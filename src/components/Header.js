@@ -92,14 +92,6 @@ export default function Example() {
 
   return (
     <>
-      {/*
-        This example requires updating your template:
-
-        ```
-        <html class="h-full bg-white">
-        <body class="h-full">
-        ```
-      */}
       <div>
         <Transition.Root show={sidebarOpen} as={Fragment}>
           <Dialog
@@ -166,30 +158,68 @@ export default function Example() {
                       <ul role="list" className="flex flex-1 flex-col gap-y-7">
                         <li>
                           <ul role="list" className="-mx-2 space-y-1">
-                            {navigation.map((item) => (
-                              <li key={item.name}>
-                                <a
-                                  href={item.href}
-                                  className={classNames(
-                                    item.current
-                                      ? "bg-indigo-700 text-white"
-                                      : "text-indigo-200 hover:text-white hover:bg-indigo-700",
-                                    "group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold"
+                          {navigation.map((item) => (
+                        <Menu key={item.name} as="div" className="relative">
+                          <Menu.Button
+                            className={classNames(
+                              item.current
+                                ? "bg-indigo-700 text-white"
+                                : "text-indigo-200 hover:text-white hover:bg-indigo-700",
+                              "group flex items-center px-2 py-2 text-sm font-medium rounded-md"
+                            )}
+                          >
+                            <item.icon
+                              className={classNames(
+                                item.current
+                                  ? "text-white"
+                                  : "text-indigo-400 group-hover:text-white",
+                                "mr-3 flex-shrink-0 h-6 w-6"
+                              )}
+                              aria-hidden="true"
+                            />
+                            {item.name}
+                            {item.submenu && (
+                              <ChevronDownIcon
+                                className={classNames(
+                                  item.current
+                                    ? "text-white"
+                                    : "text-indigo-400 group-hover:text-white",
+                                  "ml-auto h-5 w-5"
+                                )}
+                                aria-hidden="true"
+                              />
+                            )}
+                          </Menu.Button>
+
+                          <Transition
+                            as={Fragment}
+                            enter="transition ease-out duration-100"
+                            enterFrom="transform opacity-0 scale-95"
+                            enterTo="transform opacity-100 scale-100"
+                            leave="transition ease-in duration-75"
+                            leaveFrom="transform opacity-100 scale-100"
+                            leaveTo="transform opacity-0 scale-95"
+                          >
+                            <Menu.Items className="absolute z-10 mt-2 w-48 px-2 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                              {item.submenu.map((subItem) => (
+                                <Menu.Item key={subItem.name}>
+                                  {({ active }) => (
+                                    <a
+                                      href={subItem.href}
+                                      className={classNames(
+                                        active ? "bg-gray-100" : "",
+                                        "block px-4 py-2 text-sm text-gray-700"
+                                      )}
+                                    >
+                                      {subItem.name}
+                                    </a>
                                   )}
-                                >
-                                  <item.icon
-                                    className={classNames(
-                                      item.current
-                                        ? "text-white"
-                                        : "text-indigo-200 group-hover:text-white",
-                                      "h-6 w-6 shrink-0"
-                                    )}
-                                    aria-hidden="true"
-                                  />
-                                  {item.name}
-                                </a>
-                              </li>
-                            ))}
+                                </Menu.Item>
+                              ))}
+                            </Menu.Items>
+                          </Transition>
+                        </Menu>
+                      ))}
                           </ul>
                         </li>
                         <li>
