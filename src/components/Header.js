@@ -31,6 +31,7 @@ import Budgets from "../pages/Budgets"
 import Financial from "../pages/Financial";
 import Transfers from "../pages/Transfers";
 
+
 const navigation = [
   {
     name: "Dashboard",
@@ -88,7 +89,7 @@ const navigation = [
 const teams = [
   { id: 1, name: "Users", href: "users", initial: "H", current: false },
   { id: 2, name: "Snap Shots", href: "#", initial: "T", current: false },
-  { id: 3, name: "Calendar", href: "#", initial: "W", current: false },
+  { id: 3, name: "Calendar", href: "calendar", initial: "W", current: false },
 ];
 const userNavigation = [
   { name: "Your profile", href: "#" },
@@ -551,6 +552,7 @@ export default function Example() {
                 <Route path="/budgets" element={<Budgets />} />
                 <Route path="/financial" element={<Financial />} />
                 <Route path="/transfers" element={<Transfers />} />
+                
               </Routes>
             </div>
           </main>
