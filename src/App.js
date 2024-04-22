@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { BrowserRouter as Routers } from 'react-router-dom';
 import './App.css';
 // import Navbar from './components/Navbar';
 import Header from './components/Header';
@@ -20,7 +21,9 @@ function App() {
       {/* <Navbar /> */}
 
       <div className="py-">
-        <Header />
+        <Routers>
+         <Header />
+        </Routers>
         <main>
           <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
             
