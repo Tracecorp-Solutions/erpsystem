@@ -20,6 +20,11 @@ import {
 import Dashboard from "../pages/Dashboard";
 import Vendors from "../pages/Vendors";
 import Deposit from "../pages/Dashboard";
+import Profit from "../pages/Profit";
+import Loss from "../pages/Loss";
+import Expense from "../pages/Expense";
+import MainAccounts from "../pages/MainAccounts";
+import Supplier from "../pages/Supplier";
 
 const navigation = [
   {
@@ -28,26 +33,45 @@ const navigation = [
     current: true,
     submenu: [
       { name: "Home", href: "/dashboard/", current: false },
-      { name: "Vendors", href: "/dashboard/vendors", current: false }
+      { name: "Vendors", href: "/dashboard/vendors", current: false },
     ],
   },
   {
     name: "Banking",
     icon: UsersIcon,
     current: false,
+    submenu: [{ name: "Deposit", href: "/deposit", current: false }],
+  },
+  {
+    name: "Reports",
+    icon: FolderIcon,
+    current: false,
     submenu: [
-      { name: "Deposit", href: "/Banking/deposit", current: false },
+      { name: "Profit", href: "/profit", current: false },
+      { name: "Loss", href: "/loss", current: false },
     ],
   },
-  { name: "Reports", href: "#", icon: FolderIcon, current: false },
-  { name: "Bill Tracker", href: "#", icon: CalendarIcon, current: false },
+  {
+    name: "Bill Tracker",
+    icon: CalendarIcon,
+    current: false,
+    submenu: [{ name: "Expense", href: "/expense", current: false }],
+  },
   {
     name: "Chart of Accounts",
     href: "#",
     icon: DocumentDuplicateIcon,
     current: false,
+    submenu: [
+      { name: "Main Accounts", href: "/main-accounts", current: false },
+    ],
   },
-  { name: "Files", href: "#", icon: ChartPieIcon, current: false },
+  {
+    name: "Files",
+    icon: ChartPieIcon,
+    current: false,
+    submenu: [{ name: "Suppliers", href: "/suppliers", current: false }],
+  },
 ];
 const teams = [
   { id: 1, name: "Users", href: "#", initial: "H", current: false },
@@ -233,7 +257,6 @@ export default function Example() {
                   <ul role="list" className="-mx-2 space-y-1">
                     {navigation.map((item) => (
                       <li key={item.name}>
-                        {/* Render a dropdown if the item has a submenu */}
                         {item.submenu ? (
                           <Menu as="div" className="relative">
                             <Menu.Button
@@ -243,6 +266,7 @@ export default function Example() {
                                   ? "bg-indigo-700 text-white"
                                   : "text-indigo-200 hover:text-white hover:bg-indigo-700"
                               )}
+                              style={{ width: "250px" }}
                             >
                               <item.icon
                                 className={classNames(
@@ -254,16 +278,20 @@ export default function Example() {
                                 aria-hidden="true"
                               />
                               {item.name}
-                              <ChevronDownIcon
-                                className={classNames(
-                                  item.current
-                                    ? "text-white"
-                                    : "text-indigo-200 group-hover:text-white",
-                                  "h-5 w-5 text-gray-400 group-hover:text-white"
-                                )}
-                                aria-hidden="true"
-                              />
+                              <div className="flex-grow" />
+                              <div>
+                                <ChevronDownIcon
+                                  className={classNames(
+                                    item.current
+                                      ? "text-white"
+                                      : "text-indigo-200 group-hover:text-white",
+                                    "h-5 w-5 text-gray-400 group-hover:text-white"
+                                  )}
+                                  aria-hidden="true"
+                                />
+                              </div>
                             </Menu.Button>
+
                             <Transition
                               as={Fragment}
                               enter="transition ease-out duration-100"
@@ -470,7 +498,12 @@ export default function Example() {
               <Routes>
                 <Route path="/dashboard/" element={<Dashboard />} />
                 <Route path="/dashboard/vendors" element={<Vendors />} />
-                <Route path="/Banking/deposit" element={<Deposit />} />
+                <Route path="/deposit" element={<Deposit />} />
+                <Route path="/profit" element={<Profit />} />
+                <Route path="/loss" element={<Loss />} />
+                <Route path="/expense" element={<Expense />} />
+                <Route path="/main-accounts" element={<MainAccounts />} />
+                <Route path="/suppliers" element={<Supplier />} />
               </Routes>
             </div>
           </main>
