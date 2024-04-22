@@ -19,12 +19,17 @@ import {
 } from "@heroicons/react/20/solid";
 import Dashboard from "../pages/Dashboard";
 import Vendors from "../pages/Vendors";
-import Deposit from "../pages/Dashboard";
+import Deposit from "../pages/Deposit";
 import Profit from "../pages/Profit";
 import Loss from "../pages/Loss";
 import Expense from "../pages/Expense";
 import MainAccounts from "../pages/MainAccounts";
-import Supplier from "../pages/Supplier";
+import About from "../pages/About";
+import Reconciliation from "../pages/Reconciliation";
+import Cashflows from "../pages/Cashflows";
+import Budgets from "../pages/Budgets"
+import Financial from "../pages/Financial";
+import Transfers from "../pages/Transfers";
 
 const navigation = [
   {
@@ -40,7 +45,11 @@ const navigation = [
     name: "Banking",
     icon: UsersIcon,
     current: false,
-    submenu: [{ name: "Deposit", href: "/deposit", current: false }],
+    submenu: [
+      { name: "Deposit", href: "/deposit", current: false },
+      { name: "Transfers", href: "/transfers", current: false },
+      { name: "Reconciliation", href: "/reconciliation", current: false }
+    ],
   },
   {
     name: "Reports",
@@ -49,6 +58,9 @@ const navigation = [
     submenu: [
       { name: "Profit", href: "/profit", current: false },
       { name: "Loss", href: "/loss", current: false },
+      { name: "Financial Position", href: "/Financial", current: false },
+      { name: "Cashflows", href: "/cashflows", current: false },
+      { name: "Budgets", href: "/budgets", current: false }
     ],
   },
   {
@@ -70,11 +82,11 @@ const navigation = [
     name: "Files",
     icon: ChartPieIcon,
     current: false,
-    submenu: [{ name: "Suppliers", href: "/suppliers", current: false }],
+    submenu: [{ name: "About", href: "/about", current: false }],
   },
 ];
 const teams = [
-  { id: 1, name: "Users", href: "#", initial: "H", current: false },
+  { id: 1, name: "Users", href: "users", initial: "H", current: false },
   { id: 2, name: "Snap Shots", href: "#", initial: "T", current: false },
   { id: 3, name: "Calendar", href: "#", initial: "W", current: false },
 ];
@@ -272,14 +284,14 @@ export default function Example() {
         <div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col">
           {/* Sidebar component, swap this element with another sidebar if you like */}
           <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-indigo-600 px-6 pb-4">
-            <div className="flex h-16 shrink-0 items-center">
-              {/* <img
-                className="h-14 w-28 bg-white"
+            <div className="flex h-16 w-32 shrink-0 items-center rounded-lg mt-3">
+              <img
+                className="h-16 w-28 bg-white rounded-lg"
                 src="https://www.tracecorpsolutions.com/wp-content/uploads/2019/05/Tracecorp-logo.png"
                 alt="Your Company"
             
-              /> */}
-              <h1 className="">TraceCorp</h1>
+              />
+            
             </div>
             <nav className="flex flex-1 flex-col">
               <ul role="list" className="flex flex-1 flex-col gap-y-7">
@@ -533,7 +545,12 @@ export default function Example() {
                 <Route path="/loss" element={<Loss />} />
                 <Route path="/expense" element={<Expense />} />
                 <Route path="/main-accounts" element={<MainAccounts />} />
-                <Route path="/suppliers" element={<Supplier />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/reconciliation" element={<Reconciliation />} />
+                <Route path="/cashflows" element={<Cashflows />} />
+                <Route path="/budgets" element={<Budgets />} />
+                <Route path="/financial" element={<Financial />} />
+                <Route path="/transfers" element={<Transfers />} />
               </Routes>
             </div>
           </main>
