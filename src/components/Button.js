@@ -1,20 +1,7 @@
 import React from 'react';
-// /*
-//   This example requires some changes to your config:
-  
-//   ```
-//   // tailwind.config.js
-//   module.exports = {
-//     // ...
-//     plugins: [
-//       // ...
-//       require('@tailwindcss/forms'),
-//     ],
-//   }
-//   ```
-// */
+
 const tabs = [
-    { name: 'New Account', href: '#', current: false },
+    { name: 'New Account', href: '/account-creation', current: false },
     { name: 'Expense', href: '#', current: false },
     { name: 'Petty Cash', href: '#', current: true },
     { name: 'Offer', href: '#', current: false },
