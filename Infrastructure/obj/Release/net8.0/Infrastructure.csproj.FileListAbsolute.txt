@@ -1,0 +1,16 @@
+D:\working directory\erpsystem\Infrastructure\bin\Release\net8.0\Infrastructure.deps.json
+D:\working directory\erpsystem\Infrastructure\bin\Release\net8.0\Infrastructure.dll
+D:\working directory\erpsystem\Infrastructure\bin\Release\net8.0\Infrastructure.pdb
+D:\working directory\erpsystem\Infrastructure\bin\Release\net8.0\Core.dll
+D:\working directory\erpsystem\Infrastructure\bin\Release\net8.0\Core.pdb
+D:\working directory\erpsystem\Infrastructure\obj\Release\net8.0\Infrastructure.csproj.AssemblyReference.cache
+D:\working directory\erpsystem\Infrastructure\obj\Release\net8.0\Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+D:\working directory\erpsystem\Infrastructure\obj\Release\net8.0\Infrastructure.AssemblyInfoInputs.cache
+D:\working directory\erpsystem\Infrastructure\obj\Release\net8.0\Infrastructure.AssemblyInfo.cs
+D:\working directory\erpsystem\Infrastructure\obj\Release\net8.0\Infrastructure.csproj.CoreCompileInputs.cache
+D:\working directory\erpsystem\Infrastructure\obj\Release\net8.0\Infrastructure.sourcelink.json
+D:\working directory\erpsystem\Infrastructure\obj\Release\net8.0\Infrastr.15EFFBFE.Up2Date
+D:\working directory\erpsystem\Infrastructure\obj\Release\net8.0\Infrastructure.dll
+D:\working directory\erpsystem\Infrastructure\obj\Release\net8.0\refint\Infrastructure.dll
+D:\working directory\erpsystem\Infrastructure\obj\Release\net8.0\Infrastructure.pdb
+D:\working directory\erpsystem\Infrastructure\obj\Release\net8.0\ref\Infrastructure.dll
