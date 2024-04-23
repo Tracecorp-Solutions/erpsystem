@@ -3,7 +3,7 @@ import React from 'react';
 const tabs = [
     { name: 'New Account', href: '/account-creation', current: false },
     { name: 'Expense', href: '#', current: false },
-    { name: 'Petty Cash', href: '#', current: true },
+    { name: 'Petty Cash', href: '/petty', current: true },
     { name: 'Offer', href: '#', current: false },
     { name: 'Sales', href: '#', current: false },
   ]
