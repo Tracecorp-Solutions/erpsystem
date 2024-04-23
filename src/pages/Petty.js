@@ -17,8 +17,8 @@ const petty = [
           <div className="sm:flex-auto">
             <h1 className="text-base font-semibold leading-6 text-gray-900">Petty Cash</h1>
             <p className="mt-2 text-sm text-gray-700">
-              For work completed from <time dateTime="2022-08-01">August 1, 2022</time> to{' '}
-              <time dateTime="2022-08-31">August 31, 2022</time>.
+              For work completed from <time dateTime="2024-08-01">August 1, 2024</time> to{' '}
+              <time dateTime="2024-08-31">August 31, 2024</time>.
             </p>
           </div>
           <div className="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
