@@ -37,6 +37,7 @@ const navigation = [
     name: "Dashboard",
     icon: HomeIcon,
     current: true,
+    submenuItem: true,
     submenu: [
       { name: "Home", href: "/dashboard/", current: false },
       { name: "Vendors", href: "/dashboard/vendors", current: false },
@@ -46,6 +47,7 @@ const navigation = [
     name: "Banking",
     icon: UsersIcon,
     current: false,
+    submenuItem: true,
     submenu: [
       { name: "Deposit", href: "/deposit", current: false },
       { name: "Transfers", href: "/transfers", current: false },
@@ -56,6 +58,7 @@ const navigation = [
     name: "Reports",
     icon: FolderIcon,
     current: false,
+    submenuItem: true,
     submenu: [
       { name: "Profit", href: "/profit", current: false },
       { name: "Loss", href: "/loss", current: false },
@@ -68,6 +71,7 @@ const navigation = [
     name: "Bill Tracker",
     icon: CalendarIcon,
     current: false,
+    submenuItem: true,
     submenu: [{ name: "Expense", href: "/expense", current: false }],
   },
   {
@@ -75,6 +79,7 @@ const navigation = [
     href: "#",
     icon: DocumentDuplicateIcon,
     current: false,
+    submenuItem: true,
     submenu: [
       { name: "Main Accounts", href: "/main-accounts", current: false },
     ],
@@ -83,6 +88,7 @@ const navigation = [
     name: "Files",
     icon: ChartPieIcon,
     current: false,
+    submenuItem: true,
     submenu: [{ name: "About", href: "/about", current: false }],
   },
 ];
@@ -100,7 +106,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function Example() {
+export default function Main() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
@@ -180,6 +186,7 @@ export default function Example() {
                                 : "text-indigo-200 hover:text-white hover:bg-indigo-700",
                               "group flex items-center px-2 py-2 text-sm font-medium rounded-md"
                             )}
+                            style={{ width: "250px" }}
                           >
                             <item.icon
                               className={classNames(
@@ -206,14 +213,14 @@ export default function Example() {
 
                           <Transition
                             as={Fragment}
-                            enter="transition ease-out duration-100"
+                            enter="transition ease-linear duration-200"
                             enterFrom="transform opacity-0 scale-95"
                             enterTo="transform opacity-100 scale-100"
                             leave="transition ease-in duration-75"
                             leaveFrom="transform opacity-100 scale-100"
                             leaveTo="transform opacity-0 scale-95"
                           >
-                            <Menu.Items className="absolute z-10 mt-2 w-48 px-2 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                            <Menu.Items className="mt-2 w-48 px-2 origin-top-right divide-gray-100 text-white rounded-md focus:outline-none">
                               {item.submenu.map((subItem) => (
                                 <Menu.Item key={subItem.name}>
                                   {({ active }) => (
@@ -221,7 +228,7 @@ export default function Example() {
                                       href={subItem.href}
                                       className={classNames(
                                         active ? "bg-gray-100" : "",
-                                        "block px-4 py-2 text-sm text-gray-700"
+                                        "block px-4 py-2 text-sm"
                                       )}
                                     >
                                       {subItem.name}
@@ -337,14 +344,14 @@ export default function Example() {
 
                             <Transition
                               as={Fragment}
-                              enter="transition ease-out duration-100"
+                              enter="transition ease-linear duration-200"
                               enterFrom="transform opacity-0 scale-95"
                               enterTo="transform opacity-100 scale-100"
                               leave="transition ease-in duration-75"
                               leaveFrom="transform opacity-100 scale-100"
                               leaveTo="transform opacity-0 scale-95"
                             >
-                              <Menu.Items className="absolute right-0 z-10 mt-2.5 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-gray-900/5 focus:outline-none">
+                              <Menu.Items className="mt-2.5 w-48 origin-top-right rounded-md py-1  ring-1 ring-gray-900/5 focus:outline-none" style={{ width: "250px" }}>
                                 {item.submenu.map((subItem) => (
                                   <Menu.Item key={subItem.name}>
                                     {({ active }) => (
@@ -352,10 +359,11 @@ export default function Example() {
                                         href={subItem.href}
                                         className={classNames(
                                           active
-                                            ? "bg-gray-100 text-gray-900"
+                                            ? " text-gray-900  hover:bg-indigo-700"
                                             : "text-gray-700",
-                                          "block px-4 py-2 text-sm"
+                                          "block px-4 py-2 text-sm  hover:bg-indigo-700"
                                         )}
+                                        style={{color: "white"}}
                                       >
                                         {subItem.name}
                                       </a>
