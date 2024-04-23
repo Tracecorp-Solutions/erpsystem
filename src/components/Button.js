@@ -1,7 +1,7 @@
 import React from 'react';
 
 const tabs = [
-    { name: 'New Account', href: '/account-creation', current: false },
+    { name: 'New Account', href: '/account-creation', current: true },
     { name: 'Expense', href: '#', current: false },
     { name: 'Petty Cash', href: '/petty', current: true },
     { name: 'Offer', href: '#', current: false },
@@ -12,7 +12,7 @@ const tabs = [
     return classes.filter(Boolean).join(' ')
   }
   
-  export default function Example() {
+  export default function Button() {
     return (
       <div className="relative border-b border-gray-200 pb-5 sm:pb-0">
         <div className="md:flex md:items-center md:justify-between">
