@@ -17,6 +17,7 @@ import {
   ChevronDownIcon,
   MagnifyingGlassIcon,
 } from "@heroicons/react/20/solid";
+import Button from "../components/Button";
 import Dashboard from "../pages/Dashboard";
 import Vendors from "../pages/Vendors";
 import Deposit from "../pages/Deposit";
@@ -543,7 +544,7 @@ export default function Main() {
               </div>
             </div>
           </div>
-
+          <Button/>
           <main className="py-10">
             <div className="px-4 sm:px-6 lg:px-8">
               <Routes>
