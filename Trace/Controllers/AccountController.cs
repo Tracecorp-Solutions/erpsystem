@@ -10,11 +10,11 @@ namespace Trace.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CreateAccountController : ControllerBase
+    public class AccountController : ControllerBase
     {
         private readonly IAccountRepository _accountrepository;
 
-        public CreateAccountController(IAccountRepository accountRepository) 
+        public AccountController(IAccountRepository accountRepository) 
         {
             _accountrepository = accountRepository;
         }

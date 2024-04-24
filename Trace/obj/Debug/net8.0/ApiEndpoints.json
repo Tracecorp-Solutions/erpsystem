@@ -1,6 +1,6 @@
 [
   {
-    "ContainingType": "Trace.Controllers.CreateAccountController",
+    "ContainingType": "Trace.Controllers.AccountController",
     "Method": "CreateAccount",
     "RelativePath": "accounts",
     "HttpMethod": "POST",
@@ -58,7 +58,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "Trace.Controllers.CreateAccountController",
+    "ContainingType": "Trace.Controllers.AccountController",
     "Method": "GetAllAccounts",
     "RelativePath": "GetAccounts",
     "HttpMethod": "GET",
