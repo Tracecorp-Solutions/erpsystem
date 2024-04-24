@@ -9,6 +9,6 @@ namespace Core.Repositories
 {
     public interface IAccountRepository
     {
-        Task<Account> CreateAccountAsync(int groupId, Account account);
+        Task<Account> CreateAccountAsync(Account account);
     }
 }

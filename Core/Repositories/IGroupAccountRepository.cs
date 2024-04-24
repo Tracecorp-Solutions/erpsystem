@@ -10,6 +10,8 @@ namespace Core.Repositories
     public interface IGroupAccountRepository
     {
         Task<GroupAccount> AddAsync(GroupAccount groupAccount);
+
+        Task<IEnumerable<GroupAccount>> GetAllGroupAccounts();
     }
 
 }

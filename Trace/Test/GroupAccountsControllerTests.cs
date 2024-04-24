@@ -17,7 +17,7 @@ namespace Trace.Test
             // Arrange
             var mockRepository = new Mock<IGroupAccountRepository>();
             var mockAccountService = new Mock<GroupAccountRepository>();
-            var controller = new GroupAccountsController(mockRepository.Object, mockAccountService.Object);
+            //var controller = new GroupAccountsController(mockRepository.Object, mockAccountService.Object);
 
             var groupAccountId = 1;
             var account = new GroupAccount { Id = 0, Name = "TestAccount" };

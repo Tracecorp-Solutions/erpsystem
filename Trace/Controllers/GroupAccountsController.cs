@@ -11,7 +11,7 @@ namespace Trace.Controllers
     {
         private readonly IGroupAccountRepository _repository;
 
-        public GroupAccountsController(IGroupAccountRepository repository, Infrastructure.Repositories.GroupAccountRepository @object)
+        public GroupAccountsController(IGroupAccountRepository repository)
         {
             _repository = repository;
         }
@@ -21,6 +21,13 @@ namespace Trace.Controllers
         {
             var addedAccount = await _repository.AddAsync(groupAccount);
             return CreatedAtAction(nameof(Post), new { id = addedAccount.Id }, addedAccount);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAllGroupAccounts()
+        {
+            var groupaccounts = await _repository.GetAllGroupAccounts();
+            return Ok(groupaccounts);
         }
     }
 

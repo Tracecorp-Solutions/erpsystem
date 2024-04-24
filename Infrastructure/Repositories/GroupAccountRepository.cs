@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Core.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories
 {
@@ -22,6 +23,12 @@ namespace Infrastructure.Repositories
             _context.GroupAccounts.Add(groupAccount);
             await _context.SaveChangesAsync();
             return groupAccount;
+        }
+
+        public async Task<IEnumerable<GroupAccount>> GetAllGroupAccounts()
+        {
+            IEnumerable<GroupAccount> groupAccounts = await _context.GroupAccounts.ToListAsync();
+            return groupAccounts;
         }
     }
 

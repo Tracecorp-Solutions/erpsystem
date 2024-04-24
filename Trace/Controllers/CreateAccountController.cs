@@ -19,13 +19,13 @@ namespace Trace.Controllers
             _accountrepository = accountRepository;
         }
 
-        [HttpPost("{groupId}/accounts")]
-        public async Task<IActionResult> CreateAccount(int groupId, [FromBody] Account account)
+        [HttpPost("/accounts")]
+        public async Task<IActionResult> CreateAccount([FromBody] Account account)
         {
             try
             {
-                var createdAccount = await _accountrepository.CreateAccountAsync(groupId, account);
-                return CreatedAtAction(nameof(CreateAccount), new { groupId, accountId = createdAccount.Id }, createdAccount);
+                var createdAccount = await _accountrepository.CreateAccountAsync( account);
+                return CreatedAtAction(nameof(CreateAccount), new { account.GroupId, accountId = createdAccount.Id }, createdAccount);
             }
             catch (ArgumentException ex)
             {
