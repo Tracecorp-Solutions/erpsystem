@@ -56,5 +56,15 @@
       }
     ],
     "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Trace.Controllers.CreateAccountController",
+    "Method": "GetAllAccounts",
+    "RelativePath": "GetAccounts",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
   }
 ]

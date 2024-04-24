@@ -1,5 +1,6 @@
 ﻿using Core.Models;
 using Core.Repositories;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +28,12 @@ namespace Infrastructure.Repositories
             await _context.SaveChangesAsync();
 
             return account;
+        }
+
+        public async Task<IEnumerable<Account>> GetAccounts() 
+        {
+            IEnumerable<Account> accounts = await _context.Accounts.ToListAsync();
+            return accounts;
         }
     }
 }

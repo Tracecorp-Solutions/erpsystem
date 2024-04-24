@@ -3,32 +3,32 @@
   "WorkspaceRootPath": "D:\\working directory\\erpsystem\\Trace\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{97CA6EF6-720A-4545-8A15-EBF2D4F20DA0}|Trace.csproj|d:\\working directory\\erpsystem\\trace\\trace.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
-      "RelativeMoniker": "D:0:0:{97CA6EF6-720A-4545-8A15-EBF2D4F20DA0}|Trace.csproj|solutionrelative:trace.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A176F11F-4BEC-4DAC-9205-CF64F57D23C0}|..\\Core\\Core.csproj|d:\\working directory\\erpsystem\\core\\repositories\\igroupaccountrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{97CA6EF6-720A-4545-8A15-EBF2D4F20DA0}|Trace.csproj|d:\\working directory\\erpsystem\\trace\\controllers\\createaccountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{97CA6EF6-720A-4545-8A15-EBF2D4F20DA0}|Trace.csproj|solutionrelative:controllers\\createaccountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7735A439-FAA5-47B0-AAB7-17DB1C05A2D8}|..\\Infrastructure\\Infrastructure.csproj|d:\\working directory\\erpsystem\\infrastructure\\repositories\\groupaccountrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{7735A439-FAA5-47B0-AAB7-17DB1C05A2D8}|..\\Infrastructure\\Infrastructure.csproj|d:\\working directory\\erpsystem\\infrastructure\\repositories\\accountrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{7735A439-FAA5-47B0-AAB7-17DB1C05A2D8}|..\\Infrastructure\\Infrastructure.csproj|d:\\working directory\\erpsystem\\infrastructure\\repositories\\groupaccountrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A176F11F-4BEC-4DAC-9205-CF64F57D23C0}|..\\Core\\Core.csproj|d:\\working directory\\erpsystem\\core\\repositories\\igroupaccountrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{97CA6EF6-720A-4545-8A15-EBF2D4F20DA0}|Trace.csproj|d:\\working directory\\erpsystem\\trace\\controllers\\groupaccountscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{97CA6EF6-720A-4545-8A15-EBF2D4F20DA0}|Trace.csproj|solutionrelative:controllers\\groupaccountscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{97CA6EF6-720A-4545-8A15-EBF2D4F20DA0}|Trace.csproj|d:\\working directory\\erpsystem\\trace\\test\\groupaccountscontrollertests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{97CA6EF6-720A-4545-8A15-EBF2D4F20DA0}|Trace.csproj|solutionrelative:test\\groupaccountscontrollertests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A176F11F-4BEC-4DAC-9205-CF64F57D23C0}|..\\Core\\Core.csproj|d:\\working directory\\erpsystem\\core\\repositories\\iaccountrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A176F11F-4BEC-4DAC-9205-CF64F57D23C0}|..\\Core\\Core.csproj|d:\\working directory\\erpsystem\\core\\repositories\\iaccountrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{97CA6EF6-720A-4545-8A15-EBF2D4F20DA0}|Trace.csproj|d:\\working directory\\erpsystem\\trace\\trace.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{97CA6EF6-720A-4545-8A15-EBF2D4F20DA0}|Trace.csproj|solutionrelative:trace.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{97CA6EF6-720A-4545-8A15-EBF2D4F20DA0}|Trace.csproj|d:\\working directory\\erpsystem\\trace\\test\\groupaccountscontrollertests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{97CA6EF6-720A-4545-8A15-EBF2D4F20DA0}|Trace.csproj|solutionrelative:test\\groupaccountscontrollertests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A176F11F-4BEC-4DAC-9205-CF64F57D23C0}|..\\Core\\Core.csproj|d:\\working directory\\erpsystem\\core\\models\\account.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
@@ -100,89 +100,102 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "GroupAccountsController.cs",
-              "DocumentMoniker": "D:\\working directory\\erpsystem\\Trace\\Controllers\\GroupAccountsController.cs",
-              "RelativeDocumentMoniker": "Controllers\\GroupAccountsController.cs",
-              "ToolTip": "D:\\working directory\\erpsystem\\Trace\\Controllers\\GroupAccountsController.cs",
-              "RelativeToolTip": "Controllers\\GroupAccountsController.cs",
-              "ViewState": "AQIAABEAAAAAAAAAAAAYwB4AAAAJAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-22T08:42:36.145Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 1,
               "Title": "GroupAccountRepository.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Infrastructure\\Repositories\\GroupAccountRepository.cs",
               "RelativeDocumentMoniker": "..\\Infrastructure\\Repositories\\GroupAccountRepository.cs",
               "ToolTip": "D:\\working directory\\erpsystem\\Infrastructure\\Repositories\\GroupAccountRepository.cs",
               "RelativeToolTip": "..\\Infrastructure\\Repositories\\GroupAccountRepository.cs",
-              "ViewState": "AQIAAA8AAAAAAAAAAAAuwB8AAAAJAAAA",
+              "ViewState": "AQIAABIAAAAAAAAAAAAuwB8AAAAJAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-04-22T08:33:56.168Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 2,
               "Title": "AccountRepository.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Infrastructure\\Repositories\\AccountRepository.cs",
               "RelativeDocumentMoniker": "..\\Infrastructure\\Repositories\\AccountRepository.cs",
               "ToolTip": "D:\\working directory\\erpsystem\\Infrastructure\\Repositories\\AccountRepository.cs",
               "RelativeToolTip": "..\\Infrastructure\\Repositories\\AccountRepository.cs",
-              "ViewState": "AQIAAA8AAAAAAAAAAADgvxkAAAArAAAA",
+              "ViewState": "AQIAABMAAAAAAAAAAAAqwCAAAAA7AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-04-22T09:36:39.975Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
               "Title": "CreateAccountController.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Trace\\Controllers\\CreateAccountController.cs",
               "RelativeDocumentMoniker": "Controllers\\CreateAccountController.cs",
               "ToolTip": "D:\\working directory\\erpsystem\\Trace\\Controllers\\CreateAccountController.cs",
               "RelativeToolTip": "Controllers\\CreateAccountController.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABsAAABTAAAA",
+              "ViewState": "AQIAACgAAAAAAAAAAAAswC0AAAAkAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-04-22T09:38:32.813Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 4,
+              "Title": "GroupAccountsController.cs",
+              "DocumentMoniker": "D:\\working directory\\erpsystem\\Trace\\Controllers\\GroupAccountsController.cs",
+              "RelativeDocumentMoniker": "Controllers\\GroupAccountsController.cs",
+              "ToolTip": "D:\\working directory\\erpsystem\\Trace\\Controllers\\GroupAccountsController.cs",
+              "RelativeToolTip": "Controllers\\GroupAccountsController.cs",
+              "ViewState": "AQIAAA4AAAAAAAAAAAAYwBwAAAA7AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-22T08:42:36.145Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "IGroupAccountRepository.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Core\\Repositories\\IGroupAccountRepository.cs",
               "RelativeDocumentMoniker": "..\\Core\\Repositories\\IGroupAccountRepository.cs",
               "ToolTip": "D:\\working directory\\erpsystem\\Core\\Repositories\\IGroupAccountRepository.cs",
               "RelativeToolTip": "..\\Core\\Repositories\\IGroupAccountRepository.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA0AAAAIAAAA",
+              "ViewState": "AQIAAAQAAAAAAAAAAAAlwA0AAAA7AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-04-22T08:32:55.64Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 5,
+              "Title": "IAccountRepository.cs",
+              "DocumentMoniker": "D:\\working directory\\erpsystem\\Core\\Repositories\\IAccountRepository.cs",
+              "RelativeDocumentMoniker": "..\\Core\\Repositories\\IAccountRepository.cs",
+              "ToolTip": "D:\\working directory\\erpsystem\\Core\\Repositories\\IAccountRepository.cs",
+              "RelativeToolTip": "..\\Core\\Repositories\\IAccountRepository.cs",
+              "ViewState": "AQIAAAEAAAAAAAAAAAAhwAwAAAAuAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-22T09:29:40.481Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
               "Title": "Trace.csproj",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Trace\\Trace.csproj",
               "RelativeDocumentMoniker": "Trace.csproj",
               "ToolTip": "D:\\working directory\\erpsystem\\Trace\\Trace.csproj",
               "RelativeToolTip": "Trace.csproj",
-              "ViewState": "AQIAAAYAAAAAAAAAAAAAAB8AAAAAAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAB8AAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
               "WhenOpened": "2024-04-22T08:16:01.724Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "GroupAccountsControllerTests.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Trace\\Test\\GroupAccountsControllerTests.cs",
               "RelativeDocumentMoniker": "Test\\GroupAccountsControllerTests.cs",
@@ -190,8 +203,7 @@
               "RelativeToolTip": "Test\\GroupAccountsControllerTests.cs",
               "ViewState": "AQIAAA8AAAAAAAAAAAAUwBMAAAAOAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-22T11:32:19.999Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-04-22T11:32:19.999Z"
             },
             {
               "$type": "Document",
@@ -240,18 +252,6 @@
               "ViewState": "AQIAAAMAAAAAAAAAAAAAABMAAABLAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-04-22T10:34:36.437Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "IAccountRepository.cs",
-              "DocumentMoniker": "D:\\working directory\\erpsystem\\Core\\Repositories\\IAccountRepository.cs",
-              "RelativeDocumentMoniker": "..\\Core\\Repositories\\IAccountRepository.cs",
-              "ToolTip": "D:\\working directory\\erpsystem\\Core\\Repositories\\IAccountRepository.cs",
-              "RelativeToolTip": "..\\Core\\Repositories\\IAccountRepository.cs",
-              "ViewState": "AQIAAAEAAAAAAAAAAAAhwAsAAAApAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-22T09:29:40.481Z"
             },
             {
               "$type": "Document",
@@ -312,8 +312,7 @@
               "RelativeToolTip": "Models\\TraceErpContext.cs",
               "ViewState": "AQIAAAsAAAAAAAAAAAAnwBoAAAAjAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-22T08:56:57.549Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-04-22T08:56:57.549Z"
             },
             {
               "$type": "Document",
