@@ -7,6 +7,6 @@
 
         public string Behaviour { get; set; }
 
-        public ICollection<Account> Accounts { get; set; } = new List<Account>();
+        //public ICollection<Account> Accounts { get; set; } = new List<Account>();
     }
 }

@@ -6,7 +6,7 @@ using Core.Models;
 namespace Trace.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class GroupAccountsController : ControllerBase
     {
         private readonly IGroupAccountRepository _repository;

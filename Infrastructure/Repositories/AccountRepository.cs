@@ -23,7 +23,8 @@ namespace Infrastructure.Repositories
             if (groupAccount == null)
                 throw new ArgumentException("Invalid group account id.");
 
-            groupAccount.Accounts.Add(account);
+            _context.Accounts.Add(account);
+            //groupAccount.Accounts.Add(account);
             //groupAccount.Accounts.Add(account);
             await _context.SaveChangesAsync();
 
