@@ -1,16 +1,62 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 const AccountCreation = () => {
   const [showForm, setShowForm] = useState(false);
-  const [accounts, setAccounts] = useState([
-    { id: 1, name: "Account 1", balance: 1000 },
-    { id: 2, name: "Account 2", balance: 2000 },
-    { id: 3, name: "Account 3", balance: 3000 },
-  ]);
-  const [newAccount, setNewAccount] = useState({ name: "", behavior: "" });
+  const [groups, setGroups] = useState([]);
+  const [accounts, setAccounts] = useState([]);
+  const [newAccount, setNewAccount] = useState({
+    name: "",
+    groupId: "",
+    balance: 0,
+  });
+  const [successMessage, setSuccessMessage] = useState("");
+  const groupsApiUrl = "http://54.226.71.2/GetAllGroupAccounts";
+  const accountsApiUrl = "http://54.226.71.2/GetAccounts";
+  const createAccountsApiUrl = "http://54.226.71.2/accounts";
+
+  useEffect(() => {
+    fetchGroups();
+    fetchAccounts();
+  }, []);
+
+  const fetchGroups = async () => {
+    try {
+      const response = await axios.get(groupsApiUrl);
+      setGroups(response.data);
+      console.log(response.data);
+    } catch (error) {
+      console.error("Error fetching groups:", error);
+    }
+  };
+
+  const fetchAccounts = async () => {
+    try {
+      const response = await axios.get(accountsApiUrl);
+      setAccounts(response.data);
+    } catch (error) {
+      console.error("Error fetching accounts:", error);
+    }
+  };
 
   const toggleForm = () => {
     setShowForm(!showForm);
+  };
+
+  const getGroupNameById = (groupId) => {
+    const group = groups.find((group) => group.id === groupId);
+    return group ? group.name : "Unknown";
+  };
+
+  const handleSubmit = async () => {
+    try {
+      await axios.post(createAccountsApiUrl, newAccount);
+      setSuccessMessage("Account created successfully!");
+      setNewAccount({ name: "", groupId: "", behavior: "" });
+      fetchAccounts();
+    } catch (error) {
+      console.error("Error creating account:", error);
+    }
   };
 
   return (
@@ -34,9 +80,7 @@ const AccountCreation = () => {
       {showForm && (
         <div className="absolute inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center">
           <div className="bg-white p-8 rounded-lg max-w-xl w-full mx-4">
-            <h2 className="text-lg font-semibold mb-4">
-              New Account Form
-            </h2>
+            <h2 className="text-lg font-semibold mb-4">New Account Form</h2>
             <div className="mb-4">
               <label
                 htmlFor="name"
@@ -54,28 +98,47 @@ const AccountCreation = () => {
                 }
                 className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                 placeholder="Please enter account name..."
-                style={{ padding: "18px" }}
               />
             </div>
             <div className="mb-4">
               <label
-                htmlFor="behavior"
+                htmlFor="balance"
                 className="block text-sm font-medium text-gray-700"
               >
-                Account
+                Balance
+              </label>
+              <input
+                type="text"
+                name="balance"
+                id="balance"
+                value={newAccount.balance}
+                onChange={(e) =>
+                  setNewAccount({ ...newAccount, balance: e.target.value })
+                }
+                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                placeholder="Please enter account balance..."
+              />
+            </div>
+            <div className="mb-4">
+              <label
+                htmlFor="group"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Group
               </label>
               <select
-                value={newAccount.behavior}
+                value={newAccount.groupId}
                 onChange={(e) =>
-                  setNewAccount({ ...newAccount, behavior: e.target.value })
+                  setNewAccount({ ...newAccount, groupId: e.target.value })
                 }
                 className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full border-gray-300 rounded-md focus:ring-1 focus:ring-offset-1 focus:ring-offset-gray-100 focus:ring-indigo-500 sm:text-sm mb-20"
-                style={{ padding: "18px", marginBottom: "20px" }}
               >
-                <option value="">Select Account</option>
-                <option value="Debit">Assets</option>
-                <option value="Credit">Liability</option>
-                <option value="Credit">Expense</option>
+                <option value="">Select Group</option>
+                {groups.map((group) => (
+                  <option key={group.id} value={group.id}>
+                    {group.name}
+                  </option>
+                ))}
               </select>
             </div>
             <div className="flex justify-end mt-20">
@@ -88,17 +151,18 @@ const AccountCreation = () => {
               </button>
               <button
                 type="button"
-                onClick={() => {
-                  console.log("Form submitted:", newAccount);
-                  setNewAccount({ name: "", behavior: "" });
-                  toggleForm();
-                }}
+                onClick={handleSubmit}
                 className="ml-3 px-4 py-2 bg-indigo-600 text-white rounded-md text-sm font-semibold hover:bg-indigo-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-indigo-500"
               >
                 Save
               </button>
             </div>
           </div>
+        </div>
+      )}
+      {successMessage && (
+        <div className="mt-4 p-4 bg-green-100 text-green-700">
+          {successMessage}
         </div>
       )}
       <div className="mt-8 flow-root">
@@ -117,8 +181,9 @@ const AccountCreation = () => {
                     scope="col"
                     className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                   >
-                    Balance
+                    Group
                   </th>
+                  <th scope="col">Balance</th>
                   <th
                     scope="col"
                     className="relative py-3.5 pl-3 pr-4 sm:pr-6 lg:pr-8"
@@ -128,10 +193,14 @@ const AccountCreation = () => {
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200 bg-white">
+                {/* Replace 'accounts' with the correct data source */}
                 {accounts.map((account) => (
                   <tr key={account.id}>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                       {account.name}
+                    </td>
+                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                      {getGroupNameById(account.groupId)}
                     </td>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                       {account.balance}
