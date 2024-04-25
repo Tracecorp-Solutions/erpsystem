@@ -1,5 +1,6 @@
 ﻿using Core.Models;
 using Core.Repositories;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,7 +32,44 @@ namespace Infrastructure.Repositories
             accountFrom.Balance -= transaction.Amount;
             accountTo.Balance += transaction.Amount;
 
+            await _context.Transactions.AddAsync(transaction);
+
             // Save changes to the database
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<Transaction>> GetAllTransactions() 
+        {
+            IEnumerable<Transaction> transactions = await _context.Transactions.ToListAsync();
+
+            return transactions;
+        }
+
+        public async Task RecordJournalEntry(JournalItem journalItem) 
+        {
+            // Retrieve accounts involved in the transaction
+            var accountFrom = await _context.Accounts.FindAsync(journalItem.AccountFromId);
+            var accountTo = await _context.Accounts.FindAsync(journalItem.AccountToId);
+
+            if (accountFrom == null || accountTo == null)
+                throw new ArgumentException("Invalid account(s) specified.");
+
+            // Perform double-entry bookkeeping
+            var fromaccountgroupaccount = await _context.GroupAccounts.FindAsync(accountFrom.GroupId);
+            var toaccountgroupaccount = await _context.GroupAccounts.FindAsync(accountTo.GroupId);
+
+            //updating of balance for the accounts
+            if (fromaccountgroupaccount.Behaviour.Equals("Debit"))
+            {
+                accountFrom.Balance -= journalItem.Amount;
+                accountTo.Balance += journalItem.Amount;
+            }
+            else
+            {
+                accountFrom.Balance += journalItem.Amount;
+                accountTo.Balance -= journalItem.Amount;
+            }
+
             await _context.SaveChangesAsync();
         }
     }

@@ -17,8 +17,8 @@
   },
   {
     "ContainingType": "Trace.Controllers.GroupAccountsController",
-    "Method": "Post",
-    "RelativePath": "api/GroupAccounts",
+    "Method": "CreateGroupAccount",
+    "RelativePath": "CreateGroupAccount",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
@@ -32,9 +32,19 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "Trace.Controllers.AccountController",
+    "Method": "GetAllAccounts",
+    "RelativePath": "GetAccounts",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "Trace.Controllers.GroupAccountsController",
     "Method": "GetAllGroupAccounts",
-    "RelativePath": "api/GroupAccounts",
+    "RelativePath": "GetAllGroupAccounts",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -44,7 +54,7 @@
   {
     "ContainingType": "Trace.Controllers.TransactionsController",
     "Method": "RecordTransaction",
-    "RelativePath": "api/Transactions",
+    "RelativePath": "RecordTransaction",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
@@ -58,9 +68,9 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "Trace.Controllers.AccountController",
-    "Method": "GetAllAccounts",
-    "RelativePath": "GetAccounts",
+    "ContainingType": "Trace.Controllers.TransactionsController",
+    "Method": "RetrieveAllTransactions",
+    "RelativePath": "RetrieveTransactions",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,

@@ -16,14 +16,14 @@ namespace Trace.Controllers
             _repository = repository;
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Post([FromBody] GroupAccount groupAccount)
+        [HttpPost("/CreateGroupAccount")]
+        public async Task<IActionResult> CreateGroupAccount([FromBody] GroupAccount groupAccount)
         {
             var addedAccount = await _repository.AddAsync(groupAccount);
-            return CreatedAtAction(nameof(Post), new { id = addedAccount.Id }, addedAccount);
+            return CreatedAtAction(nameof(CreateGroupAccount), new { id = addedAccount.Id }, addedAccount);
         }
 
-        [HttpGet]
+        [HttpGet("/GetAllGroupAccounts")]
         public async Task<IActionResult> GetAllGroupAccounts()
         {
             var groupaccounts = await _repository.GetAllGroupAccounts();

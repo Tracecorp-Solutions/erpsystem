@@ -16,7 +16,7 @@ namespace Trace.Controllers
             _transactionRepository = transactionRepository;
         }
 
-        [HttpPost]
+        [HttpPost("/RecordTransaction")]
         public async Task<IActionResult> RecordTransaction([FromBody] Transaction transaction)
         {
             try
@@ -30,6 +30,21 @@ namespace Trace.Controllers
             }
             catch (Exception)
             {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
+        }
+
+        [HttpGet("/RetrieveTransactions")]
+        public async Task<IActionResult> RetrieveAllTransactions() 
+        {
+            try
+            {
+                var transactions = await _transactionRepository.GetAllTransactions();
+                return Ok(transactions);
+            }
+            catch (Exception)
+            {
+
                 return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
             }
         }

@@ -11,6 +11,8 @@ namespace Infrastructure
 
         public DbSet<GroupAccount> GroupAccounts { get; set; }
         public DbSet<Account> Accounts { get; set; }
+
+        public DbSet<Transaction> Transactions { get; set; }
     }
 
 }
