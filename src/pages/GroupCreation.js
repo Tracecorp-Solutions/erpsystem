@@ -8,9 +8,10 @@ export default function GroupAccount() {
   const [groupAccounts, setGroupAccounts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(5);
+  const [itemsPerPage] = useState(4);
   const [formErrors, setFormError] = useState({});
   const [showEditButton, setShowEditButton] = useState(true);
+  const [successMessage, setSuccessMessage] = useState("");
 
   useEffect(() => {
     fetchGroupAccounts();
@@ -82,7 +83,10 @@ export default function GroupAccount() {
         );
 
         if (response?.data) {
-          console.log("Group account created:", response.data);
+          setSuccessMessage("Group account created successfully.");
+          setTimeout(() => {
+            setSuccessMessage("");
+          }, 5000);
         } else {
           console.error(
             "Error creating group account: Response data is undefined"
@@ -136,6 +140,11 @@ export default function GroupAccount() {
 
   return (
     <div className="px-4 sm:px-6 lg:px-8">
+      {successMessage && (
+        <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-1" role="alert">
+          <span className="block sm:inline">{successMessage}</span>
+        </div>
+      )}
       <div className="sm:flex sm:items-center">
         <div className="sm:flex-auto">
           <h1 className="text-base font-semibold leading-6 text-gray-900">
