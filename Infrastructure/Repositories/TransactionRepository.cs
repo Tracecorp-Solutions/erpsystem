@@ -54,12 +54,14 @@ namespace Infrastructure.Repositories
             if (accountFrom == null || accountTo == null)
                 throw new ArgumentException("Invalid account(s) specified.");
 
-            // Perform double-entry bookkeeping
-            var fromaccountgroupaccount = await _context.GroupAccounts.FindAsync(accountFrom.GroupId);
-            var toaccountgroupaccount = await _context.GroupAccounts.FindAsync(accountTo.GroupId);
+            // Get SubGroup where the account falls under
+            var fromaccountsubgroupaccount = await _context.SubGroupAccounts.FindAsync(accountFrom.SubGroupAccountId);
+            var toaccountsubgroupaccount = await _context.SubGroupAccounts.FindAsync(accountTo.SubGroupAccountId);
 
+            var fromsgroup = await _context.GroupAccounts.FindAsync(fromaccountsubgroupaccount.GroupId);
+            var togroup = await _context.GroupAccounts.FindAsync(toaccountsubgroupaccount.GroupId);
             //updating of balance for the accounts
-            if (fromaccountgroupaccount.Behaviour.Equals("Debit"))
+            if (fromsgroup.Behaviour.Equals("Debit"))
             {
                 accountFrom.Balance -= journalItem.Amount;
                 accountTo.Balance += journalItem.Amount;

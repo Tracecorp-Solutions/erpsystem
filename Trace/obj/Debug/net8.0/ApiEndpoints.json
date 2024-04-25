@@ -32,6 +32,22 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "Trace.Controllers.GroupAccountsController",
+    "Method": "CreateSubGroupAccount",
+    "RelativePath": "CreateSubGroupAccount",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "subGroupAccount",
+        "Type": "Core.Models.SubGroupAccount",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "Trace.Controllers.VendorController",
     "Method": "CreateVendor",
     "RelativePath": "CreateVendor",
@@ -61,6 +77,16 @@
     "ContainingType": "Trace.Controllers.GroupAccountsController",
     "Method": "GetAllGroupAccounts",
     "RelativePath": "GetAllGroupAccounts",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Trace.Controllers.GroupAccountsController",
+    "Method": "GetAllSubGroupAccounts",
+    "RelativePath": "GetAllSubGroupAccounts",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,

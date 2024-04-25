@@ -8,7 +8,6 @@ namespace Infrastructure
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) 
         {
         }
-
         public DbSet<GroupAccount> GroupAccounts { get; set; }
         public DbSet<Account> Accounts { get; set; }
 
@@ -16,6 +15,8 @@ namespace Infrastructure
 
         public DbSet<Vendor> Vendors { get; set; }
         public DbSet<Address> Addresses { get; set; }
+
+        public DbSet<SubGroupAccount> SubGroupAccounts { get; set; }
     }
 
 }

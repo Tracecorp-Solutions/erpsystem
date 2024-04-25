@@ -25,7 +25,7 @@ namespace Trace.Controllers
             try
             {
                 var createdAccount = await _accountrepository.CreateAccountAsync( account);
-                return CreatedAtAction(nameof(CreateAccount), new { account.GroupId, accountId = createdAccount.Id }, createdAccount);
+                return CreatedAtAction(nameof(CreateAccount), new { account.SubGroupAccountId, accountId = createdAccount.Id }, createdAccount);
             }
             catch (ArgumentException ex)
             {

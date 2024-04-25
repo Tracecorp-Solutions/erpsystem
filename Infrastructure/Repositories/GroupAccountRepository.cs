@@ -25,10 +25,26 @@ namespace Infrastructure.Repositories
             return groupAccount;
         }
 
+        public async Task<SubGroupAccount> AddSubGroupAccount(SubGroupAccount subGroupAccount) 
+        {
+            _context.SubGroupAccounts.Add(subGroupAccount);
+            await _context.SaveChangesAsync();
+            return subGroupAccount;
+        }
+
         public async Task<IEnumerable<GroupAccount>> GetAllGroupAccounts()
         {
             IEnumerable<GroupAccount> groupAccounts = await _context.GroupAccounts.ToListAsync();
             return groupAccounts;
+        }
+
+        public async Task<IEnumerable<SubGroupAccount>> GetAllSubGroupAccounts() 
+        {
+            IEnumerable<SubGroupAccount> subGroupAccounts = await _context.SubGroupAccounts
+                .Include(e => e.GroupAccount)
+                .ToListAsync();
+
+            return subGroupAccounts;
         }
     }
 

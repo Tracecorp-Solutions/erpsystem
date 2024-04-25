@@ -11,7 +11,11 @@ namespace Core.Repositories
     {
         Task<GroupAccount> AddAsync(GroupAccount groupAccount);
 
+        Task<SubGroupAccount> AddSubGroupAccount(SubGroupAccount subGroupAccount);
+
         Task<IEnumerable<GroupAccount>> GetAllGroupAccounts();
+
+        Task<IEnumerable<SubGroupAccount>> GetAllSubGroupAccounts();
     }
 
 }

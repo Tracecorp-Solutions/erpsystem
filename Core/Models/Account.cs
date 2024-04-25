@@ -12,6 +12,6 @@ namespace Core.Models
         public string Name { get; set; }
         public decimal Balance { get; set; }
 
-        public int GroupId { get; set; }
+        public int SubGroupAccountId { get; set; }
     }
 }

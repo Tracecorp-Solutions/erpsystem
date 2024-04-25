@@ -33,12 +33,12 @@ namespace Infrastructure.Migrations
                     b.Property<decimal>("Balance")
                         .HasColumnType("decimal(65,30)");
 
-                    b.Property<int>("GroupId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("longtext");
+
+                    b.Property<int>("SubGroupAccountId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -99,6 +99,35 @@ namespace Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("GroupAccounts");
+                });
+
+            modelBuilder.Entity("Core.Models.SubGroupAccount", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("GroupAccountId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("GroupId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GroupAccountId");
+
+                    b.ToTable("SubGroupAccounts");
                 });
 
             modelBuilder.Entity("Core.Models.Transaction", b =>
@@ -222,6 +251,17 @@ namespace Infrastructure.Migrations
                         .HasForeignKey("Core.Models.Address", "VendorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Core.Models.SubGroupAccount", b =>
+                {
+                    b.HasOne("Core.Models.GroupAccount", "GroupAccount")
+                        .WithMany()
+                        .HasForeignKey("GroupAccountId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("GroupAccount");
                 });
 
             modelBuilder.Entity("Core.Models.Vendor", b =>

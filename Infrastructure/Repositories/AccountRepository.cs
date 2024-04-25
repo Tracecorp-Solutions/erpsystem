@@ -20,7 +20,7 @@ namespace Infrastructure.Repositories
 
         public async Task<Account> CreateAccountAsync(Account account)
         {
-            var groupAccount = await _context.GroupAccounts.FindAsync(account.GroupId);
+            var groupAccount = await _context.GroupAccounts.FindAsync(account.SubGroupAccountId);
             if (groupAccount == null)
                 throw new ArgumentException("Invalid group account id.");
 
