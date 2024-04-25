@@ -1,6 +1,7 @@
 import React from 'react';
 
 const tabs = [
+
   { name: 'Group Account', href: '/account-creation', current: false },
   { name: 'Account List', href: '/account', current: false },
   { name: 'Expense', href: '#', current: false },
@@ -48,6 +49,7 @@ export default function NavigationHeader() {
               <option key={tab.name}>{tab.name}</option>
             ))}
           </select>
+
         </div>
         <div className="hidden sm:block">
           <nav className="-mb-px flex space-x-8">
