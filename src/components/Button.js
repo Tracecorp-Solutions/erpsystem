@@ -2,7 +2,7 @@ import React from 'react';
 
 const tabs = [
     { name: 'New Account', href: '/account-creation', current: true },
-    { name: 'Expense', href: '#', current: false },
+    { name: 'Vendors', href: '/dashboard/vendors', current: false },
     { name: 'Petty Cash', href: '/petty', current: true },
     { name: 'Offer', href: '#', current: false },
     { name: 'Sales', href: '#', current: false },
@@ -17,14 +17,14 @@ const tabs = [
       <div className="relative border-b border-gray-200 pb-5 sm:pb-0">
         <div className="md:flex md:items-center md:justify-between">
           <h3 className="text-base font-semibold leading-6 text-gray-900 ml-6"></h3>
-          <div className="mt-3 flex md:absolute md:right-0 md:top-3 md:mt-0">
+        <div className="mt-3 flex md:absolute md:right-0 md:top-3 md:mt-0">
             <button
               type="button"
               className="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
             >
               Print
             </button>
-            <button
+            <button 
               type="button"
               className="ml-3 mr-4 inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
             >
