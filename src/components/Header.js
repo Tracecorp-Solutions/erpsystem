@@ -31,8 +31,13 @@ import Cashflows from "../pages/Cashflows";
 import Budgets from "../pages/Budgets"
 import Financial from "../pages/Financial";
 import Transfers from "../pages/Transfers";
+
+import GroupAccount from "../pages/GroupCreation";
+import AccountCreation from "../pages/AccountCreation";
+
 import Account from "../pages/AccountCreation";
 import Petty from "../pages/Petty";
+
 
 const navigation = [
   {
@@ -562,6 +567,8 @@ export default function Main() {
                 <Route path="/budgets" element={<Budgets />} />
                 <Route path="/financial" element={<Financial />} />
                 <Route path="/transfers" element={<Transfers />} />
+                <Route path="/account-creation" element={<GroupAccount />} />
+                <Route path="/account" element={<AccountCreation />} />
                 <Route path="/account-creation" element={<Account />} />
                 <Route path="/petty" element={<Petty />} />
               </Routes>
