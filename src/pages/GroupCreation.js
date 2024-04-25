@@ -291,7 +291,9 @@ export default function GroupAccount() {
               </table>
             </div>
           </div>
-          <div className="mt-4 flex justify-center">
+          {
+            showEditButton && (
+              <div className="mt-4 flex justify-center">
             <nav
               className="relative z-0 inline-flex shadow-sm rounded-md -space-x-px"
               aria-label="Pagination"
@@ -327,6 +329,8 @@ export default function GroupAccount() {
               </button>
             </nav>
           </div>
+            )
+          }
         </div>
       )}
     </div>
