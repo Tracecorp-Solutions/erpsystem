@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 const petty = [
     {
       id: 1,
@@ -12,6 +13,12 @@ const petty = [
   ]
 
   export default function Petty() {
+    const [showForm, setShowForm] = useState(false);
+    const [newAccount, setNewAccount] = useState({ Date: '', Name: '', behavior: '' });
+  
+    const toggleForm = () => {
+      setShowForm(!showForm);
+    };
     return (
       <div className="px-4 sm:px-6 lg:px-8">
         <div className="sm:flex sm:items-center">
@@ -25,13 +32,78 @@ const petty = [
           <div className="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
           <button
             type="button"
+            onClick={toggleForm}
             className="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-          >
-            Petty Entry
-          </button>
+            >
+              + New
+          </button>  
           </div>
         </div>
-        
+        {showForm && (
+          <div className="absolute inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center">
+            <div className="bg-white p-8 rounded-lg max-w-xl w-full mx-4">
+              <h2 className="text-lg font-semibold mb-4">New Account Form</h2>
+              <div className="mb-4">
+                <label htmlFor="date" className="block text-sm font-medium text-gray-700">Date</label>
+                <input
+                  type="Date"
+                  name="date"
+                  id="date"
+                  value={newAccount.Date}
+                  onChange={(e) => setNewAccount({ ...newAccount, Date: e.target.value })}
+                  className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                  style={{padding: "18px"}}
+                  />
+              </div>
+              <div className="mb-4">
+                <label htmlFor="name" className="block text-sm font-medium text-gray-700">Name</label>
+                <input
+                  type="text"
+                  name="name"
+                  id="name"
+                  value={newAccount.Name}
+                  onChange={(e) => setNewAccount({ ...newAccount, Name: e.target.value })}
+                  className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                  placeholder="Please enter account name..."
+                  style={{padding: "18px"}}
+                  />
+              </div>
+              <div className="mb-4" style={{padding: "18px"}}>
+                <label htmlFor="behavior" className="block text-sm font-medium text-gray-700">Behavior</label>
+                <select
+                  value={newAccount.behavior}
+                  onChange={(e) => setNewAccount({ ...newAccount, behavior: e.target.value })}
+                  className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full border-gray-300 rounded-md focus:ring-1 focus:ring-offset-1 focus:ring-offset-gray-100 focus:ring-indigo-500 sm:text-sm"
+                  style={{padding: "15px", marginBottom: "20px"}}
+                >
+                  <option value="">Select Behavior</option>
+                  <option value="Debit">Debit</option>
+                  <option value="Credit">Credit</option>
+                </select>
+              </div>
+              <div className="flex justify-end mt-12">
+                <button
+                  type="button"
+                  onClick={toggleForm}
+                  className="px-4 py-2 bg-indigo-600 text-white rounded-md text-sm font-semibold hover:bg-indigo-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-indigo-500"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    console.log("Form submitted:", newAccount);
+                    setNewAccount({ Date: '', Name: '', behavior: '' });
+                    toggleForm();
+                  }}
+                  className="ml-3 px-4 py-2 bg-indigo-600 text-white rounded-md text-sm font-semibold hover:bg-indigo-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-indigo-500"
+                >
+                  Save
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
         <div className="-mx-4 mt-8 flow-root sm:mx-0">
           <table className="min-w-full">
             <colgroup>
