@@ -6,6 +6,7 @@ const petty = [
       narration: 'Electricity',
       rate: '$100.00',
       price: '$2,000.00',
+      balance: '$1900.0',
     },
     // More projects...
   ]
@@ -59,6 +60,10 @@ const petty = [
                 <th scope="col" className="py-3.5 pl-3 pr-4 text-right text-sm font-semibold text-gray-900 sm:pr-0">
                   Debit
                 </th>
+                <th scope="col" className="py-3.5 pl-3 pr-4 text-right text-sm font-semibold text-gray-900 sm:pr-0">
+                  Balance
+                </th>
+                
               </tr>
             </thead>
             <tbody>
@@ -71,6 +76,8 @@ const petty = [
                   <td className="hidden px-3 py-5 text-right text-sm text-gray-500 sm:table-cell">{petty.narration}</td>
                   <td className="hidden px-3 py-5 text-right text-sm text-gray-500 sm:table-cell">{petty.rate}</td>
                   <td className="py-5 pl-3 pr-4 text-right text-sm text-gray-500 sm:pr-0">{petty.price}</td>
+                  <td className="py-5 pl-3 pr-4 text-right text-sm text-gray-500 sm:pr-0">{petty.balance}</td>
+                  
                 </tr>
               ))}
             </tbody>
@@ -86,6 +93,7 @@ const petty = [
                 <th scope="row" className="pl-4 pr-3 pt-6 text-left text-sm font-normal text-gray-500 sm:hidden">
                   Subtotal
                 </th>
+                
                 <td className="pl-3 pr-4 pt-6 text-right text-sm text-gray-500 sm:pr-0">$8,800.00</td>
               </tr>
               <tr>
