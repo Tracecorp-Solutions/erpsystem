@@ -32,6 +32,22 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "Trace.Controllers.VendorController",
+    "Method": "CreateVendor",
+    "RelativePath": "CreateVendor",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "vendor",
+        "Type": "Core.Models.Vendor",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "Trace.Controllers.AccountController",
     "Method": "GetAllAccounts",
     "RelativePath": "GetAccounts",
@@ -45,6 +61,16 @@
     "ContainingType": "Trace.Controllers.GroupAccountsController",
     "Method": "GetAllGroupAccounts",
     "RelativePath": "GetAllGroupAccounts",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Trace.Controllers.VendorController",
+    "Method": "GetAllVendors",
+    "RelativePath": "GetAllVendors",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,

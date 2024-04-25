@@ -13,6 +13,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddScoped<IGroupAccountRepository, GroupAccountRepository>();
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
+builder.Services.AddScoped<IVendorRepository, VendorRepository>();
 
 builder.Services.AddControllers();
 builder.Services.AddCors(options =>

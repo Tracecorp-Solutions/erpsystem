@@ -13,6 +13,9 @@ namespace Infrastructure
         public DbSet<Account> Accounts { get; set; }
 
         public DbSet<Transaction> Transactions { get; set; }
+
+        public DbSet<Vendor> Vendors { get; set; }
+        public DbSet<Address> Addresses { get; set; }
     }
 
 }
