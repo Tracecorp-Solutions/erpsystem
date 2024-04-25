@@ -4,8 +4,8 @@ const tabs = [
 
   { name: 'Group Account', href: '/account-creation', current: false },
   { name: 'Account List', href: '/account', current: false },
-  { name: 'Expense', href: '#', current: false },
-  { name: 'Petty Cash', href: '#', current: true },
+  { name: 'Vendors', href: '/dashboard/vendors', current: false },
+  { name: 'Petty Cash', href: '/petty', current: true },
   { name: 'Offer', href: '#', current: false },
   { name: 'Sales', href: '#', current: false },
 ]
