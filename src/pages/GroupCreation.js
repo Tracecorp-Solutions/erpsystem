@@ -8,7 +8,8 @@ export default function GroupAccount() {
   const [groupAccounts, setGroupAccounts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(6);
+  const [itemsPerPage] = useState(5);
+  const [formErrors, setFormError] = useState({});
 
   useEffect(() => {
     fetchGroupAccounts();
@@ -32,39 +33,64 @@ export default function GroupAccount() {
     setShowForm(!showForm);
   };
 
+  const validateForm = () => {
+    let errors = {};
+    let isValid = true;
+
+    if (!newAccount.name.trim()) {
+      errors.name = "Name is required";
+      isValid = false;
+    } else {
+      errors.name = "";
+    }
+
+    if (!newAccount.behaviour.trim()) {
+      errors.behaviour = "Behaviour is required";
+      isValid = false;
+    } else {
+      errors.behaviour = "";
+    }
+
+    setFormError(errors);
+
+    return isValid;
+  };
+
   const handleSubmit = async () => {
-    try {
-      const response = await axios.post(
-        "http://54.226.71.2/CreateGroupAccount",
-        {
-          name: newAccount.name,
-          behaviour: newAccount.behaviour,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
+    if (validateForm()) {
+      try {
+        const response = await axios.post(
+          "http://54.226.71.2/CreateGroupAccount",
+          {
+            name: newAccount.name,
+            behaviour: newAccount.behaviour,
           },
-        }
-      );
-
-      if (response?.data) {
-        console.log("Group account created:", response.data);
-      } else {
-        console.error(
-          "Error creating group account: Response data is undefined"
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
         );
-        setError("Error creating group account: Response data is undefined");
-      }
 
-      setNewAccount({ name: "", behaviour: "" });
-      toggleForm();
-      fetchGroupAccounts();
-    } catch (error) {
-      console.error("Error creating group account:", error);
-      setError(
-        error.response?.data?.message ||
-          "An error occurred while creating group account"
-      );
+        if (response?.data) {
+          console.log("Group account created:", response.data);
+        } else {
+          console.error(
+            "Error creating group account: Response data is undefined"
+          );
+          setError("Error creating group account: Response data is undefined");
+        }
+
+        setNewAccount({ name: "", behaviour: "" });
+        toggleForm();
+        fetchGroupAccounts();
+      } catch (error) {
+        console.error("Error creating group account:", error);
+        setError(
+          error.response?.data?.message ||
+            "An error occurred while creating group account"
+        );
+      }
     }
   };
 
@@ -75,12 +101,29 @@ export default function GroupAccount() {
     indexOfLastItem
   );
 
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  const totalPages = Math.ceil(groupAccounts.length / itemsPerPage);
+  const pageNumbers = Array.from(
+    { length: totalPages },
+    (_, index) => index + 1
+  );
 
-  const pageNumbers = [];
-  for (let i = 1; i <= Math.ceil(groupAccounts.length / itemsPerPage); i++) {
-    pageNumbers.push(i);
-  }
+  const paginate = (pageNumber) => {
+    if (pageNumber >= 1 && pageNumber <= totalPages) {
+      setCurrentPage(pageNumber);
+    }
+  };
+
+  const nextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const prevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
 
   return (
     <div className="px-4 sm:px-6 lg:px-8">
@@ -118,12 +161,16 @@ export default function GroupAccount() {
                 name="name"
                 id="name"
                 value={newAccount.name}
-                onChange={(e) =>
-                  setNewAccount({ ...newAccount, name: e.target.value })
-                }
-                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                onChange={(e) => {
+                  setNewAccount({ ...newAccount, name: e.target.value });
+                  setFormError({ ...formErrors, name: "" });
+                }}
+                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 p-4 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                 placeholder="Please enter account name..."
               />
+              {formErrors.name && (
+                <p className="mt-2 text-sm text-red-500">{formErrors.name}</p>
+              )}
             </div>
             <div className="mb-4">
               <label
@@ -134,15 +181,21 @@ export default function GroupAccount() {
               </label>
               <select
                 value={newAccount.behaviour}
-                onChange={(e) =>
-                  setNewAccount({ ...newAccount, behaviour: e.target.value })
-                }
-                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full border-gray-300 rounded-md focus:ring-1 focus:ring-offset-1 focus:ring-offset-gray-100 focus:ring-indigo-500 sm:text-sm"
+                onChange={(e) => {
+                  setNewAccount({ ...newAccount, behaviour: e.target.value });
+                  setFormError({ ...formErrors, behaviour: "" });
+                }}
+                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 p-4 block w-full border-gray-300 rounded-md focus:ring-1 focus:ring-offset-1 focus:ring-offset-gray-100 focus:ring-indigo-500 sm:text-sm"
               >
                 <option value="">Select Behaviour</option>
                 <option value="Debit">Debit</option>
                 <option value="Credit">Credit</option>
               </select>
+              {formErrors.behaviour && (
+                <p className="mt-2 text-sm text-red-500">
+                  {formErrors.behaviour}
+                </p>
+              )}
             </div>
             <div className="flex justify-end mt-12">
               <button
@@ -180,92 +233,91 @@ export default function GroupAccount() {
       {!loading && (
         <div className="mt-8 flow-root">
           <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-            <div className="inline-block min-w-full py-2 align-middle">
+            <div className="inline-block min-w-full py-2 align-middle mt-5">
               <table className="min-w-full divide-y divide-gray-300">
                 <thead>
                   <tr>
                     <th
                       scope="col"
                       className="px-3 py-3.5 text-left text-sm font-semibold                     text-gray-900"
-                      >
-                        Name
-                      </th>
-                      <th
-                        scope="col"
-                        className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-                      >
-                        Behaviour
-                      </th>
-                      <th
-                        scope="col"
-                        className="relative py-3.5 pl-3 pr-4 sm:pr-6 lg:pr-8"
-                      >
-                        <span className="sr-only">Edit</span>
-                      </th>
+                    >
+                      Name
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                    >
+                      Behaviour
+                    </th>
+                    <th
+                      scope="col"
+                      className="relative py-3.5 pl-3 pr-4 sm:pr-6 lg:pr-8"
+                    >
+                      <span className="sr-only">Edit</span>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-200 bg-white">
+                  {currentGroupAccounts.map((account, index) => (
+                    <tr key={index}>
+                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                        {account.name}
+                      </td>
+                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                        {account.behaviour}
+                      </td>
+                      <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6 lg:pr-8">
+                        <a
+                          href="#"
+                          className="text-indigo-600 hover:text-indigo-900"
+                        >
+                          Edit<span className="sr-only">{account.name}</span>
+                        </a>
+                      </td>
                     </tr>
-                  </thead>
-                  <tbody className="divide-y divide-gray-200 bg-white">
-                    {currentGroupAccounts.map((account, index) => (
-                      <tr key={index}>
-                        <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                          {account.name}
-                        </td>
-                        <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                          {account.behaviour}
-                        </td>
-                        <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6 lg:pr-8">
-                          <a
-                            href="#"
-                            className="text-indigo-600 hover:text-indigo-900"
-                          >
-                            Edit<span className="sr-only">{account.name}</span>
-                          </a>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-            <div className="mt-4 flex justify-center">
-              <nav
-                className="relative z-0 inline-flex shadow-sm rounded-md -space-x-px"
-                aria-label="Pagination"
-              >
-                <button
-                  onClick={() => paginate(currentPage - 1)}
-                  disabled={currentPage === 1}
-                  className="relative inline-flex items-center px-4 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
-                >
-                  <span className="sr-only">Previous</span>
-                  Previous
-                </button>
-                {pageNumbers.map((number) => (
-                  <button
-                    key={number}
-                    onClick={() => paginate(number)}
-                    className={`relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium ${
-                      currentPage === number
-                        ? "text-indigo-600 bg-indigo-100"
-                        : "text-gray-700 hover:bg-gray-50"
-                    }`}
-                  >
-                    {number}
-                  </button>
-                ))}
-                <button
-                  onClick={() => paginate(currentPage + 1)}
-                  disabled={currentGroupAccounts.length < itemsPerPage}
-                  className="relative inline-flex items-center px-4 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
-                >
-                  <span className="sr-only">Next</span>
-                  Next
-                </button>
-              </nav>
+                  ))}
+                </tbody>
+              </table>
             </div>
           </div>
-        )}
-      </div>
-    );
-  }
-  
+          <div className="mt-4 flex justify-center">
+            <nav
+              className="relative z-0 inline-flex shadow-sm rounded-md -space-x-px"
+              aria-label="Pagination"
+            >
+              <button
+                onClick={prevPage}
+                disabled={currentPage === 1}
+                className="relative inline-flex items-center px-4 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+              >
+                <span className="sr-only">Previous</span>
+                Previous
+              </button>
+              {pageNumbers.map((number) => (
+                <button
+                  key={number}
+                  onClick={() => paginate(number)}
+                  className={`relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium ${
+                    currentPage === number
+                      ? "text-indigo-600 bg-indigo-100"
+                      : "text-gray-700 hover:bg-gray-50"
+                  }`}
+                >
+                  {number}
+                </button>
+              ))}
+              <button
+                onClick={nextPage}
+                disabled={currentPage === totalPages}
+                className="relative inline-flex items-center px-4 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+              >
+                <span className="sr-only">Next</span>
+                Next
+              </button>
+            </nav>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
