@@ -10,7 +10,13 @@ const AccountCreation = () => {
     groupId: "",
     balance: 0,
   });
+  const [loading, setLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(4);
+  const [formErrors, setFormError] = useState({});
+  const [showEditButton, setShowEditButton] = useState(true);
   const [successMessage, setSuccessMessage] = useState("");
+
   const groupsApiUrl = "http://54.226.71.2/GetAllGroupAccounts";
   const accountsApiUrl = "http://54.226.71.2/GetAccounts";
   const createAccountsApiUrl = "http://54.226.71.2/accounts";
@@ -20,11 +26,18 @@ const AccountCreation = () => {
     fetchAccounts();
   }, []);
 
+  useEffect(() => {
+    if (showForm) {
+      setShowEditButton(false);
+    } else {
+      setShowEditButton(true);
+    }
+  }, [showForm]);
+
   const fetchGroups = async () => {
     try {
       const response = await axios.get(groupsApiUrl);
       setGroups(response.data);
-      console.log(response.data);
     } catch (error) {
       console.error("Error fetching groups:", error);
     }
@@ -48,14 +61,78 @@ const AccountCreation = () => {
     return group ? group.name : "Unknown";
   };
 
+  const validateForm = () => {
+    let errors = {};
+    let isValid = true;
+
+    if (!newAccount.name.trim()) {
+      errors.name = "Account name is required";
+      isValid = false;
+    } else {
+      errors.name = "";
+    }
+
+    if (!newAccount.balance.toString().trim()) {
+      errors.balance = "Account balance is required";
+      isValid = false;
+    } else {
+      errors.balance = "";
+    }
+
+    if (!newAccount.groupId.trim()) {
+      errors.groupId = "Please select the group";
+      isValid = false;
+    } else {
+      errors.groupId = "";
+    }
+
+    setFormError(errors);
+
+    return isValid;
+  };
+
   const handleSubmit = async () => {
+   if (validateForm()) {
     try {
       await axios.post(createAccountsApiUrl, newAccount);
-      setSuccessMessage("Account created successfully!");
-      setNewAccount({ name: "", groupId: "", behavior: "" });
+      setNewAccount({ name: "", groupId: "", balance: "" });
       fetchAccounts();
+      toggleForm();
+      setSuccessMessage("Account created successfully!");
+      setTimeout(() => {
+        setSuccessMessage("");
+      }, 5000);
     } catch (error) {
       console.error("Error creating account:", error);
+    }
+   }
+  };
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentAccounts = accounts.slice(indexOfFirstItem, indexOfLastItem);
+
+  const totalPages = Math.ceil(accounts.length / itemsPerPage);
+  const pageNumbers = Array.from(
+    { length: totalPages },
+    (_, index) => index + 1
+  );
+
+  const paginate = (pageNumber) => {
+    if (pageNumber >= 1 && pageNumber <= totalPages) {
+      setCurrentPage(pageNumber);
+    }
+  };
+
+  const nextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const prevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
     }
   };
 
@@ -86,7 +163,7 @@ const AccountCreation = () => {
                 htmlFor="name"
                 className="block text-sm font-medium text-gray-700"
               >
-                Name
+                Name*
               </label>
               <input
                 type="text"
@@ -96,16 +173,19 @@ const AccountCreation = () => {
                 onChange={(e) =>
                   setNewAccount({ ...newAccount, name: e.target.value })
                 }
-                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 p-4 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                 placeholder="Please enter account name..."
               />
+               {formErrors.name && (
+                <p className="mt-2 text-sm text-red-500">{formErrors.name}</p>
+              )}
             </div>
             <div className="mb-4">
               <label
                 htmlFor="balance"
                 className="block text-sm font-medium text-gray-700"
               >
-                Balance
+                Balance*
               </label>
               <input
                 type="text"
@@ -115,23 +195,26 @@ const AccountCreation = () => {
                 onChange={(e) =>
                   setNewAccount({ ...newAccount, balance: e.target.value })
                 }
-                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 p-4 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                 placeholder="Please enter account balance..."
               />
+               {formErrors.name && (
+                <p className="mt-2 text-sm text-red-500">{formErrors.balance}</p>
+              )}
             </div>
             <div className="mb-4">
               <label
                 htmlFor="group"
                 className="block text-sm font-medium text-gray-700"
               >
-                Group
+                Group*
               </label>
               <select
                 value={newAccount.groupId}
                 onChange={(e) =>
                   setNewAccount({ ...newAccount, groupId: e.target.value })
                 }
-                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full border-gray-300 rounded-md focus:ring-1 focus:ring-offset-1 focus:ring-offset-gray-100 focus:ring-indigo-500 sm:text-sm mb-20"
+                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 p-4 block w-full border-gray-300 rounded-md focus:ring-1 focus:ring-offset-1 focus:ring-offset-gray-100 focus:ring-indigo-500 sm:text-sm mb-20"
               >
                 <option value="">Select Group</option>
                 {groups.map((group) => (
@@ -140,6 +223,9 @@ const AccountCreation = () => {
                   </option>
                 ))}
               </select>
+              {formErrors.name && (
+                <p className="mt-2 text-sm text-red-500">{formErrors.balance}</p>
+              )}
             </div>
             <div className="flex justify-end mt-20">
               <button
@@ -183,7 +269,12 @@ const AccountCreation = () => {
                   >
                     Group
                   </th>
-                  <th scope="col">Balance</th>
+                  <th
+                    scope="col"
+                    className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                  >
+                    Balance
+                  </th>
                   <th
                     scope="col"
                     className="relative py-3.5 pl-3 pr-4 sm:pr-6 lg:pr-8"
@@ -193,8 +284,7 @@ const AccountCreation = () => {
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200 bg-white">
-                {/* Replace 'accounts' with the correct data source */}
-                {accounts.map((account) => (
+                {currentAccounts.map((account) => (
                   <tr key={account.id}>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                       {account.name}
@@ -206,12 +296,14 @@ const AccountCreation = () => {
                       {account.balance}
                     </td>
                     <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6 lg:pr-8">
-                      <a
-                        href="#"
-                        className="text-indigo-600 hover:text-indigo-900"
-                      >
-                        Edit<span className="sr-only">{account.name}</span>
-                      </a>
+                      {showEditButton && (
+                        <a
+                          href="#"
+                          className="text-indigo-600 hover:text-indigo-900"
+                        >
+                          Edit<span className="sr-only">{account.name}</span>
+                        </a>
+                      )}
                     </td>
                   </tr>
                 ))}
@@ -219,6 +311,44 @@ const AccountCreation = () => {
             </table>
           </div>
         </div>
+        {showEditButton && (
+          <div className="mt-4 flex justify-center sm:mt-20">
+            <nav
+              className="relative z-0 inline-flex shadow-sm rounded-md -space-x-px"
+              aria-label="Pagination"
+            >
+              <button
+                onClick={prevPage}
+                disabled={currentPage === 1}
+                className="relative inline-flex items-center px-4 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+              >
+                <span className="sr-only">Previous</span>
+                Previous
+              </button>
+              {pageNumbers.map((number) => (
+                <button
+                  key={number}
+                  onClick={() => paginate(number)}
+                  className={`relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium ${
+                    currentPage === number
+                      ? "text-indigo-600 bg-indigo-100"
+                      : "text-gray-700 hover:bg-gray-50"
+                  }`}
+                >
+                  {number}
+                </button>
+              ))}
+              <button
+                onClick={nextPage}
+                disabled={currentPage === totalPages}
+                className="relative inline-flex items-center px-4 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+              >
+                <span className="sr-only">Next</span>
+                Next
+              </button>
+            </nav>
+          </div>
+        )}
       </div>
     </div>
   );
