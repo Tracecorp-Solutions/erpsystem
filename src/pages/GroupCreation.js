@@ -10,10 +10,19 @@ export default function GroupAccount() {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(5);
   const [formErrors, setFormError] = useState({});
+  const [showEditButton, setShowEditButton] = useState(true);
 
   useEffect(() => {
     fetchGroupAccounts();
   }, []);
+
+  useEffect(() => {
+    if (showForm) {
+      setShowEditButton(false);
+    } else {
+      setShowEditButton(true);
+    }
+  }, [showForm]);
 
   const fetchGroupAccounts = async () => {
     try {
@@ -267,12 +276,14 @@ export default function GroupAccount() {
                         {account.behaviour}
                       </td>
                       <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6 lg:pr-8">
-                        <a
-                          href="#"
-                          className="text-indigo-600 hover:text-indigo-900"
-                        >
-                          Edit<span className="sr-only">{account.name}</span>
-                        </a>
+                        {showEditButton && (
+                          <a
+                            href="#"
+                            className="text-indigo-600 hover:text-indigo-900"
+                          >
+                            Edit<span className="sr-only">{account.name}</span>
+                          </a>
+                        )}
                       </td>
                     </tr>
                   ))}
