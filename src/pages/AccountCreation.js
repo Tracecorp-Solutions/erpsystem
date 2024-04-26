@@ -11,14 +11,11 @@ const AccountCreation = () => {
     balance: 0,
   });
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(4);
+  const [itemsPerPage] = useState(2);
   const [formErrors, setFormError] = useState({});
   const [showEditButton, setShowEditButton] = useState(true);
   const [successMessage, setSuccessMessage] = useState("");
-
-  const groupsApiUrl = "http://54.226.71.2/GetAllGroupAccounts";
-  const accountsApiUrl = "http://54.226.71.2/GetAccounts";
-  const createAccountsApiUrl = "http://54.226.71.2/accounts";
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetchGroups();
@@ -35,7 +32,9 @@ const AccountCreation = () => {
 
   const fetchGroups = async () => {
     try {
-      const response = await axios.get(groupsApiUrl);
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}/GetAllGroupAccounts`
+      );
       setGroups(response.data);
     } catch (error) {
       console.error("Error fetching groups:", error);
@@ -44,8 +43,11 @@ const AccountCreation = () => {
 
   const fetchAccounts = async () => {
     try {
-      const response = await axios.get(accountsApiUrl);
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}/GetAccounts`
+      );
       setAccounts(response.data);
+      setLoading(false);
     } catch (error) {
       console.error("Error fetching accounts:", error);
     }
@@ -91,20 +93,23 @@ const AccountCreation = () => {
   };
 
   const handleSubmit = async () => {
-   if (validateForm()) {
-    try {
-      await axios.post(createAccountsApiUrl, newAccount);
-      setNewAccount({ name: "", groupId: "", balance: "" });
-      fetchAccounts();
-      toggleForm();
-      setSuccessMessage("Account created successfully!");
-      setTimeout(() => {
-        setSuccessMessage("");
-      }, 5000);
-    } catch (error) {
-      console.error("Error creating account:", error);
+    if (validateForm()) {
+      try {
+        await axios.post(
+          `${process.env.REACT_APP_API_URL}/accounts`,
+          newAccount
+        );
+        setNewAccount({ name: "", groupId: "", balance: "" });
+        fetchAccounts();
+        toggleForm();
+        setSuccessMessage("Account created successfully!");
+        setTimeout(() => {
+          setSuccessMessage("");
+        }, 5000);
+      } catch (error) {
+        console.error("Error creating account:", error);
+      }
     }
-   }
   };
 
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -175,7 +180,7 @@ const AccountCreation = () => {
                 className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 p-4 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                 placeholder="Please enter account name..."
               />
-               {formErrors.name && (
+              {formErrors.name && (
                 <p className="mt-2 text-sm text-red-500">{formErrors.name}</p>
               )}
             </div>
@@ -197,8 +202,10 @@ const AccountCreation = () => {
                 className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 p-4 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                 placeholder="Please enter account balance..."
               />
-               {formErrors.name && (
-                <p className="mt-2 text-sm text-red-500">{formErrors.balance}</p>
+              {formErrors.name && (
+                <p className="mt-2 text-sm text-red-500">
+                  {formErrors.balance}
+                </p>
               )}
             </div>
             <div className="mb-4">
@@ -223,7 +230,9 @@ const AccountCreation = () => {
                 ))}
               </select>
               {formErrors.name && (
-                <p className="mt-2 text-sm text-red-500">{formErrors.balance}</p>
+                <p className="mt-2 text-sm text-red-500">
+                  {formErrors.balance}
+                </p>
               )}
             </div>
             <div className="flex justify-end mt-20">
@@ -250,105 +259,116 @@ const AccountCreation = () => {
           {successMessage}
         </div>
       )}
-      <div className="mt-8 flow-root">
-        <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-          <div className="inline-block min-w-full py-2 align-middle">
-            <table className="min-w-full divide-y divide-gray-300">
-              <thead>
-                <tr>
-                  <th
-                    scope="col"
-                    className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-                  >
-                    Name
-                  </th>
-                  <th
-                    scope="col"
-                    className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-                  >
-                    Group
-                  </th>
-                  <th
-                    scope="col"
-                    className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-                  >
-                    Balance
-                  </th>
-                  <th
-                    scope="col"
-                    className="relative py-3.5 pl-3 pr-4 sm:pr-6 lg:pr-8"
-                  >
-                    <span className="sr-only">Edit</span>
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-200 bg-white">
-                {currentAccounts.map((account) => (
-                  <tr key={account.id}>
-                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                      {account.name}
-                    </td>
-                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                      {getGroupNameById(account.groupId)}
-                    </td>
-                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                      {account.balance}
-                    </td>
-                    <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6 lg:pr-8">
-                      {showEditButton && (
-                        <a
-                          href="/"
-                          className="text-indigo-600 hover:text-indigo-900"
-                        >
-                          Edit<span className="sr-only">{account.name}</span>
-                        </a>
-                      )}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+      {loading && (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "50vh",
+          }}
+        >
+          <div className="spinner-grow bg-gray-900 animate-spin" role="status">
+            <img
+              className="h-20 w-20"
+              src="https://www.tracecorpsolutions.com/wp-content/uploads/2019/05/Tracecorp-logo.png"
+              alt="TraceCorp"
+            />{" "}
           </div>
         </div>
-        {showEditButton && (
-          <div className="mt-4 flex justify-center sm:mt-20">
+      )}
+      {!loading && (
+        <div className="mt-8 overflow-x-auto">
+          <table className="table-auto min-w-full divide-y divide-gray-200">
+            <thead className="bg-gray-50">
+              <tr>
+                <th
+                  scope="col"
+                  className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >
+                  Name
+                </th>
+                <th
+                  scope="col"
+                  className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >
+                  Group
+                </th>
+                <th
+                  scope="col"
+                  className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >
+                  Balance
+                </th>
+                <th scope="col" className="relative px-3 py-3">
+                  <span className="sr-only">Edit</span>
+                </th>
+              </tr>
+            </thead>
+            <tbody className="bg-white divide-y divide-gray-200">
+              {currentAccounts.map((account) => (
+                <tr key={account.id}>
+                  <td className="px-3 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                    {account.name}
+                  </td>
+                  <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">
+                    {getGroupNameById(account.groupId)}
+                  </td>
+                  <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">
+                    {account.balance}
+                  </td>
+                  <td className="px-3 py-4 whitespace-nowrap text-right text-sm font-medium">
+                    {showEditButton && (
+                      <a
+                        href="/"
+                        className="text-indigo-600 hover:text-indigo-900"
+                      >
+                        <i className="bi bi-pencil"></i>
+                      </a>
+                    )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          {showEditButton && (
             <nav
-              className="relative z-0 inline-flex shadow-sm rounded-md -space-x-px"
+              className="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6"
               aria-label="Pagination"
             >
-              <button
-                onClick={prevPage}
-                disabled={currentPage === 1}
-                className="relative inline-flex items-center px-4 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
-              >
-                <span className="sr-only">Previous</span>
-                Previous
-              </button>
-              {pageNumbers.map((number) => (
+              <div className="hidden sm:block">
+                <p className="text-sm text-gray-700">
+                  Showing
+                  <span className="font-medium mx-1">
+                    {indexOfFirstItem + 1}
+                  </span>
+                  to
+                  <span className="font-medium mx-1">{indexOfLastItem}</span>
+                  of
+                  <span className="font-medium mx-1">{accounts.length}</span>
+                  results
+                </p>
+              </div>
+              <div className="flex-1 flex justify-between sm:justify-end">
                 <button
-                  key={number}
-                  onClick={() => paginate(number)}
-                  className={`relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium ${
-                    currentPage === number
-                      ? "text-indigo-600 bg-indigo-100"
-                      : "text-gray-700 hover:bg-gray-50"
-                  }`}
+                  onClick={prevPage}
+                  disabled={currentPage === 1}
+                  className="relative inline-flex items-center px-4 py-2 rounded-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
                 >
-                  {number}
+                  Previous
                 </button>
-              ))}
-              <button
-                onClick={nextPage}
-                disabled={currentPage === totalPages}
-                className="relative inline-flex items-center px-4 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
-              >
-                <span className="sr-only">Next</span>
-                Next
-              </button>
+                <button
+                  onClick={nextPage}
+                  disabled={currentPage === totalPages}
+                  className="ml-3 relative inline-flex items-center px-4 py-2 rounded-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+                >
+                  Next
+                </button>
+              </div>
             </nav>
-          </div>
-        )}
-      </div>
+          )}
+        </div>
+      )}
     </div>
   );
 };

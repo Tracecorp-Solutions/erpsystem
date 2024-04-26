@@ -176,7 +176,7 @@ export default function Main() {
                   <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-indigo-600 px-6 pb-4">
                     <div className="flex h-16 shrink-0 items-center">
                       <img
-                        className="h-8 w-auto"
+                        className="h-8 w-8 rounded-full"
                         src="https://www.tracecorpsolutions.com/wp-content/uploads/2019/05/Tracecorp-logo.png"
                         alt="TraceCorp"
                       />
@@ -298,9 +298,9 @@ export default function Main() {
         <div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col">
           {/* Sidebar component, swap this element with another sidebar if you like */}
           <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-indigo-600 px-6 pb-4">
-            <div className="flex h-16 w-32 shrink-0 items-center rounded-lg mt-3">
+            <div className="flex h-16 shrink-0 flex justify-center items-center rounded-lg mt-3">
               <img
-                className="h-16 w-28 bg-white rounded-lg"
+                className="h-20 w-20 bg-white rounded-full"
                 src="https://www.tracecorpsolutions.com/wp-content/uploads/2019/05/Tracecorp-logo.png"
                 alt="Your Company"
             
