@@ -181,9 +181,8 @@ export default function Main() {
                       />
                     </div>
                     <nav className="flex flex-1 flex-col">
-                      <ul role="list" className="flex flex-1 flex-col gap-y-7">
+                      <ul className="flex flex-1 flex-col gap-y-7">
                         <li>
-                          <ul role="list" className="-mx-2 space-y-1">
                           {navigation.map((item) => (
                         <Menu key={item.name} as="div" className="relative">
                           <Menu.Button
@@ -247,13 +246,12 @@ export default function Main() {
                           </Transition>
                         </Menu>
                       ))}
-                          </ul>
                         </li>
                         <li>
                           <div className="text-xs font-semibold leading-6 text-indigo-200">
                             Your teams
                           </div>
-                          <ul role="list" className="-mx-2 mt-2 space-y-1">
+                          <ul className="-mx-2 mt-2 space-y-1">
                             {teams.map((team) => (
                               <li key={team.name}>
                                 <a
@@ -276,7 +274,7 @@ export default function Main() {
                         </li>
                         <li className="mt-auto">
                           <a
-                            href="#"
+                            href="/"
                             className="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-indigo-200 hover:bg-indigo-700 hover:text-white"
                           >
                             <Cog6ToothIcon
@@ -309,9 +307,8 @@ export default function Main() {
             
             </div>
             <nav className="flex flex-1 flex-col">
-              <ul role="list" className="flex flex-1 flex-col gap-y-7">
+              <ul className="flex flex-1 flex-col gap-y-7">
                 <li>
-                  <ul role="list" className="-mx-2 space-y-1">
                     {navigation.map((item) => (
                       <li key={item.name}>
                         {item.submenu ? (
@@ -404,13 +401,12 @@ export default function Main() {
                         )}
                       </li>
                     ))}
-                  </ul>
                 </li>
                 <li>
                   <div className="text-xs font-semibold leading-6 text-indigo-200">
                     Your teams
                   </div>
-                  <ul role="list" className="-mx-2 mt-2 space-y-1">
+                  <ul className="-mx-2 mt-2 space-y-1">
                     {teams.map((team) => (
                       <li key={team.name}>
                         <a
@@ -433,7 +429,7 @@ export default function Main() {
                 </li>
                 <li className="mt-auto">
                   <a
-                    href="#"
+                    href="/"
                     className="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-indigo-200 hover:bg-indigo-700 hover:text-white"
                   >
                     <Cog6ToothIcon

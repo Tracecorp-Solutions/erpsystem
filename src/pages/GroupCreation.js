@@ -4,7 +4,6 @@ import axios from "axios";
 export default function GroupAccount() {
   const [showForm, setShowForm] = useState(false);
   const [newAccount, setNewAccount] = useState({ name: "", behaviour: "" });
-  const [error, setError] = useState(null);
   const [groupAccounts, setGroupAccounts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
@@ -31,11 +30,9 @@ export default function GroupAccount() {
         "http://54.226.71.2/GetAllGroupAccounts"
       );
       setGroupAccounts(response.data);
-      console.log(response.data);
       setLoading(false);
     } catch (error) {
       console.error("Error fetching group accounts:", error);
-      setError("Failed to fetch group accounts. Please try again later.");
     }
   };
 
@@ -91,7 +88,6 @@ export default function GroupAccount() {
           console.error(
             "Error creating group account: Response data is undefined"
           );
-          setError("Error creating group account: Response data is undefined");
         }
 
         setNewAccount({ name: "", behaviour: "" });
@@ -99,10 +95,6 @@ export default function GroupAccount() {
         fetchGroupAccounts();
       } catch (error) {
         console.error("Error creating group account:", error);
-        setError(
-          error.response?.data?.message ||
-            "An error occurred while creating group account"
-        );
       }
     }
   };
@@ -287,7 +279,7 @@ export default function GroupAccount() {
                       <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6 lg:pr-8">
                         {showEditButton && (
                           <a
-                            href="#"
+                            href="/"
                             className="text-indigo-600 hover:text-indigo-900"
                           >
                             Edit<span className="sr-only">{account.name}</span>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-const AccountCreation = () => {
+const SubGroup = () => {
   const [showForm, setShowForm] = useState(false);
   const [groups, setGroups] = useState([]);
   const [accounts, setAccounts] = useState([]);
@@ -10,6 +10,7 @@ const AccountCreation = () => {
     groupId: "",
     balance: 0,
   });
+  const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(4);
   const [formErrors, setFormError] = useState({});
@@ -266,12 +267,6 @@ const AccountCreation = () => {
                     scope="col"
                     className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                   >
-                    Group
-                  </th>
-                  <th
-                    scope="col"
-                    className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-                  >
                     Balance
                   </th>
                   <th
@@ -289,15 +284,12 @@ const AccountCreation = () => {
                       {account.name}
                     </td>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                      {getGroupNameById(account.groupId)}
-                    </td>
-                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                       {account.balance}
                     </td>
                     <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6 lg:pr-8">
                       {showEditButton && (
                         <a
-                          href="/"
+                          href="#"
                           className="text-indigo-600 hover:text-indigo-900"
                         >
                           Edit<span className="sr-only">{account.name}</span>
@@ -353,4 +345,4 @@ const AccountCreation = () => {
   );
 };
 
-export default AccountCreation;
+export default SubGroup;
