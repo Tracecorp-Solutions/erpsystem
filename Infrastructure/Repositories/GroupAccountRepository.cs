@@ -27,9 +27,27 @@ namespace Infrastructure.Repositories
 
         public async Task<SubGroupAccount> AddSubGroupAccount(SubGroupAccount subGroupAccount) 
         {
-            _context.SubGroupAccounts.Add(subGroupAccount);
-            await _context.SaveChangesAsync();
-            return subGroupAccount;
+            var groupaccountexists = await _context.GroupAccounts.FindAsync(subGroupAccount.GroupId);
+            if (groupaccountexists == null)
+            {
+                throw new ArgumentException("Invalid group account id.");
+            }
+            else 
+            {
+                // Inspect the state of the DbContext
+                var entries = _context.ChangeTracker.Entries();
+                foreach (var entry in entries)
+                {
+                    if (entry.Entity is SubGroupAccount)
+                    {
+                        Console.WriteLine($"Entity Type: {entry.Entity.GetType().Name}, State: {entry.State}");
+                    }
+                }
+                _context.SubGroupAccounts.Add(subGroupAccount);
+                await _context.SaveChangesAsync();
+                return subGroupAccount;
+            }
+            
         }
 
         public async Task<IEnumerable<GroupAccount>> GetAllGroupAccounts()
@@ -38,39 +56,24 @@ namespace Infrastructure.Repositories
             return groupAccounts;
         }
 
-        public async Task<IEnumerable<GroupSubGroupViewModel>> GetAllSubGroupAccounts() 
+        public async Task<IEnumerable<GroupSubGroupViewModel>> GetAllSubGroupAccounts()
         {
-            var subGroupAccountswithgroup = await _context.SubGroupAccounts
-              .Join(
-                  _context.GroupAccounts,
-                  subgrp => subgrp.Id,
-                  groupacc => groupacc.Id,
-                  (subgrp, groupacc) => new GroupSubGroupViewModel
-                  {
-                      subGroupAccount = new SubGroupAccount 
-                      {
-                          Name = subgrp.Name,
-                          Description = subgrp.Description,
-                          Id = subgrp.Id,
-                      },
-                      groupAccount = new GroupAccount 
-                      {
-                          Name = groupacc.Name,
-                          Behaviour = groupacc.Behaviour,
-                          Id = groupacc.Id,
-                      }
-                  }
-              )
-              .ToListAsync();
-            //IEnumerable<SubGroupAccount> subGroupAccounts = await _context.SubGroupAccounts
-            //    .Join(_context.GroupAccounts,
+            var subGroupAccounts = await _context.SubGroupAccounts
+                .Join(
+                    _context.GroupAccounts,
+                    subGroup => subGroup.GroupId,  // Foreign key from SubGroupAccounts
+                    group => group.Id,             // Primary key of GroupAccounts
+                    (subGroup, group) => new GroupSubGroupViewModel // Project directly into the view model
+                    {
+                        SubGroupAccount = subGroup, // Assuming SubGroupAccount in the view model is of type SubGroupAccount
+                        GroupAccount = group        // Assuming GroupAccount in the view model is of type GroupAccount
+                    })
+                .ToListAsync();
 
-            //    )
-            //    //.Include(e => e.GroupAccount)
-            //    .ToListAsync();
-
-            return subGroupAccountswithgroup;
+            return subGroupAccounts;
         }
+
+        
     }
 
 }

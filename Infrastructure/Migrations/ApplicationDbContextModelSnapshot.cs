@@ -117,9 +117,6 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int>("GroupAccountId")
-                        .HasColumnType("int");
-
                     b.Property<int>("GroupId")
                         .HasColumnType("int");
 
@@ -128,8 +125,6 @@ namespace Infrastructure.Migrations
                         .HasColumnType("longtext");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("GroupAccountId");
 
                     b.ToTable("SubGroupAccounts");
                 });
@@ -255,17 +250,6 @@ namespace Infrastructure.Migrations
                         .HasForeignKey("Core.Models.Address", "VendorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("Core.Models.SubGroupAccount", b =>
-                {
-                    b.HasOne("Core.Models.GroupAccount", "GroupAccount")
-                        .WithMany()
-                        .HasForeignKey("GroupAccountId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("GroupAccount");
                 });
 
             modelBuilder.Entity("Core.Models.Vendor", b =>

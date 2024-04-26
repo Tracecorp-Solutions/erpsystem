@@ -8,7 +8,7 @@ namespace Core.Models
 {
     public class GroupSubGroupViewModel
     {
-        public SubGroupAccount subGroupAccount { get; set; }
-        public GroupAccount groupAccount { get; set; }
+        public SubGroupAccount SubGroupAccount { get; set; }
+        public GroupAccount GroupAccount { get; set; }
     }
 }

@@ -59,8 +59,12 @@ namespace Trace.Controllers
         {
             try
             {
-                var addedaccount = _repository.AddSubGroupAccount(subGroupAccount);
+                var addedaccount = await _repository.AddSubGroupAccount(subGroupAccount);
                 return CreatedAtAction(nameof(CreateSubGroupAccount), new { id = addedaccount.Id }, addedaccount);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
             }
             catch (Exception)
             {
