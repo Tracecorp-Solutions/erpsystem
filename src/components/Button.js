@@ -1,7 +1,6 @@
 import React from 'react';
 
 const tabs = [
-
   { name: 'Group Account', href: '/account-creation', current: false },
   { name: 'Sub Group', href: '/sub-group', current: false },
   { name: 'Account List', href: '/account', current: false },
@@ -9,13 +8,20 @@ const tabs = [
   { name: 'Petty Cash', href: '/petty', current: true },
   { name: 'Offer', href: '#', current: false },
   { name: 'Sales', href: '#', current: false },
-]
+];
 
 function classNames(...classes) {
-  return classes.filter(Boolean).join(' ')
+  return classes.filter(Boolean).join(' ');
 }
 
 export default function NavigationHeader() {
+  const handleSelectChange = (e) => {
+    const selectedTab = tabs.find((tab) => tab.name === e.target.value);
+    if (selectedTab) {
+      window.location.href = selectedTab.href;
+    }
+  };
+
   return (
     <div className="relative border-b border-gray-200 pb-5 sm:pb-0">
       <div className="md:flex md:items-center md:justify-between">
@@ -44,12 +50,14 @@ export default function NavigationHeader() {
             name="current-tab"
             className="block w-full rounded-md border-0 py-1.5 pl-3 pr-10 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
             defaultValue={tabs.find((tab) => tab.current).name}
+            onChange={handleSelectChange}
           >
             {tabs.map((tab) => (
-              <option key={tab.name}>{tab.name}</option>
+              <option key={tab.name} value={tab.name}>
+                {tab.name}
+              </option>
             ))}
           </select>
-
         </div>
         <div className="hidden sm:block">
           <nav className="-mb-px flex space-x-8">
@@ -72,5 +80,5 @@ export default function NavigationHeader() {
         </div>
       </div>
     </div>
-  )
+  );
 }
