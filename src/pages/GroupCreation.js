@@ -27,7 +27,7 @@ export default function GroupAccount() {
   const fetchGroupAccounts = async () => {
     try {
       const response = await axios.get(
-        "http://54.226.71.2/GetAllGroupAccounts"
+        `${process.env.REACT_APP_API_URL}/GetAllGroupAccounts`
       );
       setGroupAccounts(response.data);
       setLoading(false);
@@ -67,7 +67,7 @@ export default function GroupAccount() {
     if (validateForm()) {
       try {
         const response = await axios.post(
-          "http://54.226.71.2/CreateGroupAccount",
+          `${process.env.REACT_APP_API_URL}/CreateGroupAccount`,
           {
             name: newAccount.name,
             behaviour: newAccount.behaviour,

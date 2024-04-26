@@ -16,10 +16,6 @@ const SubGroup = () => {
   const [showEditButton, setShowEditButton] = useState(true);
   const [successMessage, setSuccessMessage] = useState("");
 
-  const groupsApiUrl = "http://54.226.71.2/GetAllSubGroupAccounts";
-  const createAccountsApiUrl = "http://54.226.71.2/CreateSubGroupAccount";
-  const allgroupApi = "http://54.226.71.2/GetAllGroupAccounts";
-
   useEffect(() => {
     fetchGroups();
     fetchGroupsAll();
@@ -35,7 +31,7 @@ const SubGroup = () => {
 
   const fetchGroups = async () => {
     try {
-      const response = await axios.get(groupsApiUrl);
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/GetAllSubGroupAccounts`);
       setGroups(response.data);
       console.log(response.data);
     } catch (error) {
@@ -45,7 +41,7 @@ const SubGroup = () => {
 
   const fetchGroupsAll = async () => {
     try {
-      const response = await axios.get(allgroupApi);
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/GetAllGroupAccounts`);
       setAllGroups(response.data);
     } catch (error) {
       console.error("Error fetching groups:", error);
@@ -82,7 +78,7 @@ const SubGroup = () => {
   const handleSubmit = async () => {
     if (validateForm()) {
       try {
-        await axios.post(createAccountsApiUrl, newAccount);
+        await axios.post(`${process.env.REACT_APP_API_URL}/CreateSubGroupAccount`, newAccount);
         setNewAccount({ name: "", groupId: "", description: "" });
         toggleForm();
         setSuccessMessage("Sub-group created successfully!");

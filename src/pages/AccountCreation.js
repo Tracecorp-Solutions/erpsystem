@@ -16,10 +16,6 @@ const AccountCreation = () => {
   const [showEditButton, setShowEditButton] = useState(true);
   const [successMessage, setSuccessMessage] = useState("");
 
-  const groupsApiUrl = "http://54.226.71.2/GetAllGroupAccounts";
-  const accountsApiUrl = "http://54.226.71.2/GetAccounts";
-  const createAccountsApiUrl = "http://54.226.71.2/accounts";
-
   useEffect(() => {
     fetchGroups();
     fetchAccounts();
@@ -35,7 +31,7 @@ const AccountCreation = () => {
 
   const fetchGroups = async () => {
     try {
-      const response = await axios.get(groupsApiUrl);
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/GetAllGroupAccounts`);
       setGroups(response.data);
     } catch (error) {
       console.error("Error fetching groups:", error);
@@ -44,7 +40,7 @@ const AccountCreation = () => {
 
   const fetchAccounts = async () => {
     try {
-      const response = await axios.get(accountsApiUrl);
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/GetAccounts`);
       setAccounts(response.data);
     } catch (error) {
       console.error("Error fetching accounts:", error);
@@ -93,7 +89,7 @@ const AccountCreation = () => {
   const handleSubmit = async () => {
    if (validateForm()) {
     try {
-      await axios.post(createAccountsApiUrl, newAccount);
+      await axios.post(`${process.env.REACT_APP_API_URL}/accounts`, newAccount);
       setNewAccount({ name: "", groupId: "", balance: "" });
       fetchAccounts();
       toggleForm();
