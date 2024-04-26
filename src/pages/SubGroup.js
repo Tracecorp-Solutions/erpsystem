@@ -13,7 +13,7 @@ const SubGroup = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(4);
   const [formErrors, setFormErrors] = useState({});
-  const [showEditButton] = useState(true);
+  const [showEditButton, setShowEditButton] = useState(true);
   const [successMessage, setSuccessMessage] = useState("");
 
   const groupsApiUrl = "http://54.226.71.2/GetAllSubGroupAccounts";
@@ -24,6 +24,14 @@ const SubGroup = () => {
     fetchGroups();
     fetchGroupsAll();
   }, []);
+
+  useEffect(() => {
+    if (showForm) {
+      setShowEditButton(false);
+    } else {
+      setShowEditButton(true);
+    }
+  }, [showForm]);
 
   const fetchGroups = async () => {
     try {
