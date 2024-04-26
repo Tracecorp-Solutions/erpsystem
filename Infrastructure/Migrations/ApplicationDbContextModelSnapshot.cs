@@ -33,6 +33,10 @@ namespace Infrastructure.Migrations
                     b.Property<decimal>("Balance")
                         .HasColumnType("decimal(65,30)");
 
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("longtext");
