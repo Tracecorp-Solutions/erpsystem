@@ -4,61 +4,36 @@ import axios from "axios";
 const SubGroup = () => {
   const [showForm, setShowForm] = useState(false);
   const [groups, setGroups] = useState([]);
-  const [accounts, setAccounts] = useState([]);
   const [newAccount, setNewAccount] = useState({
     name: "",
     groupId: "",
-    balance: 0,
+    description: "",
   });
-  const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(4);
-  const [formErrors, setFormError] = useState({});
-  const [showEditButton, setShowEditButton] = useState(true);
+  const [formErrors, setFormErrors] = useState({});
+  const [showEditButton] = useState(true);
   const [successMessage, setSuccessMessage] = useState("");
 
-  const groupsApiUrl = "http://54.226.71.2/GetAllGroupAccounts";
-  const accountsApiUrl = "http://54.226.71.2/GetAccounts";
-  const createAccountsApiUrl = "http://54.226.71.2/accounts";
+  const groupsApiUrl = "http://54.226.71.2/GetAllSubGroupAccounts";
+  const createAccountsApiUrl = "http://54.226.71.2/CreateSubGroupAccount";
 
   useEffect(() => {
     fetchGroups();
-    fetchAccounts();
   }, []);
-
-  useEffect(() => {
-    if (showForm) {
-      setShowEditButton(false);
-    } else {
-      setShowEditButton(true);
-    }
-  }, [showForm]);
 
   const fetchGroups = async () => {
     try {
       const response = await axios.get(groupsApiUrl);
       setGroups(response.data);
+      console.log(response.data);
     } catch (error) {
       console.error("Error fetching groups:", error);
     }
   };
 
-  const fetchAccounts = async () => {
-    try {
-      const response = await axios.get(accountsApiUrl);
-      setAccounts(response.data);
-    } catch (error) {
-      console.error("Error fetching accounts:", error);
-    }
-  };
-
   const toggleForm = () => {
     setShowForm(!showForm);
-  };
-
-  const getGroupNameById = (groupId) => {
-    const group = groups.find((group) => group.id === groupId);
-    return group ? group.name : "Unknown";
   };
 
   const validateForm = () => {
@@ -72,13 +47,6 @@ const SubGroup = () => {
       errors.name = "";
     }
 
-    if (!newAccount.balance.toString().trim()) {
-      errors.balance = "Account balance is required";
-      isValid = false;
-    } else {
-      errors.balance = "";
-    }
-
     if (!newAccount.groupId.trim()) {
       errors.groupId = "Please select the group";
       isValid = false;
@@ -86,33 +54,32 @@ const SubGroup = () => {
       errors.groupId = "";
     }
 
-    setFormError(errors);
+    setFormErrors(errors);
 
     return isValid;
   };
 
   const handleSubmit = async () => {
-   if (validateForm()) {
-    try {
-      await axios.post(createAccountsApiUrl, newAccount);
-      setNewAccount({ name: "", groupId: "", balance: "" });
-      fetchAccounts();
-      toggleForm();
-      setSuccessMessage("Account created successfully!");
-      setTimeout(() => {
-        setSuccessMessage("");
-      }, 5000);
-    } catch (error) {
-      console.error("Error creating account:", error);
+    if (validateForm()) {
+      try {
+        await axios.post(createAccountsApiUrl, newAccount);
+        setNewAccount({ name: "", groupId: "", description: "" });
+        toggleForm();
+        setSuccessMessage("Sub-group created successfully!");
+        setTimeout(() => {
+          setSuccessMessage("");
+        }, 5000);
+      } catch (error) {
+        console.error("Error creating sub-group:", error);
+      }
     }
-   }
   };
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentAccounts = accounts.slice(indexOfFirstItem, indexOfLastItem);
+  const currentGroup = groups.slice(indexOfFirstItem, indexOfLastItem);
 
-  const totalPages = Math.ceil(accounts.length / itemsPerPage);
+  const totalPages = Math.ceil(groups.length / itemsPerPage);
   const pageNumbers = Array.from(
     { length: totalPages },
     (_, index) => index + 1
@@ -141,7 +108,7 @@ const SubGroup = () => {
       <div className="sm:flex sm:items-center">
         <div className="sm:flex-auto">
           <h1 className="text-base font-semibold leading-6 text-gray-900">
-            Accounts
+            Sub groups
           </h1>
         </div>
         <div className="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
@@ -157,7 +124,34 @@ const SubGroup = () => {
       {showForm && (
         <div className="absolute inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center">
           <div className="bg-white p-8 rounded-lg max-w-xl w-full mx-4">
-            <h2 className="text-lg font-semibold mb-4">New Account Form</h2>
+            <h2 className="text-lg font-semibold mb-4">New Sub Group Form</h2>
+            <div className="mb-4">
+              <label
+                htmlFor="group"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Group Account*
+              </label>
+              <select
+                value={newAccount.groupId}
+                onChange={(e) =>
+                  setNewAccount({ ...newAccount, groupId: e.target.value })
+                }
+                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 p-4 block w-full border-gray-300 rounded-md focus:ring-1 focus:ring-offset-1 focus:ring-offset-gray-100 focus:ring-indigo-500 sm:text-sm mb-20"
+              >
+                <option value="">Select Group</option>
+                {groups.map((group) => (
+                  <option key={group.id} value={group.id}>
+                    {group.name}
+                  </option>
+                ))}
+              </select>
+              {formErrors.groupId && (
+                <p className="mt-2 text-sm text-red-500">
+                  {formErrors.groupId}
+                </p>
+              )}
+            </div>
             <div className="mb-4">
               <label
                 htmlFor="name"
@@ -176,55 +170,33 @@ const SubGroup = () => {
                 className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 p-4 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                 placeholder="Please enter account name..."
               />
-               {formErrors.name && (
+              {formErrors.name && (
                 <p className="mt-2 text-sm text-red-500">{formErrors.name}</p>
               )}
             </div>
             <div className="mb-4">
               <label
-                htmlFor="balance"
+                htmlFor="description"
                 className="block text-sm font-medium text-gray-700"
               >
-                Balance*
+                Description
               </label>
-              <input
-                type="text"
-                name="balance"
-                id="balance"
-                value={newAccount.balance}
+              <textarea
+                name="description"
+                id="description"
+                value={newAccount.description}
                 onChange={(e) =>
-                  setNewAccount({ ...newAccount, balance: e.target.value })
+                  setNewAccount({ ...newAccount, description: e.target.value })
                 }
+                rows={5}
+                cols={5}
                 className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 p-4 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                placeholder="Please enter account balance..."
+                placeholder="Please enter description..."
               />
-               {formErrors.name && (
-                <p className="mt-2 text-sm text-red-500">{formErrors.balance}</p>
-              )}
-            </div>
-            <div className="mb-4">
-              <label
-                htmlFor="group"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Group*
-              </label>
-              <select
-                value={newAccount.groupId}
-                onChange={(e) =>
-                  setNewAccount({ ...newAccount, groupId: e.target.value })
-                }
-                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 p-4 block w-full border-gray-300 rounded-md focus:ring-1 focus:ring-offset-1 focus:ring-offset-gray-100 focus:ring-indigo-500 sm:text-sm mb-20"
-              >
-                <option value="">Select Group</option>
-                {groups.map((group) => (
-                  <option key={group.id} value={group.id}>
-                    {group.name}
-                  </option>
-                ))}
-              </select>
-              {formErrors.name && (
-                <p className="mt-2 text-sm text-red-500">{formErrors.balance}</p>
+              {formErrors.description && (
+                <p className="mt-2 text-sm text-red-500">
+                  {formErrors.description}
+                </p>
               )}
             </div>
             <div className="flex justify-end mt-20">
@@ -267,7 +239,7 @@ const SubGroup = () => {
                     scope="col"
                     className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                   >
-                    Balance
+                    Description
                   </th>
                   <th
                     scope="col"
@@ -278,21 +250,21 @@ const SubGroup = () => {
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200 bg-white">
-                {currentAccounts.map((account) => (
-                  <tr key={account.id}>
+                {currentGroup.map((group) => (
+                  <tr key={group.subGroupAccount.id}>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                      {account.name}
+                      {group.subGroupAccount.name}
                     </td>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                      {account.balance}
+                      {group.subGroupAccount.description}
                     </td>
                     <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6 lg:pr-8">
                       {showEditButton && (
                         <a
-                          href="#"
+                          href="/"
                           className="text-indigo-600 hover:text-indigo-900"
                         >
-                          Edit<span className="sr-only">{account.name}</span>
+                          Edit<span className="sr-only">{group.name}</span>
                         </a>
                       )}
                     </td>

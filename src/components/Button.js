@@ -3,6 +3,7 @@ import React from 'react';
 const tabs = [
 
   { name: 'Group Account', href: '/account-creation', current: false },
+  { name: 'Sub Group', href: '/sub-group', current: false },
   { name: 'Account List', href: '/account', current: false },
   { name: 'Vendors', href: '/dashboard/vendors', current: false },
   { name: 'Petty Cash', href: '/petty', current: true },
