@@ -274,13 +274,13 @@ const SubGroup = () => {
                   scope="col"
                   className="px-3 py-3 text-left text-sm font-semibold text-gray-900"
                 >
-                  Name
+                  NAME
                 </th>
                 <th
                   scope="col"
                   className="px-3 py-3 text-left text-sm font-semibold text-gray-900"
                 >
-                  Description
+                  DESCRIPTION
                 </th>
                 <th scope="col" className="relative px-3 py-3">
                   <span className="sr-only">Edit</span>
