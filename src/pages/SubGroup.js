@@ -4,6 +4,7 @@ import axios from "axios";
 const SubGroup = () => {
   const [showForm, setShowForm] = useState(false);
   const [groups, setGroups] = useState([]);
+  const [allGroups, setAllGroups] = useState([]);
   const [newAccount, setNewAccount] = useState({
     name: "",
     groupId: "",
@@ -17,9 +18,11 @@ const SubGroup = () => {
 
   const groupsApiUrl = "http://54.226.71.2/GetAllSubGroupAccounts";
   const createAccountsApiUrl = "http://54.226.71.2/CreateSubGroupAccount";
+  const allgroupApi = "http://54.226.71.2/GetAllGroupAccounts";
 
   useEffect(() => {
     fetchGroups();
+    fetchGroupsAll();
   }, []);
 
   const fetchGroups = async () => {
@@ -27,6 +30,15 @@ const SubGroup = () => {
       const response = await axios.get(groupsApiUrl);
       setGroups(response.data);
       console.log(response.data);
+    } catch (error) {
+      console.error("Error fetching groups:", error);
+    }
+  };
+
+  const fetchGroupsAll = async () => {
+    try {
+      const response = await axios.get(allgroupApi);
+      setAllGroups(response.data);
     } catch (error) {
       console.error("Error fetching groups:", error);
     }
@@ -140,7 +152,7 @@ const SubGroup = () => {
                 className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 p-4 block w-full border-gray-300 rounded-md focus:ring-1 focus:ring-offset-1 focus:ring-offset-gray-100 focus:ring-indigo-500 sm:text-sm mb-20"
               >
                 <option value="">Select Group</option>
-                {groups.map((group) => (
+                {allGroups.map((group) => (
                   <option key={group.id} value={group.id}>
                     {group.name}
                   </option>
