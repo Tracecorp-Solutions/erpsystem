@@ -133,7 +133,10 @@ export default function GroupAccount() {
   return (
     <div className="px-4 sm:px-6 lg:px-8">
       {successMessage && (
-        <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-1" role="alert">
+        <div
+          className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-1"
+          role="alert"
+        >
           <span className="block sm:inline">{successMessage}</span>
         </div>
       )}
@@ -235,8 +238,12 @@ export default function GroupAccount() {
             height: "50vh",
           }}
         >
-          <div class="spinner-grow" role="status">
-            <span class="visually-hidden">Loading...</span>
+          <div class="spinner-grow bg-gray-900 animate-spin" role="status">
+            <img
+              className="h-20 w-20"
+              src="https://www.tracecorpsolutions.com/wp-content/uploads/2019/05/Tracecorp-logo.png"
+              alt="TraceCorp"
+            />{" "}
           </div>
         </div>
       )}
@@ -249,7 +256,7 @@ export default function GroupAccount() {
                   <tr>
                     <th
                       scope="col"
-                      className="px-3 py-3.5 text-left text-sm font-semibold                     text-gray-900"
+                      className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                     >
                       Name
                     </th>
@@ -282,7 +289,12 @@ export default function GroupAccount() {
                             href="/"
                             className="text-indigo-600 hover:text-indigo-900"
                           >
-                            Edit<span className="sr-only">{account.name}</span>
+                            <a
+                              href="/"
+                              className="text-indigo-600 hover:text-indigo-900"
+                            >
+                              <i className="bi bi-pencil"></i>
+                            </a>
                           </a>
                         )}
                       </td>
@@ -292,46 +304,44 @@ export default function GroupAccount() {
               </table>
             </div>
           </div>
-          {
-            showEditButton && (
-              <div className="mt-4 flex justify-center">
-            <nav
-              className="relative z-0 inline-flex shadow-sm rounded-md -space-x-px"
-              aria-label="Pagination"
-            >
-              <button
-                onClick={prevPage}
-                disabled={currentPage === 1}
-                className="relative inline-flex items-center px-4 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+          {showEditButton && (
+            <div className="mt-4 flex justify-center">
+              <nav
+                className="relative z-0 inline-flex shadow-sm rounded-md -space-x-px"
+                aria-label="Pagination"
               >
-                <span className="sr-only">Previous</span>
-                Previous
-              </button>
-              {pageNumbers.map((number) => (
                 <button
-                  key={number}
-                  onClick={() => paginate(number)}
-                  className={`relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium ${
-                    currentPage === number
-                      ? "text-indigo-600 bg-indigo-100"
-                      : "text-gray-700 hover:bg-gray-50"
-                  }`}
+                  onClick={prevPage}
+                  disabled={currentPage === 1}
+                  className="relative inline-flex items-center px-4 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
                 >
-                  {number}
+                  <span className="sr-only">Previous</span>
+                  Previous
                 </button>
-              ))}
-              <button
-                onClick={nextPage}
-                disabled={currentPage === totalPages}
-                className="relative inline-flex items-center px-4 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
-              >
-                <span className="sr-only">Next</span>
-                Next
-              </button>
-            </nav>
-          </div>
-            )
-          }
+                {pageNumbers.map((number) => (
+                  <button
+                    key={number}
+                    onClick={() => paginate(number)}
+                    className={`relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium ${
+                      currentPage === number
+                        ? "text-indigo-600 bg-indigo-100"
+                        : "text-gray-700 hover:bg-gray-50"
+                    }`}
+                  >
+                    {number}
+                  </button>
+                ))}
+                <button
+                  onClick={nextPage}
+                  disabled={currentPage === totalPages}
+                  className="relative inline-flex items-center px-4 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+                >
+                  <span className="sr-only">Next</span>
+                  Next
+                </button>
+              </nav>
+            </div>
+          )}
         </div>
       )}
     </div>
