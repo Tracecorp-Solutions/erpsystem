@@ -38,13 +38,38 @@ namespace Infrastructure.Repositories
             return groupAccounts;
         }
 
-        public async Task<IEnumerable<SubGroupAccount>> GetAllSubGroupAccounts() 
+        public async Task<IEnumerable<GroupSubGroupViewModel>> GetAllSubGroupAccounts() 
         {
-            IEnumerable<SubGroupAccount> subGroupAccounts = await _context.SubGroupAccounts
-                .Include(e => e.GroupAccount)
-                .ToListAsync();
+            var subGroupAccountswithgroup = await _context.SubGroupAccounts
+              .Join(
+                  _context.GroupAccounts,
+                  subgrp => subgrp.Id,
+                  groupacc => groupacc.Id,
+                  (subgrp, groupacc) => new GroupSubGroupViewModel
+                  {
+                      subGroupAccount = new SubGroupAccount 
+                      {
+                          Name = subgrp.Name,
+                          Description = subgrp.Description,
+                          Id = subgrp.Id,
+                      },
+                      groupAccount = new GroupAccount 
+                      {
+                          Name = groupacc.Name,
+                          Behaviour = groupacc.Behaviour,
+                          Id = groupacc.Id,
+                      }
+                  }
+              )
+              .ToListAsync();
+            //IEnumerable<SubGroupAccount> subGroupAccounts = await _context.SubGroupAccounts
+            //    .Join(_context.GroupAccounts,
 
-            return subGroupAccounts;
+            //    )
+            //    //.Include(e => e.GroupAccount)
+            //    .ToListAsync();
+
+            return subGroupAccountswithgroup;
         }
     }
 
