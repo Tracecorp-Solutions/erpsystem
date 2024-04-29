@@ -20,9 +20,9 @@ namespace Infrastructure.Repositories
 
         public async Task<Account> CreateAccountAsync(Account account)
         {
-            var groupAccount = await _context.GroupAccounts.FindAsync(account.SubGroupAccountId);
+            var groupAccount = await _context.SubGroupAccounts.FindAsync(account.SubGroupAccountId);
             if (groupAccount == null)
-                throw new ArgumentException("Invalid group account id.");
+                throw new ArgumentException("Invalid subgroup account id.");
 
             _context.Accounts.Add(account);
             await _context.SaveChangesAsync();
@@ -32,7 +32,12 @@ namespace Infrastructure.Repositories
 
         public async Task<IEnumerable<Account>> GetAccounts() 
         {
-            IEnumerable<Account> accounts = await _context.Accounts.ToListAsync();
+            var accounts = await _context.Accounts.ToListAsync();
+            if (!accounts.Any())
+            {
+                throw new ArgumentException("No accounts found.");
+            }
+
             return accounts;
         }
     }

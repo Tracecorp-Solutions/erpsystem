@@ -30,7 +30,8 @@ namespace Infrastructure.Repositories
             {
                 Name = $"{vendor.FirstName} {vendor.LastName}",
                 Balance = vendor.OpeningBalance,
-                SubGroupAccountId = 1
+                SubGroupAccountId = 5,
+                Description = "Vendor Account "
             };
             var createdAccount = await _accountService.CreateAccountAsync(account);
             vendor.AccountId = createdAccount.Id;
