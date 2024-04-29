@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { Select } from 'antd';
+
+const { Option } = Select;
 
 const AccountCreation = () => {
   const [showForm, setShowForm] = useState(false);
@@ -366,16 +369,17 @@ const AccountCreation = () => {
                   </td>
                   <td className="px-3 py-4 whitespace-nowrap text-right text-sm font-medium">
                     {showEditButton && (
-                      <div className="relative">
-                        <select
-                          className="text-indigo-600 hover:text-indigo-900"
-                          onChange={(e) => handleEdit(e.target.value)}
-                        >
-                          <option value="">Actions</option>
-                          <option value="edit">Edit</option>
-                          <option value="delete">Delete</option>
-                        </select>
-                      </div>
+                      <div className="mb-4 md:w-2/4">
+                      <Select
+                        id="vendor"
+                        className="w-full"
+                        onChange={(value) => handleEdit(value)}
+                        bordered={false}
+                      >
+                        <Option value="vendor1">Edit</Option>
+                        <Option value="vendor2">Delete</Option>
+                      </Select>
+                    </div>
                     )}
                   </td>
                 </tr>

@@ -38,6 +38,7 @@ import AccountCreation from "../pages/AccountCreation";
 import Account from "../pages/AccountCreation";
 import Petty from "../pages/Petty";
 import SubGroup from "../pages/SubGroup";
+import Billing from "../pages/Billing";
 
 
 const navigation = [
@@ -80,7 +81,9 @@ const navigation = [
     icon: CalendarIcon,
     current: false,
     submenuItem: true,
-    submenu: [{ name: "Expense", href: "/expense", current: false }],
+    submenu: [
+    { name: "Billing", href: "/billing", current: false },
+    { name: "Expense", href: "/expense", current: false }],
   },
   {
     name: "Chart of Accounts",
@@ -569,6 +572,7 @@ export default function Main() {
                 <Route path="/account-creation" element={<Account />} />
                 <Route path="/petty" element={<Petty />} />
                 <Route path="/sub-group" element={<SubGroup />} />
+                <Route path="/billing" element={<Billing />} />
               </Routes>
             </div>
           </main>

@@ -5,6 +5,7 @@ const tabs = [
   { name: 'Sub Group', href: '/sub-group', current: false },
   { name: 'Account List', href: '/account', current: false },
   { name: 'Vendors', href: '/dashboard/vendors', current: false },
+  { name: 'Billing', href: '/billing', current: false },
   { name: 'Petty Cash', href: '/petty', current: true },
   { name: 'Offer', href: '#', current: false },
   { name: 'Sales', href: '#', current: false },
