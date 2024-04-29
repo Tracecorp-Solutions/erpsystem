@@ -99,6 +99,16 @@ const SubGroup = () => {
     }
   };
 
+  const handleEdit = (action) => {
+    if (action === "edit") {
+      console.log("Edit action triggered");
+    }
+
+    if (action === "delete") {
+      console.log("Deleted action triggered");
+    }
+  }
+
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentGroup = groups.slice(indexOfFirstItem, indexOfLastItem);
@@ -296,14 +306,18 @@ const SubGroup = () => {
                   <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                     {group.subGroupAccount.description}
                   </td>
-                  <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium">
+                  <td className="relative whitespace-nowrap py-4 pr-4 text-right text-sm font-medium">
                     {showEditButton && (
-                      <a
-                        href="/"
-                        className="text-indigo-600 hover:text-indigo-900"
-                      >
-                        <i className="bi bi-pencil"></i>
-                      </a>
+                      <div className="relative">
+                        <select
+                          className="text-indigo-600 hover:text-indigo-900"
+                          onChange={(e) => handleEdit(e.target.value)}
+                        >
+                          <option value="">Actions</option>
+                          <option value="edit">Edit</option>
+                          <option value="delete">Delete</option>
+                        </select>
+                      </div>
                     )}
                   </td>
                 </tr>

@@ -99,6 +99,16 @@ export default function GroupAccount() {
     }
   };
 
+  const handleEdit = (action) => {
+    if (action === "edit") {
+      console.log("Edit action triggered");
+    }
+
+    if (action === "delete") {
+      console.log("Deleted action triggered");
+    }
+  }
+
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentGroupAccounts = groupAccounts.slice(
@@ -280,12 +290,22 @@ export default function GroupAccount() {
                   </td>
                   <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6 lg:pr-8">
                     {showEditButton && (
-                      <a
-                        href="/"
+                      <div className="relative">
+                      <select
                         className="text-indigo-600 hover:text-indigo-900"
+                        onChange={(e) => handleEdit(e.target.value)}
+                        style={{
+                          width: "140px",
+                          height: "40px",
+                          borderRadius: "0",
+                          padding: "8px",
+                        }}
                       >
-                        <i className="bi bi-pencil"></i>
-                      </a>
+                        <option value="">Actions</option>
+                        <option value="edit">Edit</option>
+                        <option value="delete">Delete</option>
+                      </select>
+                    </div>
                     )}
                   </td>
                 </tr>

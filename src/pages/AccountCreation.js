@@ -7,12 +7,14 @@ const AccountCreation = () => {
   const [accounts, setAccounts] = useState([]);
   const [newAccount, setNewAccount] = useState({
     name: "",
-    groupId: "",
+    subGroupAccountId: "",
     balance: 0,
+    description: "",
   });
+  const [subGroupAccounts, setSubGroupAccounts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(2);
-  const [formErrors, setFormError] = useState({});
+  const [formErrors, setFormErrors] = useState({});
   const [showEditButton, setShowEditButton] = useState(true);
   const [successMessage, setSuccessMessage] = useState("");
   const [loading, setLoading] = useState(true);
@@ -20,6 +22,7 @@ const AccountCreation = () => {
   useEffect(() => {
     fetchGroups();
     fetchAccounts();
+    fetchSubGroupAccounts();
   }, []);
 
   useEffect(() => {
@@ -53,13 +56,20 @@ const AccountCreation = () => {
     }
   };
 
-  const toggleForm = () => {
-    setShowForm(!showForm);
+  const fetchSubGroupAccounts = async () => {
+    try {
+      const response = await axios.get(
+        "http://54.226.71.2/GetAllSubGroupAccounts"
+      );
+      setSubGroupAccounts(response.data);
+      console.log(response.data);
+    } catch (error) {
+      console.error("Error fetching subGroup accounts", error);
+    }
   };
 
-  const getGroupNameById = (groupId) => {
-    const group = groups.find((group) => group.id === groupId);
-    return group ? group.name : "Unknown";
+  const toggleForm = () => {
+    setShowForm(!showForm);
   };
 
   const validateForm = () => {
@@ -69,25 +79,19 @@ const AccountCreation = () => {
     if (!newAccount.name.trim()) {
       errors.name = "Account name is required";
       isValid = false;
-    } else {
-      errors.name = "";
     }
 
-    if (!newAccount.balance.toString().trim()) {
-      errors.balance = "Account balance is required";
+    if (!newAccount.balance.toString().trim() || isNaN(newAccount.balance)) {
+      errors.balance = "Invalid balance";
       isValid = false;
-    } else {
-      errors.balance = "";
     }
 
-    if (!newAccount.groupId.trim()) {
-      errors.groupId = "Please select the group";
+    if (!newAccount.subGroupAccountId) {
+      errors.subGroupAccountId = "Please select a subgroup";
       isValid = false;
-    } else {
-      errors.groupId = "";
     }
 
-    setFormError(errors);
+    setFormErrors(errors);
 
     return isValid;
   };
@@ -95,11 +99,22 @@ const AccountCreation = () => {
   const handleSubmit = async () => {
     if (validateForm()) {
       try {
-        await axios.post(
+        const response = await axios.post(
           `${process.env.REACT_APP_API_URL}/accounts`,
-          newAccount
+          {
+            name: newAccount.name,
+            balance: parseFloat(newAccount.balance),
+            subGroupAccountId: parseInt(newAccount.subGroupAccountId),
+            description: newAccount.description,
+          }
         );
-        setNewAccount({ name: "", groupId: "", balance: "" });
+        console.log(response.data);
+        setNewAccount({
+          name: "",
+          subGroupAccountId: "",
+          balance: 0,
+          description: "",
+        });
         fetchAccounts();
         toggleForm();
         setSuccessMessage("Account created successfully!");
@@ -112,21 +127,21 @@ const AccountCreation = () => {
     }
   };
 
+  const handleEdit = (action) => {
+    if (action === "edit") {
+      console.log("Edit action triggered");
+    }
+
+    if (action === "delete") {
+      console.log("Deleted action triggered");
+    }
+  };
+
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentAccounts = accounts.slice(indexOfFirstItem, indexOfLastItem);
 
   const totalPages = Math.ceil(accounts.length / itemsPerPage);
-  const pageNumbers = Array.from(
-    { length: totalPages },
-    (_, index) => index + 1
-  );
-
-  const paginate = (pageNumber) => {
-    if (pageNumber >= 1 && pageNumber <= totalPages) {
-      setCurrentPage(pageNumber);
-    }
-  };
 
   const nextPage = () => {
     if (currentPage < totalPages) {
@@ -164,6 +179,40 @@ const AccountCreation = () => {
             <h2 className="text-lg font-semibold mb-4">New Account Form</h2>
             <div className="mb-4">
               <label
+                htmlFor="group"
+                className="block text-sm font-medium text-gray-700"
+              >
+                SubGroup*
+              </label>
+              <select
+                value={newAccount.subGroupAccountId}
+                onChange={(e) =>
+                  setNewAccount({
+                    ...newAccount,
+                    subGroupAccountId: parseInt(e.target.value),
+                  })
+                }
+                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 p-4 block w-full border-gray-300 rounded-md focus:ring-1 focus:ring-offset-1 focus:ring-offset-gray-100 focus:ring-indigo-500 sm:text-sm mb-20"
+              >
+                <option value="">Select SubGroup</option>
+                {subGroupAccounts.map((subGroup) => (
+                  <option
+                    key={subGroup.subGroupAccount.id}
+                    value={subGroup.subGroupAccount.id.toString()}
+                  >
+                    {subGroup.subGroupAccount.name}
+                  </option>
+                ))}
+              </select>
+
+              {formErrors.subGroupAccountId && (
+                <p className="mt-2 text-sm text-red-500">
+                  {formErrors.subGroupAccountId}
+                </p>
+              )}
+            </div>
+            <div className="mb-4">
+              <label
                 htmlFor="name"
                 className="block text-sm font-medium text-gray-700"
               >
@@ -189,7 +238,7 @@ const AccountCreation = () => {
                 htmlFor="balance"
                 className="block text-sm font-medium text-gray-700"
               >
-                Balance*
+                Opening Bal*
               </label>
               <input
                 type="text"
@@ -202,7 +251,7 @@ const AccountCreation = () => {
                 className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 p-4 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                 placeholder="Please enter account balance..."
               />
-              {formErrors.name && (
+              {formErrors.balance && (
                 <p className="mt-2 text-sm text-red-500">
                   {formErrors.balance}
                 </p>
@@ -210,28 +259,26 @@ const AccountCreation = () => {
             </div>
             <div className="mb-4">
               <label
-                htmlFor="group"
+                htmlFor="description"
                 className="block text-sm font-medium text-gray-700"
               >
-                Group*
+                Description
               </label>
-              <select
-                value={newAccount.groupId}
+              <textarea
+                name="description"
+                id="description"
+                value={newAccount.description}
                 onChange={(e) =>
-                  setNewAccount({ ...newAccount, groupId: e.target.value })
+                  setNewAccount({ ...newAccount, description: e.target.value })
                 }
-                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 p-4 block w-full border-gray-300 rounded-md focus:ring-1 focus:ring-offset-1 focus:ring-offset-gray-100 focus:ring-indigo-500 sm:text-sm mb-20"
-              >
-                <option value="">Select Group</option>
-                {groups.map((group) => (
-                  <option key={group.id} value={group.id}>
-                    {group.name}
-                  </option>
-                ))}
-              </select>
-              {formErrors.name && (
+                rows={2}
+                cols={5}
+                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 p-4 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                placeholder="Please enter description..."
+              />
+              {formErrors.description && (
                 <p className="mt-2 text-sm text-red-500">
-                  {formErrors.balance}
+                  {formErrors.description}
                 </p>
               )}
             </div>
@@ -292,7 +339,7 @@ const AccountCreation = () => {
                   scope="col"
                   className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                 >
-                  Group
+                  Description
                 </th>
                 <th
                   scope="col"
@@ -312,19 +359,23 @@ const AccountCreation = () => {
                     {account.name}
                   </td>
                   <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {getGroupNameById(account.groupId)}
+                    {account.description}
                   </td>
                   <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">
                     {account.balance}
                   </td>
                   <td className="px-3 py-4 whitespace-nowrap text-right text-sm font-medium">
                     {showEditButton && (
-                      <a
-                        href="/"
-                        className="text-indigo-600 hover:text-indigo-900"
-                      >
-                        <i className="bi bi-pencil"></i>
-                      </a>
+                      <div className="relative">
+                        <select
+                          className="text-indigo-600 hover:text-indigo-900"
+                          onChange={(e) => handleEdit(e.target.value)}
+                        >
+                          <option value="">Actions</option>
+                          <option value="edit">Edit</option>
+                          <option value="delete">Delete</option>
+                        </select>
+                      </div>
                     )}
                   </td>
                 </tr>
