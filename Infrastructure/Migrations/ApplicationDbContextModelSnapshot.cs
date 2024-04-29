@@ -46,16 +46,16 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Accounts");
+                    b.ToTable("accounts", (string)null);
                 });
 
             modelBuilder.Entity("Core.Models.Address", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int?>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int?>("Id"));
 
                     b.Property<string>("City")
                         .IsRequired()
@@ -69,7 +69,7 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int>("VendorId")
+                    b.Property<int?>("VendorId")
                         .HasColumnType("int");
 
                     b.Property<string>("ZipCode")
@@ -81,7 +81,65 @@ namespace Infrastructure.Migrations
                     b.HasIndex("VendorId")
                         .IsUnique();
 
-                    b.ToTable("Addresses");
+                    b.ToTable("addresses", (string)null);
+                });
+
+            modelBuilder.Entity("Core.Models.Bill", b =>
+                {
+                    b.Property<int?>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int?>("Id"));
+
+                    b.Property<DateTime>("BillDate")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("BillNo")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<DateTime>("DueDate")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<decimal?>("TotalAmount")
+                        .HasColumnType("decimal(65,30)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("bills", (string)null);
+                });
+
+            modelBuilder.Entity("Core.Models.BillTranItems", b =>
+                {
+                    b.Property<int?>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int?>("Id"));
+
+                    b.Property<int>("AccountId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(65,30)");
+
+                    b.Property<int?>("BillId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BillId");
+
+                    b.ToTable("billtranitems", (string)null);
                 });
 
             modelBuilder.Entity("Core.Models.GroupAccount", b =>
@@ -102,7 +160,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GroupAccounts");
+                    b.ToTable("groupaccounts", (string)null);
                 });
 
             modelBuilder.Entity("Core.Models.SubGroupAccount", b =>
@@ -126,7 +184,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("SubGroupAccounts");
+                    b.ToTable("subgroupaccounts", (string)null);
                 });
 
             modelBuilder.Entity("Core.Models.Transaction", b =>
@@ -155,18 +213,18 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Transactions");
+                    b.ToTable("transactions", (string)null);
                 });
 
             modelBuilder.Entity("Core.Models.Vendor", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int?>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int?>("Id"));
 
-                    b.Property<int>("AccountId")
+                    b.Property<int?>("AccountId")
                         .HasColumnType("int");
 
                     b.Property<decimal>("BillingRate")
@@ -240,16 +298,26 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Vendors");
+                    b.ToTable("vendors", (string)null);
                 });
 
             modelBuilder.Entity("Core.Models.Address", b =>
                 {
                     b.HasOne("Core.Models.Vendor", null)
                         .WithOne("Addres")
-                        .HasForeignKey("Core.Models.Address", "VendorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("Core.Models.Address", "VendorId");
+                });
+
+            modelBuilder.Entity("Core.Models.BillTranItems", b =>
+                {
+                    b.HasOne("Core.Models.Bill", null)
+                        .WithMany("BillTranItems")
+                        .HasForeignKey("BillId");
+                });
+
+            modelBuilder.Entity("Core.Models.Bill", b =>
+                {
+                    b.Navigation("BillTranItems");
                 });
 
             modelBuilder.Entity("Core.Models.Vendor", b =>

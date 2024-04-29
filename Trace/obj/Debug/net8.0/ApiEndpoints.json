@@ -16,6 +16,22 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "Trace.Controllers.BillController",
+    "Method": "CreateBill",
+    "RelativePath": "CreateBill",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "bill",
+        "Type": "Core.Models.Bill",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "Trace.Controllers.GroupAccountsController",
     "Method": "CreateGroupAccount",
     "RelativePath": "CreateGroupAccount",
@@ -67,6 +83,16 @@
     "ContainingType": "Trace.Controllers.AccountController",
     "Method": "GetAllAccounts",
     "RelativePath": "GetAccounts",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Trace.Controllers.BillController",
+    "Method": "GetAllSubGroupAccounts",
+    "RelativePath": "GetAllBills",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,

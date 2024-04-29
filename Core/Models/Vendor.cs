@@ -8,7 +8,7 @@ namespace Core.Models
 {
     public class Vendor
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
         public string Title { get; set; }
         public string FirstName { get; set; }
         public string MiddleName { get; set; }
@@ -28,7 +28,7 @@ namespace Core.Models
         public string Notes { get; set; }
         public string BusinessIdNo { get; set; }
         public string Status { get; set; }
-        public int AccountId { get; set; }
+        public int? AccountId { get; set; }
 
     }
 }

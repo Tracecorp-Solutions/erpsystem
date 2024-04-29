@@ -14,6 +14,7 @@ builder.Services.AddScoped<IGroupAccountRepository, GroupAccountRepository>();
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
 builder.Services.AddScoped<IVendorRepository, VendorRepository>();
+builder.Services.AddScoped<IBillRepository, BillRepository>();
 
 builder.Services.AddControllers();
 builder.Services.AddCors(options =>
@@ -55,6 +56,14 @@ if (app.Environment.IsDevelopment())
     //    c.RoutePrefix = "swagger"; // Sets Swagger at the root URL path (http://<app-url>/swagger)
     //});
 }
+
+// Apply pending migrations and create the database if it doesn't exist
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    dbContext.Database.Migrate();
+}
+
 app.UseDeveloperExceptionPage();
 app.UseSwagger();
 app.UseSwaggerUI(); 
