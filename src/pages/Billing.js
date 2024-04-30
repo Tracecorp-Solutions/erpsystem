@@ -21,6 +21,7 @@ const Billing = () => {
 
   const [description, setDescription] = useState("");
   const [amount, setAmount] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
 
   const fetchVendor = async () => {
     try {
@@ -73,8 +74,6 @@ const Billing = () => {
       billTranItems: [newBillTranItem, ...prevBillData.billTranItems],
     }));
   };
-  
-  
 
   const handleDataSubmit = async () => {
     try {
@@ -82,24 +81,35 @@ const Billing = () => {
         billDate: billData.billDate,
         dueDate: billData.dueDate,
         billNo: billData.billNo,
-        billTranItems: data.map(item => ({
+        billTranItems: data.map((item) => ({
           accountId: item.accountId,
           description: item.description,
-          amount: parseFloat(item.amount)
+          amount: parseFloat(item.amount),
         })),
         totalAmount: calculateTotalAmount(),
-        status: billData.status
+        status: billData.status,
       };
 
       console.log(billDataToSend);
-  
-      const response = await axios.post("http://54.226.71.2/CreateBill", billDataToSend);
+
+      const response = await axios.post(
+        "http://54.226.71.2/CreateBill",
+        billDataToSend
+      );
+      setBillData({
+        billDate: "",
+        dueDate: "",
+        billNo: "",
+        billTranItems: [],
+        totalAmount: 0,
+        status: "",
+      });
+      setSuccessMessage("Bill submitted successfully successfully!");
       console.log("Bill data submitted successfully:", response.data);
     } catch (error) {
       console.error("Error submitting bill data:", error);
     }
   };
-  
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -108,7 +118,10 @@ const Billing = () => {
       category: "category",
       description: description,
       amount: amount,
-      accountId: billData.billTranItems.length > 0 ? billData.billTranItems[0].accountId : null,
+      accountId:
+        billData.billTranItems.length > 0
+          ? billData.billTranItems[0].accountId
+          : null,
     };
 
     setData([...data, newRow]);
@@ -119,6 +132,11 @@ const Billing = () => {
 
   return (
     <div className="mx-auto">
+      {successMessage && (
+        <div className="mt-4 p-4 bg-green-100 text-green-700">
+          {successMessage}
+        </div>
+      )}
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="mb-4 md:w-1/4">
           <label htmlFor="vendor" className="block mb-1">
@@ -130,6 +148,7 @@ const Billing = () => {
             placeholder="Select vendor"
             onChange={handleVendorChange}
             value={selectedVendor ? selectedVendor.id : ""}
+            required
           >
             <Option value="">Select vendor</Option>
             {vendor.map((vendorData) => (
@@ -165,11 +184,11 @@ const Billing = () => {
               className="w-full"
               value={billData.status}
               onChange={(value) => setBillData({ ...billData, status: value })}
+              readOnly
+              required
             >
               <Option value="">Select status</Option>
               <Option value="pending">Pending</Option>
-              <Option value="cancel">Cancel</Option>
-              <Option value="succeeded">Succeeded</Option>
             </Select>
           </div>
 
@@ -185,6 +204,7 @@ const Billing = () => {
               onChange={(e) =>
                 setBillData({ ...billData, billDate: e.target.value })
               }
+              required
             />
           </div>
 
@@ -200,6 +220,7 @@ const Billing = () => {
               onChange={(e) =>
                 setBillData({ ...billData, dueDate: e.target.value })
               }
+              required
             />
           </div>
 
@@ -216,6 +237,7 @@ const Billing = () => {
               onChange={(e) =>
                 setBillData({ ...billData, billNo: e.target.value })
               }
+              required
             />
           </div>
 
@@ -224,6 +246,7 @@ const Billing = () => {
               defaultValue="Category"
               style={{ width: "75%" }}
               onChange={(value) => handleAccountChange(value)}
+              required
             >
               {accounts.map((accountData) => (
                 <Option key={accountData.id} value={accountData.id}>
@@ -239,6 +262,7 @@ const Billing = () => {
               className="border px-3 py-2 w-3/4"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
+              required
             />
           </div>
           <div className="w-full md:w-1/4 px-4 mb-4">
@@ -248,6 +272,7 @@ const Billing = () => {
               className="border px-3 py-2 w-3/4"
               value={amount}
               onChange={(e) => setAmount(e.target.value)}
+              required
             />
           </div>
         </div>
@@ -257,7 +282,7 @@ const Billing = () => {
             type="submit"
             className="bg-blue-500 text-white rounded px-4 py-2 hover:bg-blue-600"
           >
-            Save
+            Add
           </button>
         </div>
       </form>
@@ -322,13 +347,13 @@ const Billing = () => {
           </tbody>
         </table>
         <div>
-        <button
-          onClick={handleDataSubmit}
-          className="bg-green-500 text-white rounded px-4 py-2 hover:bg-green-600"
-        >
-          Submit Data
-        </button>
-      </div>
+          <button
+            onClick={handleDataSubmit}
+            className="bg-green-500 text-white rounded px-4 py-2 hover:bg-green-600"
+          >
+            Submit Data
+          </button>
+        </div>
       </div>
     </div>
   );
