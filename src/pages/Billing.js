@@ -27,7 +27,9 @@ const Billing = () => {
 
   const fetchVendor = async () => {
     try {
-      const response = await axios.get(`${process.env.REACT_APP_API_URL}/GetAllVendors`);
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}/GetAllVendors`
+      );
       setVendor(response.data);
     } catch (error) {
       console.error("Error fetching vendors", error);
@@ -36,7 +38,9 @@ const Billing = () => {
 
   const fetchAccounts = async () => {
     try {
-      const response = await axios.get(`${process.env.REACT_APP_API_URL}/GetAccounts`);
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}/GetAccounts`
+      );
       setAccounts(response.data);
     } catch (error) {
       console.error("Error fetching accounts", error);
@@ -142,30 +146,30 @@ const Billing = () => {
         </div>
       )}
       <form onSubmit={handleSubmit} className="space-y-4">
-        <div className="mb-4 md:w-1/4">
-          <label htmlFor="vendor" className="block mb-1">
-            Vendor
-          </label>
-          <Select
-            id="vendor"
-            className="w-full"
-            placeholder="Select vendor"
-            onChange={handleVendorChange}
-            value={selectedVendor ? selectedVendor.id : ""}
-            required
-          >
-            <Option value="">Select vendor</Option>
-            {vendor.map((vendorData) => (
-              <Option key={vendorData.id} value={vendorData.id}>
-                {vendorData.title} {vendorData.firstName}{" "}
-                {vendorData.middleName} {vendorData.lastName}
-              </Option>
-            ))}
-          </Select>
-        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div>
+            <label htmlFor="vendor" className="block mb-1">
+              Vendor
+            </label>
+            <Select
+              id="vendor"
+              className="w-full"
+              placeholder="Select vendor"
+              onChange={handleVendorChange}
+              value={selectedVendor ? selectedVendor.id : ""}
+              required
+            >
+              <Option value="">Select vendor</Option>
+              {vendor.map((vendorData) => (
+                <Option key={vendorData.id} value={vendorData.id}>
+                  {vendorData.title} {vendorData.firstName}{" "}
+                  {vendorData.middleName} {vendorData.lastName}
+                </Option>
+              ))}
+            </Select>
+          </div>
 
-        <div className="flex flex-wrap -mx-4">
-          <div className="w-full md:w-1/4 px-4 mb-4">
+          <div>
             <label htmlFor="address" className="block mb-1">
               Address
             </label>
@@ -179,7 +183,7 @@ const Billing = () => {
             ></textarea>
           </div>
 
-          <div className="mb-4 px-4 md:w-1/4">
+          <div>
             <label htmlFor="status" className="block mb-1">
               Status
             </label>
@@ -196,7 +200,7 @@ const Billing = () => {
             </Select>
           </div>
 
-          <div className="w-full md:w-1/4 px-4 mb-4">
+          <div>
             <label htmlFor="billDate" className="block mb-1">
               Bill Date
             </label>
@@ -212,7 +216,7 @@ const Billing = () => {
             />
           </div>
 
-          <div className="w-full md:w-1/4 px-4 mb-4">
+          <div>
             <label htmlFor="dueDate" className="block mb-1">
               Due Date
             </label>
@@ -228,7 +232,7 @@ const Billing = () => {
             />
           </div>
 
-          <div className="w-full md:w-1/4 px-4 mb-4">
+          <div>
             <label htmlFor="billNo" className="block mb-1">
               Bill No
             </label>
@@ -245,25 +249,8 @@ const Billing = () => {
             />
           </div>
 
-          <div className="w-full md:w-1/4 px-4 mb-4">
-          <label htmlFor="billNo" className="block mb-1">
-              Account
-            </label>
-            <Select
-              defaultValue="Category"
-              style={{ width: "75%" }}
-              onChange={(value) => handleAccountChange(value)}
-              required
-            >
-              {accounts.map((accountData) => (
-                <Option key={accountData.id} value={accountData.id}>
-                  {accountData.name}
-                </Option>
-              ))}
-            </Select>
-          </div>
-          <div className="w-full md:w-1/4 px-4 mb-4">
-            <label htmlFor="billNo" className="block mb-1">
+          <div>
+            <label htmlFor="description" className="block mb-1">
               Description of the bill
             </label>
             <textarea
@@ -271,32 +258,34 @@ const Billing = () => {
               onChange={(e) =>
                 setBillData({ ...billData, narration: e.target.value })
               }
-              placeholder="Naration"
+              placeholder="Narration"
               className="w-full border rounded p-2"
               rows={3}
               required
             />
           </div>
-          <div className="w-full md:w-1/4 px-4 mb-4">
-          <label htmlFor="billNo" className="block mb-1">
+
+          <div>
+            <label htmlFor="description" className="block mb-1">
               Description of the items
             </label>
             <textarea
               placeholder="Description"
-              className="border rounded px-3 py-2 w-3/4"
+              className="border rounded px-3 py-2 w-full"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               required
             />
           </div>
-          <div className="w-full md:w-1/4 px-4 mb-4">
-          <label htmlFor="billNo" className="block mb-1">
+
+          <div>
+            <label htmlFor="amount" className="block mb-1">
               Amount
             </label>
             <input
               type="text"
               placeholder="Amount"
-              className="border px-3 py-2 w-3/4"
+              className="border px-3 py-2 w-full"
               value={amount}
               onChange={(e) => setAmount(e.target.value)}
               required
