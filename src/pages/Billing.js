@@ -26,7 +26,6 @@ const Billing = () => {
     try {
       const response = await axios.get("http://54.226.71.2/GetAllVendors");
       setVendor(response.data);
-      console.log(response.data);
     } catch (error) {
       console.error("Error fetching vendors", error);
     }
@@ -62,29 +61,45 @@ const Billing = () => {
       setAddress(selected.email);
     }
   };
-
   const handleAccountChange = (value) => {
-    if (data.length > 0) {
-      const newData = [...data];
-      newData[0].accountId = value;
-      setData(newData);
-    } else {
-      console.error("Data array is empty. Cannot set accountId.");
+    console.log("Selected account id:", value);
+    const newBillTranItem = {
+      accountId: value,
+      description: description,
+      amount: amount,
+    };
+    setBillData((prevBillData) => ({
+      ...prevBillData,
+      billTranItems: [newBillTranItem, ...prevBillData.billTranItems],
+    }));
+  };
+  
+  
+
+  const handleDataSubmit = async () => {
+    try {
+      const billDataToSend = {
+        billDate: billData.billDate,
+        dueDate: billData.dueDate,
+        billNo: billData.billNo,
+        billTranItems: data.map(item => ({
+          accountId: item.accountId,
+          description: item.description,
+          amount: parseFloat(item.amount)
+        })),
+        totalAmount: calculateTotalAmount(),
+        status: billData.status
+      };
+
+      console.log(billDataToSend);
+  
+      const response = await axios.post("http://54.226.71.2/CreateBill", billDataToSend);
+      console.log("Bill data submitted successfully:", response.data);
+    } catch (error) {
+      console.error("Error submitting bill data:", error);
     }
   };
   
-
-  const handleCreateBill = async () => {
-    try {
-      const response = await axios.post(
-        "http://54.226.71.2/CreateBill",
-        billData
-      );
-      console.log("Bill created successfully", response.data);
-    } catch (error) {
-      console.error("Error creating bill", error);
-    }
-  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -93,6 +108,7 @@ const Billing = () => {
       category: "category",
       description: description,
       amount: amount,
+      accountId: billData.billTranItems.length > 0 ? billData.billTranItems[0].accountId : null,
     };
 
     setData([...data, newRow]);
@@ -209,8 +225,8 @@ const Billing = () => {
               style={{ width: "75%" }}
               onChange={(value) => handleAccountChange(value)}
             >
-              {accounts.map((accountData, index) => (
-                <Option key={index} value={accountData.id}>
+              {accounts.map((accountData) => (
+                <Option key={accountData.id} value={accountData.id}>
                   {accountData.name}
                 </Option>
               ))}
@@ -305,6 +321,14 @@ const Billing = () => {
             </tr>
           </tbody>
         </table>
+        <div>
+        <button
+          onClick={handleDataSubmit}
+          className="bg-green-500 text-white rounded px-4 py-2 hover:bg-green-600"
+        >
+          Submit Data
+        </button>
+      </div>
       </div>
     </div>
   );
