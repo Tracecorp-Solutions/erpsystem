@@ -39,7 +39,6 @@ const Vendor = () => {
   };
 
   const vendorsApiUrl = "http://54.226.71.2/GetAllVendors";
-  const createVendorApiUrl = "http://54.226.71.2/CreateVendor";
 
   const fetchVendors = async () => {
     try {
@@ -58,9 +57,9 @@ const Vendor = () => {
 
   const handleSubmit = async () => {
     try {
-      const response = await axios.post(createVendorApiUrl, newVendor);
-      console.log("Vendor created successfully:", response.data);
-      setSuccessMessage("Vendor created successfully!");
+      const createVendorApiUrl = `${process.env.REACT_APP_API_URL}/CreateVendor`; // Corrected endpoint URL
+      const response = await axios.post(createVendorApiUrl, newVendor); // Corrected axios.post usage
+      setSuccessMessage("Vendor created successfully!"); 
       // Clear the form fields
       setNewVendor({
         title: "",
