@@ -1,6 +1,6 @@
 ﻿using Core.Models;
 using Core.Repositories;
-using Infrastructure;
+using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

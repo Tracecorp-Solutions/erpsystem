@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Core.Models;
 using Microsoft.EntityFrameworkCore;
-using Infrastructure;
+using Infrastructure.Data;
 
 namespace Services.Repositories
 {

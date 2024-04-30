@@ -5,7 +5,7 @@ using Core.Repositories;
 using Core.Models;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Infrastructure.Repositories;
+using Services.Repositories;
 
 namespace Trace.Test
 {
