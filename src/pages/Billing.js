@@ -7,7 +7,7 @@ const { Option } = Select;
 const Billing = () => {
   const [vendor, setVendor] = useState([]);
   const [selectedVendor, setselectedVendor] = useState(null);
-  const [address, setAddress] = useState("");
+  const [addres, setAddress] = useState("");
   const [accounts, setAccounts] = useState([]);
   const [billData, setBillData] = useState({
     billDate: "",
@@ -64,9 +64,14 @@ const Billing = () => {
     const selected = vendor.find((v) => v.id === value);
     if (selected) {
       setselectedVendor(selected);
-      setAddress(selected.email);
+      if (selected.addres && selected.addres.city) {
+        setAddress(selected.addres.city);
+      } else {
+        setAddress("");
+      }
     }
   };
+  
   const handleAccountChange = (value) => {
     console.log("Selected account id:", value);
     const newBillTranItem = {
@@ -178,7 +183,7 @@ const Billing = () => {
               className="w-full border rounded p-2"
               rows="4"
               placeholder="Enter address"
-              value={address}
+              value={addres}
               readOnly
             ></textarea>
           </div>
@@ -292,6 +297,24 @@ const Billing = () => {
             />
           </div>
         </div>
+
+        <div className="w-full md:w-1/4 px-4 mb-4">
+          <label htmlFor="billNo" className="block mb-1">
+              Account
+            </label>
+            <Select
+              defaultValue="Category"
+              style={{ width: "75%" }}
+              onChange={(value) => handleAccountChange(value)}
+              required
+            >
+              {accounts.map((accountData) => (
+                <Option key={accountData.id} value={accountData.id}>
+                  {accountData.name}
+                </Option>
+              ))}
+            </Select>
+          </div>
 
         <div>
           <button
