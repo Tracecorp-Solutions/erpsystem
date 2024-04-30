@@ -15,6 +15,10 @@ namespace Core.Models
         public List<BillTranItems> BillTranItems { get; set; }
         public decimal? TotalAmount { get; set; }
 
+        public string Type { get; set; }
+
+        public string? Narration { get; set; }
+
         public string Status { get; set; }
 
     }
