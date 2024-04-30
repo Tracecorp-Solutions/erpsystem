@@ -20,6 +20,7 @@ namespace Infrastructure
         public DbSet<Bill> Bills { get; set; }
 
         public DbSet<BillTranItems> billTranItems { get; set; }
+        public DbSet<Product> Products { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -34,6 +35,7 @@ namespace Infrastructure
             modelBuilder.Entity<SubGroupAccount>().ToTable("subgroupaccounts");
             modelBuilder.Entity<Bill>().ToTable("bills");
             modelBuilder.Entity<BillTranItems>().ToTable("billtranitems");
+            modelBuilder.Entity<Product>().ToTable("Products");
         }
     }
 

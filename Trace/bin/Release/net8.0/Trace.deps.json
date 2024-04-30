@@ -677,7 +677,8 @@
       },
       "Services/1.0.0": {
         "dependencies": {
-          "Core": "1.0.0"
+          "Core": "1.0.0",
+          "Infrastructure": "1.0.0"
         },
         "runtime": {
           "Services.dll": {}

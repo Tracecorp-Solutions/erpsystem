@@ -2,6 +2,7 @@ using Core.Repositories;
 using Infrastructure;
 using Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Services.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,11 +11,12 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"),
     ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("DefaultConnection"))));
 
-builder.Services.AddScoped<IGroupAccountRepository, GroupAccountRepository>();
-builder.Services.AddScoped<IAccountRepository, AccountRepository>();
-builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
-builder.Services.AddScoped<IVendorRepository, VendorRepository>();
-builder.Services.AddScoped<IBillRepository, BillRepository>();
+builder.Services.AddScoped<IGroupAccountRepository, Infrastructure.Repositories.GroupAccountRepository>();
+builder.Services.AddScoped<IAccountRepository, Infrastructure.Repositories.AccountRepository>();
+builder.Services.AddScoped<ITransactionRepository, Infrastructure.Repositories.TransactionRepository>();
+builder.Services.AddScoped<IVendorRepository, Infrastructure.Repositories.VendorRepository>();
+builder.Services.AddScoped<IBillRepository, Infrastructure.Repositories.BillRepository>();
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
 
 builder.Services.AddControllers();
 builder.Services.AddCors(options =>

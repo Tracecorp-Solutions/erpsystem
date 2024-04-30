@@ -48,6 +48,22 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "Trace.Controllers.ProductsController",
+    "Method": "CreateProduct",
+    "RelativePath": "CreateProduct",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "product",
+        "Type": "Core.Models.Product",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "Trace.Controllers.GroupAccountsController",
     "Method": "CreateSubGroupAccount",
     "RelativePath": "CreateSubGroupAccount",
@@ -103,6 +119,16 @@
     "ContainingType": "Trace.Controllers.GroupAccountsController",
     "Method": "GetAllGroupAccounts",
     "RelativePath": "GetAllGroupAccounts",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Trace.Controllers.ProductsController",
+    "Method": "GetAllProducts",
+    "RelativePath": "GetAllProducts",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,

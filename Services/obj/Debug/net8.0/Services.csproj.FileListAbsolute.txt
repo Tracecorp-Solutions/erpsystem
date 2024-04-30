@@ -14,3 +14,5 @@ D:\working directory\erpsystem\Services\obj\Debug\net8.0\Services.dll
 D:\working directory\erpsystem\Services\obj\Debug\net8.0\refint\Services.dll
 D:\working directory\erpsystem\Services\obj\Debug\net8.0\Services.pdb
 D:\working directory\erpsystem\Services\obj\Debug\net8.0\ref\Services.dll
+D:\working directory\erpsystem\Services\bin\Debug\net8.0\Infrastructure.dll
+D:\working directory\erpsystem\Services\bin\Debug\net8.0\Infrastructure.pdb

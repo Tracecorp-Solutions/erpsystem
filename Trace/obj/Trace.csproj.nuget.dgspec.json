@@ -164,6 +164,9 @@
             "projectReferences": {
               "D:\\working directory\\erpsystem\\Core\\Core.csproj": {
                 "projectPath": "D:\\working directory\\erpsystem\\Core\\Core.csproj"
+              },
+              "D:\\working directory\\erpsystem\\Infrastructure\\Infrastructure.csproj": {
+                "projectPath": "D:\\working directory\\erpsystem\\Infrastructure\\Infrastructure.csproj"
               }
             }
           }
