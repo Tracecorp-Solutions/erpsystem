@@ -17,21 +17,7 @@ const Billing = () => {
     totalAmount: 0,
     status: "",
   });
-
-  const [data, setData] = useState([
-    {
-      key: "1",
-      category: "category1",
-      description: "Lorem ipsum dolor sit amet",
-      amount: "100",
-    },
-    {
-      key: "2",
-      category: "category2",
-      description: "Consectetur adipiscing elit",
-      amount: "200",
-    },
-  ]);
+  const [data, setData] = useState([]);
 
   const [description, setDescription] = useState("");
   const [amount, setAmount] = useState("");
@@ -78,10 +64,15 @@ const Billing = () => {
   };
 
   const handleAccountChange = (value) => {
-    const newData = [...data];
-    newData[0].accountId = value;
-    setData(newData);
+    if (data.length > 0) {
+      const newData = [...data];
+      newData[0].accountId = value;
+      setData(newData);
+    } else {
+      console.error("Data array is empty. Cannot set accountId.");
+    }
   };
+  
 
   const handleCreateBill = async () => {
     try {
