@@ -16,13 +16,11 @@ const Vendor = () => {
     fax: "",
     other: "",
     website: "",
-    address: {
-      id: 0,
+    addres: {
       street: "",
       city: "",
       zipCode: "",
       country: "",
-      vendorId: 0,
     },
     billingRate: 0,
     openingBalance: 0,
@@ -30,7 +28,6 @@ const Vendor = () => {
     notes: "",
     businessIdNo: "",
     status: "",
-    accountId: 0,
   });
   const [vendors, setVendors] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -78,13 +75,11 @@ const Vendor = () => {
         fax: "",
         other: "",
         website: "",
-        address: {
-          id: 0,
+        addres: {
           street: "",
           city: "",
           zipCode: "",
           country: "",
-          vendorId: 0,
         },
         billingRate: 0,
         openingBalance: 0,
@@ -92,7 +87,6 @@ const Vendor = () => {
         notes: "",
         businessIdNo: "",
         status: "",
-        accountId: 0,
       });
       // Refresh vendors list
       fetchVendors();
@@ -362,29 +356,6 @@ const Vendor = () => {
             <div className="grid grid-cols-4 gap-4">
               <div className="mb-4">
                 <label
-                  htmlFor="Id"
-                  className="block text-sm font-medium text-gray-700"
-                >
-                  Id
-                </label>
-                <input
-                  type="number"
-                  name="Id"
-                  id="Id"
-                  value={newVendor.address.id}
-                  onChange={(e) =>
-                    setNewVendor({
-                      ...newVendor,
-                      address: { ...newVendor.address, id: e.target.value },
-                    })
-                  }
-                  className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                  placeholder="ID."
-                  style={{ padding: "18px" }}
-                />
-              </div>
-              <div className="mb-4">
-                <label
                   htmlFor="street"
                   className="block text-sm font-medium text-gray-700"
                 >
@@ -394,11 +365,11 @@ const Vendor = () => {
                   type="text"
                   name="street"
                   id="street"
-                  value={newVendor.address.street}
+                  value={newVendor.addres.street}
                   onChange={(e) =>
                     setNewVendor({
                       ...newVendor,
-                      address: { ...newVendor.address, street: e.target.value },
+                      addres: { ...newVendor.addres, street: e.target.value },
                     })
                   }
                   className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
@@ -417,11 +388,11 @@ const Vendor = () => {
                   type="text"
                   name="city"
                   id="city"
-                  value={newVendor.address.city}
+                  value={newVendor.addres.city}
                   onChange={(e) =>
                     setNewVendor({
                       ...newVendor,
-                      address: { ...newVendor.address, city: e.target.value },
+                      addres: { ...newVendor.addres, city: e.target.value },
                     })
                   }
                   className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
@@ -440,12 +411,12 @@ const Vendor = () => {
                   type="text"
                   name="zipCode"
                   id="zipCode"
-                  value={newVendor.address.zipCode}
+                  value={newVendor.addres.zipCode}
                   onChange={(e) =>
                     setNewVendor({
                       ...newVendor,
-                      address: {
-                        ...newVendor.address,
+                      addres: {
+                        ...newVendor.addres,
                         zipCode: e.target.value,
                       },
                     })
@@ -469,44 +440,18 @@ const Vendor = () => {
                   type="text"
                   name="country"
                   id="country"
-                  value={newVendor.address.country}
+                  value={newVendor.addres.country}
                   onChange={(e) =>
                     setNewVendor({
                       ...newVendor,
-                      address: {
-                        ...newVendor.address,
+                      addres: {
+                        ...newVendor.addres,
                         country: e.target.value,
                       },
                     })
                   }
                   className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                   placeholder="Enter country..."
-                  style={{ padding: "18px" }}
-                />
-              </div>
-              <div className="mb-4">
-                <label
-                  htmlFor="vendorId"
-                  className="block text-sm font-medium text-gray-700"
-                >
-                  Vendor ID
-                </label>
-                <input
-                  type="text"
-                  name="vendorId"
-                  id="vendorId"
-                  value={newVendor.address.vendorId}
-                  onChange={(e) =>
-                    setNewVendor({
-                      ...newVendor,
-                      address: {
-                        ...newVendor.address,
-                        vendorId: e.target.value,
-                      },
-                    })
-                  }
-                  className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                  placeholder="Enter vendor ID..."
                   style={{ padding: "18px" }}
                 />
               </div>
@@ -644,26 +589,6 @@ const Vendor = () => {
               </div>
             </div>
 
-            <div className="mb-4">
-              <label
-                htmlFor="billingRate"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Account Id
-              </label>
-              <input
-                type="number"
-                name="accountId"
-                id="accountId"
-                value={newVendor.accountId}
-                onChange={(e) =>
-                  setNewVendor({ ...newVendor, accountId: e.target.value })
-                }
-                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                placeholder="Enter account Number..."
-                style={{ padding: "18px" }}
-              />
-            </div>
             {/* Middle Name */}
 
             {/* Last Name */}
@@ -687,6 +612,80 @@ const Vendor = () => {
           </div>
         </div>
       )}
+
+      {/* <div className="-mx-4 mt-8 flow-root sm:mx-0">
+      <table class="table table-striped">
+          
+          <thead>
+            <tr>
+              <th scope="col">Date</th>
+              <th scope="col">Name</th>
+              <th scope="col">Balance</th>
+              <th scope="col">Edit</th>
+            </tr>
+          </thead>
+          <tbody class="bg-white>
+        {vendors.map((vendor) => (
+          <tr key={vendor.id} class="even:bg-gray-50">
+             <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+              {vendor.openingBalanceDate}
+            </td>
+            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+              <div className="text-sm font-medium text-gray-900">
+                {vendor.title} {vendor.firstName} {vendor.lastName}
+              </div>
+              <div className="text-sm text-gray-500">{vendor.email}</div>
+            </td>
+        
+            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+              {vendor.openingBalance}
+            </td>
+           
+            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+              {vendor.edit}
+            </td>
+          </tr>
+        ))}
+      </tbody>
+     
+
+        </table>
+      </div> */}
+      <div class="px-4 sm:px-6 lg:px-8">
+ 
+  <div class="mt-8 flow-root">
+    <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+      <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+        <table class="min-w-full divide-y divide-gray-300">
+          <thead>
+            <tr>
+              <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3">Date</th>
+              <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Name</th>
+              <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Balance</th>
+              
+              <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-3">
+                <span class="sr-only">Edit</span>
+              </th>
+            </tr>
+          </thead>
+          <tbody class="bg-white">
+            {vendors.map((vendor) => (
+
+            <tr key={vendor.id} class="even:bg-gray-50">
+              <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-3">{vendor.openingBalanceDate}</td>
+              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"> {vendor.title} {vendor.firstName} {vendor.lastName}</td>
+              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{vendor.openingBalance}</td>
+              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"> {vendor.edit}</td>
+              
+            </tr>
+             ))}
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
 
       {/* Display success or error message */}
       {successMessage && <p className="text-green-600">{successMessage}</p>}
