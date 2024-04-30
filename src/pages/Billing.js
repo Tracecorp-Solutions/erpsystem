@@ -1,35 +1,114 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Select } from "antd";
+import axios from "axios";
 
 const { Option } = Select;
 
 const Billing = () => {
-    const [data, setData] = useState([
-        {
-          key: "1",
-          category: "category1",
-          description: "Lorem ipsum dolor sit amet",
-          amount: "100",
-        },
-        {
-          key: "2",
-          category: "category2",
-          description: "Consectetur adipiscing elit",
-          amount: "200",
-        },
-      ]);
-    
-      const calculateTotalAmount = () => {
-        let total = 0;
-        data.forEach((item) => {
-          total += parseFloat(item.amount);
-        });
-        return total;
-      };
-    
-      const handleSubmit = (e) => {
-        e.preventDefault();
-      };
+  const [vendor, setVendor] = useState([]);
+  const [selectedVendor, setselectedVendor] = useState(null);
+  const [address, setAddress] = useState("");
+  const [accounts, setAccounts] = useState([]);
+  const [billData, setBillData] = useState({
+    billDate: "",
+    dueDate: "",
+    billNo: "",
+    billTranItems: [],
+    totalAmount: 0,
+    status: "",
+  });
+
+  const [data, setData] = useState([
+    {
+      key: "1",
+      category: "category1",
+      description: "Lorem ipsum dolor sit amet",
+      amount: "100",
+    },
+    {
+      key: "2",
+      category: "category2",
+      description: "Consectetur adipiscing elit",
+      amount: "200",
+    },
+  ]);
+
+  const [description, setDescription] = useState("");
+  const [amount, setAmount] = useState("");
+
+  const fetchVendor = async () => {
+    try {
+      const response = await axios.get("http://54.226.71.2/GetAllVendors");
+      setVendor(response.data);
+      console.log(response.data);
+    } catch (error) {
+      console.error("Error fetching vendors", error);
+    }
+  };
+
+  const fetchAccounts = async () => {
+    try {
+      const response = await axios.get("http://54.226.71.2/GetAccounts");
+      setAccounts(response.data);
+      console.log(response.data);
+    } catch (error) {
+      console.error("Error fetching accounts", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchVendor();
+    fetchAccounts();
+  }, []);
+
+  const calculateTotalAmount = () => {
+    let total = 0;
+    data.forEach((item) => {
+      total += parseFloat(item.amount);
+    });
+    return total;
+  };
+
+  const handleVendorChange = (value) => {
+    const selected = vendor.find((v) => v.id === value);
+    if (selected) {
+      setselectedVendor(selected);
+      setAddress(selected.email);
+    }
+  };
+
+  const handleAccountChange = (value) => {
+    const newData = [...data];
+    newData[0].accountId = value;
+    setData(newData);
+  };
+
+  const handleCreateBill = async () => {
+    try {
+      const response = await axios.post(
+        "http://54.226.71.2/CreateBill",
+        billData
+      );
+      console.log("Bill created successfully", response.data);
+    } catch (error) {
+      console.error("Error creating bill", error);
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const newRow = {
+      key: Date.now().toString(),
+      category: "category",
+      description: description,
+      amount: amount,
+    };
+
+    setData([...data, newRow]);
+
+    setDescription("");
+    setAmount("");
+  };
 
   return (
     <div className="mx-auto">
@@ -38,10 +117,20 @@ const Billing = () => {
           <label htmlFor="vendor" className="block mb-1">
             Vendor
           </label>
-          <Select id="vendor" className="w-full" placeholder="Select vendor">
+          <Select
+            id="vendor"
+            className="w-full"
+            placeholder="Select vendor"
+            onChange={handleVendorChange}
+            value={selectedVendor ? selectedVendor.id : ""}
+          >
             <Option value="">Select vendor</Option>
-            <Option value="vendor1">Vendor 1</Option>
-            <Option value="vendor2">Vendor 2</Option>
+            {vendor.map((vendorData) => (
+              <Option key={vendorData.id} value={vendorData.id}>
+                {vendorData.title} {vendorData.firstName}{" "}
+                {vendorData.middleName} {vendorData.lastName}
+              </Option>
+            ))}
           </Select>
         </div>
 
@@ -55,17 +144,25 @@ const Billing = () => {
               className="w-full border rounded p-2"
               rows="4"
               placeholder="Enter address"
+              value={address}
+              readOnly
             ></textarea>
           </div>
 
           <div className="mb-4 px-4 md:w-1/4">
-            <label htmlFor="bill" className="block mb-1">
-              Bill
+            <label htmlFor="status" className="block mb-1">
+              Status
             </label>
-            <Select id="bill" className="w-full" placeholder="Select bill">
-              <Option value="">Select bill</Option>
-              <Option value="bill1">Bill 1</Option>
-              <Option value="bill2">Bill 2</Option>
+            <Select
+              id="status"
+              className="w-full"
+              value={billData.status}
+              onChange={(value) => setBillData({ ...billData, status: value })}
+            >
+              <Option value="">Select status</Option>
+              <Option value="pending">Pending</Option>
+              <Option value="cancel">Cancel</Option>
+              <Option value="succeeded">Succeeded</Option>
             </Select>
           </div>
 
@@ -77,6 +174,10 @@ const Billing = () => {
               type="date"
               id="billDate"
               className="w-full border rounded p-2"
+              value={billData.billDate}
+              onChange={(e) =>
+                setBillData({ ...billData, billDate: e.target.value })
+              }
             />
           </div>
 
@@ -88,6 +189,10 @@ const Billing = () => {
               type="date"
               id="dueDate"
               className="w-full border rounded p-2"
+              value={billData.dueDate}
+              onChange={(e) =>
+                setBillData({ ...billData, dueDate: e.target.value })
+              }
             />
           </div>
 
@@ -100,6 +205,42 @@ const Billing = () => {
               id="billNo"
               className="w-full border rounded p-2"
               placeholder="Enter bill number"
+              value={billData.billNo}
+              onChange={(e) =>
+                setBillData({ ...billData, billNo: e.target.value })
+              }
+            />
+          </div>
+
+          <div className="w-full md:w-1/4 px-4 mb-4">
+            <Select
+              defaultValue="Category"
+              style={{ width: "75%" }}
+              onChange={(value) => handleAccountChange(value)}
+            >
+              {accounts.map((accountData, index) => (
+                <Option key={index} value={accountData.id}>
+                  {accountData.name}
+                </Option>
+              ))}
+            </Select>
+          </div>
+          <div className="w-full md:w-1/4 px-4 mb-4">
+            <input
+              type="text"
+              placeholder="Description"
+              className="border px-3 py-2 w-3/4"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+            />
+          </div>
+          <div className="w-full md:w-1/4 px-4 mb-4">
+            <input
+              type="text"
+              placeholder="Amount"
+              className="border px-3 py-2 w-3/4"
+              value={amount}
+              onChange={(e) => setAmount(e.target.value)}
             />
           </div>
         </div>
@@ -109,7 +250,7 @@ const Billing = () => {
             type="submit"
             className="bg-blue-500 text-white rounded px-4 py-2 hover:bg-blue-600"
           >
-            Submit
+            Save
           </button>
         </div>
       </form>
@@ -143,33 +284,9 @@ const Billing = () => {
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
-            <tr>
-            <Select
-                  defaultValue="Category"
-                  style={{ width: "75%" }}
-                  onChange={(value) => {
-                  }}
-                >
-                  <Option value="category1">Category 1</Option>
-                  <Option value="category2">Category 2</Option>
-                </Select>
-              <td>
-                <input
-                  type="text"
-                  placeholder="Description"
-                  className="border px-3 py-2 w-3/4"
-                />
-              </td>
-              <td>
-                <input
-                  type="text"
-                  placeholder="Amount"
-                  className="border px-3 py-2 w-3/4"
-                />
-              </td>
-            </tr>
-            {data.map((rowData, index) => (
-              <tr key={index}>
+            <tr></tr>
+            {data.map((rowData) => (
+              <tr key={rowData.key}>
                 <td className="px-3 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                   {rowData.category}
                 </td>
