@@ -32,14 +32,6 @@ import Budgets from "../pages/Budgets"
 import Financial from "../pages/Financial";
 import Transfers from "../pages/Transfers";
 
-import GroupAccount from "../pages/GroupCreation";
-import AccountCreation from "../pages/AccountCreation";
-
-import Account from "../pages/AccountCreation";
-import Petty from "../pages/Petty";
-import SubGroup from "../pages/SubGroup";
-import Billing from "../pages/Billing";
-
 
 const navigation = [
   {
@@ -48,8 +40,8 @@ const navigation = [
     current: true,
     submenuItem: true,
     submenu: [
-      { name: "Home", href: "/", current: false },
-     
+      { name: "Home", href: "/dashboard/", current: false },
+      { name: "Vendors", href: "/dashboard/vendors", current: false },
     ],
   },
   {
@@ -81,9 +73,7 @@ const navigation = [
     icon: CalendarIcon,
     current: false,
     submenuItem: true,
-    submenu: [
-    { name: "Billing", href: "/billing", current: false },
-    { name: "Expense", href: "/expense", current: false }],
+    submenu: [{ name: "Expense", href: "/expense", current: false }],
   },
   {
     name: "Chart of Accounts",
@@ -176,24 +166,25 @@ export default function Main() {
                     </div>
                   </Transition.Child>
                   {/* Sidebar component, swap this element with another sidebar if you like */}
-                  <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-cyan-600 px-6 pb-4">
+                  <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-indigo-600 px-6 pb-4">
                     <div className="flex h-16 shrink-0 items-center">
                       <img
-                        className="h-8 w-8 rounded-full"
+                        className="h-8 w-auto"
                         src="https://www.tracecorpsolutions.com/wp-content/uploads/2019/05/Tracecorp-logo.png"
                         alt="TraceCorp"
                       />
                     </div>
                     <nav className="flex flex-1 flex-col">
-                      <ul className="flex flex-1 flex-col gap-y-7">
+                      <ul role="list" className="flex flex-1 flex-col gap-y-7">
                         <li>
+                          <ul role="list" className="-mx-2 space-y-1">
                           {navigation.map((item) => (
                         <Menu key={item.name} as="div" className="relative">
                           <Menu.Button
                             className={classNames(
                               item.current
-                                ? "bg-cyan-800 text-white"
-                                : "text-cyan-200 hover:text-white hover:bg-cyan-600",
+                                ? "bg-indigo-700 text-white"
+                                : "text-indigo-200 hover:text-white hover:bg-indigo-700",
                               "group flex items-center px-2 py-2 text-sm font-medium rounded-md"
                             )}
                             style={{ width: "250px" }}
@@ -202,7 +193,7 @@ export default function Main() {
                               className={classNames(
                                 item.current
                                   ? "text-white"
-                                  : "text-cyan-400 group-hover:text-white",
+                                  : "text-indigo-400 group-hover:text-white",
                                 "mr-3 flex-shrink-0 h-6 w-6"
                               )}
                               aria-hidden="true"
@@ -213,7 +204,7 @@ export default function Main() {
                                 className={classNames(
                                   item.current
                                     ? "text-white"
-                                    : "text-cyan-400 group-hover:text-white",
+                                    : "text-indigo-400 group-hover:text-white",
                                   "ml-auto h-5 w-5"
                                 )}
                                 aria-hidden="true"
@@ -250,24 +241,25 @@ export default function Main() {
                           </Transition>
                         </Menu>
                       ))}
+                          </ul>
                         </li>
                         <li>
-                          <div className="text-xs font-semibold leading-6 text-cyan-200">
+                          <div className="text-xs font-semibold leading-6 text-indigo-200">
                             Your teams
                           </div>
-                          <ul className="-mx-2 mt-2 space-y-1">
+                          <ul role="list" className="-mx-2 mt-2 space-y-1">
                             {teams.map((team) => (
                               <li key={team.name}>
                                 <a
                                   href={team.href}
                                   className={classNames(
                                     team.current
-                                      ? "bg-cyan-700 text-white"
-                                      : "text-cyan-200 hover:text-white hover:bg-cyan-700",
+                                      ? "bg-indigo-700 text-white"
+                                      : "text-indigo-200 hover:text-white hover:bg-indigo-700",
                                     "group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold"
                                   )}
                                 >
-                                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-cyan-400 bg-cyan-500 text-[0.625rem] font-medium text-white">
+                                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-indigo-400 bg-indigo-500 text-[0.625rem] font-medium text-white">
                                     {team.initial}
                                   </span>
                                   <span className="truncate">{team.name}</span>
@@ -278,11 +270,11 @@ export default function Main() {
                         </li>
                         <li className="mt-auto">
                           <a
-                            href="/"
-                            className="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-cyan-200 hover:bg-cyan-700 hover:text-white"
+                            href="#"
+                            className="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-indigo-200 hover:bg-indigo-700 hover:text-white"
                           >
                             <Cog6ToothIcon
-                              className="h-6 w-6 shrink-0 text-cyan-200 group-hover:text-white"
+                              className="h-6 w-6 shrink-0 text-indigo-200 group-hover:text-white"
                               aria-hidden="true"
                             />
                             Settings
@@ -300,10 +292,10 @@ export default function Main() {
         {/* Static sidebar for desktop */}
         <div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col">
           {/* Sidebar component, swap this element with another sidebar if you like */}
-          <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-cyan-600 px-6 pb-4">
-            <div className="flex h-16 shrink-0 flex justify-center items-center rounded-lg mt-3">
+          <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-indigo-600 px-6 pb-4">
+            <div className="flex h-16 w-32 shrink-0 items-center rounded-lg mt-3">
               <img
-                className="h-20 w-20 bg-white rounded-full"
+                className="h-16 w-28 bg-white rounded-lg"
                 src="https://www.tracecorpsolutions.com/wp-content/uploads/2019/05/Tracecorp-logo.png"
                 alt="Your Company"
             
@@ -311,8 +303,9 @@ export default function Main() {
             
             </div>
             <nav className="flex flex-1 flex-col">
-              <ul className="flex flex-1 flex-col gap-y-7">
+              <ul role="list" className="flex flex-1 flex-col gap-y-7">
                 <li>
+                  <ul role="list" className="-mx-2 space-y-1">
                     {navigation.map((item) => (
                       <li key={item.name}>
                         {item.submenu ? (
@@ -321,8 +314,8 @@ export default function Main() {
                               className={classNames(
                                 "group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold",
                                 item.current
-                                  ? "bg-cyan-700 text-white"
-                                  : "text-cyan-200 hover:text-white hover:bg-cyan-600"
+                                  ? "bg-indigo-700 text-white"
+                                  : "text-indigo-200 hover:text-white hover:bg-indigo-700"
                               )}
                               style={{ width: "250px" }}
                             >
@@ -330,7 +323,7 @@ export default function Main() {
                                 className={classNames(
                                   item.current
                                     ? "text-white"
-                                    : "text-cyan-200 group-hover:text-white",
+                                    : "text-indigo-200 group-hover:text-white",
                                   "h-6 w-6 shrink-0"
                                 )}
                                 aria-hidden="true"
@@ -342,7 +335,7 @@ export default function Main() {
                                   className={classNames(
                                     item.current
                                       ? "text-white"
-                                      : "text-cyan-200 group-hover:text-white",
+                                      : "text-indigo-200 group-hover:text-white",
                                     "h-5 w-5 text-gray-400 group-hover:text-white"
                                   )}
                                   aria-hidden="true"
@@ -367,9 +360,9 @@ export default function Main() {
                                         href={subItem.href}
                                         className={classNames(
                                           active
-                                            ? " text-gray-900  hover:bg-cyan-700"
+                                            ? " text-gray-900  hover:bg-indigo-700"
                                             : "text-gray-700",
-                                          "block px-4 py-2 text-sm  hover:bg-cyan-700"
+                                          "block px-4 py-2 text-sm  hover:bg-indigo-700"
                                         )}
                                         style={{color: "white"}}
                                       >
@@ -386,8 +379,8 @@ export default function Main() {
                             href={item.href}
                             className={classNames(
                               item.current
-                                ? "bg-cyan-700 text-white"
-                                : "text-cyan-200 hover:text-white hover:bg-cyan-700",
+                                ? "bg-indigo-700 text-white"
+                                : "text-indigo-200 hover:text-white hover:bg-indigo-700",
                               "group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold"
                             )}
                           >
@@ -395,7 +388,7 @@ export default function Main() {
                               className={classNames(
                                 item.current
                                   ? "text-white"
-                                  : "text-cyan-200 group-hover:text-white",
+                                  : "text-indigo-200 group-hover:text-white",
                                 "h-6 w-6 shrink-0"
                               )}
                               aria-hidden="true"
@@ -405,24 +398,25 @@ export default function Main() {
                         )}
                       </li>
                     ))}
+                  </ul>
                 </li>
                 <li>
-                  <div className="text-xs font-semibold leading-6 text-cyan-200">
+                  <div className="text-xs font-semibold leading-6 text-indigo-200">
                     Your teams
                   </div>
-                  <ul className="-mx-2 mt-2 space-y-1">
+                  <ul role="list" className="-mx-2 mt-2 space-y-1">
                     {teams.map((team) => (
                       <li key={team.name}>
                         <a
                           href={team.href}
                           className={classNames(
                             team.current
-                              ? "bg-cyan-700 text-white"
-                              : "text-cyan-200 hover:text-white hover:bg-cyan-700",
+                              ? "bg-indigo-700 text-white"
+                              : "text-indigo-200 hover:text-white hover:bg-indigo-700",
                             "group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold"
                           )}
                         >
-                          <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-cyan-400 bg-cyan-500 text-[0.625rem] font-medium text-white">
+                          <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-indigo-400 bg-indigo-500 text-[0.625rem] font-medium text-white">
                             {team.initial}
                           </span>
                           <span className="truncate">{team.name}</span>
@@ -433,11 +427,11 @@ export default function Main() {
                 </li>
                 <li className="mt-auto">
                   <a
-                    href="/"
-                    className="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-cyan-200 hover:bg-cyan-700 hover:text-white"
+                    href="#"
+                    className="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-indigo-200 hover:bg-indigo-700 hover:text-white"
                   >
                     <Cog6ToothIcon
-                      className="h-6 w-6 shrink-0 text-cyan-200 group-hover:text-white"
+                      className="h-6 w-6 shrink-0 text-indigo-200 group-hover:text-white"
                       aria-hidden="true"
                     />
                     Settings
@@ -554,7 +548,7 @@ export default function Main() {
           <main className="py-10">
             <div className="px-4 sm:px-6 lg:px-8">
               <Routes>
-                <Route path="/" element={<Dashboard />} />
+                <Route path="/dashboard/" element={<Dashboard />} />
                 <Route path="/dashboard/vendors" element={<Vendors />} />
                 <Route path="/deposit" element={<Deposit />} />
                 <Route path="/profit" element={<Profit />} />
@@ -567,12 +561,7 @@ export default function Main() {
                 <Route path="/budgets" element={<Budgets />} />
                 <Route path="/financial" element={<Financial />} />
                 <Route path="/transfers" element={<Transfers />} />
-                <Route path="/account-creation" element={<GroupAccount />} />
-                <Route path="/account" element={<AccountCreation />} />
-                <Route path="/account-creation" element={<Account />} />
-                <Route path="/petty" element={<Petty />} />
-                <Route path="/sub-group" element={<SubGroup />} />
-                <Route path="/billing" element={<Billing />} />
+                
               </Routes>
             </div>
           </main>
