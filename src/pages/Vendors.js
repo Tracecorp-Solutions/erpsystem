@@ -458,7 +458,7 @@ const Vendor = () => {
             </div>
 
             <div className="grid grid-cols-3 gap-4">
-              <div className="mb-4">
+              <div className="mb-3">
                 <label
                   htmlFor="billingRate"
                   className="block text-sm font-medium text-gray-700"
@@ -478,7 +478,7 @@ const Vendor = () => {
                   style={{ padding: "18px" }}
                 />
               </div>
-              <div className="mb-4">
+              <div className="mb-3">
                 <label
                   htmlFor="openingBalance"
                   className="block text-sm font-medium text-gray-700"
@@ -501,7 +501,7 @@ const Vendor = () => {
                   style={{ padding: "18px" }}
                 />
               </div>
-              <div className="mb-4">
+              <div className="mb-3">
                 <label
                   htmlFor="openingBalanceDate"
                   className="block text-sm font-medium text-gray-700"
@@ -547,7 +547,7 @@ const Vendor = () => {
                   style={{ padding: "18px" }}
                 />
               </div>
-              <div className="mb-4">
+              <div className="mb-3">
                 <label
                   htmlFor="businessIdNo"
                   className="block text-sm font-medium text-gray-700"
@@ -567,7 +567,7 @@ const Vendor = () => {
                   style={{ padding: "18px" }}
                 />
               </div>
-              <div className="mb-4">
+              <div className="mb-3">
                 <label
                   htmlFor="status"
                   className="block text-sm font-medium text-gray-700"

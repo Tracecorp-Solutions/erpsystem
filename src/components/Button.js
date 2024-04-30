@@ -101,7 +101,7 @@ export default function NavigationHeader() {
           </div>
           <div className="py-1" role="none">
             <a
-              href="#"
+              href="/products"
               className="text-gray-700 block px-4 py-2 text-sm"
               role="menuitem"
               tabIndex="-1"
