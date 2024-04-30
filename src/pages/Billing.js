@@ -16,6 +16,8 @@ const Billing = () => {
     billTranItems: [],
     totalAmount: 0,
     status: "",
+    type: "Bill",
+    narration: "",
   });
   const [data, setData] = useState([]);
 
@@ -25,7 +27,7 @@ const Billing = () => {
 
   const fetchVendor = async () => {
     try {
-      const response = await axios.get("http://54.226.71.2/GetAllVendors");
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/GetAllVendors`);
       setVendor(response.data);
     } catch (error) {
       console.error("Error fetching vendors", error);
@@ -34,9 +36,8 @@ const Billing = () => {
 
   const fetchAccounts = async () => {
     try {
-      const response = await axios.get("http://54.226.71.2/GetAccounts");
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/GetAccounts`);
       setAccounts(response.data);
-      console.log(response.data);
     } catch (error) {
       console.error("Error fetching accounts", error);
     }
@@ -88,12 +89,13 @@ const Billing = () => {
         })),
         totalAmount: calculateTotalAmount(),
         status: billData.status,
+        type: "Bill",
       };
 
       console.log(billDataToSend);
 
-      const response = await axios.post(
-        "http://54.226.71.2/CreateBill",
+      await axios.post(
+        `${process.env.REACT_APP_API_URL}/CreateBill`,
         billDataToSend
       );
       setBillData({
@@ -105,7 +107,9 @@ const Billing = () => {
         status: "",
       });
       setSuccessMessage("Bill submitted successfully successfully!");
-      console.log("Bill data submitted successfully:", response.data);
+      setTimeout(() => {
+        setSuccessMessage("");
+      }, 5000);
     } catch (error) {
       console.error("Error submitting bill data:", error);
     }
@@ -242,6 +246,9 @@ const Billing = () => {
           </div>
 
           <div className="w-full md:w-1/4 px-4 mb-4">
+          <label htmlFor="billNo" className="block mb-1">
+              Account
+            </label>
             <Select
               defaultValue="Category"
               style={{ width: "75%" }}
@@ -256,16 +263,36 @@ const Billing = () => {
             </Select>
           </div>
           <div className="w-full md:w-1/4 px-4 mb-4">
-            <input
-              type="text"
+            <label htmlFor="billNo" className="block mb-1">
+              Description of the bill
+            </label>
+            <textarea
+              value={billData.narration}
+              onChange={(e) =>
+                setBillData({ ...billData, narration: e.target.value })
+              }
+              placeholder="Naration"
+              className="w-full border rounded p-2"
+              rows={3}
+              required
+            />
+          </div>
+          <div className="w-full md:w-1/4 px-4 mb-4">
+          <label htmlFor="billNo" className="block mb-1">
+              Description of the items
+            </label>
+            <textarea
               placeholder="Description"
-              className="border px-3 py-2 w-3/4"
+              className="border rounded px-3 py-2 w-3/4"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               required
             />
           </div>
           <div className="w-full md:w-1/4 px-4 mb-4">
+          <label htmlFor="billNo" className="block mb-1">
+              Amount
+            </label>
             <input
               type="text"
               placeholder="Amount"
