@@ -41,7 +41,7 @@
     "Parameters": [
       {
         "Name": "groupAccount",
-        "Type": "Core.Models.GroupAccount",
+        "Type": "Core.Models.GroupAccountView",
         "IsRequired": true
       }
     ],
@@ -156,6 +156,16 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "Trace.Controllers.TrialBalanceController",
+    "Method": "GetTrialBalance",
+    "RelativePath": "GetTrialBalance",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "Trace.Controllers.TransactionsController",
     "Method": "RecordTransaction",
     "RelativePath": "RecordTransaction",
@@ -164,8 +174,8 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "transaction",
-        "Type": "Core.Models.Transaction",
+        "Name": "trans",
+        "Type": "Core.TransactionViewModel",
         "IsRequired": true
       }
     ],

@@ -37,7 +37,9 @@ namespace Trace.Controllers
             try
             {
                 var vendors = await _vendorRepository.GetAllVendors();
-                return Ok(vendors);
+                if(vendors.Any())
+                    return Ok(vendors);
+                return NotFound("No Vendors found");
             }
             catch (Exception)
             {

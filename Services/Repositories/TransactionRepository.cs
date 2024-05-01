@@ -1,4 +1,5 @@
-﻿using Core.Models;
+﻿using Core;
+using Core.Models;
 using Core.Repositories;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
@@ -20,24 +21,100 @@ namespace Services.Repositories
             _context = context;
         }
 
-        public async Task RecordTransactionAsync(Transaction transaction)
+        public async Task RecordTransactionAsync(TransactionViewModel transView) 
         {
-            // Retrieve accounts involved in the transaction
-            var accountFrom = await _context.Accounts.FindAsync(transaction.AccountFromId);
-            var accountTo = await _context.Accounts.FindAsync(transaction.AccountToId);
+            using (var trans = await _context.Database.BeginTransactionAsync())
+            {
+                try
+                {
+                    var accountFrom = await _context.Accounts
+                    .Include(a => a.SubGroupAccount)
+                    .ThenInclude(s => s.GroupAccount)
+                    .SingleOrDefaultAsync(a => a.Id == transView.AccountFromId);
 
-            if (accountFrom == null || accountTo == null)
-                throw new ArgumentException("Invalid account(s) specified.");
+                    var accountTo = await _context.Accounts
+                        .Include(a => a.SubGroupAccount)
+                        .ThenInclude(s => s.GroupAccount)
+                        .SingleOrDefaultAsync(a => a.Id == transView.AccountToId);
 
-            // Perform double-entry bookkeeping
-            accountFrom.Balance -= transaction.Amount;
-            accountTo.Balance += transaction.Amount;
+                    if (accountFrom == null || accountTo == null)
+                        throw new ArgumentException("One or both accounts not found.");
 
-            await _context.Transactions.AddAsync(transaction);
+                    if (accountFrom.SubGroupAccount.GroupAccount.Behaviour != "Debit")
+                        throw new InvalidOperationException("The source account must belong to a group with 'Debit' behavior.");
 
-            // Save changes to the database
-            await _context.SaveChangesAsync();
+                    if (accountTo.SubGroupAccount.GroupAccount.Behaviour != "Credit")
+                        throw new InvalidOperationException("The destination account must belong to a group with 'Credit' behavior.");
+
+                    //if (accountFrom.Balance < transView.Amount)
+                    //    throw new InvalidOperationException("Insufficient funds in the source account.");
+
+                    // Update account balances
+                    accountFrom.Balance -= transView.Amount;
+                    accountTo.Balance += transView.Amount;
+
+                    // Create and save the transaction
+                    var transactionEntry = new Transaction
+                    {
+                        AccountFromId = transView.AccountFromId,
+                        AccountToId = transView.AccountToId,
+                        Amount = transView.Amount,
+                        TransactionDate = transView.TransactionDate,
+                        Narration = transView.Narration
+                    };
+
+                    //update the database
+                    _context.Transactions.Add(transactionEntry);
+                    await _context.SaveChangesAsync();
+
+                    // Commit transaction after all operations are successful
+                    await trans.CommitAsync();
+                }
+                catch 
+                {
+                    throw;
+                }
+            }
         }
+        //public async Task RecordTransactionAsync(Transaction transaction)
+        //{
+        //    // Retrieve accounts involved in the transaction
+        //    var accountFrom = await _context.Accounts.FindAsync(transaction.AccountFromId);
+        //    var accountTo = await _context.Accounts.FindAsync(transaction.AccountToId);
+
+        //    if (accountFrom == null || accountTo == null)
+        //        throw new ArgumentException("Invalid account(s) specified.");
+
+        //    // Perform double-entry bookkeeping
+
+        //    //create Credit entry
+        //    var creditTransaction = new Transaction
+        //    {
+        //        AccountFromId = accountTo.Id,
+        //        AccountToId = accountFrom.Id,
+        //        TransactionDate = transaction.TransactionDate,
+        //        Amount = transaction.Amount,
+        //        Narration = transaction.Narration,
+        //    };
+
+        //    //create Debit Entry
+        //    var debitTransaction = new Transaction
+        //    {
+        //        AccountFromId = accountTo.Id,
+        //        AccountToId = accountFrom.Id,
+        //        TransactionDate = transaction.TransactionDate,
+        //        Amount = -transaction.Amount,
+        //        Narration = transaction.Narration,  
+        //    };
+
+
+        //    accountFrom.Balance -= transaction.Amount;
+        //    accountTo.Balance += transaction.Amount;
+
+        //    // Update database
+        //    _context.Transactions.AddRange(new[] { debitTransaction, creditTransaction });
+        //    await _context.SaveChangesAsync();
+        //}
 
         public async Task<IEnumerable<Transaction>> GetAllTransactions() 
         {

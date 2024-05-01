@@ -46,6 +46,8 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("SubGroupAccountId");
+
                     b.ToTable("accounts", (string)null);
                 });
 
@@ -221,6 +223,8 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("GroupId");
+
                     b.ToTable("subgroupaccounts", (string)null);
                 });
 
@@ -250,7 +254,11 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("transactions", (string)null);
+                    b.HasIndex("AccountFromId");
+
+                    b.HasIndex("AccountToId");
+
+                    b.ToTable("Transactions");
                 });
 
             modelBuilder.Entity("Core.Models.Vendor", b =>
@@ -338,6 +346,17 @@ namespace Infrastructure.Migrations
                     b.ToTable("vendors", (string)null);
                 });
 
+            modelBuilder.Entity("Core.Models.Account", b =>
+                {
+                    b.HasOne("Core.Models.SubGroupAccount", "SubGroupAccount")
+                        .WithMany("Accounts")
+                        .HasForeignKey("SubGroupAccountId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("SubGroupAccount");
+                });
+
             modelBuilder.Entity("Core.Models.Address", b =>
                 {
                     b.HasOne("Core.Models.Vendor", null)
@@ -352,9 +371,56 @@ namespace Infrastructure.Migrations
                         .HasForeignKey("BillId");
                 });
 
+            modelBuilder.Entity("Core.Models.SubGroupAccount", b =>
+                {
+                    b.HasOne("Core.Models.GroupAccount", "GroupAccount")
+                        .WithMany("SubGroupAccounts")
+                        .HasForeignKey("GroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("GroupAccount");
+                });
+
+            modelBuilder.Entity("Core.Models.Transaction", b =>
+                {
+                    b.HasOne("Core.Models.Account", "AccountFrom")
+                        .WithMany("TransactionsFrom")
+                        .HasForeignKey("AccountFromId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Core.Models.Account", "AccountTo")
+                        .WithMany("TransactionsTo")
+                        .HasForeignKey("AccountToId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AccountFrom");
+
+                    b.Navigation("AccountTo");
+                });
+
+            modelBuilder.Entity("Core.Models.Account", b =>
+                {
+                    b.Navigation("TransactionsFrom");
+
+                    b.Navigation("TransactionsTo");
+                });
+
             modelBuilder.Entity("Core.Models.Bill", b =>
                 {
                     b.Navigation("BillTranItems");
+                });
+
+            modelBuilder.Entity("Core.Models.GroupAccount", b =>
+                {
+                    b.Navigation("SubGroupAccounts");
+                });
+
+            modelBuilder.Entity("Core.Models.SubGroupAccount", b =>
+                {
+                    b.Navigation("Accounts");
                 });
 
             modelBuilder.Entity("Core.Models.Vendor", b =>

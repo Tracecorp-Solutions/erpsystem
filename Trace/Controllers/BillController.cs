@@ -42,13 +42,9 @@ namespace Trace.Controllers
             {
                 var bills = await _billrepository.GetBills();
                 if (bills.Any())
-                {
                     return Ok(bills);
-                }
-                else
-                {
-                    return NotFound("No Bills found");
-                }
+
+                return NotFound("No Bills found");
             }
             catch (Exception)
             {

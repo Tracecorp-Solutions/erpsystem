@@ -32,14 +32,21 @@ namespace Services.Repositories
         }
         public async Task<IEnumerable<Account>> GetAccounts()
         {
-            // Directly use AnyAsync to check if any accounts exist
-            if (!await _context.Accounts.AnyAsync())
-            {
-                throw new ArgumentException("No accounts found.");
-            }
-
             // Only retrieve the accounts if they exist
             return await _context.Accounts.ToListAsync();
+        }
+
+        public async Task<decimal> GetAccountBalance(int accountId) 
+        {
+            var debitTotal = await _context.Transactions
+            .Where(t => t.AccountFromId == accountId)
+            .SumAsync(t => t.Amount);
+
+            var creditTotal = await _context.Transactions
+                .Where(t => t.AccountToId == accountId)
+                .SumAsync(t => t.Amount);
+
+            return creditTotal - debitTotal;
         }
 
     }

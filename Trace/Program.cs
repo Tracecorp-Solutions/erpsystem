@@ -16,6 +16,7 @@ builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
 builder.Services.AddScoped<IVendorRepository, VendorRepository>();
 builder.Services.AddScoped<IBillRepository, BillRepository>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<ITrialBalanceRepository, TrialBalanceRepository>();
 
 builder.Services.AddControllers();
 builder.Services.AddCors(options =>

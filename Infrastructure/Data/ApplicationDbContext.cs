@@ -29,7 +29,17 @@ namespace Infrastructure.Data
             // Specify lowercase table names
             modelBuilder.Entity<GroupAccount>().ToTable("groupaccounts");
             modelBuilder.Entity<Account>().ToTable("accounts");
-            modelBuilder.Entity<Transaction>().ToTable("transactions");
+
+            modelBuilder.Entity<Transaction>()
+            .HasOne(t => t.AccountFrom)
+            .WithMany(a => a.TransactionsFrom)
+            .HasForeignKey(t => t.AccountFromId);
+
+            modelBuilder.Entity<Transaction>()
+                .HasOne(t => t.AccountTo)
+                .WithMany(a => a.TransactionsTo)
+                .HasForeignKey(t => t.AccountToId);
+            //modelBuilder.Entity<Transaction>().ToTable("transactions");
             modelBuilder.Entity<Vendor>().ToTable("vendors");
             modelBuilder.Entity<Address>().ToTable("addresses");
             modelBuilder.Entity<SubGroupAccount>().ToTable("subgroupaccounts");

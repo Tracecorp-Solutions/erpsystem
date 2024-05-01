@@ -11,5 +11,7 @@ namespace Core.Repositories
     {
         Task<Account> CreateAccountAsync(Account account);
         Task<IEnumerable<Account>> GetAccounts();
+
+        Task<decimal> GetAccountBalance(int accountId);
     }
 }

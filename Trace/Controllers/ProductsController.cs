@@ -42,7 +42,9 @@ namespace Trace.Controllers
             try
             {
                 var products = await _repository.GetAllProducts();
-                return Ok(products);
+                if(products.Any())
+                    return Ok(products);
+                return NotFound("No Products Found");
             }
             catch(ArgumentException ex) 
             {

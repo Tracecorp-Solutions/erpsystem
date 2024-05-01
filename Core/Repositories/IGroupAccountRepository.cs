@@ -9,7 +9,7 @@ namespace Core.Repositories
 {
     public interface IGroupAccountRepository
     {
-        Task<GroupAccount> AddAsync(GroupAccount groupAccount);
+        Task<GroupAccountView> AddAsync(GroupAccountView groupAccount);
 
         Task<SubGroupAccount> AddSubGroupAccount(SubGroupAccount subGroupAccount);
 

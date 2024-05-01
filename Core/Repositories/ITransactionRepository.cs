@@ -9,7 +9,7 @@ namespace Core.Repositories
 {
     public interface ITransactionRepository
     {
-        Task RecordTransactionAsync(Transaction transaction);
+        Task RecordTransactionAsync(TransactionViewModel transaction);
 
         Task RecordJournalEntry(JournalItem item);
 

@@ -43,7 +43,10 @@ namespace Trace.Controllers
             try
             {
                 var accounts = await _accountrepository.GetAccounts();
-                return Ok(accounts);
+                if (accounts.Any()) 
+                    return Ok(accounts);
+
+                return NotFound("No Accounts Found");
             }
             catch (Exception ex)
             {

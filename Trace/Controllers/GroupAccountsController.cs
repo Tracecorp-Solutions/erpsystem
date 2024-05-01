@@ -17,12 +17,12 @@ namespace Trace.Controllers
         }
 
         [HttpPost("/CreateGroupAccount")]
-        public async Task<IActionResult> CreateGroupAccount([FromBody] GroupAccount groupAccount)
+        public async Task<IActionResult> CreateGroupAccount([FromBody] GroupAccountView groupAccount)
         {
             try
             {
                 var addedAccount = await _repository.AddAsync(groupAccount);
-                return CreatedAtAction(nameof(CreateGroupAccount), new { id = addedAccount.Id }, addedAccount);
+                return CreatedAtAction(nameof(CreateGroupAccount), new { addedAccount });
             }
             catch (Exception)
             {
@@ -38,15 +38,9 @@ namespace Trace.Controllers
             try
             {
                 var groupaccounts = await _repository.GetAllGroupAccounts();
-                if (!groupaccounts.Any())
-                {
-                    return NotFound("No Group Accounts Found");
-                }
-                else
-                {
+                if (groupaccounts.Any())
                     return Ok(groupaccounts);
-                }
-                
+                return NotFound("No Group Accounts Found");
             }
             catch (Exception)
             {
@@ -78,15 +72,9 @@ namespace Trace.Controllers
             try
             {
                 var subgroupaccounts = await _repository.GetAllSubGroupAccounts();
-                if (!subgroupaccounts.Any())
-                {
-                    return NotFound("No subgroup accounts found");
-                }
-                else
-                {
+                if (subgroupaccounts.Any())
                     return Ok(subgroupaccounts);
-                }
-                
+                return NotFound("No subgroup accounts found");
             }
             catch (Exception)
             {

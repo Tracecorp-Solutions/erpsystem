@@ -19,11 +19,22 @@ namespace Services.Repositories
             _context = context;
         }
 
-        public async Task<GroupAccount> AddAsync(GroupAccount groupAccount)
+        public async Task<GroupAccountView> AddAsync(GroupAccountView grpView)
         {
+            var groupAccount = new GroupAccount
+            {
+                Name = grpView.Name,
+                Behaviour = grpView.Behaviour,
+            };
             _context.GroupAccounts.Add(groupAccount);
             await _context.SaveChangesAsync();
-            return groupAccount;
+
+            var viewMode = new GroupAccountView
+            {
+                Name = groupAccount.Name,
+                Behaviour = groupAccount.Behaviour,
+            };
+            return viewMode;
         }
 
         public async Task<SubGroupAccount> AddSubGroupAccount(SubGroupAccount subGroupAccount) 
