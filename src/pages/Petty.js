@@ -94,13 +94,13 @@ export default function Petty() {
           >
             + New
           </button>
-          <button
+          {/* <button
             type="button"
             onClick={retrieveTransactions}
             className="ml-3 mt-8 px-4 py-2 bg-indigo-600 text-white rounded-md text-sm font-semibold hover:bg-indigo-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-indigo-500"
           >
             Retrieve Transactions
-          </button>
+          </button> */}
         </div>
       </div>
       {showForm && (
@@ -252,68 +252,62 @@ export default function Petty() {
       <div className="-mx-4 mt-8 flow-root sm:mx-0">
         <table className="min-w-full">
           <colgroup>
-            <col className="w-full sm:w-1/2" />
-            <col className="sm:w-1/6" />
-            <col className="sm:w-1/6" />
-            <col className="sm:w-1/6" />
+            <col className="w-full sm:w-1/3" />
+            <col className="sm:w-1/8" />
+            <col className="sm:w-1/8" />
+            <col className="sm:w-1/8" />
           </colgroup>
-          <thead className="border-b border-gray-300 text-gray-900">
+          <thead className="border-b border-gray-400 text-gray-800">
             <tr>
               <th
                 scope="col"
-                className="py-3.2 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0"
-              >
-                Account ID
-              </th>
-              <th
-                scope="col"
-                className="hidden px-3 py-3.5 text-right text-sm font-semibold text-gray-900 sm:table-cell"
-              >
-                Account From ID
-              </th>
-              <th
-                scope="col"
-                className="hidden px-3 py-3.5 text-right text-sm font-semibold text-gray-900 sm:table-cell"
-              >
-                Account To ID
-              </th>
-              <th
-                scope="col"
-                className="py-3.5 pl-3 pr-4 text-right text-sm font-semibold text-gray-900 sm:pr-0"
+                className="py-2 pl-1  text-left text-sm font-semibold text-gray-900 sm:pr-0"
               >
                 Date
               </th>
               <th
                 scope="col"
-                className="py-3.5 pl-3 pr-4 text-right text-sm font-semibold text-gray-900 sm:pr-0"
+                className="hidden px-3 py-2 pl-2 text-left text-sm font-semibold text-gray-900 sm:table-cell"
+              >
+                Account From ID
+              </th>
+              <th
+                scope="col"
+                className="hidden px-2 py-2 text-left text-sm font-semibold text-gray-900 sm:table-cell"
+              >
+                Account To ID
+              </th>
+              
+              <th
+                scope="col"
+                className="py-2 pl-2 pr-4 text-right text-sm font-semibold text-gray-900 sm:pr-0"
               >
                 Amount
               </th>
               <th
                 scope="col"
-                className="py-3.5 pl-3 pr-4 text-right text-sm font-semibold text-gray-900 sm:pr-0"
+                className="py-2 pl-2 pr-1 text-right text-sm font-semibold text-gray-900 sm:pr-0"
               >
                 Narration
               </th>
             </tr>
           </thead>
           <tbody>
-            {initialTransactions.map((transaction) => (
-              <tr key={transaction.id} className="border-b border-gray-200">
-                <td className="max-w-0 py-5 pl-4 pr-3 text-sm sm:pl-0">
-                  <div className="font-medium text-gray-900">{transaction.accountId}</div>
-                  <div className="mt-1 truncate text-gray-500">
-                    {transaction.accountFromId}
-                  </div>
+            {transactions.map((transaction) => (
+              <tr key={transactions.id} className="border-b border-gray-200">
+               
+                <td className="hidden px-3 py-2 text-left text-sm text-gray-500 sm:table-cell">
+                  {transaction.transactionDate}
                 </td>
-                <td className="hidden px-3 py-5 text-right text-sm text-gray-500 sm:table-cell">
+                  <td className="hidden px-3 py-2 text-left text-sm text-gray-500 sm:table-cell">
+                  {transaction.accountFromId}
+                </td>
+                <td className="hidden px-3 py-2 text-left text-sm text-gray-500 sm:table-cell">
                   {transaction.accountToId}
                 </td>
-                <td className="hidden px-3 py-5 text-right text-sm text-gray-500 sm:table-cell">
-                  {transaction.Date}
-                </td>
+                
                 <td className="py-5 pl-3 pr-4 text-right text-sm text-gray-500 sm:pr-0">
-                  {transaction.Amount}
+                  {transaction.amount}
                 </td>
                 <td className="py-5 pl-3 pr-4 text-right text-sm text-gray-500 sm:pr-0">
                   {transaction.narration}

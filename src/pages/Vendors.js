@@ -39,7 +39,6 @@ const Vendor = () => {
   };
 
   const vendorsApiUrl = "http://54.226.71.2/GetAllVendors";
-  const createVendorApiUrl = "http://54.226.71.2/CreateVendor";
 
   const fetchVendors = async () => {
     try {
@@ -58,9 +57,9 @@ const Vendor = () => {
 
   const handleSubmit = async () => {
     try {
-      const response = await axios.post(createVendorApiUrl, newVendor);
-      console.log("Vendor created successfully:", response.data);
-      setSuccessMessage("Vendor created successfully!");
+      const createVendorApiUrl = `${process.env.REACT_APP_API_URL}/CreateVendor`; // Corrected endpoint URL
+      const response = await axios.post(createVendorApiUrl, newVendor); // Corrected axios.post usage
+      setSuccessMessage("Vendor created successfully!"); 
       // Clear the form fields
       setNewVendor({
         title: "",
@@ -458,7 +457,7 @@ const Vendor = () => {
             </div>
 
             <div className="grid grid-cols-3 gap-4">
-              <div className="mb-4">
+              <div className="mb-3">
                 <label
                   htmlFor="billingRate"
                   className="block text-sm font-medium text-gray-700"
@@ -478,7 +477,7 @@ const Vendor = () => {
                   style={{ padding: "18px" }}
                 />
               </div>
-              <div className="mb-4">
+              <div className="mb-3">
                 <label
                   htmlFor="openingBalance"
                   className="block text-sm font-medium text-gray-700"
@@ -501,7 +500,7 @@ const Vendor = () => {
                   style={{ padding: "18px" }}
                 />
               </div>
-              <div className="mb-4">
+              <div className="mb-3">
                 <label
                   htmlFor="openingBalanceDate"
                   className="block text-sm font-medium text-gray-700"
@@ -547,7 +546,7 @@ const Vendor = () => {
                   style={{ padding: "18px" }}
                 />
               </div>
-              <div className="mb-4">
+              <div className="mb-3">
                 <label
                   htmlFor="businessIdNo"
                   className="block text-sm font-medium text-gray-700"
@@ -567,7 +566,7 @@ const Vendor = () => {
                   style={{ padding: "18px" }}
                 />
               </div>
-              <div className="mb-4">
+              <div className="mb-3">
                 <label
                   htmlFor="status"
                   className="block text-sm font-medium text-gray-700"

@@ -31,7 +31,7 @@ import Cashflows from "../pages/Cashflows";
 import Budgets from "../pages/Budgets"
 import Financial from "../pages/Financial";
 import Transfers from "../pages/Transfers";
-
+import Invoice from "../pages/Invoice";
 import GroupAccount from "../pages/GroupCreation";
 import AccountCreation from "../pages/AccountCreation";
 
@@ -572,6 +572,7 @@ export default function Main() {
                 <Route path="/account-creation" element={<Account />} />
                 <Route path="/petty" element={<Petty />} />
                 <Route path="/sub-group" element={<SubGroup />} />
+                <Route path="/invoice" element={<Invoice />} />
                 <Route path="/billing" element={<Billing />} />
               </Routes>
             </div>
