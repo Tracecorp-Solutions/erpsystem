@@ -107,7 +107,7 @@ const SubGroup = () => {
     if (action === "delete") {
       console.log("Deleted action triggered");
     }
-  }
+  };
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -290,10 +290,18 @@ const SubGroup = () => {
                   scope="col"
                   className="px-3 py-3 text-left text-sm font-semibold text-gray-900"
                 >
+                  GROUP ACCOUNT
+                </th>
+                <th
+                  scope="col"
+                  className="px-3 py-3 text-left text-sm font-semibold text-gray-900"
+                >
                   DESCRIPTION
                 </th>
                 <th scope="col" className="relative px-3 py-3">
-                  <span className="sr-only">Edit</span>
+                  <span className="px-3 py-3 text-left text-sm font-semibold text-gray-900">
+                    Actions
+                  </span>
                 </th>
               </tr>
             </thead>
@@ -302,6 +310,9 @@ const SubGroup = () => {
                 <tr key={group.subGroupAccount.id}>
                   <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                     {group.subGroupAccount.name}
+                  </td>
+                  <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                    {group.groupAccount.name}
                   </td>
                   <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                     {group.subGroupAccount.description}
@@ -313,7 +324,7 @@ const SubGroup = () => {
                           className="text-indigo-600 hover:text-indigo-900"
                           onChange={(e) => handleEdit(e.target.value)}
                         >
-                          <option value="">Actions</option>
+                          <option value="">Show</option>
                           <option value="edit">Edit</option>
                           <option value="delete">Delete</option>
                         </select>
