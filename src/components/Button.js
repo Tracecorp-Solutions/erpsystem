@@ -46,7 +46,7 @@ export default function NavigationHeader() {
           >
             + New Entry
           </button> */}
-          <div className="relative inline-block text-left mr-6 ">
+          <div className="relative inline-block text-left mr-10 ">
       <div>
         <button
           type="button"
