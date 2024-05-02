@@ -25,7 +25,7 @@ namespace Trace.Controllers
                 await _vendorRepository.CreateVendorAsync(vendor);
                 return Ok("Vendor recorded successfully.");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
             }

@@ -31,7 +31,7 @@ namespace Services.Repositories
             {
                 Name = $"{vendor.FirstName} {vendor.LastName}",
                 Balance = vendor.OpeningBalance,
-                SubGroupAccountId = 5,
+                SubGroupAccountId = 2,
                 Description = "Vendor Account "
             };
             var createdAccount = await _accountService.CreateAccountAsync(account);

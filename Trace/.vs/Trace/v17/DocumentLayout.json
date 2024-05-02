@@ -3,6 +3,16 @@
   "WorkspaceRootPath": "D:\\working directory\\erpsystem\\Trace\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{D0C5D151-D98C-46B1-A85E-DFAA22B5EE2F}|..\\Services\\Services.csproj|d:\\working directory\\erpsystem\\services\\repositories\\vendorrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{97CA6EF6-720A-4545-8A15-EBF2D4F20DA0}|Trace.csproj|d:\\working directory\\erpsystem\\trace\\controllers\\vendorcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{97CA6EF6-720A-4545-8A15-EBF2D4F20DA0}|Trace.csproj|solutionrelative:controllers\\vendorcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A176F11F-4BEC-4DAC-9205-CF64F57D23C0}|..\\Core\\Core.csproj|d:\\working directory\\erpsystem\\core\\repositories\\ivendorrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{D0C5D151-D98C-46B1-A85E-DFAA22B5EE2F}|..\\Services\\Services.csproj|d:\\working directory\\erpsystem\\services\\repositories\\trialbalancerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -17,10 +27,6 @@
     },
     {
       "AbsoluteMoniker": "D:0:0:{A176F11F-4BEC-4DAC-9205-CF64F57D23C0}|..\\Core\\Core.csproj|d:\\working directory\\erpsystem\\core\\repositories\\iaccountrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{97CA6EF6-720A-4545-8A15-EBF2D4F20DA0}|Trace.csproj|d:\\working directory\\erpsystem\\trace\\controllers\\vendorcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{97CA6EF6-720A-4545-8A15-EBF2D4F20DA0}|Trace.csproj|solutionrelative:controllers\\vendorcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{97CA6EF6-720A-4545-8A15-EBF2D4F20DA0}|Trace.csproj|d:\\working directory\\erpsystem\\trace\\controllers\\trialbalancecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -45,9 +51,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{97CA6EF6-720A-4545-8A15-EBF2D4F20DA0}|Trace.csproj|d:\\working directory\\erpsystem\\trace\\trace.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
       "RelativeMoniker": "D:0:0:{97CA6EF6-720A-4545-8A15-EBF2D4F20DA0}|Trace.csproj|solutionrelative:trace.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D0C5D151-D98C-46B1-A85E-DFAA22B5EE2F}|..\\Services\\Services.csproj|d:\\working directory\\erpsystem\\services\\repositories\\vendorrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A176F11F-4BEC-4DAC-9205-CF64F57D23C0}|..\\Core\\Core.csproj|d:\\working directory\\erpsystem\\core\\repositories\\igroupaccountrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
@@ -149,9 +152,6 @@
       "RelativeMoniker": "D:0:0:{97CA6EF6-720A-4545-8A15-EBF2D4F20DA0}|Trace.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A176F11F-4BEC-4DAC-9205-CF64F57D23C0}|..\\Core\\Core.csproj|d:\\working directory\\erpsystem\\core\\repositories\\ivendorrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{A176F11F-4BEC-4DAC-9205-CF64F57D23C0}|..\\Core\\Core.csproj|d:\\working directory\\erpsystem\\core\\models\\journalentry.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -216,57 +216,20 @@
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "IAccountRepository.cs",
-              "DocumentMoniker": "D:\\working directory\\erpsystem\\Core\\Repositories\\IAccountRepository.cs",
-              "RelativeDocumentMoniker": "..\\Core\\Repositories\\IAccountRepository.cs",
-              "ToolTip": "D:\\working directory\\erpsystem\\Core\\Repositories\\IAccountRepository.cs",
-              "RelativeToolTip": "..\\Core\\Repositories\\IAccountRepository.cs",
-              "ViewState": "AQIAAAUAAAAAAAAAAAD4vwwAAAAuAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-22T09:29:40.481Z"
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "TransactionRepository.cs",
-              "DocumentMoniker": "D:\\working directory\\erpsystem\\Services\\Repositories\\TransactionRepository.cs",
-              "RelativeDocumentMoniker": "..\\Services\\Repositories\\TransactionRepository.cs",
-              "ToolTip": "D:\\working directory\\erpsystem\\Services\\Repositories\\TransactionRepository.cs",
-              "RelativeToolTip": "..\\Services\\Repositories\\TransactionRepository.cs",
-              "ViewState": "AQIAAD4AAAAAAAAAAAAAAEwAAAAaAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-30T09:04:31.504Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "GroupAccountsController.cs",
-              "DocumentMoniker": "D:\\working directory\\erpsystem\\Trace\\Controllers\\GroupAccountsController.cs",
-              "RelativeDocumentMoniker": "Controllers\\GroupAccountsController.cs",
-              "ToolTip": "D:\\working directory\\erpsystem\\Trace\\Controllers\\GroupAccountsController.cs",
-              "RelativeToolTip": "Controllers\\GroupAccountsController.cs",
-              "ViewState": "AQIAADwAAAAAAAAAAAAnwEwAAAA+AAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-22T08:42:36.145Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
               "Title": "VendorController.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Trace\\Controllers\\VendorController.cs",
               "RelativeDocumentMoniker": "Controllers\\VendorController.cs",
               "ToolTip": "D:\\working directory\\erpsystem\\Trace\\Controllers\\VendorController.cs",
               "RelativeToolTip": "Controllers\\VendorController.cs",
-              "ViewState": "AQIAACYAAAAAAAAAAAAYwCkAAAAxAAAA",
+              "ViewState": "AQIAABMAAAAAAAAAAAAAwBgAAAAtAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-04-25T08:20:56.566Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 8,
               "Title": "TrialBalanceController.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Trace\\Controllers\\TrialBalanceController.cs",
               "RelativeDocumentMoniker": "Controllers\\TrialBalanceController.cs",
@@ -278,20 +241,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 3,
               "Title": "TrialBalanceRepository.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Services\\Repositories\\TrialBalanceRepository.cs",
               "RelativeDocumentMoniker": "..\\Services\\Repositories\\TrialBalanceRepository.cs",
               "ToolTip": "D:\\working directory\\erpsystem\\Services\\Repositories\\TrialBalanceRepository.cs",
               "RelativeToolTip": "..\\Services\\Repositories\\TrialBalanceRepository.cs",
-              "ViewState": "AQIAABAAAAAAAAAAAAAzwBMAAAAJAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABMAAAAJAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-04-30T13:01:22.339Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 6,
               "Title": "AccountRepository.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Services\\Repositories\\AccountRepository.cs",
               "RelativeDocumentMoniker": "..\\Services\\Repositories\\AccountRepository.cs",
@@ -303,7 +266,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 13,
               "Title": "Trace.csproj",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Trace\\Trace.csproj",
               "RelativeDocumentMoniker": "Trace.csproj",
@@ -315,7 +278,69 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 0,
+              "Title": "VendorRepository.cs",
+              "DocumentMoniker": "D:\\working directory\\erpsystem\\Services\\Repositories\\VendorRepository.cs",
+              "RelativeDocumentMoniker": "..\\Services\\Repositories\\VendorRepository.cs",
+              "ToolTip": "D:\\working directory\\erpsystem\\Services\\Repositories\\VendorRepository.cs",
+              "RelativeToolTip": "..\\Services\\Repositories\\VendorRepository.cs",
+              "ViewState": "AQIAABQAAAAAAAAAAAAhwCEAAAAlAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-30T09:04:42.785Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "GroupAccountsController.cs",
+              "DocumentMoniker": "D:\\working directory\\erpsystem\\Trace\\Controllers\\GroupAccountsController.cs",
+              "RelativeDocumentMoniker": "Controllers\\GroupAccountsController.cs",
+              "ToolTip": "D:\\working directory\\erpsystem\\Trace\\Controllers\\GroupAccountsController.cs",
+              "RelativeToolTip": "Controllers\\GroupAccountsController.cs",
+              "ViewState": "AQIAADwAAAAAAAAAAAAnwEwAAAA+AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-22T08:42:36.145Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "IVendorRepository.cs",
+              "DocumentMoniker": "D:\\working directory\\erpsystem\\Core\\Repositories\\IVendorRepository.cs",
+              "RelativeDocumentMoniker": "..\\Core\\Repositories\\IVendorRepository.cs",
+              "ToolTip": "D:\\working directory\\erpsystem\\Core\\Repositories\\IVendorRepository.cs",
+              "RelativeToolTip": "..\\Core\\Repositories\\IVendorRepository.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAApwAsAAAAmAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-25T07:30:54.099Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "TransactionRepository.cs",
+              "DocumentMoniker": "D:\\working directory\\erpsystem\\Services\\Repositories\\TransactionRepository.cs",
+              "RelativeDocumentMoniker": "..\\Services\\Repositories\\TransactionRepository.cs",
+              "ToolTip": "D:\\working directory\\erpsystem\\Services\\Repositories\\TransactionRepository.cs",
+              "RelativeToolTip": "..\\Services\\Repositories\\TransactionRepository.cs",
+              "ViewState": "AQIAAD4AAAAAAAAAAAAAAEwAAAAaAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-30T09:04:31.504Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "IAccountRepository.cs",
+              "DocumentMoniker": "D:\\working directory\\erpsystem\\Core\\Repositories\\IAccountRepository.cs",
+              "RelativeDocumentMoniker": "..\\Core\\Repositories\\IAccountRepository.cs",
+              "ToolTip": "D:\\working directory\\erpsystem\\Core\\Repositories\\IAccountRepository.cs",
+              "RelativeToolTip": "..\\Core\\Repositories\\IAccountRepository.cs",
+              "ViewState": "AQIAAAUAAAAAAAAAAAD4vwwAAAAuAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-22T09:29:40.481Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
               "Title": "BillController.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Trace\\Controllers\\BillController.cs",
               "RelativeDocumentMoniker": "Controllers\\BillController.cs",
@@ -327,7 +352,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 5,
               "Title": "AccountController.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Trace\\Controllers\\AccountController.cs",
               "RelativeDocumentMoniker": "Controllers\\AccountController.cs",
@@ -335,12 +360,11 @@
               "RelativeToolTip": "Controllers\\AccountController.cs",
               "ViewState": "AQIAABQAAAAAAAAAAAAhwDAAAAAkAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-22T09:38:32.813Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-04-22T09:38:32.813Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 10,
               "Title": "ProductsController.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Trace\\Controllers\\ProductsController.cs",
               "RelativeDocumentMoniker": "Controllers\\ProductsController.cs",
@@ -352,7 +376,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 9,
               "Title": "TransactionsController.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Trace\\Controllers\\TransactionsController.cs",
               "RelativeDocumentMoniker": "Controllers\\TransactionsController.cs",
@@ -364,19 +388,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "VendorRepository.cs",
-              "DocumentMoniker": "D:\\working directory\\erpsystem\\Services\\Repositories\\VendorRepository.cs",
-              "RelativeDocumentMoniker": "..\\Services\\Repositories\\VendorRepository.cs",
-              "ToolTip": "D:\\working directory\\erpsystem\\Services\\Repositories\\VendorRepository.cs",
-              "RelativeToolTip": "..\\Services\\Repositories\\VendorRepository.cs",
-              "ViewState": "AQIAABEAAAAAAAAAAAAAwA4AAAAFAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-30T09:04:42.785Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 14,
               "Title": "IGroupAccountRepository.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Core\\Repositories\\IGroupAccountRepository.cs",
               "RelativeDocumentMoniker": "..\\Core\\Repositories\\IGroupAccountRepository.cs",
@@ -388,7 +400,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 15,
               "Title": "Program.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Trace\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
@@ -400,7 +412,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 16,
               "Title": "Account.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Core\\Models\\Account.cs",
               "RelativeDocumentMoniker": "..\\Core\\Models\\Account.cs",
@@ -412,7 +424,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 19,
               "Title": "GroupSubGroupViewModel.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Core\\Models\\GroupSubGroupViewModel.cs",
               "RelativeDocumentMoniker": "..\\Core\\Models\\GroupSubGroupViewModel.cs",
@@ -424,7 +436,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 17,
               "Title": "SubGroupAccount.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Core\\Models\\SubGroupAccount.cs",
               "RelativeDocumentMoniker": "..\\Core\\Models\\SubGroupAccount.cs",
@@ -436,7 +448,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 21,
               "Title": "GroupAccountRepository.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Services\\Repositories\\GroupAccountRepository.cs",
               "RelativeDocumentMoniker": "..\\Services\\Repositories\\GroupAccountRepository.cs",
@@ -448,7 +460,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 18,
               "Title": "GroupAccount.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Core\\Models\\GroupAccount.cs",
               "RelativeDocumentMoniker": "..\\Core\\Models\\GroupAccount.cs",
@@ -460,7 +472,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 20,
               "Title": "SubGroupViewModel.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Core\\Models\\SubGroupViewModel.cs",
               "RelativeDocumentMoniker": "..\\Core\\Models\\SubGroupViewModel.cs",
@@ -472,7 +484,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 22,
               "Title": "GroupAccountView.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Core\\Models\\GroupAccountView.cs",
               "RelativeDocumentMoniker": "..\\Core\\Models\\GroupAccountView.cs",
@@ -496,7 +508,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
+              "DocumentIndex": 25,
               "Title": "TrialBalanceViewModel.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Core\\Models\\TrialBalanceViewModel.cs",
               "RelativeDocumentMoniker": "..\\Core\\Models\\TrialBalanceViewModel.cs",
@@ -508,7 +520,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 23,
               "Title": "ApplicationDbContext.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Infrastructure\\Data\\ApplicationDbContext.cs",
               "RelativeDocumentMoniker": "..\\Infrastructure\\Data\\ApplicationDbContext.cs",
@@ -520,7 +532,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 26,
               "Title": "ITransactionRepository.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Core\\Repositories\\ITransactionRepository.cs",
               "RelativeDocumentMoniker": "..\\Core\\Repositories\\ITransactionRepository.cs",
@@ -532,7 +544,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 24,
               "Title": "ITrialBalanceRepository.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Core\\Repositories\\ITrialBalanceRepository.cs",
               "RelativeDocumentMoniker": "..\\Core\\Repositories\\ITrialBalanceRepository.cs",
@@ -544,7 +556,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 26,
+              "DocumentIndex": 27,
               "Title": "TransactionViewModel.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Core\\TransactionViewModel.cs",
               "RelativeDocumentMoniker": "..\\Core\\TransactionViewModel.cs",
@@ -556,7 +568,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 27,
+              "DocumentIndex": 28,
               "Title": "Transaction.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Core\\Models\\Transaction.cs",
               "RelativeDocumentMoniker": "..\\Core\\Models\\Transaction.cs",
@@ -568,7 +580,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 28,
+              "DocumentIndex": 29,
               "Title": "Infrastructure.csproj",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Infrastructure\\Infrastructure.csproj",
               "RelativeDocumentMoniker": "..\\Infrastructure\\Infrastructure.csproj",
@@ -580,7 +592,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 29,
+              "DocumentIndex": 30,
               "Title": "20240430101240_AdditionOfNarrantion_and_type_on_Bill.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Infrastructure\\Migrations\\20240430101240_AdditionOfNarrantion_and_type_on_Bill.cs",
               "RelativeDocumentMoniker": "..\\Infrastructure\\Migrations\\20240430101240_AdditionOfNarrantion_and_type_on_Bill.cs",
@@ -592,7 +604,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 36,
+              "DocumentIndex": 37,
               "Title": "BillRepository.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Services\\Repositories\\BillRepository.cs",
               "RelativeDocumentMoniker": "..\\Services\\Repositories\\BillRepository.cs",
@@ -604,7 +616,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 34,
+              "DocumentIndex": 35,
               "Title": "ProductRepository.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Services\\Repositories\\ProductRepository.cs",
               "RelativeDocumentMoniker": "..\\Services\\Repositories\\ProductRepository.cs",
@@ -628,7 +640,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 33,
+              "DocumentIndex": 34,
               "Title": "Product.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Core\\Models\\Product.cs",
               "RelativeDocumentMoniker": "..\\Core\\Models\\Product.cs",
@@ -640,7 +652,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 32,
+              "DocumentIndex": 33,
               "Title": "Core.csproj",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Core\\Core.csproj",
               "RelativeDocumentMoniker": "..\\Core\\Core.csproj",
@@ -652,7 +664,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 30,
+              "DocumentIndex": 31,
               "Title": "Bill.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Core\\Models\\Bill.cs",
               "RelativeDocumentMoniker": "..\\Core\\Models\\Bill.cs",
@@ -664,7 +676,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 31,
+              "DocumentIndex": 32,
               "Title": "GroupAccountsControllerTests.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Trace\\Test\\GroupAccountsControllerTests.cs",
               "RelativeDocumentMoniker": "Test\\GroupAccountsControllerTests.cs",
@@ -676,7 +688,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 35,
+              "DocumentIndex": 36,
               "Title": "IProductRepository.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Core\\Repositories\\IProductRepository.cs",
               "RelativeDocumentMoniker": "..\\Core\\Repositories\\IProductRepository.cs",
@@ -688,7 +700,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 37,
+              "DocumentIndex": 38,
               "Title": "Services.csproj",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Services\\Services.csproj",
               "RelativeDocumentMoniker": "..\\Services\\Services.csproj",
@@ -700,7 +712,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 38,
+              "DocumentIndex": 39,
               "Title": "20240429153812_AdditionOfIgnoringCaseSensitivityOnTables1.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Infrastructure\\Migrations\\20240429153812_AdditionOfIgnoringCaseSensitivityOnTables1.cs",
               "RelativeDocumentMoniker": "..\\Infrastructure\\Migrations\\20240429153812_AdditionOfIgnoringCaseSensitivityOnTables1.cs",
@@ -724,7 +736,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 40,
+              "DocumentIndex": 41,
               "Title": "BillTranItems.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Core\\Models\\BillTranItems.cs",
               "RelativeDocumentMoniker": "..\\Core\\Models\\BillTranItems.cs",
@@ -736,7 +748,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 39,
+              "DocumentIndex": 40,
               "Title": "IBillRepository.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Core\\Repositories\\IBillRepository.cs",
               "RelativeDocumentMoniker": "..\\Core\\Repositories\\IBillRepository.cs",
@@ -772,7 +784,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 41,
+              "DocumentIndex": 42,
               "Title": "Address.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Core\\Models\\Address.cs",
               "RelativeDocumentMoniker": "..\\Core\\Models\\Address.cs",
@@ -784,7 +796,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 42,
+              "DocumentIndex": 43,
               "Title": "Vendor.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Core\\Models\\Vendor.cs",
               "RelativeDocumentMoniker": "..\\Core\\Models\\Vendor.cs",
@@ -808,7 +820,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 43,
+              "DocumentIndex": 44,
               "Title": "20240426102732_Addition_of_Description_on_subgroupaccoutn.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Infrastructure\\Migrations\\20240426102732_Addition_of_Description_on_subgroupaccoutn.cs",
               "RelativeDocumentMoniker": "..\\Infrastructure\\Migrations\\20240426102732_Addition_of_Description_on_subgroupaccoutn.cs",
@@ -820,7 +832,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 44,
+              "DocumentIndex": 45,
               "Title": "appsettings.json",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Trace\\appsettings.json",
               "RelativeDocumentMoniker": "appsettings.json",
@@ -841,18 +853,6 @@
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-04-25T12:20:18.396Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 45,
-              "Title": "IVendorRepository.cs",
-              "DocumentMoniker": "D:\\working directory\\erpsystem\\Core\\Repositories\\IVendorRepository.cs",
-              "RelativeDocumentMoniker": "..\\Core\\Repositories\\IVendorRepository.cs",
-              "ToolTip": "D:\\working directory\\erpsystem\\Core\\Repositories\\IVendorRepository.cs",
-              "RelativeToolTip": "..\\Core\\Repositories\\IVendorRepository.cs",
-              "ViewState": "AQIAAAMAAAAAAAAAAAAlwAwAAAAvAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-25T07:30:54.099Z"
             },
             {
               "$type": "Document",
