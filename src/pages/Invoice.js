@@ -304,7 +304,7 @@ const Products = () => {
       </form>
 
       <div>
-        <h2 className="text-lg font-semibold mb-4">Details</h2>
+        <h2 className="text-lg font-semibold mb-4">Invoice Details</h2>
         <table className="table-auto min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">
             <tr>
