@@ -43,11 +43,11 @@ namespace Services.Repositories
                     if (accountFrom.SubGroupAccount.GroupAccount.Behaviour != "Debit")
                         throw new InvalidOperationException("The source account must belong to a group with 'Debit' behavior.");
 
-                    if (accountTo.SubGroupAccount.GroupAccount.Behaviour != "Credit")
-                        throw new InvalidOperationException("The destination account must belong to a group with 'Credit' behavior.");
+                    //if (accountTo.SubGroupAccount.GroupAccount.Behaviour != "Credit")
+                    //    throw new InvalidOperationException("The destination account must belong to a group with 'Credit' behavior.");
 
-                    //if (accountFrom.Balance < transView.Amount)
-                    //    throw new InvalidOperationException("Insufficient funds in the source account.");
+                    if (accountFrom.Balance < transView.Amount)
+                        throw new InvalidOperationException("Insufficient funds in the source account.");
 
                     // Update account balances
                     accountFrom.Balance -= transView.Amount;
@@ -72,6 +72,8 @@ namespace Services.Repositories
                 }
                 catch 
                 {
+                    // Rollback transaction if an exception occurs
+                    await trans.RollbackAsync();
                     throw;
                 }
             }
