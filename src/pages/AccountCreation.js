@@ -333,25 +333,27 @@ const AccountCreation = () => {
       )}
       {!loading && (
         <div className="mt-8 overflow-x-auto">
-          <div className="mt-4 mb-2">
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Items Per Page:
-            </label>
-            <Select
-              value={itemsPerPage}
-              onChange={handleItemsPerPageChange}
-              className="w-24"
-            >
-              <Option value={2}>2</Option>
-              <Option value={5}>5</Option>
-              <Option value={10}>10</Option>
-              <Option value={10}>10</Option>
-              <Option value={20}>20</Option>
-              <Option value={30}>30</Option>
-              <Option value={40}>40</Option>
-              <Option value={50}>50</Option>
-            </Select>
-          </div>
+         { !showForm && (
+           <div className="mt-4 mb-2">
+           <label className="block text-sm font-medium text-gray-700 mb-2">
+             Items Per Page:
+           </label>
+           <Select
+             value={itemsPerPage}
+             onChange={handleItemsPerPageChange}
+             className="w-24"
+           >
+             <Option value={2}>2</Option>
+             <Option value={5}>5</Option>
+             <Option value={10}>10</Option>
+             <Option value={10}>10</Option>
+             <Option value={20}>20</Option>
+             <Option value={30}>30</Option>
+             <Option value={40}>40</Option>
+             <Option value={50}>50</Option>
+           </Select>
+         </div>
+         )}
           <table className="table-auto min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">
               <tr>

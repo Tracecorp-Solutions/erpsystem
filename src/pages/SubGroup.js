@@ -285,7 +285,9 @@ const SubGroup = () => {
       )}
       {!loading && (
         <div className="mt-8 overflow-x-auto">
-          <div className="mt-4 mb-2">
+          {
+            !showForm && (
+              <div className="mt-4 mb-2">
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Items Per Page:
             </label>
@@ -303,6 +305,8 @@ const SubGroup = () => {
               <Option value={50}>50</Option>
             </Select>
           </div>
+            )
+          }
           <table className="table-auto min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">
               <tr>
