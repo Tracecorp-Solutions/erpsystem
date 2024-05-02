@@ -65,7 +65,6 @@ const AccountCreation = () => {
         "http://54.226.71.2/GetAllSubGroupAccounts"
       );
       setSubGroupAccounts(response.data);
-      console.log(response.data);
     } catch (error) {
       console.error("Error fetching subGroup accounts", error);
     }
@@ -342,6 +341,12 @@ const AccountCreation = () => {
                   scope="col"
                   className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                 >
+                  SubGroup
+                </th>
+                <th
+                  scope="col"
+                  className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >
                   Description
                 </th>
                 <th
@@ -356,34 +361,41 @@ const AccountCreation = () => {
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
-              {currentAccounts.map((account) => (
-                <tr key={account.id}>
-                  <td className="px-3 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                    {account.name}
-                  </td>
-                  <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {account.description}
-                  </td>
-                  <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {account.balance}
-                  </td>
-                  <td className="px-3 py-4 whitespace-nowrap text-right text-sm font-medium">
-                    {showEditButton && (
-                      <div className="mb-4 md:w-2/4">
-                      <Select
-                        id="vendor"
-                        className="w-full"
-                        onChange={(value) => handleEdit(value)}
-                        bordered={false}
-                      >
-                        <Option value="vendor1">Edit</Option>
-                        <Option value="vendor2">Delete</Option>
-                      </Select>
-                    </div>
-                    )}
-                  </td>
-                </tr>
-              ))}
+              {currentAccounts.map((account) => {
+                const subGroupInfo = subGroupAccounts.find(subGroup => subGroup.subGroupAccount.id === account.subGroupAccountId);
+
+                return (
+                  <tr key={account.id}>
+                    <td className="px-3 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                      {account.name}
+                    </td>
+                    <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">
+                      {subGroupInfo ? subGroupInfo.subGroupAccount.name : 'N/A'}
+                    </td>
+                    <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">
+                      {account.description}
+                    </td>
+                    <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">
+                      {account.balance}
+                    </td>
+                    <td className="px-3 py-4 whitespace-nowrap text-right text-sm font-medium">
+                      {showEditButton && (
+                        <div className="mb-4 md:w-2/4">
+                          <Select
+                            id="vendor"
+                            className="w-full"
+                            onChange={(value) => handleEdit(value)}
+                            bordered={false}
+                          >
+                            <Option value="vendor1">Edit</Option>
+                            <Option value="vendor2">Delete</Option>
+                          </Select>
+                        </div>
+                      )}
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
           {showEditButton && (
