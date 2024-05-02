@@ -280,7 +280,6 @@ export default function GroupAccount() {
                 <Option value={2}>2</Option>
                 <Option value={5}>5</Option>
                 <Option value={10}>10</Option>
-                <Option value={10}>10</Option>
                 <Option value={20}>20</Option>
                 <Option value={30}>30</Option>
                 <Option value={40}>40</Option>
