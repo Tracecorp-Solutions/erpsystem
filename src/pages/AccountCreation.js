@@ -381,8 +381,11 @@ const AccountCreation = () => {
                 >
                   Balance
                 </th>
-                <th scope="col" className="relative px-3 py-3">
-                  <span className="sr-only">Edit</span>
+                <th
+                  scope="col"
+                  className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >
+                  Actions
                 </th>
               </tr>
             </thead>
@@ -409,7 +412,7 @@ const AccountCreation = () => {
                     </td>
                     <td className="px-3 py-4 whitespace-nowrap text-right text-sm font-medium">
                       {showEditButton && (
-                        <div className="mb-4 md:w-2/4">
+                        <div className="mb-4 md:w-3/4">
                           <Select
                             id="vendor"
                             className="w-full"

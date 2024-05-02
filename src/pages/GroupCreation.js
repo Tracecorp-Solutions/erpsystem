@@ -110,7 +110,7 @@ export default function GroupAccount() {
     if (action === "delete") {
       console.log("Deleted action triggered");
     }
-  }
+  };
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -147,7 +147,6 @@ export default function GroupAccount() {
     setitemsPerPage(value);
     setCurrentPage(1);
   };
-
 
   return (
     <div className="px-4 sm:px-6 lg:px-8">
@@ -268,29 +267,27 @@ export default function GroupAccount() {
       )}
       {!loading && (
         <div className="mt-8 overflow-x-auto">
-          {
-            !showForm && (
-              <div className="mt-4 mb-2">
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Items Per Page:
-            </label>
-            <Select
-              value={itemsPerPage}
-              onChange={handleItemsPerPageChange}
-              className="w-24"
-            >
-              <Option value={2}>2</Option>
-              <Option value={5}>5</Option>
-              <Option value={10}>10</Option>
-              <Option value={10}>10</Option>
-              <Option value={20}>20</Option>
-              <Option value={30}>30</Option>
-              <Option value={40}>40</Option>
-              <Option value={50}>50</Option>
-            </Select>
-          </div>
-            )
-          }
+          {!showForm && (
+            <div className="mt-4 mb-2">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Items Per Page:
+              </label>
+              <Select
+                value={itemsPerPage}
+                onChange={handleItemsPerPageChange}
+                className="w-24"
+              >
+                <Option value={2}>2</Option>
+                <Option value={5}>5</Option>
+                <Option value={10}>10</Option>
+                <Option value={10}>10</Option>
+                <Option value={20}>20</Option>
+                <Option value={30}>30</Option>
+                <Option value={40}>40</Option>
+                <Option value={50}>50</Option>
+              </Select>
+            </div>
+          )}
           <table className="table-auto min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">
               <tr>
@@ -306,8 +303,14 @@ export default function GroupAccount() {
                 >
                   Behaviour
                 </th>
-                <th scope="col" className="relative px-3 py-3">
-                  <span className="sr-only">Edit</span>
+
+                <th scope="col" className="relative" style={{ padding: "8px", textAlign: "end" }} colSpan="3">
+                  <span
+                    className="text-sm font-semibold text-gray-900"
+                    style={{ padding: "8px" }}
+                  >
+                    ACTIONS
+                  </span>
                 </th>
               </tr>
             </thead>
@@ -323,21 +326,21 @@ export default function GroupAccount() {
                   <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6 lg:pr-8">
                     {showEditButton && (
                       <div className="relative">
-                      <select
-                        className="text-indigo-600 hover:text-indigo-900"
-                        onChange={(e) => handleEdit(e.target.value)}
-                        style={{
-                          width: "140px",
-                          height: "40px",
-                          borderRadius: "0",
-                          padding: "8px",
-                        }}
-                      >
-                        <option value="">Actions</option>
-                        <option value="edit">Edit</option>
-                        <option value="delete">Delete</option>
-                      </select>
-                    </div>
+                        <select
+                          className="text-indigo-600 hover:text-indigo-900"
+                          onChange={(e) => handleEdit(e.target.value)}
+                          style={{
+                            width: "100px",
+                            height: "40px",
+                            borderRadius: "0",
+                            padding: "8px",
+                          }}
+                        >
+                          <option value="">Show</option>
+                          <option value="edit">Edit</option>
+                          <option value="delete">Delete</option>
+                        </select>
+                      </div>
                     )}
                   </td>
                 </tr>

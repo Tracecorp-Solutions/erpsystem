@@ -330,7 +330,7 @@ const SubGroup = () => {
                 </th>
                 <th scope="col" className="relative px-3 py-3">
                   <span className="px-3 py-3 text-left text-sm font-semibold text-gray-900">
-                    Actions
+                    ACTIONS
                   </span>
                 </th>
               </tr>
