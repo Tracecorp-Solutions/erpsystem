@@ -292,6 +292,23 @@ const Products = () => {
             />
           </div>
         </div>
+          <div className="w-full md:w-1/4 px-4 mb-4">
+          <label htmlFor="billNo" className="block mb-1">
+              Account
+            </label>
+            <Select
+              defaultValue="Category"
+              style={{ width: "75%" }}
+              onChange={(value) => handleAccountChange(value)}
+              required
+            >
+              {accounts.map((accountData) => (
+                <Option key={accountData.id} value={accountData.id}>
+                  {accountData.name}
+                </Option>
+              ))}
+            </Select>
+          </div>
 
         <div>
           <button

@@ -601,7 +601,7 @@ const Vendor = () => {
                 Cancel
               </button>
               <button
-                type="button"
+                type="submit"
                 onClick={handleSubmit}
                 className="ml-3 px-4 py-2 bg-indigo-600 text-white rounded-md text-sm font-semibold hover:bg-indigo-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-indigo-500"
               >
