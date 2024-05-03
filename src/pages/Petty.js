@@ -73,6 +73,16 @@ export default function Petty() {
     }
   };
 
+  const handleEdit = (action) => {
+    if (action === "edit") {
+      console.log("Edit action triggered");
+    }
+
+    if (action === "delete") {
+      console.log("Delete action triggered");
+    }
+  };
+
   return (
     <div className="px-4 sm:px-6 lg:px-8">
       <div className="sm:flex sm:items-center">
@@ -290,6 +300,12 @@ export default function Petty() {
               >
                 Narration
               </th>
+              <th
+                scope="col"
+                className="py-2 pl-2 pr-1 text-right text-sm font-semibold text-gray-900 sm:pr-0"
+              >
+                Edit
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -312,6 +328,16 @@ export default function Petty() {
                 <td className="py-5 pl-3 pr-4 text-right text-sm text-gray-500 sm:pr-0">
                   {transaction.narration}
                 </td>
+                <div className="relative">
+                      <select
+                        className="text-indigo-600 hover:text-indigo-900"
+                        onChange={(e) => handleEdit(e.target.value)}
+                      >
+                        <option value="">Actions</option>
+                        <option value="edit">Edit</option>
+                        <option value="delete">Delete</option>
+                      </select>
+                    </div>
               </tr>
             ))}
           </tbody>

@@ -7,8 +7,8 @@ const tabs = [
   { name: 'Vendors', href: '/dashboard/vendors', current: false },
   { name: 'Billing', href: '/billing', current: false },
   { name: 'Petty Cash', href: '/petty', current: true },
-  { name: 'Offer', href: '#', current: false },
-  { name: 'Sales', href: '#', current: false },
+  // { name: 'Offer', href: '#', current: false },
+  // { name: 'Sales', href: '#', current: false },
 ];
 
 function classNames(...classes) {
@@ -111,7 +111,7 @@ export default function NavigationHeader() {
               Invoice
             </a>
             <a
-              href="#"
+              href="/products"
               className="text-gray-700 block px-4 py-2 text-sm"
               role="menuitem"
               tabIndex="-1"

@@ -34,7 +34,7 @@ import Transfers from "../pages/Transfers";
 import Invoice from "../pages/Invoice";
 import GroupAccount from "../pages/GroupCreation";
 import AccountCreation from "../pages/AccountCreation";
-
+import Products from "../pages/Products";
 import Account from "../pages/AccountCreation";
 import Petty from "../pages/Petty";
 import SubGroup from "../pages/SubGroup";
@@ -574,6 +574,7 @@ export default function Main() {
                 <Route path="/sub-group" element={<SubGroup />} />
                 <Route path="/invoice" element={<Invoice />} />
                 <Route path="/billing" element={<Billing />} />
+                <Route path="/products" element={<Products />} />
               </Routes>
             </div>
           </main>
