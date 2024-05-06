@@ -16,6 +16,7 @@ const SubGroup = () => {
   const [showEditButton, setShowEditButton] = useState(true);
   const [successMessage, setSuccessMessage] = useState("");
   const [loading, setLoading] = useState(true);
+  const [subGroups, setSubGroups] = useState([]); // New state to store created subgroups
 
   useEffect(() => {
     fetchGroups();
@@ -57,6 +58,10 @@ const SubGroup = () => {
     setShowForm(!showForm);
   };
 
+  const seeSubgroup = (subgroupId) => {
+    console.log(`Clicked on subgroup with ID: ${subgroupId}`);
+  };
+
   const validateForm = () => {
     let errors = {};
     let isValid = true;
@@ -83,10 +88,12 @@ const SubGroup = () => {
   const handleSubmit = async () => {
     if (validateForm()) {
       try {
-        await axios.post(
+        const response = await axios.post(
           `${process.env.REACT_APP_API_URL}/CreateSubGroupAccount`,
           newAccount
         );
+        const createdSubGroup = response.data;
+        setSubGroups([...subGroups, createdSubGroup]); // Add created subgroup to state
         setNewAccount({ name: "", groupId: "", description: "" });
         toggleForm();
         setSuccessMessage("Sub-group created successfully!");
@@ -107,7 +114,7 @@ const SubGroup = () => {
     if (action === "delete") {
       console.log("Deleted action triggered");
     }
-  }
+  };
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -141,8 +148,11 @@ const SubGroup = () => {
     <div className="px-4 sm:px-6 lg:px-8">
       <div className="sm:flex sm:items-center">
         <div className="sm:flex-auto">
-          <h1 className="text-base font-semibold leading-6 text-gray-900">
-            Sub groups
+          <h1
+            className="text-base font-semibold leading-6 text-gray-700"
+            style={{ fontFamily: "outfit, sans-serif" }}
+          >
+            Subgroup Creation
           </h1>
         </div>
         <div className="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
@@ -150,28 +160,70 @@ const SubGroup = () => {
             type="button"
             onClick={toggleForm}
             className="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            style={{ fontFamily: "outfit, sans-serif" }}
           >
             + New
           </button>
         </div>
       </div>
       {showForm && (
-        <div className="absolute inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center">
-          <div className="bg-white p-8 rounded-lg max-w-xl w-full mx-4">
-            <h2 className="text-lg font-semibold mb-4">New Sub Group Form</h2>
+        <div className="absolute inset-0 bg-gray-700 mt-10 bg-opacity-50 flex items-center justify-center">
+          <div className="bg-white p-6 rounded-lg max-w-md w-full mx-4">
+            <h2
+              className="text-lg font-semibold mb-6"
+              style={{ fontFamily: "outfit, sans-serif" }}
+            >
+              Subgroup Creation
+            </h2>
+            <div className="mb-4">
+              <label
+                htmlFor="name"
+                className="block text-sm font-medium text-gray-800"
+                style={{ fontFamily: "outfit, sans-serif" }}
+              >
+                Subgroup Name
+              </label>
+              <h5
+                className="block text-xs font-small mt-2 text-gray-500"
+                style={{ fontFamily: "outfit, sans-serif" }}
+              >
+                Choose a unique name for subgroup
+              </h5>
+              <input
+                type="text"
+                name="name"
+                id="name"
+                value={newAccount.name}
+                onChange={(e) =>
+                  setNewAccount({ ...newAccount, name: e.target.value })
+                }
+                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 p-4 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                placeholder="Subgroup name..."
+              />
+              {formErrors.name && (
+                <p className="mt-2 text-sm text-red-500">{formErrors.name}</p>
+              )}
+            </div>
             <div className="mb-4">
               <label
                 htmlFor="group"
-                className="block text-sm font-medium text-gray-700"
+                className="block text-sm font-medium text-gray-800"
+                style={{ fontFamily: "outfit, sans-serif" }}
               >
-                Group Account*
+                Group Account
               </label>
+              <h5
+                className="block text-xs font-small mt-2 text-gray-500"
+                style={{ fontFamily: "outfit, sans-serif" }}
+              >
+                Select a group the subgroup belongs to
+              </h5>
               <select
                 value={newAccount.groupId}
                 onChange={(e) =>
                   setNewAccount({ ...newAccount, groupId: e.target.value })
                 }
-                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 p-4 block w-full border-gray-300 rounded-md focus:ring-1 focus:ring-offset-1 focus:ring-offset-gray-100 focus:ring-indigo-500 sm:text-sm mb-20"
+                className="mt-1 focus:ring-indigo-200 focus:border-indigo-200 p-4 block w-full border-gray-300 rounded-md focus:ring-1 focus:ring-offset-1 focus:ring-offset-gray-100 focus:ring-indigo-200 sm:text-sm mb-6"
               >
                 <option value="">Select Group</option>
                 {allGroups.map((group) => (
@@ -186,44 +238,33 @@ const SubGroup = () => {
                 </p>
               )}
             </div>
-            <div className="mb-4">
-              <label
-                htmlFor="name"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Name*
-              </label>
-              <input
-                type="text"
-                name="name"
-                id="name"
-                value={newAccount.name}
-                onChange={(e) =>
-                  setNewAccount({ ...newAccount, name: e.target.value })
-                }
-                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 p-4 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                placeholder="Please enter account name..."
-              />
-              {formErrors.name && (
-                <p className="mt-2 text-sm text-red-500">{formErrors.name}</p>
-              )}
-            </div>
+
             <div className="mb-4">
               <label
                 htmlFor="description"
                 className="block text-sm font-medium text-gray-700"
+                style={{ fontFamily: "outfit, sans-serif" }}
               >
                 Description
               </label>
+              <h5
+                className="block text-xs font-small text-gray-500"
+                style={{ fontFamily: "outfit, sans-serif" }}
+              >
+                Add a description to help identify the subgroup
+              </h5>
               <textarea
                 name="description"
                 id="description"
                 value={newAccount.description}
                 onChange={(e) =>
-                  setNewAccount({ ...newAccount, description: e.target.value })
+                  setNewAccount({
+                    ...newAccount,
+                    description: e.target.value,
+                  })
                 }
-                rows={5}
-                cols={5}
+                rows={4}
+                cols={4}
                 className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 p-4 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                 placeholder="Please enter description..."
               />
@@ -233,20 +274,22 @@ const SubGroup = () => {
                 </p>
               )}
             </div>
-            <div className="flex justify-end mt-20">
+            <div className="flex justify-cover mt-4 w-full">
               <button
                 type="button"
                 onClick={toggleForm}
-                className="px-4 py-2 bg-indigo-600 text-white rounded-md text-sm font-semibold hover:bg-indigo-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-indigo-500"
+                className="flex-1 px-4 ml-3 py-2 text-gray bg-gray-300 rounded-xl text-xs font-semibold focus:outline-none hover:bg-indigo-700 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring"
+                style={{ fontFamily: "outfit, sans-serif" }}
               >
                 Cancel
               </button>
               <button
                 type="button"
                 onClick={handleSubmit}
-                className="ml-3 px-4 py-2 bg-indigo-600 text-white rounded-md text-sm font-semibold hover:bg-indigo-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-indigo-500"
+                className="flex-1 ml-3 px-4 py-2 bg-indigo-600 text-white rounded-xl text-xs font-semibold hover:bg-indigo-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-indigo-500"
+                style={{ fontFamily: "outfit, sans-serif" }}
               >
-                Save
+                Save Subgroup
               </button>
             </div>
           </div>
@@ -276,90 +319,40 @@ const SubGroup = () => {
         </div>
       )}
       {!loading && (
-        <div className="mt-8 overflow-x-auto">
-          <table className="table-auto min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
-              <tr>
-                <th
-                  scope="col"
-                  className="px-3 py-3 text-left text-sm font-semibold text-gray-900"
-                >
-                  NAME
-                </th>
-                <th
-                  scope="col"
-                  className="px-3 py-3 text-left text-sm font-semibold text-gray-900"
-                >
-                  DESCRIPTION
-                </th>
-                <th scope="col" className="relative px-3 py-3">
-                  <span className="sr-only">Edit</span>
-                </th>
-              </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {currentGroup.map((group) => (
-                <tr key={group.subGroupAccount.id}>
-                  <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                    {group.subGroupAccount.name}
-                  </td>
-                  <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                    {group.subGroupAccount.description}
-                  </td>
-                  <td className="relative whitespace-nowrap py-4 pr-4 text-right text-sm font-medium">
-                    {showEditButton && (
-                      <div className="relative">
-                        <select
-                          className="text-indigo-600 hover:text-indigo-900"
-                          onChange={(e) => handleEdit(e.target.value)}
-                        >
-                          <option value="">Actions</option>
-                          <option value="edit">Edit</option>
-                          <option value="delete">Delete</option>
-                        </select>
-                      </div>
-                    )}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          {showEditButton && (
-            <nav
-              className="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6"
-              aria-label="Pagination"
+        <div className="mt-8 grid grid-cols-2 gap-4">
+          {subGroups.map((subGroup) => (
+            <div
+              key={subGroup.id}
+              className="bg-gray-100 rounded-lg overflow-hidden"
             >
-              <div className="hidden sm:block">
-                <p className="text-sm text-gray-700">
-                  Showing
-                  <span className="font-medium mx-1">
-                    {indexOfFirstItem + 1}
-                  </span>
-                  to
-                  <span className="font-medium mx-1">{indexOfLastItem}</span>
-                  of
-                  <span className="font-medium mx-1">{groups.length}</span>
-                  results
+              <div className="p-4">
+                <div className="flex justify-between items-center mb-2">
+                  <h3
+                    className="text-sm font-semibold text-gray-900"
+                    style={{ fontFamily: "outfit, sans-serif" }}
+                  >
+                    {subGroup.name}
+                  </h3>
+                </div>
+                <p
+                  className="text-sm text-gray-500"
+                  style={{ fontFamily: "outfit, sans-serif" }}
+                >
+                  {subGroup.description}
                 </p>
               </div>
-              <div className="flex-1 flex justify-between sm:justify-end">
+              <div className="p-4 bg-gray-100">
                 <button
-                  onClick={prevPage}
-                  disabled={currentPage === 1}
-                  className="relative inline-flex items-center px-4 py-2 rounded-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+                
+                  onClick={() => seeSubgroup(subGroup.id)}
+                  className="flex-1 px-4 ml-3 py-2 text-gray bg-gray-200 rounded-xl text-xs font-semibold focus:outline-none hover:bg-indigo-700 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring border border-blue-700 rounded-xs"
+                  style={{ fontFamily: "outfit, sans-serif" }}
                 >
-                  Previous
-                </button>
-                <button
-                  onClick={nextPage}
-                  disabled={currentPage === totalPages}
-                  className="ml-3 relative inline-flex items-center px-4 py-2 rounded-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
-                >
-                  Next
+                  See Subgroup
                 </button>
               </div>
-            </nav>
-          )}
+            </div>
+          ))}
         </div>
       )}
     </div>
@@ -367,3 +360,4 @@ const SubGroup = () => {
 };
 
 export default SubGroup;
+
