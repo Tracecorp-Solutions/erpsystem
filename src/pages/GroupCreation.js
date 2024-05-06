@@ -3,6 +3,7 @@ import axios from "axios";
 import { Select } from "antd";
 import { CloseOutlined } from "@ant-design/icons";
 import "../styles/GroupCreation.css";
+import GroupCreationShow from "../components/GroupCreationShow";
 
 const { Option } = Select;
 
@@ -10,7 +11,7 @@ export default function GroupAccount() {
   const [showForm, setShowForm] = useState(false);
   const [newAccount, setNewAccount] = useState({ name: "", behaviour: "" });
   const [groupAccounts, setGroupAccounts] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setitemsPerPage] = useState(2);
   const [formErrors, setFormError] = useState({});
@@ -32,7 +33,7 @@ export default function GroupAccount() {
   const fetchGroupAccounts = async () => {
     try {
       const response = await axios.get(
-        `${process.env.REACT_APP_API_URL}/GetAllGroupAccounts`
+        `${process.env.REACT_APP_API_URL1}/GetAllGroupAccounts`
       );
       setGroupAccounts(response.data);
       setLoading(false);
@@ -389,27 +390,14 @@ export default function GroupAccount() {
       )}
       {!loading && (
         <div className="mt-8 overflow-x-auto">
-          {!showForm && (
+          {!showForm && currentGroupAccounts.length === 0 ? (
+            <GroupCreationShow />
+          ) : (
             <div className="mt-4 mb-2">
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Items Per Page:
-              </label>
-              <Select
-                value={itemsPerPage}
-                onChange={handleItemsPerPageChange}
-                className="w-24"
-              >
-                <Option value={2}>2</Option>
-                <Option value={5}>5</Option>
-                <Option value={10}>10</Option>
-                <Option value={20}>20</Option>
-                <Option value={30}>30</Option>
-                <Option value={40}>40</Option>
-                <Option value={50}>50</Option>
-              </Select>
+             <h1>Hello</h1>
             </div>
           )}
-          <table className="table-auto min-w-full divide-y divide-gray-200">
+          {/* <table className="table-auto min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">
               <tr>
                 <th
@@ -510,7 +498,7 @@ export default function GroupAccount() {
                 </button>
               </div>
             </nav>
-          )}
+          )} */}
         </div>
       )}
     </div>
