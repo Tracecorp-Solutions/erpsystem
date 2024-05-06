@@ -4,7 +4,6 @@ import { Select } from "antd";
 import { CloseOutlined } from "@ant-design/icons";
 import "../styles/GroupCreation.css";
 import GroupCreationShow from "../components/GroupCreationShow";
-import GroupAccountCard from "../components/GroupCreationCard";
 import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { EllipsisHorizontalIcon } from "@heroicons/react/20/solid";
@@ -52,10 +51,12 @@ export default function GroupAccount() {
   };
 
   function chunkArray(array, chunkSize) {
-    return Array.from({ length: Math.ceil(array.length / chunkSize) }, (_, index) =>
-      array.slice(index * chunkSize, index * chunkSize + chunkSize)
+    return Array.from(
+      { length: Math.ceil(array.length / chunkSize) },
+      (_, index) =>
+        array.slice(index * chunkSize, index * chunkSize + chunkSize)
     );
-  }  
+  }
 
   const validateForm = () => {
     let errors = {};
@@ -75,6 +76,13 @@ export default function GroupAccount() {
       errors.behaviour = "";
     }
 
+    if (!newAccount.description.trim()) {
+      errors.description = "description is required";
+      isValid = false;
+    } else {
+      errors.description = "";
+    }
+
     setFormError(errors);
 
     return isValid;
@@ -88,6 +96,7 @@ export default function GroupAccount() {
           {
             name: newAccount.name,
             behaviour: newAccount.behaviour,
+            description: newAccount.description,
           },
           {
             headers: {
@@ -331,10 +340,18 @@ export default function GroupAccount() {
               focus:border-indigo-500
               "
                   placeholder="Description"
+                  value={newAccount.description}
+                  onChange={(e) => {
+                    setNewAccount({
+                      ...newAccount,
+                      description: e.target.value,
+                    });
+                    setFormError({ ...formErrors, description: "" });
+                  }}
                 />
-                {formErrors.behaviour && (
+                {formErrors.description && (
                   <p className="mt-2 text-sm text-red-500">
-                    {formErrors.behaviour}
+                    {formErrors.description}
                   </p>
                 )}
               </div>
@@ -408,114 +425,122 @@ export default function GroupAccount() {
             <GroupCreationShow />
           ) : (
             <div className="mt-4 mb-2">
-            {!showForm && (
-              <>
-                {chunkArray(currentGroupAccounts, 2).map((column, columnIndex) => (
-                  <div key={columnIndex} className="flex flex-col sm:flex-row">
-                    {column.map((account) => (
-                      <div
-                        key={account.id}
-                        className="bg-gray-100 rounded-lg overflow-hidden flex-1 mr-4 mb-4 sm:mb-0"
-                      >
-                        <div className="p-4">
-                          <div className="flex justify-between items-center mb-2">
-                            <h3
-                              className="text-md font-semibold text-gray-700"
+              {!showForm && (
+                <>
+                  {chunkArray(groupAccounts, 2).map((column, columnIndex) => (
+                    <div
+                      key={columnIndex}
+                      className="flex flex-col sm:flex-row"
+                    >
+                      {column.map((account, index) => (
+                        <div
+                          key={account.id}
+                          className={classNames(
+                            "bg-gray-100 rounded-lg overflow-hidden flex-1 mr-4 mb-4 sm:mb-0 card",
+                            {
+                              'w-full': index === column.length - 1 && column.length === 1,
+                              'w-1/2': index !== column.length - 1 || column.length > 1
+                            }
+                          )}
+                          style={{ margin: "15px", width: `${100 / column.length}%` }}
+                        >
+                          <div className="p-4">
+                            <div className="flex justify-between items-center mb-2">
+                              <h3
+                                className="text-md font-semibold text-gray-700"
+                                style={{ fontFamily: "outfit, sans-serif" }}
+                              >
+                                {account.name}
+                              </h3>
+                              <Menu as="div" className="relative ml-auto">
+                                <Menu.Button className="-m-2.5 block p-2.5 text-gray-400 hover:text-gray-500">
+                                  <span className="sr-only">Open options</span>
+                                  <EllipsisHorizontalIcon
+                                    className="h-5 w-5"
+                                    aria-hidden="true"
+                                  />
+                                </Menu.Button>
+                                <Transition
+                                  as={Fragment}
+                                  enter="transition ease-out duration-100"
+                                  enterFrom="transform opacity-0 scale-95"
+                                  enterTo="transform opacity-100 scale-100"
+                                  leave="transition ease-in duration-75"
+                                  leaveFrom="transform opacity-100 scale-100"
+                                  leaveTo="transform opacity-0 scale-95"
+                                >
+                                  <Menu.Items className="absolute right-0 z-10 mt-0.5 w-32 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none">
+                                    <Menu.Item>
+                                      {({ active }) => (
+                                        <a
+                                          href="#"
+                                          className={classNames(
+                                            active ? "bg-gray-50" : "",
+                                            "block px-3 py-1 text-sm leading-6 text-gray-700"
+                                          )}
+                                        >
+                                          View
+                                          <span className="sr-only">
+                                            , {account.name}
+                                          </span>
+                                        </a>
+                                      )}
+                                    </Menu.Item>
+                                    <Menu.Item>
+                                      {({ active }) => (
+                                        <a
+                                          href="#"
+                                          className={classNames(
+                                            active ? "bg-gray-50" : "",
+                                            "block px-3 py-1 text-sm leading-6 text-gray-700"
+                                          )}
+                                        >
+                                          Edit
+                                          <span className="sr-only">
+                                            , {account.name}
+                                          </span>
+                                        </a>
+                                      )}
+                                    </Menu.Item>
+                                  </Menu.Items>
+                                </Transition>
+                              </Menu>
+                            </div>
+                            <p
+                              className="text-xs text-gray-500"
                               style={{ fontFamily: "outfit, sans-serif" }}
+                            >
+                              {account.description}
+                            </p>
+                          </div>
+                          <div className="m-4 bg-gray-100 flex items-center justify-between">
+                            <button
+                              // onClick={() => seeSubgroup(account.id)}
+                              className="px-4 mt-3 py-2 text-blue bg-gray-200 rounded-xl text-xs font-semibold focus:outline-none hover:bg-indigo-700 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring border border-blue-700 rounded-xs"
+                              style={{
+                                fontFamily: "outfit, sans-serif",
+                                color: "blue",
+                              }}
+                            >
+                              See Subgroup
+                            </button>
+                            <h3
+                              className="ml-1 text-xs text-right text-gray-500"
+                              style={{
+                                fontFamily: "outfit, sans-serif",
+                                color: "blue",
+                              }}
                             >
                               {account.name}
                             </h3>
-                            <Menu as="div" className="relative ml-auto">
-                              <Menu.Button className="-m-2.5 block p-2.5 text-gray-400 hover:text-gray-500">
-                                <span className="sr-only">Open options</span>
-                                <EllipsisHorizontalIcon
-                                  className="h-5 w-5"
-                                  aria-hidden="true"
-                                />
-                              </Menu.Button>
-                              <Transition
-                                as={Fragment}
-                                enter="transition ease-out duration-100"
-                                enterFrom="transform opacity-0 scale-95"
-                                enterTo="transform opacity-100 scale-100"
-                                leave="transition ease-in duration-75"
-                                leaveFrom="transform opacity-100 scale-100"
-                                leaveTo="transform opacity-0 scale-95"
-                              >
-                                <Menu.Items className="absolute right-0 z-10 mt-0.5 w-32 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none">
-                                  <Menu.Item>
-                                    {({ active }) => (
-                                      <a
-                                        href="#"
-                                        className={classNames(
-                                          active ? "bg-gray-50" : "",
-                                          "block px-3 py-1 text-sm leading-6 text-gray-700"
-                                        )}
-                                      >
-                                        View
-                                        <span className="sr-only">
-                                          , {account.name}
-                                        </span>
-                                      </a>
-                                    )}
-                                  </Menu.Item>
-                                  <Menu.Item>
-                                    {({ active }) => (
-                                      <a
-                                        href="#"
-                                        className={classNames(
-                                          active ? "bg-gray-50" : "",
-                                          "block px-3 py-1 text-sm leading-6 text-gray-700"
-                                        )}
-                                      >
-                                        Edit
-                                        <span className="sr-only">
-                                          , {account.name}
-                                        </span>
-                                      </a>
-                                    )}
-                                  </Menu.Item>
-                                </Menu.Items>
-                              </Transition>
-                            </Menu>
                           </div>
-                          <p
-                            className="text-xs text-gray-500"
-                            style={{ fontFamily: "outfit, sans-serif" }}
-                          >
-                            {account.description}
-                          </p>
                         </div>
-                        <div className="m-4 bg-gray-100 flex items-center justify-between">
-                          <button
-                            // onClick={() => seeSubgroup(account.id)}
-                            className="px-4 mt-3 py-2 text-blue bg-gray-200 rounded-xl text-xs font-semibold focus:outline-none hover:bg-indigo-700 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring border border-blue-700 rounded-xs"
-                            style={{
-                              fontFamily: "outfit, sans-serif",
-                              color: "blue",
-                            }}
-                          >
-                            See Subgroup
-                          </button>
-                          <h3
-                            className="ml-1 text-xs text-right text-gray-500"
-                            style={{
-                              fontFamily: "outfit, sans-serif",
-                              color: "blue",
-                            }}
-                          >
-                            {account.name}
-                          </h3>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                ))}
-              </>
-            )}
-          </div>
-          
-
+                      ))}
+                    </div>
+                  ))}
+                </>
+              )}
+            </div>
           )}
         </div>
       )}
