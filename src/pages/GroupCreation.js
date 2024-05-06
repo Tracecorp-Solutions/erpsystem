@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Select } from "antd";
+import { CloseOutlined } from "@ant-design/icons";
+import "../styles/GroupCreation.css";
 
 const { Option } = Select;
 
@@ -168,24 +170,56 @@ export default function GroupAccount() {
           <button
             type="button"
             onClick={toggleForm}
-            className="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            className="
+            block
+            rounded-md
+            bg-indigo-600
+            px-3
+            py-2
+            text-center
+            text-sm
+            font-semibold
+            text-white
+            shadow-sm
+            hover:bg-indigo-500
+            focus-visible:outline
+            focus-visible:outline-2
+            focus-visible:outline-offset-2
+            focus-visible:outline-indigo-600
+            groupbtn
+            "
           >
-            + New
+            <span style={{ marginRight: "10px" }}>+</span>
+            Create Group
           </button>
         </div>
       </div>
       {showForm && (
-        <div className="absolute inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center">
+        <div className="absolute mt-20 inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center">
+          <div className="bg-white p-8 rounded-lg max-w-xl w-full mx-4 relative">
+          <div className="absolute top-0 right-0 mt-10 mr-10">
+            <CloseOutlined style={{ cursor: "pointer" }} onClick={toggleForm} />
+          </div>{" "}
           <div className="bg-white p-8 rounded-lg max-w-xl w-full mx-4">
-            <h2 className="text-lg font-semibold mb-4">
-              New Group Account Form
+            <h2 className="text-lg font-semibold mb-4 group-title">
+              Group Creation
             </h2>
+            <p className="description">
+              Choose a unique name for your group that reflects its purpose
+              (e.g., Assets, Liabilities, Equity, Revenue, or Expenses)
+            </p>
             <div className="mb-4">
               <label
                 htmlFor="name"
-                className="block text-sm font-medium text-gray-700"
+                className="
+                block
+                text-sm
+                font-medium
+                text-gray-700
+                label-text
+                "
               >
-                Name
+                Group Name
               </label>
               <input
                 type="text"
@@ -196,8 +230,18 @@ export default function GroupAccount() {
                   setNewAccount({ ...newAccount, name: e.target.value });
                   setFormError({ ...formErrors, name: "" });
                 }}
-                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 p-4 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                placeholder="Please enter account name..."
+                className="
+                mt-1
+                p-4 block
+                w-full
+                sm:text-sm
+                rounded-md
+                text-input
+                focus:ring-indigo-500
+                focus:border-gray-400
+                focus-visible:border-indigo-500
+                "
+                placeholder="Group name"
               />
               {formErrors.name && (
                 <p className="mt-2 text-sm text-red-500">{formErrors.name}</p>
@@ -206,9 +250,15 @@ export default function GroupAccount() {
             <div className="mb-4">
               <label
                 htmlFor="behaviour"
-                className="block text-sm font-medium text-gray-700"
+                className="
+                block
+                text-sm
+                font-medium
+                text-gray-700
+                label-text
+                "
               >
-                Behaviour
+                Group Behaviour
               </label>
               <select
                 value={newAccount.behaviour}
@@ -216,9 +266,19 @@ export default function GroupAccount() {
                   setNewAccount({ ...newAccount, behaviour: e.target.value });
                   setFormError({ ...formErrors, behaviour: "" });
                 }}
-                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 p-4 block w-full border-gray-300 rounded-md focus:ring-1 focus:ring-offset-1 focus:ring-offset-gray-100 focus:ring-indigo-500 sm:text-sm"
+                className="
+                mt-1
+                focus:ring-indigo-500
+                focus:border-indigo-500
+                p-4 block
+                w-full
+                border-gray-300
+                rounded-md
+                sm:text-sm
+                text-input
+                "
               >
-                <option value="">Select Behaviour</option>
+                <option value="">Select group behavior</option>
                 <option value="Debit">Debit</option>
                 <option value="Credit">Credit</option>
               </select>
@@ -228,23 +288,85 @@ export default function GroupAccount() {
                 </p>
               )}
             </div>
-            <div className="flex justify-end mt-12">
+            <div className="mb-4">
+              <label
+                htmlFor="behaviour"
+                className="
+                block
+                text-sm
+                font-medium
+                text-gray-700
+                label-text
+                "
+              >
+                Description
+              </label>
+              <span className="description">
+                Add a brief description to help identify this group's purpose
+              </span>
+              <textarea
+                className="
+              mt-1
+              p-4 block
+              w-full
+              sm:text-sm
+              rounded-md
+              text-input
+              focus:ring-indigo-500
+              focus:border-indigo-500
+              "
+                placeholder="Description"
+              />
+              {formErrors.behaviour && (
+                <p className="mt-2 text-sm text-red-500">
+                  {formErrors.behaviour}
+                </p>
+              )}
+            </div>
+            <div className="flex justify-around mt-12">
               <button
                 type="button"
                 onClick={toggleForm}
-                className="px-4 py-2 bg-indigo-600 text-white rounded-md text-sm font-semibold hover:bg-indigo-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-indigo-500"
+                className="px-4
+                py-2
+                text-white
+                rounded-md
+                text-sm
+                font-semibold
+                focus:outline-none
+                focus-visible:ring-2
+                focus-visible:ring-offset-2
+                focus-visible:ring-indigo-
+                cancel-btn
+                "
               >
                 Cancel
               </button>
               <button
                 type="button"
                 onClick={handleSubmit}
-                className="ml-3 px-4 py-2 bg-indigo-600 text-white rounded-md text-sm font-semibold hover:bg-indigo-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-indigo-500"
+                className="
+                ml-3
+                px-4
+                py-2
+                bg-indigo-600
+                text-white
+                rounded-md
+                text-sm
+                font-semibold
+                hover:bg-indigo-700
+                focus:outline-none
+                focus-visible:ring-2
+                focus-visible:ring-offset-2
+                focus-visible:ring-indigo-500
+                save-group
+                "
               >
-                Save
+                Save Group
               </button>
             </div>
           </div>
+        </div>
         </div>
       )}
       {loading && (
@@ -303,7 +425,12 @@ export default function GroupAccount() {
                   Behaviour
                 </th>
 
-                <th scope="col" className="relative" style={{ padding: "8px", textAlign: "end" }} colSpan="3">
+                <th
+                  scope="col"
+                  className="relative"
+                  style={{ padding: "8px", textAlign: "end" }}
+                  colSpan="3"
+                >
                   <span
                     className="text-sm font-semibold text-gray-900"
                     style={{ padding: "8px" }}
