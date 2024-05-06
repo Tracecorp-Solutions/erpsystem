@@ -16,6 +16,13 @@ namespace Core.Repositories
         Task<IEnumerable<GroupAccount>> GetAllGroupAccounts();
 
         Task<IEnumerable<GroupSubGroupViewModel>> GetAllSubGroupAccounts();
+
+        Task<GroupAccount> GetGroupById(int id);
+        Task UpdateGroupAccount(GroupAccount groupAccount);
+
+        Task<SubGroupAccount> GetSubGroupById(int id);
+
+        Task UpdateSubGroupAccount(SubGroupAccount subGroupAccount);
     }
 
 }

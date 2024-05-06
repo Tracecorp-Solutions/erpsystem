@@ -11,8 +11,10 @@ namespace Core.Models
 
         public string Behaviour { get; set; } // Debit or Credit
 
+        public string Description { get; set; }
+
         // Navigation property
         [JsonIgnore]
-        public ICollection<SubGroupAccount> SubGroupAccounts { get; set; }
+        public ICollection<SubGroupAccount>? SubGroupAccounts { get; set; }
     }
 }

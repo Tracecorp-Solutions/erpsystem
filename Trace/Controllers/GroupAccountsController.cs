@@ -81,6 +81,78 @@ namespace Trace.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "An error occured while processing");
             }
         }
+
+        [HttpGet("/GetGroupAccountById")]
+        public async Task<IActionResult> GetGroupAccountById(int id) 
+        {
+            try
+            {
+                var groupaccount = await _repository.GetGroupById(id);
+                return Ok(groupaccount);
+            }
+            catch (ArgumentException ex) 
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occured while processing");
+            }
+        }
+
+        [HttpPost("/EditGroupAccount")]
+        public async Task<IActionResult> EditGroupAccount([FromBody] GroupAccount groupAccount) 
+        {
+            try
+            {
+                await _repository.UpdateGroupAccount(groupAccount);
+                return Ok();
+            }
+            catch (ArgumentException ex) 
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occured while processing");
+            }
+        }
+
+        [HttpGet("/GetSubGroupById")]
+        public async Task<IActionResult> GetSubGroupById(int id) 
+        {
+            try
+            {
+                var subgroup = await _repository.GetSubGroupById(id);
+                return Ok(subgroup);
+            }
+            catch (ArgumentException ex) 
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occured while processing");
+            }
+        }
+
+        [HttpPost("/EditSubGroupAccount")]
+        public async Task<IActionResult> EditSubGroupAccount([FromBody] SubGroupAccount sub) 
+        {
+            try
+            {
+                await _repository.UpdateSubGroupAccount(sub);
+                return Ok();
+            }
+            catch (ArgumentException ex) 
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occured while processing");
+            }
+        }
     }
 
 }

@@ -13,5 +13,9 @@ namespace Core.Repositories
         Task<IEnumerable<Account>> GetAccounts();
 
         Task<decimal> GetAccountBalance(int accountId);
+
+        Task<Account> GetAccountById(int accountId);
+
+        Task<string> UpdateAccount(Account account);
     }
 }

@@ -49,5 +49,27 @@ namespace Services.Repositories
             return creditTotal - debitTotal;
         }
 
+        public async Task<Account> GetAccountById(int accountId) 
+        {
+            var account = await _context.Accounts
+                .Include(ac => ac.SubGroupAccount)
+                .FirstOrDefaultAsync(ac => ac.Id == accountId);
+
+            return account == null ? throw new ArgumentException("No Account Found with that id") : account;
+        }
+
+        public async Task<string> UpdateAccount(Account account) 
+        {
+            //get existing account
+            var exisitingac = await _context.Accounts
+                .FirstOrDefaultAsync(ac => ac.Id == account.Id);
+            if (exisitingac == null)
+                throw new ArgumentException("No Account found with this id");
+
+            _context.Entry(exisitingac).CurrentValues.SetValues(account);
+            await _context.SaveChangesAsync();
+            return "Account Updated successfully";
+        }
+
     }
 }

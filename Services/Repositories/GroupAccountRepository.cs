@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Core.Models;
 using Microsoft.EntityFrameworkCore;
 using Infrastructure.Data;
+using System.Reflection.Metadata.Ecma335;
 
 namespace Services.Repositories
 {
@@ -25,6 +26,7 @@ namespace Services.Repositories
             {
                 Name = grpView.Name,
                 Behaviour = grpView.Behaviour,
+                Description = grpView.Description,
             };
             _context.GroupAccounts.Add(groupAccount);
             await _context.SaveChangesAsync();
@@ -33,6 +35,7 @@ namespace Services.Repositories
             {
                 Name = groupAccount.Name,
                 Behaviour = groupAccount.Behaviour,
+                Description = groupAccount.Description,
             };
             return viewMode;
         }
@@ -85,7 +88,45 @@ namespace Services.Repositories
             return subGroupAccounts;
         }
 
-        
+        public async Task<GroupAccount> GetGroupById(int id) 
+        {
+            var groupaccount = await _context.GroupAccounts.FirstOrDefaultAsync(a => a.Id==id);
+            return groupaccount == null ? throw new ArgumentException("No group account with this id found") : groupaccount;
+        }
+
+        public async Task UpdateGroupAccount(GroupAccount groupAccount)
+        {
+            //fetch existing group account
+            var existinggroupaccount = await _context.GroupAccounts
+                .FirstOrDefaultAsync(ga => ga.Id == groupAccount.Id);
+            if (existinggroupaccount == null)
+                throw new ArgumentException("No Group Account found with that id");
+
+            _context.Entry(existinggroupaccount).CurrentValues.SetValues(groupAccount);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<SubGroupAccount> GetSubGroupById(int id) 
+        {
+            //get subgroup with the corresponding group account
+            var subgroup = await _context.SubGroupAccounts
+                .Include(sg => sg.GroupAccount)
+                .FirstOrDefaultAsync(sg => sg.Id == id);
+
+            return subgroup == null? throw new ArgumentException("No Sub group account with that id found"): subgroup;
+        }
+
+        public async Task UpdateSubGroupAccount(SubGroupAccount subGroupAccount) 
+        {
+            //get existing subgroup account
+            var existingSubGroup = await _context.SubGroupAccounts
+                .FirstOrDefaultAsync(sg => sg.Id == subGroupAccount.Id);
+            if (existingSubGroup == null)
+                throw new ArgumentException("No sub group account found with that id");
+
+            _context.Entry(existingSubGroup).CurrentValues.SetValues(subGroupAccount);
+            await _context.SaveChangesAsync();
+        }
     }
 
 }

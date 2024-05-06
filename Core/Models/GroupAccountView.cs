@@ -11,5 +11,7 @@ namespace Core.Models
         public string Name { get; set; }
 
         public string Behaviour { get; set; } // Debit or Credit
+
+        public string Description { get; set; }
     }
 }
