@@ -437,12 +437,9 @@ export default function GroupAccount() {
                           key={account.id}
                           className={classNames(
                             "bg-gray-100 rounded-lg overflow-hidden flex-1 mr-4 mb-4 sm:mb-0 card",
-                            {
-                              'w-full': index === column.length - 1 && column.length === 1,
-                              'w-1/2': index !== column.length - 1 || column.length > 1
-                            }
+                            "lg:w-1/2"
                           )}
-                          style={{ margin: "15px", width: `${100 / column.length}%` }}
+                          style={{ margin: "15px" }}
                         >
                           <div className="p-4">
                             <div className="flex justify-between items-center mb-2">
