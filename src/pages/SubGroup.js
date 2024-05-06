@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { Fragment } from "react";
+import { Menu, Transition } from "@headlessui/react";
+import { EllipsisHorizontalIcon } from "@heroicons/react/20/solid";
 
 const SubGroup = () => {
   const [showForm, setShowForm] = useState(false);
@@ -30,6 +33,10 @@ const SubGroup = () => {
       setShowEditButton(true);
     }
   }, [showForm]);
+
+  function classNames(...classes) {
+    return classes.filter(Boolean).join(" ");
+  }
 
   const fetchGroups = async () => {
     try {
@@ -328,28 +335,86 @@ const SubGroup = () => {
               <div className="p-4">
                 <div className="flex justify-between items-center mb-2">
                   <h3
-                    className="text-sm font-semibold text-gray-900"
+                    className="text-md font-semibold text-gray-700"
                     style={{ fontFamily: "outfit, sans-serif" }}
                   >
                     {subGroup.name}
                   </h3>
+                  <Menu as="div" className="relative ml-auto">
+                    <Menu.Button className="-m-2.5 block p-2.5 text-gray-400 hover:text-gray-500">
+                      <span className="sr-only">Open options</span>
+                      <EllipsisHorizontalIcon
+                        className="h-5 w-5"
+                        aria-hidden="true"
+                      />
+                    </Menu.Button>
+                    <Transition
+                      as={Fragment}
+                      enter="transition ease-out duration-100"
+                      enterFrom="transform opacity-0 scale-95"
+                      enterTo="transform opacity-100 scale-100"
+                      leave="transition ease-in duration-75"
+                      leaveFrom="transform opacity-100 scale-100"
+                      leaveTo="transform opacity-0 scale-95"
+                    >
+                      <Menu.Items className="absolute right-0 z-10 mt-0.5 w-32 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none">
+                        <Menu.Item>
+                          {({ active }) => (
+                            <a
+                              href="#"
+                              className={classNames(
+                                active ? "bg-gray-50" : "",
+                                "block px-3 py-1 text-sm leading-6 text-gray-700"
+                              )}
+                            >
+                              View
+                              <span className="sr-only">
+                                , {subGroups.name}
+                              </span>
+                            </a>
+                          )}
+                        </Menu.Item>
+                        <Menu.Item>
+                          {({ active }) => (
+                            <a
+                              href="#"
+                              className={classNames(
+                                active ? "bg-gray-50" : "",
+                                "block px-3 py-1 text-sm leading-6 text-gray-700"
+                              )}
+                            >
+                              Edit
+                              <span className="sr-only">
+                                , {subGroups.name}
+                              </span>
+                            </a>
+                          )}
+                        </Menu.Item>
+                      </Menu.Items>
+                    </Transition>
+                  </Menu>
                 </div>
                 <p
-                  className="text-sm text-gray-500"
+                  className="text-xs text-gray-500"
                   style={{ fontFamily: "outfit, sans-serif" }}
                 >
                   {subGroup.description}
                 </p>
               </div>
-              <div className="p-4 bg-gray-100">
+              <div className="m-4 bg-gray-100 flex items-center justify-between">
                 <button
-                
                   onClick={() => seeSubgroup(subGroup.id)}
-                  className="flex-1 px-4 ml-3 py-2 text-gray bg-gray-200 rounded-xl text-xs font-semibold focus:outline-none hover:bg-indigo-700 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring border border-blue-700 rounded-xs"
-                  style={{ fontFamily: "outfit, sans-serif" }}
+                  className="px-4 mt-3 py-2 text-blue bg-gray-200 rounded-xl text-xs font-semibold focus:outline-none hover:bg-indigo-700 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring border border-blue-700 rounded-xs"
+                  style={{ fontFamily: "outfit, sans-serif", color: "blue" }}
                 >
                   See Subgroup
                 </button>
+                <h3
+                  className="ml-1 text-xs text-right text-gray-500"
+                  style={{ fontFamily: "outfit, sans-serif", color: "blue"}}
+                >
+                  {subGroup.name}
+                </h3>
               </div>
             </div>
           ))}
@@ -360,4 +425,3 @@ const SubGroup = () => {
 };
 
 export default SubGroup;
-
