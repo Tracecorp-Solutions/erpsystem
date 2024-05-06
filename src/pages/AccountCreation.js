@@ -39,7 +39,7 @@ const AccountCreation = () => {
   const fetchGroups = async () => {
     try {
       const response = await axios.get(
-        `${process.env.REACT_APP_API_URL}/GetAllGroupAccounts`
+        `${process.env.REACT_APP_API_URL1}/GetAllGroupAccounts`
       );
       setGroups(response.data);
     } catch (error) {

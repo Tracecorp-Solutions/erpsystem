@@ -4,6 +4,11 @@ import { Select } from "antd";
 import { CloseOutlined } from "@ant-design/icons";
 import "../styles/GroupCreation.css";
 import GroupCreationShow from "../components/GroupCreationShow";
+import GroupAccountCard from "../components/GroupCreationCard";
+import { Fragment } from "react";
+import { Menu, Transition } from "@headlessui/react";
+import { EllipsisHorizontalIcon } from "@heroicons/react/20/solid";
+import classNames from "classnames";
 
 const { Option } = Select;
 
@@ -33,7 +38,7 @@ export default function GroupAccount() {
   const fetchGroupAccounts = async () => {
     try {
       const response = await axios.get(
-        `${process.env.REACT_APP_API_URL1}/GetAllGroupAccounts`
+        `${process.env.REACT_APP_API_URL}/GetAllGroupAccounts`
       );
       setGroupAccounts(response.data);
       setLoading(false);
@@ -45,6 +50,12 @@ export default function GroupAccount() {
   const toggleForm = () => {
     setShowForm(!showForm);
   };
+
+  function chunkArray(array, chunkSize) {
+    return Array.from({ length: Math.ceil(array.length / chunkSize) }, (_, index) =>
+      array.slice(index * chunkSize, index * chunkSize + chunkSize)
+    );
+  }  
 
   const validateForm = () => {
     let errors = {};
@@ -198,40 +209,43 @@ export default function GroupAccount() {
       {showForm && (
         <div className="absolute mt-20 inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center">
           <div className="bg-white p-8 rounded-lg max-w-xl w-full mx-4 relative">
-          <div className="absolute top-0 right-0 mt-10 mr-10">
-            <CloseOutlined style={{ cursor: "pointer" }} onClick={toggleForm} />
-          </div>{" "}
-          <div className="bg-white p-8 rounded-lg max-w-xl w-full mx-4">
-            <h2 className="text-lg font-semibold mb-4 group-title">
-              Group Creation
-            </h2>
-            <p className="description">
-              Choose a unique name for your group that reflects its purpose
-              (e.g., Assets, Liabilities, Equity, Revenue, or Expenses)
-            </p>
-            <div className="mb-4">
-              <label
-                htmlFor="name"
-                className="
+            <div className="absolute top-0 right-0 mt-10 mr-10">
+              <CloseOutlined
+                style={{ cursor: "pointer" }}
+                onClick={toggleForm}
+              />
+            </div>{" "}
+            <div className="bg-white p-8 rounded-lg max-w-xl w-full mx-4">
+              <h2 className="text-lg font-semibold mb-4 group-title">
+                Group Creation
+              </h2>
+              <p className="description">
+                Choose a unique name for your group that reflects its purpose
+                (e.g., Assets, Liabilities, Equity, Revenue, or Expenses)
+              </p>
+              <div className="mb-4">
+                <label
+                  htmlFor="name"
+                  className="
                 block
                 text-sm
                 font-medium
                 text-gray-700
                 label-text
                 "
-              >
-                Group Name
-              </label>
-              <input
-                type="text"
-                name="name"
-                id="name"
-                value={newAccount.name}
-                onChange={(e) => {
-                  setNewAccount({ ...newAccount, name: e.target.value });
-                  setFormError({ ...formErrors, name: "" });
-                }}
-                className="
+                >
+                  Group Name
+                </label>
+                <input
+                  type="text"
+                  name="name"
+                  id="name"
+                  value={newAccount.name}
+                  onChange={(e) => {
+                    setNewAccount({ ...newAccount, name: e.target.value });
+                    setFormError({ ...formErrors, name: "" });
+                  }}
+                  className="
                 mt-1
                 p-4 block
                 w-full
@@ -242,32 +256,32 @@ export default function GroupAccount() {
                 focus:border-gray-400
                 focus-visible:border-indigo-500
                 "
-                placeholder="Group name"
-              />
-              {formErrors.name && (
-                <p className="mt-2 text-sm text-red-500">{formErrors.name}</p>
-              )}
-            </div>
-            <div className="mb-4">
-              <label
-                htmlFor="behaviour"
-                className="
+                  placeholder="Group name"
+                />
+                {formErrors.name && (
+                  <p className="mt-2 text-sm text-red-500">{formErrors.name}</p>
+                )}
+              </div>
+              <div className="mb-4">
+                <label
+                  htmlFor="behaviour"
+                  className="
                 block
                 text-sm
                 font-medium
                 text-gray-700
                 label-text
                 "
-              >
-                Group Behaviour
-              </label>
-              <select
-                value={newAccount.behaviour}
-                onChange={(e) => {
-                  setNewAccount({ ...newAccount, behaviour: e.target.value });
-                  setFormError({ ...formErrors, behaviour: "" });
-                }}
-                className="
+                >
+                  Group Behaviour
+                </label>
+                <select
+                  value={newAccount.behaviour}
+                  onChange={(e) => {
+                    setNewAccount({ ...newAccount, behaviour: e.target.value });
+                    setFormError({ ...formErrors, behaviour: "" });
+                  }}
+                  className="
                 mt-1
                 focus:ring-indigo-500
                 focus:border-indigo-500
@@ -278,35 +292,35 @@ export default function GroupAccount() {
                 sm:text-sm
                 text-input
                 "
-              >
-                <option value="">Select group behavior</option>
-                <option value="Debit">Debit</option>
-                <option value="Credit">Credit</option>
-              </select>
-              {formErrors.behaviour && (
-                <p className="mt-2 text-sm text-red-500">
-                  {formErrors.behaviour}
-                </p>
-              )}
-            </div>
-            <div className="mb-4">
-              <label
-                htmlFor="behaviour"
-                className="
+                >
+                  <option value="">Select group behavior</option>
+                  <option value="Debit">Debit</option>
+                  <option value="Credit">Credit</option>
+                </select>
+                {formErrors.behaviour && (
+                  <p className="mt-2 text-sm text-red-500">
+                    {formErrors.behaviour}
+                  </p>
+                )}
+              </div>
+              <div className="mb-4">
+                <label
+                  htmlFor="behaviour"
+                  className="
                 block
                 text-sm
                 font-medium
                 text-gray-700
                 label-text
                 "
-              >
-                Description
-              </label>
-              <span className="description">
-                Add a brief description to help identify this group's purpose
-              </span>
-              <textarea
-                className="
+                >
+                  Description
+                </label>
+                <span className="description">
+                  Add a brief description to help identify this group's purpose
+                </span>
+                <textarea
+                  className="
               mt-1
               p-4 block
               w-full
@@ -316,19 +330,19 @@ export default function GroupAccount() {
               focus:ring-indigo-500
               focus:border-indigo-500
               "
-                placeholder="Description"
-              />
-              {formErrors.behaviour && (
-                <p className="mt-2 text-sm text-red-500">
-                  {formErrors.behaviour}
-                </p>
-              )}
-            </div>
-            <div className="flex justify-around mt-12">
-              <button
-                type="button"
-                onClick={toggleForm}
-                className="px-4
+                  placeholder="Description"
+                />
+                {formErrors.behaviour && (
+                  <p className="mt-2 text-sm text-red-500">
+                    {formErrors.behaviour}
+                  </p>
+                )}
+              </div>
+              <div className="flex justify-around mt-12">
+                <button
+                  type="button"
+                  onClick={toggleForm}
+                  className="px-4
                 py-2
                 text-white
                 rounded-md
@@ -340,13 +354,13 @@ export default function GroupAccount() {
                 focus-visible:ring-indigo-
                 cancel-btn
                 "
-              >
-                Cancel
-              </button>
-              <button
-                type="button"
-                onClick={handleSubmit}
-                className="
+                >
+                  Cancel
+                </button>
+                <button
+                  type="button"
+                  onClick={handleSubmit}
+                  className="
                 ml-3
                 px-4
                 py-2
@@ -362,12 +376,12 @@ export default function GroupAccount() {
                 focus-visible:ring-indigo-500
                 save-group
                 "
-              >
-                Save Group
-              </button>
+                >
+                  Save Group
+                </button>
+              </div>
             </div>
           </div>
-        </div>
         </div>
       )}
       {loading && (
@@ -394,111 +408,115 @@ export default function GroupAccount() {
             <GroupCreationShow />
           ) : (
             <div className="mt-4 mb-2">
-             <h1>Hello</h1>
-            </div>
-          )}
-          {/* <table className="table-auto min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
-              <tr>
-                <th
-                  scope="col"
-                  className="px-3 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider"
-                >
-                  Name
-                </th>
-                <th
-                  scope="col"
-                  className="px-3 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider"
-                >
-                  Behaviour
-                </th>
-
-                <th
-                  scope="col"
-                  className="relative"
-                  style={{ padding: "8px", textAlign: "end" }}
-                  colSpan="3"
-                >
-                  <span
-                    className="text-sm font-semibold text-gray-900"
-                    style={{ padding: "8px" }}
-                  >
-                    ACTIONS
-                  </span>
-                </th>
-              </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {currentGroupAccounts.map((account, index) => (
-                <tr key={index}>
-                  <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                    {account.name}
-                  </td>
-                  <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                    {account.behaviour}
-                  </td>
-                  <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6 lg:pr-8">
-                    {showEditButton && (
-                      <div className="relative">
-                        <select
-                          className="text-indigo-600 hover:text-indigo-900"
-                          onChange={(e) => handleEdit(e.target.value)}
-                          style={{
-                            width: "100px",
-                            height: "40px",
-                            borderRadius: "0",
-                            padding: "8px",
-                          }}
-                        >
-                          <option value="">Show</option>
-                          <option value="edit">Edit</option>
-                          <option value="delete">Delete</option>
-                        </select>
+            {!showForm && (
+              <>
+                {chunkArray(currentGroupAccounts, 2).map((column, columnIndex) => (
+                  <div key={columnIndex} className="flex flex-col sm:flex-row">
+                    {column.map((account) => (
+                      <div
+                        key={account.id}
+                        className="bg-gray-100 rounded-lg overflow-hidden flex-1 mr-4 mb-4 sm:mb-0"
+                      >
+                        <div className="p-4">
+                          <div className="flex justify-between items-center mb-2">
+                            <h3
+                              className="text-md font-semibold text-gray-700"
+                              style={{ fontFamily: "outfit, sans-serif" }}
+                            >
+                              {account.name}
+                            </h3>
+                            <Menu as="div" className="relative ml-auto">
+                              <Menu.Button className="-m-2.5 block p-2.5 text-gray-400 hover:text-gray-500">
+                                <span className="sr-only">Open options</span>
+                                <EllipsisHorizontalIcon
+                                  className="h-5 w-5"
+                                  aria-hidden="true"
+                                />
+                              </Menu.Button>
+                              <Transition
+                                as={Fragment}
+                                enter="transition ease-out duration-100"
+                                enterFrom="transform opacity-0 scale-95"
+                                enterTo="transform opacity-100 scale-100"
+                                leave="transition ease-in duration-75"
+                                leaveFrom="transform opacity-100 scale-100"
+                                leaveTo="transform opacity-0 scale-95"
+                              >
+                                <Menu.Items className="absolute right-0 z-10 mt-0.5 w-32 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none">
+                                  <Menu.Item>
+                                    {({ active }) => (
+                                      <a
+                                        href="#"
+                                        className={classNames(
+                                          active ? "bg-gray-50" : "",
+                                          "block px-3 py-1 text-sm leading-6 text-gray-700"
+                                        )}
+                                      >
+                                        View
+                                        <span className="sr-only">
+                                          , {account.name}
+                                        </span>
+                                      </a>
+                                    )}
+                                  </Menu.Item>
+                                  <Menu.Item>
+                                    {({ active }) => (
+                                      <a
+                                        href="#"
+                                        className={classNames(
+                                          active ? "bg-gray-50" : "",
+                                          "block px-3 py-1 text-sm leading-6 text-gray-700"
+                                        )}
+                                      >
+                                        Edit
+                                        <span className="sr-only">
+                                          , {account.name}
+                                        </span>
+                                      </a>
+                                    )}
+                                  </Menu.Item>
+                                </Menu.Items>
+                              </Transition>
+                            </Menu>
+                          </div>
+                          <p
+                            className="text-xs text-gray-500"
+                            style={{ fontFamily: "outfit, sans-serif" }}
+                          >
+                            {account.description}
+                          </p>
+                        </div>
+                        <div className="m-4 bg-gray-100 flex items-center justify-between">
+                          <button
+                            // onClick={() => seeSubgroup(account.id)}
+                            className="px-4 mt-3 py-2 text-blue bg-gray-200 rounded-xl text-xs font-semibold focus:outline-none hover:bg-indigo-700 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring border border-blue-700 rounded-xs"
+                            style={{
+                              fontFamily: "outfit, sans-serif",
+                              color: "blue",
+                            }}
+                          >
+                            See Subgroup
+                          </button>
+                          <h3
+                            className="ml-1 text-xs text-right text-gray-500"
+                            style={{
+                              fontFamily: "outfit, sans-serif",
+                              color: "blue",
+                            }}
+                          >
+                            {account.name}
+                          </h3>
+                        </div>
                       </div>
-                    )}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          {showEditButton && (
-            <nav
-              className="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6"
-              aria-label="Pagination"
-            >
-              <div className="hidden sm:block">
-                <p className="text-sm text-gray-700">
-                  Showing
-                  <span className="font-medium mx-1">
-                    {indexOfFirstItem + 1}
-                  </span>
-                  to
-                  <span className="font-medium mx-1">{indexOfLastItem}</span>
-                  of
-                  <span className="font-medium mx-1">
-                    {groupAccounts.length}
-                  </span>
-                  results
-                </p>
-              </div>
-              <div className="flex-1 flex justify-between sm:justify-end">
-                <button
-                  onClick={prevPage}
-                  disabled={currentPage === 1}
-                  className="relative inline-flex items-center px-4 py-2 rounded-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
-                >
-                  Previous
-                </button>
-                <button
-                  onClick={nextPage}
-                  disabled={currentPage === totalPages}
-                  className="ml-3 relative inline-flex items-center px-4 py-2 rounded-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
-                >
-                  Next
-                </button>
-              </div>
-            </nav>
-          )} */}
+                    ))}
+                  </div>
+                ))}
+              </>
+            )}
+          </div>
+          
+
+          )}
         </div>
       )}
     </div>
