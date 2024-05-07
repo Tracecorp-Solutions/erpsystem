@@ -55,6 +55,7 @@ function Card({
                 marginTop: "5px",
               }}
             >
+              <h2>{filteredSubGroups[0].name}</h2>
               <h3 style={{ margin: "5px", color: "#4467a1" }}>SubGroups</h3>
               <table className="min-w-full divide-y divide-gray-200">
                 <thead className="bg-gray-50">
@@ -82,13 +83,7 @@ function Card({
   );
 }
 
-export default function AccountSidebar({
-  account,
-  onClose,
-  showForm,
-  setShowForm,
-  subGroups,
-}) {
+export default function AccountSidebar({ account, showForm, subGroups }) {
   const [open, setOpen] = useState(true);
 
   const groupAccountId = account.id;
