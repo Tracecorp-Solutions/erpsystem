@@ -17,13 +17,14 @@ const EditForm = ({ editedGroupAccount, handleSubmitEdit, closeEditForm }) => {
     setEditedAccount({ ...editedAccount, [name]: value });
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault(); // Prevent default form submission
     handleSubmitEdit(editedAccount);
   };
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
-      <div className="modal-content bg-white rounded-lg shadow-lg p-8">
+      <div className="modal-content bg-white rounded-lg shadow-lg p-8" style={{ width: '50%', height: '50%' }}>
         <span className="close absolute top-2 right-2 cursor-pointer text-gray-600" onClick={closeEditForm}>&times;</span>
         <h2 className="text-xl font-semibold mb-4">Edit Group Account</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -47,6 +48,7 @@ const EditForm = ({ editedGroupAccount, handleSubmitEdit, closeEditForm }) => {
     </div>
   );
 };
+
 
 
 
