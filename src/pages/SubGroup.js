@@ -3,6 +3,7 @@ import axios from "axios";
 import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { EllipsisHorizontalIcon } from "@heroicons/react/20/solid";
+import { BrowserRouter as Router, Link } from 'react-router-dom';
 
 const SubGroup = () => {
   const [showForm, setShowForm] = useState(false);
@@ -407,7 +408,7 @@ const SubGroup = () => {
                   className="px-4 mt-3 py-2 text-blue bg-gray-200 rounded-xl text-xs font-semibold focus:outline-none hover:bg-indigo-700 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring border border-blue-700 rounded-xs"
                   style={{ fontFamily: "outfit, sans-serif", color: "blue" }}
                 >
-                  See Subgroup
+                    <Link to="/seegroup">See Subgroup</Link>
                 </button>
                 <h3
                   className="ml-1 text-xs text-right text-gray-500"
@@ -421,6 +422,7 @@ const SubGroup = () => {
         </div>
       )}
     </div>
+    
   );
 };
 

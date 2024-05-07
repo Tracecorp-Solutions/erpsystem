@@ -482,7 +482,11 @@ export default function Main() {
                   name="search"
                 />
               </form>
-              <div className="flex items-center gap-x-4 lg:gap-x-6">
+
+
+             
+              <div className="flex items-center gap-x-4 lg:gap-x-6 mb-3">
+                <Button/>
                 <button
                   type="button"
                   className="-m-2.5 p-2.5 text-gray-400 hover:text-gray-500"
@@ -550,7 +554,7 @@ export default function Main() {
               </div>
             </div>
           </div>
-          <Button/>
+         
           <main className="py-10">
             <div className="px-4 sm:px-6 lg:px-8">
               <Routes>
@@ -575,6 +579,8 @@ export default function Main() {
                 <Route path="/invoice" element={<Invoice />} />
                 <Route path="/billing" element={<Billing />} />
                 <Route path="/products" element={<Products />} />
+              
+
               </Routes>
             </div>
           </main>
