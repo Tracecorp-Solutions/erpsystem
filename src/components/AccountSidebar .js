@@ -56,7 +56,16 @@ function Card({
               }}
             >
               <h2>{filteredSubGroups[0].name}</h2>
-              <h3 style={{ margin: "5px", color: "#4467a1", fontSize: "24px", fontWeight: "600" }}>SubGroups</h3>
+              <h3
+                style={{
+                  margin: "5px",
+                  color: "#4467a1",
+                  fontSize: "24px",
+                  fontWeight: "600",
+                }}
+              >
+                SubGroups
+              </h3>
               <table className="min-w-full divide-y divide-gray-200">
                 <thead className="bg-gray-50">
                   <tr>
@@ -131,14 +140,16 @@ export default function AccountSidebar({ account, showForm, subGroups }) {
                             </button>
                             <div className="flex justify-between">
                               <div>
-                                <Dialog.Title className="
+                                <Dialog.Title
+                                  className="
                                 text-base
                                 font-semibold
                                 leading-6"
-                                style={{
-                                  fontFamily: "outFit",
-                                  fontWeight: "600",
-                                  fontSize: "36px"
+                                  style={{
+                                    fontFamily: "outFit",
+                                    fontWeight: "600",
+                                    fontSize: "36px",
+                                    color: "#505050",
                                   }}
                                 >
                                   {account.name}
@@ -162,10 +173,15 @@ export default function AccountSidebar({ account, showForm, subGroups }) {
                               </div>
                             </div>
 
-                            <div className="mt-2" style={{ textAlign: "start", fontFamily: "outFit" }}>
-                              <p className="text-sm text-indigo-300">
-                                {account.description}
-                              </p>
+                            <div
+                              className="mt-2"
+                              style={{
+                                textAlign: "start",
+                                fontFamily: "outFit",
+                                color: "#a1a1a1",
+                              }}
+                            >
+                              <p className="text-sm">{account.description}</p>
                             </div>
                           </div>
                           <Card
