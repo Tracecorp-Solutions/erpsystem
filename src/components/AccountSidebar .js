@@ -1,6 +1,7 @@
 import { Fragment, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
+import { EditOutlined, EyeInvisibleOutlined } from "@ant-design/icons";
 
 function Card({ title, description }) {
   return (
@@ -16,17 +17,21 @@ function Card({ title, description }) {
           <h3 className="text-lg font-medium leading-6 text-gray-900 text-center">
             {title}
           </h3>
-          <p className="mt-1 max-w-2xl text-sm text-gray-500 text-center">{description}</p>
+          <p className="mt-1 max-w-2xl text-sm text-gray-500 text-center">
+            {description}
+          </p>
           <div style={{ display: "flex", justifyContent: "center" }}>
-          <button type="button" style={{
-            background: "#4467a1",
-            borderRadius: "20px",
-            padding: "10px"
-            }}
-            className="text-white mt-5"
+            <button
+              type="button"
+              style={{
+                background: "#4467a1",
+                borderRadius: "20px",
+                padding: "10px",
+              }}
+              className="text-white mt-5"
             >
               + Create SubGroup
-          </button>
+            </button>
           </div>
         </div>
       </div>
@@ -61,29 +66,43 @@ export default function AccountSidebar({
                     leaveFrom="translate-x-0"
                     leaveTo="translate-x-full"
                   >
-                    <Dialog.Panel className="pointer-events-auto w-screen max-w-md mt-32">
+                    <Dialog.Panel className="pointer-events-auto w-screen max-w-md mt-20">
                       <form className="flex h-full flex-col divide-y divide-gray-200 bg-white shadow-xl">
                         <div className="h-0 flex-1 overflow-y-auto">
-                          <div className="px-4 py-6 sm:px-6">
-                            <div className="flex items-center justify-between">
-                              <Dialog.Title className="text-base font-semibold leading-6">
-                                {account.name}
-                              </Dialog.Title>
-                              <div className="ml-3 flex h-7 items-center">
-                                <button
-                                  type="button"
-                                  className="relative rounded-md bg-indigo-700 text-indigo-200 hover:text-white focus:outline-none focus:ring-2 focus:ring-white"
-                                  onClick={() => setOpen(false)}
-                                >
-                                  <span className="absolute -inset-2.5" />
-                                  <span className="sr-only">Close panel</span>
-                                  <XMarkIcon
-                                    className="h-6 w-6"
-                                    aria-hidden="true"
-                                  />
-                                </button>
-                              </div>
+                          <div className="px-4 py-6 text-end sm:px-6">
+                            <button
+                              type="button"
+                              className="relative rounded-md text-indigo-200 focus:outline-none focus:ring-2 focus:ring-white"
+                              onClick={() => setOpen(false)}
+                            >
+                              <span className="absolute -inset-2.5" />
+                              <span className="sr-only">Close panel</span>
+                              <XMarkIcon
+                                className="h-6 w-6"
+                                aria-hidden="true"
+                              />
+                            </button>
+                            <div className="flex justify-between">
+                                <div>
+                                <Dialog.Title className="text-base font-semibold leading-6">
+                                  {account.name}
+                                </Dialog.Title>
+                                </div>
+                                <div className="flex items-center space-x-4">
+                                  <EyeInvisibleOutlined style={{
+                                    padding: "10px",
+                                    borderRadius: "50px",
+                                    background: "#f6f6f4"
+                                  }}
+                                    />
+                                  <EditOutlined style={{
+                                    padding: "10px",
+                                    borderRadius: "50px",
+                                    background: "#f6f6f4"
+                                  }} />
+                                </div>
                             </div>
+
                             <div className="mt-1">
                               <p className="text-sm text-indigo-300">
                                 {account.description}
