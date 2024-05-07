@@ -23,10 +23,38 @@ function Card({
           )}
           {showCreateSubGroupButton && (
             <>
-              <h3 className="text-lg font-medium leading-6 text-gray-900 text-center">
+              <h3 className="
+              text-lg
+              font-medium
+              leading-6
+              text-gray-900
+              text-center
+              mt-6
+              "
+              style={{
+                fontFamily: "outFit",
+                fontWeight: "600",
+                fontSize: "24px",
+                color: "#505050"
+              }}
+              >
                 {title}
               </h3>
-              <p className="mt-1 max-w-2xl text-sm text-gray-500 text-center">
+              <p className="
+                mt-1
+                max-w-2xl
+                text-sm
+                text-gray-500
+                text-center
+                mt-6
+                "
+                style={{
+                  fontFamily: "outFit",
+                  fontSize: "16px",
+                  color: "#505050",
+                  fontWeight: "400"
+                }}
+                >
                 {description}
               </p>
             </>
@@ -38,7 +66,8 @@ function Card({
                 style={{
                   background: "#4467a1",
                   borderRadius: "20px",
-                  padding: "10px",
+                  padding: "5px 15px 5px 15px",
+                  fontFamily: "outFit"
                 }}
                 className="text-white mt-5"
               >
@@ -62,14 +91,30 @@ function Card({
                   color: "#4467a1",
                   fontSize: "24px",
                   fontWeight: "600",
+                  fontFamily: "outFit"
                 }}
               >
                 SubGroups
               </h3>
-              <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-gray-50">
+              <table className="min-w-full">
+                <thead className="
+                bg-gray-50
+                "
+                style={{ borderRadius: "20px" }}
+                >
                   <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="
+                    px-6
+                    py-3
+                    text-left
+                    text-xs
+                    font-medium
+                    text-gray-500
+                    uppercase
+                    tracking-wider
+                    "
+                    style={{ fontFamily: "outFit", fontWeight: "500" }}
+                    >
                       Name
                     </th>
                   </tr>
@@ -77,7 +122,16 @@ function Card({
                 <tbody className="bg-white divide-y divide-gray-200">
                   {filteredSubGroups.map((subgroup, index) => (
                     <tr key={index}>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                      <td className="
+                      px-6
+                      py-4
+                      whitespace-nowrap
+                      text-sm
+                      font-medium
+                      text-gray-900
+                      "
+                      style={{ fontFamily: "outFit", color: "#505050" }}
+                      >
                         {subgroup.subGroupAccount.name}
                       </td>
                     </tr>
@@ -134,11 +188,12 @@ export default function AccountSidebar({ account, showForm, subGroups }) {
                               <span className="absolute -inset-2.5" />
                               <span className="sr-only">Close panel</span>
                               <XMarkIcon
-                                className="h-6 w-6"
+                                className="h-10 w-10"
                                 aria-hidden="true"
+                                style={{ color: "#505050", marginRight: "15px" }}
                               />
                             </button>
-                            <div className="flex justify-between">
+                            <div className="flex justify-between mt-5">
                               <div>
                                 <Dialog.Title
                                   className="
