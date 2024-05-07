@@ -13,7 +13,7 @@ function Card({
     <div style={{ display: "flex", justifyContent: "center" }}>
       <div
         className="bg-white overflow-hidden sm:rounded-lg"
-        style={{ width: "350px", background: "#F6F6F4" }}
+        style={{ width: "350px", background: showCreateSubGroupButton ? "#F6F6F4" : "#fff" }}
       >
         <div className="px-4 py-5 sm:px-6">
           {showCreateSubGroupButton && (
@@ -100,7 +100,7 @@ function Card({
                 <thead className="
                 bg-gray-50
                 "
-                style={{ borderRadius: "20px" }}
+                style={{ borderRadius: "50px" }}
                 >
                   <tr>
                     <th className="
