@@ -3,7 +3,12 @@ import { Dialog, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { EditOutlined, EyeInvisibleOutlined } from "@ant-design/icons";
 
-function Card({ title, description }) {
+function Card({ title, description, subGroups, groupAccountId }) {
+
+  const filteredSubGroups = subGroups.filter(item => item.groupAccount.id === groupAccountId);
+  
+  const showCreateSubGroupButton = filteredSubGroups.length === 0;
+  
   return (
     <div style={{ display: "flex", justifyContent: "center" }}>
       <div
@@ -12,7 +17,7 @@ function Card({ title, description }) {
       >
         <div className="px-4 py-5 sm:px-6">
           <div style={{ display: "flex", justifyContent: "center" }}>
-            <img src="../images/name.svg" width={150} />
+            <img src="../images/name.svg" width={150} alt="Placeholder" />
           </div>
           <h3 className="text-lg font-medium leading-6 text-gray-900 text-center">
             {title}
@@ -20,18 +25,28 @@ function Card({ title, description }) {
           <p className="mt-1 max-w-2xl text-sm text-gray-500 text-center">
             {description}
           </p>
-          <div style={{ display: "flex", justifyContent: "center" }}>
-            <button
-              type="button"
-              style={{
-                background: "#4467a1",
-                borderRadius: "20px",
-                padding: "10px",
-              }}
-              className="text-white mt-5"
-            >
-              + Create SubGroup
-            </button>
+          {showCreateSubGroupButton && (
+            <div style={{ display: "flex", justifyContent: "center" }}>
+              <button
+                type="button"
+                style={{
+                  background: "#4467a1",
+                  borderRadius: "20px",
+                  padding: "10px",
+                }}
+                className="text-white mt-5"
+              >
+                + Create SubGroup
+              </button>
+            </div>
+          )}
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          {filteredSubGroups.map((subgroup, index) => (
+              <div key={index}>
+                <h4 className="font-semibold">{subgroup.subGroupAccount.name}</h4>
+                <p>{subgroup.subGroupAccount.description}</p>
+              </div>
+            ))}
           </div>
         </div>
       </div>
@@ -39,13 +54,17 @@ function Card({ title, description }) {
   );
 }
 
+
 export default function AccountSidebar({
   account,
   onClose,
   showForm,
   setShowForm,
+  subGroups
 }) {
   const [open, setOpen] = useState(true);
+
+  const showCreateSubGroupButton = subGroups.length === 0;
 
   return (
     <>
@@ -112,7 +131,9 @@ export default function AccountSidebar({
                           <Card
                             title="Let's Organize Further!"
                             description="You haven't created any subgroups under Assets yet."
-                          />
+                            showCreateSubGroupButton={showCreateSubGroupButton}
+                            subGroups={subGroups}
+                            groupAccountId={account.id}                          />
                         </div>
                       </form>
                     </Dialog.Panel>

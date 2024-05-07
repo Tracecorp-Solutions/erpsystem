@@ -21,6 +21,7 @@ export default function GroupAccount() {
     description: "",
   });
   const [groupAccounts, setGroupAccounts] = useState([]);
+  const [subGroups, setSubGroups] = useState([]);
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setitemsPerPage] = useState(2);
@@ -32,6 +33,7 @@ export default function GroupAccount() {
 
   useEffect(() => {
     fetchGroupAccounts();
+    fetchSubGroups();
   }, []);
 
   useEffect(() => {
@@ -41,6 +43,19 @@ export default function GroupAccount() {
       setShowEditButton(true);
     }
   }, [showForm]);
+
+  const fetchSubGroups = async () => {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}/GetAllSubGroupAccounts`
+      );
+      setSubGroups(response.data);
+      console.log(response.data);
+      setLoading(false);
+    } catch (error) {
+      console.error("Error fetching groups:", error);
+    }
+  };
 
   const fetchGroupAccounts = async () => {
     try {
@@ -197,6 +212,7 @@ export default function GroupAccount() {
           onClose={handleCloseSidebar}
           showForm={showForm}
           setShowForm={setShowForm}
+          subGroups={subGroups}
         />
       )}
       {successMessage && (
