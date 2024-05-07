@@ -16,9 +16,13 @@ function Card({ title, description, subGroups, groupAccountId }) {
         style={{ width: "350px", background: "#F6F6F4" }}
       >
         <div className="px-4 py-5 sm:px-6">
-          <div style={{ display: "flex", justifyContent: "center" }}>
+         {
+          showCreateSubGroupButton && (
+             <div style={{ display: "flex", justifyContent: "center" }}>
             <img src="../images/name.svg" width={150} alt="Placeholder" />
           </div>
+          )
+         }
           <h3 className="text-lg font-medium leading-6 text-gray-900 text-center">
             {title}
           </h3>
@@ -40,14 +44,27 @@ function Card({ title, description, subGroups, groupAccountId }) {
               </button>
             </div>
           )}
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {filteredSubGroups.map((subgroup, index) => (
-              <div key={index}>
-                <h4 className="font-semibold">{subgroup.subGroupAccount.name}</h4>
-                <p>{subgroup.subGroupAccount.description}</p>
+           {
+            !showCreateSubGroupButton && (
+              <div style={{ border: "1px solid #7A7A7A", padding: "10px", borderRadius: "20px", marginTop: "5px" }}>
+                 <h3 style={{margin: "5px" , color: "#4467a1"}}>SubGroups</h3>
+             <table className="min-w-full divide-y divide-gray-200">
+              <thead className="bg-gray-50">
+                <tr>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+                </tr>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200">
+                {filteredSubGroups.map((subgroup, index) => (
+                  <tr key={index}>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{subgroup.subGroupAccount.name}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
               </div>
-            ))}
-          </div>
+            )
+           }
         </div>
       </div>
     </div>
