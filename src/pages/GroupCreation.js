@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Select } from "antd";
 import { CloseOutlined } from "@ant-design/icons";
 import "../styles/GroupCreation.css";
 import GroupCreationShow from "../components/GroupCreationShow";
@@ -8,10 +7,48 @@ import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { EllipsisHorizontalIcon } from "@heroicons/react/20/solid";
 import classNames from "classnames";
-import AccountCreation from "./AccountCreation";
 import AccountSidebar from "../components/AccountSidebar ";
 
-const { Option } = Select;
+const EditForm = ({ editedGroupAccount, handleSubmitEdit, closeEditForm }) => {
+  const [editedAccount, setEditedAccount] = useState(editedGroupAccount);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setEditedAccount({ ...editedAccount, [name]: value });
+  };
+
+  const handleSubmit = () => {
+    handleSubmitEdit(editedAccount);
+  };
+
+  return (
+    <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
+      <div className="modal-content bg-white rounded-lg shadow-lg p-8">
+        <span className="close absolute top-2 right-2 cursor-pointer text-gray-600" onClick={closeEditForm}>&times;</span>
+        <h2 className="text-xl font-semibold mb-4">Edit Group Account</h2>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label htmlFor="name" className="block text-sm font-medium text-gray-700">Name:</label>
+            <input type="text" onClick={(e) => e.stopPropagation()} id="name" name="name" value={editedAccount.name} onChange={handleChange} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+          </div>
+          <div>
+            <label htmlFor="behaviour" className="block text-sm font-medium text-gray-700">Behaviour:</label>
+            <input type="text" onClick={(e) => e.stopPropagation()} id="behaviour" name="behaviour" value={editedAccount.behaviour} onChange={handleChange} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+          </div>
+          <div>
+            <label htmlFor="description" className="block text-sm font-medium text-gray-700">Description:</label>
+            <textarea id="description" onClick={(e) => e.stopPropagation()} name="description" value={editedAccount.description} onChange={handleChange} rows="4" className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"></textarea>
+          </div>
+          <button type="submit" className="inline-flex justify-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+            Save
+          </button>
+        </form>
+      </div>
+    </div>
+  );
+};
+
+
 
 export default function GroupAccount() {
   const [showForm, setShowForm] = useState(false);
@@ -23,13 +60,14 @@ export default function GroupAccount() {
   const [groupAccounts, setGroupAccounts] = useState([]);
   const [subGroups, setSubGroups] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setitemsPerPage] = useState(2);
   const [formErrors, setFormError] = useState({});
   const [showEditButton, setShowEditButton] = useState(true);
   const [successMessage, setSuccessMessage] = useState("");
   const [selectedAccount, setSelectedAccount] = useState(null);
   const [sidebarVisible, setSidebarVisible] = useState(false);
+  const [editedGroupAccount, setEditedGroupAccount] = useState(null);
+  const [isEditing, setIsEditing] = useState(false);
+  const [showEditForm, setShowEditForm] = useState(false);
 
   useEffect(() => {
     fetchGroupAccounts();
@@ -148,15 +186,49 @@ export default function GroupAccount() {
     }
   };
 
-  const handleEdit = (action) => {
-    if (action === "edit") {
-      console.log("Edit action triggered");
-    }
+  const openEditForm = (account) => {
+    setEditedGroupAccount(account);
+    setShowEditForm(true);
+  };
 
-    if (action === "delete") {
-      console.log("Deleted action triggered");
+  // Function to close the edit form
+  const closeEditForm = () => {
+    setShowEditForm(false);
+  };
+
+  const handleEdit = (account) => {
+    // Set the edited account to the clicked account
+    setIsEditing(true);
+    setEditedGroupAccount(account);
+    // Additional logic to display edit form or modal can go here
+  };
+
+  const handleSubmitEdit = async (editedAccount) => {
+    try {
+      const response = await axios.post(
+        'http://54.226.71.2/EditGroupAccount',
+        {
+          id: editedAccount.id,
+          name: editedAccount.name,
+          behaviour: editedAccount.behaviour,
+          description: editedAccount.description
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }
+      );
+      console.log('Edit account response:', response.data);
+      setIsEditing(false);
+      setEditedGroupAccount(null);
+      // Fetch updated group accounts
+      fetchGroupAccounts();
+    } catch (error) {
+      console.error('Error editing group account:', error);
     }
   };
+  
 
   const handleSeeGroup = (account) => {
     setSelectedAccount(account);
@@ -166,42 +238,6 @@ export default function GroupAccount() {
   const handleCloseSidebar = () => {
     setSelectedAccount(null);
     setSidebarVisible(false);
-  };
-
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentGroupAccounts = groupAccounts.slice(
-    indexOfFirstItem,
-    indexOfLastItem
-  );
-
-  const totalPages = Math.ceil(groupAccounts.length / itemsPerPage);
-  const pageNumbers = Array.from(
-    { length: totalPages },
-    (_, index) => index + 1
-  );
-
-  const paginate = (pageNumber) => {
-    if (pageNumber >= 1 && pageNumber <= totalPages) {
-      setCurrentPage(pageNumber);
-    }
-  };
-
-  const nextPage = () => {
-    if (currentPage < totalPages) {
-      setCurrentPage(currentPage + 1);
-    }
-  };
-
-  const prevPage = () => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
-    }
-  };
-
-  const handleItemsPerPageChange = (value) => {
-    setitemsPerPage(value);
-    setCurrentPage(1);
   };
 
   return (
@@ -463,7 +499,7 @@ export default function GroupAccount() {
       )}
       {!loading && (
         <div className="mt-8 overflow-x-auto">
-          {!showForm && currentGroupAccounts.length === 0 ? (
+          {!showForm && groupAccounts.length === 0 ? (
             <GroupCreationShow />
           ) : (
             <div className="mt-4 mb-2">
@@ -492,17 +528,17 @@ export default function GroupAccount() {
                                 {account.name}
                               </h3>
                               <Menu as="div" className="relative ml-auto">
-                               {
-                                !showForm && (
+                                {!showForm && (
                                   <Menu.Button className="-m-2.5 block p-2.5 text-gray-400 hover:text-gray-500">
-                                  <span className="sr-only">Open options</span>
-                                  <EllipsisHorizontalIcon
-                                    className="h-5 w-5"
-                                    aria-hidden="true"
-                                  />
-                                </Menu.Button>
-                                )
-                               }
+                                    <span className="sr-only">
+                                      Open options
+                                    </span>
+                                    <EllipsisHorizontalIcon
+                                      className="h-5 w-5"
+                                      aria-hidden="true"
+                                    />
+                                  </Menu.Button>
+                                )}
                                 <Transition
                                   as={Fragment}
                                   enter="transition ease-out duration-100"
@@ -530,21 +566,27 @@ export default function GroupAccount() {
                                       )}
                                     </Menu.Item>
                                     <Menu.Item>
-                                      {({ active }) => (
-                                        <a
-                                          href="#"
-                                          className={classNames(
-                                            active ? "bg-gray-50" : "",
-                                            "block px-3 py-1 text-sm leading-6 text-gray-700"
-                                          )}
-                                        >
-                                          Edit
-                                          <span className="sr-only">
-                                            , {account.name}
-                                          </span>
-                                        </a>
-                                      )}
-                                    </Menu.Item>
+  {({ active }) => (
+    <div className={classNames("relative", active ? "bg-gray-50" : "")}>
+      <button
+        onClick={() => handleEdit(account)} // Call openEditForm function passing the current account
+        className="block px-3 py-1 text-sm leading-6 text-gray-700 w-full text-left"
+      >
+        Edit
+      </button>
+      {isEditing && editedGroupAccount && (
+        <div className="absolute top-full left-0 mt-1 w-full">
+          <EditForm
+            editedGroupAccount={editedGroupAccount}
+            handleSubmitEdit={handleSubmitEdit}
+            closeEditForm={closeEditForm}
+          />
+        </div>
+      )}
+    </div>
+  )}
+</Menu.Item>
+
                                   </Menu.Items>
                                 </Transition>
                               </Menu>
