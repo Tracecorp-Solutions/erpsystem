@@ -355,7 +355,7 @@ export default function GroupAccount() {
 
   const handleSeeGroup = (account) => {
     setSelectedAccount(account);
-    setSidebarVisible(true);
+    setSidebarVisible(!sidebarVisible);
   };
 
   const handleCloseSidebar = () => {
@@ -651,7 +651,6 @@ export default function GroupAccount() {
                                 {account.name}
                               </h3>
                               <Menu as="div" className="relative ml-auto">
-                                {!showForm && (
                                   <Menu.Button className="-m-2.5 block p-2.5 text-gray-400 hover:text-gray-500">
                                     <span className="sr-only">
                                       Open options
@@ -661,7 +660,6 @@ export default function GroupAccount() {
                                       aria-hidden="true"
                                     />
                                   </Menu.Button>
-                                )}
                                 <Transition
                                   as={Fragment}
                                   enter="transition ease-out duration-100"
