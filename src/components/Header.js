@@ -39,6 +39,7 @@ import Account from "../pages/AccountCreation";
 import Petty from "../pages/Petty";
 import SubGroup from "../pages/SubGroup";
 import Billing from "../pages/Billing";
+import TrialBalance from "../pages/TrialBalance";
 
 
 const navigation = [
@@ -574,6 +575,7 @@ export default function Main() {
                 <Route path="/sub-group" element={<SubGroup />} />
                 <Route path="/invoice" element={<Invoice />} />
                 <Route path="/billing" element={<Billing />} />
+                <Route path="/trial-balance" element={<TrialBalance />} />
                 <Route path="/products" element={<Products />} />
               </Routes>
             </div>

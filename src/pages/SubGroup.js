@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { Select } from "antd";
+
+const { Option } = Select;
 
 const SubGroup = () => {
   const [showForm, setShowForm] = useState(false);
@@ -11,7 +14,7 @@ const SubGroup = () => {
     description: "",
   });
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(4);
+  const [itemsPerPage, setitemsPerPage] = useState(2);
   const [formErrors, setFormErrors] = useState({});
   const [showEditButton, setShowEditButton] = useState(true);
   const [successMessage, setSuccessMessage] = useState("");
@@ -107,7 +110,7 @@ const SubGroup = () => {
     if (action === "delete") {
       console.log("Deleted action triggered");
     }
-  }
+  };
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -135,6 +138,11 @@ const SubGroup = () => {
     if (currentPage > 1) {
       setCurrentPage(currentPage - 1);
     }
+  };
+
+  const handleItemsPerPageChange = (value) => {
+    setitemsPerPage(value);
+    setCurrentPage(1);
   };
 
   return (
@@ -277,6 +285,28 @@ const SubGroup = () => {
       )}
       {!loading && (
         <div className="mt-8 overflow-x-auto">
+          {
+            !showForm && (
+              <div className="mt-4 mb-2">
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Items Per Page:
+            </label>
+            <Select
+              value={itemsPerPage}
+              onChange={handleItemsPerPageChange}
+              className="w-24"
+            >
+              <Option value={2}>2</Option>
+              <Option value={5}>5</Option>
+              <Option value={10}>10</Option>
+              <Option value={20}>20</Option>
+              <Option value={30}>30</Option>
+              <Option value={40}>40</Option>
+              <Option value={50}>50</Option>
+            </Select>
+          </div>
+            )
+          }
           <table className="table-auto min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">
               <tr>
@@ -290,10 +320,18 @@ const SubGroup = () => {
                   scope="col"
                   className="px-3 py-3 text-left text-sm font-semibold text-gray-900"
                 >
+                  GROUP ACCOUNT
+                </th>
+                <th
+                  scope="col"
+                  className="px-3 py-3 text-left text-sm font-semibold text-gray-900"
+                >
                   DESCRIPTION
                 </th>
                 <th scope="col" className="relative px-3 py-3">
-                  <span className="sr-only">Edit</span>
+                  <span className="px-3 py-3 text-left text-sm font-semibold text-gray-900">
+                    ACTIONS
+                  </span>
                 </th>
               </tr>
             </thead>
@@ -302,6 +340,9 @@ const SubGroup = () => {
                 <tr key={group.subGroupAccount.id}>
                   <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                     {group.subGroupAccount.name}
+                  </td>
+                  <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                    {group.groupAccount.name}
                   </td>
                   <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                     {group.subGroupAccount.description}
@@ -313,7 +354,7 @@ const SubGroup = () => {
                           className="text-indigo-600 hover:text-indigo-900"
                           onChange={(e) => handleEdit(e.target.value)}
                         >
-                          <option value="">Actions</option>
+                          <option value="">Show</option>
                           <option value="edit">Edit</option>
                           <option value="delete">Delete</option>
                         </select>

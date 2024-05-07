@@ -71,7 +71,7 @@ const Billing = () => {
       }
     }
   };
-  
+
   const handleAccountChange = (value) => {
     console.log("Selected account id:", value);
     const newBillTranItem = {
@@ -269,53 +269,7 @@ const Billing = () => {
               required
             />
           </div>
-
-          <div>
-            <label htmlFor="description" className="block mb-1">
-              Description of the items
-            </label>
-            <textarea
-              placeholder="Description"
-              className="border rounded px-3 py-2 w-full"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              required
-            />
-          </div>
-
-          <div>
-            <label htmlFor="amount" className="block mb-1">
-              Amount
-            </label>
-            <input
-              type="text"
-              placeholder="Amount"
-              className="border px-3 py-2 w-full"
-              value={amount}
-              onChange={(e) => setAmount(e.target.value)}
-              required
-            />
-          </div>
         </div>
-
-        <div className="w-full md:w-1/4 px-4 mb-4">
-          <label htmlFor="billNo" className="block mb-1">
-              Account
-            </label>
-            <Select
-              defaultValue="Category"
-              style={{ width: "75%" }}
-              onChange={(value) => handleAccountChange(value)}
-              required
-            >
-              {accounts.map((accountData) => (
-                <Option key={accountData.id} value={accountData.id}>
-                  {accountData.name}
-                </Option>
-              ))}
-            </Select>
-          </div>
-
         <div>
           <button
             type="submit"
@@ -355,7 +309,42 @@ const Billing = () => {
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
-            <tr></tr>
+            <tr>
+              <td>
+                <Select
+                  defaultValue="Category"
+                  style={{ width: "75%" }}
+                  onChange={(value) => handleAccountChange(value)}
+                  required
+                >
+                  {accounts.map((accountData) => (
+                    <Option key={accountData.id} value={accountData.id}>
+                      {accountData.name}
+                    </Option>
+                  ))}
+                </Select>
+              </td>
+              <td>
+                <input
+                  type="text"
+                  placeholder="Description"
+                  className="border rounded px-3 py-2 w-full"
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                  required
+                />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  placeholder="Amount"
+                  className="border px-3 py-2 w-full"
+                  value={amount}
+                  onChange={(e) => setAmount(e.target.value)}
+                  required
+                />
+              </td>
+            </tr>
             {data.map((rowData) => (
               <tr key={rowData.key}>
                 <td className="px-3 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
