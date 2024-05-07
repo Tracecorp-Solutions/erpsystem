@@ -8,12 +8,18 @@ import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { EllipsisHorizontalIcon } from "@heroicons/react/20/solid";
 import classNames from "classnames";
+import AccountCreation from "./AccountCreation";
+import AccountSidebar from "../components/AccountSidebar ";
 
 const { Option } = Select;
 
 export default function GroupAccount() {
   const [showForm, setShowForm] = useState(false);
-  const [newAccount, setNewAccount] = useState({ name: "", behaviour: "" });
+  const [newAccount, setNewAccount] = useState({
+    name: "",
+    behaviour: "",
+    description: "",
+  });
   const [groupAccounts, setGroupAccounts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
@@ -21,6 +27,8 @@ export default function GroupAccount() {
   const [formErrors, setFormError] = useState({});
   const [showEditButton, setShowEditButton] = useState(true);
   const [successMessage, setSuccessMessage] = useState("");
+  const [selectedAccount, setSelectedAccount] = useState(null);
+  const [sidebarVisible, setSidebarVisible] = useState(false);
 
   useEffect(() => {
     fetchGroupAccounts();
@@ -135,6 +143,16 @@ export default function GroupAccount() {
     }
   };
 
+  const handleSeeGroup = (account) => {
+    setSelectedAccount(account);
+    setSidebarVisible(true);
+  };
+
+  const handleCloseSidebar = () => {
+    setSelectedAccount(null);
+    setSidebarVisible(false);
+  };
+
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentGroupAccounts = groupAccounts.slice(
@@ -172,7 +190,15 @@ export default function GroupAccount() {
   };
 
   return (
-    <div className="px-4 sm:px-6 lg:px-8">
+    <div className="px-4 sm:px-6 lg:px-8 group-container">
+      {selectedAccount && sidebarVisible && (
+        <AccountSidebar
+          account={selectedAccount}
+          onClose={handleCloseSidebar}
+          showForm={showForm}
+          setShowForm={setShowForm}
+        />
+      )}
       {successMessage && (
         <div
           className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-1"
@@ -436,10 +462,10 @@ export default function GroupAccount() {
                         <div
                           key={account.id}
                           className={classNames(
-                            "bg-gray-100 rounded-lg overflow-hidden flex-1 mr-4 mb-4 sm:mb-0 card",
+                            "rounded-lg overflow-hidden flex-1 mr-4 mb-4 sm:mb-0 card",
                             "lg:w-1/2"
                           )}
-                          style={{ margin: "15px" }}
+                          style={{ margin: "15px", background: "#fff" }}
                         >
                           <div className="p-4">
                             <div className="flex justify-between items-center mb-2">
@@ -450,13 +476,17 @@ export default function GroupAccount() {
                                 {account.name}
                               </h3>
                               <Menu as="div" className="relative ml-auto">
-                                <Menu.Button className="-m-2.5 block p-2.5 text-gray-400 hover:text-gray-500">
+                               {
+                                !showForm && (
+                                  <Menu.Button className="-m-2.5 block p-2.5 text-gray-400 hover:text-gray-500">
                                   <span className="sr-only">Open options</span>
                                   <EllipsisHorizontalIcon
                                     className="h-5 w-5"
                                     aria-hidden="true"
                                   />
                                 </Menu.Button>
+                                )
+                               }
                                 <Transition
                                   as={Fragment}
                                   enter="transition ease-out duration-100"
@@ -510,26 +540,18 @@ export default function GroupAccount() {
                               {account.description}
                             </p>
                           </div>
-                          <div className="m-4 bg-gray-100 flex items-center justify-between">
+                          <div className="m-4 flex items-center justify-between">
                             <button
-                              // onClick={() => seeSubgroup(account.id)}
-                              className="px-4 mt-3 py-2 text-blue bg-gray-200 rounded-xl text-xs font-semibold focus:outline-none hover:bg-indigo-700 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring border border-blue-700 rounded-xs"
+                              onClick={() => handleSeeGroup(account)}
+                              className="
+                              px-4 mt-3 py-2 text-blue bg-gray-200 rounded-xl text-xs font-semibold focus:outline-none hover:bg-indigo-700 hover:text-white focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring border border-blue-700 rounded-xs"
                               style={{
                                 fontFamily: "outfit, sans-serif",
-                                color: "blue",
+                                // color: "blue",
                               }}
                             >
-                              See Subgroup
+                              See group
                             </button>
-                            <h3
-                              className="ml-1 text-xs text-right text-gray-500"
-                              style={{
-                                fontFamily: "outfit, sans-serif",
-                                color: "blue",
-                              }}
-                            >
-                              {account.name}
-                            </h3>
                           </div>
                         </div>
                       ))}

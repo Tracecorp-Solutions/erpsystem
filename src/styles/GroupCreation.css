@@ -51,3 +51,9 @@
  font-family: out-fit;
  font-weight: 600;
 }
+
+.group-container {
+  background: #F6F6F4;
+  padding: 15px;
+  border-radius: 10px;
+}
