@@ -3,12 +3,12 @@ import { Dialog, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { EditOutlined, EyeInvisibleOutlined } from "@ant-design/icons";
 
-function Card({ title, description, subGroups, groupAccountId }) {
-
-  const filteredSubGroups = subGroups.filter(item => item.groupAccount.id === groupAccountId);
-  
-  const showCreateSubGroupButton = filteredSubGroups.length === 0;
-  
+function Card({
+  title,
+  description,
+  filteredSubGroups,
+  showCreateSubGroupButton,
+}) {
   return (
     <div style={{ display: "flex", justifyContent: "center" }}>
       <div
@@ -16,19 +16,21 @@ function Card({ title, description, subGroups, groupAccountId }) {
         style={{ width: "350px", background: "#F6F6F4" }}
       >
         <div className="px-4 py-5 sm:px-6">
-         {
-          showCreateSubGroupButton && (
-             <div style={{ display: "flex", justifyContent: "center" }}>
-            <img src="../images/name.svg" width={150} alt="Placeholder" />
-          </div>
-          )
-         }
-          <h3 className="text-lg font-medium leading-6 text-gray-900 text-center">
-            {title}
-          </h3>
-          <p className="mt-1 max-w-2xl text-sm text-gray-500 text-center">
-            {description}
-          </p>
+          {showCreateSubGroupButton && (
+            <div style={{ display: "flex", justifyContent: "center" }}>
+              <img src="../images/name.svg" width={150} alt="Placeholder" />
+            </div>
+          )}
+          {showCreateSubGroupButton && (
+            <>
+              <h3 className="text-lg font-medium leading-6 text-gray-900 text-center">
+                {title}
+              </h3>
+              <p className="mt-1 max-w-2xl text-sm text-gray-500 text-center">
+                {description}
+              </p>
+            </>
+          )}
           {showCreateSubGroupButton && (
             <div style={{ display: "flex", justifyContent: "center" }}>
               <button
@@ -44,44 +46,58 @@ function Card({ title, description, subGroups, groupAccountId }) {
               </button>
             </div>
           )}
-           {
-            !showCreateSubGroupButton && (
-              <div style={{ border: "1px solid #7A7A7A", padding: "10px", borderRadius: "20px", marginTop: "5px" }}>
-                 <h3 style={{margin: "5px" , color: "#4467a1"}}>SubGroups</h3>
-             <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
-                <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
-                </tr>
-              </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
-                {filteredSubGroups.map((subgroup, index) => (
-                  <tr key={index}>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{subgroup.subGroupAccount.name}</td>
+          {!showCreateSubGroupButton && (
+            <div
+              style={{
+                border: "1px solid #7A7A7A",
+                padding: "10px",
+                borderRadius: "20px",
+                marginTop: "5px",
+              }}
+            >
+              <h3 style={{ margin: "5px", color: "#4467a1" }}>SubGroups</h3>
+              <table className="min-w-full divide-y divide-gray-200">
+                <thead className="bg-gray-50">
+                  <tr>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Name
+                    </th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-              </div>
-            )
-           }
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200">
+                  {filteredSubGroups.map((subgroup, index) => (
+                    <tr key={index}>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                        {subgroup.subGroupAccount.name}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
         </div>
       </div>
     </div>
   );
 }
 
-
 export default function AccountSidebar({
   account,
   onClose,
   showForm,
   setShowForm,
-  subGroups
+  subGroups,
 }) {
   const [open, setOpen] = useState(true);
 
-  const showCreateSubGroupButton = subGroups.length === 0;
+  const groupAccountId = account.id;
+
+  const filteredSubGroups = subGroups.filter(
+    (item) => item.groupAccount.id === groupAccountId
+  );
+
+  const showCreateSubGroupButton = filteredSubGroups.length === 0;
 
   return (
     <>
@@ -119,24 +135,27 @@ export default function AccountSidebar({
                               />
                             </button>
                             <div className="flex justify-between">
-                                <div>
+                              <div>
                                 <Dialog.Title className="text-base font-semibold leading-6">
                                   {account.name}
                                 </Dialog.Title>
-                                </div>
-                                <div className="flex items-center space-x-4">
-                                  <EyeInvisibleOutlined style={{
+                              </div>
+                              <div className="flex items-center space-x-4">
+                                <EyeInvisibleOutlined
+                                  style={{
                                     padding: "10px",
                                     borderRadius: "50px",
-                                    background: "#f6f6f4"
+                                    background: "#f6f6f4",
                                   }}
-                                    />
-                                  <EditOutlined style={{
+                                />
+                                <EditOutlined
+                                  style={{
                                     padding: "10px",
                                     borderRadius: "50px",
-                                    background: "#f6f6f4"
-                                  }} />
-                                </div>
+                                    background: "#f6f6f4",
+                                  }}
+                                />
+                              </div>
                             </div>
 
                             <div className="mt-1">
@@ -149,8 +168,8 @@ export default function AccountSidebar({
                             title="Let's Organize Further!"
                             description="You haven't created any subgroups under Assets yet."
                             showCreateSubGroupButton={showCreateSubGroupButton}
-                            subGroups={subGroups}
-                            groupAccountId={account.id}                          />
+                            filteredSubGroups={filteredSubGroups}
+                          />
                         </div>
                       </form>
                     </Dialog.Panel>
