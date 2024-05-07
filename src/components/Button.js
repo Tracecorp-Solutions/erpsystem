@@ -7,8 +7,8 @@ const tabs = [
   { name: 'Vendors', href: '/dashboard/vendors', current: false },
   { name: 'Billing', href: '/billing', current: false },
   { name: 'Petty Cash', href: '/petty', current: true },
-  { name: 'Offer', href: '#', current: false },
-  { name: 'Sales', href: '#', current: false },
+  // { name: 'Offer', href: '#', current: false },
+  // { name: 'Sales', href: '#', current: false },
 ];
 
 function classNames(...classes) {
@@ -46,7 +46,7 @@ export default function NavigationHeader() {
           >
             + New Entry
           </button> */}
-          <div className="relative inline-block text-left mr-6 ">
+          <div className="relative inline-block text-left mr-10 ">
       <div>
         <button
           type="button"
@@ -74,7 +74,7 @@ export default function NavigationHeader() {
 
       {isOpen && (
         <div
-          className="absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+          className="absolute left-0 z-10 mt-2 w-56 origin-top-left divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
           role="menu"
           aria-orientation="vertical"
           aria-labelledby="menu-button"
@@ -82,13 +82,13 @@ export default function NavigationHeader() {
         >
           <div className="py-1" role="none">
             <a
-              href="/petty"
+              href="/products"
               className="text-gray-700 block px-4 py-2 text-sm"
               role="menuitem"
               tabIndex="-1"
               id="menu-item-0"
             >
-            Petty cash
+            Products
             </a>
             <a
               href="/trial-balance"
@@ -102,16 +102,16 @@ export default function NavigationHeader() {
           </div>
           <div className="py-1" role="none">
             <a
-              href="#"
+              href="/invoice"
               className="text-gray-700 block px-4 py-2 text-sm"
               role="menuitem"
               tabIndex="-1"
               id="menu-item-2"
             >
-              Products
+              Invoice
             </a>
             <a
-              href="#"
+              href="/products"
               className="text-gray-700 block px-4 py-2 text-sm"
               role="menuitem"
               tabIndex="-1"

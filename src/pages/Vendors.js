@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { Select } from "antd";
+
+const { Option } = Select;
 
 const Vendor = () => {
   const [showForm, setShowForm] = useState(false);
@@ -32,14 +35,16 @@ const Vendor = () => {
   const [vendors, setVendors] = useState([]);
   const [loading, setLoading] = useState(true);
   const [successMessage, setSuccessMessage] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(5);
   const [errorMessage, setErrorMessage] = useState("");
 
   const toggleForm = () => {
     setShowForm(!showForm);
   };
 
+
   const vendorsApiUrl = "http://54.226.71.2/GetAllVendors";
-  const createVendorApiUrl = "http://54.226.71.2/CreateVendor";
 
   const fetchVendors = async () => {
     try {
@@ -56,10 +61,48 @@ const Vendor = () => {
     fetchVendors();
   }, []);
 
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentvendors = vendors.slice(indexOfFirstItem, indexOfLastItem);
+
+  const totalPages = Math.ceil(vendors.length / itemsPerPage);
+  const pageNumbers = Array.from(
+    { length: totalPages },
+    (_, index) => index + 1
+  );
+
+  const paginate = (pageNumber) => {
+    if (pageNumber >= 1 && pageNumber <= totalPages) {
+      setCurrentPage(pageNumber);
+    }
+  };
+
+  const nextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const prevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const handleEdit = (action) => {
+    if (action === "edit") {
+      console.log("Edit action triggered");
+    }
+
+    if (action === "delete") {
+      console.log("Delete action triggered");
+    }
+  };
+
   const handleSubmit = async () => {
     try {
-      const response = await axios.post(createVendorApiUrl, newVendor);
-      console.log("Vendor created successfully:", response.data);
+      const createVendorApiUrl = `${process.env.REACT_APP_API_URL}/CreateVendor`; // Corrected endpoint URL
+      const response = await axios.post(createVendorApiUrl, newVendor); // Corrected axios.post usage
       setSuccessMessage("Vendor created successfully!");
       // Clear the form fields
       setNewVendor({
@@ -458,7 +501,7 @@ const Vendor = () => {
             </div>
 
             <div className="grid grid-cols-3 gap-4">
-              <div className="mb-4">
+              <div className="mb-3">
                 <label
                   htmlFor="billingRate"
                   className="block text-sm font-medium text-gray-700"
@@ -478,7 +521,7 @@ const Vendor = () => {
                   style={{ padding: "18px" }}
                 />
               </div>
-              <div className="mb-4">
+              <div className="mb-3">
                 <label
                   htmlFor="openingBalance"
                   className="block text-sm font-medium text-gray-700"
@@ -501,7 +544,7 @@ const Vendor = () => {
                   style={{ padding: "18px" }}
                 />
               </div>
-              <div className="mb-4">
+              <div className="mb-3">
                 <label
                   htmlFor="openingBalanceDate"
                   className="block text-sm font-medium text-gray-700"
@@ -547,7 +590,7 @@ const Vendor = () => {
                   style={{ padding: "18px" }}
                 />
               </div>
-              <div className="mb-4">
+              <div className="mb-3">
                 <label
                   htmlFor="businessIdNo"
                   className="block text-sm font-medium text-gray-700"
@@ -567,7 +610,7 @@ const Vendor = () => {
                   style={{ padding: "18px" }}
                 />
               </div>
-              <div className="mb-4">
+              <div className="mb-3">
                 <label
                   htmlFor="status"
                   className="block text-sm font-medium text-gray-700"
@@ -602,7 +645,7 @@ const Vendor = () => {
                 Cancel
               </button>
               <button
-                type="button"
+                type="submit"
                 onClick={handleSubmit}
                 className="ml-3 px-4 py-2 bg-indigo-600 text-white rounded-md text-sm font-semibold hover:bg-indigo-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-indigo-500"
               >
@@ -613,79 +656,111 @@ const Vendor = () => {
         </div>
       )}
 
-      {/* <div className="-mx-4 mt-8 flow-root sm:mx-0">
-      <table class="table table-striped">
-          
-          <thead>
-            <tr>
-              <th scope="col">Date</th>
-              <th scope="col">Name</th>
-              <th scope="col">Balance</th>
-              <th scope="col">Edit</th>
-            </tr>
-          </thead>
-          <tbody class="bg-white>
-        {vendors.map((vendor) => (
-          <tr key={vendor.id} class="even:bg-gray-50">
-             <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-              {vendor.openingBalanceDate}
-            </td>
-            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-              <div className="text-sm font-medium text-gray-900">
-                {vendor.title} {vendor.firstName} {vendor.lastName}
-              </div>
-              <div className="text-sm text-gray-500">{vendor.email}</div>
-            </td>
-        
-            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-              {vendor.openingBalance}
-            </td>
-           
-            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-              {vendor.edit}
-            </td>
-          </tr>
-        ))}
-      </tbody>
-     
-
-        </table>
-      </div> */}
       <div class="px-4 sm:px-6 lg:px-8">
- 
-  <div class="mt-8 flow-root">
-    <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-      <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-        <table class="min-w-full divide-y divide-gray-300">
-          <thead>
-            <tr>
-              <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3">Date</th>
-              <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Name</th>
-              <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Balance</th>
-              
-              <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-3">
-                <span class="sr-only">Edit</span>
-              </th>
-            </tr>
-          </thead>
-          <tbody class="bg-white">
-            {vendors.map((vendor) => (
-
-            <tr key={vendor.id} class="even:bg-gray-50">
-              <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-3">{vendor.openingBalanceDate}</td>
-              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"> {vendor.title} {vendor.firstName} {vendor.lastName}</td>
-              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{vendor.openingBalance}</td>
-              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"> {vendor.edit}</td>
-              
-            </tr>
-             ))}
-
-          </tbody>
-        </table>
+        <div class="mt-8 flow-root">
+          <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+            <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+            <table className="min-w-full divide-y divide-gray-300 bg-gray-400 rounded-lg">
+                <thead>
+                  <tr>
+                    <th
+                      scope="col"
+                      class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3"
+                    >
+                      Date
+                    </th>
+                    
+                    <th
+                      scope="col"
+                      class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                    >
+                      Name
+                    </th>
+                    <th
+                      scope="col"
+                      class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                    >
+                      Balance
+                    </th>
+                    <th
+                      scope="col"
+                      class="py-3.5 pl-4 pr-3 text-right text-sm font-semibold text-gray-900 sm:pl-3"
+                    >
+                      Edit
+                    </th>
+                    
+                  </tr>
+                </thead>
+                <tbody class="bg-white">
+                  {vendors.map((vendor) => (
+                    <tr key={vendor.id} class="even:bg-gray-50">
+                      <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-3">
+                        {new Date(vendor.openingBalanceDate).toLocaleString(
+                          "en-US",
+                          { timeZone: "UTC" }
+                        )}
+                      </td>
+                      <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                        {" "}
+                        {vendor.title} {vendor.firstName} {vendor.lastName}
+                      </td>
+                      <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                        {vendor.openingBalance}
+                      </td>
+                      <td className="relative whitespace-nowrap py-4 pr-4 text-right text-sm font-medium">
+                    <div className="relative">
+                      <select
+                        className="text-indigo-600 hover:text-indigo-900"
+                        onChange={(e) => handleEdit(e.target.value)}
+                      >
+                        <option value="">Actions</option>
+                        <option value="edit">Edit</option>
+                        <option value="delete">Delete</option>
+                      </select>
+                    </div>
+                  </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              <nav
+            className="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6"
+            aria-label="Pagination"
+          >
+            <div className="hidden sm:block">
+              <p className="text-sm text-gray-700">
+                Showing
+                <span className="font-medium mx-1">
+                  {indexOfFirstItem + 1}
+                </span>
+                to
+                <span className="font-medium mx-1">{indexOfLastItem}</span>
+                of
+                <span className="font-medium mx-1">{vendors.length}</span>
+                results
+              </p>
+            </div>
+            <div className="flex-1 flex justify-between sm:justify-end">
+              <button
+                onClick={prevPage}
+                disabled={currentPage === 1}
+                className="relative inline-flex items-center px-4 py-2 rounded-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+              >
+                Previous
+              </button>
+              <button
+                onClick={nextPage}
+                disabled={currentPage === totalPages}
+                className="ml-3 relative inline-flex items-center px-4 py-2 rounded-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+              >
+                Next
+              </button>
+            </div>
+          </nav>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
-</div>
 
       {/* Display success or error message */}
       {successMessage && <p className="text-green-600">{successMessage}</p>}
