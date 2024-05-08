@@ -1,4 +1,10 @@
 import { Fragment, useState } from "react";
+import { ArrowDownIcon, ArrowUpIcon } from "@heroicons/react/20/solid";
+import {
+  CursorArrowRaysIcon,
+  EnvelopeOpenIcon,
+  UsersIcon,
+} from "@heroicons/react/24/outline";
 import { Dialog, Menu, Transition } from "@headlessui/react";
 import {
   Bars3CenterLeftIcon,
@@ -45,6 +51,26 @@ const transactions = [
     date: "July 11, 2020",
     datetime: "2020-07-11",
   },
+  {
+    id: 1,
+    name: "Payment to Amos",
+    href: "#",
+    amount: "$30,000",
+    currency: "USD",
+    status: "success",
+    date: "July 11, 2022",
+    datetime: "2020-07-11",
+  },
+  {
+    id: 1,
+    name: "Payment to Daniel",
+    href: "#",
+    amount: "$4,000",
+    currency: "USD",
+    status: "success",
+    date: "July 11, 2023",
+    datetime: "2023-07-11",
+  },
   // More transactions...
 ];
 const statusStyles = {
@@ -56,6 +82,41 @@ const statusStyles = {
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
+
+const stats = [
+  {
+    id: 1,
+    name: "Total Transactions",
+    stat: "71,897",
+    icon: UsersIcon,
+    change: "122",
+    changeType: "increase",
+  },
+  {
+    id: 2,
+    name: "Avg. Open Rate",
+    stat: "58.16%",
+    icon: EnvelopeOpenIcon,
+    change: "5.4%",
+    changeType: "increase",
+  },
+  {
+    id: 3,
+    name: "Total Expenses",
+    stat: "24.57%",
+    icon: CursorArrowRaysIcon,
+    change: "3.2%",
+    changeType: "decrease",
+  },
+  {
+    id: 3,
+    name: "Avg. Click Rate",
+    stat: "24.57%",
+    icon: CursorArrowRaysIcon,
+    change: "3.2%",
+    changeType: "decrease",
+  },
+];
 
 export default function Example() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -71,9 +132,9 @@ export default function Example() {
         ```
       */}
 
-      <main className="flex-1 pb-8 bg-gray-100 rounded-md">
+      <main className="flex-1 pb-6 bg-gray-200 rounded-md">
         {/* Page header */}
-        <div className="bg-gray-100 shadow rounded-xl">
+        <div className="bg-gray-200 shadow rounded-xl">
           <div className="px-4 sm:px-6 lg:mx-auto lg:max-w-6xl lg:px-8">
             <div className="py-6 md:flex md:items-center md:justify-between lg:border-t lg:border-gray-200">
               <div className="min-w-0 flex-1">
@@ -106,7 +167,7 @@ export default function Example() {
                         alt=""
                       />
                       <h1
-                        className="ml-3 text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:leading-9"
+                        className="ml-3 text-2xl font-bold leading-7 text-gray-700 sm:truncate sm:leading-9"
                         style={{ fontFamily: "outfit, sans-serif" }}
                       >
                         Dashboard
@@ -119,164 +180,80 @@ export default function Example() {
           </div>
         </div>
 
-        <div className="mt-8">
-          <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-            <div className="mt-2 grid grid-cols-2 gap-5 sm:grid-cols-2 lg:grid-cols-2">
-              {/* Card */}
-              {cards.map((card) => (
+        <div className="mt-4 ml-6 mr-6">
+          <div>
+            <dl className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-2">
+              {stats.map((item) => (
                 <div
-                  key={card.name}
-                  className="flex overflow-hidden rounded-lg bg-white shadow"
+                  key={item.id}
+                  className="relative overflow-hidden rounded-lg bg-white px-4 pb-12 pt-5 shadow sm:px-6 sm:pt-6"
                 >
-                  <div className="p-5 flex-1">
-                    <div className="flex items-center">
-                      <div className="flex-shrink-0">
-                        <card.icon
-                          className="h-6 w-6 text-gray-400"
+                  <dt>
+                    <div className="absolute rounded-md bg-indigo-500 p-3">
+                      <item.icon
+                        className="h-6 w-6 text-white"
+                        aria-hidden="true"
+                      />
+                    </div>
+                    <p className="ml-16 truncate text-sm font-medium text-gray-500">
+                      {item.name}
+                    </p>
+                  </dt>
+                  <dd className="ml-16 flex items-baseline pb-6 sm:pb-7">
+                    <p className="text-2xl font-semibold text-gray-900">
+                      {item.stat}
+                    </p>
+                    <p
+                      className={classNames(
+                        item.changeType === "increase"
+                          ? "text-green-600"
+                          : "text-red-600",
+                        "ml-2 flex items-baseline text-sm font-semibold"
+                      )}
+                    >
+                      {item.changeType === "increase" ? (
+                        <ArrowUpIcon
+                          className="h-5 w-5 flex-shrink-0 self-center text-green-500"
                           aria-hidden="true"
                         />
-                      </div>
-                      <div className="ml-5 w-0 flex-1">
-                        <dl>
-                          <dt className="truncate text-sm font-medium text-gray-500">
-                            {card.name}
-                          </dt>
-                          <dd>
-                            <div className="text-lg font-medium text-gray-900">
-                              {card.amount}
-                            </div>
-                          </dd>
-                        </dl>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="flex-1">{/* <LineGraph /> */}</div>
-                  <div className="bg-gray-50 px-5 py-3">
-                    <div className="text-sm">
-                      <a
-                        href={card.href}
-                        className="font-medium text-cyan-700 hover:text-cyan-900"
-                      >
-                        View all
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              ))}
+                      ) : (
+                        <ArrowDownIcon
+                          className="h-5 w-5 flex-shrink-0 self-center text-red-500"
+                          aria-hidden="true"
+                        />
+                      )}
 
-              {ticket.map((ticket) => (
-                <div
-                  key={ticket.name}
-                  className="overflow-hidden rounded-lg bg-white shadow"
-                >
-                  <div className="p-5">
-                    <div className="flex items-center">
-                      <div className="flex-shrink-0">
-                        <ticket.icon
-                          className="h-6 w-6 text-gray-400"
-                          aria-hidden="true"
-                        />
-                      </div>
-                      <div className="ml-5 w-0 flex-1">
-                        <dl>
-                          <dt className="truncate text-sm font-medium text-gray-500">
-                            {ticket.name}
-                          </dt>
-                          <dd>
-                            <div className="text-lg font-medium text-gray-900">
-                              {ticket.amount}
-                            </div>
-                          </dd>
-                        </dl>
+                      <span className="sr-only">
+                        {" "}
+                        {item.changeType === "increase"
+                          ? "Increased"
+                          : "Decreased"}{" "}
+                        by{" "}
+                      </span>
+                      {item.change}
+                    </p>
+                    <div className="absolute inset-x-0 bottom-0 bg-gray-50 px-4 py-4 sm:px-6">
+                      <div className="text-sm">
+                        <a
+                          href="#"
+                          className="font-medium text-indigo-600 hover:text-indigo-500"
+                        >
+                          View all
+                          <span className="sr-only"> {item.name} stats</span>
+                        </a>
                       </div>
                     </div>
-                  </div>
-                  {/* <div className="bg-gray-50 px-5 py-3">
-                    <div className="text-sm">
-                      <a
-                        href={ticket.href}
-                        className="font-medium text-cyan-700 hover:text-cyan-900"
-                      >
-                        View all
-                      </a>
-                    </div>
-                  </div> */}
+                  </dd>
                 </div>
               ))}
-              {ticket.map((ticket) => (
-                <div
-                  key={ticket.name}
-                  className="flex flex-col md:flex-row md:space-x-4 overflow-hidden rounded-lg bg-white shadow mb-4"
-                >
-                  <div className="p-5 flex-1">
-                    <div className="flex items-center">
-                      <div className="flex-shrink-0">
-                        <ticket.icon
-                          className="h-6 w-6 text-gray-400"
-                          aria-hidden="true"
-                        />
-                      </div>
-                      <div className="ml-5 w-0 flex-1">
-                        <dl>
-                          <dt className="truncate text-sm font-medium text-gray-500">
-                            {ticket.name}
-                          </dt>
-                          <dd>
-                            <div className="text-lg font-medium text-gray-900">
-                              {ticket.amount}
-                            </div>
-                          </dd>
-                        </dl>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="bg-gray-50 p-5 flex-1">
-                    {/* <BarGraph /> */}
-                  </div>
-                </div>
-              ))}
-
-              {ticket.map((ticket) => (
-                <div
-                  key={ticket.name}
-                  className="flex flex-col md:flex-row md:space-x-4 overflow-hidden rounded-lg bg-white shadow mb-4"
-                >
-                  <div className="p-5 flex-1">
-                    <div className="flex items-center">
-                      <div className="flex-shrink-0">
-                        <ticket.icon
-                          className="h-6 w-6 text-gray-400"
-                          aria-hidden="true"
-                        />
-                      </div>
-                      <div className="ml-5 w-0 flex-1">
-                        <dl>
-                          <dt className="truncate text-sm font-medium text-gray-500">
-                            {ticket.name}
-                          </dt>
-                          <dd>
-                            <div className="text-lg font-medium text-gray-900">
-                              {ticket.amount}
-                            </div>
-                          </dd>
-                        </dl>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="bg-gray-50 p-5 flex-1">
-                    {/* <BarGraph /> */}
-                  </div>
-                </div>
-              ))}
-            </div>
+            </dl>
           </div>
-
-          <h2 className="mx-auto mt-8 max-w-6xl px-4 text-lg font-medium leading-6 text-gray-900 sm:px-6 lg:px-8">
-            Recent activity
-          </h2>
 
           {/* Activity list (smallest breakpoint only) */}
           <div className="shadow sm:hidden">
+            <h2 className="mx-auto mt-8 max-w-6xl px-4 text-lg leading-6 text-gray-900 sm:px-6 lg:px-8">
+              Recent activity
+            </h2>
             <ul
               role="list"
               className="mt-2 divide-y divide-gray-200 overflow-hidden shadow sm:hidden"
@@ -340,29 +317,35 @@ export default function Example() {
           </div>
 
           {/* Activity table (small breakpoint and up) */}
-          <div className="hidden sm:block">
+          <div className="hidden sm:block bg-white rounded-md">
             <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
               <div className="mt-2 flex flex-col">
                 <div className="min-w-full overflow-hidden overflow-x-auto align-middle shadow sm:rounded-lg">
+                  <h2
+                    className="mx-auto mt-8 max-w-6xl px-4 text-lg font-medium leading-6 text-gray-700 sm:px-6 lg:px-8"
+                    style={{ fontFamily: "outfit, sans-serif" }}
+                  >
+                    Recent activity
+                  </h2>
                   <table className="min-w-full divide-y divide-gray-200">
                     <thead>
                       <tr>
                         <th
-                          className="hidden bg-gray-50 px-6 py-3 text-left text-sm font-semibold text-gray-900 md:block"
+                          className="hidden bg-gray-50 px-6 py-3 text-left text-sm text-gray-700 md:block"
                           scope="col"
                           style={{ fontFamily: "outfit, sans-serif" }}
                         >
                           Status
                         </th>
                         <th
-                          className="bg-gray-50 px-6 py-3 text-left text-sm font-semibold text-gray-900"
+                          className="bg-gray-50 px-6 py-3 text-left text-sm  text-gray-700"
                           scope="col"
                           style={{ fontFamily: "outfit, sans-serif" }}
                         >
                           Transaction
                         </th>
                         <th
-                          className="bg-gray-50 px-6 py-3 text-right text-sm font-semibold text-gray-900"
+                          className="bg-gray-50 px-6 py-3 text-right text-sm text-gray-700"
                           scope="col"
                           style={{ fontFamily: "outfit, sans-serif" }}
                         >
@@ -370,7 +353,7 @@ export default function Example() {
                         </th>
 
                         <th
-                          className="bg-gray-50 px-6 py-3 text-right text-sm font-semibold text-gray-900"
+                          className="bg-gray-50 px-6 py-3 text-right text-sm text-gray-700"
                           scope="col"
                           style={{ fontFamily: "outfit, sans-serif" }}
                         >
