@@ -90,6 +90,7 @@ function Card({
                 padding: "10px",
                 borderRadius: "20px",
                 marginTop: "5px",
+                width: "23vw"
               }}
             >
               <h2>{filteredSubGroups[0].name}</h2>
