@@ -13,7 +13,10 @@ function Card({
     <div style={{ display: "flex", justifyContent: "center" }}>
       <div
         className="bg-white overflow-hidden sm:rounded-lg"
-        style={{ width: "350px", background: showCreateSubGroupButton ? "#F6F6F4" : "#fff" }}
+        style={{
+          width: "350px",
+          background: showCreateSubGroupButton ? "#F6F6F4" : "#fff",
+        }}
       >
         <div className="px-4 py-5 sm:px-6">
           {showCreateSubGroupButton && (
@@ -23,7 +26,8 @@ function Card({
           )}
           {showCreateSubGroupButton && (
             <>
-              <h3 className="
+              <h3
+                className="
               text-lg
               font-medium
               leading-6
@@ -31,16 +35,17 @@ function Card({
               text-center
               mt-6
               "
-              style={{
-                fontFamily: "outFit",
-                fontWeight: "600",
-                fontSize: "24px",
-                color: "#505050"
-              }}
+                style={{
+                  fontFamily: "outFit",
+                  fontWeight: "600",
+                  fontSize: "24px",
+                  color: "#505050",
+                }}
               >
                 {title}
               </h3>
-              <p className="
+              <p
+                className="
                 mt-1
                 max-w-2xl
                 text-sm
@@ -52,9 +57,9 @@ function Card({
                   fontFamily: "outFit",
                   fontSize: "16px",
                   color: "#505050",
-                  fontWeight: "400"
+                  fontWeight: "400",
                 }}
-                >
+              >
                 {description}
               </p>
             </>
@@ -67,7 +72,7 @@ function Card({
                   background: "#4467a1",
                   borderRadius: "20px",
                   padding: "5px 15px 5px 15px",
-                  fontFamily: "outFit"
+                  fontFamily: "outFit",
                 }}
                 className="text-white mt-5"
               >
@@ -91,19 +96,21 @@ function Card({
                   color: "#4467a1",
                   fontSize: "24px",
                   fontWeight: "600",
-                  fontFamily: "outFit"
+                  fontFamily: "outFit",
                 }}
               >
                 SubGroups
               </h3>
               <table className="min-w-full">
-                <thead className="
+                <thead
+                  className="
                 bg-gray-50
                 "
-                style={{ borderRadius: "50px" }}
+                  style={{ borderRadius: "50px" }}
                 >
                   <tr>
-                    <th className="
+                    <th
+                      className="
                     px-6
                     py-3
                     text-left
@@ -113,16 +120,32 @@ function Card({
                     uppercase
                     tracking-wider
                     "
-                    style={{ fontFamily: "outFit", fontWeight: "500" }}
+                      style={{ fontFamily: "outFit", fontWeight: "500" }}
                     >
                       Name
+                    </th>
+                    <th
+                      className="
+                    px-6
+                    py-3
+                    text-left
+                    text-xs
+                    font-medium
+                    text-gray-500
+                    uppercase
+                    tracking-wider
+                    "
+                      style={{ fontFamily: "outFit", fontWeight: "500" }}
+                    >
+                      Created
                     </th>
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
                   {filteredSubGroups.map((subgroup, index) => (
                     <tr key={index}>
-                      <td className="
+                      <td
+                        className="
                       px-6
                       py-4
                       whitespace-nowrap
@@ -130,9 +153,24 @@ function Card({
                       font-medium
                       text-gray-900
                       "
-                      style={{ fontFamily: "outFit", color: "#505050" }}
+                        style={{ fontFamily: "outFit", color: "#505050" }}
                       >
                         {subgroup.subGroupAccount.name}
+                      </td>
+                      <td
+                        className="
+                      px-6
+                      py-4
+                      whitespace-nowrap
+                      text-sm
+                      font-medium
+                      text-gray-900
+                      "
+                        style={{ fontFamily: "outFit", color: "#505050" }}
+                      >
+                        {new Date(
+                          subgroup.subGroupAccount.dateCreated
+                        ).toLocaleDateString("en-US")}
                       </td>
                     </tr>
                   ))}
@@ -190,7 +228,10 @@ export default function AccountSidebar({ account, showForm, subGroups }) {
                               <XMarkIcon
                                 className="h-10 w-10"
                                 aria-hidden="true"
-                                style={{ color: "#505050", marginRight: "15px" }}
+                                style={{
+                                  color: "#505050",
+                                  marginRight: "15px",
+                                }}
                               />
                             </button>
                             <div className="flex justify-between mt-5">

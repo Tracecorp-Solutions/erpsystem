@@ -365,7 +365,7 @@ export default function GroupAccount() {
 
   return (
     <div className="px-4 sm:px-6 lg:px-8 group-container">
-      {selectedAccount && sidebarVisible && (
+      {sidebarVisible && (
         <AccountSidebar
           account={selectedAccount}
           onClose={handleCloseSidebar}
@@ -384,7 +384,7 @@ export default function GroupAccount() {
       )}
       <div className="sm:flex sm:items-center">
         <div className="sm:flex-auto">
-          <h1 className="text-base font-semibold leading-6 text-gray-900">
+          <h1 className="text-base font-semibold leading-6 text-gray-900" style={{ fontFamily: "outfit, sans-serif" }}>
             Group Accounts
           </h1>
         </div>
@@ -411,7 +411,7 @@ export default function GroupAccount() {
             groupbtn
             "
           >
-            <span style={{ marginRight: "10px" }}>+</span>
+            <span style={{ marginRight: "10px", fontFamily: "outfit, sans-serif" }}>+</span>
             Create Group
           </button>
         </div>
@@ -572,6 +572,10 @@ export default function GroupAccount() {
                 focus-visible:ring-indigo-
                 cancel-btn
                 "
+                style={{
+                  fontFamily: "outfit, sans-serif",
+                  // color: "blue",
+                }}
                 >
                   Cancel
                 </button>
@@ -594,6 +598,10 @@ export default function GroupAccount() {
                 focus-visible:ring-indigo-500
                 save-group
                 "
+                style={{
+                  fontFamily: "outfit, sans-serif",
+                  // color: "blue",
+                }}
                 >
                   Save Group
                 </button>
