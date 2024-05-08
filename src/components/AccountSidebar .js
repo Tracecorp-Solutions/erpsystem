@@ -8,6 +8,7 @@ function Card({
   description,
   filteredSubGroups,
   showCreateSubGroupButton,
+  setDrawerVisible,
 }) {
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -77,7 +78,12 @@ function Card({
                   fontFamily: "outFit, Sans-serif",
                 }}
                 className="text-white mt-5"
-                onClick={() => setModalVisible(true)}
+                onClick={() => {
+                  if (true) {
+                    setModalVisible(true)
+                    setDrawerVisible(false);
+                  }
+                }}
               >
                 + Create SubGroup
               </button>
@@ -275,6 +281,7 @@ export default function AccountSidebar({ account, subGroups }) {
         description="You haven't created any subgroups under Assets yet."
         showCreateSubGroupButton={showCreateSubGroupButton}
         filteredSubGroups={filteredSubGroups}
+        setDrawerVisible={setDrawerVisible}
       />
     </Drawer>
   );
