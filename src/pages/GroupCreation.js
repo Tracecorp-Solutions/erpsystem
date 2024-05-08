@@ -4,7 +4,8 @@ import { CloseOutlined } from "@ant-design/icons";
 import "../styles/GroupCreation.css";
 import GroupCreationShow from "../components/GroupCreationShow";
 import { Fragment } from "react";
-import { Menu, Transition } from "@headlessui/react";
+// import { Menu, Transition } from "@headlessui/react";
+import { Menu, Dropdown, Button } from "antd";
 import { EllipsisHorizontalIcon } from "@heroicons/react/20/solid";
 import classNames from "classnames";
 import AccountSidebar from "../components/AccountSidebar ";
@@ -31,7 +32,7 @@ const EditForm = ({ editedGroupAccount, handleSubmitEdit, closeEditForm }) => {
           height: "90%",
           maxWidth: "600px",
           maxHeight: "600px",
-          borderRadius: "25px"
+          borderRadius: "25px",
         }}
       >
         <div
@@ -324,8 +325,10 @@ export default function GroupAccount() {
   };
 
   const handleEdit = (account) => {
-    setIsEditing(true);
+    // setIsEditing(true);
     setEditedGroupAccount(account);
+    setShowEditForm(true);
+    console.log("Editing", account);
   };
 
   const handleSubmitEdit = async (editedAccount) => {
@@ -365,7 +368,7 @@ export default function GroupAccount() {
 
   return (
     <div className="px-4 sm:px-6 lg:px-8 group-container">
-      {sidebarVisible && (
+      {selectedAccount && sidebarVisible && (
         <AccountSidebar
           account={selectedAccount}
           onClose={handleCloseSidebar}
@@ -384,7 +387,7 @@ export default function GroupAccount() {
       )}
       <div className="sm:flex sm:items-center">
         <div className="sm:flex-auto">
-          <h1 className="text-base font-semibold leading-6 text-gray-900" style={{ fontFamily: "outfit, sans-serif" }}>
+          <h1 className="text-base font-semibold leading-6 text-gray-900">
             Group Accounts
           </h1>
         </div>
@@ -411,7 +414,7 @@ export default function GroupAccount() {
             groupbtn
             "
           >
-            <span style={{ marginRight: "10px", fontFamily: "outfit, sans-serif" }}>+</span>
+            <span style={{ marginRight: "10px" }}>+</span>
             Create Group
           </button>
         </div>
@@ -572,10 +575,6 @@ export default function GroupAccount() {
                 focus-visible:ring-indigo-
                 cancel-btn
                 "
-                style={{
-                  fontFamily: "outfit, sans-serif",
-                  // color: "blue",
-                }}
                 >
                   Cancel
                 </button>
@@ -598,10 +597,6 @@ export default function GroupAccount() {
                 focus-visible:ring-indigo-500
                 save-group
                 "
-                style={{
-                  fontFamily: "outfit, sans-serif",
-                  // color: "blue",
-                }}
                 >
                   Save Group
                 </button>
@@ -627,6 +622,13 @@ export default function GroupAccount() {
             />
           </div>
         </div>
+      )}
+      {showEditForm && (
+        <EditForm
+          editedGroupAccount={editedGroupAccount}
+          handleSubmitEdit={handleSubmitEdit}
+          closeEditForm={closeEditForm}
+        />
       )}
       {!loading && (
         <div className="mt-8 overflow-x-auto">
@@ -658,8 +660,25 @@ export default function GroupAccount() {
                               >
                                 {account.name}
                               </h3>
-                              <Menu as="div" className="relative ml-auto">
-                                  <Menu.Button className="-m-2.5 block p-2.5 text-gray-400 hover:text-gray-500">
+                              {!showEditForm && (
+                                <Dropdown
+                                  overlay={
+                                    <Menu>
+                                      <Menu.Item key="1">
+                                        <a href="#">View</a>
+                                      </Menu.Item>
+                                      <Menu.Item
+                                        key="2"
+                                        onClick={() => handleEdit(account)}
+                                      >
+                                        Edit
+                                      </Menu.Item>
+                                    </Menu>
+                                  }
+                                  placement="bottomRight"
+                                  overlayStyle={{ width: "200px" }}
+                                >
+                                  <div>
                                     <span className="sr-only">
                                       Open options
                                     </span>
@@ -667,66 +686,9 @@ export default function GroupAccount() {
                                       className="h-5 w-5"
                                       aria-hidden="true"
                                     />
-                                  </Menu.Button>
-                                <Transition
-                                  as={Fragment}
-                                  enter="transition ease-out duration-100"
-                                  enterFrom="transform opacity-0 scale-95"
-                                  enterTo="transform opacity-100 scale-100"
-                                  leave="transition ease-in duration-75"
-                                  leaveFrom="transform opacity-100 scale-100"
-                                  leaveTo="transform opacity-0 scale-95"
-                                >
-                                  <Menu.Items className="absolute right-0 z-10 mt-0.5 w-32 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none">
-                                    <Menu.Item>
-                                      {({ active }) => (
-                                        <a
-                                          href="#"
-                                          className={classNames(
-                                            active ? "bg-gray-50" : "",
-                                            "block px-3 py-1 text-sm leading-6 text-gray-700"
-                                          )}
-                                        >
-                                          View
-                                          <span className="sr-only">
-                                            , {account.name}
-                                          </span>
-                                        </a>
-                                      )}
-                                    </Menu.Item>
-                                    <Menu.Item>
-                                      {({ active }) => (
-                                        <div
-                                          className={classNames(
-                                            "relative",
-                                            active ? "bg-gray-50" : ""
-                                          )}
-                                        >
-                                          <button
-                                            onClick={() => handleEdit(account)} // Call openEditForm function passing the current account
-                                            className="block px-3 py-1 text-sm leading-6 text-gray-700 w-full text-left"
-                                          >
-                                            Edit
-                                          </button>
-                                          {isEditing && editedGroupAccount && (
-                                            <div className="absolute top-full left-0 mt-1 w-full">
-                                              <EditForm
-                                                editedGroupAccount={
-                                                  editedGroupAccount
-                                                }
-                                                handleSubmitEdit={
-                                                  handleSubmitEdit
-                                                }
-                                                closeEditForm={closeEditForm}
-                                              />
-                                            </div>
-                                          )}
-                                        </div>
-                                      )}
-                                    </Menu.Item>
-                                  </Menu.Items>
-                                </Transition>
-                              </Menu>
+                                  </div>
+                                </Dropdown>
+                              )}
                             </div>
                             <p
                               className="text-xs text-gray-500"

@@ -251,26 +251,10 @@ export default function AccountSidebar({ account, showForm, subGroups }) {
                                   {account.name}
                                 </Dialog.Title>
                               </div>
-                              <div className="flex items-center space-x-4">
-                                <EyeInvisibleOutlined
-                                  style={{
-                                    padding: "10px",
-                                    borderRadius: "50px",
-                                    background: "#f6f6f4",
-                                  }}
-                                />
-                                <EditOutlined
-                                  style={{
-                                    padding: "10px",
-                                    borderRadius: "50px",
-                                    background: "#f6f6f4",
-                                  }}
-                                />
-                              </div>
                             </div>
 
                             <div
-                              className="mt-2"
+                              className="mt-5"
                               style={{
                                 textAlign: "start",
                                 fontFamily: "outFit",
