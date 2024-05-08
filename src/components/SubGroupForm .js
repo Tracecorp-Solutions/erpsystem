@@ -82,6 +82,11 @@ const SubGroupForm = ({ onCancel }) => {
           <label
             htmlFor="name"
             className="block text-sm font-medium text-gray-700"
+            style={{
+                fontFamily: "outFit, Sans-serif",
+                color: "#505050",
+                fontSize: "16px"
+            }}
           >
           Subgroup Name
          </label>
@@ -108,6 +113,9 @@ const SubGroupForm = ({ onCancel }) => {
             style={{
               border: "1px solid #7a7a7a",
               borderRadius: "10px",
+              fontFamily: "outFit, Sans-serif",
+              color: "#505050",
+              fontSize: "16px"
             }}
           />
           {formErrors.name && (
@@ -118,6 +126,11 @@ const SubGroupForm = ({ onCancel }) => {
           <label
             htmlFor="group"
             className="block text-sm font-medium text-gray-700"
+            style={{
+                color: "#505050",
+                fontSize: "16px",
+                fontFamily: "outFit, Sans-serif"
+            }}
           >
             Group
           </label>
@@ -142,6 +155,9 @@ const SubGroupForm = ({ onCancel }) => {
             style={{
               border: "1px solid #7a7a7a",
               borderRadius: "10px",
+              fontFamily: "outFit, Sans-serif",
+              color: "#505050",
+              fontSize: "16px"
             }}
           >
             <option value="">Select Group</option>
@@ -159,10 +175,23 @@ const SubGroupForm = ({ onCancel }) => {
           <label
             htmlFor="description"
             className="block text-sm font-medium text-gray-700"
+            style={{
+                fontFamily: "outFit, Sans-serif",
+                color: "#505050",
+                fontSize: "16px"
+            }}
           >
             Description
           </label>
-          <p>Add a brief description to help identify this subgroup's purpose</p>
+          <p 
+            style={{
+              fontFamily: "outFit, Sans-serif",
+              color: "#505050",
+            fontSize: "16px"
+            }}
+            >
+             Add a brief description to help identify this subgroup's purpose
+            </p>
           <textarea
             id="description"
             value={newAccount.description}
@@ -184,6 +213,9 @@ const SubGroupForm = ({ onCancel }) => {
             style={{
               border: "1px solid #7a7a7a",
               borderRadius: "10px",
+              fontFamily: "outFit, Sans-serif",
+              color: "#505050",
+              fontSize: "16px"
             }}
           />
         </div>
@@ -202,7 +234,11 @@ const SubGroupForm = ({ onCancel }) => {
             focus-visible:ring-offset-2
             focus-visible:ring-indigo-
             cancel-btn
-            "          >
+            "
+            style={{
+              fontFamily: "outFit, Sans-serif"
+            }}
+            >
             Cancel
           </button>
           <button
@@ -224,6 +260,9 @@ const SubGroupForm = ({ onCancel }) => {
             focus-visible:ring-indigo-500
             save-group
             "
+            style={{
+                fontFamily: "outFit, Sans-serif"
+              }}
             > 
             {loading ? "Saving..." : "Save"}
           </button>

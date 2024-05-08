@@ -38,7 +38,7 @@ function Card({
               mt-6
               "
                 style={{
-                  fontFamily: "outFit, san-sarif",
+                  fontFamily: "outFit, Sans-serif",
                   fontWeight: "600",
                   fontSize: "24px",
                   color: "#505050",
@@ -56,7 +56,7 @@ function Card({
                 mt-6
                 "
                 style={{
-                  fontFamily: "outFit, san-sarif",
+                  fontFamily: "outFit, Sans-serif",
                   fontSize: "16px",
                   color: "#505050",
                   fontWeight: "400",
@@ -74,7 +74,7 @@ function Card({
                   background: "#4467a1",
                   borderRadius: "20px",
                   padding: "5px 15px 5px 15px",
-                  fontFamily: "outFit, san-sarif",
+                  fontFamily: "outFit, Sans-serif",
                 }}
                 className="text-white mt-5"
                 onClick={() => setModalVisible(true)}
@@ -99,7 +99,7 @@ function Card({
                   color: "#4467a1",
                   fontSize: "24px",
                   fontWeight: "600",
-                  fontFamily: "outFit, san-sarif",
+                  fontFamily: "outFit, Sans-serif",
                 }}
               >
                 SubGroups
@@ -124,7 +124,7 @@ function Card({
                     tracking-wider
                     "
                       style={{
-                        fontFamily: "outFit, san-sarif",
+                        fontFamily: "outFit, Sans-serif",
                         fontWeight: "500",
                       }}
                     >
@@ -142,7 +142,7 @@ function Card({
                     tracking-wider
                     "
                       style={{
-                        fontFamily: "outFit, san-sarif",
+                        fontFamily: "outFit, Sans-serif",
                         fontWeight: "500",
                       }}
                     >
@@ -163,7 +163,7 @@ function Card({
                       text-gray-900
                       "
                         style={{
-                          fontFamily: "outFit, san-sarif",
+                          fontFamily: "outFit, Sans-serif",
                           color: "#505050",
                         }}
                       >
@@ -193,10 +193,9 @@ function Card({
         </div>
         <Modal
         visible={modalVisible}
-        onCancel={() => setModalVisible(false)} // Close the modal when cancelled
-        footer={null} // Hide footer for simplicity
+        onCancel={() => setModalVisible(false)}
+        footer={null}
       >
-        {/* Render the SubGroupForm component inside the modal */}
         <SubGroupForm onCancel={() => setModalVisible(false)} />
       </Modal>
       </div>
@@ -204,7 +203,7 @@ function Card({
   );
 }
 
-export default function AccountSidebar({ account, showForm, subGroups }) {
+export default function AccountSidebar({ account, subGroups }) {
   const [drawerVisible, setDrawerVisible] = useState(true);
 
   const groupAccountId = account.id;
@@ -249,7 +248,7 @@ export default function AccountSidebar({ account, showForm, subGroups }) {
                 font-semibold
                 leading-6"
               style={{
-                fontFamily: "outFit, san-sarif",
+                fontFamily: "outFit, Sans-serif",
                 fontWeight: "600",
                 fontSize: "36px",
                 color: "#505050",
@@ -264,7 +263,7 @@ export default function AccountSidebar({ account, showForm, subGroups }) {
           className="mt-5"
           style={{
             textAlign: "start",
-            fontFamily: "outFit, san-sarif",
+            fontFamily: "outFit, Sans-serif",
             color: "#a1a1a1",
           }}
         >
