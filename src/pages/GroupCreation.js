@@ -146,8 +146,14 @@ const EditForm = ({ editedGroupAccount, handleSubmitEdit, closeEditForm }) => {
             focus-visible:ring-2
             focus-visible:ring-offset-2
             focus-visible:ring-indigo-
-            cancel-btn
             "
+            style={{
+              background: "#F6F6F4",
+              color: "#505050",
+              width: "40%",
+              borderRadius: "25px",
+              fontFamily: "out-fit, sans-serif"
+            }}
               onClick={closeEditForm}
             >
               Cancel
@@ -168,8 +174,13 @@ const EditForm = ({ editedGroupAccount, handleSubmitEdit, closeEditForm }) => {
             focus-visible:ring-2
             focus-visible:ring-offset-2
             focus-visible:ring-indigo-500
-            save-group
             "
+            style={{
+              color: "#fff",
+              width: "40%",
+              borderRadius: "25px",
+              fontFamily: "out-fit, sans-serif"
+            }}
             >
               Save
             </button>

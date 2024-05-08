@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { Drawer } from "antd";
+import { Drawer, Modal } from "antd";
 import { XMarkIcon } from "@heroicons/react/24/outline";
+import SubGroupForm from "./SubGroupForm ";
 
 function Card({
   title,
@@ -8,6 +9,8 @@ function Card({
   filteredSubGroups,
   showCreateSubGroupButton,
 }) {
+  const [modalVisible, setModalVisible] = useState(false);
+
   return (
     <div style={{ display: "flex", justifyContent: "center" }}>
       <div
@@ -74,6 +77,7 @@ function Card({
                   fontFamily: "outFit, san-sarif",
                 }}
                 className="text-white mt-5"
+                onClick={() => setModalVisible(true)}
               >
                 + Create SubGroup
               </button>
@@ -187,6 +191,14 @@ function Card({
             </div>
           )}
         </div>
+        <Modal
+        visible={modalVisible}
+        onCancel={() => setModalVisible(false)} // Close the modal when cancelled
+        footer={null} // Hide footer for simplicity
+      >
+        {/* Render the SubGroupForm component inside the modal */}
+        <SubGroupForm onCancel={() => setModalVisible(false)} />
+      </Modal>
       </div>
     </div>
   );
