@@ -1,17 +1,184 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Select } from "antd";
 import { CloseOutlined } from "@ant-design/icons";
 import "../styles/GroupCreation.css";
 import GroupCreationShow from "../components/GroupCreationShow";
 import { Fragment } from "react";
-import { Menu, Transition } from "@headlessui/react";
+// import { Menu, Transition } from "@headlessui/react";
+import { Menu, Dropdown, Button } from "antd";
 import { EllipsisHorizontalIcon } from "@heroicons/react/20/solid";
 import classNames from "classnames";
-import AccountCreation from "./AccountCreation";
 import AccountSidebar from "../components/AccountSidebar ";
+import GroupAccountDetails from "../components/GroupAccountDetails ";
 
-const { Option } = Select;
+const EditForm = ({ editedGroupAccount, handleSubmitEdit, closeEditForm }) => {
+  const [editedAccount, setEditedAccount] = useState(editedGroupAccount);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setEditedAccount({ ...editedAccount, [name]: value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    handleSubmitEdit(editedAccount);
+  };
+
+  return (
+    <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 mt-10">
+      <div
+        className="modal-content bg-white rounded-lg shadow-lg p-8"
+        style={{
+          width: "80%",
+          height: "90%",
+          maxWidth: "600px",
+          maxHeight: "600px",
+          borderRadius: "25px",
+        }}
+      >
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "end",
+            position: "relative",
+            bottom: "25px",
+          }}
+        >
+          <span
+            className="close cursor-pointer text-gray-600"
+            style={{ fontSize: "40px" }}
+            onClick={closeEditForm}
+          >
+            &times;
+          </span>
+        </div>
+        <h2 className="text-xl font-semibold mb-4">Edit Assets</h2>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label
+              htmlFor="name"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Name:
+            </label>
+            <input
+              type="text"
+              onClick={(e) => e.stopPropagation()}
+              id="name"
+              name="name"
+              className="
+              mt-1
+              p-4 block
+              w-full
+              sm:text-sm
+              rounded-md
+              text-input
+              focus:ring-indigo-500
+              focus:border-gray-400
+              focus-visible:border-indigo-500
+              "
+              value={editedAccount.name}
+              onChange={handleChange}
+            />
+          </div>
+          <div>
+            <label
+              htmlFor="behaviour"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Behaviour:
+            </label>
+            <input
+              type="text"
+              onClick={(e) => e.stopPropagation()}
+              id="behaviour"
+              name="behaviour"
+              value={editedAccount.behaviour}
+              onChange={handleChange}
+              className="mt-1
+              p-4 block
+              w-full
+              sm:text-sm
+              rounded-md
+              text-input
+              focus:ring-indigo-500
+              focus:border-gray-400
+              focus-visible:border-indigo-500
+              "
+            />
+          </div>
+          <div>
+            <label
+              htmlFor="description"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Description:
+            </label>
+            <textarea
+              id="description"
+              onClick={(e) => e.stopPropagation()}
+              name="description"
+              value={editedAccount.description}
+              onChange={handleChange}
+              rows="4"
+              className="mt-1
+              p-4 block
+              w-full
+              sm:text-sm
+              rounded-md
+              text-input
+              focus:ring-indigo-500
+              focus:border-gray-400
+              focus-visible:border-indigo-500
+              "
+            ></textarea>
+          </div>
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <button
+              type="button"
+              className="px-4
+            py-2
+            text-white
+            rounded-md
+            text-sm
+            font-semibold
+            focus:outline-none
+            focus-visible:ring-2
+            focus-visible:ring-offset-2
+            focus-visible:ring-indigo-
+            cancel-btn
+            "
+              onClick={closeEditForm}
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              className="
+            ml-3
+            px-4
+            py-2
+            bg-indigo-600
+            text-white
+            rounded-md
+            text-sm
+            font-semibold
+            hover:bg-indigo-700
+            focus:outline-none
+            focus-visible:ring-2
+            focus-visible:ring-offset-2
+            focus-visible:ring-indigo-500
+            save-group
+            "
+            >
+              Save
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+};
 
 export default function GroupAccount() {
   const [showForm, setShowForm] = useState(false);
@@ -23,13 +190,16 @@ export default function GroupAccount() {
   const [groupAccounts, setGroupAccounts] = useState([]);
   const [subGroups, setSubGroups] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setitemsPerPage] = useState(2);
   const [formErrors, setFormError] = useState({});
   const [showEditButton, setShowEditButton] = useState(true);
   const [successMessage, setSuccessMessage] = useState("");
   const [selectedAccount, setSelectedAccount] = useState(null);
   const [sidebarVisible, setSidebarVisible] = useState(false);
+  const [editedGroupAccount, setEditedGroupAccount] = useState(null);
+  const [isEditing, setIsEditing] = useState(false);
+  const [showEditForm, setShowEditForm] = useState(false);
+  const [showDetails, setShowDetails] = useState(false);
+
 
   useEffect(() => {
     fetchGroupAccounts();
@@ -148,19 +318,50 @@ export default function GroupAccount() {
     }
   };
 
-  const handleEdit = (action) => {
-    if (action === "edit") {
-      console.log("Edit action triggered");
-    }
+  const openEditForm = (account) => {
+    setEditedGroupAccount(account);
+    setShowEditForm(true);
+  };
 
-    if (action === "delete") {
-      console.log("Deleted action triggered");
+  const closeEditForm = () => {
+    setShowEditForm(false);
+  };
+
+  const handleEdit = (account) => {
+    // setIsEditing(true);
+    setEditedGroupAccount(account);
+    setShowEditForm(true);
+    console.log("Editing", account);
+  };
+
+  const handleSubmitEdit = async (editedAccount) => {
+    try {
+      const response = await axios.post(
+        "http://54.226.71.2/EditGroupAccount",
+        {
+          id: editedAccount.id,
+          name: editedAccount.name,
+          behaviour: editedAccount.behaviour,
+          description: editedAccount.description,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      console.log("Edit account response:", response.data);
+      setIsEditing(false);
+      setEditedGroupAccount(null);
+      fetchGroupAccounts();
+    } catch (error) {
+      console.error("Error editing group account:", error);
     }
   };
 
   const handleSeeGroup = (account) => {
     setSelectedAccount(account);
-    setSidebarVisible(true);
+    setSidebarVisible(!sidebarVisible);
   };
 
   const handleCloseSidebar = () => {
@@ -168,40 +369,14 @@ export default function GroupAccount() {
     setSidebarVisible(false);
   };
 
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentGroupAccounts = groupAccounts.slice(
-    indexOfFirstItem,
-    indexOfLastItem
-  );
-
-  const totalPages = Math.ceil(groupAccounts.length / itemsPerPage);
-  const pageNumbers = Array.from(
-    { length: totalPages },
-    (_, index) => index + 1
-  );
-
-  const paginate = (pageNumber) => {
-    if (pageNumber >= 1 && pageNumber <= totalPages) {
-      setCurrentPage(pageNumber);
-    }
+  const handleViewDetails = (account) => {
+    setSelectedAccount(account);
+    setShowDetails(true);
   };
 
-  const nextPage = () => {
-    if (currentPage < totalPages) {
-      setCurrentPage(currentPage + 1);
-    }
-  };
-
-  const prevPage = () => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
-    }
-  };
-
-  const handleItemsPerPageChange = (value) => {
-    setitemsPerPage(value);
-    setCurrentPage(1);
+  const handleCloseDetails = () => {
+    setSelectedAccount(null);
+    setShowDetails(false);
   };
 
   return (
@@ -461,9 +636,22 @@ export default function GroupAccount() {
           </div>
         </div>
       )}
+      {showEditForm && (
+        <EditForm
+          editedGroupAccount={editedGroupAccount}
+          handleSubmitEdit={handleSubmitEdit}
+          closeEditForm={closeEditForm}
+        />
+      )}
+        {showDetails && (
+        <GroupAccountDetails
+          account={selectedAccount}
+          onClose={handleCloseDetails}
+        />
+      )}
       {!loading && (
         <div className="mt-8 overflow-x-auto">
-          {!showForm && currentGroupAccounts.length === 0 ? (
+          {!showForm && groupAccounts.length === 0 ? (
             <GroupCreationShow />
           ) : (
             <div className="mt-4 mb-2">
@@ -491,63 +679,39 @@ export default function GroupAccount() {
                               >
                                 {account.name}
                               </h3>
-                              <Menu as="div" className="relative ml-auto">
-                               {
-                                !showForm && (
-                                  <Menu.Button className="-m-2.5 block p-2.5 text-gray-400 hover:text-gray-500">
-                                  <span className="sr-only">Open options</span>
-                                  <EllipsisHorizontalIcon
-                                    className="h-5 w-5"
-                                    aria-hidden="true"
-                                  />
-                                </Menu.Button>
-                                )
-                               }
-                                <Transition
-                                  as={Fragment}
-                                  enter="transition ease-out duration-100"
-                                  enterFrom="transform opacity-0 scale-95"
-                                  enterTo="transform opacity-100 scale-100"
-                                  leave="transition ease-in duration-75"
-                                  leaveFrom="transform opacity-100 scale-100"
-                                  leaveTo="transform opacity-0 scale-95"
+                              {!showEditForm && (
+                                <Dropdown
+                                  overlay={
+                                    <Menu>
+                                      <Menu.Item key="1" onClick={() => handleSeeGroup(account)}>
+                                        <a href="#">View</a>
+                                      </Menu.Item>
+                                      <Menu.Item
+                                        key="2"
+                                        onClick={() => handleEdit(account)}
+                                      >
+                                        Edit
+                                      </Menu.Item>
+                                    </Menu>
+                                  }
+                                  placement="bottomRight"
+                                  overlayStyle={{ width: "200px" }}
                                 >
-                                  <Menu.Items className="absolute right-0 z-10 mt-0.5 w-32 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none">
-                                    <Menu.Item>
-                                      {({ active }) => (
-                                        <a
-                                          href="#"
-                                          className={classNames(
-                                            active ? "bg-gray-50" : "",
-                                            "block px-3 py-1 text-sm leading-6 text-gray-700"
-                                          )}
-                                        >
-                                          View
-                                          <span className="sr-only">
-                                            , {account.name}
-                                          </span>
-                                        </a>
-                                      )}
-                                    </Menu.Item>
-                                    <Menu.Item>
-                                      {({ active }) => (
-                                        <a
-                                          href="#"
-                                          className={classNames(
-                                            active ? "bg-gray-50" : "",
-                                            "block px-3 py-1 text-sm leading-6 text-gray-700"
-                                          )}
-                                        >
-                                          Edit
-                                          <span className="sr-only">
-                                            , {account.name}
-                                          </span>
-                                        </a>
-                                      )}
-                                    </Menu.Item>
-                                  </Menu.Items>
-                                </Transition>
-                              </Menu>
+                                  <div style={{
+                                        borderRadius: "50px",
+                                        padding: "3px",
+                                        background: "#f6f6f4"
+                                      }}>
+                                    <span className="sr-only">
+                                      Open options
+                                    </span>
+                                    <EllipsisHorizontalIcon
+                                      className="h-5 w-5"
+                                      aria-hidden="true"
+                                    />
+                                  </div>
+                                </Dropdown>
+                              )}
                             </div>
                             <p
                               className="text-xs text-gray-500"
