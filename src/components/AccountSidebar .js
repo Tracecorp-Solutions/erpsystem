@@ -35,7 +35,7 @@ function Card({
               mt-6
               "
                 style={{
-                  fontFamily: "outFit",
+                  fontFamily: "outFit, san-sarif",
                   fontWeight: "600",
                   fontSize: "24px",
                   color: "#505050",
@@ -53,7 +53,7 @@ function Card({
                 mt-6
                 "
                 style={{
-                  fontFamily: "outFit",
+                  fontFamily: "outFit, san-sarif",
                   fontSize: "16px",
                   color: "#505050",
                   fontWeight: "400",
@@ -71,7 +71,7 @@ function Card({
                   background: "#4467a1",
                   borderRadius: "20px",
                   padding: "5px 15px 5px 15px",
-                  fontFamily: "outFit",
+                  fontFamily: "outFit, san-sarif",
                 }}
                 className="text-white mt-5"
               >
@@ -95,7 +95,7 @@ function Card({
                   color: "#4467a1",
                   fontSize: "24px",
                   fontWeight: "600",
-                  fontFamily: "outFit",
+                  fontFamily: "outFit, san-sarif",
                 }}
               >
                 SubGroups
@@ -119,7 +119,10 @@ function Card({
                     uppercase
                     tracking-wider
                     "
-                      style={{ fontFamily: "outFit", fontWeight: "500" }}
+                      style={{
+                        fontFamily: "outFit, san-sarif",
+                        fontWeight: "500",
+                      }}
                     >
                       Name
                     </th>
@@ -134,7 +137,10 @@ function Card({
                     uppercase
                     tracking-wider
                     "
-                      style={{ fontFamily: "outFit", fontWeight: "500" }}
+                      style={{
+                        fontFamily: "outFit, san-sarif",
+                        fontWeight: "500",
+                      }}
                     >
                       Created
                     </th>
@@ -152,7 +158,10 @@ function Card({
                       font-medium
                       text-gray-900
                       "
-                        style={{ fontFamily: "outFit", color: "#505050" }}
+                        style={{
+                          fontFamily: "outFit, san-sarif",
+                          color: "#505050",
+                        }}
                       >
                         {subgroup.subGroupAccount.name}
                       </td>
@@ -228,7 +237,7 @@ export default function AccountSidebar({ account, showForm, subGroups }) {
                 font-semibold
                 leading-6"
               style={{
-                fontFamily: "outFit",
+                fontFamily: "outFit, san-sarif",
                 fontWeight: "600",
                 fontSize: "36px",
                 color: "#505050",
@@ -243,7 +252,7 @@ export default function AccountSidebar({ account, showForm, subGroups }) {
           className="mt-5"
           style={{
             textAlign: "start",
-            fontFamily: "outFit",
+            fontFamily: "outFit, san-sarif",
             color: "#a1a1a1",
           }}
         >

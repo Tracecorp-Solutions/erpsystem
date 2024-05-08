@@ -683,7 +683,7 @@ export default function GroupAccount() {
                                 <Dropdown
                                   overlay={
                                     <Menu>
-                                      <Menu.Item key="1" onClick={() => handleViewDetails(account)}>
+                                      <Menu.Item key="1" onClick={() => handleSeeGroup(account)}>
                                         <a href="#">View</a>
                                       </Menu.Item>
                                       <Menu.Item
