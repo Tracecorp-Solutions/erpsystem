@@ -116,8 +116,8 @@ function Card({
                   className="
                 bg-gray-50
                 "
-                  style={{ borderRadius: "50px" }}
-                >
+                style={{ borderTopLeftRadius: "20px", borderTopRightRadius: "20px" }}
+              >
                   <tr>
                     <th
                       className="
@@ -129,6 +129,7 @@ function Card({
                     text-gray-500
                     uppercase
                     tracking-wider
+                    rounded-l-md
                     "
                       style={{
                         fontFamily: "outFit, Sans-serif",
