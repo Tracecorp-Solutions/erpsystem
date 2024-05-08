@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Drawer, Modal } from "antd";
+import { Drawer, Modal, Table  } from "antd";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import SubGroupForm from "./SubGroupForm ";
 
@@ -96,6 +96,7 @@ function Card({
                 padding: "10px",
                 borderRadius: "20px",
                 marginTop: "5px",
+                width: "320px",
               }}
             >
               <h2>{filteredSubGroups[0].name}</h2>
@@ -110,7 +111,7 @@ function Card({
               >
                 SubGroups
               </h3>
-              <table className="min-w-full">
+              <table  className="min-w-full" style={{ width: "100%" }}>
                 <thead
                   className="
                 bg-gray-50
