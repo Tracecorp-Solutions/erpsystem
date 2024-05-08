@@ -203,7 +203,7 @@ export default function AccountSidebar({ account, showForm, subGroups }) {
       width={400}
       style={{ height: "100vh", overflow: "auto" }}
     >
-      <div className="px-4 py-6 text-end">
+      <div className="px- text-end">
         <button
           type="button"
           onClick={() => setDrawerVisible(false)}
