@@ -678,7 +678,11 @@ export default function GroupAccount() {
                                   placement="bottomRight"
                                   overlayStyle={{ width: "200px" }}
                                 >
-                                  <div>
+                                  <div style={{
+                                        borderRadius: "50px",
+                                        padding: "3px",
+                                        background: "#f6f6f4"
+                                      }}>
                                     <span className="sr-only">
                                       Open options
                                     </span>
