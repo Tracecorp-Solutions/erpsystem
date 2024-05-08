@@ -9,6 +9,7 @@ import { Menu, Dropdown, Button } from "antd";
 import { EllipsisHorizontalIcon } from "@heroicons/react/20/solid";
 import classNames from "classnames";
 import AccountSidebar from "../components/AccountSidebar ";
+import GroupAccountDetails from "../components/GroupAccountDetails ";
 
 const EditForm = ({ editedGroupAccount, handleSubmitEdit, closeEditForm }) => {
   const [editedAccount, setEditedAccount] = useState(editedGroupAccount);
@@ -197,6 +198,8 @@ export default function GroupAccount() {
   const [editedGroupAccount, setEditedGroupAccount] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const [showEditForm, setShowEditForm] = useState(false);
+  const [showDetails, setShowDetails] = useState(false);
+
 
   useEffect(() => {
     fetchGroupAccounts();
@@ -364,6 +367,16 @@ export default function GroupAccount() {
   const handleCloseSidebar = () => {
     setSelectedAccount(null);
     setSidebarVisible(false);
+  };
+
+  const handleViewDetails = (account) => {
+    setSelectedAccount(account);
+    setShowDetails(true);
+  };
+
+  const handleCloseDetails = () => {
+    setSelectedAccount(null);
+    setShowDetails(false);
   };
 
   return (
@@ -630,6 +643,12 @@ export default function GroupAccount() {
           closeEditForm={closeEditForm}
         />
       )}
+        {showDetails && (
+        <GroupAccountDetails
+          account={selectedAccount}
+          onClose={handleCloseDetails}
+        />
+      )}
       {!loading && (
         <div className="mt-8 overflow-x-auto">
           {!showForm && groupAccounts.length === 0 ? (
@@ -664,7 +683,7 @@ export default function GroupAccount() {
                                 <Dropdown
                                   overlay={
                                     <Menu>
-                                      <Menu.Item key="1">
+                                      <Menu.Item key="1" onClick={() => handleViewDetails(account)}>
                                         <a href="#">View</a>
                                       </Menu.Item>
                                       <Menu.Item
