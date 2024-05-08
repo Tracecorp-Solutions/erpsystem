@@ -1,6 +1,5 @@
+import React from 'react';
 
-const Loss = () => {
-    return <h1>Loss</h1>;
-}
+const Loss = () => <h1>About Components</h1>
 
 export default Loss;
