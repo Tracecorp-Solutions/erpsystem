@@ -13,21 +13,21 @@ const AccountCreation = () => {
 
   const columns = [
     {
-      title: 'Name',
-      dataIndex: 'name',
+      title: "Name",
+      dataIndex: "name",
     },
     {
-      title: 'Age',
-      dataIndex: 'age',
+      title: "Age",
+      dataIndex: "age",
     },
     {
-      title: 'Address',
-      dataIndex: 'address',
+      title: "Address",
+      dataIndex: "address",
     },
   ];
 
   const onSelectChange = (newSelectedRowKeys) => {
-    console.log('selectedRowKeys changed: ', newSelectedRowKeys);
+    console.log("selectedRowKeys changed: ", newSelectedRowKeys);
     setSelectedRowKeys(newSelectedRowKeys);
   };
 
@@ -39,20 +39,24 @@ const AccountCreation = () => {
       Table.SELECTION_INVERT,
       Table.SELECTION_NONE,
       {
-        key: 'odd',
-        text: 'Select Odd Row',
+        key: "odd",
+        text: "Select Odd Row",
         onSelect: (changeableRowKeys) => {
           let newSelectedRowKeys = [];
-          newSelectedRowKeys = changeableRowKeys.filter((_, index) => index % 2 !== 0);
+          newSelectedRowKeys = changeableRowKeys.filter(
+            (_, index) => index % 2 !== 0
+          );
           setSelectedRowKeys(newSelectedRowKeys);
         },
       },
       {
-        key: 'even',
-        text: 'Select Even Row',
+        key: "even",
+        text: "Select Even Row",
         onSelect: (changeableRowKeys) => {
           let newSelectedRowKeys = [];
-          newSelectedRowKeys = changeableRowKeys.filter((_, index) => index % 2 === 0);
+          newSelectedRowKeys = changeableRowKeys.filter(
+            (_, index) => index % 2 === 0
+          );
           setSelectedRowKeys(newSelectedRowKeys);
         },
       },
@@ -126,7 +130,6 @@ const AccountCreation = () => {
     },
     // Add more dummy data as needed
   ];
-  
 
   return (
     <div>
@@ -167,7 +170,7 @@ const AccountCreation = () => {
             msOverflowStyle: "none",
             scrollbarWidth: "none",
             "&::-webkit-scrollbar": {
-              display: "none"
+              display: "none",
             },
           }}
           className="overflow-y-auto"
@@ -178,16 +181,27 @@ const AccountCreation = () => {
                 color: "#505050",
                 fontFamily: "outFit, Sans-serif",
                 fontSize: "25px",
-                marginTop: "30px"
+                marginTop: "30px",
               }}
             >
               Account Creation
             </h3>
             <div className="mb-4">
-              <label htmlFor="name" className="block mb-1"  style={{ fontFamily: "outFit, Sans-serif", fontSize: "16px", fontWeight: "600" }}>
+              <label
+                htmlFor="name"
+                className="block mb-1"
+                style={{
+                  fontFamily: "outFit, Sans-serif",
+                  fontSize: "16px",
+                  fontWeight: "600",
+                }}
+              >
                 Account Name
               </label>
-              <p className="text-gray-600 text-sm mb-1" style={{ fontFamily: "outFit, Sans-serif" }}>
+              <p
+                className="text-gray-600 text-sm mb-1"
+                style={{ fontFamily: "outFit, Sans-serif" }}
+              >
                 Choose a unique name for your account that reflects its purpose
               </p>
               <input
@@ -201,10 +215,20 @@ const AccountCreation = () => {
               />
             </div>
             <div className="mb-4">
-              <label htmlFor="accountType" className="block mb-1"  style={{ fontFamily: "outFit, Sans-serif", fontSize: "16px", fontWeight: "600" }}>
+              <label
+                htmlFor="accountType"
+                className="block mb-1"
+                style={{
+                  fontFamily: "outFit, Sans-serif",
+                  fontSize: "16px",
+                  fontWeight: "600",
+                }}
+              >
                 Account Type
               </label>
-              <p className="text-gray-600 text-sm mb-1">This account can be a Bank account or an In-house account</p>
+              <p className="text-gray-600 text-sm mb-1">
+                This account can be a Bank account or an In-house account
+              </p>
               <select
                 id="accountType"
                 name="accountType"
@@ -221,7 +245,15 @@ const AccountCreation = () => {
               </select>
             </div>
             <div className="mb-4">
-              <label htmlFor="subGroupAccountId" className="block mb-1" style={{ fontFamily: "outFit, Sans-serif", fontSize: "16px", fontWeight: "600" }}>
+              <label
+                htmlFor="subGroupAccountId"
+                className="block mb-1"
+                style={{
+                  fontFamily: "outFit, Sans-serif",
+                  fontSize: "16px",
+                  fontWeight: "600",
+                }}
+              >
                 SubGroup
               </label>
               <p>Select the subgroup this account belongs to</p>
@@ -247,7 +279,15 @@ const AccountCreation = () => {
               </select>
             </div>
             <div className="mb-4">
-              <label htmlFor="name" className="block mb-1"  style={{ fontFamily: "outFit, Sans-serif", fontSize: "16px", fontWeight: "600" }}>
+              <label
+                htmlFor="name"
+                className="block mb-1"
+                style={{
+                  fontFamily: "outFit, Sans-serif",
+                  fontSize: "16px",
+                  fontWeight: "600",
+                }}
+              >
                 Account Number
               </label>
               <p className="text-gray-600 text-sm mb-1">
@@ -264,10 +304,20 @@ const AccountCreation = () => {
               />
             </div>
             <div className="mb-4">
-              <label htmlFor="balance" className="block mb-1"  style={{ fontFamily: "outFit, Sans-serif", fontSize: "16px", fontWeight: "600" }}>
+              <label
+                htmlFor="balance"
+                className="block mb-1"
+                style={{
+                  fontFamily: "outFit, Sans-serif",
+                  fontSize: "16px",
+                  fontWeight: "600",
+                }}
+              >
                 Opening Balance Date
               </label>
-              <p style={{ fontFamily: "outFit, Sans-serif", color: "#a1a1a1" }}>This is the date when the account was created</p>
+              <p style={{ fontFamily: "outFit, Sans-serif", color: "#a1a1a1" }}>
+                This is the date when the account was created
+              </p>
               <input
                 type="date"
                 id="balance"
@@ -279,10 +329,20 @@ const AccountCreation = () => {
               />
             </div>
             <div className="mb-4">
-              <label htmlFor="balance" className="block mb-1"  style={{ fontFamily: "outFit, Sans-serif", fontSize: "16px", fontWeight: "600" }}>
+              <label
+                htmlFor="balance"
+                className="block mb-1"
+                style={{
+                  fontFamily: "outFit, Sans-serif",
+                  fontSize: "16px",
+                  fontWeight: "600",
+                }}
+              >
                 Opening Balance
               </label>
-              <p style={{ fontFamily: "outFit, Sans-serif", color: "#a1a1a1" }}>Initial account value at creation</p>
+              <p style={{ fontFamily: "outFit, Sans-serif", color: "#a1a1a1" }}>
+                Initial account value at creation
+              </p>
               <input
                 type="number"
                 id="balance"
@@ -294,7 +354,15 @@ const AccountCreation = () => {
               />
             </div>
             <div className="mb-4">
-              <label htmlFor="description" className="block mb-1"  style={{ fontFamily: "outFit, Sans-serif", fontSize: "16px", fontWeight: "600" }}>
+              <label
+                htmlFor="description"
+                className="block mb-1"
+                style={{
+                  fontFamily: "outFit, Sans-serif",
+                  fontSize: "16px",
+                  fontWeight: "600",
+                }}
+              >
                 Description
               </label>
               <textarea
@@ -317,7 +385,7 @@ const AccountCreation = () => {
                   border: "#505050 1px solid",
                 }}
               >
-                Cancel 
+                Cancel
               </button>
               <button
                 type="submit"
@@ -336,67 +404,69 @@ const AccountCreation = () => {
         </div>
       </Modal>
       <div style={{ overflowX: "auto" }}>
-      <table className="table-auto min-w-full divide-y divide-gray-200">
-        <thead className="bg-gray-50">
-          <tr>
-            <th
-              scope="col"
-              className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-            >
-              Name
-            </th>
-            <th
-              scope="col"
-              className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-            >
-              SubGroup
-            </th>
-            <th
-              scope="col"
-              className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-            >
-              Description
-            </th>
-            <th
-              scope="col"
-              className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-            >
-              Balance
-            </th>
-            <th
-              scope="col"
-              className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-            >
-              Actions
-            </th>
-          </tr>
-        </thead>
-        <tbody className="bg-white divide-y divide-gray-200">
-          {currentAccounts.map((account) => {
-            const subGroupInfo = subGroupAccounts.find(
-              (subGroup) =>
-                subGroup.subGroupAccount.id === account.subGroupAccountId
-            );
+        <table className="table-auto min-w-full divide-y divide-gray-200">
+          <thead className="bg-gray-50" style={{ borderRadius: "30px" }}>
+            <tr>
+              <input type="checkbox" style={{ marginLeft: "10px", marginTop: "15px" }} />
+              <th
+                scope="col"
+                className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
+                Name
+              </th>
+              <th
+                scope="col"
+                className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
+                SubGroup
+              </th>
+              <th
+                scope="col"
+                className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
+                Description
+              </th>
+              <th
+                scope="col"
+                className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
+                Balance
+              </th>
+              <th
+                scope="col"
+                className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
+                Actions
+              </th>
+            </tr>
+          </thead>
+          <tbody className="bg-white divide-y divide-gray-200">
+            {currentAccounts.map((account) => {
+              const subGroupInfo = subGroupAccounts.find(
+                (subGroup) =>
+                  subGroup.subGroupAccount.id === account.subGroupAccountId
+              );
 
-            return (
-              <tr key={account.id}>
-                <td className="px-3 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                  {account.name}
-                </td>
-                <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">
-                  {subGroupInfo ? subGroupInfo.subGroupAccount.name : "N/A"}
-                </td>
-                <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">
-                  {account.description}
-                </td>
-                <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">
-                  {account.balance}
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+              return (
+                <tr key={account.id}>
+                  <input type="checkbox" style={{ marginLeft: "10px", marginTop: "15px" }} />
+                  <td className="px-3 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                    {account.name}
+                  </td>
+                  <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">
+                    {subGroupInfo ? subGroupInfo.subGroupAccount.name : "N/A"}
+                  </td>
+                  <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">
+                    {account.description}
+                  </td>
+                  <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">
+                    {account.balance}
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
       </div>
     </div>
   );
