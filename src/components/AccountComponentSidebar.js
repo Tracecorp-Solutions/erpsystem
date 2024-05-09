@@ -81,62 +81,61 @@ function Card({
   );
 }
 
-export default function AccountComponentSidebar({ account, subGroups }) {
-  const [drawerVisible, setDrawerVisible] = useState(true);
+export default function AccountComponentSidebar({ setDrawerVisible, drawerVisible }) {
   const [modalVisible, setModalVisible] = useState(false);
 
 
-
   return (
-    <Drawer
-      placement="right"
-      closable={false}
-      onClose={() => setDrawerVisible(false)}
-      visible={drawerVisible}
-      width={400}
-      style={{ height: "100vh", overflow: "auto" }}
-    >
-      <div className="px- text-end">
-        <button
-          type="button"
-          onClick={() => setDrawerVisible(false)}
-          className="relative rounded-md text-indigo-200 focus:outline-none focus:ring-2 focus:ring-white"
-        >
-          <span className="absolute -inset-2.5" />
-          <span className="sr-only">Close panel</span>
-          <XMarkIcon
-            className="h-10 w-10"
-            aria-hidden="true"
-          />
-        </button>
-        <div className="flex justify-between mt-5">
-          <div>
-            <h2
-              className="
-                text-base
-                font-semibold
-                leading-6"
-            >
-                kakak
-            </h2>
+    <>
+      <Drawer
+        placement="right"
+        closable={false}
+        onClose={() => setDrawerVisible(false)}
+        visible={drawerVisible}
+        width={400}
+        style={{ height: "100vh", overflow: "auto" }}
+      >
+        <div className="px- text-end">
+          <button
+            type="button"
+            onClick={() => setDrawerVisible(false)}
+            className="relative rounded-md text-indigo-200 focus:outline-none focus:ring-2 focus:ring-white"
+          >
+            <span className="absolute -inset-2.5" />
+            <span className="sr-only">Close panel</span>
+            <XMarkIcon
+              className="h-10 w-10"
+              aria-hidden="true"
+            />
+          </button>
+          <div className="flex justify-between mt-5">
+            <div>
+              <h2
+                className="
+                  text-base
+                  font-semibold
+                  leading-6"
+              >
+                  kakak
+              </h2>
+            </div>
+          </div>
+          <div className="mt-5">
+            <p className="text-sm">jajajj</p>
           </div>
         </div>
-        <div className="mt-5">
-          <p className="text-sm">jajajj</p>
-        </div>
-      </div>
-      <Card
-        title="Let's Organize Further!"
-        description="You haven't created any subgroups under Assets yet."
-        setModalVisible={setModalVisible}
-      />
-      <Modal
-        visible={modalVisible}
-        onCancel={() => setModalVisible(false)}
-        footer={null}
-      >
-        {/* <SubGroupForm onCancel={() => setModalVisible(false)} /> */}
-      </Modal>
-    </Drawer>
+        <Card
+          showCreateSubGroupButton={true} // Set to true to always show the create subgroup button
+          setModalVisible={setModalVisible}
+        />
+        <Modal
+          visible={modalVisible}
+          onCancel={() => setModalVisible(false)}
+          footer={null}
+        >
+          {/* <SubGroupForm onCancel={() => setModalVisible(false)} /> */}
+        </Modal>
+      </Drawer>
+    </>
   );
 }

@@ -8,7 +8,7 @@ import AccountComponentSidebar from "../components/AccountComponentSidebar";
 
 const AccountCreation = () => {
   const [showModal, setShowModal] = useState(false);
-  const [showSidebar, setShowSidebar] = useState(false);
+  const [drawerVisible, setDrawerVisible] = useState(false);
   const [groups, setGroups] = useState([]);
   const [subGroupAccounts, setSubGroupAccounts] = useState([]);
   const [form] = Form.useForm();
@@ -87,27 +87,24 @@ const AccountCreation = () => {
     setDropdownVisible({ ...dropdownVisible, [accountId]: visible });
   };
 
-  const handleMenuClick = (e) => {
-    console.log("Clicked on menu item:", e.key);
-    if (e.key === "1") {
-      setShowSidebar(true);
-    } else {
-      setDropdownVisible(false);
-    }
+  const toggleSidebar = () => {
+    setDrawerVisible(!drawerVisible);
+    setDropdownVisible({});
   };
 
 
   const menu = (
-    <Menu onClick={handleMenuClick}>
-      <Menu.Item key="1">View</Menu.Item>
-      <Menu.Item key="2">Option 2</Menu.Item>
-      <Menu.Item key="3">Option 3</Menu.Item>
+    <Menu>
+      <Menu.Item key="1" onClick={() => toggleSidebar("1")}>View</Menu.Item>
+      <Menu.Item key="2" onClick={() => toggleSidebar("2")}>Option 2</Menu.Item>
+      <Menu.Item key="3" onClick={() => toggleSidebar("3")}>Option 3</Menu.Item>
     </Menu>
   );
+  
 
   return (
     <div>
-       {showSidebar && <AccountComponentSidebar />}
+       {drawerVisible && <AccountComponentSidebar setDrawerVisible={setDrawerVisible} drawerVisible={drawerVisible} />}
       <div
         style={{
           display: "flex",
