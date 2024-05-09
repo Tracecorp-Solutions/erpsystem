@@ -20,7 +20,8 @@ const AccountCreation = () => {
   const [formErrors, setFormErrors] = useState({});
   const [showEditButton, setShowEditButton] = useState(true);
   const [successMessage, setSuccessMessage] = useState("");
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [checkedAccount, setCheckdAccount] = useState({});
 
   useEffect(() => {
     fetchGroups();
@@ -139,6 +140,13 @@ const AccountCreation = () => {
     }
   };
 
+  const handleCheckboxChange = (accountId) => {
+    setCheckdAccount((prevState) => ({
+      ...prevState,
+      [accountId]: !prevState(accountId),
+    }));
+  }
+
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentAccounts = accounts.slice(indexOfFirstItem, indexOfLastItem);
@@ -174,9 +182,29 @@ const AccountCreation = () => {
           <button
             type="button"
             onClick={toggleForm}
-            className="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            className="
+            block
+            rounded-md 
+            px-3
+            py-2
+            text-center
+            text-sm
+            font-semibold
+            text-white
+            shadow-sm
+            hover:bg-indigo-500
+            focus-visible:outline
+            focus-visible:outline-2
+            focus-visible:outline-offset-2
+            focus-visible:outline-indigo-600
+            "
+            style={{
+              background: "#4467a1",
+              borderRadius: "28px",
+              fontFamily: "outFit, Sans-serif"
+            }}
           >
-            + New
+            + Create Account
           </button>
         </div>
       </div>
@@ -397,6 +425,13 @@ const AccountCreation = () => {
 
                 return (
                   <tr key={account.id}>
+                    <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">
+                      <input
+                        type="checkbox"
+                        onChange={() => handleCheckboxChange(account.id)}
+                        checked={checkedAccount[account.id] || false}
+                      />
+                    </td>
                     <td className="px-3 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                       {account.name}
                     </td>
