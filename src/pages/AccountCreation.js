@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Select } from 'antd';
+import { Select } from "antd";
 
 const { Option } = Select;
 
@@ -16,7 +16,7 @@ const AccountCreation = () => {
   });
   const [subGroupAccounts, setSubGroupAccounts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(2);
+  const [itemsPerPage, setitemsPerPage] = useState(2);
   const [formErrors, setFormErrors] = useState({});
   const [showEditButton, setShowEditButton] = useState(true);
   const [successMessage, setSuccessMessage] = useState("");
@@ -39,7 +39,7 @@ const AccountCreation = () => {
   const fetchGroups = async () => {
     try {
       const response = await axios.get(
-        `${process.env.REACT_APP_API_URL}/GetAllGroupAccounts`
+        `${process.env.REACT_APP_API_URL1}/GetAllGroupAccounts`
       );
       setGroups(response.data);
     } catch (error) {
@@ -65,7 +65,6 @@ const AccountCreation = () => {
         "http://54.226.71.2/GetAllSubGroupAccounts"
       );
       setSubGroupAccounts(response.data);
-      console.log(response.data);
     } catch (error) {
       console.error("Error fetching subGroup accounts", error);
     }
@@ -156,6 +155,11 @@ const AccountCreation = () => {
     if (currentPage > 1) {
       setCurrentPage(currentPage - 1);
     }
+  };
+
+  const handleItemsPerPageChange = (value) => {
+    setitemsPerPage(value);
+    setCurrentPage(1);
   };
 
   return (
@@ -329,6 +333,26 @@ const AccountCreation = () => {
       )}
       {!loading && (
         <div className="mt-8 overflow-x-auto">
+         { !showForm && (
+           <div className="mt-4 mb-2">
+           <label className="block text-sm font-medium text-gray-700 mb-2">
+             Items Per Page:
+           </label>
+           <Select
+             value={itemsPerPage}
+             onChange={handleItemsPerPageChange}
+             className="w-24"
+           >
+             <Option value={2}>2</Option>
+             <Option value={5}>5</Option>
+             <Option value={10}>10</Option>
+             <Option value={20}>20</Option>
+             <Option value={30}>30</Option>
+             <Option value={40}>40</Option>
+             <Option value={50}>50</Option>
+           </Select>
+         </div>
+         )}
           <table className="table-auto min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">
               <tr>
@@ -342,6 +366,12 @@ const AccountCreation = () => {
                   scope="col"
                   className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                 >
+                  SubGroup
+                </th>
+                <th
+                  scope="col"
+                  className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >
                   Description
                 </th>
                 <th
@@ -350,40 +380,53 @@ const AccountCreation = () => {
                 >
                   Balance
                 </th>
-                <th scope="col" className="relative px-3 py-3">
-                  <span className="sr-only">Edit</span>
+                <th
+                  scope="col"
+                  className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >
+                  Actions
                 </th>
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
-              {currentAccounts.map((account) => (
-                <tr key={account.id}>
-                  <td className="px-3 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                    {account.name}
-                  </td>
-                  <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {account.description}
-                  </td>
-                  <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {account.balance}
-                  </td>
-                  <td className="px-3 py-4 whitespace-nowrap text-right text-sm font-medium">
-                    {showEditButton && (
-                      <div className="mb-4 md:w-2/4">
-                      <Select
-                        id="vendor"
-                        className="w-full"
-                        onChange={(value) => handleEdit(value)}
-                        bordered={false}
-                      >
-                        <Option value="vendor1">Edit</Option>
-                        <Option value="vendor2">Delete</Option>
-                      </Select>
-                    </div>
-                    )}
-                  </td>
-                </tr>
-              ))}
+              {currentAccounts.map((account) => {
+                const subGroupInfo = subGroupAccounts.find(
+                  (subGroup) =>
+                    subGroup.subGroupAccount.id === account.subGroupAccountId
+                );
+
+                return (
+                  <tr key={account.id}>
+                    <td className="px-3 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                      {account.name}
+                    </td>
+                    <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">
+                      {subGroupInfo ? subGroupInfo.subGroupAccount.name : "N/A"}
+                    </td>
+                    <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">
+                      {account.description}
+                    </td>
+                    <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">
+                      {account.balance}
+                    </td>
+                    <td className="px-3 py-4 whitespace-nowrap text-right text-sm font-medium">
+                      {showEditButton && (
+                        <div className="mb-4 md:w-3/4">
+                          <Select
+                            id="vendor"
+                            className="w-full"
+                            onChange={(value) => handleEdit(value)}
+                            bordered={false}
+                          >
+                            <Option value="vendor1">Edit</Option>
+                            <Option value="vendor2">Delete</Option>
+                          </Select>
+                        </div>
+                      )}
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
           {showEditButton && (

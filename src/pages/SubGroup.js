@@ -8,6 +8,7 @@ import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
 import View from "../components/View";
 import { Link } from "react-router-dom";
 
+
 const { Option } = Select;
 
 const SubGroup = () => {
@@ -323,6 +324,7 @@ const SubGroup = () => {
       {/* {loading && <SubSidebar />} */}
       {!loading && (
         <div className="mt-8 overflow-x-auto">
+
           {!showForm && (
             <div className="mt-4 mb-2">
               <label
@@ -345,6 +347,7 @@ const SubGroup = () => {
             </div>
           )}
           <table className="table-auto min-w-full divide-y divide-gray-200 bg-gray-100">
+
             <thead className="bg-gray-50">
               <tr>
                 <th
@@ -359,6 +362,7 @@ const SubGroup = () => {
                   className="px-3 py-3 text-left text-sm font-semibold text-gray-700"
                   style={{ fontFamily: "outfit, sans-serif" }}
                 >
+
                   Group
                 </th>
                 <th
@@ -367,6 +371,7 @@ const SubGroup = () => {
                   style={{ fontFamily: "outfit, sans-serif" }}
                 >
                   Description
+
                 </th>
                 {/* <th scope="col" className="relative px-3 py-3">
                   <span
@@ -378,6 +383,7 @@ const SubGroup = () => {
                 </th> */}
               </tr>
             </thead>
+
             <tbody className="bg-gray-100 divide-y divide-gray-100">
               {currentGroup.map((group) =>
                 group?.subGroupAccount && group?.groupAccount ? (
