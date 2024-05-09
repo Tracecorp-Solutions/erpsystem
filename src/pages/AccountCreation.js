@@ -4,14 +4,17 @@ import axios from "axios";
 import { Modal, Form, Button, Dropdown, Menu } from "antd";
 
 import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
+import AccountComponentSidebar from "../components/AccountComponentSidebar";
 
 const AccountCreation = () => {
   const [showModal, setShowModal] = useState(false);
+  const [showSidebar, setShowSidebar] = useState(false);
   const [groups, setGroups] = useState([]);
   const [subGroupAccounts, setSubGroupAccounts] = useState([]);
   const [form] = Form.useForm();
 
-  const [dropdownVisible, setDropdownVisible] = useState(false);
+
+  const [dropdownVisible, setDropdownVisible] = useState({});
 
   useEffect(() => {
     fetchGroups();
@@ -80,18 +83,23 @@ const AccountCreation = () => {
     },
   ];
 
-  const handleDropdownVisibleChange = (visible) => {
-    setDropdownVisible(visible);
+  const handleDropdownVisibleChange = (visible, accountId) => {
+    setDropdownVisible({ ...dropdownVisible, [accountId]: visible });
   };
 
   const handleMenuClick = (e) => {
     console.log("Clicked on menu item:", e.key);
-    setDropdownVisible(false);
+    if (e.key === "1") {
+      setShowSidebar(true);
+    } else {
+      setDropdownVisible(false);
+    }
   };
+
 
   const menu = (
     <Menu onClick={handleMenuClick}>
-      <Menu.Item key="1">Option 1</Menu.Item>
+      <Menu.Item key="1">View</Menu.Item>
       <Menu.Item key="2">Option 2</Menu.Item>
       <Menu.Item key="3">Option 3</Menu.Item>
     </Menu>
@@ -99,6 +107,7 @@ const AccountCreation = () => {
 
   return (
     <div>
+       {showSidebar && <AccountComponentSidebar />}
       <div
         style={{
           display: "flex",
