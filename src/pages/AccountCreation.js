@@ -103,15 +103,16 @@ const AccountCreation = () => {
                 color: "#505050",
                 fontFamily: "outFit, Sans-serif",
                 fontSize: "25px",
+                marginTop: "30px"
               }}
             >
               Account Creation
             </h3>
             <div className="mb-4">
-              <label htmlFor="name" className="block mb-1">
-                Account Name:
+              <label htmlFor="name" className="block mb-1"  style={{ fontFamily: "outFit, Sans-serif", fontSize: "16px", fontWeight: "600" }}>
+                Account Name
               </label>
-              <p className="text-gray-600 text-sm mb-1">
+              <p className="text-gray-600 text-sm mb-1" style={{ fontFamily: "outFit, Sans-serif" }}>
                 Choose a unique name for your account that reflects its purpose
               </p>
               <input
@@ -121,12 +122,14 @@ const AccountCreation = () => {
                 required
                 placeholder="Please enter account name..."
                 className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                style={{ borderRadius: "12px", padding: "15px" }}
               />
             </div>
             <div className="mb-4">
-              <label htmlFor="accountType" className="block mb-1">
-                Account Type:
+              <label htmlFor="accountType" className="block mb-1"  style={{ fontFamily: "outFit, Sans-serif", fontSize: "16px", fontWeight: "600" }}>
+                Account Type
               </label>
+              <p className="text-gray-600 text-sm mb-1">This account can be a Bank account or an In-house account</p>
               <select
                 id="accountType"
                 name="accountType"
@@ -135,6 +138,7 @@ const AccountCreation = () => {
                   form.setFieldsValue({ accountType: e.target.value })
                 }
                 className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                style={{ borderRadius: "12px", padding: "15px" }}
               >
                 <option value="">Select Account Type</option>
                 <option value="bank">Bank</option>
@@ -142,9 +146,10 @@ const AccountCreation = () => {
               </select>
             </div>
             <div className="mb-4">
-              <label htmlFor="subGroupAccountId" className="block mb-1">
-                SubGroup:
+              <label htmlFor="subGroupAccountId" className="block mb-1" style={{ fontFamily: "outFit, Sans-serif", fontSize: "16px", fontWeight: "600" }}>
+                SubGroup
               </label>
+              <p>Select the subgroup this account belongs to</p>
               <select
                 id="subGroupAccountId"
                 name="subGroupAccountId"
@@ -153,6 +158,7 @@ const AccountCreation = () => {
                   form.setFieldsValue({ subGroupAccountId: e.target.value })
                 }
                 className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                style={{ borderRadius: "12px", padding: "15px" }}
               >
                 <option value="">Select SubGroup</option>
                 {subGroupAccounts.map((subGroup) => (
@@ -166,25 +172,42 @@ const AccountCreation = () => {
               </select>
             </div>
             <div className="mb-4">
-              <label htmlFor="name" className="block mb-1">
-                Name:
+              <label htmlFor="name" className="block mb-1"  style={{ fontFamily: "outFit, Sans-serif", fontSize: "16px", fontWeight: "600" }}>
+                Account Number
               </label>
               <p className="text-gray-600 text-sm mb-1">
-                Choose a unique name for your account that reflects its purpose
+                To ensure accurate tracking of transactions
               </p>
               <input
-                type="text"
+                type="number"
                 id="name"
                 name="name"
                 required
-                placeholder="Please enter account name..."
+                placeholder="Please enter account number..."
                 className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                style={{ borderRadius: "12px", padding: "15px" }}
               />
             </div>
             <div className="mb-4">
-              <label htmlFor="balance" className="block mb-1">
-                Opening Balance Date:
+              <label htmlFor="balance" className="block mb-1"  style={{ fontFamily: "outFit, Sans-serif", fontSize: "16px", fontWeight: "600" }}>
+                Opening Balance Date
               </label>
+              <p style={{ fontFamily: "outFit, Sans-serif", color: "#a1a1a1" }}>This is the date when the account was created</p>
+              <input
+                type="date"
+                id="balance"
+                name="balance"
+                required
+                placeholder="Please enter account balance..."
+                className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                style={{ borderRadius: "12px", padding: "15px" }}
+              />
+            </div>
+            <div className="mb-4">
+              <label htmlFor="balance" className="block mb-1"  style={{ fontFamily: "outFit, Sans-serif", fontSize: "16px", fontWeight: "600" }}>
+                Opening Balance
+              </label>
+              <p style={{ fontFamily: "outFit, Sans-serif", color: "#a1a1a1" }}>Initial account value at creation</p>
               <input
                 type="number"
                 id="balance"
@@ -192,30 +215,19 @@ const AccountCreation = () => {
                 required
                 placeholder="Please enter account balance..."
                 className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                style={{ borderRadius: "12px", padding: "15px" }}
               />
             </div>
             <div className="mb-4">
-              <label htmlFor="balance" className="block mb-1">
-                Opening Bal:
-              </label>
-              <input
-                type="number"
-                id="balance"
-                name="balance"
-                required
-                placeholder="Please enter account balance..."
-                className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
-              />
-            </div>
-            <div className="mb-4">
-              <label htmlFor="description" className="block mb-1">
-                Description:
+              <label htmlFor="description" className="block mb-1"  style={{ fontFamily: "outFit, Sans-serif", fontSize: "16px", fontWeight: "600" }}>
+                Description
               </label>
               <textarea
                 id="description"
                 name="description"
                 placeholder="Please enter description..."
                 className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                style={{ borderRadius: "12px", padding: "15px" }}
               ></textarea>
             </div>
             <div className="flex justify-between">
@@ -230,7 +242,7 @@ const AccountCreation = () => {
                   border: "#505050 1px solid",
                 }}
               >
-                Cancel
+                Cancel 
               </button>
               <button
                 type="submit"
