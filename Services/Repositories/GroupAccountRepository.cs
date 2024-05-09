@@ -49,6 +49,7 @@ namespace Services.Repositories
             }
             else 
             {
+                subGroupAccount.DateCreated = DateTime.Now;
                 // Inspect the state of the DbContext
                 var entries = _context.ChangeTracker.Entries();
                 foreach (var entry in entries)
@@ -126,6 +127,18 @@ namespace Services.Repositories
 
             _context.Entry(existingSubGroup).CurrentValues.SetValues(subGroupAccount);
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<SubGroupAccount>> GetSubGroupByGroupId(int groupId) 
+        {
+            var subgroups = await _context.SubGroupAccounts
+                                   .Where(sg => sg.GroupId == groupId)
+                                   .ToListAsync();
+
+            if (subgroups.Count == 0)
+                throw new ArgumentException("No Subgroup found in that group");
+
+            return subgroups;
         }
     }
 

@@ -50,6 +50,27 @@ namespace Services.Repositories
             return vendors;
         }
 
+        public async Task<IEnumerable<Vendor>> GetVendorById(VendorSearchView view) 
+        {
+            var vendor =  await _context.Vendors.Where(v => v.Type == view.VendType && v.Id == view.Id).ToListAsync();
+
+            return vendor == null ? throw new ArgumentException("No Record found found") : vendor;
+        }
+
+        public async Task<string> UpdateVendor(Vendor vendor) 
+        {
+            //get vendor to edit
+            var existingvendor = await _context.Vendors
+                .FirstOrDefaultAsync(v => v.Id == vendor.Id);
+            if (existingvendor == null)
+                throw new ArgumentException("No record found for what you want to edit");
+
+            _context.Entry(existingvendor).CurrentValues.SetValues(vendor);
+            // save the changes 
+            await _context.SaveChangesAsync();
+            return "Record Updated Successfully";
+        }
+
 
     }
 }

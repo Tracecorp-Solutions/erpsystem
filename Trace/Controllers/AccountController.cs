@@ -89,5 +89,26 @@ namespace Trace.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
             }
         }
+
+        [HttpGet("/GetAccountsBySubGroupId")]
+        public async Task<IActionResult> GetAccountsBySubGroupId(int subgroupid) 
+        {
+            try
+            {
+                var accounts = await _accountrepository.GetAccountsBySubGroupId(subgroupid);
+                return Ok(accounts);
+
+            }catch(ArgumentException ex) 
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
+        }
+
+
+      
     }
 }

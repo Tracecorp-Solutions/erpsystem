@@ -23,6 +23,7 @@ namespace Core.Repositories
         Task<SubGroupAccount> GetSubGroupById(int id);
 
         Task UpdateSubGroupAccount(SubGroupAccount subGroupAccount);
+        Task<IEnumerable<SubGroupAccount>> GetSubGroupByGroupId(int groupId);
     }
 
 }

@@ -32,5 +32,13 @@ namespace Core.Models
         public int? AccountId { get; set; }
         [NotMapped]
         public int SubGroupId { get; set; }
+
+        public VendType Type { get; set; }
+    }
+
+    public enum VendType 
+    {
+        Vendor,
+        Customer
     }
 }

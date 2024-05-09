@@ -71,5 +71,13 @@ namespace Services.Repositories
             return "Account Updated successfully";
         }
 
+        public async Task<IEnumerable<Account>> GetAccountsBySubGroupId(int subGroupId) 
+        {
+            var accounts = await _context.Accounts
+                .Where(ac => ac.SubGroupAccountId == subGroupId).ToListAsync();
+
+            return accounts == null ? throw new ArgumentException("No Account found in that subgroup") : accounts;
+        }
+
     }
 }

@@ -11,5 +11,9 @@ namespace Core.Repositories
     {
         Task<Vendor> CreateVendorAsync(Vendor vendor);
         Task<IEnumerable<Vendor>> GetAllVendors();
+
+        Task<IEnumerable<Vendor>> GetVendorById(VendorSearchView vendor);
+
+        Task<string> UpdateVendor(Vendor vendor);
     }
 }

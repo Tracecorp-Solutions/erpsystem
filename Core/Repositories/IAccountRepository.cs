@@ -17,5 +17,7 @@ namespace Core.Repositories
         Task<Account> GetAccountById(int accountId);
 
         Task<string> UpdateAccount(Account account);
+
+        Task<IEnumerable<Account>> GetAccountsBySubGroupId(int subGroupId);
     }
 }

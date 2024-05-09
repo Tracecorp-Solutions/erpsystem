@@ -153,6 +153,24 @@ namespace Trace.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "An error occured while processing");
             }
         }
+
+        [HttpGet("/GetSubGroupByGroupId")]
+        public async Task<IActionResult> GetSubGroupByGroupId(int groupid) 
+        {
+            try
+            {
+                var subgroups = await _repository.GetSubGroupByGroupId(groupid);
+                return Ok(subgroups);   
+            }
+            catch (ArgumentException ex) 
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occured while processing");
+            }
+        }
     }
 
 }

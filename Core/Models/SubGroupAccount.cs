@@ -20,6 +20,8 @@ namespace Core.Models
         [ForeignKey("GroupAccount")]
         public int GroupId { get; set; }
 
+        public DateTime? DateCreated { get; set; }
+
         // Navigation property
         [JsonIgnore]
         public GroupAccount? GroupAccount { get; set; }

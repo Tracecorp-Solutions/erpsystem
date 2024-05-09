@@ -154,6 +154,22 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "Trace.Controllers.AccountController",
+    "Method": "GetAccountsBySubGroupId",
+    "RelativePath": "GetAccountsBySubGroupId",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "subgroupid",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "Trace.Controllers.BillController",
     "Method": "GetAllSubGroupAccounts",
     "RelativePath": "GetAllBills",
@@ -221,6 +237,22 @@
   },
   {
     "ContainingType": "Trace.Controllers.GroupAccountsController",
+    "Method": "GetSubGroupByGroupId",
+    "RelativePath": "GetSubGroupByGroupId",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "groupid",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Trace.Controllers.GroupAccountsController",
     "Method": "GetSubGroupById",
     "RelativePath": "GetSubGroupById",
     "HttpMethod": "GET",
@@ -243,6 +275,22 @@
     "IsController": true,
     "Order": 0,
     "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Trace.Controllers.VendorController",
+    "Method": "GetVendorById",
+    "RelativePath": "GetVendorById",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "view",
+        "Type": "Core.Models.VendorSearchView",
+        "IsRequired": true
+      }
+    ],
     "ReturnTypes": []
   },
   {
@@ -282,6 +330,22 @@
       {
         "Name": "account",
         "Type": "Core.Models.Account",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Trace.Controllers.VendorController",
+    "Method": "UpdateVendorDetails",
+    "RelativePath": "UpdateVendorDetails",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "vendor",
+        "Type": "Core.Models.Vendor",
         "IsRequired": true
       }
     ],

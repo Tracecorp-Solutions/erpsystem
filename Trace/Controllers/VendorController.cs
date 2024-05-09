@@ -47,5 +47,43 @@ namespace Trace.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
             }
         }
+
+        [HttpPost("/GetVendorById")]
+        public async Task<IActionResult> GetVendorById([FromBody]VendorSearchView view) 
+        {
+            try
+            {
+                var vendor = await _vendorRepository.GetVendorById(view);
+                return Ok(vendor);
+            }
+            catch (ArgumentException ex) 
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
+        }
+
+        [HttpPost("/UpdateVendorDetails")]
+        public async Task<IActionResult> UpdateVendorDetails([FromBody]Vendor vendor) 
+        {
+            try
+            {
+                var message = _vendorRepository.UpdateVendor(vendor);
+                return Ok(message);
+            }
+            catch (ArgumentException ex) 
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
+        }
+
+
     }
 }
