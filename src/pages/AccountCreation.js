@@ -17,7 +17,9 @@ const AccountCreation = () => {
 
   const fetchGroups = async () => {
     try {
-      const response = await axios.get(`${process.env.REACT_APP_API_URL1}/GetAllGroupAccounts`);
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL1}/GetAllGroupAccounts`
+      );
       setGroups(response.data);
     } catch (error) {
       console.error("Error fetching groups:", error);
@@ -26,7 +28,9 @@ const AccountCreation = () => {
 
   const fetchSubGroupAccounts = async () => {
     try {
-      const response = await axios.get("http://54.226.71.2/GetAllSubGroupAccounts");
+      const response = await axios.get(
+        "http://54.226.71.2/GetAllSubGroupAccounts"
+      );
       setSubGroupAccounts(response.data);
     } catch (error) {
       console.error("Error fetching subGroup accounts", error);
@@ -51,44 +55,39 @@ const AccountCreation = () => {
 
   return (
     <div>
-    <div style={{
-      display: "flex",
-      justifyContent: "space-between"
-    }}>
-      <h2
-      style={{
-        fontFamily: "outFit,Sans-serif",
-        color: "#505050",
-        fontWeight: "600",
-        fontSize: "25px"
-      }}
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+        }}
       >
-        Accounts
-      </h2>
-    <Button
-      type="primary"
-      onClick={() => setShowModal(true)}
-      style={{
-        background: "#4467a1",
-        borderRadius: "28px",
-        fontFamily: "outFit, Sans-serif"
-      }}
-      >
-        + Create Account
-      </Button>
-    </div>
+        <h2
+          style={{
+            fontFamily: "outFit,Sans-serif",
+            color: "#505050",
+            fontWeight: "600",
+            fontSize: "25px",
+          }}
+        >
+          Accounts
+        </h2>
+        <Button
+          type="primary"
+          onClick={() => setShowModal(true)}
+          style={{
+            background: "#4467a1",
+            borderRadius: "28px",
+            fontFamily: "outFit, Sans-serif",
+          }}
+        >
+          + Create Account
+        </Button>
+      </div>
       <Modal
         title="New Account Form"
         visible={showModal}
         onCancel={handleCancel}
-        footer={[
-          <Button key="cancel" onClick={handleCancel}>
-            Cancel
-          </Button>,
-          <Button key="submit" type="primary" onClick={handleSubmit}>
-            Save
-          </Button>,
-        ]}
+        footer={null}
       >
         <Form form={form} layout="vertical" onFinish={handleSubmit}>
           <Form.Item
@@ -98,7 +97,10 @@ const AccountCreation = () => {
           >
             <Select placeholder="Select SubGroup">
               {subGroupAccounts.map((subGroup) => (
-                <Option key={subGroup.subGroupAccount.id} value={subGroup.subGroupAccount.id}>
+                <Option
+                  key={subGroup.subGroupAccount.id}
+                  value={subGroup.subGroupAccount.id}
+                >
                   {subGroup.subGroupAccount.name}
                 </Option>
               ))}
@@ -119,7 +121,10 @@ const AccountCreation = () => {
               { type: "number", message: "Invalid balance" },
             ]}
           >
-            <Input type="number" placeholder="Please enter account balance..." />
+            <Input
+              type="number"
+              placeholder="Please enter account balance..."
+            />
           </Form.Item>
           <Form.Item name="description" label="Description">
             <Input.TextArea placeholder="Please enter description..." />
