@@ -1,16 +1,17 @@
-import React, { useState, useEffect, Fragment } from "react";
+import React, { useState, useEffect } from "react";
 
 import axios from "axios";
-import { Modal, Form, Button } from "antd";
-import { Menu, Transition } from "@headlessui/react";
+import { Modal, Form, Button, Dropdown, Menu } from "antd";
+
 import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
-import classNames from "classnames";
 
 const AccountCreation = () => {
   const [showModal, setShowModal] = useState(false);
   const [groups, setGroups] = useState([]);
   const [subGroupAccounts, setSubGroupAccounts] = useState([]);
   const [form] = Form.useForm();
+
+  const [dropdownVisible, setDropdownVisible] = useState(false);
 
   useEffect(() => {
     fetchGroups();
@@ -77,8 +78,24 @@ const AccountCreation = () => {
       description: "Description for Account 3",
       balance: 3000,
     },
-    // Add more dummy data as needed
   ];
+
+  const handleDropdownVisibleChange = (visible) => {
+    setDropdownVisible(visible);
+  };
+
+  const handleMenuClick = (e) => {
+    console.log("Clicked on menu item:", e.key);
+    setDropdownVisible(false);
+  };
+
+  const menu = (
+    <Menu onClick={handleMenuClick}>
+      <Menu.Item key="1">Option 1</Menu.Item>
+      <Menu.Item key="2">Option 2</Menu.Item>
+      <Menu.Item key="3">Option 3</Menu.Item>
+    </Menu>
+  );
 
   return (
     <div>
@@ -352,7 +369,7 @@ const AccountCreation = () => {
           </form>
         </div>
       </Modal>
-      <div style={{  overflowY: "auto" }}>
+      <div style={{ overflowY: "auto" }}>
         <table className="table-auto min-w-full divide-gray-200">
           <thead className="bg-gray-50">
             <tr style={{ borderRadius: "50px" }}>
@@ -417,11 +434,26 @@ const AccountCreation = () => {
                   <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">
                     {account.balance}
                   </td>
-                  <div style={{ width: "100px", display: "flex", justifyContent: "center" }}>
-                  <EllipsisVerticalIcon
-                          className="h-5 w-5"
-                          aria-hidden="true"
-                        />
+                  <div
+                    style={{
+                      width: "100px",
+                      display: "flex",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <Dropdown
+                      overlay={menu}
+                      trigger={["click"]}
+                      visible={dropdownVisible[account.id]}
+                      onVisibleChange={(visible) =>
+                        handleDropdownVisibleChange(visible, account.id)
+                      }
+                    >
+                      <EllipsisVerticalIcon
+                        className="h-5 w-5"
+                        aria-hidden="true"
+                      />
+                    </Dropdown>
                   </div>
                 </tr>
               );
