@@ -90,7 +90,7 @@ export default function NavigationHeader() {
                     Products
                   </a>
                   <a
-                    href="/groupCreation"
+                    href="/group-creation"
                     className="text-gray-700 block px-4 py-2 text-sm hover:green"
                     role="menuitem"
                     tabIndex="-1"
@@ -99,7 +99,7 @@ export default function NavigationHeader() {
                     Group Account
                   </a>
                   <a
-                    href="#"
+                    href="/petty"
                     className="text-gray-700 block px-4 py-2 text-sm hover:green"
                     role="menuitem"
                     tabIndex="-1"
