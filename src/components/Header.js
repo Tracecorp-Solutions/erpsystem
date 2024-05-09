@@ -40,6 +40,7 @@ import Petty from "../pages/Petty";
 import SubGroup from "../pages/SubGroup";
 import Billing from "../pages/Billing";
 import LineChart from "./LineGraph";
+import View from "./View";
 
 const navigation = [
   {
@@ -647,6 +648,7 @@ export default function Main() {
                 <Route path="/billing" element={<Billing />} />
                 <Route path="/products" element={<Products />} />
                 <Route path="/grap" element={<LineChart />} />
+                <Route path="/view" element={<View />} />
               </Routes>
             </div>
           </main>

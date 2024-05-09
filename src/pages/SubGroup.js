@@ -2,9 +2,11 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Select } from "antd";
 import SubSidebar from "../components/SubSidebar ";
-import { Fragment } from 'react'
-import { Menu, Transition } from '@headlessui/react'
-import { EllipsisVerticalIcon } from '@heroicons/react/20/solid'
+import { Fragment } from "react";
+import { Menu, Transition } from "@headlessui/react";
+import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
+import View from "../components/View";
+import { Link } from "react-router-dom";
 
 const { Option } = Select;
 
@@ -29,10 +31,9 @@ const SubGroup = () => {
     fetchGroupsAll();
   }, []);
 
-
-function classNames(...classes) {
-  return classes.filter(Boolean).join(' ')
-}
+  function classNames(...classes) {
+    return classes.filter(Boolean).join(" ");
+  }
 
   useEffect(() => {
     if (showForm) {
@@ -335,7 +336,6 @@ function classNames(...classes) {
                 onChange={handleItemsPerPageChange}
                 className="w-24"
               >
-               
                 <Option value={10}>10</Option>
                 <Option value={20}>20</Option>
                 <Option value={30}>30</Option>
@@ -412,24 +412,24 @@ function classNames(...classes) {
                           <Menu.Items className="absolute left-0 z-6 mt-2 mr-6 w-24  origin-top-left rounded-md bg-gray-300 py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none">
                             <Menu.Item>
                               {({ active }) => (
-                                <a
-                                  href="#"
-                                  className={classNames(
-                                    active ? "bg-gray-50" : "",
-                                    "block px-3 py-1 text-sm leading-6 text-gray-900"
-                                  )}
-                                >
-                                  View 
-                                  <span className="sr-only">
-                                    , {group.name}
-                                  </span>
-                                </a>
+                               <a
+                               href={`/#`} // Adjust the path as needed
+                               className={classNames(
+                                 active ? "bg-gray-50" : "",
+                                 "block px-3 py-1 text-sm leading-6 text-gray-900"
+                               )}
+                             >
+                               View
+                               <span className="sr-only">
+                                 , {group.name}
+                               </span>
+                             </a>
                               )}
                             </Menu.Item>
                             <Menu.Item>
                               {({ active }) => (
-                                <a
-                                  href="#"
+                                <Link
+                                  to={`/#/${group.subGroupAccount.id}`} // Adjust the path as needed
                                   className={classNames(
                                     active ? "bg-gray-50" : "",
                                     "block px-3 py-1 text-sm leading-6 text-gray-900"
@@ -439,7 +439,7 @@ function classNames(...classes) {
                                   <span className="sr-only">
                                     , {group.name}
                                   </span>
-                                </a>
+                                </Link>
                               )}
                             </Menu.Item>
                           </Menu.Items>

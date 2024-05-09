@@ -99,7 +99,7 @@ export default function NavigationHeader() {
                     Group Account
                   </a>
                   <a
-                    href="/petty"
+                    href="/view"
                     className="text-gray-700 block px-4 py-2 text-sm hover:green"
                     role="menuitem"
                     tabIndex="-1"
