@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Select } from "antd";
+import SubSidebar from "../components/SubSidebar ";
+import { Fragment } from 'react'
+import { Menu, Transition } from '@headlessui/react'
+import { EllipsisVerticalIcon } from '@heroicons/react/20/solid'
 
 const { Option } = Select;
 
@@ -24,6 +28,11 @@ const SubGroup = () => {
     fetchGroups();
     fetchGroupsAll();
   }, []);
+
+
+function classNames(...classes) {
+  return classes.filter(Boolean).join(' ')
+}
 
   useEffect(() => {
     if (showForm) {
@@ -102,9 +111,28 @@ const SubGroup = () => {
     }
   };
 
-  const handleEdit = (action) => {
+  const handleEdit = async (action, id, group) => {
+    if (!group) {
+      console.error("Group not found");
+      return;
+    }
+
     if (action === "edit") {
-      console.log("Edit action triggered");
+      try {
+        await axios.post(
+          `${process.env.REACT_APP_API_URL}/EditSubGroupAccount`,
+          {
+            id: group.subGroupAccount.id,
+            name: group.subGroupAccount.name,
+            description: group.subGroupAccount.description,
+            groupId: group.subGroupAccount.groupId,
+            dateCreated: group.subGroupAccount.dateCreated,
+          }
+        );
+        console.log("Edit action triggered");
+      } catch (error) {
+        console.error("Error editing sub-group:", error);
+      }
     }
 
     if (action === "delete") {
@@ -149,58 +177,40 @@ const SubGroup = () => {
     <div className="px-4 sm:px-6 lg:px-8">
       <div className="sm:flex sm:items-center">
         <div className="sm:flex-auto">
-          <h1 className="text-base font-semibold leading-6 text-gray-900">
-            Sub groups
+          <h1 className="text-base font-semibold leading-6 text-gray-700">
+            Subgroups
           </h1>
         </div>
         <div className="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
           <button
             type="button"
             onClick={toggleForm}
-            className="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            className="block rounded-xl bg-green-500 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
           >
-            + New
+            + New Subgroup
           </button>
         </div>
       </div>
       {showForm && (
-        <div className="absolute inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center">
-          <div className="bg-white p-8 rounded-lg max-w-xl w-full mx-4">
-            <h2 className="text-lg font-semibold mb-4">New Sub Group Form</h2>
-            <div className="mb-4">
-              <label
-                htmlFor="group"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Group Account*
-              </label>
-              <select
-                value={newAccount.groupId}
-                onChange={(e) =>
-                  setNewAccount({ ...newAccount, groupId: e.target.value })
-                }
-                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 p-4 block w-full border-gray-300 rounded-md focus:ring-1 focus:ring-offset-1 focus:ring-offset-gray-100 focus:ring-indigo-500 sm:text-sm mb-20"
-              >
-                <option value="">Select Group</option>
-                {allGroups.map((group) => (
-                  <option key={group.id} value={group.id}>
-                    {group.name}
-                  </option>
-                ))}
-              </select>
-              {formErrors.groupId && (
-                <p className="mt-2 text-sm text-red-500">
-                  {formErrors.groupId}
-                </p>
-              )}
-            </div>
-            <div className="mb-4">
+        <div className="absolute mt-14 inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center">
+          <div className="bg-white p-5 rounded-lg max-w-md w-full mx-2">
+            <h2 className="text-lg font-semibold mb-4 text-gray-700">
+              New SubGroup Form
+            </h2>
+            <div className="mb-2">
               <label
                 htmlFor="name"
                 className="block text-sm font-medium text-gray-700"
+                style={{ fontFamily: "outfit, sans-serif" }}
               >
-                Name*
+                SubGroup Name
               </label>
+              <h6
+                className="block text-xs font-medium text-gray-400"
+                style={{ fontFamily: "outfit, sans-serif" }}
+              >
+                Choose a name for your subgroup
+              </h6>
               <input
                 type="text"
                 name="name"
@@ -216,13 +226,55 @@ const SubGroup = () => {
                 <p className="mt-2 text-sm text-red-500">{formErrors.name}</p>
               )}
             </div>
-            <div className="mb-4">
+            <div className="mb-2">
+              <label
+                htmlFor="group"
+                className="block text-sm font-medium text-gray-700"
+                style={{ fontFamily: "outfit, sans-serif" }}
+              >
+                Group Account
+              </label>
+              <h6
+                className="block text-xs font-medium text-gray-400"
+                style={{ fontFamily: "outfit, sans-serif" }}
+              >
+                Select a group this subgroup belongs to
+              </h6>
+              <select
+                value={newAccount.groupId}
+                onChange={(e) =>
+                  setNewAccount({ ...newAccount, groupId: e.target.value })
+                }
+                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 p-4 block w-full border-gray-300 rounded-md focus:ring-1 focus:ring-offset-1 focus:ring-offset-gray-100 focus:ring-indigo-500 sm:text-sm mb-8"
+              >
+                <option value="">Select Group</option>
+                {allGroups.map((group) => (
+                  <option key={group.id} value={group.id}>
+                    {group.name}
+                  </option>
+                ))}
+              </select>
+              {formErrors.groupId && (
+                <p className="mt-2 text-sm text-red-500">
+                  {formErrors.groupId}
+                </p>
+              )}
+            </div>
+
+            <div className="mb-2">
               <label
                 htmlFor="description"
                 className="block text-sm font-medium text-gray-700"
+                style={{ fontFamily: "outfit, sans-serif" }}
               >
                 Description
               </label>
+              <h6
+                className="block text-xs font-medium text-gray-400"
+                style={{ fontFamily: "outfit, sans-serif" }}
+              >
+                Add a description that explains this subgroup
+              </h6>
               <textarea
                 name="description"
                 id="description"
@@ -230,8 +282,8 @@ const SubGroup = () => {
                 onChange={(e) =>
                   setNewAccount({ ...newAccount, description: e.target.value })
                 }
-                rows={5}
-                cols={5}
+                rows={3}
+                cols={3}
                 className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 p-4 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                 placeholder="Please enter description..."
               />
@@ -241,18 +293,20 @@ const SubGroup = () => {
                 </p>
               )}
             </div>
-            <div className="flex justify-end mt-20">
+            <div className="flex justify-between mt-4">
               <button
                 type="button"
                 onClick={toggleForm}
-                className="px-4 py-2 bg-indigo-600 text-white rounded-md text-sm font-semibold hover:bg-indigo-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-indigo-500"
+                className="flex-1 px-4 py-2 bg-gray-400 text-gray-700 rounded-xl text-sm font-semibold hover:bg-indigo-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-indigo-500"
+                style={{ fontFamily: "outfit, sans-serif" }}
               >
                 Cancel
               </button>
               <button
                 type="button"
                 onClick={handleSubmit}
-                className="ml-3 px-4 py-2 bg-indigo-600 text-white rounded-md text-sm font-semibold hover:bg-indigo-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-indigo-500"
+                style={{ fontFamily: "outfit, sans-serif" }}
+                className="flex-1 ml-3 px-4 py-2 bg-indigo-600 text-white rounded-xl text-sm font-semibold hover:bg-indigo-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-indigo-500"
               >
                 Save
               </button>
@@ -265,104 +319,136 @@ const SubGroup = () => {
           {successMessage}
         </div>
       )}
-      {loading && (
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            height: "50vh",
-          }}
-        >
-          <div className="spinner-grow bg-gray-900 animate-spin" role="status">
-            <img
-              className="h-20 w-20"
-              src="https://www.tracecorpsolutions.com/wp-content/uploads/2019/05/Tracecorp-logo.png"
-              alt="TraceCorp"
-            />{" "}
-          </div>
-        </div>
-      )}
+      {/* {loading && <SubSidebar />} */}
       {!loading && (
         <div className="mt-8 overflow-x-auto">
-          {
-            !showForm && (
-              <div className="mt-4 mb-2">
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Items Per Page:
-            </label>
-            <Select
-              value={itemsPerPage}
-              onChange={handleItemsPerPageChange}
-              className="w-24"
-            >
-              <Option value={2}>2</Option>
-              <Option value={5}>5</Option>
-              <Option value={10}>10</Option>
-              <Option value={20}>20</Option>
-              <Option value={30}>30</Option>
-              <Option value={40}>40</Option>
-              <Option value={50}>50</Option>
-            </Select>
-          </div>
-            )
-          }
-          <table className="table-auto min-w-full divide-y divide-gray-200">
+          {!showForm && (
+            <div className="mt-4 mb-2">
+              <label
+                className="block text-sm font-medium text-gray-700 mb-2"
+                style={{ fontFamily: "outfit, sans-serif" }}
+              >
+                Items Per Page:
+              </label>
+              <Select
+                value={itemsPerPage}
+                onChange={handleItemsPerPageChange}
+                className="w-24"
+              >
+               
+                <Option value={10}>10</Option>
+                <Option value={20}>20</Option>
+                <Option value={30}>30</Option>
+                <Option value={40}>40</Option>
+                <Option value={50}>50</Option>
+              </Select>
+            </div>
+          )}
+          <table className="table-auto min-w-full divide-y divide-gray-200 bg-gray-100">
             <thead className="bg-gray-50">
               <tr>
                 <th
                   scope="col"
-                  className="px-3 py-3 text-left text-sm font-semibold text-gray-900"
+                  className="px-3 py-3 text-left text-sm font-semibold text-gray-700"
+                  style={{ fontFamily: "outfit, sans-serif" }}
                 >
-                  NAME
+                  Name
                 </th>
                 <th
                   scope="col"
-                  className="px-3 py-3 text-left text-sm font-semibold text-gray-900"
+                  className="px-3 py-3 text-left text-sm font-semibold text-gray-700"
+                  style={{ fontFamily: "outfit, sans-serif" }}
                 >
-                  GROUP ACCOUNT
+                  Group
                 </th>
                 <th
                   scope="col"
-                  className="px-3 py-3 text-left text-sm font-semibold text-gray-900"
+                  className="px-3 py-3 text-left text-sm font-semibold text-gray-700"
+                  style={{ fontFamily: "outfit, sans-serif" }}
                 >
-                  DESCRIPTION
+                  Description
                 </th>
-                <th scope="col" className="relative px-3 py-3">
-                  <span className="px-3 py-3 text-left text-sm font-semibold text-gray-900">
+                {/* <th scope="col" className="relative px-3 py-3">
+                  <span
+                    className="px-3 py-3 text-left text-sm font-semibold text-gray-900"
+                    style={{ fontFamily: "outfit, sans-serif" }}
+                  >
                     ACTIONS
                   </span>
-                </th>
+                </th> */}
               </tr>
             </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {currentGroup.map((group) => (
-                <tr key={group.subGroupAccount.id}>
-                  <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                    {group.subGroupAccount.name}
-                  </td>
-                  <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                    {group.groupAccount.name}
-                  </td>
-                  <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                    {group.subGroupAccount.description}
-                  </td>
-                  <td className="relative whitespace-nowrap py-4 pr-4 text-right text-sm font-medium">
-                    {showEditButton && (
-                      <div className="relative">
-                        <select
-                          className="text-indigo-600 hover:text-indigo-900"
-                          onChange={(e) => handleEdit(e.target.value)}
+            <tbody className="bg-gray-100 divide-y divide-gray-100">
+              {currentGroup.map((group) =>
+                group?.subGroupAccount && group?.groupAccount ? (
+                  <tr key={group?.subGroupAccount?.id}>
+                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                      {group?.subGroupAccount?.name}
+                    </td>
+                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                      {group?.groupAccount?.name}
+                    </td>
+                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                      {group?.subGroupAccount?.description}
+                    </td>
+                    <td className="relative whitespace-nowrap py-4 pr-4 text-left-4 text-sm font-medium">
+                      <Menu as="div" className="relative flex-none">
+                        <Menu.Button className="-m-2.5 block p-2.5 text-gray-700 hover:text-gray-700">
+                          <span className="sr-only">Open options</span>
+                          <EllipsisVerticalIcon
+                            className="h-5 w-5"
+                            aria-hidden="true"
+                          />
+                        </Menu.Button>
+                        <Transition
+                          as={Fragment}
+                          enter="transition ease-out duration-100"
+                          enterFrom="transform opacity-0 scale-95"
+                          enterTo="transform opacity-100 scale-100"
+                          leave="transition ease-in duration-75"
+                          leaveFrom="transform opacity-100 scale-100"
+                          leaveTo="transform opacity-0 scale-95"
                         >
-                          <option value="">Show</option>
-                          <option value="edit">Edit</option>
-                          <option value="delete">Delete</option>
-                        </select>
-                      </div>
-                    )}
-                  </td>
-                </tr>
-              ))}
+                          <Menu.Items className="absolute left-0 z-6 mt-2 mr-6 w-24  origin-top-left rounded-md bg-gray-300 py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none">
+                            <Menu.Item>
+                              {({ active }) => (
+                                <a
+                                  href="#"
+                                  className={classNames(
+                                    active ? "bg-gray-50" : "",
+                                    "block px-3 py-1 text-sm leading-6 text-gray-900"
+                                  )}
+                                >
+                                  View 
+                                  <span className="sr-only">
+                                    , {group.name}
+                                  </span>
+                                </a>
+                              )}
+                            </Menu.Item>
+                            <Menu.Item>
+                              {({ active }) => (
+                                <a
+                                  href="#"
+                                  className={classNames(
+                                    active ? "bg-gray-50" : "",
+                                    "block px-3 py-1 text-sm leading-6 text-gray-900"
+                                  )}
+                                >
+                                  Edit
+                                  <span className="sr-only">
+                                    , {group.name}
+                                  </span>
+                                </a>
+                              )}
+                            </Menu.Item>
+                          </Menu.Items>
+                        </Transition>
+                      </Menu>
+                    </td>
+                  </tr>
+                ) : null
+              )}
             </tbody>
           </table>
           {showEditButton && (
