@@ -161,11 +161,11 @@ export default function Example() {
                           </dd> */}
                     </dl>
                     <div className="flex items-center">
-                      <img
+                      {/* <img
                         className="h-16 w-16 rounded-full sm:hidden"
                         src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.6&w=256&h=256&q=80"
                         alt=""
-                      />
+                      /> */}
                       <h1
                         className="ml-3 text-2xl font-bold leading-7 text-gray-700 sm:truncate sm:leading-9"
                         style={{ fontFamily: "outfit, sans-serif" }}
@@ -317,7 +317,7 @@ export default function Example() {
           </div>
 
           {/* Activity table (small breakpoint and up) */}
-          <div className="hidden sm:block bg-white rounded-md">
+          <div className="hidden sm:block bg-white rounded-md mt-6">
             <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
               <div className="mt-2 flex flex-col">
                 <div className="min-w-full overflow-hidden overflow-x-auto align-middle shadow sm:rounded-lg">

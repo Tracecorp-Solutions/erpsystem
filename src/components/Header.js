@@ -177,7 +177,7 @@ export default function Main() {
                   <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-gray-300 px-6 pb-4">
                     <div
                       className="flex grow flex-col gap-y-5 overflow-y-auto h-16 shrink-0 items-center bg-white px-6 pb-4"
-                      style={{ width: "310px", marginLeft: "-20px", height: "80px" }}
+                      style={{ width: "310px", marginLeft: "-24px", height: "80px" }}
                     >
                       <img
                         className="h-16 w-24 rounded-full "
@@ -189,7 +189,7 @@ export default function Main() {
                       <ul className="flex flex-1 flex-col gap-y-7">
                         <li>
                           <h6
-                            className="group -mx-2 flex gap-x-3 rounded-md p-1 text-center text-sm leading-6 text-gray-500"
+                            className="group -mx-2 flex gap-x-3 rounded-md p-1 text-center text-xs leading-6 text-gray-500"
                             style={{ fontFamily: "outfit, sans-serif" }}
                           >
                             You are managing
@@ -205,7 +205,7 @@ export default function Main() {
                           </li>
                           <hr className=" flex gap-x-3 bg-gray-700 rounded-md text-center mb-3" />
                           <h6
-                            className="group -mx-2 flex gap-x-3 rounded-md text-center text-sm leading-6 text-gray-500"
+                            className="group -mx-2 flex gap-x-3 rounded-md text-center text-xs leading-6 text-gray-500"
                             style={{ fontFamily: "outfit, sans-serif" }}
                           >
                             Main Menu
@@ -352,7 +352,7 @@ export default function Main() {
               <ul className="flex flex-1 flex-col gap-y-7 mr-4">
                 <li>
                   <h6
-                    className="group -mx-2 flex gap-x-3 rounded-md p-1 text-center text-sm leading-6 text-gray-500"
+                    className="group -mx-2 flex gap-x-3 rounded-md p-1 text-center text-xs leading-6 text-gray-500"
                     style={{ fontFamily: "outfit, sans-serif" }}
                   >
                     You are managing
@@ -368,7 +368,7 @@ export default function Main() {
                   </li>
                   <hr className=" flex gap-x-3 bg-gray-700 rounded-md text-center mb-3" />
                   <h6
-                    className="group -mx-2 flex gap-x-3 rounded-md text-center text-sm leading-6 text-gray-500"
+                    className="group -mx-2 flex gap-x-3 rounded-md text-center text-xs leading-6 text-gray-500"
                     style={{ fontFamily: "outfit, sans-serif" }}
                   >
                     Main Menu
@@ -555,7 +555,7 @@ export default function Main() {
 
                 <button
                   type="button"
-                  className="-m-2.5 p-2.5 text-gray-400 hover:text-gray-500"
+                  className="-m-2.5 p-2.5 text-gray-400 bg-gray-200 hover:text-gray-500 rounded-xl"
                 >
                   <span className="sr-only">View notifications</span>
                   <BellIcon className="h-6 w-6" aria-hidden="true" />
@@ -569,7 +569,7 @@ export default function Main() {
 
                 {/* Profile dropdown */}
                 <Menu as="div" className="relative">
-                  <Menu.Button className="-m-1.5 flex items-center p-1.5">
+                  <Menu.Button className="-m-1.5 flex items-center p-1.5 bg-gray-200 rounded-xl">
                     <span className="sr-only">Open user menu</span>
                     <img
                       className="h-8 w-8 rounded-full bg-gray-50"
