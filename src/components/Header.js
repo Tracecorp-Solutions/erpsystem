@@ -28,7 +28,7 @@ import MainAccounts from "../pages/MainAccounts";
 import About from "../pages/About";
 import Reconciliation from "../pages/Reconciliation";
 import Cashflows from "../pages/Cashflows";
-import Budgets from "../pages/Budgets"
+import Budgets from "../pages/Budgets";
 import Financial from "../pages/Financial";
 import Transfers from "../pages/Transfers";
 import Invoice from "../pages/Invoice";
@@ -39,7 +39,12 @@ import Account from "../pages/AccountCreation";
 import Petty from "../pages/Petty";
 import SubGroup from "../pages/SubGroup";
 import Billing from "../pages/Billing";
+
+import LineChart from "./LineGraph";
+import View from "./View";
+
 import TrialBalance from "../pages/TrialBalance";
+
 
 
 const navigation = [
@@ -48,10 +53,7 @@ const navigation = [
     icon: HomeIcon,
     current: true,
     submenuItem: true,
-    submenu: [
-      { name: "Home", href: "/", current: false },
-     
-    ],
+    submenu: [{ name: "Home", href: "/", current: false }],
   },
   {
     name: "Banking",
@@ -61,7 +63,7 @@ const navigation = [
     submenu: [
       { name: "Deposit", href: "/deposit", current: false },
       { name: "Transfers", href: "/transfers", current: false },
-      { name: "Reconciliation", href: "/reconciliation", current: false }
+      { name: "Reconciliation", href: "/reconciliation", current: false },
     ],
   },
   {
@@ -74,7 +76,7 @@ const navigation = [
       { name: "Loss", href: "/loss", current: false },
       { name: "Financial Position", href: "/Financial", current: false },
       { name: "Cashflows", href: "/cashflows", current: false },
-      { name: "Budgets", href: "/budgets", current: false }
+      { name: "Budgets", href: "/budgets", current: false },
     ],
   },
   {
@@ -83,8 +85,9 @@ const navigation = [
     current: false,
     submenuItem: true,
     submenu: [
-    { name: "Billing", href: "/billing", current: false },
-    { name: "Expense", href: "/expense", current: false }],
+      { name: "Billing", href: "/billing", current: false },
+      { name: "Expense", href: "/expense", current: false },
+    ],
   },
   {
     name: "Chart of Accounts",
@@ -94,6 +97,8 @@ const navigation = [
     submenuItem: true,
     submenu: [
       { name: "Main Accounts", href: "/main-accounts", current: false },
+      { name: "Group Accounts", href: "/group-creation", current: false },
+      { name: "SubGroup Accounts", href: "/sub-group", current: false },
     ],
   },
   {
@@ -170,17 +175,20 @@ export default function Main() {
                       >
                         <span className="sr-only">Close sidebar</span>
                         <XMarkIcon
-                          className="h-6 w-6 text-white"
+                          className="h-6 w-6 text-gray-900"
                           aria-hidden="true"
                         />
                       </button>
                     </div>
                   </Transition.Child>
                   {/* Sidebar component, swap this element with another sidebar if you like */}
-                  <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-cyan-600 px-6 pb-4">
-                    <div className="flex h-16 shrink-0 items-center">
+                  <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-gray-300 px-6 pb-4">
+                    <div
+                      className="flex grow flex-col gap-y-5 overflow-y-auto h-16 shrink-0 items-center bg-white px-6 pb-4"
+                      style={{ width: "310px", marginLeft: "-24px", height: "80px" }}
+                    >
                       <img
-                        className="h-8 w-8 rounded-full"
+                        className="h-16 w-24 rounded-full "
                         src="https://www.tracecorpsolutions.com/wp-content/uploads/2019/05/Tracecorp-logo.png"
                         alt="TraceCorp"
                       />
@@ -188,72 +196,106 @@ export default function Main() {
                     <nav className="flex flex-1 flex-col">
                       <ul className="flex flex-1 flex-col gap-y-7">
                         <li>
-                          {navigation.map((item) => (
-                        <Menu key={item.name} as="div" className="relative">
-                          <Menu.Button
-                            className={classNames(
-                              item.current
-                                ? "bg-cyan-800 text-white"
-                                : "text-cyan-200 hover:text-white hover:bg-cyan-600",
-                              "group flex items-center px-2 py-2 text-sm font-medium rounded-md"
-                            )}
-                            style={{ width: "250px" }}
+                          <h6
+                            className="group -mx-2 flex gap-x-3 rounded-md p-1 text-center text-xs leading-6 text-gray-500"
+                            style={{ fontFamily: "outfit, sans-serif" }}
                           >
-                            <item.icon
-                              className={classNames(
-                                item.current
-                                  ? "text-white"
-                                  : "text-cyan-400 group-hover:text-white",
-                                "mr-3 flex-shrink-0 h-6 w-6"
-                              )}
-                              aria-hidden="true"
-                            />
-                            {item.name}
-                            {item.submenu && (
-                              <ChevronDownIcon
+                            You are managing
+                          </h6>
+                          <li className="mt-auto bg-white rounded-md mb-3">
+                            <a
+                              href="/"
+                              className="group -mx-2 flex gap-x-3 rounded-md p-2 pl-9 text-center text-sm leading-6 text-blue-500"
+                              style={{ fontFamily: "outfit, sans-serif" }}
+                            >
+                              TraceCorp
+                            </a>
+                          </li>
+                          <hr className=" flex gap-x-3 bg-gray-700 rounded-md text-center mb-3" />
+                          <h6
+                            className="group -mx-2 flex gap-x-3 rounded-md text-center text-xs leading-6 text-gray-500"
+                            style={{ fontFamily: "outfit, sans-serif" }}
+                          >
+                            Main Menu
+                          </h6>
+                          {navigation.map((item) => (
+                            <Menu key={item.name} as="div" className="relative">
+                              <Menu.Button
                                 className={classNames(
                                   item.current
-                                    ? "text-white"
-                                    : "text-cyan-400 group-hover:text-white",
-                                  "ml-auto h-5 w-5"
+                                    ? "bg-green-300 text-gray-700"
+                                    : "text-gray-700 hover:text-gray hover:bg-green-300",
+                                  "group flex items-center px-2 py-2 text-sm font-medium rounded-md"
                                 )}
-                                aria-hidden="true"
-                              />
-                            )}
-                          </Menu.Button>
-
-                          <Transition
-                            as={Fragment}
-                            enter="transition ease-linear duration-200"
-                            enterFrom="transform opacity-0 scale-95"
-                            enterTo="transform opacity-100 scale-100"
-                            leave="transition ease-in duration-75"
-                            leaveFrom="transform opacity-100 scale-100"
-                            leaveTo="transform opacity-0 scale-95"
-                          >
-                            <Menu.Items className="mt-2 w-48 px-2 origin-top-right divide-gray-100 text-white rounded-md focus:outline-none">
-                              {item.submenu.map((subItem) => (
-                                <Menu.Item key={subItem.name}>
-                                  {({ active }) => (
-                                    <a
-                                      href={subItem.href}
-                                      className={classNames(
-                                        active ? "bg-gray-100" : "",
-                                        "block px-4 py-2 text-sm"
-                                      )}
-                                    >
-                                      {subItem.name}
-                                    </a>
+                                style={{
+                                  fontFamily: "outfit, sans-serif",
+                                  width: "250px",
+                                }}
+                              >
+                                <item.icon
+                                  className={classNames(
+                                    item.current
+                                      ? "text-gary-400"
+                                      : "text-gray-400 group-hover:text-white",
+                                    "mr-3 flex-shrink-0 h-6 w-6"
                                   )}
-                                </Menu.Item>
-                              ))}
-                            </Menu.Items>
-                          </Transition>
-                        </Menu>
-                      ))}
+                                  style={{
+                                    fontFamily: "outfit, sans-serif",
+                                  }}
+                                  aria-hidden="true"
+                                />
+                                {item.name}
+                                {item.submenu && (
+                                  <ChevronDownIcon
+                                    className={classNames(
+                                      item.current
+                                        ? "text-gray-700"
+                                        : "text-gray-700 group-hover:text-white",
+                                      "ml-auto h-5 w-5"
+                                    )}
+                                    aria-hidden="true"
+                                  />
+                                )}
+                              </Menu.Button>
+
+                              <Transition
+                                as={Fragment}
+                                enter="transition ease-linear duration-200"
+                                enterFrom="transform opacity-0 scale-95"
+                                enterTo="transform opacity-100 scale-100"
+                                leave="transition ease-in duration-75"
+                                leaveFrom="transform opacity-100 scale-100"
+                                leaveTo="transform opacity-0 scale-95"
+                              >
+                                <Menu.Items className="mt-2 w-48 px-2 origin-top-right divide-gray-100 text-white rounded-md focus:outline-none">
+                                  {item.submenu.map((subItem) => (
+                                    <Menu.Item key={subItem.name}>
+                                      {({ active }) => (
+                                        <a
+                                          href={subItem.href}
+                                          className={classNames(
+                                            active ? "bg-gray-700" : "",
+                                            "block px-4 py-2 text-sm"
+                                          )}
+                                          style={{
+                                            fontFamily: "outfit, sans-serif",
+                                          }}
+                                        >
+                                          {subItem.name}
+                                        </a>
+                                      )}
+                                    </Menu.Item>
+                                  ))}
+                                </Menu.Items>
+                              </Transition>
+                            </Menu>
+                          ))}
                         </li>
                         <li>
-                          <div className="text-xs font-semibold leading-6 text-cyan-200">
+                          <div
+                            className="text-xs font-semibold leading-6 text-gray-700"
+                            style={{ fontFamily: "outfit, sans-serif" }}
+                          >
                             Your teams
                           </div>
                           <ul className="-mx-2 mt-2 space-y-1">
@@ -263,12 +305,13 @@ export default function Main() {
                                   href={team.href}
                                   className={classNames(
                                     team.current
-                                      ? "bg-cyan-700 text-white"
-                                      : "text-cyan-200 hover:text-white hover:bg-cyan-700",
-                                    "group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold"
+                                      ? "bg-gray-700 text-gray-700"
+                                      : "text-gray-700 hover:text-gray-700 hover:bg-green-300",
+                                    "group flex gap-x-3 rounded-md p-2 text-sm leading-6"
                                   )}
+                                  style={{ fontFamily: "outfit, sans-serif" }}
                                 >
-                                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-cyan-400 bg-cyan-500 text-[0.625rem] font-medium text-white">
+                                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-gray-400 bg-gray-500 text-[0.625rem] font-medium text-white">
                                     {team.initial}
                                   </span>
                                   <span className="truncate">{team.name}</span>
@@ -277,13 +320,14 @@ export default function Main() {
                             ))}
                           </ul>
                         </li>
-                        <li className="mt-auto">
+                        <li className="mt-auto bg-white rounded-md">
                           <a
                             href="/"
-                            className="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-cyan-200 hover:bg-cyan-700 hover:text-white"
+                            className="group -mx-2 flex gap-x-3 rounded-md p-2 pl-5 text-sm font-semibold leading-6 text-gray-500 hover:bg-green-300 hover:text-ray 500"
+                            style={{ fontFamily: "outfit, sans-serif" }}
                           >
                             <Cog6ToothIcon
-                              className="h-6 w-6 shrink-0 text-cyan-200 group-hover:text-white"
+                              className="h-6 w-6 shrink-0 text-gray-500 group-hover:text-gray-500"
                               aria-hidden="true"
                             />
                             Settings
@@ -301,114 +345,144 @@ export default function Main() {
         {/* Static sidebar for desktop */}
         <div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col">
           {/* Sidebar component, swap this element with another sidebar if you like */}
-          <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-cyan-600 px-6 pb-4">
-            <div className="flex h-16 shrink-0 flex justify-center items-center rounded-lg mt-3">
+          <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-gray-300 px-4 pb-4">
+            <div
+              className="flex grow flex-col gap-y-5 h-16 shrink-0 flex justify-center items-center bg-white rounded-lg lg:w-full"
+              style={{ width: "290px", marginLeft: "-12px" }}
+            >
               <img
                 className="h-20 w-20 bg-white rounded-full"
                 src="https://www.tracecorpsolutions.com/wp-content/uploads/2019/05/Tracecorp-logo.png"
                 alt="Your Company"
-            
               />
-            
             </div>
             <nav className="flex flex-1 flex-col">
-              <ul className="flex flex-1 flex-col gap-y-7">
+              <ul className="flex flex-1 flex-col gap-y-7 mr-4">
                 <li>
-                    {navigation.map((item) => (
-                      <li key={item.name}>
-                        {item.submenu ? (
-                          <Menu as="div" className="relative">
-                            <Menu.Button
-                              className={classNames(
-                                "group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold",
-                                item.current
-                                  ? "bg-cyan-700 text-white"
-                                  : "text-cyan-200 hover:text-white hover:bg-cyan-600"
-                              )}
-                              style={{ width: "250px" }}
-                            >
-                              <item.icon
-                                className={classNames(
-                                  item.current
-                                    ? "text-white"
-                                    : "text-cyan-200 group-hover:text-white",
-                                  "h-6 w-6 shrink-0"
-                                )}
-                                aria-hidden="true"
-                              />
-                              {item.name}
-                              <div className="flex-grow" />
-                              <div>
-                                <ChevronDownIcon
-                                  className={classNames(
-                                    item.current
-                                      ? "text-white"
-                                      : "text-cyan-200 group-hover:text-white",
-                                    "h-5 w-5 text-gray-400 group-hover:text-white"
-                                  )}
-                                  aria-hidden="true"
-                                />
-                              </div>
-                            </Menu.Button>
-
-                            <Transition
-                              as={Fragment}
-                              enter="transition ease-linear duration-200"
-                              enterFrom="transform opacity-0 scale-95"
-                              enterTo="transform opacity-100 scale-100"
-                              leave="transition ease-in duration-75"
-                              leaveFrom="transform opacity-100 scale-100"
-                              leaveTo="transform opacity-0 scale-95"
-                            >
-                              <Menu.Items className="mt-2.5 w-48 origin-top-right rounded-md py-1  ring-1 ring-gray-900/5 focus:outline-none" style={{ width: "250px" }}>
-                                {item.submenu.map((subItem) => (
-                                  <Menu.Item key={subItem.name}>
-                                    {({ active }) => (
-                                      <a
-                                        href={subItem.href}
-                                        className={classNames(
-                                          active
-                                            ? " text-gray-900  hover:bg-cyan-700"
-                                            : "text-gray-700",
-                                          "block px-4 py-2 text-sm  hover:bg-cyan-700"
-                                        )}
-                                        style={{color: "white"}}
-                                      >
-                                        {subItem.name}
-                                      </a>
-                                    )}
-                                  </Menu.Item>
-                                ))}
-                              </Menu.Items>
-                            </Transition>
-                          </Menu>
-                        ) : (
-                          <a
-                            href={item.href}
+                  <h6
+                    className="group -mx-2 flex gap-x-3 rounded-md p-1 text-center text-xs leading-6 text-gray-500"
+                    style={{ fontFamily: "outfit, sans-serif" }}
+                  >
+                    You are managing
+                  </h6>
+                  <li className="mt-auto bg-white rounded-md mb-3">
+                    <a
+                      href="/"
+                      className="group -mx-2 flex gap-x-3 rounded-md p-2 pl-9 text-center text-sm leading-6 text-blue-500"
+                      style={{ fontFamily: "outfit, sans-serif" }}
+                    >
+                      TraceCorp
+                    </a>
+                  </li>
+                  <hr className=" flex gap-x-3 bg-gray-700 rounded-md text-center mb-3" />
+                  <h6
+                    className="group -mx-2 flex gap-x-3 rounded-md text-center text-xs leading-6 text-gray-500"
+                    style={{ fontFamily: "outfit, sans-serif" }}
+                  >
+                    Main Menu
+                  </h6>
+                  {navigation.map((item) => (
+                    <li key={item.name}>
+                      {item.submenu ? (
+                        <Menu as="div" className="relative">
+                          <Menu.Button
                             className={classNames(
+                              "group flex gap-x-3 rounded-md p-2 text-sm leading-6",
                               item.current
-                                ? "bg-cyan-700 text-white"
-                                : "text-cyan-200 hover:text-white hover:bg-cyan-700",
-                              "group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold"
+                                ? "bg-green-300 text-gray-500"
+                                : "text-gray-500 hover:text-blue-600 hover:bg-green-300"
                             )}
+                            style={{
+                              width: "250px",
+                              fontFamily: "outfit, sans-serif",
+                            }}
                           >
                             <item.icon
                               className={classNames(
                                 item.current
-                                  ? "text-white"
-                                  : "text-cyan-200 group-hover:text-white",
+                                  ? "text-gray-500"
+                                  : "text-gray-500 group-hover:text-blue-600",
                                 "h-6 w-6 shrink-0"
                               )}
                               aria-hidden="true"
                             />
                             {item.name}
-                          </a>
-                        )}
-                      </li>
-                    ))}
+                            <div className="flex-grow" />
+                            <div>
+                              <ChevronDownIcon
+                                className={classNames(
+                                  item.current
+                                    ? "text-gray-500"
+                                    : "text-gray-500 group-hover:text-gray-500",
+                                  "h-5 w-5 text-gray-500 group-hover:text-gray-500"
+                                )}
+                                style={{ fontFamily: "outfit, sans-serif" }}
+                                aria-hidden="true"
+                              />
+                            </div>
+                          </Menu.Button>
+
+                          <Transition
+                            as={Fragment}
+                            enter="transition ease-linear duration-200"
+                            enterFrom="transform opacity-0 scale-95"
+                            enterTo="transform opacity-100 scale-100"
+                            leave="transition ease-in duration-75"
+                            leaveFrom="transform opacity-100 scale-100"
+                            leaveTo="transform opacity-0 scale-95"
+                          >
+                            <Menu.Items
+                              className="mt-2.5 w-48 origin-top-right rounded-md py-1  ring-1 ring-gray-900/5 focus:outline-none"
+                              style={{ width: "250px" }}
+                            >
+                              {item.submenu.map((subItem) => (
+                                <Menu.Item key={subItem.name}>
+                                  {({ active }) => (
+                                    <a
+                                      href={subItem.href}
+                                      className={classNames(
+                                        active
+                                          ? " text-gray-900  hover:bg-gray-700"
+                                          : "text-gray-700",
+                                        "block px-4 py-2 text-sm  hover:bg-gray-700"
+                                      )}
+                                      style={{ color: "white" }}
+                                    >
+                                      {subItem.name}
+                                    </a>
+                                  )}
+                                </Menu.Item>
+                              ))}
+                            </Menu.Items>
+                          </Transition>
+                        </Menu>
+                      ) : (
+                        <a
+                          href={item.href}
+                          className={classNames(
+                            item.current
+                              ? "bg-gray-700 text-gray-500"
+                              : "text-gray-500 hover:text-white hover:bg-gray-700",
+                            "group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold"
+                          )}
+                        >
+                          <item.icon
+                            className={classNames(
+                              item.current
+                                ? "text-gray-500"
+                                : "text-gray-500 group-hover:text-gray-500",
+                              "h-6 w-6 shrink-0"
+                            )}
+                            aria-hidden="true"
+                          />
+                          {item.name}
+                        </a>
+                      )}
+                    </li>
+                  ))}
                 </li>
                 <li>
-                  <div className="text-xs font-semibold leading-6 text-cyan-200">
+                  <div className="text-xs font-semibold leading-6 text-gray-500">
                     Your teams
                   </div>
                   <ul className="-mx-2 mt-2 space-y-1">
@@ -418,12 +492,12 @@ export default function Main() {
                           href={team.href}
                           className={classNames(
                             team.current
-                              ? "bg-cyan-700 text-white"
-                              : "text-cyan-200 hover:text-white hover:bg-cyan-700",
-                            "group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold"
+                              ? "bg-gray-700 text-gray-500"
+                              : "text-gray-500 hover:text-blue-600 hover:bg-green-300",
+                            "group flex gap-x-3 rounded-md p-2 text-sm leading-6"
                           )}
                         >
-                          <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-cyan-400 bg-cyan-500 text-[0.625rem] font-medium text-white">
+                          <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-gray-400 bg-gray-500 text-[0.625rem] font-medium text-white">
                             {team.initial}
                           </span>
                           <span className="truncate">{team.name}</span>
@@ -432,13 +506,13 @@ export default function Main() {
                     ))}
                   </ul>
                 </li>
-                <li className="mt-auto">
+                <li className="mt-auto rounded-md bg-white ">
                   <a
                     href="/"
-                    className="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-cyan-200 hover:bg-cyan-700 hover:text-white"
+                    className="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm  leading-6 text-gray-500 hover:bg-green-300 hover:text-white"
                   >
                     <Cog6ToothIcon
-                      className="h-6 w-6 shrink-0 text-cyan-200 group-hover:text-white"
+                      className="h-6 w-6 shrink-0 text-gray-500 pl-6 group-hover:text-green-300"
                       aria-hidden="true"
                     />
                     Settings
@@ -483,10 +557,13 @@ export default function Main() {
                   name="search"
                 />
               </form>
-              <div className="flex items-center gap-x-4 lg:gap-x-6">
+
+              <div className="flex items-center gap-x-4 lg:gap-x-6 mb-3">
+                <Button />
+
                 <button
                   type="button"
-                  className="-m-2.5 p-2.5 text-gray-400 hover:text-gray-500"
+                  className="-m-2.5 p-2.5 text-gray-400 bg-gray-200 hover:text-gray-500 rounded-xl"
                 >
                   <span className="sr-only">View notifications</span>
                   <BellIcon className="h-6 w-6" aria-hidden="true" />
@@ -500,7 +577,7 @@ export default function Main() {
 
                 {/* Profile dropdown */}
                 <Menu as="div" className="relative">
-                  <Menu.Button className="-m-1.5 flex items-center p-1.5">
+                  <Menu.Button className="-m-1.5 flex items-center p-1.5 bg-gray-200 rounded-xl">
                     <span className="sr-only">Open user menu</span>
                     <img
                       className="h-8 w-8 rounded-full bg-gray-50"
@@ -551,7 +628,6 @@ export default function Main() {
               </div>
             </div>
           </div>
-          <Button/>
           <main className="py-10">
             <div className="px-4 sm:px-6 lg:px-8">
               <Routes>
@@ -577,6 +653,8 @@ export default function Main() {
                 <Route path="/billing" element={<Billing />} />
                 <Route path="/trial-balance" element={<TrialBalance />} />
                 <Route path="/products" element={<Products />} />
+                <Route path="/grap" element={<LineChart />} />
+                <Route path="/view" element={<View />} />
               </Routes>
             </div>
           </main>

@@ -1,6 +1,8 @@
 .groupbtn {
     border-radius: 20px;
-    font-family: out-fit, sans-serif;
+
+    font-family: out-fit;
+
     padding-left: 15px;
     padding-right: 15px;
     padding-top: 10px;
@@ -35,10 +37,12 @@
   width: 40%;
   border-radius: 25px;
   font-family: out-fit, sans-serif;
+
 }
 
 .text-input {
   border: 1px solid #7a7a7a;
+  border-radius: 20px;
   border-radius: 10px;
 }
 
