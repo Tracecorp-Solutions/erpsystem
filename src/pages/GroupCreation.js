@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { CloseOutlined } from "@ant-design/icons";
+import { CloseOutlined, EyeOutlined } from "@ant-design/icons";
 import "../styles/GroupCreation.css";
 import GroupCreationShow from "../components/GroupCreationShow";
 import { Fragment } from "react";
 // import { Menu, Transition } from "@headlessui/react";
 import { Menu, Dropdown, Button } from "antd";
+import { EditOutlined } from "@ant-design/icons";
 import { EllipsisHorizontalIcon } from "@heroicons/react/20/solid";
 import classNames from "classnames";
 import AccountSidebar from "../components/AccountSidebar ";
@@ -17,6 +18,11 @@ const EditForm = ({ editedGroupAccount, handleSubmitEdit, closeEditForm }) => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setEditedAccount({ ...editedAccount, [name]: value });
+  };
+
+  const handleBehaviorChange = (e) => {
+    const { value } = e.target;
+    setEditedAccount({ ...editedAccount, behaviour: value });
   };
 
   const handleSubmit = (e) => {
@@ -52,7 +58,7 @@ const EditForm = ({ editedGroupAccount, handleSubmitEdit, closeEditForm }) => {
             &times;
           </span>
         </div>
-        <h2 className="text-xl font-semibold mb-4">Edit Assets</h2>
+        <h2 className="text-xl font-semibold mb-4">Edit {editedAccount.name}</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label
@@ -88,24 +94,27 @@ const EditForm = ({ editedGroupAccount, handleSubmitEdit, closeEditForm }) => {
             >
               Behaviour:
             </label>
-            <input
-              type="text"
-              onClick={(e) => e.stopPropagation()}
+            <select
               id="behaviour"
               name="behaviour"
+              className="
+                mt-1
+                focus:ring-indigo-500
+                focus:border-indigo-500
+                p-4 block
+                w-full
+                border-gray-300
+                rounded-md
+                sm:text-sm
+                text-input
+                "
               value={editedAccount.behaviour}
-              onChange={handleChange}
-              className="mt-1
-              p-4 block
-              w-full
-              sm:text-sm
-              rounded-md
-              text-input
-              focus:ring-indigo-500
-              focus:border-gray-400
-              focus-visible:border-indigo-500
-              "
-            />
+              onChange={handleBehaviorChange}
+            >
+              <option value="">Select group behavior</option>
+              <option value="Debit">Debit</option>
+              <option value="Credit">Credit</option>
+            </select>
           </div>
           <div>
             <label
@@ -146,8 +155,14 @@ const EditForm = ({ editedGroupAccount, handleSubmitEdit, closeEditForm }) => {
             focus-visible:ring-2
             focus-visible:ring-offset-2
             focus-visible:ring-indigo-
-            cancel-btn
             "
+              style={{
+                background: "#F6F6F4",
+                color: "#505050",
+                width: "40%",
+                borderRadius: "25px",
+                fontFamily: "out-fit, sans-serif"
+              }}
               onClick={closeEditForm}
             >
               Cancel
@@ -168,8 +183,13 @@ const EditForm = ({ editedGroupAccount, handleSubmitEdit, closeEditForm }) => {
             focus-visible:ring-2
             focus-visible:ring-offset-2
             focus-visible:ring-indigo-500
-            save-group
             "
+              style={{
+                color: "#fff",
+                width: "40%",
+                borderRadius: "25px",
+                fontFamily: "out-fit, sans-serif"
+              }}
             >
               Save
             </button>
@@ -179,6 +199,7 @@ const EditForm = ({ editedGroupAccount, handleSubmitEdit, closeEditForm }) => {
     </div>
   );
 };
+
 
 export default function GroupAccount() {
   const [showForm, setShowForm] = useState(false);
@@ -353,6 +374,7 @@ export default function GroupAccount() {
       console.log("Edit account response:", response.data);
       setIsEditing(false);
       setEditedGroupAccount(null);
+      setShowEditForm(false);
       fetchGroupAccounts();
     } catch (error) {
       console.error("Error editing group account:", error);
@@ -684,13 +706,15 @@ export default function GroupAccount() {
                                   overlay={
                                     <Menu>
                                       <Menu.Item key="1" onClick={() => handleSeeGroup(account)}>
-                                        <a href="#">View</a>
+                                      <EyeOutlined style={{ marginRight: "5px" }} />
+                                        <span>View</span>
                                       </Menu.Item>
                                       <Menu.Item
                                         key="2"
                                         onClick={() => handleEdit(account)}
                                       >
-                                        Edit
+                                        <EditOutlined style={{ marginRight: "5px" }} />
+                                        <span>Edit</span>
                                       </Menu.Item>
                                     </Menu>
                                   }

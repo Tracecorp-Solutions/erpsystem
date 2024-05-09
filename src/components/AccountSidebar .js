@@ -1,13 +1,17 @@
 import React, { useState } from "react";
-import { Drawer } from "antd";
+import { Drawer, Modal, Table  } from "antd";
 import { XMarkIcon } from "@heroicons/react/24/outline";
+import SubGroupForm from "./SubGroupForm ";
 
 function Card({
   title,
   description,
   filteredSubGroups,
   showCreateSubGroupButton,
+  setDrawerVisible,
 }) {
+  const [modalVisible, setModalVisible] = useState(false);
+
   return (
     <div style={{ display: "flex", justifyContent: "center" }}>
       <div
@@ -35,7 +39,7 @@ function Card({
               mt-6
               "
                 style={{
-                  fontFamily: "outFit, san-sarif",
+                  fontFamily: "outFit, Sans-serif",
                   fontWeight: "600",
                   fontSize: "24px",
                   color: "#505050",
@@ -53,7 +57,7 @@ function Card({
                 mt-6
                 "
                 style={{
-                  fontFamily: "outFit, san-sarif",
+                  fontFamily: "outFit, Sans-serif",
                   fontSize: "16px",
                   color: "#505050",
                   fontWeight: "400",
@@ -71,9 +75,15 @@ function Card({
                   background: "#4467a1",
                   borderRadius: "20px",
                   padding: "5px 15px 5px 15px",
-                  fontFamily: "outFit, san-sarif",
+                  fontFamily: "outFit, Sans-serif",
                 }}
                 className="text-white mt-5"
+                onClick={() => {
+                  if (true) {
+                    setModalVisible(true)
+                    setDrawerVisible(false);
+                  }
+                }}
               >
                 + Create SubGroup
               </button>
@@ -86,6 +96,7 @@ function Card({
                 padding: "10px",
                 borderRadius: "20px",
                 marginTop: "5px",
+                width: "320px",
               }}
             >
               <h2>{filteredSubGroups[0].name}</h2>
@@ -95,18 +106,18 @@ function Card({
                   color: "#4467a1",
                   fontSize: "24px",
                   fontWeight: "600",
-                  fontFamily: "outFit, san-sarif",
+                  fontFamily: "outFit, Sans-serif",
                 }}
               >
                 SubGroups
               </h3>
-              <table className="min-w-full">
+              <table  className="min-w-full" style={{ width: "100%" }}>
                 <thead
                   className="
                 bg-gray-50
                 "
-                  style={{ borderRadius: "50px" }}
-                >
+                style={{ borderTopLeftRadius: "20px", borderTopRightRadius: "20px" }}
+              >
                   <tr>
                     <th
                       className="
@@ -118,9 +129,10 @@ function Card({
                     text-gray-500
                     uppercase
                     tracking-wider
+                    rounded-l-md
                     "
                       style={{
-                        fontFamily: "outFit, san-sarif",
+                        fontFamily: "outFit, Sans-serif",
                         fontWeight: "500",
                       }}
                     >
@@ -138,7 +150,7 @@ function Card({
                     tracking-wider
                     "
                       style={{
-                        fontFamily: "outFit, san-sarif",
+                        fontFamily: "outFit, Sans-serif",
                         fontWeight: "500",
                       }}
                     >
@@ -159,7 +171,7 @@ function Card({
                       text-gray-900
                       "
                         style={{
-                          fontFamily: "outFit, san-sarif",
+                          fontFamily: "outFit, Sans-serif",
                           color: "#505050",
                         }}
                       >
@@ -187,12 +199,19 @@ function Card({
             </div>
           )}
         </div>
+        <Modal
+        visible={modalVisible}
+        onCancel={() => setModalVisible(false)}
+        footer={null}
+      >
+        <SubGroupForm onCancel={() => setModalVisible(false)} />
+      </Modal>
       </div>
     </div>
   );
 }
 
-export default function AccountSidebar({ account, showForm, subGroups }) {
+export default function AccountSidebar({ account, subGroups }) {
   const [drawerVisible, setDrawerVisible] = useState(true);
 
   const groupAccountId = account.id;
@@ -237,7 +256,7 @@ export default function AccountSidebar({ account, showForm, subGroups }) {
                 font-semibold
                 leading-6"
               style={{
-                fontFamily: "outFit, san-sarif",
+                fontFamily: "outFit, Sans-serif",
                 fontWeight: "600",
                 fontSize: "36px",
                 color: "#505050",
@@ -252,8 +271,9 @@ export default function AccountSidebar({ account, showForm, subGroups }) {
           className="mt-5"
           style={{
             textAlign: "start",
-            fontFamily: "outFit, san-sarif",
+            fontFamily: "outFit, Sans-serif",
             color: "#a1a1a1",
+            width: "250px"
           }}
         >
           <p className="text-sm">{account.description}</p>
@@ -264,6 +284,7 @@ export default function AccountSidebar({ account, showForm, subGroups }) {
         description="You haven't created any subgroups under Assets yet."
         showCreateSubGroupButton={showCreateSubGroupButton}
         filteredSubGroups={filteredSubGroups}
+        setDrawerVisible={setDrawerVisible}
       />
     </Drawer>
   );
