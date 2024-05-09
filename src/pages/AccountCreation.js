@@ -1,67 +1,16 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { Select, Modal, Form, Input, Button, Table } from "antd";
+import React, { useState, useEffect, Fragment } from "react";
 
-const { Option } = Select;
+import axios from "axios";
+import { Modal, Form, Button } from "antd";
+import { Menu, Transition } from "@headlessui/react";
+import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
+import classNames from "classnames";
 
 const AccountCreation = () => {
   const [showModal, setShowModal] = useState(false);
   const [groups, setGroups] = useState([]);
   const [subGroupAccounts, setSubGroupAccounts] = useState([]);
   const [form] = Form.useForm();
-  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
-
-  const columns = [
-    {
-      title: "Name",
-      dataIndex: "name",
-    },
-    {
-      title: "Age",
-      dataIndex: "age",
-    },
-    {
-      title: "Address",
-      dataIndex: "address",
-    },
-  ];
-
-  const onSelectChange = (newSelectedRowKeys) => {
-    console.log("selectedRowKeys changed: ", newSelectedRowKeys);
-    setSelectedRowKeys(newSelectedRowKeys);
-  };
-
-  const rowSelection = {
-    selectedRowKeys,
-    onChange: onSelectChange,
-    selections: [
-      Table.SELECTION_ALL,
-      Table.SELECTION_INVERT,
-      Table.SELECTION_NONE,
-      {
-        key: "odd",
-        text: "Select Odd Row",
-        onSelect: (changeableRowKeys) => {
-          let newSelectedRowKeys = [];
-          newSelectedRowKeys = changeableRowKeys.filter(
-            (_, index) => index % 2 !== 0
-          );
-          setSelectedRowKeys(newSelectedRowKeys);
-        },
-      },
-      {
-        key: "even",
-        text: "Select Even Row",
-        onSelect: (changeableRowKeys) => {
-          let newSelectedRowKeys = [];
-          newSelectedRowKeys = changeableRowKeys.filter(
-            (_, index) => index % 2 === 0
-          );
-          setSelectedRowKeys(newSelectedRowKeys);
-        },
-      },
-    ],
-  };
 
   useEffect(() => {
     fetchGroups();
@@ -403,11 +352,14 @@ const AccountCreation = () => {
           </form>
         </div>
       </Modal>
-      <div style={{ overflowX: "auto" }}>
-        <table className="table-auto min-w-full divide-y divide-gray-200">
-          <thead className="bg-gray-50" style={{ borderRadius: "30px" }}>
-            <tr>
-              <input type="checkbox" style={{ marginLeft: "10px", marginTop: "15px" }} />
+      <div style={{  overflowY: "auto" }}>
+        <table className="table-auto min-w-full divide-gray-200">
+          <thead className="bg-gray-50">
+            <tr style={{ borderRadius: "50px" }}>
+              <input
+                type="checkbox"
+                style={{ marginLeft: "10px", marginTop: "15px" }}
+              />
               <th
                 scope="col"
                 className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
@@ -449,7 +401,10 @@ const AccountCreation = () => {
 
               return (
                 <tr key={account.id}>
-                  <input type="checkbox" style={{ marginLeft: "10px", marginTop: "15px" }} />
+                  <input
+                    type="checkbox"
+                    style={{ marginLeft: "10px", marginTop: "15px" }}
+                  />
                   <td className="px-3 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                     {account.name}
                   </td>
@@ -462,6 +417,12 @@ const AccountCreation = () => {
                   <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">
                     {account.balance}
                   </td>
+                  <div style={{ width: "100px", display: "flex", justifyContent: "center" }}>
+                  <EllipsisVerticalIcon
+                          className="h-5 w-5"
+                          aria-hidden="true"
+                        />
+                  </div>
                 </tr>
               );
             })}
