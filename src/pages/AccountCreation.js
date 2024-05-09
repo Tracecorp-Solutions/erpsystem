@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Select, Modal, Form, Input, Button } from "antd";
+import { Select, Modal, Form, Input, Button, Table } from "antd";
 
 const { Option } = Select;
 
@@ -9,6 +9,55 @@ const AccountCreation = () => {
   const [groups, setGroups] = useState([]);
   const [subGroupAccounts, setSubGroupAccounts] = useState([]);
   const [form] = Form.useForm();
+  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+
+  const columns = [
+    {
+      title: 'Name',
+      dataIndex: 'name',
+    },
+    {
+      title: 'Age',
+      dataIndex: 'age',
+    },
+    {
+      title: 'Address',
+      dataIndex: 'address',
+    },
+  ];
+
+  const onSelectChange = (newSelectedRowKeys) => {
+    console.log('selectedRowKeys changed: ', newSelectedRowKeys);
+    setSelectedRowKeys(newSelectedRowKeys);
+  };
+
+  const rowSelection = {
+    selectedRowKeys,
+    onChange: onSelectChange,
+    selections: [
+      Table.SELECTION_ALL,
+      Table.SELECTION_INVERT,
+      Table.SELECTION_NONE,
+      {
+        key: 'odd',
+        text: 'Select Odd Row',
+        onSelect: (changeableRowKeys) => {
+          let newSelectedRowKeys = [];
+          newSelectedRowKeys = changeableRowKeys.filter((_, index) => index % 2 !== 0);
+          setSelectedRowKeys(newSelectedRowKeys);
+        },
+      },
+      {
+        key: 'even',
+        text: 'Select Even Row',
+        onSelect: (changeableRowKeys) => {
+          let newSelectedRowKeys = [];
+          newSelectedRowKeys = changeableRowKeys.filter((_, index) => index % 2 === 0);
+          setSelectedRowKeys(newSelectedRowKeys);
+        },
+      },
+    ],
+  };
 
   useEffect(() => {
     fetchGroups();
@@ -52,6 +101,32 @@ const AccountCreation = () => {
       console.error("Validation failed:", error);
     }
   };
+
+  const currentAccounts = [
+    {
+      id: 1,
+      name: "Account 1",
+      subGroupAccountId: 1,
+      description: "Description for Account 1",
+      balance: 1000,
+    },
+    {
+      id: 2,
+      name: "Account 2",
+      subGroupAccountId: 2,
+      description: "Description for Account 2",
+      balance: 2000,
+    },
+    {
+      id: 3,
+      name: "Account 3",
+      subGroupAccountId: 1,
+      description: "Description for Account 3",
+      balance: 3000,
+    },
+    // Add more dummy data as needed
+  ];
+  
 
   return (
     <div>
@@ -260,6 +335,69 @@ const AccountCreation = () => {
           </form>
         </div>
       </Modal>
+      <div style={{ overflowX: "auto" }}>
+      <table className="table-auto min-w-full divide-y divide-gray-200">
+        <thead className="bg-gray-50">
+          <tr>
+            <th
+              scope="col"
+              className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+            >
+              Name
+            </th>
+            <th
+              scope="col"
+              className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+            >
+              SubGroup
+            </th>
+            <th
+              scope="col"
+              className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+            >
+              Description
+            </th>
+            <th
+              scope="col"
+              className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+            >
+              Balance
+            </th>
+            <th
+              scope="col"
+              className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+            >
+              Actions
+            </th>
+          </tr>
+        </thead>
+        <tbody className="bg-white divide-y divide-gray-200">
+          {currentAccounts.map((account) => {
+            const subGroupInfo = subGroupAccounts.find(
+              (subGroup) =>
+                subGroup.subGroupAccount.id === account.subGroupAccountId
+            );
+
+            return (
+              <tr key={account.id}>
+                <td className="px-3 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                  {account.name}
+                </td>
+                <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">
+                  {subGroupInfo ? subGroupInfo.subGroupAccount.name : "N/A"}
+                </td>
+                <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">
+                  {account.description}
+                </td>
+                <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">
+                  {account.balance}
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+      </div>
     </div>
   );
 };
