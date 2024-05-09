@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { CloseOutlined } from "@ant-design/icons";
+import { CloseOutlined, EyeOutlined } from "@ant-design/icons";
 import "../styles/GroupCreation.css";
 import GroupCreationShow from "../components/GroupCreationShow";
 import { Fragment } from "react";
 // import { Menu, Transition } from "@headlessui/react";
 import { Menu, Dropdown, Button } from "antd";
+import { EditOutlined } from "@ant-design/icons";
 import { EllipsisHorizontalIcon } from "@heroicons/react/20/solid";
 import classNames from "classnames";
 import AccountSidebar from "../components/AccountSidebar ";
@@ -705,13 +706,15 @@ export default function GroupAccount() {
                                   overlay={
                                     <Menu>
                                       <Menu.Item key="1" onClick={() => handleSeeGroup(account)}>
-                                        <a href="#">View</a>
+                                      <EyeOutlined style={{ marginRight: "5px" }} />
+                                        <span>View</span>
                                       </Menu.Item>
                                       <Menu.Item
                                         key="2"
                                         onClick={() => handleEdit(account)}
                                       >
-                                        Edit
+                                        <EditOutlined style={{ marginRight: "5px" }} />
+                                        <span>Edit</span>
                                       </Menu.Item>
                                     </Menu>
                                   }

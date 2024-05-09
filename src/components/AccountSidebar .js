@@ -273,6 +273,7 @@ export default function AccountSidebar({ account, subGroups }) {
             textAlign: "start",
             fontFamily: "outFit, Sans-serif",
             color: "#a1a1a1",
+            width: "250px"
           }}
         >
           <p className="text-sm">{account.description}</p>
