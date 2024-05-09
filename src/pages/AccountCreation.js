@@ -83,53 +83,170 @@ const AccountCreation = () => {
           + Create Account
         </Button>
       </div>
-      <Modal
-        title="New Account Form"
-        visible={showModal}
-        onCancel={handleCancel}
-        footer={null}
-      >
-        <Form form={form} layout="vertical" onFinish={handleSubmit}>
-          <Form.Item
-            name="subGroupAccountId"
-            label="SubGroup"
-            rules={[{ required: true, message: "Please select a subgroup" }]}
-          >
-            <Select placeholder="Select SubGroup">
-              {subGroupAccounts.map((subGroup) => (
-                <Option
-                  key={subGroup.subGroupAccount.id}
-                  value={subGroup.subGroupAccount.id}
-                >
-                  {subGroup.subGroupAccount.name}
-                </Option>
-              ))}
-            </Select>
-          </Form.Item>
-          <Form.Item
-            name="name"
-            label="Name"
-            rules={[{ required: true, message: "Account name is required" }]}
-          >
-            <Input placeholder="Please enter account name..." />
-          </Form.Item>
-          <Form.Item
-            name="balance"
-            label="Opening Bal"
-            rules={[
-              { required: true, message: "Please enter account balance" },
-              { type: "number", message: "Invalid balance" },
-            ]}
-          >
-            <Input
-              type="number"
-              placeholder="Please enter account balance..."
-            />
-          </Form.Item>
-          <Form.Item name="description" label="Description">
-            <Input.TextArea placeholder="Please enter description..." />
-          </Form.Item>
-        </Form>
+      <Modal visible={showModal} onCancel={handleCancel} footer={null}>
+        <div
+          style={{
+            maxHeight: "70vh",
+            overflowY: "auto",
+            paddingRight: "15px",
+            msOverflowStyle: "none",
+            scrollbarWidth: "none",
+            "&::-webkit-scrollbar": {
+              display: "none"
+            },
+          }}
+          className="overflow-y-auto"
+        >
+          <form onSubmit={handleSubmit} className="max-w-md mx-auto">
+            <h3
+              style={{
+                color: "#505050",
+                fontFamily: "outFit, Sans-serif",
+                fontSize: "25px",
+              }}
+            >
+              Account Creation
+            </h3>
+            <div className="mb-4">
+              <label htmlFor="name" className="block mb-1">
+                Account Name:
+              </label>
+              <p className="text-gray-600 text-sm mb-1">
+                Choose a unique name for your account that reflects its purpose
+              </p>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                required
+                placeholder="Please enter account name..."
+                className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+              />
+            </div>
+            <div className="mb-4">
+              <label htmlFor="accountType" className="block mb-1">
+                Account Type:
+              </label>
+              <select
+                id="accountType"
+                name="accountType"
+                required
+                onChange={(e) =>
+                  form.setFieldsValue({ accountType: e.target.value })
+                }
+                className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+              >
+                <option value="">Select Account Type</option>
+                <option value="bank">Bank</option>
+                <option value="in-house">In-house</option>
+              </select>
+            </div>
+            <div className="mb-4">
+              <label htmlFor="subGroupAccountId" className="block mb-1">
+                SubGroup:
+              </label>
+              <select
+                id="subGroupAccountId"
+                name="subGroupAccountId"
+                required
+                onChange={(e) =>
+                  form.setFieldsValue({ subGroupAccountId: e.target.value })
+                }
+                className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+              >
+                <option value="">Select SubGroup</option>
+                {subGroupAccounts.map((subGroup) => (
+                  <option
+                    key={subGroup.subGroupAccount.id}
+                    value={subGroup.subGroupAccount.id}
+                  >
+                    {subGroup.subGroupAccount.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="mb-4">
+              <label htmlFor="name" className="block mb-1">
+                Name:
+              </label>
+              <p className="text-gray-600 text-sm mb-1">
+                Choose a unique name for your account that reflects its purpose
+              </p>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                required
+                placeholder="Please enter account name..."
+                className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+              />
+            </div>
+            <div className="mb-4">
+              <label htmlFor="balance" className="block mb-1">
+                Opening Balance Date:
+              </label>
+              <input
+                type="number"
+                id="balance"
+                name="balance"
+                required
+                placeholder="Please enter account balance..."
+                className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+              />
+            </div>
+            <div className="mb-4">
+              <label htmlFor="balance" className="block mb-1">
+                Opening Bal:
+              </label>
+              <input
+                type="number"
+                id="balance"
+                name="balance"
+                required
+                placeholder="Please enter account balance..."
+                className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+              />
+            </div>
+            <div className="mb-4">
+              <label htmlFor="description" className="block mb-1">
+                Description:
+              </label>
+              <textarea
+                id="description"
+                name="description"
+                placeholder="Please enter description..."
+                className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+              ></textarea>
+            </div>
+            <div className="flex justify-between">
+              <button
+                type="button"
+                onClick={handleCancel}
+                className="py-2 px-4 bg-gray-300 text-gray-700 rounded hover:bg-gray-400 focus:outline-none"
+                style={{
+                  borderRadius: "28px",
+                  fontFamily: "outFit, Sans-serif",
+                  width: "40%",
+                  border: "#505050 1px solid",
+                }}
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                className="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none"
+                style={{
+                  background: "#4467a1",
+                  borderRadius: "28px",
+                  fontFamily: "outFit, Sans-serif",
+                  width: "40%",
+                }}
+              >
+                Save Account
+              </button>
+            </div>
+          </form>
+        </div>
       </Modal>
     </div>
   );
