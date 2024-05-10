@@ -23,6 +23,7 @@ const AccountCreation = () => {
   });
   const [dropdownVisible, setDropdownVisible] = useState({});
   const [selectedAccount, setSelectedAccount] = useState(null);
+  console.log("oaoaooaooa", selectedAccount)
 
   useEffect(() => {
     fetchAccounts();
@@ -112,8 +113,6 @@ const AccountCreation = () => {
   const renderMenu = (accountId) => (
     <Menu>
       <Menu.Item key="1" onClick={() => handleViewDetails(accountId)}>View</Menu.Item>
-      <Menu.Item key="2" onClick={() => toggleSidebar("2")}>Option 2</Menu.Item>
-      <Menu.Item key="3" onClick={() => toggleSidebar("3")}>Option 3</Menu.Item>
     </Menu>
   );
   

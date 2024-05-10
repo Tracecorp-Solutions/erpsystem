@@ -1,60 +1,158 @@
-import React, { useState } from "react";
-import { Drawer, Modal } from "antd";
+import { useState } from "react";
+import { Drawer, Modal, Card } from "antd";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 
-export default function AccountComponentSidebar({ setDrawerVisible, drawerVisible, selectedAccount }) {
-  const [modalVisible, setModalVisible] = useState(false);
 
-  console.log("selected account", selectedAccount);
-
-
-  return (
-    <>
-      <Drawer
-        placement="right"
-        closable={false}
-        onClose={() => setDrawerVisible(false)}
-        visible={drawerVisible}
-        width={400}
-        style={{ height: "100vh", overflow: "auto" }}
-      >
-        <div className="px- text-end">
-          <button
-            type="button"
-            onClick={() => setDrawerVisible(false)}
-            className="relative rounded-md text-indigo-200 focus:outline-none focus:ring-2 focus:ring-white"
-          >
-            <span className="absolute -inset-2.5" />
-            <span className="sr-only">Close panel</span>
-            <XMarkIcon
-              className="h-10 w-10"
-              aria-hidden="true"
-            />
-          </button>
-          <div className="flex justify-between mt-5">
-            <div>
-              <h2
-                className="
-                  text-base
-                  font-semibold
-                  leading-6"
-              >
-                  {selectedAccount.name}
-              </h2>
+export default function AccountComponentSidebar({
+    setDrawerVisible,
+    drawerVisible,
+    selectedAccount,
+    subGroupAccounts,
+  }) {
+    const [modalVisible, setModalVisible] = useState(false);
+  
+  
+  
+    
+    const groupAccountId = selectedAccount.id;
+  
+  const filteredSubGroups = subGroupAccounts.filter(
+    (item) => item.subGroupAccount.id === groupAccountId
+  );
+  
+  const subGroupName = filteredSubGroups.length > 0 ? filteredSubGroups[0].subGroupAccount.name : "N/A";
+  
+  
+    console.log("selected account name", subGroupName);
+  
+    return (
+      <>
+        <Drawer
+          placement="right"
+          closable={false}
+          onClose={() => setDrawerVisible(false)}
+          visible={drawerVisible}
+          width={500}
+          style={{ height: "100vh", overflow: "auto" }}
+        >
+          <div className="px- text-end">
+            <button
+              type="button"
+              onClick={() => setDrawerVisible(false)}
+              className="relative rounded-md text-indigo-200 focus:outline-none focus:ring-2 focus:ring-white"
+            >
+              <span className="absolute -inset-2.5" />
+              <span className="sr-only">Close panel</span>
+              <XMarkIcon className="h-10 w-10" aria-hidden="true" />
+            </button>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "start",
+                color: "#505050",
+                fontSize: "36px",
+                fontFamily: "outFit, Sans-serif",
+                fontWeight: "600",
+              }}
+            >
+              <h2>{selectedAccount.name}</h2>
+            </div>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "start",
+                color: "#505050",
+                fontSize: "12px",
+                fontFamily: "outFit, Sans-serif",
+                fontWeight: "500",
+              }}
+            >
+              <h2>OPENING BALANCE</h2>
+            </div>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "start",
+                color: "#505050",
+                fontSize: "24px",
+                fontFamily: "outFit, Sans-serif",
+                fontWeight: "600",
+              }}
+            >
+              ${selectedAccount.balance}
+            </div>
+            <div className="mt-5">
+              <div className="flex justify-between">
+                <Card style={{ width: 400, marginRight: "10px" }}>
+                  <h2
+                    style={{
+                      textAlign: "start",
+                      fontSize: "11px",
+                      fontFamily: "outFit, Sans-serif",
+                      color: "#A1a1a1",
+                      marginRight: "10px",
+                    }}
+                  >
+                    OPENING BALANCE DATE
+                  </h2>
+                  <p
+                    style={{
+                      textAlign: "start",
+                      fontSize: "16px",
+                      fontWeight: "600",
+                      color: "#505050",
+                      fontFamily: "outFit, Sans-serif",
+                    }}
+                  >
+                    {selectedAccount.openingBalanceDate}
+                  </p>
+                </Card>
+  
+                <Card style={{ width: 400 }}>
+                  <h2
+                    style={{
+                      textAlign: "start",
+                      fontSize: "11px",
+                      fontFamily: "outFit, Sans-serif",
+                      color: "#A1a1a1",
+                      marginRight: "10px",
+                    }}
+                  >
+                    SUBGROUP
+                  </h2>
+                  <p
+                    style={{
+                      textAlign: "start",
+                      fontSize: "16px",
+                      fontWeight: "600",
+                      color: "#505050",
+                      fontFamily: "outFit, Sans-serif",
+                    }}
+                  >
+                    {filteredSubGroups(selectedAccount.name)}
+                  </p>
+                </Card>
+              </div>
+  
+              <div className="flex justify-between mt-5">
+                <Card style={{ width: 300 }}>
+                  <p>jajajj</p>
+                </Card>
+  
+                <Card style={{ width: 300 }}>
+                  <p>jajajj</p>
+                </Card>
+              </div>
             </div>
           </div>
-          <div className="mt-5">
-            <p className="text-sm">jajajj</p>
-          </div>
-        </div>
-        <Modal
-          visible={modalVisible}
-          onCancel={() => setModalVisible(false)}
-          footer={null}
-        >
-          {/* <SubGroupForm onCancel={() => setModalVisible(false)} /> */}
-        </Modal>
-      </Drawer>
-    </>
-  );
-}
+          <Modal
+            visible={modalVisible}
+            onCancel={() => setModalVisible(false)}
+            footer={null}
+          >
+            {/* <SubGroupForm onCancel={() => setModalVisible(false)} /> */}
+          </Modal>
+        </Drawer>
+      </>
+    );
+  }
