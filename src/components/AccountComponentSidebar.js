@@ -10,21 +10,30 @@ export default function AccountComponentSidebar({
     subGroupAccounts,
   }) {
     const [modalVisible, setModalVisible] = useState(false);
-  
-  
-  
+   
+ 
     
-    const groupAccountId = selectedAccount.id;
-  
+      console.log("Selected account name:", subGroupAccounts);
+
+      const groupAccountId = selectedAccount.id;
+
   const filteredSubGroups = subGroupAccounts.filter(
-    (item) => item.subGroupAccount.id === groupAccountId
+    (item) => item.groupAccount.id === groupAccountId
   );
-  
-  const subGroupName = filteredSubGroups.length > 0 ? filteredSubGroups[0].subGroupAccount.name : "N/A";
-  
-  
-    console.log("selected account name", subGroupName);
-  
+
+  const showCreateSubGroupButton = filteredSubGroups.length === 0;
+
+  const getSubGroupName = () => {
+    if (!selectedAccount || !subGroupAccounts) return "N/A";
+    const groupAccountId = selectedAccount.id;
+    const filteredSubGroup = subGroupAccounts.find(
+      (item) => item.subGroupAccount.id === groupAccountId
+    );
+    return filteredSubGroup ? filteredSubGroup.subGroupAccount.name : "N/A";
+  };
+
+  console.log("Selected account name:", getSubGroupName());
+    
     return (
       <>
         <Drawer
@@ -129,7 +138,7 @@ export default function AccountComponentSidebar({
                       fontFamily: "outFit, Sans-serif",
                     }}
                   >
-                    {filteredSubGroups(selectedAccount.name)}
+                    {getSubGroupName(selectedAccount.name)}
                   </p>
                 </Card>
               </div>

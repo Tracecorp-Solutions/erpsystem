@@ -47,6 +47,7 @@ const AccountCreation = () => {
         "http://54.226.71.2/GetAllSubGroupAccounts"
       );
       setSubGroupAccounts(response.data);
+      console.log(response.data);
     } catch (error) {
       console.error("Error fetching subGroup accounts", error);
     }
@@ -118,7 +119,7 @@ const AccountCreation = () => {
   
   return (
     <div>
-       {drawerVisible && <AccountComponentSidebar setDrawerVisible={setDrawerVisible} drawerVisible={drawerVisible} selectedAccount={selectedAccount} />}
+       {drawerVisible && <AccountComponentSidebar subGroupAccounts={subGroupAccounts} setDrawerVisible={setDrawerVisible} drawerVisible={drawerVisible} selectedAccount={selectedAccount} />}
       <div
         style={{
           display: "flex",
