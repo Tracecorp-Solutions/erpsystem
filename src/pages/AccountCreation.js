@@ -10,7 +10,7 @@ import AccountNavigationFilter from "../components/AccountNavigationFilter";
 const AccountCreation = () => {
   const [showModal, setShowModal] = useState(false);
   const [drawerVisible, setDrawerVisible] = useState(false);
-  const [groups, setGroups] = useState([]);
+  const [accounts, setAccounts] = useState([]);
   const [subGroupAccounts, setSubGroupAccounts] = useState([]);
   const [newAccount, setNewAccount] = useState({
     name: "",
@@ -22,25 +22,23 @@ const AccountCreation = () => {
     openingBalanceDate: ""
   });
 
-  console.log("Creating accounts", newAccount);
-
   const [dropdownVisible, setDropdownVisible] = useState({});
 
   useEffect(() => {
-    // fetchGroups();
+    fetchAccounts();
     fetchSubGroupAccounts();
   }, []);
 
-  // const fetchGroups = async () => {
-  //   try {
-  //     const response = await axios.get(
-  //       `${process.env.REACT_APP_API_URL1}/GetAllGroupAccounts`
-  //     );
-  //     setGroups(response.data);
-  //   } catch (error) {
-  //     console.error("Error fetching groups:", error);
-  //   }
-  // };
+  const fetchAccounts = async () => {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}/GetAccounts`
+      );
+      setAccounts(response.data);
+    } catch (error) {
+      console.error("Error fetching groups:", error);
+    }
+  };
 
   const fetchSubGroupAccounts = async () => {
     try {
@@ -90,29 +88,6 @@ const AccountCreation = () => {
     }
   };
 
-  const currentAccounts = [
-    {
-      id: 1,
-      name: "Account 1",
-      subGroupAccountId: 1,
-      description: "Description for Account 1",
-      balance: 1000,
-    },
-    {
-      id: 2,
-      name: "Account 2",
-      subGroupAccountId: 2,
-      description: "Description for Account 2",
-      balance: 2000,
-    },
-    {
-      id: 3,
-      name: "Account 3",
-      subGroupAccountId: 1,
-      description: "Description for Account 3",
-      balance: 3000,
-    },
-  ];
 
   const handleDropdownVisibleChange = (visible, accountId) => {
     setDropdownVisible({ ...dropdownVisible, [accountId]: visible });
@@ -491,7 +466,7 @@ const AccountCreation = () => {
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
-            {currentAccounts.map((account) => {
+            {accounts.map((account) => {
               const subGroupInfo = subGroupAccounts.find(
                 (subGroup) =>
                   subGroup.subGroupAccount.id === account.subGroupAccountId
