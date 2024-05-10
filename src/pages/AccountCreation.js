@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 
 import axios from "axios";
 import { Modal, Form, Button, Dropdown, Menu } from "antd";
+import AccountForm from "../components/EditAccountForm";
 
 import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
 import AccountComponentSidebar from "../components/AccountComponentSidebar";
@@ -9,6 +10,7 @@ import AccountNavigationFilter from "../components/AccountNavigationFilter";
 
 const AccountCreation = () => {
   const [showModal, setShowModal] = useState(false);
+  const [showEditForm, setShowEditForm] = useState(false);
   const [drawerVisible, setDrawerVisible] = useState(false);
   const [accounts, setAccounts] = useState([]);
   const [subGroupAccounts, setSubGroupAccounts] = useState([]);
@@ -105,21 +107,40 @@ const AccountCreation = () => {
     setDropdownVisible({ ...dropdownVisible, [accountId]: visible });
   };
 
-  const toggleSidebar = () => {
-    setDrawerVisible(!drawerVisible);
-    setDropdownVisible({});
-  };
+const handleEdit = () => {
+  setShowEditForm(true);
+}
+
+const CancelEdit = () => {
+  setShowEditForm(false);
+}
 
 
   const renderMenu = (accountId) => (
     <Menu>
       <Menu.Item key="1" onClick={() => handleViewDetails(accountId)}>View</Menu.Item>
+      <Menu.Item key="2" onClick={handleEdit}>Edit</Menu.Item>
+
     </Menu>
   );
   
   return (
     <div>
        {drawerVisible && <AccountComponentSidebar subGroupAccounts={subGroupAccounts} setDrawerVisible={setDrawerVisible} drawerVisible={drawerVisible} selectedAccount={selectedAccount} />}
+       <Modal
+        visible={showEditForm}
+        onCancel={handleCancel}
+        footer={null}
+      >
+        <div style={{ maxHeight: "70vh", overflowY: "auto" }}>
+          <AccountForm
+            newAccount={newAccount}
+            setNewAccount={setNewAccount}
+            handleSubmit={handleSubmit}
+            CancelEdit={CancelEdit}
+          />
+        </div>
+      </Modal>
       <div
         style={{
           display: "flex",
