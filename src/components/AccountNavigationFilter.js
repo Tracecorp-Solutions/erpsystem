@@ -20,7 +20,8 @@ const AccountNavigationFilter = () => {
         style={{ borderRadius: "24px", padding: "10px" }}
       />
       <div className="relative flex md:ml-auto md:mr-4">
-        <div className="relative w-16 md:w-auto mr-4 md:mr-0" style={{ marginRight: "10px" }}>
+        <div className="relative w-16 md:w-auto mr-4 md:mr-0" style={{ marginRight: "10px", display: "flex", justifyContent: "space-around" }}>
+            <p style={{ marginRight: "10px" }}>Show Disabled Accounts</p>
           <Switch
             checked={!disabled}
             onChange={toggleDisabled}
@@ -41,14 +42,14 @@ const AccountNavigationFilter = () => {
             </div>
           </div>
         </div>
+      </div>
 
-        <Input
+      <Input
         placeholder="Search Accounts"
         prefix={<SearchOutlined />}
         className="mb-2 md:mb-0 md:mr-4 w-full md:w-auto"
         style={{ borderRadius: "24px", padding: "10px" }}
       />
-      </div>
 
       <Select defaultValue="Newest First" className="w-full md:w-40">
         <Option value="newest">Newest First</Option>
