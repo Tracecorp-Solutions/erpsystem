@@ -9,24 +9,17 @@ export default function AccountComponentSidebar({
   subGroupAccounts,
 }) {
   const [modalVisible, setModalVisible] = useState(false);
+  console.log("sub group", subGroupAccounts);
 
-  const groupAccountId = selectedAccount.id;
 
-  const filteredSubGroups = subGroupAccounts.filter(
-    (item) => item.groupAccount.id === groupAccountId
-  );
-
-  const showCreateSubGroupButton = filteredSubGroups.length === 0;
-
-  const getSubGroupName = () => {
+const getSubGroupName = () => {
     if (!selectedAccount || !subGroupAccounts) return "N/A";
-    const groupAccountId = selectedAccount.id;
-    const filteredSubGroup = subGroupAccounts.find(
-      (item) => item.subGroupAccount.id === groupAccountId
+    const subGroup = subGroupAccounts.find(
+      (item) => item.groupAccount.id === selectedAccount.id
     );
-    return filteredSubGroup ? filteredSubGroup.subGroupAccount.name : "N/A";
+    return subGroup ? subGroup.subGroupAccount.name : "N/A";
   };
-
+  
   console.log("Selected account name:", getSubGroupName());
 
   return (
