@@ -20,7 +20,7 @@ const AccountNavigationFilter = () => {
         style={{ borderRadius: "24px", padding: "10px" }}
       />
       <div className="relative flex md:ml-auto md:mr-4">
-        <div className="relative w-16 md:w-auto mr-4 md:mr-0">
+        <div className="relative w-16 md:w-auto mr-4 md:mr-0" style={{ marginRight: "10px" }}>
           <Switch
             checked={!disabled}
             onChange={toggleDisabled}
@@ -38,22 +38,16 @@ const AccountNavigationFilter = () => {
               <CheckOutlined
                 className={`${!disabled ? "text-white" : "hidden"}`}
               />
-              <CloseOutlined
-                className={`${disabled ? "text-gray-600" : "hidden"}`}
-              />
             </div>
           </div>
         </div>
 
-        <Select
-          mode="multiple"
-          placeholder="Filter fields"
-          className="w-full md:w-64"
-        >
-          <Option value="field1">Field 1</Option>
-          <Option value="field2">Field 2</Option>
-          <Option value="field3">Field 3</Option>
-        </Select>
+        <Input
+        placeholder="Search Accounts"
+        prefix={<SearchOutlined />}
+        className="mb-2 md:mb-0 md:mr-4 w-full md:w-auto"
+        style={{ borderRadius: "24px", padding: "10px" }}
+      />
       </div>
 
       <Select defaultValue="Newest First" className="w-full md:w-40">
