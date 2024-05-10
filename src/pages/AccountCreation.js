@@ -5,6 +5,7 @@ import { Modal, Form, Button, Dropdown, Menu } from "antd";
 
 import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
 import AccountComponentSidebar from "../components/AccountComponentSidebar";
+import AccountNavigationFilter from "../components/AccountNavigationFilter";
 
 const AccountCreation = () => {
   const [showModal, setShowModal] = useState(false);
@@ -133,6 +134,7 @@ const AccountCreation = () => {
           + Create Account
         </Button>
       </div>
+      <AccountNavigationFilter />
       <Modal visible={showModal} onCancel={handleCancel} footer={null}>
         <div
           style={{
@@ -375,7 +377,8 @@ const AccountCreation = () => {
           </form>
         </div>
       </Modal>
-      <div style={{ overflowY: "auto" }}>
+     <div>
+     <div style={{ overflowY: "auto" }}>
         <table className="table-auto min-w-full divide-gray-200">
           <thead className="bg-gray-50">
             <tr style={{ borderRadius: "50px" }}>
@@ -467,6 +470,7 @@ const AccountCreation = () => {
           </tbody>
         </table>
       </div>
+     </div>
     </div>
   );
 };
