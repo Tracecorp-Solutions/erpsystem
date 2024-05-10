@@ -127,20 +127,6 @@ const CancelEdit = () => {
   return (
     <div>
        {drawerVisible && <AccountComponentSidebar subGroupAccounts={subGroupAccounts} setDrawerVisible={setDrawerVisible} drawerVisible={drawerVisible} selectedAccount={selectedAccount} />}
-       <Modal
-        visible={showEditForm}
-        onCancel={handleCancel}
-        footer={null}
-      >
-        <div style={{ maxHeight: "70vh", overflowY: "auto" }}>
-          <AccountForm
-            newAccount={newAccount}
-            setNewAccount={setNewAccount}
-            handleSubmit={handleSubmit}
-            CancelEdit={CancelEdit}
-          />
-        </div>
-      </Modal>
       <div
         style={{
           display: "flex",
@@ -169,6 +155,20 @@ const CancelEdit = () => {
           + Create Account
         </Button>
       </div>
+      <Modal
+        visible={showEditForm}
+        onCancel={CancelEdit}
+        footer={null}
+      >
+        <div style={{ maxHeight: "70vh", overflowY: "auto" }}>
+          <AccountForm
+            newAccount={newAccount}
+            setNewAccount={setNewAccount}
+            handleSubmit={handleSubmit}
+            CancelEdit={CancelEdit}
+          />
+        </div>
+      </Modal>
       <AccountNavigationFilter />
       <Modal visible={showModal} onCancel={handleCancel} footer={null}>
         <div
