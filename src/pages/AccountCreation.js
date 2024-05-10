@@ -92,7 +92,7 @@ const AccountCreation = () => {
     try {
       const response = await axios.get(`${process.env.REACT_APP_API_URL}/GetAccountById?id=${accountId}`);
       setSelectedAccount(response.data);
-      setShowModal(true);
+      setDrawerVisible(true);
     } catch (error) {
       console.error("Error fetching account details:", error);
     }
@@ -119,7 +119,7 @@ const AccountCreation = () => {
   
   return (
     <div>
-       {drawerVisible && <AccountComponentSidebar setDrawerVisible={setDrawerVisible} drawerVisible={drawerVisible} />}
+       {drawerVisible && <AccountComponentSidebar setDrawerVisible={setDrawerVisible} drawerVisible={drawerVisible} selectedAccount={selectedAccount} />}
       <div
         style={{
           display: "flex",
