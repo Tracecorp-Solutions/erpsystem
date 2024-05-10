@@ -21,8 +21,8 @@ const AccountCreation = () => {
     description: "",
     openingBalanceDate: ""
   });
-
   const [dropdownVisible, setDropdownVisible] = useState({});
+  const [selectedAccount, setSelectedAccount] = useState(null);
 
   useEffect(() => {
     fetchAccounts();
@@ -88,6 +88,16 @@ const AccountCreation = () => {
     }
   };
 
+  const handleViewDetails = async (accountId) => {
+    try {
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/GetAccountById?id=${accountId}`);
+      setSelectedAccount(response.data);
+      setShowModal(true);
+    } catch (error) {
+      console.error("Error fetching account details:", error);
+    }
+  }
+
 
   const handleDropdownVisibleChange = (visible, accountId) => {
     setDropdownVisible({ ...dropdownVisible, [accountId]: visible });
@@ -99,15 +109,14 @@ const AccountCreation = () => {
   };
 
 
-  const menu = (
+  const renderMenu = (accountId) => (
     <Menu>
-      <Menu.Item key="1" onClick={() => toggleSidebar("1")}>View</Menu.Item>
+      <Menu.Item key="1" onClick={() => handleViewDetails(accountId)}>View</Menu.Item>
       <Menu.Item key="2" onClick={() => toggleSidebar("2")}>Option 2</Menu.Item>
       <Menu.Item key="3" onClick={() => toggleSidebar("3")}>Option 3</Menu.Item>
     </Menu>
   );
   
-
   return (
     <div>
        {drawerVisible && <AccountComponentSidebar setDrawerVisible={setDrawerVisible} drawerVisible={drawerVisible} />}
@@ -498,8 +507,7 @@ const AccountCreation = () => {
                     }}
                   >
                     <Dropdown
-                      overlay={menu}
-                      trigger={["click"]}
+overlay={renderMenu(account.id)}                      trigger={["click"]}
                       visible={dropdownVisible[account.id]}
                       onVisibleChange={(visible) =>
                         handleDropdownVisibleChange(visible, account.id)
