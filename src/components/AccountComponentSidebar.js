@@ -87,7 +87,7 @@ const getSubGroupName = () => {
                     fontSize: "11px",
                     fontFamily: "outFit, Sans-serif",
                     color: "#A1a1a1",
-                    marginRight: "10px",
+                    // marginRight: "10px",
                   }}
                 >
                   OPENING BALANCE DATE
@@ -132,12 +132,53 @@ const getSubGroupName = () => {
             </div>
 
             <div className="flex justify-between mt-5">
-              <Card style={{ width: 300 }}>
-                <p>jajajj</p>
+              <Card  style={{ width: 400, marginRight: "10px" }}>
+              <h2
+                  style={{
+                    textAlign: "start",
+                    fontSize: "11px",
+                    fontFamily: "outFit, Sans-serif",
+                    color: "#A1a1a1",
+                    marginRight: "10px",
+                  }}
+                >
+                  ACCOUNT TYPE
+                </h2>
+                <p
+                  style={{
+                    textAlign: "start",
+                    fontSize: "16px",
+                    fontWeight: "600",
+                    color: "#505050",
+                    fontFamily: "outFit, Sans-serif",
+                  }}
+                >
+                  {selectedAccount.accountType}
+                </p>
               </Card>
 
-              <Card style={{ width: 300 }}>
-                <p>jajajj</p>
+              <Card style={{ width: 400 }}>
+              <h2
+                  style={{
+                    textAlign: "start",
+                    fontSize: "11px",
+                    fontFamily: "outFit, Sans-serif",
+                    color: "#A1a1a1",
+                  }}
+                >
+                  ACCOUNT NUMBER
+                </h2>
+                <p
+                  style={{
+                    textAlign: "start",
+                    fontSize: "16px",
+                    fontWeight: "600",
+                    color: "#505050",
+                    fontFamily: "outFit, Sans-serif",
+                  }}
+                >
+                  {selectedAccount.accountNumber}
+                </p>
               </Card>
             </div>
           </div>
