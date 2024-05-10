@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Drawer, Modal } from "antd";
 import { XMarkIcon } from "@heroicons/react/24/outline";
-// import SubGroupForm from "./SubGroupForm";
 
 function Card({
   showCreateSubGroupButton,
