@@ -11,15 +11,14 @@ export default function AccountComponentSidebar({
   const [modalVisible, setModalVisible] = useState(false);
   console.log("sub group", subGroupAccounts);
 
-
-const getSubGroupName = () => {
+  const getSubGroupName = () => {
     if (!selectedAccount || !subGroupAccounts) return "N/A";
     const subGroup = subGroupAccounts.find(
       (item) => item.groupAccount.id === selectedAccount.id
     );
     return subGroup ? subGroup.subGroupAccount.name : "N/A";
   };
-  
+
   console.log("Selected account name:", getSubGroupName());
 
   return (
@@ -80,14 +79,19 @@ const getSubGroupName = () => {
           </div>
           <div className="mt-5">
             <div className="flex justify-between">
-              <Card style={{ width: 400, marginRight: "10px" }}>
+              <Card
+                style={{
+                  width: 400,
+                  marginRight: "10px",
+                  background: "#f6f6f4",
+                }}
+              >
                 <h2
                   style={{
                     textAlign: "start",
                     fontSize: "11px",
                     fontFamily: "outFit, Sans-serif",
                     color: "#A1a1a1",
-                    // marginRight: "10px",
                   }}
                 >
                   OPENING BALANCE DATE
@@ -105,7 +109,7 @@ const getSubGroupName = () => {
                 </p>
               </Card>
 
-              <Card style={{ width: 400 }}>
+              <Card style={{ width: 400, background: "#f6f6f4" }}>
                 <h2
                   style={{
                     textAlign: "start",
@@ -132,8 +136,14 @@ const getSubGroupName = () => {
             </div>
 
             <div className="flex justify-between mt-5">
-              <Card  style={{ width: 400, marginRight: "10px" }}>
-              <h2
+              <Card
+                style={{
+                  width: 400,
+                  marginRight: "10px",
+                  background: "#f6f6f4",
+                }}
+              >
+                <h2
                   style={{
                     textAlign: "start",
                     fontSize: "11px",
@@ -157,8 +167,8 @@ const getSubGroupName = () => {
                 </p>
               </Card>
 
-              <Card style={{ width: 400 }}>
-              <h2
+              <Card style={{ width: 400, background: "#f6f6f4" }}>
+                <h2
                   style={{
                     textAlign: "start",
                     fontSize: "11px",
@@ -182,6 +192,42 @@ const getSubGroupName = () => {
               </Card>
             </div>
           </div>
+          <div style={{ marginTop: "25px" }}>
+            <h2
+              style={{
+                textAlign: "start",
+                fontSize: "12px",
+                fontFamily: "outFit, Sans-serif",
+                color: "#A1a1a1",
+                fontWeight: "500"
+              }}
+            >
+              ABOUT ACCOUNT
+            </h2>
+            <p
+              style={{
+                textAlign: "start",
+                fontSize: "16px",
+                fontWeight: "400",
+                color: "#505050",
+                fontFamily: "outFit, Sans-serif",
+                marginTop: "10px"
+              }}
+            >
+              {selectedAccount.description}
+            </p>
+          </div>
+          <button type="button"
+            className="w-full mt-5"
+            style={{
+                border: "1px solid #4467a1",
+                padding: "7px",
+                borderRadius: "28px",
+                color: "#4467a1",
+                fontFamily: "outFit, Sans-serif"
+                }}>
+                View Transactions
+          </button>
         </div>
         <Modal
           visible={modalVisible}
