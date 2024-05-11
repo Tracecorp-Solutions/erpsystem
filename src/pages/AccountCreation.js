@@ -86,8 +86,7 @@ const AccountCreation = () => {
         openingBalanceDate: "",
       });
       fetchAccounts();
-      setTimeout(() => {
-      }, 5000);
+      setTimeout(() => {}, 5000);
       setShowModal(false);
     } catch (error) {
       console.error("Validation failed:", error);
@@ -603,14 +602,23 @@ const AccountCreation = () => {
               })}
             </tbody>
           </table>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "end",
+              marginRight: "40px",
+              marginTop: "10px",
+            }}
+          >
+            <Pagination
+              current={currentPage}
+              total={filteredAccounts.length}
+              pageSize={itemsPerPage}
+              onChange={paginate}
+            />
+          </div>
         </div>
       </div>
-      <Pagination
-        current={currentPage}
-        total={filteredAccounts.length}
-        pageSize={itemsPerPage}
-        onChange={paginate}
-      />
     </div>
   );
 };
