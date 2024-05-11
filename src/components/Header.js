@@ -93,7 +93,7 @@ const navigation = [
     submenuItem: true,
     submenu: [
       { name: "Main Accounts", href: "/main-accounts", current: false },
-      { name: "Group Accounts", href: "/group-creation", current: false },
+      { name: "Group Accounts", href: "/account-creation", current: false },
       { name: "SubGroup Accounts", href: "/sub-group", current: false },
     ],
   },
