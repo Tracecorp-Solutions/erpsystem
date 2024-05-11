@@ -8,7 +8,6 @@ import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
 import View from "../components/View";
 import { Link } from "react-router-dom";
 
-
 const { Option } = Select;
 
 const SubGroup = () => {
@@ -324,7 +323,6 @@ const SubGroup = () => {
       {/* {loading && <SubSidebar />} */}
       {!loading && (
         <div className="mt-8 overflow-x-auto">
-
           {!showForm && (
             <div className="mt-4 mb-2">
               <label
@@ -347,7 +345,6 @@ const SubGroup = () => {
             </div>
           )}
           <table className="table-auto min-w-full divide-y divide-gray-200 bg-gray-100">
-
             <thead className="bg-gray-50">
               <tr>
                 <th
@@ -362,7 +359,6 @@ const SubGroup = () => {
                   className="px-3 py-3 text-left text-sm font-semibold text-gray-700"
                   style={{ fontFamily: "outfit, sans-serif" }}
                 >
-
                   Group
                 </th>
                 <th
@@ -371,7 +367,6 @@ const SubGroup = () => {
                   style={{ fontFamily: "outfit, sans-serif" }}
                 >
                   Description
-
                 </th>
                 {/* <th scope="col" className="relative px-3 py-3">
                   <span
@@ -418,18 +413,18 @@ const SubGroup = () => {
                           <Menu.Items className="absolute left-0 z-6 mt-2 mr-6 w-24  origin-top-left rounded-md bg-gray-300 py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none">
                             <Menu.Item>
                               {({ active }) => (
-                               <a
-                               href={`/#`} // Adjust the path as needed
-                               className={classNames(
-                                 active ? "bg-gray-50" : "",
-                                 "block px-3 py-1 text-sm leading-6 text-gray-900"
-                               )}
-                             >
-                               View
-                               <span className="sr-only">
-                                 , {group.name}
-                               </span>
-                             </a>
+                                <a
+                                  href={`/#`} // Adjust the path as needed
+                                  className={classNames(
+                                    active ? "bg-gray-50" : "",
+                                    "block px-3 py-1 text-sm leading-6 text-gray-900"
+                                  )}
+                                >
+                                  View
+                                  <span className="sr-only">
+                                    , {group.name}
+                                  </span>
+                                </a>
                               )}
                             </Menu.Item>
                             <Menu.Item>
