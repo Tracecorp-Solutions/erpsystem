@@ -202,7 +202,7 @@ export default function Main() {
                           >
                             You are managing
                           </h6>
-                          <li className="mt-auto bg-white rounded-md mb-3">
+                          <li className="mt-auto bg-white rounded-xl mb-3">
                             <a
                               href="/"
                               className="group -mx-2 flex gap-x-3 rounded-xl p-2 pl-9 text-center text-sm leading-6 text-blue-500"
@@ -361,10 +361,10 @@ export default function Main() {
                   >
                     You are managing
                   </h6>
-                  <li className="mt-auto bg-white rounded-md mb-3">
+                  <li className="mt-auto bg-white rounded-xl mb-3">
                     <a
                       href="/"
-                      className="group -mx-2 flex gap-x-3 rounded-md p-2 pl-9 text-center text-sm leading-6 text-blue-500"
+                      className="group -mx-2 flex gap-x-3 rounded-xl p-2 pl-9 text-center text-sm leading-6 text-blue-500"
                       style={{ fontFamily: "outfit, sans-serif" }}
                     >
                       TraceCorp
