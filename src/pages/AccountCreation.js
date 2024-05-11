@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import axios from "axios";
-import { Modal, Form, Button, Dropdown, Menu } from "antd";
+import { Modal, Form, Button, Dropdown, Menu, Pagination  } from "antd";
 import AccountForm from "../components/EditAccountForm";
 
 import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
@@ -27,6 +27,8 @@ const AccountCreation = () => {
   const [selectedAccount, setSelectedAccount] = useState(null);
   const [editedAccount, setEditedAccount] = useState(null);
   const [accountNameFilter, setAccountNameFilter] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(1);
 
   useEffect(() => {
     fetchAccounts();
@@ -153,7 +155,16 @@ const AccountCreation = () => {
     </Menu>
   );
 
-  const filterAccounts = accounts.filter((account) => account.name.toLowerCase().includes(accountNameFilter.toLocaleLowerCase()))
+  const filteredAccounts = accounts.filter((account) => account.name.toLowerCase().includes(accountNameFilter.toLocaleLowerCase()));
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = (currentPage - 1) * itemsPerPage;
+  const currentItems = filteredAccounts.slice(
+    indexOfFirstItem,
+    indexOfLastItem
+  );
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
     <div>
@@ -536,7 +547,7 @@ const AccountCreation = () => {
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
-              {filterAccounts.map((account) => {
+              {currentItems.map((account) => {
                 const subGroupInfo = subGroupAccounts.find(
                   (subGroup) =>
                     subGroup.subGroupAccount.id === account.subGroupAccountId
@@ -591,6 +602,12 @@ const AccountCreation = () => {
           </table>
         </div>
       </div>
+      <Pagination
+  current={currentPage}
+  total={filteredAccounts.length}
+  pageSize={itemsPerPage}
+  onChange={paginate}
+/>
     </div>
   );
 };
