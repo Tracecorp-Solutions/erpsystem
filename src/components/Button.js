@@ -11,9 +11,9 @@ import React, { useState } from "react";
 //   // { name: 'Sales', href: '#', current: false },
 // ];
 
-function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
-}
+// function classNames(...classes) {
+//   return classes.filter(Boolean).join(" ");
+// }
 
 export default function NavigationHeader() {
   const [isOpen, setIsOpen] = useState(false);
@@ -90,7 +90,7 @@ export default function NavigationHeader() {
                     Products
                   </a>
                   <a
-                    href="/group-creation"
+                    href="/account-creation"
                     className="text-gray-700 block px-4 py-2 text-sm hover:green"
                     role="menuitem"
                     tabIndex="-1"
@@ -99,7 +99,7 @@ export default function NavigationHeader() {
                     Group Account
                   </a>
                   <a
-                    href="/view"
+                    href="/petty"
                     className="text-gray-700 block px-4 py-2 text-sm hover:green"
                     role="menuitem"
                     tabIndex="-1"
@@ -117,7 +117,7 @@ export default function NavigationHeader() {
                     SubGroup Accounts
                   </a>
                   <a
-                    href="#"
+                    href="/billing"
                     className="text-gray-700 block px-4 py-2 text-sm hover:green"
                     role="menuitem"
                     tabIndex="-1"
@@ -126,7 +126,7 @@ export default function NavigationHeader() {
                     Billing
                   </a>
                   <a
-                    href="#"
+                    href="/account-creation"
                     className="text-gray-700 block px-4 py-2 text-sm hover:green"
                     role="menuitem"
                     tabIndex="-1"

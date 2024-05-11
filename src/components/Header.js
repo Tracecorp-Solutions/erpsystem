@@ -39,13 +39,9 @@ import Account from "../pages/AccountCreation";
 import Petty from "../pages/Petty";
 import SubGroup from "../pages/SubGroup";
 import Billing from "../pages/Billing";
-
 import LineChart from "./LineGraph";
 import View from "./View";
-
 import TrialBalance from "../pages/TrialBalance";
-
-
 
 const navigation = [
   {
