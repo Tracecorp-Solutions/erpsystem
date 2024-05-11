@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Select } from "antd";
@@ -283,8 +284,8 @@ const SubGroup = () => {
                 onChange={(e) =>
                   setNewAccount({ ...newAccount, description: e.target.value })
                 }
-                rows={3}
-                cols={3}
+                rows={4}
+                cols={4}
                 className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 p-4 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                 placeholder="Please enter description..."
               />

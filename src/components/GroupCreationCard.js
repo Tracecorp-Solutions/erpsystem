@@ -29,7 +29,7 @@ const GroupAccountCard = () => {
             business's financial health.
           </p>
           <Button type="button" className="group-btn">
-            See Group
+            See SubGroup
           </Button>
         </Card>
       </Col>

@@ -37,7 +37,7 @@ const EditForm = ({ editedGroupAccount, handleSubmitEdit, closeEditForm }) => {
         style={{
           width: "80%",
           height: "90%",
-          maxWidth: "600px",
+          maxWidth: "600px ",
           maxHeight: "600px",
           borderRadius: "25px",
         }}
