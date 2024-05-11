@@ -2,15 +2,13 @@ import React, { useState } from "react";
 import { Switch, Select, Input } from "antd";
 import {
   FilterOutlined,
-  CheckOutlined,
   SearchOutlined,
-  PicRightOutlined,
 } from "@ant-design/icons";
 import "../styles/components/AccountNavigationFilter.css";
 
 const { Option } = Select;
 
-const AccountNavigationFilter = () => {
+const AccountNavigationFilter = ({accountNameFilter, setAccountNameFilter }) => {
   const [disabled, setDisabled] = useState(false);
 
   const toggleDisabled = () => {
@@ -22,6 +20,8 @@ const AccountNavigationFilter = () => {
       <Input
         placeholder="Search Accounts"
         prefix={<SearchOutlined />}
+        value={accountNameFilter}
+        onChange={(e) => setAccountNameFilter(e.target.value)}
         className="mb-2 md:mb-0 md:mr-4 w-full md:w-auto"
         style={{ borderRadius: "24px", padding: "10px" }}
       />
