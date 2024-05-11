@@ -25,7 +25,7 @@ const AccountCreation = () => {
   });
   const [dropdownVisible, setDropdownVisible] = useState({});
   const [selectedAccount, setSelectedAccount] = useState(null);
-  console.log("oaoaooaooa", selectedAccount)
+  const [editedAccount, setEditedAccount] = useState(null);
 
   useEffect(() => {
     fetchAccounts();
@@ -92,11 +92,13 @@ const AccountCreation = () => {
     }
   };
 
-  const handleEditSubmit = async () => {
+  const handleEditSubmit = async (e) => {
+    console.log("aoo", editedAccount )
+      e.preventDefault();
     try {
-      const response = await axios.put(
-        `${process.env.REACT_APP_API_URL}/accounts/${selectedAccount.id}`,
-        selectedAccount
+      const response = await axios.post(
+        `${process.env.REACT_APP_API_URL}/UpdateAccountDetails`,
+        editedAccount 
       );
       console.log("Account updated:", response.data);
       setShowEditForm(false);
@@ -125,6 +127,7 @@ const AccountCreation = () => {
     try {
       const response = await axios.get(`${process.env.REACT_APP_API_URL}/GetAccountById?id=${accountId}`);
       setSelectedAccount(response.data);
+      setEditedAccount(response.data);
       setShowEditForm(true);
     } catch (error) {
       console.error("Error fetching account details for edit:", error);
@@ -180,13 +183,15 @@ const CancelEdit = () => {
         footer={null}
       >
         <div style={{ maxHeight: "70vh", overflowY: "auto" }}>
-          <AccountForm
-accountData={selectedAccount}
-setNewAccount={setNewAccount}
+        <AccountForm
+            accountData={selectedAccount} // Pass selectedAccount as a prop if needed by the form
+            editedAccount={editedAccount} // Pass editedAccount to the form
+            setEditedAccount={setEditedAccount} // Pass setter function to update editedAccount
             handleSubmit={handleEditSubmit}
-            CancelEdit={CancelEdit}
+            CancelEdit={() => setShowEditForm(false)}
             subGroupAccounts={subGroupAccounts}
           />
+
         </div>
       </Modal>
       <AccountNavigationFilter />
