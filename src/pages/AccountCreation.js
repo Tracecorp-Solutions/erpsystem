@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
-
 import axios from "axios";
-import { Modal, Form, Button, Dropdown, Menu, Pagination } from "antd";
+import { Modal, Button, Dropdown, Menu, Pagination } from "antd";
+import { EyeOutlined, EditOutlined } from '@ant-design/icons';
 import AccountForm from "../components/EditAccountForm";
-
 import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
 import AccountComponentSidebar from "../components/AccountComponentSidebar";
 import AccountNavigationFilter from "../components/AccountNavigationFilter";
@@ -144,11 +143,11 @@ const AccountCreation = () => {
   };
 
   const renderMenu = (accountId) => (
-    <Menu>
-      <Menu.Item key="1" onClick={() => handleViewDetails(accountId)}>
+    <Menu style={{ width: "200px" }}>
+      <Menu.Item key="1" onClick={() => handleViewDetails(accountId)} icon={<EyeOutlined />}>
         View
       </Menu.Item>
-      <Menu.Item key="2" onClick={() => handleEdit(accountId)}>
+      <Menu.Item key="2" onClick={() => handleEdit(accountId)}  icon={<EditOutlined />}>
         Edit
       </Menu.Item>
     </Menu>
@@ -622,8 +621,8 @@ const AccountCreation = () => {
           marginTop: "10px",
         }}
       >
-        <div style={{ textAlign: "center", marginTop: "15px", fontSize: "12px" }}>
-          Showing {rangeStart} to {rangeEnd} of {filteredAccounts.length}{" "}
+        <div style={{ textAlign: "center", marginTop: "15px", fontSize: "12px", color: "#a1a1a1" }}>
+          Showing {rangeStart} - {rangeEnd} of {filteredAccounts.length}{" "}
           results
         </div>
         <Pagination
