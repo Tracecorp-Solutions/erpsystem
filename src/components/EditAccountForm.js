@@ -25,7 +25,7 @@ const AccountForm = ({
       </h3>
       <div
         style={{
-          maxHeight: "55vh",
+          maxHeight: "50vh",
           overflowY: "auto",
           paddingRight: "15px",
           msOverflowStyle: "none",

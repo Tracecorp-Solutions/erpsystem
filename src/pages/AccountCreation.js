@@ -7,6 +7,7 @@ import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
 import AccountComponentSidebar from "../components/AccountComponentSidebar";
 import AccountNavigationFilter from "../components/AccountNavigationFilter";
 import "../styles/AccountCreation.css";
+import AccountLoadingMessage from "../components/AccountLoadingMessage";
 
 const AccountCreation = () => {
   const [showModal, setShowModal] = useState(false);
@@ -28,7 +29,8 @@ const AccountCreation = () => {
   const [editedAccount, setEditedAccount] = useState(null);
   const [accountNameFilter, setAccountNameFilter] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(1);
+  const [itemsPerPage] = useState(3);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetchAccounts();
@@ -41,7 +43,7 @@ const AccountCreation = () => {
         `${process.env.REACT_APP_API_URL}/GetAccounts`
       );
       setAccounts(response.data);
-      console.log("account..", response.data);
+      setLoading(false);
     } catch (error) {
       console.error("Error fetching groups:", error);
     }
@@ -224,10 +226,14 @@ const AccountCreation = () => {
           />
         </div>
       </Modal>
-      <AccountNavigationFilter
+     {
+      !loading && (
+        <AccountNavigationFilter
         accountNameFilter={accountNameFilter}
         setAccountNameFilter={setAccountNameFilter}
       />
+      )
+     }
       <Modal visible={showModal} onCancel={handleCancel} footer={null}>
         <h3
           style={{
@@ -512,7 +518,9 @@ const AccountCreation = () => {
       </Modal>
       <div>
         <div style={{ overflowY: "auto" }}>
-          <table className="table-auto min-w-full divide-gray-200">
+         {
+          loading ? ( <AccountLoadingMessage /> ) : (
+             <table className="table-auto min-w-full divide-gray-200">
             <thead className="bg-gray-50">
               <tr style={{ borderRadius: "50px" }}>
                 <input
@@ -611,9 +619,13 @@ const AccountCreation = () => {
               })}
             </tbody>
           </table>
+          )
+         }
         </div>
       </div>
-      <div
+      {
+        !loading && (
+          <div
         style={{
           display: "flex",
           justifyContent: "space-between",
@@ -632,6 +644,8 @@ const AccountCreation = () => {
           onChange={paginate}
         />
       </div>
+        )
+      }
     </div>
   );
 };
