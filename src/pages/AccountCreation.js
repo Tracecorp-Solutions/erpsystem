@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import axios from "axios";
-import { Modal, Form, Button, Dropdown, Menu, Pagination  } from "antd";
+import { Modal, Form, Button, Dropdown, Menu, Pagination } from "antd";
 import AccountForm from "../components/EditAccountForm";
 
 import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
@@ -85,9 +85,8 @@ const AccountCreation = () => {
         description: "",
         openingBalanceDate: "",
       });
-      // fetchAccounts();
+      fetchAccounts();
       setTimeout(() => {
-        // setSuccessMessage("");
       }, 5000);
       setShowModal(false);
     } catch (error) {
@@ -105,7 +104,6 @@ const AccountCreation = () => {
       );
       console.log("Account updated:", response.data);
       setShowEditForm(false);
-      // Refetch accounts or update accounts state with the edited account
     } catch (error) {
       console.error("Error updating account:", error);
     }
@@ -155,7 +153,9 @@ const AccountCreation = () => {
     </Menu>
   );
 
-  const filteredAccounts = accounts.filter((account) => account.name.toLowerCase().includes(accountNameFilter.toLocaleLowerCase()));
+  const filteredAccounts = accounts.filter((account) =>
+    account.name.toLowerCase().includes(accountNameFilter.toLocaleLowerCase())
+  );
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = (currentPage - 1) * itemsPerPage;
@@ -207,16 +207,19 @@ const AccountCreation = () => {
       <Modal visible={showEditForm} onCancel={CancelEdit} footer={null}>
         <div style={{ maxHeight: "70vh", overflowY: "auto" }}>
           <AccountForm
-            accountData={selectedAccount} // Pass selectedAccount as a prop if needed by the form
-            editedAccount={editedAccount} // Pass editedAccount to the form
-            setEditedAccount={setEditedAccount} // Pass setter function to update editedAccount
+            accountData={selectedAccount}
+            editedAccount={editedAccount}
+            setEditedAccount={setEditedAccount}
             handleSubmit={handleEditSubmit}
             CancelEdit={() => setShowEditForm(false)}
             subGroupAccounts={subGroupAccounts}
           />
         </div>
       </Modal>
-      <AccountNavigationFilter accountNameFilter={accountNameFilter} setAccountNameFilter={setAccountNameFilter} />
+      <AccountNavigationFilter
+        accountNameFilter={accountNameFilter}
+        setAccountNameFilter={setAccountNameFilter}
+      />
       <Modal visible={showModal} onCancel={handleCancel} footer={null}>
         <div
           style={{
@@ -603,11 +606,11 @@ const AccountCreation = () => {
         </div>
       </div>
       <Pagination
-  current={currentPage}
-  total={filteredAccounts.length}
-  pageSize={itemsPerPage}
-  onChange={paginate}
-/>
+        current={currentPage}
+        total={filteredAccounts.length}
+        pageSize={itemsPerPage}
+        onChange={paginate}
+      />
     </div>
   );
 };
