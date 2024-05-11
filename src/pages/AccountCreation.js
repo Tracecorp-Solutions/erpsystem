@@ -9,7 +9,6 @@ import AccountComponentSidebar from "../components/AccountComponentSidebar";
 import AccountNavigationFilter from "../components/AccountNavigationFilter";
 import "../styles/AccountCreation.css";
 
-
 const AccountCreation = () => {
   const [showModal, setShowModal] = useState(false);
   const [showEditForm, setShowEditForm] = useState(false);
@@ -43,6 +42,7 @@ const AccountCreation = () => {
         `${process.env.REACT_APP_API_URL}/GetAccounts`
       );
       setAccounts(response.data);
+      console.log("account..", response.data);
     } catch (error) {
       console.error("Error fetching groups:", error);
     }
@@ -207,14 +207,14 @@ const AccountCreation = () => {
       </div>
       <Modal visible={showEditForm} onCancel={CancelEdit} footer={null}>
         <div style={{ maxHeight: "70vh", overflowY: "auto" }}>
-        <AccountForm
-  accountData={selectedAccount}
-  editedAccount={editedAccount}
-  setEditedAccount={setEditedAccount}
-  handleSubmit={handleEditSubmit}
-  CancelEdit={() => setShowEditForm(false)}
-  subGroupAccounts={subGroupAccounts}
-/>
+          <AccountForm
+            accountData={selectedAccount}
+            editedAccount={editedAccount}
+            setEditedAccount={setEditedAccount}
+            handleSubmit={handleEditSubmit}
+            CancelEdit={() => setShowEditForm(false)}
+            subGroupAccounts={subGroupAccounts}
+          />
         </div>
       </Modal>
       <AccountNavigationFilter
@@ -222,6 +222,16 @@ const AccountCreation = () => {
         setAccountNameFilter={setAccountNameFilter}
       />
       <Modal visible={showModal} onCancel={handleCancel} footer={null}>
+        <h3
+          style={{
+            color: "#505050",
+            fontFamily: "outFit, Sans-serif",
+            fontSize: "25px",
+            marginTop: "30px",
+          }}
+        >
+          Account Creation
+        </h3>
         <div
           style={{
             maxHeight: "70vh",
@@ -236,16 +246,6 @@ const AccountCreation = () => {
           className="overflow-y-auto"
         >
           <form className="max-w-md mx-auto">
-            <h3
-              style={{
-                color: "#505050",
-                fontFamily: "outFit, Sans-serif",
-                fontSize: "25px",
-                marginTop: "30px",
-              }}
-            >
-              Account Creation
-            </h3>
             <div className="mb-4">
               <label
                 htmlFor="name"
@@ -472,35 +472,35 @@ const AccountCreation = () => {
                 style={{ borderRadius: "12px", padding: "15px" }}
               ></textarea>
             </div>
-            <div className="flex justify-between">
-              <button
-                type="button"
-                onClick={handleCancel}
-                className="py-2 px-4 bg-gray-300 text-gray-700 rounded hover:bg-gray-400 focus:outline-none"
-                style={{
-                  borderRadius: "28px",
-                  fontFamily: "outFit, Sans-serif",
-                  width: "40%",
-                  border: "#505050 1px solid",
-                }}
-              >
-                Cancel
-              </button>
-              <button
-                type="submit"
-                className="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none"
-                style={{
-                  background: "#4467a1",
-                  borderRadius: "28px",
-                  fontFamily: "outFit, Sans-serif",
-                  width: "40%",
-                }}
-                onClick={handleSubmit}
-              >
-                Save Account
-              </button>
-            </div>
           </form>
+        </div>
+        <div className="flex justify-between">
+          <button
+            type="button"
+            onClick={handleCancel}
+            className="py-2 px-4 text-gray-700 rounded focus:outline-none"
+            style={{
+              borderRadius: "28px",
+              fontFamily: "outFit, Sans-serif",
+              width: "40%",
+              border: "#505050 1px solid",
+            }}
+          >
+            Cancel
+          </button>
+          <button
+            type="submit"
+            className="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none"
+            style={{
+              background: "#4467a1",
+              borderRadius: "28px",
+              fontFamily: "outFit, Sans-serif",
+              width: "40%",
+            }}
+            onClick={handleSubmit}
+          >
+            Save Account
+          </button>
         </div>
       </Modal>
       <div>
@@ -607,20 +607,20 @@ const AccountCreation = () => {
         </div>
       </div>
       <div
-            style={{
-              display: "flex",
-              justifyContent: "end",
-              marginRight: "40px",
-              marginTop: "10px",
-            }}
-          >
-            <Pagination
-              current={currentPage}
-              total={filteredAccounts.length}
-              pageSize={itemsPerPage}
-              onChange={paginate}
-            />
-          </div>
+        style={{
+          display: "flex",
+          justifyContent: "end",
+          marginRight: "40px",
+          marginTop: "10px",
+        }}
+      >
+        <Pagination
+          current={currentPage}
+          total={filteredAccounts.length}
+          pageSize={itemsPerPage}
+          onChange={paginate}
+        />
+      </div>
     </div>
   );
 };
