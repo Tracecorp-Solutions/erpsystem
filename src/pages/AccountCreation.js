@@ -498,25 +498,31 @@ const CancelEdit = () => {
                 scope="col"
                 className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
               >
+              ACCOUNT NO
+              </th>
+              <th
+                scope="col"
+                className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
                 SubGroup
               </th>
               <th
                 scope="col"
                 className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
               >
-                Description
+                ACCOUNT TYPE
               </th>
               <th
                 scope="col"
                 className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
               >
-                Balance
+                0PENING BALANCE
               </th>
               <th
                 scope="col"
                 className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
               >
-                Actions
+                ACTION
               </th>
             </tr>
           </thead>
@@ -536,11 +542,14 @@ const CancelEdit = () => {
                   <td className="px-3 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                     {account.name}
                   </td>
+                  <td className="px-3 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                    {account.accountNumber}
+                  </td>
                   <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">
                     {subGroupInfo ? subGroupInfo.subGroupAccount.name : "N/A"}
                   </td>
                   <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {account.description}
+                    {account.accountType}
                   </td>
                   <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">
                     {account.balance}
@@ -553,7 +562,8 @@ const CancelEdit = () => {
                     }}
                   >
                     <Dropdown
-overlay={renderMenu(account.id)}                      trigger={["click"]}
+                      overlay={renderMenu(account.id)}
+                      trigger={["click"]}
                       visible={dropdownVisible[account.id]}
                       onVisibleChange={(visible) =>
                         handleDropdownVisibleChange(visible, account.id)
