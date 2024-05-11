@@ -1,0 +1,26 @@
+/* CSS file */
+.ant-pagination {
+    margin-top: 20px;
+    text-align: center;
+  }
+  
+  .ant-pagination-prev,
+  .ant-pagination-next {
+    /* background-color: #4467a1; */
+    border-color: #4467a1;
+    color: white;
+  }
+  
+  .ant-pagination-item {
+    background-color: #f0f2f5;
+    border-color: #fff;
+    border-radius: 50px
+  }
+  
+  /* Active page */
+  .ant-pagination-item-active {
+    background-color: #4467a1;
+    border-color: #fff;
+    color: white;
+  }
+  

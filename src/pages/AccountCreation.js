@@ -7,6 +7,8 @@ import AccountForm from "../components/EditAccountForm";
 import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
 import AccountComponentSidebar from "../components/AccountComponentSidebar";
 import AccountNavigationFilter from "../components/AccountNavigationFilter";
+import "../styles/AccountCreation.css";
+
 
 const AccountCreation = () => {
   const [showModal, setShowModal] = useState(false);
@@ -205,14 +207,14 @@ const AccountCreation = () => {
       </div>
       <Modal visible={showEditForm} onCancel={CancelEdit} footer={null}>
         <div style={{ maxHeight: "70vh", overflowY: "auto" }}>
-          <AccountForm
-            accountData={selectedAccount}
-            editedAccount={editedAccount}
-            setEditedAccount={setEditedAccount}
-            handleSubmit={handleEditSubmit}
-            CancelEdit={() => setShowEditForm(false)}
-            subGroupAccounts={subGroupAccounts}
-          />
+        <AccountForm
+  accountData={selectedAccount}
+  editedAccount={editedAccount}
+  setEditedAccount={setEditedAccount}
+  handleSubmit={handleEditSubmit}
+  CancelEdit={() => setShowEditForm(false)}
+  subGroupAccounts={subGroupAccounts}
+/>
         </div>
       </Modal>
       <AccountNavigationFilter
