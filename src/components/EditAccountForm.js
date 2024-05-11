@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 
-const AccountForm = ({ newAccount, setNewAccount, handleSubmit, CancelEdit }) => {
+const AccountForm = ({  handleSubmit, CancelEdit, subGroupAccounts, accountData }) => {
+    const [newAccount, setNewAccount] = useState(accountData);
   
   return (
     <div style={{
@@ -23,7 +24,7 @@ const AccountForm = ({ newAccount, setNewAccount, handleSubmit, CancelEdit }) =>
         marginTop: "30px",
       }}
     >
-      Account Creation
+      {newAccount.id ? "Edit Account" : "Account Creation"}
     </h3>
     <div className="mb-4">
       <label
@@ -105,7 +106,7 @@ const AccountForm = ({ newAccount, setNewAccount, handleSubmit, CancelEdit }) =>
         SubGroup
       </label>
       <p>Select the subgroup this account belongs to</p>
-      {/* <select
+      <select
         id="subGroupAccountId"
         name="subGroupAccountId"
         value={newAccount.subGroupAccountId}
@@ -127,7 +128,7 @@ const AccountForm = ({ newAccount, setNewAccount, handleSubmit, CancelEdit }) =>
             {subGroup.subGroupAccount.name}
           </option>
         ))}
-      </select> */}
+      </select>
     </div>
     <div className="mb-4">
       <label
@@ -162,7 +163,7 @@ const AccountForm = ({ newAccount, setNewAccount, handleSubmit, CancelEdit }) =>
     </div>
     <div className="mb-4">
     <label
-      htmlFor="balance"
+      htmlFor="openingBalanceDate"
       className="block mb-1"
       style={{
         fontFamily: "outFit, Sans-serif",

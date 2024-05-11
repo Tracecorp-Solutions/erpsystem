@@ -92,6 +92,20 @@ const AccountCreation = () => {
     }
   };
 
+  const handleEditSubmit = async () => {
+    try {
+      const response = await axios.put(
+        `${process.env.REACT_APP_API_URL}/accounts/${selectedAccount.id}`,
+        selectedAccount
+      );
+      console.log("Account updated:", response.data);
+      setShowEditForm(false);
+      // Refetch accounts or update accounts state with the edited account
+    } catch (error) {
+      console.error("Error updating account:", error);
+    }
+  };
+
   const handleViewDetails = async (accountId) => {
     try {
       const response = await axios.get(`${process.env.REACT_APP_API_URL}/GetAccountById?id=${accountId}`);
@@ -107,9 +121,15 @@ const AccountCreation = () => {
     setDropdownVisible({ ...dropdownVisible, [accountId]: visible });
   };
 
-const handleEdit = () => {
-  setShowEditForm(true);
-}
+  const handleEdit = async (accountId) => {
+    try {
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/GetAccountById?id=${accountId}`);
+      setSelectedAccount(response.data);
+      setShowEditForm(true);
+    } catch (error) {
+      console.error("Error fetching account details for edit:", error);
+    }
+  }
 
 const CancelEdit = () => {
   setShowEditForm(false);
@@ -119,8 +139,7 @@ const CancelEdit = () => {
   const renderMenu = (accountId) => (
     <Menu>
       <Menu.Item key="1" onClick={() => handleViewDetails(accountId)}>View</Menu.Item>
-      <Menu.Item key="2" onClick={handleEdit}>Edit</Menu.Item>
-
+      <Menu.Item key="2" onClick={() => handleEdit(accountId)}>Edit</Menu.Item>
     </Menu>
   );
   
@@ -162,10 +181,11 @@ const CancelEdit = () => {
       >
         <div style={{ maxHeight: "70vh", overflowY: "auto" }}>
           <AccountForm
-            newAccount={newAccount}
-            setNewAccount={setNewAccount}
-            handleSubmit={handleSubmit}
+accountData={selectedAccount}
+setNewAccount={setNewAccount}
+            handleSubmit={handleEditSubmit}
             CancelEdit={CancelEdit}
+            subGroupAccounts={subGroupAccounts}
           />
         </div>
       </Modal>
