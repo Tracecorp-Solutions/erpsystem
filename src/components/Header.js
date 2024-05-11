@@ -231,8 +231,8 @@ export default function Main() {
                                 <item.icon
                                   className={classNames(
                                     item.current
-                                      ? "text-gary-400"
-                                      : "text-gray-400 group-hover:text-white",
+                                      ? "text-gray-400"
+                                      : "text-gray-400 group-hover:text-green-300",
                                     "mr-3 flex-shrink-0 h-6 w-6"
                                   )}
                                   style={{
@@ -246,7 +246,7 @@ export default function Main() {
                                     className={classNames(
                                       item.current
                                         ? "text-gray-700"
-                                        : "text-gray-700 group-hover:text-white",
+                                        : "text-gray-700 group-hover:text-green-300",
                                       "ml-auto h-5 w-5"
                                     )}
                                     aria-hidden="true"
@@ -270,8 +270,8 @@ export default function Main() {
                                         <a
                                           href={subItem.href}
                                           className={classNames(
-                                            active ? "bg-gray-700" : "",
-                                            "block px-4 py-2 text-sm"
+                                            active ? "bg-green-300" : "",
+                                            "block px-4 py-2 text-sm text-gray-500"
                                           )}
                                           style={{
                                             fontFamily: "outfit, sans-serif",
@@ -409,8 +409,8 @@ export default function Main() {
                                 className={classNames(
                                   item.current
                                     ? "text-gray-500"
-                                    : "text-gray-500 group-hover:text-gray-500",
-                                  "h-5 w-5 text-gray-500 group-hover:text-gray-500"
+                                    : "text-gray-500 group-hover:text-green-300",
+                                  "h-5 w-5 text-gray-500 group-hover:text-gray-300"
                                 )}
                                 style={{ fontFamily: "outfit, sans-serif" }}
                                 aria-hidden="true"
@@ -438,11 +438,11 @@ export default function Main() {
                                       href={subItem.href}
                                       className={classNames(
                                         active
-                                          ? " text-gray-900  hover:bg-gray-700"
+                                          ? " text-gray-900  hover:bg-green-300"
                                           : "text-gray-700",
-                                        "block px-4 py-2 text-sm  hover:bg-gray-700"
+                                        "block px-4 py-2 text-sm  hover:bg-green-300"
                                       )}
-                                      style={{ color: "white" }}
+                                      style={{ color: "gray" }}
                                     >
                                       {subItem.name}
                                     </a>
