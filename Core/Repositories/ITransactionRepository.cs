@@ -13,6 +13,8 @@ namespace Core.Repositories
 
         Task RecordJournalEntry(JournalItem item);
 
-        Task<IEnumerable<Transaction>> GetAllTransactions(); 
+        Task<IEnumerable<TransactionEntry>> GetAllTransactions(); 
+
+        Task<IEnumerable<TransactionEntry>> GetTransactionEntriesByAccountId(int accountId);
     }
 }

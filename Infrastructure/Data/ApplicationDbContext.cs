@@ -11,7 +11,9 @@ namespace Infrastructure.Data
         public DbSet<GroupAccount> GroupAccounts { get; set; }
         public DbSet<Account> Accounts { get; set; }
 
-        public DbSet<Transaction> Transactions { get; set; }
+        //public DbSet<Transaction> Transactions { get; set; }
+
+        public DbSet<TransactionEntry> transactionEntries { get; set; }
 
         public DbSet<Vendor> Vendors { get; set; }
         public DbSet<Address> Addresses { get; set; }
@@ -27,25 +29,25 @@ namespace Infrastructure.Data
             base.OnModelCreating(modelBuilder);
 
             // Specify lowercase table names
-            modelBuilder.Entity<GroupAccount>().ToTable("groupaccounts");
-            modelBuilder.Entity<Account>().ToTable("accounts");
+            //modelBuilder.Entity<GroupAccount>().ToTable("groupaccounts");
+            //modelBuilder.Entity<Account>().ToTable("accounts");
 
-            modelBuilder.Entity<Transaction>()
-            .HasOne(t => t.AccountFrom)
-            .WithMany(a => a.TransactionsFrom)
-            .HasForeignKey(t => t.AccountFromId);
+            //modelBuilder.Entity<Transaction>()
+            //.HasOne(t => t.AccountFrom)
+            //.WithMany(a => a.TransactionsFrom)
+            //.HasForeignKey(t => t.AccountFromId);
 
-            modelBuilder.Entity<Transaction>()
-                .HasOne(t => t.AccountTo)
-                .WithMany(a => a.TransactionsTo)
-                .HasForeignKey(t => t.AccountToId);
+            //modelBuilder.Entity<Transaction>()
+            //    .HasOne(t => t.AccountTo)
+            //    .WithMany(a => a.TransactionsTo)
+            //    .HasForeignKey(t => t.AccountToId);
             //modelBuilder.Entity<Transaction>().ToTable("transactions");
-            modelBuilder.Entity<Vendor>().ToTable("vendors");
-            modelBuilder.Entity<Address>().ToTable("addresses");
-            modelBuilder.Entity<SubGroupAccount>().ToTable("subgroupaccounts");
-            modelBuilder.Entity<Bill>().ToTable("bills");
-            modelBuilder.Entity<BillTranItems>().ToTable("billtranitems");
-            modelBuilder.Entity<Product>().ToTable("Products");
+            //modelBuilder.Entity<Vendor>().ToTable("vendors");
+            //modelBuilder.Entity<Address>().ToTable("addresses");
+            //modelBuilder.Entity<SubGroupAccount>().ToTable("subgroupaccounts");
+            //modelBuilder.Entity<Bill>().ToTable("bills");
+            //modelBuilder.Entity<BillTranItems>().ToTable("billtranitems");
+            //modelBuilder.Entity<Product>().ToTable("Products");
         }
     }
 

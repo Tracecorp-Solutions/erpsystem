@@ -22,6 +22,11 @@ namespace Services.Repositories
 
         public async Task<GroupAccountView> AddAsync(GroupAccountView grpView)
         {
+            if (!(grpView.Behaviour.Equals("Debit", StringComparison.Ordinal) ||
+                grpView.Behaviour.Equals("Credit", StringComparison.Ordinal)))
+                throw new ArgumentException("Please supply the behaviour of the account as Debit or Credit");
+
+
             var groupAccount = new GroupAccount
             {
                 Name = grpView.Name,

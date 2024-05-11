@@ -20,11 +20,12 @@ namespace Trace.Controllers
         {
             try
             {
-                var trialBalance = await _taxBalanceRepository.GetTrialBalance();
-                if(trialBalance.Any())
-                    return Ok(trialBalance);
+                var trialBalance = await _taxBalanceRepository.GenerateTrialBalance();
                 return NotFound("No Transactions Found for trial balance to be populated");
-            }
+            }catch(ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }   
             catch (Exception ex)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");

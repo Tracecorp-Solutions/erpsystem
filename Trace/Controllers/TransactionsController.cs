@@ -54,5 +54,23 @@ namespace Trace.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
             }
         }
+
+        [HttpGet("/GetTransactionsByAccountId")]
+        public async Task<IActionResult> GetTransactionEntriesByAccountId(int accountid) 
+        {
+            try
+            {
+                var transactions = _transactionRepository.GetTransactionEntriesByAccountId(accountid);
+                return Ok(transactions);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
+        }
     }
 }

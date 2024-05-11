@@ -14,6 +14,10 @@ namespace Core.Models
         public string Name { get; set; }
         public decimal Balance { get; set; }
 
+        public string AccountType { get; set; }
+
+        public string AccountNumber { get; set; }
+
         //foreign key
         [ForeignKey("SubGroupAccount")]
         public int SubGroupAccountId { get; set; }
@@ -21,10 +25,8 @@ namespace Core.Models
         public SubGroupAccount? SubGroupAccount { get; set; } // Links to SubGroupAccount for grouping
         public string Description { get; set; }
 
-        // Navigation properties for transactions
-        [JsonIgnore]
-        public ICollection<Transaction>? TransactionsFrom { get; set; } // Transactions where this account is the source (debit)
-        [JsonIgnore]
-        public ICollection<Transaction>? TransactionsTo { get; set; }   // Transactions where this account is the destination (credit)
+        [NotMapped]
+        public DateTime OpeningBalanceDate { get; set; }
     }
+
 }

@@ -43,10 +43,11 @@ namespace Trace.Controllers
             try
             {
                 var accounts = await _accountrepository.GetAccounts();
-                if (accounts.Any()) 
-                    return Ok(accounts);
-
-                return NotFound("No Accounts Found");
+                return Ok(accounts);
+            }
+            catch(ArgumentException ex) 
+            {
+                return BadRequest(ex.Message);  
             }
             catch (Exception ex)
             {
@@ -96,6 +97,8 @@ namespace Trace.Controllers
             try
             {
                 var accounts = await _accountrepository.GetAccountsBySubGroupId(subgroupid);
+
+
                 return Ok(accounts);
 
             }catch(ArgumentException ex) 
@@ -107,8 +110,5 @@ namespace Trace.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
             }
         }
-
-
-      
     }
 }

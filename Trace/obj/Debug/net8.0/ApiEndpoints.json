@@ -268,6 +268,22 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "Trace.Controllers.TransactionsController",
+    "Method": "GetTransactionEntriesByAccountId",
+    "RelativePath": "GetTransactionsByAccountId",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "accountid",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "Trace.Controllers.TrialBalanceController",
     "Method": "GetTrialBalance",
     "RelativePath": "GetTrialBalance",

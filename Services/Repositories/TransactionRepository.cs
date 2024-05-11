@@ -21,106 +21,80 @@ namespace Services.Repositories
             _context = context;
         }
 
-        public async Task RecordTransactionAsync(TransactionViewModel transView) 
+        public async Task RecordTransactionAsync(TransactionViewModel transView)
         {
             using (var trans = await _context.Database.BeginTransactionAsync())
             {
                 try
                 {
-                    var accountFrom = await _context.Accounts
-                    .Include(a => a.SubGroupAccount)
-                    .ThenInclude(s => s.GroupAccount)
-                    .SingleOrDefaultAsync(a => a.Id == transView.AccountFromId);
+                    var accountFrom = await GetAccountWithGroupAsync(transView.AccountFromId);
+                    var accountTo = await GetAccountWithGroupAsync(transView.AccountToId);
 
-                    var accountTo = await _context.Accounts
-                        .Include(a => a.SubGroupAccount)
-                        .ThenInclude(s => s.GroupAccount)
-                        .SingleOrDefaultAsync(a => a.Id == transView.AccountToId);
+                    ValidateAccounts(accountFrom, accountTo, transView.Amount);
 
-                    if (accountFrom == null || accountTo == null)
-                        throw new ArgumentException("One or both accounts not found.");
+                    var debitTransactionEntry = CreateTransactionEntry(transView, accountFrom.Id, "Debit");
+                    var creditTransactionEntry = CreateTransactionEntry(transView, accountTo.Id, "Credit");
 
-                    if (accountFrom.SubGroupAccount.GroupAccount.Behaviour != "Debit")
-                        throw new InvalidOperationException("The source account must belong to a group with 'Debit' behavior.");
-
-                    //if (accountTo.SubGroupAccount.GroupAccount.Behaviour != "Credit")
-                    //    throw new InvalidOperationException("The destination account must belong to a group with 'Credit' behavior.");
-
-                    if (accountFrom.Balance < transView.Amount)
-                        throw new InvalidOperationException("Insufficient funds in the source account.");
-
-                    // Update account balances
-                    accountFrom.Balance -= transView.Amount;
-                    accountTo.Balance += transView.Amount;
-
-                    // Create and save the transaction
-                    var transactionEntry = new Transaction
-                    {
-                        AccountFromId = transView.AccountFromId,
-                        AccountToId = transView.AccountToId,
-                        Amount = transView.Amount,
-                        TransactionDate = transView.TransactionDate,
-                        Narration = transView.Narration
-                    };
-
-                    //update the database
-                    _context.Transactions.Add(transactionEntry);
+                    _context.transactionEntries.AddRange(new[] { debitTransactionEntry, creditTransactionEntry });
                     await _context.SaveChangesAsync();
 
-                    // Commit transaction after all operations are successful
                     await trans.CommitAsync();
                 }
-                catch 
+                catch
                 {
-                    // Rollback transaction if an exception occurs
                     await trans.RollbackAsync();
                     throw;
                 }
             }
         }
-        //public async Task RecordTransactionAsync(Transaction transaction)
-        //{
-        //    // Retrieve accounts involved in the transaction
-        //    var accountFrom = await _context.Accounts.FindAsync(transaction.AccountFromId);
-        //    var accountTo = await _context.Accounts.FindAsync(transaction.AccountToId);
 
-        //    if (accountFrom == null || accountTo == null)
-        //        throw new ArgumentException("Invalid account(s) specified.");
-
-        //    // Perform double-entry bookkeeping
-
-        //    //create Credit entry
-        //    var creditTransaction = new Transaction
-        //    {
-        //        AccountFromId = accountTo.Id,
-        //        AccountToId = accountFrom.Id,
-        //        TransactionDate = transaction.TransactionDate,
-        //        Amount = transaction.Amount,
-        //        Narration = transaction.Narration,
-        //    };
-
-        //    //create Debit Entry
-        //    var debitTransaction = new Transaction
-        //    {
-        //        AccountFromId = accountTo.Id,
-        //        AccountToId = accountFrom.Id,
-        //        TransactionDate = transaction.TransactionDate,
-        //        Amount = -transaction.Amount,
-        //        Narration = transaction.Narration,  
-        //    };
-
-
-        //    accountFrom.Balance -= transaction.Amount;
-        //    accountTo.Balance += transaction.Amount;
-
-        //    // Update database
-        //    _context.Transactions.AddRange(new[] { debitTransaction, creditTransaction });
-        //    await _context.SaveChangesAsync();
-        //}
-
-        public async Task<IEnumerable<Transaction>> GetAllTransactions() 
+        private async Task<Account> GetAccountWithGroupAsync(int accountId)
         {
-            IEnumerable<Transaction> transactions = await _context.Transactions.ToListAsync();
+            return await _context.Accounts
+                .Include(a => a.SubGroupAccount)
+                .ThenInclude(s => s.GroupAccount)
+                .SingleOrDefaultAsync(a => a.Id == accountId);
+        }
+
+        private void ValidateAccounts(Account accountFrom, Account accountTo, decimal amount)
+        {
+            if (accountFrom == null || accountTo == null)
+            {
+                throw new ArgumentException("One or both accounts not found.");
+            }
+
+            if (accountFrom.SubGroupAccount.GroupAccount.Behaviour != "Debit")
+            {
+                throw new InvalidOperationException("The source account must belong to a group with 'Debit' behavior.");
+            }
+
+            if (accountTo.SubGroupAccount.GroupAccount.Behaviour != "Credit")
+            {
+                throw new InvalidOperationException("The destination account must belong to a group with 'Credit' behavior.");
+            }
+
+            if (accountFrom.Balance < amount)
+            {
+                throw new InvalidOperationException("Insufficient funds in the source account.");
+            }
+        }
+
+        private TransactionEntry CreateTransactionEntry(TransactionViewModel transView, int accountId, string transactionType)
+        {
+            return new TransactionEntry
+            {
+                TransactionDate = transView.TransactionDate,
+                Amount = transView.Amount,
+                TransactionType = transactionType,
+                TranAccount = accountId,
+                TransactionReference = transView.TranReference,
+                Narration = transView.Narration,
+            };
+        }
+
+        public async Task<IEnumerable<TransactionEntry>> GetAllTransactions() 
+        {
+            IEnumerable<TransactionEntry> transactions = await _context.transactionEntries.ToListAsync();
 
             return transactions;
         }
@@ -153,6 +127,14 @@ namespace Services.Repositories
             }
 
             await _context.SaveChangesAsync();
+        }
+
+
+        public async Task<IEnumerable<TransactionEntry>> GetTransactionEntriesByAccountId(int accountId) 
+        {
+            var transactions = await _context.transactionEntries.Where(t => t.TranAccount == accountId).ToListAsync();
+
+            return transactions == null? throw new ArgumentException("No transaction found for that particular account"): transactions; 
         }
     }
 }

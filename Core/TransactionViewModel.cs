@@ -16,6 +16,8 @@ namespace Core
         public decimal Amount { get; set; }
         public string Narration { get; set; }
 
+        public string TranReference { get; set; }
+
 
     }
 }

@@ -23,11 +23,14 @@ namespace Trace.Controllers
             {
                 var addedAccount = await _repository.AddAsync(groupAccount);
                 return CreatedAtAction(nameof(CreateGroupAccount), new { addedAccount });
+            }catch(ArgumentException ex) 
+            {
+                return BadRequest(ex.Message);
             }
             catch (Exception)
             {
 
-                throw;
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occured while processing");
             }
             
         }
@@ -41,6 +44,9 @@ namespace Trace.Controllers
                 if (groupaccounts.Any())
                     return Ok(groupaccounts);
                 return NotFound("No Group Accounts Found");
+            }catch(ArgumentException ex) 
+            {
+                return BadRequest(ex.Message);
             }
             catch (Exception)
             {

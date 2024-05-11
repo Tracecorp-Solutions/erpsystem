@@ -10,6 +10,6 @@ namespace Core.Repositories
     public interface ITrialBalanceRepository
     {
         Task<Dictionary<string, decimal>> GetTrialBalance();
-
+        Task<IEnumerable<TrialBalanceEntry>> GenerateTrialBalance();
     }
 }

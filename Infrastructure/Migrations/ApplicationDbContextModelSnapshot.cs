@@ -30,6 +30,14 @@ namespace Infrastructure.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("AccountNumber")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("AccountType")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
                     b.Property<decimal>("Balance")
                         .HasColumnType("decimal(65,30)");
 
@@ -48,7 +56,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("SubGroupAccountId");
 
-                    b.ToTable("accounts", (string)null);
+                    b.ToTable("Accounts");
                 });
 
             modelBuilder.Entity("Core.Models.Address", b =>
@@ -83,7 +91,7 @@ namespace Infrastructure.Migrations
                     b.HasIndex("VendorId")
                         .IsUnique();
 
-                    b.ToTable("addresses", (string)null);
+                    b.ToTable("Addresses");
                 });
 
             modelBuilder.Entity("Core.Models.Bill", b =>
@@ -120,7 +128,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("bills", (string)null);
+                    b.ToTable("Bills");
                 });
 
             modelBuilder.Entity("Core.Models.BillTranItems", b =>
@@ -148,7 +156,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("BillId");
 
-                    b.ToTable("billtranitems", (string)null);
+                    b.ToTable("billTranItems");
                 });
 
             modelBuilder.Entity("Core.Models.GroupAccount", b =>
@@ -173,7 +181,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("groupaccounts", (string)null);
+                    b.ToTable("GroupAccounts");
                 });
 
             modelBuilder.Entity("Core.Models.Product", b =>
@@ -203,7 +211,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Products", (string)null);
+                    b.ToTable("Products");
                 });
 
             modelBuilder.Entity("Core.Models.SubGroupAccount", b =>
@@ -232,22 +240,16 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("GroupId");
 
-                    b.ToTable("subgroupaccounts", (string)null);
+                    b.ToTable("SubGroupAccounts");
                 });
 
-            modelBuilder.Entity("Core.Models.Transaction", b =>
+            modelBuilder.Entity("Core.Models.TransactionEntry", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("AccountFromId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("AccountToId")
-                        .HasColumnType("int");
 
                     b.Property<decimal>("Amount")
                         .HasColumnType("decimal(65,30)");
@@ -256,16 +258,25 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
+                    b.Property<int>("TranAccount")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("TransactionDate")
                         .HasColumnType("datetime(6)");
 
+                    b.Property<string>("TransactionReference")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("TransactionType")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("AccountFromId");
+                    b.HasIndex("TranAccount");
 
-                    b.HasIndex("AccountToId");
-
-                    b.ToTable("Transactions");
+                    b.ToTable("transactionEntries");
                 });
 
             modelBuilder.Entity("Core.Models.Vendor", b =>
@@ -353,7 +364,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("vendors", (string)null);
+                    b.ToTable("Vendors");
                 });
 
             modelBuilder.Entity("Core.Models.Account", b =>
@@ -392,30 +403,15 @@ namespace Infrastructure.Migrations
                     b.Navigation("GroupAccount");
                 });
 
-            modelBuilder.Entity("Core.Models.Transaction", b =>
+            modelBuilder.Entity("Core.Models.TransactionEntry", b =>
                 {
-                    b.HasOne("Core.Models.Account", "AccountFrom")
-                        .WithMany("TransactionsFrom")
-                        .HasForeignKey("AccountFromId")
+                    b.HasOne("Core.Models.Account", "Account")
+                        .WithMany()
+                        .HasForeignKey("TranAccount")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Core.Models.Account", "AccountTo")
-                        .WithMany("TransactionsTo")
-                        .HasForeignKey("AccountToId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("AccountFrom");
-
-                    b.Navigation("AccountTo");
-                });
-
-            modelBuilder.Entity("Core.Models.Account", b =>
-                {
-                    b.Navigation("TransactionsFrom");
-
-                    b.Navigation("TransactionsTo");
+                    b.Navigation("Account");
                 });
 
             modelBuilder.Entity("Core.Models.Bill", b =>
