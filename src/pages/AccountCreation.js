@@ -167,6 +167,14 @@ const AccountCreation = () => {
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
+  // const totalPages = Math.ceil(filteredAccounts.length / itemsPerPage);
+
+  const rangeStart = (currentPage - 1) * itemsPerPage + 1;
+  const rangeEnd = Math.min(
+    currentPage * itemsPerPage,
+    filteredAccounts.length
+  );
+
   return (
     <div>
       {drawerVisible && (
@@ -576,7 +584,7 @@ const AccountCreation = () => {
                       {account.accountType}
                     </td>
                     <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {account.balance}
+                      ${account.balance}
                     </td>
                     <div
                       style={{
@@ -609,11 +617,15 @@ const AccountCreation = () => {
       <div
         style={{
           display: "flex",
-          justifyContent: "end",
+          justifyContent: "space-between",
           marginRight: "40px",
           marginTop: "10px",
         }}
       >
+        <div style={{ textAlign: "center", marginTop: "15px", fontSize: "12px" }}>
+          Showing {rangeStart} to {rangeEnd} of {filteredAccounts.length}{" "}
+          results
+        </div>
         <Pagination
           current={currentPage}
           total={filteredAccounts.length}
