@@ -602,7 +602,9 @@ const AccountCreation = () => {
               })}
             </tbody>
           </table>
-          <div
+        </div>
+      </div>
+      <div
             style={{
               display: "flex",
               justifyContent: "end",
@@ -617,8 +619,6 @@ const AccountCreation = () => {
               onChange={paginate}
             />
           </div>
-        </div>
-      </div>
     </div>
   );
 };
