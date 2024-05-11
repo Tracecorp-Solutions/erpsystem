@@ -178,10 +178,14 @@ export default function Main() {
                     </div>
                   </Transition.Child>
                   {/* Sidebar component, swap this element with another sidebar if you like */}
-                  <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-gray-300 px-6 pb-4">
+                  <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-gray-200 px-6 pb-4">
                     <div
                       className="flex grow flex-col gap-y-5 overflow-y-auto h-16 shrink-0 items-center bg-white px-6 pb-4"
-                      style={{ width: "310px", marginLeft: "-24px", height: "80px" }}
+                      style={{
+                        width: "310px",
+                        marginLeft: "-24px",
+                        height: "80px",
+                      }}
                     >
                       <img
                         className="h-16 w-24 rounded-full "
@@ -193,7 +197,7 @@ export default function Main() {
                       <ul className="flex flex-1 flex-col gap-y-7">
                         <li>
                           <h6
-                            className="group -mx-2 flex gap-x-3 rounded-md p-1 text-center text-xs leading-6 text-gray-500"
+                            className="group -mx-2 flex gap-x-3 rounded-xl p-1 text-center text-xs leading-6 text-gray-500"
                             style={{ fontFamily: "outfit, sans-serif" }}
                           >
                             You are managing
@@ -201,7 +205,7 @@ export default function Main() {
                           <li className="mt-auto bg-white rounded-md mb-3">
                             <a
                               href="/"
-                              className="group -mx-2 flex gap-x-3 rounded-md p-2 pl-9 text-center text-sm leading-6 text-blue-500"
+                              className="group -mx-2 flex gap-x-3 rounded-xl p-2 pl-9 text-center text-sm leading-6 text-blue-500"
                               style={{ fontFamily: "outfit, sans-serif" }}
                             >
                               TraceCorp
@@ -209,7 +213,7 @@ export default function Main() {
                           </li>
                           <hr className=" flex gap-x-3 bg-gray-700 rounded-md text-center mb-3" />
                           <h6
-                            className="group -mx-2 flex gap-x-3 rounded-md text-center text-xs leading-6 text-gray-500"
+                            className="group -mx-2 flex gap-x-3 rounded-xl text-center text-xs leading-6 text-gray-500"
                             style={{ fontFamily: "outfit, sans-serif" }}
                           >
                             Main Menu
@@ -218,40 +222,36 @@ export default function Main() {
                             <Menu key={item.name} as="div" className="relative">
                               <Menu.Button
                                 className={classNames(
+                                  "group flex gap-x-3 rounded-xl p-2 text-sm leading-6",
                                   item.current
-                                    ? "bg-green-300 text-gray-700"
-                                    : "text-gray-700 hover:text-gray hover:bg-green-300",
-                                  "group flex items-center px-2 py-2 text-sm font-medium rounded-md"
+                                    ? "bg-gray-300 text-gray-500"
+                                    : "text-gray-500",
+                                  "hover:bg-green-300"
                                 )}
                                 style={{
-                                  fontFamily: "outfit, sans-serif",
                                   width: "250px",
+                                  fontFamily: "outfit, sans-serif",
                                 }}
                               >
                                 <item.icon
                                   className={classNames(
-                                    item.current
-                                      ? "text-gray-400"
-                                      : "text-gray-400 group-hover:text-green-300",
-                                    "mr-3 flex-shrink-0 h-6 w-6"
+                                    "text-gray-500 group-hover:text-blue-600",
+                                    "h-6 w-6 saynk-0"
                                   )}
-                                  style={{
-                                    fontFamily: "outfit, sans-serif",
-                                  }}
                                   aria-hidden="true"
                                 />
                                 {item.name}
-                                {item.submenu && (
+                                <div className="flex-grow" />
+                                <div>
                                   <ChevronDownIcon
                                     className={classNames(
-                                      item.current
-                                        ? "text-gray-700"
-                                        : "text-gray-700 group-hover:text-green-300",
-                                      "ml-auto h-5 w-5"
+                                      "text-gray-500 group-hover:text-gray-300",
+                                      "h-5 w-5 text-gray-500 group-hover:text-gray-300"
                                     )}
+                                    style={{ fontFamily: "outfit, sans-serif" }}
                                     aria-hidden="true"
                                   />
-                                )}
+                                </div>
                               </Menu.Button>
 
                               <Transition
@@ -263,7 +263,7 @@ export default function Main() {
                                 leaveFrom="transform opacity-100 scale-100"
                                 leaveTo="transform opacity-0 scale-95"
                               >
-                                <Menu.Items className="mt-2 w-48 px-2 origin-top-right divide-gray-100 text-white rounded-md focus:outline-none">
+                                <Menu.Items className="mt-2 w-48 px-2 origin-top-right divide-gray-100 text-white rounded-xl focus:outline-none">
                                   {item.submenu.map((subItem) => (
                                     <Menu.Item key={subItem.name}>
                                       {({ active }) => (
@@ -303,7 +303,7 @@ export default function Main() {
                                     team.current
                                       ? "bg-gray-700 text-gray-700"
                                       : "text-gray-700 hover:text-gray-700 hover:bg-green-300",
-                                    "group flex gap-x-3 rounded-md p-2 text-sm leading-6"
+                                    "group flex gap-x-3 rounded-xl p-2 text-sm leading-6"
                                   )}
                                   style={{ fontFamily: "outfit, sans-serif" }}
                                 >
@@ -319,7 +319,7 @@ export default function Main() {
                         <li className="mt-auto bg-white rounded-md">
                           <a
                             href="/"
-                            className="group -mx-2 flex gap-x-3 rounded-md p-2 pl-5 text-sm font-semibold leading-6 text-gray-500 hover:bg-green-300 hover:text-ray 500"
+                            className="group -mx-2 flex gap-x-3 rounded-xl p-2 pl-5 text-sm font-semibold leading-6 text-gray-500 hover:bg-green-300 hover:text-ray 500"
                             style={{ fontFamily: "outfit, sans-serif" }}
                           >
                             <Cog6ToothIcon
@@ -341,7 +341,7 @@ export default function Main() {
         {/* Static sidebar for desktop */}
         <div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col">
           {/* Sidebar component, swap this element with another sidebar if you like */}
-          <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-gray-300 px-4 pb-4">
+          <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-gray-200 px-4 pb-4">
             <div
               className="flex grow flex-col gap-y-5 h-16 shrink-0 flex justify-center items-center bg-white rounded-lg lg:w-full"
               style={{ width: "290px", marginLeft: "-12px" }}
@@ -383,10 +383,11 @@ export default function Main() {
                         <Menu as="div" className="relative">
                           <Menu.Button
                             className={classNames(
-                              "group flex gap-x-3 rounded-md p-2 text-sm leading-6",
+                              "group flex gap-x-3 rounded-xl p-2 text-sm leading-6",
                               item.current
-                                ? "bg-green-300 text-gray-500"
-                                : "text-gray-500 hover:text-blue-600 hover:bg-green-300"
+                                ? "bg-gray-300 text-gray-500"
+                                : "text-gray-500",
+                              "hover:bg-green-300"
                             )}
                             style={{
                               width: "250px",
@@ -395,10 +396,8 @@ export default function Main() {
                           >
                             <item.icon
                               className={classNames(
-                                item.current
-                                  ? "text-gray-500"
-                                  : "text-gray-500 group-hover:text-blue-600",
-                                "h-6 w-6 shrink-0"
+                                "text-gray-500 group-hover:text-blue-600",
+                                "h-6 w-6 saynk-0"
                               )}
                               aria-hidden="true"
                             />
@@ -407,9 +406,7 @@ export default function Main() {
                             <div>
                               <ChevronDownIcon
                                 className={classNames(
-                                  item.current
-                                    ? "text-gray-500"
-                                    : "text-gray-500 group-hover:text-green-300",
+                                  "text-gray-500 group-hover:text-gray-300",
                                   "h-5 w-5 text-gray-500 group-hover:text-gray-300"
                                 )}
                                 style={{ fontFamily: "outfit, sans-serif" }}
