@@ -1,97 +1,64 @@
-
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Select } from "antd";
-import SubSidebar from "../components/SubSidebar ";
-import { Fragment } from "react";
-import { Menu, Transition } from "@headlessui/react";
+import { Modal, Button, Dropdown, Menu, Pagination } from "antd";
+import { EyeOutlined, EditOutlined } from "@ant-design/icons";
+import AccountForm from "../components/SubEditAccountForm";
 import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
-import View from "../components/View";
-import { Link } from "react-router-dom";
-
-const { Option } = Select;
+import AccountComponentSidebar from "../components/SubGroupSidebar";
+import AccountNavigationFilter from "../components/SubGroupNavigationFilter";
+import "../styles/AccountCreation.css";
+import AccountLoadingMessage from "../components/SubAccountLoadingMessage";
 
 const SubGroup = () => {
-  const [showForm, setShowForm] = useState(false);
-  const [groups, setGroups] = useState([]);
-  const [allGroups, setAllGroups] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [showEditForm, setShowEditForm] = useState(false);
+  const [drawerVisible, setDrawerVisible] = useState(false);
+  const [accounts, setAccounts] = useState([]);
+  const [subGroupAccounts, setSubGroupAccounts] = useState([]);
   const [newAccount, setNewAccount] = useState({
     name: "",
     groupId: "",
     description: "",
   });
+  const [dropdownVisible, setDropdownVisible] = useState({});
+  const [selectedAccount, setSelectedAccount] = useState(null);
+  const [editedAccount, setEditedAccount] = useState(null);
+  const [accountNameFilter, setAccountNameFilter] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setitemsPerPage] = useState(2);
-  const [formErrors, setFormErrors] = useState({});
-  const [showEditButton, setShowEditButton] = useState(true);
   const [successMessage, setSuccessMessage] = useState("");
+  const [itemsPerPage] = useState(3);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchGroups();
-    fetchGroupsAll();
+    fetchAccounts();
+    fetchSubGroupAccounts();
   }, []);
 
-  function classNames(...classes) {
-    return classes.filter(Boolean).join(" ");
-  }
-
-  useEffect(() => {
-    if (showForm) {
-      setShowEditButton(false);
-    } else {
-      setShowEditButton(true);
+  const fetchAccounts = async () => {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}/GetGroupAccountById`
+      );
+      setAccounts(response.data);
+      setLoading(false);
+    } catch (error) {
+      console.error("Error fetching accounts:", error);
     }
-  }, [showForm]);
+  };
 
-  const fetchGroups = async () => {
+  const fetchSubGroupAccounts = async () => {
     try {
       const response = await axios.get(
         `${process.env.REACT_APP_API_URL}/GetAllSubGroupAccounts`
       );
-      setGroups(response.data);
-      setLoading(false);
+      setSubGroupAccounts(response.data);
     } catch (error) {
-      console.error("Error fetching groups:", error);
+      console.error("Error fetching subGroup accounts", error);
     }
   };
 
-  const fetchGroupsAll = async () => {
-    try {
-      const response = await axios.get(
-        `${process.env.REACT_APP_API_URL}/GetAllGroupAccounts`
-      );
-      setAllGroups(response.data);
-    } catch (error) {
-      console.error("Error fetching groups:", error);
-    }
-  };
-
-  const toggleForm = () => {
-    setShowForm(!showForm);
-  };
-
-  const validateForm = () => {
-    let errors = {};
-    let isValid = true;
-
-    if (!newAccount.name.trim()) {
-      errors.name = "Account name is required";
-      isValid = false;
-    } else {
-      errors.name = "";
-    }
-
-    if (!newAccount.groupId.trim()) {
-      errors.groupId = "Please select the group";
-      isValid = false;
-    } else {
-      errors.groupId = "";
-    }
-
-    setFormErrors(errors);
-
-    return isValid;
+  const handleCancel = () => {
+    setShowModal(false);
   };
 
   const handleSubmit = async () => {
@@ -113,382 +80,444 @@ const SubGroup = () => {
     }
   };
 
-  const handleEdit = async (action, id, group) => {
-    if (!group) {
-      console.error("Group not found");
-      return;
-    }
 
-    if (action === "edit") {
-      try {
-        await axios.post(
-          `${process.env.REACT_APP_API_URL}/EditSubGroupAccount`,
-          {
-            id: group.subGroupAccount.id,
-            name: group.subGroupAccount.name,
-            description: group.subGroupAccount.description,
-            groupId: group.subGroupAccount.groupId,
-            dateCreated: group.subGroupAccount.dateCreated,
-          }
-        );
-        console.log("Edit action triggered");
-      } catch (error) {
-        console.error("Error editing sub-group:", error);
-      }
-    }
-
-    if (action === "delete") {
-      console.log("Deleted action triggered");
+  const handleEditSubmit = async (e) => {
+    console.log("aoo", editedAccount);
+    e.preventDefault();
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_API_URL}/EditSubGroupAccount`,
+        editedAccount
+      );
+      console.log("Account updated:", response.data);
+      setShowEditForm(false);
+    } catch (error) {
+      console.error("Error updating account:", error);
     }
   };
 
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentGroup = groups.slice(indexOfFirstItem, indexOfLastItem);
+  const handleViewDetails = async (accountId) => {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}/GetAccountById?id=${accountId}`
+      );
+      setSelectedAccount(response.data);
+      setDrawerVisible(true);
+    } catch (error) {
+      console.error("Error fetching account details:", error);
+    }
+  };
 
-  const totalPages = Math.ceil(groups.length / itemsPerPage);
-  const pageNumbers = Array.from(
-    { length: totalPages },
-    (_, index) => index + 1
+  const handleDropdownVisibleChange = (visible, accountId) => {
+    setDropdownVisible({ ...dropdownVisible, [accountId]: visible });
+  };
+
+  const handleEdit = async (accountId) => {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}/GetAccountById?id=${accountId}`
+      );
+      setSelectedAccount(response.data);
+      setEditedAccount(response.data);
+      setShowEditForm(true);
+    } catch (error) {
+      console.error("Error fetching account details for edit:", error);
+    }
+  };
+
+  const toggleForm = () => {
+    
+  };
+
+  const validateForm = () => {
+    let errors = {};
+    let isValid = true;
+
+    if (!newAccount.name.trim()) {
+      errors.name = "Account name is required";
+      isValid = false;
+    } else {
+      errors.name = "";
+    }
+
+    if (!newAccount.groupId.trim()) {
+      errors.groupId = "Please select the group";
+      isValid = false;
+    } else {
+      errors.groupId = "";
+    }
+
+    return isValid;
+  };
+
+  const CancelEdit = () => {
+    setShowEditForm(false);
+  };
+
+  const renderMenu = (accountId) => (
+    <Menu style={{ width: "200px" }}>
+      <Menu.Item
+        key="1"
+        onClick={() => handleViewDetails(accountId)}
+        icon={<EyeOutlined />}
+      >
+        View
+      </Menu.Item>
+      <Menu.Item
+        key="2"
+        onClick={() => handleEdit(accountId)}
+        icon={<EditOutlined />}
+      >
+        Edit
+      </Menu.Item>
+    </Menu>
   );
 
-  const paginate = (pageNumber) => {
-    if (pageNumber >= 1 && pageNumber <= totalPages) {
-      setCurrentPage(pageNumber);
-    }
-  };
+  const filteredAccounts = accounts.filter((account) =>
+    account.name.toLowerCase().includes(accountNameFilter.toLocaleLowerCase())
+  );
 
-  const nextPage = () => {
-    if (currentPage < totalPages) {
-      setCurrentPage(currentPage + 1);
-    }
-  };
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = (currentPage - 1) * itemsPerPage;
+  const currentItems = filteredAccounts.slice(
+    indexOfFirstItem,
+    indexOfLastItem
+  );
 
-  const prevPage = () => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
-    }
-  };
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-  const handleItemsPerPageChange = (value) => {
-    setitemsPerPage(value);
-    setCurrentPage(1);
-  };
+  const rangeStart = (currentPage - 1) * itemsPerPage + 1;
+  const rangeEnd = Math.min(
+    currentPage * itemsPerPage,
+    filteredAccounts.length
+  );
 
   return (
-    <div className="px-4 sm:px-6 lg:px-8">
-      <div className="sm:flex sm:items-center">
-        <div className="sm:flex-auto">
-          <h1 className="text-base font-semibold leading-6 text-gray-700">
-            Subgroups
-          </h1>
-        </div>
-        <div className="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
-          <button
-            type="button"
-            onClick={toggleForm}
-            className="block rounded-xl bg-green-500 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-          >
-            + New Subgroup
-          </button>
-        </div>
+    <div>
+      {drawerVisible && (
+        <AccountComponentSidebar
+          subGroupAccounts={subGroupAccounts}
+          setDrawerVisible={setDrawerVisible}
+          drawerVisible={drawerVisible}
+          selectedAccount={selectedAccount}
+        />
+      )}
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+        }}
+      >
+        <h2
+          style={{
+            fontFamily: "outFit,Sans-serif",
+            color: "#505050",
+            fontWeight: "600",
+            fontSize: "25px",
+          }}
+        >
+          SubGroup
+        </h2>
+        <Button
+          type="primary"
+          onClick={() => setShowModal(true)}
+          style={{
+            background: "#4467a1",
+            borderRadius: "28px",
+            fontFamily: "outFit, Sans-serif",
+          }}
+        >
+          + Create SubGroup
+        </Button>
       </div>
-      {showForm && (
-        <div className="absolute mt-14 inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center">
-          <div className="bg-white p-5 rounded-lg max-w-md w-full mx-2">
-            <h2 className="text-lg font-semibold mb-4 text-gray-700">
-              New SubGroup Form
-            </h2>
-            <div className="mb-2">
+      <Modal visible={showEditForm} onCancel={CancelEdit} footer={null}>
+        <div style={{ maxHeight: "70vh", overflowY: "auto" }}>
+          <AccountForm
+            accountData={selectedAccount}
+            editedAccount={editedAccount}
+            setEditedAccount={setEditedAccount}
+            handleSubmit={handleEditSubmit}
+            CancelEdit={() => setShowEditForm(false)}
+            subGroupAccounts={subGroupAccounts}
+          />
+        </div>
+      </Modal>
+      {!loading && (
+        <AccountNavigationFilter
+          accountNameFilter={accountNameFilter}
+          setAccountNameFilter={setAccountNameFilter}
+        />
+      )}
+      <Modal visible={showModal} onCancel={handleCancel} footer={null}>
+        <h3
+          style={{
+            color: "#505050",
+            fontFamily: "outFit, Sans-serif",
+            fontSize: "25px",
+            marginTop: "30px",
+          }}
+        >
+          SubGroup Creation
+        </h3>
+        <div
+          style={{
+            maxHeight: "70vh",
+            overflowY: "auto",
+            paddingRight: "15px",
+            msOverflowStyle: "none",
+            scrollbarWidth: "none",
+            "&::-webkit-scrollbar": {
+              display: "none",
+            },
+          }}
+          className="overflow-y-auto"
+        >
+          <form className="max-w-md mx-auto">
+            <div className="mb-4">
               <label
                 htmlFor="name"
-                className="block text-sm font-medium text-gray-700"
-                style={{ fontFamily: "outfit, sans-serif" }}
+                className="block mb-1"
+                style={{
+                  fontFamily: "outFit, Sans-serif",
+                  fontSize: "16px",
+                  fontWeight: "600",
+                }}
               >
                 SubGroup Name
               </label>
-              <h6
-                className="block text-xs font-medium text-gray-400"
-                style={{ fontFamily: "outfit, sans-serif" }}
+              <p
+                className="text-gray-600 text-sm mb-1"
+                style={{ fontFamily: "outFit, Sans-serif" }}
               >
-                Choose a name for your subgroup
-              </h6>
+                Choose a unique name for your account that reflects its purpose
+              </p>
               <input
                 type="text"
-                name="name"
                 id="name"
+                name="name"
                 value={newAccount.name}
                 onChange={(e) =>
-                  setNewAccount({ ...newAccount, name: e.target.value })
+                  setNewAccount({
+                    ...newAccount,
+                    name: e.target.value,
+                  })
                 }
-                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 p-4 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                 placeholder="Please enter account name..."
+                className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                style={{ borderRadius: "12px", padding: "15px" }}
               />
-              {formErrors.name && (
-                <p className="mt-2 text-sm text-red-500">{formErrors.name}</p>
-              )}
             </div>
-            <div className="mb-2">
+
+            <div className="mb-4">
               <label
-                htmlFor="group"
-                className="block text-sm font-medium text-gray-700"
-                style={{ fontFamily: "outfit, sans-serif" }}
+                htmlFor="subGroupAccountId"
+                className="block mb-1"
+                style={{
+                  fontFamily: "outFit, Sans-serif",
+                  fontSize: "16px",
+                  fontWeight: "600",
+                }}
               >
-                Group Account
+                Group
               </label>
-              <h6
-                className="block text-xs font-medium text-gray-400"
-                style={{ fontFamily: "outfit, sans-serif" }}
-              >
-                Select a group this subgroup belongs to
-              </h6>
+              <p>Select the group this SubGroup belongs to</p>
               <select
-                value={newAccount.groupId}
+                id="GroupAccountId"
+                name="GroupAccountId"
+                value={newAccount.GroupId}
                 onChange={(e) =>
-                  setNewAccount({ ...newAccount, groupId: e.target.value })
+                  setNewAccount({
+                    ...newAccount,
+                    GroupAccountId: e.target.value,
+                  })
                 }
-                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 p-4 block w-full border-gray-300 rounded-md focus:ring-1 focus:ring-offset-1 focus:ring-offset-gray-100 focus:ring-indigo-500 sm:text-sm mb-8"
+                className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                style={{ borderRadius: "12px", padding: "15px" }}
               >
-                <option value="">Select Group</option>
-                {allGroups.map((group) => (
-                  <option key={group.id} value={group.id}>
-                    {group.name}
+                <option value="">Select SubGroup</option>
+                {subGroupAccounts.map((subGroup) => (
+                  <option
+                    key={subGroup.subGroupAccount.id}
+                    value={subGroup.subGroupAccount.id}
+                  >
+                    {subGroup.subGroupAccount.name}
                   </option>
                 ))}
               </select>
-              {formErrors.groupId && (
-                <p className="mt-2 text-sm text-red-500">
-                  {formErrors.groupId}
-                </p>
-              )}
             </div>
 
-            <div className="mb-2">
+            {/* Description */}
+            <div className="mb-4">
               <label
                 htmlFor="description"
-                className="block text-sm font-medium text-gray-700"
-                style={{ fontFamily: "outfit, sans-serif" }}
+                className="block mb-1"
+                style={{
+                  fontFamily: "outFit, Sans-serif",
+                  fontSize: "16px",
+                  fontWeight: "600",
+                }}
               >
                 Description
               </label>
-              <h6
-                className="block text-xs font-medium text-gray-400"
-                style={{ fontFamily: "outfit, sans-serif" }}
-              >
-                Add a description that explains this subgroup
-              </h6>
               <textarea
-                name="description"
                 id="description"
+                name="description"
                 value={newAccount.description}
                 onChange={(e) =>
-                  setNewAccount({ ...newAccount, description: e.target.value })
+                  setNewAccount({
+                    ...newAccount,
+                    description: e.target.value,
+                  })
                 }
-                rows={4}
-                cols={4}
-                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 p-4 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                 placeholder="Please enter description..."
-              />
-              {formErrors.description && (
-                <p className="mt-2 text-sm text-red-500">
-                  {formErrors.description}
-                </p>
-              )}
+                className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                style={{ borderRadius: "12px", padding: "15px" }}
+              ></textarea>
             </div>
-            <div className="flex justify-between mt-4">
-              <button
-                type="button"
-                onClick={toggleForm}
-                className="flex-1 px-4 py-2 bg-gray-400 text-gray-700 rounded-xl text-sm font-semibold hover:bg-indigo-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-indigo-500"
-                style={{ fontFamily: "outfit, sans-serif" }}
-              >
-                Cancel
-              </button>
-              <button
-                type="button"
-                onClick={handleSubmit}
-                style={{ fontFamily: "outfit, sans-serif" }}
-                className="flex-1 ml-3 px-4 py-2 bg-indigo-600 text-white rounded-xl text-sm font-semibold hover:bg-indigo-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-indigo-500"
-              >
-                Save
-              </button>
-            </div>
-          </div>
+          </form>
         </div>
-      )}
-      {successMessage && (
-        <div className="mt-4 p-4 bg-green-100 text-green-700">
-          {successMessage}
+        <div className="flex justify-between">
+          <button
+            type="button"
+            onClick={handleCancel}
+            className="py-2 px-4 text-gray-700 rounded focus:outline-none"
+            style={{
+              borderRadius: "28px",
+              fontFamily: "outFit, Sans-serif",
+              width: "40%",
+              border: "#505050 1px solid",
+            }}
+          >
+            Cancel
+          </button>
+          <button
+            type="submit"
+            className="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none"
+            style={{
+              background: "#4467a1",
+              borderRadius: "28px",
+              fontFamily: "outFit, Sans-serif",
+              width: "40%",
+            }}
+            onClick={handleSubmit}
+          >
+            Save Account
+          </button>
         </div>
-      )}
-      {/* {loading && <SubSidebar />} */}
-      {!loading && (
-        <div className="mt-8 overflow-x-auto">
-          {!showForm && (
-            <div className="mt-4 mb-2">
-              <label
-                className="block text-sm font-medium text-gray-700 mb-2"
-                style={{ fontFamily: "outfit, sans-serif" }}
-              >
-                Items Per Page:
-              </label>
-              <Select
-                value={itemsPerPage}
-                onChange={handleItemsPerPageChange}
-                className="w-24"
-              >
-                <Option value={10}>10</Option>
-                <Option value={20}>20</Option>
-                <Option value={30}>30</Option>
-                <Option value={40}>40</Option>
-                <Option value={50}>50</Option>
-              </Select>
-            </div>
-          )}
-          <table className="table-auto min-w-full divide-y divide-gray-200 bg-gray-100">
-            <thead className="bg-gray-50">
-              <tr>
-                <th
-                  scope="col"
-                  className="px-3 py-3 text-left text-sm font-semibold text-gray-700"
-                  style={{ fontFamily: "outfit, sans-serif" }}
-                >
-                  Name
-                </th>
-                <th
-                  scope="col"
-                  className="px-3 py-3 text-left text-sm font-semibold text-gray-700"
-                  style={{ fontFamily: "outfit, sans-serif" }}
-                >
-                  Group
-                </th>
-                <th
-                  scope="col"
-                  className="px-3 py-3 text-left text-sm font-semibold text-gray-700"
-                  style={{ fontFamily: "outfit, sans-serif" }}
-                >
-                  Description
-                </th>
-                {/* <th scope="col" className="relative px-3 py-3">
-                  <span
-                    className="px-3 py-3 text-left text-sm font-semibold text-gray-900"
-                    style={{ fontFamily: "outfit, sans-serif" }}
-                  >
-                    ACTIONS
-                  </span>
-                </th> */}
-              </tr>
-            </thead>
+      </Modal>
 
-            <tbody className="bg-gray-100 divide-y divide-gray-100">
-              {currentGroup.map((group) =>
-                group?.subGroupAccount && group?.groupAccount ? (
-                  <tr key={group?.subGroupAccount?.id}>
-                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                      {group?.subGroupAccount?.name}
-                    </td>
-                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                      {group?.groupAccount?.name}
-                    </td>
-                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                      {group?.subGroupAccount?.description}
-                    </td>
-                    <td className="relative whitespace-nowrap py-4 pr-4 text-left-4 text-sm font-medium">
-                      <Menu as="div" className="relative flex-none">
-                        <Menu.Button className="-m-2.5 block p-2.5 text-gray-700 hover:text-gray-700">
-                          <span className="sr-only">Open options</span>
+      <div>
+        <div style={{ overflowY: "auto" }}>
+          {loading ? (
+            <AccountLoadingMessage />
+          ) : (
+            <table className="table-auto min-w-full divide-gray-200">
+              <thead className="bg-gray-50">
+                <tr style={{ borderRadius: "50px" }}>
+                  <input
+                    type="checkbox"
+                    style={{ marginLeft: "10px", marginTop: "15px" }}
+                  />
+                  <th
+                    scope="col"
+                    className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    Name
+                  </th>
+
+                  <th
+                    scope="col"
+                    className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    Description
+                  </th>
+
+                  <th
+                    scope="col"
+                    className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    ACTION
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200">
+                {currentItems.map((group) => {
+                  const subGroupInfo = subGroupAccounts.find(
+                    (subGroup) =>
+                      subGroup.subGroupAccount.id === group.subGroupAccountId
+                  );
+
+                  return (
+                    <tr key={group.id}>
+                      <input
+                        type="checkbox"
+                        style={{ marginLeft: "10px", marginTop: "15px" }}
+                      />
+                      <td className="px-3 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                        {group.name}
+                      </td>
+
+                      <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">
+                        {subGroupInfo
+                          ? subGroupInfo.subGroupAccount.name
+                          : "N/A"}
+                      </td>
+
+                      <div
+                        style={{
+                          width: "100px",
+                          display: "flex",
+                          justifyContent: "center",
+                        }}
+                      >
+                        <Dropdown
+                          overlay={renderMenu(group.id)}
+                          trigger={["click"]}
+                          visible={dropdownVisible[group.id]}
+                          onVisibleChange={(visible) =>
+                            handleDropdownVisibleChange(visible, group.id)
+                          }
+                        >
                           <EllipsisVerticalIcon
                             className="h-5 w-5"
                             aria-hidden="true"
                           />
-                        </Menu.Button>
-                        <Transition
-                          as={Fragment}
-                          enter="transition ease-out duration-100"
-                          enterFrom="transform opacity-0 scale-95"
-                          enterTo="transform opacity-100 scale-100"
-                          leave="transition ease-in duration-75"
-                          leaveFrom="transform opacity-100 scale-100"
-                          leaveTo="transform opacity-0 scale-95"
-                        >
-                          <Menu.Items className="absolute left-0 z-6 mt-2 mr-6 w-24  origin-top-left rounded-md bg-gray-300 py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none">
-                            <Menu.Item>
-                              {({ active }) => (
-                                <a
-                                  href={`/#`} // Adjust the path as needed
-                                  className={classNames(
-                                    active ? "bg-gray-50" : "",
-                                    "block px-3 py-1 text-sm leading-6 text-gray-900"
-                                  )}
-                                >
-                                  View
-                                  <span className="sr-only">
-                                    , {group.name}
-                                  </span>
-                                </a>
-                              )}
-                            </Menu.Item>
-                            <Menu.Item>
-                              {({ active }) => (
-                                <Link
-                                  to={`/#/${group.subGroupAccount.id}`} // Adjust the path as needed
-                                  className={classNames(
-                                    active ? "bg-gray-50" : "",
-                                    "block px-3 py-1 text-sm leading-6 text-gray-900"
-                                  )}
-                                >
-                                  Edit
-                                  <span className="sr-only">
-                                    , {group.name}
-                                  </span>
-                                </Link>
-                              )}
-                            </Menu.Item>
-                          </Menu.Items>
-                        </Transition>
-                      </Menu>
-                    </td>
-                  </tr>
-                ) : null
-              )}
-            </tbody>
-          </table>
-          {showEditButton && (
-            <nav
-              className="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6"
-              aria-label="Pagination"
-            >
-              <div className="hidden sm:block">
-                <p className="text-sm text-gray-700">
-                  Showing
-                  <span className="font-medium mx-1">
-                    {indexOfFirstItem + 1}
-                  </span>
-                  to
-                  <span className="font-medium mx-1">{indexOfLastItem}</span>
-                  of
-                  <span className="font-medium mx-1">{groups.length}</span>
-                  results
-                </p>
-              </div>
-              <div className="flex-1 flex justify-between sm:justify-end">
-                <button
-                  onClick={prevPage}
-                  disabled={currentPage === 1}
-                  className="relative inline-flex items-center px-4 py-2 rounded-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
-                >
-                  Previous
-                </button>
-                <button
-                  onClick={nextPage}
-                  disabled={currentPage === totalPages}
-                  className="ml-3 relative inline-flex items-center px-4 py-2 rounded-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
-                >
-                  Next
-                </button>
-              </div>
-            </nav>
+                        </Dropdown>
+                      </div>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
           )}
+        </div>
+      </div>
+      {!loading && (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            marginRight: "40px",
+            marginTop: "10px",
+          }}
+        >
+          <div
+            style={{
+              textAlign: "center",
+              marginTop: "15px",
+              fontSize: "12px",
+              color: "#a1a1a1",
+            }}
+          >
+            Showing {rangeStart} - {rangeEnd} of {filteredAccounts.length}{" "}
+            results
+          </div>
+          <Pagination
+            current={currentPage}
+            total={filteredAccounts.length}
+            pageSize={itemsPerPage}
+            onChange={paginate}
+          />
         </div>
       )}
     </div>
