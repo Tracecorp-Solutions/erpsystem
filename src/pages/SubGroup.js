@@ -38,6 +38,9 @@ const SubGroup = () => {
     fetchGroupsAll();
   }, []);
 
+  // Assuming the API data structure is { id, name, description }
+
+  // In fetchGroups and fetchGroupsAll, set the correct state with fetched data
   const fetchGroups = async () => {
     try {
       const response = await axios.get(
@@ -57,9 +60,11 @@ const SubGroup = () => {
       );
       setAllGroups(response.data);
     } catch (error) {
-      console.error("Error fetching groups:", error);
+      console.error("Error fetching all groups:", error);
     }
   };
+
+  // In the table body, map over the 'groups' state to render the data
 
   const handleCancel = () => {
     setShowModal(false);
@@ -440,42 +445,47 @@ const SubGroup = () => {
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {currentGroup ? (
-                  currentGroup.map((group) => (
-                    <tr key={group.subGroupAccount.id}>
+                {groups.length > 0 ? (
+                  groups.map((group) => (
+                    <tr key={group.id}>
+                      <input
+                        type="checkbox"
+                        style={{ marginLeft: "10px", marginTop: "15px" }}
+                      />
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                         {group.subGroupAccount.name}
                       </td>
-                      
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                         {group.subGroupAccount.description}
                       </td>
-                      <div
-                      style={{
-                        width: "100px",
-                        display: "flex",
-                        justifyContent: "center",
-                      }}
-                    >
-                      <Dropdown
-                        overlay={renderMenu(group.id)}
-                        trigger={["click"]}
-                        visible={dropdownVisible[group.id]}
-                        onVisibleChange={(visible) =>
-                          handleDropdownVisibleChange(visible, group.id)
-                        }
-                      >
-                        <EllipsisVerticalIcon
-                          className="h-5 w-5"
-                          aria-hidden="true"
-                        />
-                      </Dropdown>
-                    </div>
+                      <td>
+                        <div
+                          style={{
+                            width: "100px",
+                            display: "flex",
+                            justifyContent: "center",
+                          }}
+                        >
+                          <Dropdown
+                            overlay={renderMenu(group.id)}
+                            trigger={["click"]}
+                            visible={dropdownVisible[group.id]}
+                            onVisibleChange={(visible) =>
+                              handleDropdownVisibleChange(visible, group.id)
+                            }
+                          >
+                            <EllipsisVerticalIcon
+                              className="h-5 w-5"
+                              aria-hidden="true"
+                            />
+                          </Dropdown>
+                        </div>
+                      </td>
                     </tr>
                   ))
                 ) : (
                   <tr>
-                    <td colSpan="4">No data available</td>
+                    <td colSpan="3">No data available</td>
                   </tr>
                 )}
               </tbody>
