@@ -157,7 +157,6 @@ const SubGroup = () => {
     setShowEditForm(false);
   };
 
-
   const renderMenu = (accountId) => (
     <Menu style={{ width: "200px" }}>
       <Menu.Item
@@ -441,33 +440,39 @@ const SubGroup = () => {
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-              {currentGroup.map((group) => (
-                <tr key={group.subGroupAccount.id}>
-                  <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                    {group.subGroupAccount.name}
-                  </td>
-                  <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                    {group.groupAccount.name}
-                  </td>
-                  <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                    {group.subGroupAccount.description}
-                  </td>
-                  <td className="relative whitespace-nowrap py-4 pr-4 text-right text-sm font-medium">
-                    {showEditButton && (
-                      <div className="relative">
-                        <select
-                          className="text-indigo-600 hover:text-indigo-900"
-                          onChange={(e) => handleEdit(e.target.value)}
-                        >
-                          <option value="">Show</option>
-                          <option value="edit">Edit</option>
-                          <option value="delete">Delete</option>
-                        </select>
-                      </div>
-                    )}
-                  </td>
-                </tr>
-              ))}
+                {currentGroup ? (
+                  currentGroup.map((group) => (
+                    <tr key={group.subGroupAccount.id}>
+                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                        {group.subGroupAccount.name}
+                      </td>
+                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                        {group.groupAccount.name}
+                      </td>
+                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                        {group.subGroupAccount.description}
+                      </td>
+                      <td className="relative whitespace-nowrap py-4 pr-4 text-right text-sm font-medium">
+                        {showEditButton && (
+                          <div className="relative">
+                            <select
+                              className="text-indigo-600 hover:text-indigo-900"
+                              onChange={(e) => handleEdit(e.target.value)}
+                            >
+                              <option value="">Show</option>
+                              <option value="edit">Edit</option>
+                              <option value="delete">Delete</option>
+                            </select>
+                          </div>
+                        )}
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan="4">No data available</td>
+                  </tr>
+                )}
               </tbody>
             </table>
           )}
