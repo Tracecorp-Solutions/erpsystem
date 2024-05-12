@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Modal, Button, Dropdown, Menu, Pagination } from "antd";
-import { EyeOutlined, EditOutlined } from '@ant-design/icons';
+import { EyeOutlined, EditOutlined } from "@ant-design/icons";
 import AccountForm from "../components/EditAccountForm";
 import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
 import AccountComponentSidebar from "../components/AccountComponentSidebar";
@@ -146,23 +146,38 @@ const AccountCreation = () => {
 
   const renderMenu = (accountId) => (
     <Menu style={{ width: "200px" }}>
-      <Menu.Item key="1" onClick={() => handleViewDetails(accountId)} icon={<EyeOutlined />}>
+      <Menu.Item
+        key="1"
+        onClick={() => handleViewDetails(accountId)}
+        icon={<EyeOutlined />}
+      >
         View
       </Menu.Item>
-      <Menu.Item key="2" onClick={() => handleEdit(accountId)}  icon={<EditOutlined />}>
+      <Menu.Item
+        key="2"
+        onClick={() => handleEdit(accountId)}
+        icon={<EditOutlined />}
+      >
         Edit
       </Menu.Item>
     </Menu>
   );
 
-  const filteredAccounts = accounts.filter((account) =>
-    account.name.toLowerCase().includes(accountNameFilter.toLowerCase()) ||
-    account.accountType.toLowerCase().includes(accountNameFilter.toLowerCase()) ||
-    account.accountNumber.includes(accountNameFilter.toLowerCase()) ||
-    subGroupAccounts.find(
-      (subGroup) => subGroup.subGroupAccount.id === account.subGroupAccountId
-    ).subGroupAccount.name.toLowerCase().includes(accountNameFilter.toLowerCase()) ||
-    account.balance.toString().includes(accountNameFilter)
+  const filteredAccounts = accounts.filter(
+    (account) =>
+      account.name.toLowerCase().includes(accountNameFilter.toLowerCase()) ||
+      account.accountType
+        .toLowerCase()
+        .includes(accountNameFilter.toLowerCase()) ||
+      account.accountNumber.includes(accountNameFilter.toLowerCase()) ||
+      subGroupAccounts
+        .find(
+          (subGroup) =>
+            subGroup.subGroupAccount.id === account.subGroupAccountId
+        )
+        .subGroupAccount.name.toLowerCase()
+        .includes(accountNameFilter.toLowerCase()) ||
+      account.balance.toString().includes(accountNameFilter)
   );
 
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -232,14 +247,12 @@ const AccountCreation = () => {
           />
         </div>
       </Modal>
-     {
-      !loading && (
+      {!loading && (
         <AccountNavigationFilter
-        accountNameFilter={accountNameFilter}
-        setAccountNameFilter={setAccountNameFilter}
-      />
-      )
-     }
+          accountNameFilter={accountNameFilter}
+          setAccountNameFilter={setAccountNameFilter}
+        />
+      )}
       <Modal visible={showModal} onCancel={handleCancel} footer={null}>
         <h3
           style={{
@@ -369,37 +382,40 @@ const AccountCreation = () => {
                 ))}
               </select>
             </div>
-            <div className="mb-4">
-              <label
-                htmlFor="accountNumber"
-                className="block mb-1"
-                style={{
-                  fontFamily: "outFit, Sans-serif",
-                  fontSize: "16px",
-                  fontWeight: "600",
-                }}
-              >
-                Account Number
-              </label>
-              <p className="text-gray-600 text-sm mb-1">
-                To ensure accurate tracking of transactions
-              </p>
-              <input
-                type="number"
-                id="accountNumber"
-                name="accountNumber"
-                value={newAccount.accountNumber}
-                onChange={(e) =>
-                  setNewAccount({
-                    ...newAccount,
-                    accountNumber: e.target.value,
-                  })
-                }
-                placeholder="Please enter account number..."
-                className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
-                style={{ borderRadius: "12px", padding: "15px" }}
-              />
-            </div>
+            {newAccount.accountType !== "InHouse" && (
+              <div className="mb-4">
+                <label
+                  htmlFor="accountNumber"
+                  className="block mb-1"
+                  style={{
+                    fontFamily: "outFit, Sans-serif",
+                    fontSize: "16px",
+                    fontWeight: "600",
+                  }}
+                >
+                  Account Number
+                </label>
+                <p className="text-gray-600 text-sm mb-1">
+                  To ensure accurate tracking of transactions
+                </p>
+                <input
+                  type="number"
+                  id="accountNumber"
+                  name="accountNumber"
+                  value={newAccount.accountNumber}
+                  onChange={(e) =>
+                    setNewAccount({
+                      ...newAccount,
+                      accountNumber: e.target.value,
+                    })
+                  }
+                  placeholder="Please enter account number..."
+                  className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                  style={{ borderRadius: "12px", padding: "15px" }}
+                />
+              </div>
+            )}
+
             <div className="mb-4">
               <label
                 htmlFor="balance"
@@ -524,134 +540,141 @@ const AccountCreation = () => {
       </Modal>
       <div>
         <div style={{ overflowY: "auto" }}>
-         {
-          loading ? ( <AccountLoadingMessage /> ) : (
-             <table className="table-auto min-w-full divide-gray-200">
-            <thead className="bg-gray-50">
-              <tr style={{ borderRadius: "50px" }}>
-                <input
-                  type="checkbox"
-                  style={{ marginLeft: "10px", marginTop: "15px" }}
-                />
-                <th
-                  scope="col"
-                  className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                >
-                  Name
-                </th>
-                <th
-                  scope="col"
-                  className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                >
-                  ACCOUNT NO
-                </th>
-                <th
-                  scope="col"
-                  className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                >
-                  SubGroup
-                </th>
-                <th
-                  scope="col"
-                  className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                >
-                  ACCOUNT TYPE
-                </th>
-                <th
-                  scope="col"
-                  className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                >
-                  0PENING BALANCE
-                </th>
-                <th
-                  scope="col"
-                  className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                >
-                  ACTION
-                </th>
-              </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {currentItems.map((account) => {
-                const subGroupInfo = subGroupAccounts.find(
-                  (subGroup) =>
-                    subGroup.subGroupAccount.id === account.subGroupAccountId
-                );
+          {loading ? (
+            <AccountLoadingMessage />
+          ) : (
+            <table className="table-auto min-w-full divide-gray-200">
+              <thead className="bg-gray-50">
+                <tr style={{ borderRadius: "50px" }}>
+                  <input
+                    type="checkbox"
+                    style={{ marginLeft: "10px", marginTop: "15px" }}
+                  />
+                  <th
+                    scope="col"
+                    className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    Name
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    ACCOUNT NO
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    SubGroup
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    ACCOUNT TYPE
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    0PENING BALANCE
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    ACTION
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200">
+                {currentItems.map((account) => {
+                  const subGroupInfo = subGroupAccounts.find(
+                    (subGroup) =>
+                      subGroup.subGroupAccount.id === account.subGroupAccountId
+                  );
 
-                return (
-                  <tr key={account.id}>
-                    <input
-                      type="checkbox"
-                      style={{ marginLeft: "10px", marginTop: "15px" }}
-                    />
-                    <td className="px-3 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                      {account.name}
-                    </td>
-                    <td className="px-3 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                      {account.accountNumber}
-                    </td>
-                    <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {subGroupInfo ? subGroupInfo.subGroupAccount.name : "N/A"}
-                    </td>
-                    <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {account.accountType}
-                    </td>
-                    <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">
-                      ${account.balance}
-                    </td>
-                    <div
-                      style={{
-                        width: "100px",
-                        display: "flex",
-                        justifyContent: "center",
-                      }}
-                    >
-                      <Dropdown
-                        overlay={renderMenu(account.id)}
-                        trigger={["click"]}
-                        visible={dropdownVisible[account.id]}
-                        onVisibleChange={(visible) =>
-                          handleDropdownVisibleChange(visible, account.id)
-                        }
+                  return (
+                    <tr key={account.id}>
+                      <input
+                        type="checkbox"
+                        style={{ marginLeft: "10px", marginTop: "15px" }}
+                      />
+                      <td className="px-3 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                        {account.name}
+                      </td>
+                      <td className="px-3 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                        {account.accountNumber}
+                      </td>
+                      <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">
+                        {subGroupInfo
+                          ? subGroupInfo.subGroupAccount.name
+                          : "N/A"}
+                      </td>
+                      <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">
+                        {account.accountType}
+                      </td>
+                      <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">
+                        ${account.balance}
+                      </td>
+                      <div
+                        style={{
+                          width: "100px",
+                          display: "flex",
+                          justifyContent: "center",
+                        }}
                       >
-                        <EllipsisVerticalIcon
-                          className="h-5 w-5"
-                          aria-hidden="true"
-                        />
-                      </Dropdown>
-                    </div>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-          )
-         }
+                        <Dropdown
+                          overlay={renderMenu(account.id)}
+                          trigger={["click"]}
+                          visible={dropdownVisible[account.id]}
+                          onVisibleChange={(visible) =>
+                            handleDropdownVisibleChange(visible, account.id)
+                          }
+                        >
+                          <EllipsisVerticalIcon
+                            className="h-5 w-5"
+                            aria-hidden="true"
+                          />
+                        </Dropdown>
+                      </div>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          )}
         </div>
       </div>
-      {
-        !loading && (
+      {!loading && (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            marginRight: "40px",
+            marginTop: "10px",
+          }}
+        >
           <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          marginRight: "40px",
-          marginTop: "10px",
-        }}
-      >
-        <div style={{ textAlign: "center", marginTop: "15px", fontSize: "12px", color: "#a1a1a1" }}>
-          Showing {rangeStart} - {rangeEnd} of {filteredAccounts.length}{" "}
-          results
+            style={{
+              textAlign: "center",
+              marginTop: "15px",
+              fontSize: "12px",
+              color: "#a1a1a1",
+            }}
+          >
+            Showing {rangeStart} - {rangeEnd} of {filteredAccounts.length}{" "}
+            results
+          </div>
+          <Pagination
+            current={currentPage}
+            total={filteredAccounts.length}
+            pageSize={itemsPerPage}
+            onChange={paginate}
+          />
         </div>
-        <Pagination
-          current={currentPage}
-          total={filteredAccounts.length}
-          pageSize={itemsPerPage}
-          onChange={paginate}
-        />
-      </div>
-        )
-      }
+      )}
     </div>
   );
 };

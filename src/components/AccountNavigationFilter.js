@@ -75,8 +75,8 @@ const AccountNavigationFilter = ({accountNameFilter, setAccountNameFilter }) => 
           defaultValue="Newest Frst"
           style={{ padding: "10px", borderRadius: "24px", paddingRight: "20px", paddingLeft: "20px" }}
         >
-          <option>Newest Frst</option>
-          <option>Newest Frst</option>
+          <option>Newest First</option>
+          <option>Newest First</option>
         </select>
       </div>
     </div>
