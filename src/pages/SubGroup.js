@@ -306,45 +306,41 @@ const SubGroup = () => {
                 style={{ borderRadius: "12px", padding: "15px" }}
               />
             </div>
-
             <div className="mb-4">
               <label
-                htmlFor="subGroupAccountId"
-                className="block mb-1"
+                htmlFor="group"
+                className="block text-sm font-medium text-gray-700"
                 style={{
                   fontFamily: "outFit, Sans-serif",
                   fontSize: "16px",
                   fontWeight: "600",
                 }}
               >
-                Group
+                Group Account*
               </label>
               <p>Select the group this SubGroup belongs to</p>
               <select
-                id="GroupAccountId"
-                name="GroupAccountId"
-                value={newAccount.GroupId}
+                value={newAccount.groupId}
                 onChange={(e) =>
-                  setNewAccount({
-                    ...newAccount,
-                    GroupAccountId: e.target.value,
-                  })
+                  setNewAccount({ ...newAccount, groupId: e.target.value })
                 }
                 className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
                 style={{ borderRadius: "12px", padding: "15px" }}
               >
-                <option value="">Select SubGroup</option>
-                {subGroupAccounts.map((subGroup) => (
-                  <option
-                    key={subGroup.subGroupAccount.id}
-                    value={subGroup.subGroupAccount.id}
-                  >
-                    {subGroup.subGroupAccount.name}
+                <option value="">Select Group</option>
+                {allGroups.map((group) => (
+                  <option key={group.id} value={group.id}>
+                    {group.name}
                   </option>
                 ))}
               </select>
+              {formErrors.groupId && (
+                <p className="mt-2 text-sm text-red-500">
+                  {formErrors.groupId}
+                </p>
+              )}
             </div>
-
+          
             {/* Description */}
             <div className="mb-4">
               <label
