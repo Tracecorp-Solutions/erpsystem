@@ -34,28 +34,29 @@ const SubGroup = () => {
     fetchSubGroupAccounts();
   }, []);
 
-  const fetchAccounts = async () => {
-    try {
-      const response = await axios.get(
-        `${process.env.REACT_APP_API_URL}/GetGroupAccountById`
-      );
-      setAccounts(response.data);
-      setLoading(false);
-    } catch (error) {
-      console.error("Error fetching accounts:", error);
-    }
-  };
-
-  const fetchSubGroupAccounts = async () => {
+  const fetchGroups = async () => {
     try {
       const response = await axios.get(
         `${process.env.REACT_APP_API_URL}/GetAllSubGroupAccounts`
       );
-      setSubGroupAccounts(response.data);
+      setGroups(response.data);
+      setLoading(false);
     } catch (error) {
-      console.error("Error fetching subGroup accounts", error);
+      console.error("Error fetching groups:", error);
     }
   };
+
+  const fetchGroupsAll = async () => {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}/GetAllGroupAccounts`
+      );
+      setAllGroups(response.data);
+    } catch (error) {
+      console.error("Error fetching groups:", error);
+    }
+  };
+
 
   const handleCancel = () => {
     setShowModal(false);
