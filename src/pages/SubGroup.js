@@ -30,6 +30,7 @@ const SubGroup = () => {
   const [successMessage, setSuccessMessage] = useState("");
   const [itemsPerPage] = useState(3);
   const [loading, setLoading] = useState(true);
+  const [formErrors, setFormErrors] = useState({});
 
   useEffect(() => {
     fetchGroups();
@@ -83,7 +84,6 @@ const SubGroup = () => {
   };
 
   const handleEditSubmit = async (e) => {
-    console.log("aoo", editedAccount);
     e.preventDefault();
     try {
       const response = await axios.post(
@@ -146,12 +146,14 @@ const SubGroup = () => {
       errors.groupId = "";
     }
 
+    setFormErrors(errors); // Set form errors based on validation
     return isValid;
   };
 
   const CancelEdit = () => {
     setShowEditForm(false);
   };
+
 
   const renderMenu = (accountId) => (
     <Menu style={{ width: "200px" }}>
@@ -334,13 +336,13 @@ const SubGroup = () => {
                   </option>
                 ))}
               </select>
-              {formErrors.groupId && (
+              {formErrors.groupId && ( // Check if there is an error message for the groupId field
                 <p className="mt-2 text-sm text-red-500">
-                  {formErrors.groupId}
+                  {formErrors.groupId} // Display the error message
                 </p>
               )}
             </div>
-          
+
             {/* Description */}
             <div className="mb-4">
               <label
