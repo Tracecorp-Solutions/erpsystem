@@ -457,11 +457,9 @@ const SubGroup = () => {
                         {group.name}
                       </td>
 
-                      <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">
-                        {subGroupInfo
-                          ? subGroupInfo.subGroupAccount.name
-                          : "N/A"}
-                      </td>
+                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                    {group.subGroupAccount.description}
+                  </td>
 
                       <div
                         style={{
