@@ -64,6 +64,8 @@ const SubGroup = () => {
     setShowModal(false);
   };
 
+  const [currentGroup, setCurrentGroup] = useState(null);
+
   const handleSubmit = async () => {
     if (validateForm()) {
       try {
