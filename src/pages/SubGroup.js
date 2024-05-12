@@ -440,47 +440,21 @@ const SubGroup = () => {
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {currentGroup ? (
-                  currentGroup.map((group) => (
-                    <tr key={group.subGroupAccount.id}>
-                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                        {group.subGroupAccount.name}
-                      </td>
-                      {/* <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                        {group.groupAccount.name}
-                      </td> */}
-                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                        {group.subGroupAccount.description}
-                      </td>
-                      <div
-                      style={{
-                        width: "100px",
-                        display: "flex",
-                        justifyContent: "center",
-                      }}
-                    >
-                      <Dropdown
-                        overlay={renderMenu(group.id)}
-                        trigger={["click"]}
-                        visible={dropdownVisible[group.id]}
-                        onVisibleChange={(visible) =>
-                          handleDropdownVisibleChange(visible, group.id)
-                        }
-                      >
-                        <EllipsisVerticalIcon
-                          className="h-5 w-5"
-                          aria-hidden="true"
-                        />
-                      </Dropdown>
-                    </div>
-                    </tr>
-                  ))
-                ) : (
-                  <tr>
-                    <td colSpan="4">No data available</td>
-                  </tr>
-                )}
-              </tbody>
+              {currentGroup.map((group) => (
+                <tr key={group.subGroupAccount.id}>
+                  <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                    {group.subGroupAccount.name}
+                  </td>
+                  <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                    {group.groupAccount.name}
+                  </td>
+                  <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                    {group.subGroupAccount.description}
+                  </td>
+                 
+                </tr>
+              ))}
+            </tbody>
             </table>
           )}
         </div>
