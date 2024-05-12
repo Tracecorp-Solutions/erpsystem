@@ -452,7 +452,27 @@ const SubGroup = () => {
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                         {group.subGroupAccount.description}
                       </td>
-                      
+                      <div
+                      style={{
+                        width: "100px",
+                        display: "flex",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <Dropdown
+                        overlay={renderMenu(group.id)}
+                        trigger={["click"]}
+                        visible={dropdownVisible[group.id]}
+                        onVisibleChange={(visible) =>
+                          handleDropdownVisibleChange(visible, group.id)
+                        }
+                      >
+                        <EllipsisVerticalIcon
+                          className="h-5 w-5"
+                          aria-hidden="true"
+                        />
+                      </Dropdown>
+                    </div>
                     </tr>
                   ))
                 ) : (
