@@ -2,100 +2,107 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Modal, Button, Dropdown, Menu, Pagination } from "antd";
 import { EyeOutlined, EditOutlined } from "@ant-design/icons";
-import AccountForm from "../components/SubEditAccountForm";
+import AccountForm from "../components/EditAccountForm";
 import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
-import AccountComponentSidebar from "../components/SubGroupSidebar";
-import AccountNavigationFilter from "../components/SubGroupNavigationFilter";
+// import AccountComponentSidebar from "../components/AccountComponentSidebar";
 import "../styles/AccountCreation.css";
-import AccountLoadingMessage from "../components/SubAccountLoadingMessage";
+import AccountLoadingMessage from "../components/AccountLoadingMessage";
+import SubComponentSidebar from "../components/SubGroupSidebar";
+import AccountNavigationFilter from "../components/SubGroupNavigationFilter";
 
-const SubGroup = () => {
+const AccountCreation = () => {
   const [showModal, setShowModal] = useState(false);
   const [showEditForm, setShowEditForm] = useState(false);
-  const [groups, setGroups] = useState([]);
-  const [allGroups, setAllGroups] = useState([]);
   const [drawerVisible, setDrawerVisible] = useState(false);
   const [accounts, setAccounts] = useState([]);
   const [subGroupAccounts, setSubGroupAccounts] = useState([]);
   const [newAccount, setNewAccount] = useState({
     name: "",
-    groupId: "",
+    subGroupAccountId: "",
+    accountType: "",
+    accountNumber: "",
+    balance: 0,
     description: "",
+    openingBalanceDate: "",
   });
   const [dropdownVisible, setDropdownVisible] = useState({});
   const [selectedAccount, setSelectedAccount] = useState(null);
   const [editedAccount, setEditedAccount] = useState(null);
   const [accountNameFilter, setAccountNameFilter] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [showEditButton, setShowEditButton] = useState(false);
-  const [successMessage, setSuccessMessage] = useState("");
   const [itemsPerPage] = useState(3);
   const [loading, setLoading] = useState(true);
-  const [formErrors, setFormErrors] = useState({});
 
   useEffect(() => {
-    fetchGroups();
-    fetchGroupsAll();
+    fetchAccounts();
+    fetchSubGroupAccounts();
   }, []);
 
-  // Assuming the API data structure is { id, name, description }
-
-  // In fetchGroups and fetchGroupsAll, set the correct state with fetched data
-  const fetchGroups = async () => {
+  const fetchAccounts = async () => {
     try {
       const response = await axios.get(
-        `${process.env.REACT_APP_API_URL}/GetAllSubGroupAccounts`
+        `${process.env.REACT_APP_API_URL}/GetAccounts`
       );
-      setGroups(response.data);
+      setAccounts(response.data);
       setLoading(false);
     } catch (error) {
       console.error("Error fetching groups:", error);
     }
   };
 
-  const fetchGroupsAll = async () => {
+  const fetchSubGroupAccounts = async () => {
     try {
       const response = await axios.get(
-        `${process.env.REACT_APP_API_URL}/GetAllGroupAccounts`
+        "http://54.226.71.2/GetAllSubGroupAccounts"
       );
-      setAllGroups(response.data);
+      setSubGroupAccounts(response.data);
+      console.log(response.data);
     } catch (error) {
-      console.error("Error fetching all groups:", error);
+      console.error("Error fetching subGroup accounts", error);
     }
   };
-
-  // In the table body, map over the 'groups' state to render the data
 
   const handleCancel = () => {
     setShowModal(false);
   };
 
-  const [currentGroup, setCurrentGroup] = useState(null);
-
-  const handleSubmit = async () => {
-    if (validateForm()) {
-      try {
-        await axios.post(
-          `${process.env.REACT_APP_API_URL}/CreateSubGroupAccount`,
-          newAccount
-        );
-        setNewAccount({ name: "", groupId: "", description: "" });
-        toggleForm();
-        setSuccessMessage("Sub-group created successfully!");
-        setTimeout(() => {
-          setSuccessMessage("");
-        }, 5000);
-      } catch (error) {
-        console.error("Error creating sub-group:", error);
-      }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_API_URL}/accounts`,
+        {
+          name: newAccount.name,
+          balance: parseFloat(newAccount.balance),
+          accountType: newAccount.accountType,
+          subGroupAccountId: parseInt(newAccount.subGroupAccountId),
+          accountNumber: newAccount.accountNumber,
+          description: newAccount.description,
+          openingBalanceDate: newAccount.openingBalanceDate,
+        }
+      );
+      console.log(response.data);
+      setNewAccount({
+        name: "",
+        subGroupAccountId: "",
+        balance: 0,
+        description: "",
+        openingBalanceDate: "",
+      });
+      fetchAccounts();
+      setTimeout(() => {}, 5000);
+      setShowModal(false);
+    } catch (error) {
+      console.error("Validation failed:", error);
     }
   };
 
   const handleEditSubmit = async (e) => {
+    console.log("aoo", editedAccount);
     e.preventDefault();
     try {
       const response = await axios.post(
-        `${process.env.REACT_APP_API_URL}/EditSubGroupAccount`,
+        `${process.env.REACT_APP_API_URL}/UpdateAccountDetails`,
         editedAccount
       );
       console.log("Account updated:", response.data);
@@ -134,30 +141,6 @@ const SubGroup = () => {
     }
   };
 
-  const toggleForm = () => {};
-
-  const validateForm = () => {
-    let errors = {};
-    let isValid = true;
-
-    if (!newAccount.name.trim()) {
-      errors.name = "Account name is required";
-      isValid = false;
-    } else {
-      errors.name = "";
-    }
-
-    if (!newAccount.groupId.trim()) {
-      errors.groupId = "Please select the group";
-      isValid = false;
-    } else {
-      errors.groupId = "";
-    }
-
-    setFormErrors(errors); // Set form errors based on validation
-    return isValid;
-  };
-
   const CancelEdit = () => {
     setShowEditForm(false);
   };
@@ -181,8 +164,21 @@ const SubGroup = () => {
     </Menu>
   );
 
-  const filteredAccounts = accounts.filter((account) =>
-    account.name.toLowerCase().includes(accountNameFilter.toLocaleLowerCase())
+  const filteredAccounts = accounts.filter(
+    (account) =>
+      account.name.toLowerCase().includes(accountNameFilter.toLowerCase()) ||
+      account.accountType
+        .toLowerCase()
+        .includes(accountNameFilter.toLowerCase()) ||
+      account.accountNumber.includes(accountNameFilter.toLowerCase()) ||
+      subGroupAccounts
+        .find(
+          (subGroup) =>
+            subGroup.subGroupAccount.id === account.subGroupAccountId
+        )
+        .subGroupAccount.name.toLowerCase()
+        .includes(accountNameFilter.toLowerCase()) ||
+      account.balance.toString().includes(accountNameFilter)
   );
 
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -194,6 +190,8 @@ const SubGroup = () => {
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
+  // const totalPages = Math.ceil(filteredAccounts.length / itemsPerPage);
+
   const rangeStart = (currentPage - 1) * itemsPerPage + 1;
   const rangeEnd = Math.min(
     currentPage * itemsPerPage,
@@ -203,7 +201,7 @@ const SubGroup = () => {
   return (
     <div>
       {drawerVisible && (
-        <AccountComponentSidebar
+        <SubComponentSidebar
           subGroupAccounts={subGroupAccounts}
           setDrawerVisible={setDrawerVisible}
           drawerVisible={drawerVisible}
@@ -224,7 +222,7 @@ const SubGroup = () => {
             fontSize: "25px",
           }}
         >
-          SubGroup
+          Accounts
         </h2>
         <Button
           type="primary"
@@ -235,7 +233,7 @@ const SubGroup = () => {
             fontFamily: "outFit, Sans-serif",
           }}
         >
-          + Create SubGroup
+          + Create Account
         </Button>
       </div>
       <Modal visible={showEditForm} onCancel={CancelEdit} footer={null}>
@@ -265,7 +263,7 @@ const SubGroup = () => {
             marginTop: "30px",
           }}
         >
-          SubGroup Creation
+          Account Creation
         </h3>
         <div
           style={{
@@ -291,7 +289,7 @@ const SubGroup = () => {
                   fontWeight: "600",
                 }}
               >
-                SubGroup Name
+                Account Name
               </label>
               <p
                 className="text-gray-600 text-sm mb-1"
@@ -317,39 +315,171 @@ const SubGroup = () => {
             </div>
             <div className="mb-4">
               <label
-                htmlFor="group"
-                className="block text-sm font-medium text-gray-700"
+                htmlFor="accountType"
+                className="block mb-1"
                 style={{
                   fontFamily: "outFit, Sans-serif",
                   fontSize: "16px",
                   fontWeight: "600",
                 }}
               >
-                Group Account*
+                Account Type
               </label>
-              <p>Select the group this SubGroup belongs to</p>
+              <p className="text-gray-600 text-sm mb-1">
+                This account can be a Bank account or an In-house account
+              </p>
               <select
-                value={newAccount.groupId}
+                id="accountType"
+                name="accountType"
+                value={newAccount.accountType}
                 onChange={(e) =>
-                  setNewAccount({ ...newAccount, groupId: e.target.value })
+                  setNewAccount({
+                    ...newAccount,
+                    accountType: e.target.value,
+                  })
                 }
                 className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
                 style={{ borderRadius: "12px", padding: "15px" }}
               >
-                <option value="">Select Group</option>
-                {allGroups.map((group) => (
-                  <option key={group.id} value={group.id}>
-                    {group.name}
+                <option value="">Select Account Type</option>
+                <option value="Bank">Bank</option>
+                <option value="InHouse">InHouse</option>
+              </select>
+            </div>
+            <div className="mb-4">
+              <label
+                htmlFor="subGroupAccountId"
+                className="block mb-1"
+                style={{
+                  fontFamily: "outFit, Sans-serif",
+                  fontSize: "16px",
+                  fontWeight: "600",
+                }}
+              >
+                SubGroup
+              </label>
+              <p>Select the subgroup this account belongs to</p>
+              <select
+                id="subGroupAccountId"
+                name="subGroupAccountId"
+                value={newAccount.subGroupAccountId}
+                onChange={(e) =>
+                  setNewAccount({
+                    ...newAccount,
+                    subGroupAccountId: e.target.value,
+                  })
+                }
+                className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                style={{ borderRadius: "12px", padding: "15px" }}
+              >
+                <option value="">Select SubGroup</option>
+                {subGroupAccounts.map((subGroup) => (
+                  <option
+                    key={subGroup.subGroupAccount.id}
+                    value={subGroup.subGroupAccount.id}
+                  >
+                    {subGroup.subGroupAccount.name}
                   </option>
                 ))}
               </select>
-              {formErrors.groupId && ( // Check if there is an error message for the groupId field
-                <p className="mt-2 text-sm text-red-500">
-                  {formErrors.groupId} // Display the error message
+            </div>
+            {newAccount.accountType !== "InHouse" && (
+              <div className="mb-4">
+                <label
+                  htmlFor="accountNumber"
+                  className="block mb-1"
+                  style={{
+                    fontFamily: "outFit, Sans-serif",
+                    fontSize: "16px",
+                    fontWeight: "600",
+                  }}
+                >
+                  Account Number
+                </label>
+                <p className="text-gray-600 text-sm mb-1">
+                  To ensure accurate tracking of transactions
                 </p>
-              )}
+                <input
+                  type="number"
+                  id="accountNumber"
+                  name="accountNumber"
+                  value={newAccount.accountNumber}
+                  onChange={(e) =>
+                    setNewAccount({
+                      ...newAccount,
+                      accountNumber: e.target.value,
+                    })
+                  }
+                  placeholder="Please enter account number..."
+                  className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                  style={{ borderRadius: "12px", padding: "15px" }}
+                />
+              </div>
+            )}
+
+            <div className="mb-4">
+              <label
+                htmlFor="balance"
+                className="block mb-1"
+                style={{
+                  fontFamily: "outFit, Sans-serif",
+                  fontSize: "16px",
+                  fontWeight: "600",
+                }}
+              >
+                Opening Date
+              </label>
+              <p style={{ fontFamily: "outFit, Sans-serif", color: "#a1a1a1" }}>
+                Initial account value at creation
+              </p>
+              <input
+                type="date"
+                id="openingBalanceDate"
+                name="openingBalanceDate"
+                value={newAccount.openingBalanceDate}
+                onChange={(e) =>
+                  setNewAccount({
+                    ...newAccount,
+                    openingBalanceDate: e.target.value,
+                  })
+                }
+                placeholder="Please enter account balance..."
+                className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                style={{ borderRadius: "12px", padding: "15px" }}
+              />
             </div>
 
+            <div className="mb-4">
+              <label
+                htmlFor="balance"
+                className="block mb-1"
+                style={{
+                  fontFamily: "outFit, Sans-serif",
+                  fontSize: "16px",
+                  fontWeight: "600",
+                }}
+              >
+                Opening Balance
+              </label>
+              <p style={{ fontFamily: "outFit, Sans-serif", color: "#a1a1a1" }}>
+                Initial account value at creation
+              </p>
+              <input
+                type="number"
+                id="balance"
+                name="balance"
+                value={newAccount.balance}
+                onChange={(e) =>
+                  setNewAccount({
+                    ...newAccount,
+                    balance: e.target.value,
+                  })
+                }
+                placeholder="Please enter account balance..."
+                className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                style={{ borderRadius: "12px", padding: "15px" }}
+              />
+            </div>
             {/* Description */}
             <div className="mb-4">
               <label
@@ -409,7 +539,6 @@ const SubGroup = () => {
           </button>
         </div>
       </Modal>
-
       <div>
         <div style={{ overflowY: "auto" }}>
           {loading ? (
@@ -428,14 +557,30 @@ const SubGroup = () => {
                   >
                     Name
                   </th>
-
                   <th
                     scope="col"
                     className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                   >
-                    Description
+                    ACCOUNT NO
                   </th>
-
+                  <th
+                    scope="col"
+                    className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    SubGroup
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    ACCOUNT TYPE
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    0PENING BALANCE
+                  </th>
                   <th
                     scope="col"
                     className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
@@ -445,49 +590,59 @@ const SubGroup = () => {
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {groups.length > 0 ? (
-                  groups.map((group) => (
-                    <tr key={group.id}>
+                {currentItems.map((account) => {
+                  const subGroupInfo = subGroupAccounts.find(
+                    (subGroup) =>
+                      subGroup.subGroupAccount.id === account.subGroupAccountId
+                  );
+
+                  return (
+                    <tr key={account.id}>
                       <input
                         type="checkbox"
                         style={{ marginLeft: "10px", marginTop: "15px" }}
                       />
-                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                        {group.subGroupAccount.name}
+                      <td className="px-3 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                        {account.name}
                       </td>
-                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                        {group.subGroupAccount.description}
+                      <td className="px-3 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                        {account.accountNumber}
                       </td>
-                      <td>
-                        <div
-                          style={{
-                            width: "100px",
-                            display: "flex",
-                            justifyContent: "center",
-                          }}
+                      <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">
+                        {subGroupInfo
+                          ? subGroupInfo.subGroupAccount.name
+                          : "N/A"}
+                      </td>
+                      <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">
+                        {account.accountType}
+                      </td>
+                      <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">
+                        ${account.balance}
+                      </td>
+                      <div
+                        style={{
+                          width: "100px",
+                          display: "flex",
+                          justifyContent: "center",
+                        }}
+                      >
+                        <Dropdown
+                          overlay={renderMenu(account.id)}
+                          trigger={["click"]}
+                          visible={dropdownVisible[account.id]}
+                          onVisibleChange={(visible) =>
+                            handleDropdownVisibleChange(visible, account.id)
+                          }
                         >
-                          <Dropdown
-                            overlay={renderMenu(group.id)}
-                            trigger={["click"]}
-                            visible={dropdownVisible[group.id]}
-                            onVisibleChange={(visible) =>
-                              handleDropdownVisibleChange(visible, group.id)
-                            }
-                          >
-                            <EllipsisVerticalIcon
-                              className="h-5 w-5"
-                              aria-hidden="true"
-                            />
-                          </Dropdown>
-                        </div>
-                      </td>
+                          <EllipsisVerticalIcon
+                            className="h-5 w-5"
+                            aria-hidden="true"
+                          />
+                        </Dropdown>
+                      </div>
                     </tr>
-                  ))
-                ) : (
-                  <tr>
-                    <td colSpan="3">No data available</td>
-                  </tr>
-                )}
+                  );
+                })}
               </tbody>
             </table>
           )}
@@ -525,4 +680,4 @@ const SubGroup = () => {
   );
 };
 
-export default SubGroup;
+export default AccountCreation;
