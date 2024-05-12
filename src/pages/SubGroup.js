@@ -30,8 +30,8 @@ const SubGroup = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchAccounts();
-    fetchSubGroupAccounts();
+    fetchGroups();
+    fetchGroupsAll();
   }, []);
 
   const fetchGroups = async () => {
