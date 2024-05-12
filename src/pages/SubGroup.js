@@ -12,6 +12,8 @@ import AccountLoadingMessage from "../components/SubAccountLoadingMessage";
 const SubGroup = () => {
   const [showModal, setShowModal] = useState(false);
   const [showEditForm, setShowEditForm] = useState(false);
+  const [groups, setGroups] = useState([]);
+  const [allGroups, setAllGroups] = useState([]);
   const [drawerVisible, setDrawerVisible] = useState(false);
   const [accounts, setAccounts] = useState([]);
   const [subGroupAccounts, setSubGroupAccounts] = useState([]);
@@ -57,7 +59,6 @@ const SubGroup = () => {
     }
   };
 
-
   const handleCancel = () => {
     setShowModal(false);
   };
@@ -80,7 +81,6 @@ const SubGroup = () => {
       }
     }
   };
-
 
   const handleEditSubmit = async (e) => {
     console.log("aoo", editedAccount);
@@ -126,9 +126,7 @@ const SubGroup = () => {
     }
   };
 
-  const toggleForm = () => {
-    
-  };
+  const toggleForm = () => {};
 
   const validateForm = () => {
     let errors = {};
@@ -459,8 +457,8 @@ const SubGroup = () => {
                       </td>
 
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                    {group.subGroupAccount.description}
-                  </td>
+                        {group.subGroupAccount.description}
+                      </td>
 
                       <div
                         style={{
