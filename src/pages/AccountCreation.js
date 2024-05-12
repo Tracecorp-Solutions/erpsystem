@@ -410,19 +410,27 @@ const AccountCreation = () => {
                       {account.balance}
                     </td>
                     <td className="px-3 py-4 whitespace-nowrap text-right text-sm font-medium">
-                      {showEditButton && (
-                        <div className="mb-4 md:w-3/4">
-                          <Select
-                            id="vendor"
-                            className="w-full"
-                            onChange={(value) => handleEdit(value)}
-                            bordered={false}
-                          >
-                            <Option value="vendor1">Edit</Option>
-                            <Option value="vendor2">Delete</Option>
-                          </Select>
-                        </div>
-                      )}
+                    <div
+                      style={{
+                        width: "100px",
+                        display: "flex",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <Dropdown
+                        overlay={renderMenu(account.id)}
+                        trigger={["click"]}
+                        visible={dropdownVisible[account.id]}
+                        onVisibleChange={(visible) =>
+                          handleDropdownVisibleChange(visible, account.id)
+                        }
+                      >
+                        <EllipsisVerticalIcon
+                          className="h-5 w-5"
+                          aria-hidden="true"
+                        />
+                      </Dropdown>
+                    </div>
                     </td>
                   </tr>
                 );
