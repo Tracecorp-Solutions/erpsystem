@@ -27,6 +27,7 @@ const SubGroup = () => {
   const [editedAccount, setEditedAccount] = useState(null);
   const [accountNameFilter, setAccountNameFilter] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+  const [showEditButton, setShowEditButton] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
   const [itemsPerPage] = useState(3);
   const [loading, setLoading] = useState(true);
