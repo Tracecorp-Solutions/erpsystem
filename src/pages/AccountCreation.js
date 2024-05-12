@@ -156,7 +156,13 @@ const AccountCreation = () => {
   );
 
   const filteredAccounts = accounts.filter((account) =>
-    account.name.toLowerCase().includes(accountNameFilter.toLocaleLowerCase())
+    account.name.toLowerCase().includes(accountNameFilter.toLowerCase()) ||
+    account.accountType.toLowerCase().includes(accountNameFilter.toLowerCase()) ||
+    account.accountNumber.includes(accountNameFilter.toLowerCase()) ||
+    subGroupAccounts.find(
+      (subGroup) => subGroup.subGroupAccount.id === account.subGroupAccountId
+    ).subGroupAccount.name.toLowerCase().includes(accountNameFilter.toLowerCase()) ||
+    account.balance.toString().includes(accountNameFilter)
   );
 
   const indexOfLastItem = currentPage * itemsPerPage;
