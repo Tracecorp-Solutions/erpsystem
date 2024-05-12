@@ -440,21 +440,27 @@ const SubGroup = () => {
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-              {currentGroup.map((group) => (
-                <tr key={group.subGroupAccount.id}>
-                  <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                    {group.subGroupAccount.name}
-                  </td>
-                  <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                    {group.groupAccount.name}
-                  </td>
-                  <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                    {group.subGroupAccount.description}
-                  </td>
-                 
-                </tr>
-              ))}
-            </tbody>
+                {currentGroup ? (
+                  currentGroup.map((group) => (
+                    <tr key={group.subGroupAccount.id}>
+                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                        {group.subGroupAccount.name}
+                      </td>
+                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                        {group.groupAccount.name}
+                      </td>
+                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                        {group.subGroupAccount.description}
+                      </td>
+                      
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan="4">No data available</td>
+                  </tr>
+                )}
+              </tbody>
             </table>
           )}
         </div>
