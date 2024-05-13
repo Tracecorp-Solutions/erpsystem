@@ -95,6 +95,7 @@ const navigation = [
       { name: "Main Accounts", href: "/main-accounts", current: false },
       { name: "Group Accounts", href: "/group-creation", current: false },
       { name: "SubGroup Accounts", href: "/sub-group", current: false },
+      { name: "Accounts", href: "/accounts", current: false },
     ],
   },
   {
@@ -641,8 +642,8 @@ export default function Main() {
                 <Route path="/financial" element={<Financial />} />
                 <Route path="/transfers" element={<Transfers />} />
                 <Route path="/account-creation" element={<GroupAccount />} />
-                <Route path="/account" element={<AccountCreation />} />
-                <Route path="/account-creation" element={<Account />} />
+                <Route path="/accounts" element={<AccountCreation />} />
+                {/* <Route path="/account-creation" element={<Account />} /> */}
                 <Route path="/petty" element={<Petty />} />
                 <Route path="/sub-group" element={<SubGroup />} />
                 <Route path="/invoice" element={<Invoice />} />

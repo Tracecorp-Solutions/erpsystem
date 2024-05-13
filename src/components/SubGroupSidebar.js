@@ -6,10 +6,14 @@ export default function SubComponentSidebar({
   setDrawerVisible,
   drawerVisible,
   selectedAccount,
+  accounts
 }) {
   const [modalVisible, setModalVisible] = useState(false);
 
-  console.log("sunsnnnnnnnn", selectedAccount);
+  console.log("subgroup", selectedAccount)
+  console.log("account", accounts)
+  const subgroupAccounts = accounts.filter(account => account.subGroupAccountId === selectedAccount.id);
+
 
   return (
     <>
@@ -42,9 +46,7 @@ export default function SubComponentSidebar({
             {selectedAccount?.name}
           </h2>
           <p style={{ textAlign: "start", fontFamily: "Sans-serif" }}>
-            A record of the business's non-liquid assets that have a lifespan of
-            more than one year, such as property, equipment, and investments, to
-            help you track and manage the long-term resources.
+            {selectedAccount?.description}
           </p>
         </div>
         <div
@@ -72,7 +74,22 @@ export default function SubComponentSidebar({
           <p style={{ marginTop: "10px", fontFamily: "sans-serif" }}>
             You haven't created any accounts under Long-Term Assets yet.
           </p>
-          <div style={{ display: "flex", justifyContent: "center" }}>
+          {subgroupAccounts.length > 0 ? (
+            <div>
+              <h3>Accounts:</h3>
+              <ul>
+                {subgroupAccounts.map((account) => (
+                  <li key={account.id}>
+                    {account.name} - {account.balance}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ) : (
+            <p style={{ marginTop: "10px", fontFamily: "sans-serif" }}>
+              No accounts available for this subgroup.
+            </p>
+          )}          <div style={{ display: "flex", justifyContent: "center" }}>
             <button
               type="button"
               style={{

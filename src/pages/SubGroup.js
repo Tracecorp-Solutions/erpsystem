@@ -209,6 +209,7 @@ const AccountCreation = () => {
           setDrawerVisible={setDrawerVisible}
           drawerVisible={drawerVisible}
           selectedAccount={selectedAccount}
+          accounts={accounts}
         />
       )}
       <div
