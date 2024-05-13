@@ -9,6 +9,7 @@ import "../styles/AccountCreation.css";
 import AccountLoadingMessage from "../components/AccountLoadingMessage";
 import SubComponentSidebar from "../components/SubGroupSidebar";
 import AccountNavigationFilter from "../components/SubGroupNavigationFilter";
+import SubGroupEditForm from "../components/SubGroupEditForm";
 
 const AccountCreation = () => {
   const [showModal, setShowModal] = useState(false);
@@ -167,13 +168,14 @@ const AccountCreation = () => {
       </Menu.Item>
       <Menu.Item
         key="2"
-        onClick={() => console.log("Edit clicked")}
+        onClick={() => handleEdit(accountId)}
         icon={<EditOutlined />}
       >
         Edit
       </Menu.Item>
     </Menu>
   );
+  
 
   const filteredAccounts = accounts.filter(
     (account) =>
@@ -228,6 +230,20 @@ const AccountCreation = () => {
           accounts={accounts}
         />
       )}
+
+{showEditForm && (
+  <SubGroupEditForm
+    visible={showEditForm}
+    subgroup={selectedAccount}
+    subGroupAccounts={subGroupAccounts}
+    onEdit={() => {
+      setShowEditForm(false);
+      // Optionally, you can fetch updated data after edit
+    }}
+    onCancel={CancelEdit}
+  />
+)}
+
       <div
         style={{
           display: "flex",
@@ -256,17 +272,6 @@ const AccountCreation = () => {
           + Create Account
         </Button>
       </div>
-      <Modal visible={showEditForm} onCancel={CancelEdit} footer={null}>
-        <div style={{ maxHeight: "70vh", overflowY: "auto" }}>
-          <AccountForm
-            subGroupAccounts={selectedAccount}
-            editedAccount={editedAccount}
-            setEditedAccount={setEditedAccount}
-            handleSubmit={handleEditSubmit}
-            CancelEdit={() => setShowEditForm(false)}
-          />
-        </div>
-      </Modal>
       {!loading && (
         <AccountNavigationFilter
           accountNameFilter={accountNameFilter}
