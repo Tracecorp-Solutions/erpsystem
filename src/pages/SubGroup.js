@@ -284,7 +284,7 @@ const AccountCreation = () => {
         </h3>
         <div
           style={{
-            maxHeight: "70vh",
+            maxHeight: "50vh",
             overflowY: "auto",
             paddingRight: "15px",
             msOverflowStyle: "none",
