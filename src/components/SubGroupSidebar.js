@@ -67,8 +67,13 @@ export default function SubComponentSidebar({
           </p>
         </div>
         {subgroupAccounts.length > 0 ? (
-          <div>
-            <h3 className="text-lg font-semibold mb-2">Accounts:</h3>
+          <div style={{
+            border: "1px solid #7a7a7a",
+            marginTop: "10px",
+            padding: "10px",
+            borderRadius: "24px"
+          }}>
+            <h3 className="text-lg font-semibold mb-2">Accounts</h3>
             <Table
               columns={columns}
               dataSource={subgroupAccounts}
