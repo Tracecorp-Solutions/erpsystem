@@ -208,6 +208,14 @@ const AccountCreation = () => {
     filteredAccounts.length
   );
 
+  const truncateText = (text, maxWords) => {
+    const words = text.split(" ");
+    if (words.length <= maxWords) {
+      return text;
+    }
+    return words.slice(0, maxWords).join(" ") + "...";
+  };
+
   return (
     <div>
       {drawerVisible && (
@@ -480,8 +488,9 @@ const AccountCreation = () => {
                         {account.subGroupAccount.name}
                       </td>
                       <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">
-                        {account.subGroupAccount.description}
+                        {truncateText(account.subGroupAccount.description, 6)}
                       </td>
+
                       <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">
                         {account.groupAccount.name}
                       </td>
