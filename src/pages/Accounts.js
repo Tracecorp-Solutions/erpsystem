@@ -1,16 +1,16 @@
 import { Link } from "react-router-dom";
 import TopNav from "../components/TopNav";
 
-function Dashboard() {
+function Accounts() {
   return (
     <div className="content">
       <TopNav />
+      <h1>Accounts</h1>
       <div>
-        <h1>Dashboard</h1>
-        <p>This is the Dashboard</p>
+        <Link to="/accounts">Create Account</Link>
       </div>
     </div>
   );
 }
 
-export default Dashboard;
+export default Accounts;
