@@ -235,7 +235,7 @@ const AccountCreation = () => {
   <SubGroupEditForm
     visible={showEditForm}
     subgroup={selectedAccount}
-    subGroupAccounts={subGroupAccounts}
+    group={group}
     onEdit={() => {
       setShowEditForm(false);
       // Optionally, you can fetch updated data after edit

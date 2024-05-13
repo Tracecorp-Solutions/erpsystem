@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Modal, Button } from "antd";
 import axios from "axios";
 
-const SubGroupEditForm = ({ visible, subgroup, onEdit, onCancel, subGroupAccounts }) => {
+const SubGroupEditForm = ({ visible, subgroup, onEdit, onCancel, group }) => {
   const [editedSubgroup, setEditedSubgroup] = useState({
     id: subgroup.id,
     name: subgroup.name,
@@ -56,19 +56,26 @@ const SubGroupEditForm = ({ visible, subgroup, onEdit, onCancel, subGroupAccount
           />
         </div>
 
+        
         <div className="mb-4">
           <label htmlFor="groupId" className="block mb-1">
             Group
           </label>
+          <p>Select the group this subgroup belongs to</p>
           <select
             id="groupId"
             name="groupId"
             value={editedSubgroup.groupId}
             onChange={handleChange}
             className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+            style={{ borderRadius: "12px", padding: "15px" }}
           >
             <option value="">Select Group</option>
-            {/* Render your group options here */}
+            {group.map((group) => (
+              <option key={group.id} value={group.id}>
+                {group.name}
+              </option>
+            ))}
           </select>
         </div>
 
