@@ -50,7 +50,9 @@ export default function SubComponentSidebar({
             {selectedAccount?.description}
           </p>
         </div>
-        <div
+       {
+        subgroupAccounts.length < 0 && (
+          <div
           style={{
             textAlign: "center",
             marginTop: "15px",
@@ -75,22 +77,6 @@ export default function SubComponentSidebar({
           <p style={{ marginTop: "10px", fontFamily: "sans-serif" }}>
             You haven't created any accounts under Long-Term Assets yet.
           </p>
-          {subgroupAccounts.length > 0 ? (
-            <div>
-              <h3>Accounts:</h3>
-              <ul>
-                {subgroupAccounts.map((account) => (
-                  <li key={account.id}>
-                    {account.name} - {account.balance}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ) : (
-            <p style={{ marginTop: "10px", fontFamily: "sans-serif" }}>
-              No accounts available for this subgroup.
-            </p>
-          )}
           <div style={{ display: "flex", justifyContent: "center" }}>
             <button
               type="button"
@@ -107,6 +93,24 @@ export default function SubComponentSidebar({
             </button>
           </div>
         </div>
+        )
+       }
+        {subgroupAccounts.length > 0 ? (
+            <div>
+              <h3>Accounts:</h3>
+              <ul>
+                {subgroupAccounts.map((account) => (
+                  <li key={account.id}>
+                    {account.name} - {account.balance}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ) : (
+            <p style={{ marginTop: "10px", fontFamily: "sans-serif" }}>
+              No accounts available for this subgroup.
+            </p>
+          )}
         <Modal
           visible={modalVisible}
           onCancel={() => setModalVisible(false)}
