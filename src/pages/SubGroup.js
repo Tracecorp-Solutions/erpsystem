@@ -22,7 +22,6 @@ const AccountCreation = () => {
     description: "",
     groupId: "",
   });
-  const [dropdownVisible, setDropdownVisible] = useState({});
   const [selectedAccount, setSelectedAccount] = useState(null);
   const [editedAccount, setEditedAccount] = useState(null);
   const [accountNameFilter, setAccountNameFilter] = useState("");
@@ -55,7 +54,6 @@ const AccountCreation = () => {
         "http://54.226.71.2/GetAllSubGroupAccounts"
       );
       setSubGroupAccounts(response.data);
-      console.log("xuxuuxuxuuxuux", response.data);
     } catch (error) {
       console.error("Error fetching subGroup accounts", error);
     }
@@ -106,20 +104,6 @@ const AccountCreation = () => {
     });
   };
 
-  const handleEditSubmit = async (e) => {
-    console.log("aoo", editedAccount);
-    e.preventDefault();
-    try {
-      const response = await axios.post(
-        `${process.env.REACT_APP_API_URL}/UpdateAccountDetails`,
-        editedAccount
-      );
-      console.log("Account updated:", response.data);
-      setShowEditForm(false);
-    } catch (error) {
-      console.error("Error updating account:", error);
-    }
-  };
 
   const handleViewDetails = async (accountId) => {
     console.log("id id id", accountId);
@@ -129,15 +113,10 @@ const AccountCreation = () => {
         `${process.env.REACT_APP_API_URL}/GetSubGroupById?id=${accountId}`
       );
       setSelectedAccount(response.data);
-      console.log("details", response.data);
       setDrawerVisible(true);
     } catch (error) {
       console.error("Error fetching account details:", error);
     }
-  };
-
-  const handleDropdownVisibleChange = (visible, accountId) => {
-    setDropdownVisible({ ...dropdownVisible, [accountId]: visible });
   };
 
   const handleEdit = async (accountId) => {
@@ -158,7 +137,7 @@ const AccountCreation = () => {
   };
 
   const renderMenu = (accountId) => (
-    <Menu style={{ width: "200px" }}>
+    <Menu style={{ width: "100px" }}>
       <Menu.Item
         key="1"
         onClick={() => handleViewDetails(accountId)}
@@ -175,7 +154,6 @@ const AccountCreation = () => {
       </Menu.Item>
     </Menu>
   );
-  
 
   const filteredAccounts = accounts.filter(
     (account) =>
@@ -231,18 +209,18 @@ const AccountCreation = () => {
         />
       )}
 
-{showEditForm && (
-  <SubGroupEditForm
-    visible={showEditForm}
-    subgroup={selectedAccount}
-    group={group}
-    onEdit={() => {
-      setShowEditForm(false);
-      // Optionally, you can fetch updated data after edit
-    }}
-    onCancel={CancelEdit}
-  />
-)}
+      {showEditForm && (
+        <SubGroupEditForm
+          visible={showEditForm}
+          subgroup={selectedAccount}
+          group={group}
+          onEdit={() => {
+            setShowEditForm(false);
+            handleEdit();
+          }}
+          onCancel={CancelEdit}
+        />
+      )}
 
       <div
         style={{
@@ -315,7 +293,9 @@ const AccountCreation = () => {
               >
                 SubGroup
               </label>
-              <p>Choose a unique name for your subgroup that reflects its purpose</p>
+              <p>
+                Choose a unique name for your subgroup that reflects its purpose
+              </p>
               <select
                 id="subGroupId"
                 name="subGroupId"
@@ -378,7 +358,9 @@ const AccountCreation = () => {
               >
                 Description
               </label>
-              <p>Add a brief description to help identify this subgroup's purpose</p>
+              <p>
+                Add a brief description to help identify this subgroup's purpose
+              </p>
               <textarea
                 id="description"
                 name="description"

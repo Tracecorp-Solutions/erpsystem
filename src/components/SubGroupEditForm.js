@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Modal, Button } from "antd";
 import axios from "axios";
 
-const SubGroupEditForm = ({ visible, subgroup, onEdit, onCancel, group }) => {
+const SubGroupEditForm = ({ visible, subgroup, onEdit, onCancel, group, }) => {
   const [editedSubgroup, setEditedSubgroup] = useState({
     id: subgroup.id,
     name: subgroup.name,
