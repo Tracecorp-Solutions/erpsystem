@@ -15,7 +15,7 @@ export default function SubComponentSidebar({
         closable={false}
         onClose={() => setDrawerVisible(false)}
         visible={drawerVisible}
-        width={500}
+        width={400}
         style={{ height: "100vh", overflow: "auto" }}
       >
         <div className="px- text-end">
