@@ -21,14 +21,15 @@ export default function SubComponentSidebar({
 
   const columns = [
     {
-      title: "Name",
+      title: "NAME",
       dataIndex: "name",
       key: "name",
     },
     {
-      title: "Balance",
-      dataIndex: "balance",
-      key: "balance",
+      title: "CREATED",
+      dataIndex: "openingBalanceDate",
+      key: "date",
+      render: (date) => new Date(date).toLocaleDateString(),
     },
   ];
 
@@ -73,7 +74,7 @@ export default function SubComponentSidebar({
             padding: "10px",
             borderRadius: "24px"
           }}>
-            <h3 className="text-lg font-semibold mb-2">Accounts</h3>
+            <h3 className="text-lg font-semibold mb-2" style={{ color: "#4467a1", fontFamily: "outFit, Sans-serif", fontSize: "24" }}>Accounts</h3>
             <Table
               columns={columns}
               dataSource={subgroupAccounts}
