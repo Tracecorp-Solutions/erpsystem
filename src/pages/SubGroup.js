@@ -74,6 +74,7 @@ const AccountCreation = () => {
 
   const handleCancel = () => {
     setShowModal(false);
+    console.log("close")
   };
 
   const handleSubmit = async (e) => {
@@ -296,8 +297,6 @@ const AccountCreation = () => {
           }}
           className="overflow-y-auto"
         >
-          <Modal visible={showModal} onCancel={handleCancel} footer={null}>
-            <h3>Account Creation</h3>
             <form className="max-w-md mx-auto" onSubmit={handleSubmit}>
               <div className="mb-4">
                 <label
@@ -402,35 +401,6 @@ const AccountCreation = () => {
                 </button>
               </div>
             </form>
-          </Modal>
-        </div>
-        <div className="flex justify-between">
-          <button
-            type="button"
-            onClick={handleCancel}
-            className="py-2 px-4 text-gray-700 rounded focus:outline-none"
-            style={{
-              borderRadius: "28px",
-              fontFamily: "outFit, Sans-serif",
-              width: "40%",
-              border: "#505050 1px solid",
-            }}
-          >
-            Cancel
-          </button>
-          <button
-            type="submit"
-            className="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none"
-            style={{
-              background: "#4467a1",
-              borderRadius: "28px",
-              fontFamily: "outFit, Sans-serif",
-              width: "40%",
-            }}
-            onClick={handleSubmit}
-          >
-            Save Account
-          </button>
         </div>
       </Modal>
       <div>
