@@ -578,7 +578,7 @@ const AccountCreation = () => {
                     scope="col"
                     className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                   >
-                    0PENING BALANCE
+                    BALANCE
                   </th>
                   <th
                     scope="col"
