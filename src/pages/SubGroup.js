@@ -113,17 +113,19 @@ const AccountCreation = () => {
   };
 
   const handleViewDetails = async (accountId) => {
+    console.log("id id id", accountId);
     setDrawerVisible(true);
     try {
       const response = await axios.get(
-        `${process.env.REACT_APP_API_URL}/GetAccountById?id=${accountId}`
+        `${process.env.REACT_APP_API_URL}/GetSubGroupById?id=${accountId}`
       );
       setSelectedAccount(response.data);
+      console.log("details", response.data)
       setDrawerVisible(true);
     } catch (error) {
       console.error("Error fetching account details:", error);
     }
-  };
+  };  
 
   const handleDropdownVisibleChange = (visible, accountId) => {
     setDropdownVisible({ ...dropdownVisible, [accountId]: visible });
@@ -132,7 +134,7 @@ const AccountCreation = () => {
   const handleEdit = async (accountId) => {
     try {
       const response = await axios.get(
-        `${process.env.REACT_APP_API_URL}/GetAccountById?id=${accountId}`
+        `${process.env.REACT_APP_API_URL}/GetSubGroupById?id=${accountId}`
       );
       setSelectedAccount(response.data);
       setEditedAccount(response.data);
@@ -146,11 +148,11 @@ const AccountCreation = () => {
     setShowEditForm(false);
   };
 
-  const renderMenu = () => (
+  const renderMenu = (accountId) => (
     <Menu style={{ width: "200px" }}>
       <Menu.Item
         key="1"
-        onClick={handleViewDetails}
+        onClick={() => handleViewDetails(accountId)}
         icon={<EyeOutlined />}
       >
         View
@@ -203,7 +205,7 @@ const AccountCreation = () => {
     <div>
       {drawerVisible && (
         <SubComponentSidebar
-          subGroupAccounts={subGroupAccounts}
+          subGroupAccounts={selectedAccount}
           setDrawerVisible={setDrawerVisible}
           drawerVisible={drawerVisible}
           selectedAccount={selectedAccount}
@@ -240,12 +242,11 @@ const AccountCreation = () => {
       <Modal visible={showEditForm} onCancel={CancelEdit} footer={null}>
         <div style={{ maxHeight: "70vh", overflowY: "auto" }}>
           <AccountForm
-            accountData={selectedAccount}
+            subGroupAccounts={selectedAccount}
             editedAccount={editedAccount}
             setEditedAccount={setEditedAccount}
             handleSubmit={handleEditSubmit}
             CancelEdit={() => setShowEditForm(false)}
-            subGroupAccounts={subGroupAccounts}
           />
         </div>
       </Modal>
@@ -607,7 +608,7 @@ const AccountCreation = () => {
                           justifyContent: "center",
                         }}
                       >
-                        <Dropdown overlay={renderMenu} trigger={["click"]}>
+                        <Dropdown overlay={renderMenu(account.groupAccount.id)} trigger={["click"]}>
                           <EllipsisVerticalIcon
                             className="h-5 w-5"
                             aria-hidden="true"
