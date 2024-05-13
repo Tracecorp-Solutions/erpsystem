@@ -310,6 +310,7 @@ const AccountCreation = () => {
               >
                 SubGroup
               </label>
+              <p>Choose a unique name for your subgroup that reflects its purpose</p>
               <select
                 id="subGroupId"
                 name="subGroupId"
@@ -342,6 +343,7 @@ const AccountCreation = () => {
               >
                 Group
               </label>
+              <p>Select the group this subgroup belongs to</p>
               <select
                 id="groupId"
                 name="groupId"
@@ -371,6 +373,7 @@ const AccountCreation = () => {
               >
                 Description
               </label>
+              <p>Add a brief description to help identify this subgroup's purpose</p>
               <textarea
                 id="description"
                 name="description"
