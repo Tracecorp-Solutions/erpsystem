@@ -74,7 +74,7 @@ const AccountCreation = () => {
 
   const handleCancel = () => {
     setShowModal(false);
-    console.log("close")
+    console.log("close");
   };
 
   const handleSubmit = async (e) => {
@@ -297,139 +297,120 @@ const AccountCreation = () => {
           }}
           className="overflow-y-auto"
         >
-            <form className="max-w-md mx-auto" onSubmit={handleSubmit}>
-              <div className="mb-4">
-                <label
-                  htmlFor="name"
-                  className="block mb-1"
-                  style={{
-                    fontFamily: "outFit, Sans-serif",
-                    fontSize: "16px",
-                    fontWeight: "600",
-                  }}
-                >
-                  Name
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  value={newAccount.name}
-                  onChange={handleChange}
-                  className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
-                  style={{ borderRadius: "12px", padding: "15px" }}
-                />
-              </div>
+          <form className="max-w-md mx-auto">
+            <div className="mb-4">
+              <label
+                htmlFor="subGroupId"
+                className="block mb-1"
+                style={{
+                  fontFamily: "outFit, Sans-serif",
+                  fontSize: "16px",
+                  fontWeight: "600",
+                }}
+              >
+                SubGroup
+              </label>
+              <select
+                id="subGroupId"
+                name="subGroupId"
+                value={newAccount.subGroupId}
+                onChange={handleChange}
+                className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                style={{ borderRadius: "12px", padding: "15px" }}
+              >
+                <option value="">Select SubGroup</option>
+                {subGroupAccounts.map((subGroup) => (
+                  <option
+                    key={subGroup.subGroupAccount.id}
+                    value={subGroup.subGroupAccount.name}
+                  >
+                    {subGroup.subGroupAccount.name}{" "}
+                  </option>
+                ))}
+              </select>
+            </div>
 
-              <div className="mb-4">
-                <label
-                  htmlFor="groupId"
-                  className="block mb-1"
-                  style={{
-                    fontFamily: "outFit, Sans-serif",
-                    fontSize: "16px",
-                    fontWeight: "600",
-                  }}
-                >
-                  Group
-                </label>
-                <select
-                  id="groupId"
-                  name="groupId"
-                  value={newAccount.groupId}
-                  onChange={handleChange}
-                  className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
-                  style={{ borderRadius: "12px", padding: "15px" }}
-                >
-                  <option value="">Select Group</option>
-                  {group.map((group) => (
-                    <option key={group.id} value={group.id}>
-                      {group.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
+            <div className="mb-4">
+              <label
+                htmlFor="groupId"
+                className="block mb-1"
+                style={{
+                  fontFamily: "outFit, Sans-serif",
+                  fontSize: "16px",
+                  fontWeight: "600",
+                }}
+              >
+                Group
+              </label>
+              <select
+                id="groupId"
+                name="groupId"
+                value={newAccount.groupId}
+                onChange={handleChange}
+                className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                style={{ borderRadius: "12px", padding: "15px" }}
+              >
+                <option value="">Select Group</option>
+                {group.map((group) => (
+                  <option key={group.id} value={group.id}>
+                    {group.name}
+                  </option>
+                ))}
+              </select>
+            </div>
 
-              <div className="mb-4">
-                <label
-                  htmlFor="groupId"
-                  className="block mb-1"
-                  style={{
-                    fontFamily: "outFit, Sans-serif",
-                    fontSize: "16px",
-                    fontWeight: "600",
-                  }}
-                >
-                  SubGroup
-                </label>
-                <select
-                  id="groupId"
-                  name="groupId"
-                  value={newAccount.groupId}
-                  onChange={handleChange}
-                  className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
-                  style={{ borderRadius: "12px", padding: "15px" }}
-                >
-                  <option value="">Select Group</option>
-                  {group.map((group) => (
-                    <option key={group.id} value={group.id}>
-                      {group.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              <div className="mb-4">
-                <label
-                  htmlFor="description"
-                  className="block mb-1"
-                  style={{
-                    fontFamily: "outFit, Sans-serif",
-                    fontSize: "16px",
-                    fontWeight: "600",
-                  }}
-                >
-                  Description
-                </label>
-                <textarea
-                  id="description"
-                  name="description"
-                  value={newAccount.description}
-                  onChange={handleChange}
-                  placeholder="Please enter description..."
-                  className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
-                  style={{ borderRadius: "12px", padding: "15px" }}
-                ></textarea>
-              </div>
-            </form>
+            <div className="mb-4">
+              <label
+                htmlFor="description"
+                className="block mb-1"
+                style={{
+                  fontFamily: "outFit, Sans-serif",
+                  fontSize: "16px",
+                  fontWeight: "600",
+                }}
+              >
+                Description
+              </label>
+              <textarea
+                id="description"
+                name="description"
+                value={newAccount.description}
+                onChange={handleChange}
+                placeholder="Please enter description..."
+                className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                style={{ borderRadius: "12px", padding: "15px" }}
+              ></textarea>
+            </div>
+          </form>
         </div>
         <div className="flex justify-between">
-                <button
-                  type="button"
-                  onClick={handleCancel}
-                  className="py-2 px-4 text-gray-700 rounded focus:outline-none"
-                  style={{
-                    borderRadius: "28px",
-                    fontFamily: "outFit, Sans-serif",
-                    width: "40%",
-                    border: "#505050 1px solid",
-                  }}
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  className="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none"
-                  style={{
-                    background: "#4467a1",
-                    borderRadius: "28px",
-                    fontFamily: "outFit, Sans-serif",
-                    width: "40%",
-                  }}
-                >
-                  Save Account
-                </button>
-              </div>
+          <button
+            type="button"
+            onClick={handleCancel}
+            className="py-2 px-4 text-gray-700 rounded focus:outline-none"
+            style={{
+              borderRadius: "28px",
+              fontFamily: "outFit, Sans-serif",
+              width: "40%",
+              border: "#505050 1px solid",
+            }}
+          >
+            Cancel
+          </button>
+          <button
+            type="submit"
+            className="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none"
+            style={{
+              background: "#4467a1",
+              borderRadius: "28px",
+              fontFamily: "outFit, Sans-serif",
+              width: "40%",
+            }}
+            onClick={handleSubmit}
+          >
+            Save Account
+          </button>
+        </div>
       </Modal>
       <div>
         <div style={{ overflowY: "auto" }}>
