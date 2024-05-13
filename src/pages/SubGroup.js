@@ -233,7 +233,7 @@ const AccountCreation = () => {
             fontSize: "25px",
           }}
         >
-          Accounts
+          SubGroup
         </h2>
         <Button
           type="primary"
@@ -483,7 +483,7 @@ const AccountCreation = () => {
                         {account.subGroupAccount.description}
                       </td>
                       <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">
-                        {account.groupAccount.behaviour}
+                        {account.groupAccount.name}
                       </td>
                       <div
                         style={{
