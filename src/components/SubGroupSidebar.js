@@ -1,20 +1,36 @@
 import { useState } from "react";
-import { Drawer, Modal, Card } from "antd";
+import { Drawer, Modal, Card, Table } from "antd";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 
 export default function SubComponentSidebar({
   setDrawerVisible,
   drawerVisible,
   selectedAccount,
-  accounts
+  accounts,
 }) {
   const [modalVisible, setModalVisible] = useState(false);
 
   console.log("subgroup", selectedAccount);
   console.log("account", accounts);
 
-  // Check if selectedAccount is null before accessing its id property
-  const subgroupAccounts = selectedAccount ? accounts.filter(account => account.subGroupAccountId === selectedAccount.id) : [];
+  const subgroupAccounts = selectedAccount
+    ? accounts.filter(
+        (account) => account.subGroupAccountId === selectedAccount.id
+      )
+    : [];
+
+  const columns = [
+    {
+      title: "Name",
+      dataIndex: "name",
+      key: "name",
+    },
+    {
+      title: "Balance",
+      dataIndex: "balance",
+      key: "balance",
+    },
+  ];
 
   return (
     <>
@@ -50,67 +66,58 @@ export default function SubComponentSidebar({
             {selectedAccount?.description}
           </p>
         </div>
-       {
-        subgroupAccounts.length < 0 && (
-          <div
-          style={{
-            textAlign: "center",
-            marginTop: "15px",
-            background: "#f6f6f4",
-            padding: "20px",
-            borderRadius: "24px",
-          }}
-        >
-          <div style={{ display: "flex", justifyContent: "center" }}>
-            <img src="../images/Group.jpg" width={150} />
+        {subgroupAccounts.length > 0 ? (
+          <div>
+            <h3 className="text-lg font-semibold mb-2">Accounts:</h3>
+            <Table
+              columns={columns}
+              dataSource={subgroupAccounts}
+              pagination={false}
+            />
           </div>
-          <h2
+        ) : (
+          <div
             style={{
-              marginTop: "10px",
-              fontWeight: "600",
-              fontSize: "24px",
-              fontFamily: "Sans-serif",
+              textAlign: "center",
+              marginTop: "15px",
+              background: "#f6f6f4",
+              padding: "20px",
+              borderRadius: "24px",
             }}
           >
-            Let's keep organizing!
-          </h2>
-          <p style={{ marginTop: "10px", fontFamily: "sans-serif" }}>
-            You haven't created any accounts under Long-Term Assets yet.
-          </p>
-          <div style={{ display: "flex", justifyContent: "center" }}>
-            <button
-              type="button"
+            <div style={{ display: "flex", justifyContent: "center" }}>
+              <img src="../images/Group.jpg" width={150} />
+            </div>
+            <h2
               style={{
-                marginTop: "15px",
-                borderRadius: "24px",
-                padding: "7px 15px 7px 15px",
-                background: "#4467a1",
-                color: "#fff",
-                fontFamily: "outFit, Sans-serif",
+                marginTop: "10px",
+                fontWeight: "600",
+                fontSize: "24px",
+                fontFamily: "Sans-serif",
               }}
             >
-              + Create Account
-            </button>
-          </div>
-        </div>
-        )
-       }
-        {subgroupAccounts.length > 0 ? (
-            <div>
-              <h3>Accounts:</h3>
-              <ul>
-                {subgroupAccounts.map((account) => (
-                  <li key={account.id}>
-                    {account.name} - {account.balance}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ) : (
+              Let's keep organizing!
+            </h2>
             <p style={{ marginTop: "10px", fontFamily: "sans-serif" }}>
-              No accounts available for this subgroup.
+              You haven't created any accounts under Long-Term Assets yet.
             </p>
-          )}
+            <div style={{ display: "flex", justifyContent: "center" }}>
+              <button
+                type="button"
+                style={{
+                  marginTop: "15px",
+                  borderRadius: "24px",
+                  padding: "7px 15px 7px 15px",
+                  background: "#4467a1",
+                  color: "#fff",
+                  fontFamily: "outFit, Sans-serif",
+                }}
+              >
+                + Create Account
+              </button>
+            </div>
+          </div>
+        )}
         <Modal
           visible={modalVisible}
           onCancel={() => setModalVisible(false)}
