@@ -578,7 +578,7 @@ const AccountCreation = () => {
                     scope="col"
                     className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                   >
-                    BALANCE
+                 BALANCE ($) 
                   </th>
                   <th
                     scope="col"
@@ -601,22 +601,22 @@ const AccountCreation = () => {
                         type="checkbox"
                         style={{ marginLeft: "10px", marginTop: "15px" }}
                       />
-                      <td className="px-3 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                      <td className="px-3 py-4 whitespace-nowrap text-sm  text-gray-800">
                         {account.name}
                       </td>
-                      <td className="px-3 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                      <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-800">
                         {account.accountNumber}
                       </td>
-                      <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">
+                      <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-800">
                         {subGroupInfo
                           ? subGroupInfo.subGroupAccount.name
                           : "N/A"}
                       </td>
-                      <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">
+                      <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-800">
                         {account.accountType}
                       </td>
-                      <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">
-                        ${account.balance}
+                      <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-800">
+                        {account.balance}
                       </td>
                       <div
                         style={{

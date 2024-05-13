@@ -63,7 +63,7 @@ export default function AccountComponentSidebar({
               fontWeight: "500",
             }}
           >
-            <h2>OPENING BALANCE</h2>
+            <h2>BALANCE</h2>
           </div>
           <div
             style={{
