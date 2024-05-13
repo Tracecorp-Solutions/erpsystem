@@ -113,6 +113,7 @@ const AccountCreation = () => {
   };
 
   const handleViewDetails = async (accountId) => {
+    setDrawerVisible(true);
     try {
       const response = await axios.get(
         `${process.env.REACT_APP_API_URL}/GetAccountById?id=${accountId}`
@@ -149,7 +150,7 @@ const AccountCreation = () => {
     <Menu style={{ width: "200px" }}>
       <Menu.Item
         key="1"
-        onClick={() => console.log("View clicked")}
+        onClick={handleViewDetails}
         icon={<EyeOutlined />}
       >
         View
