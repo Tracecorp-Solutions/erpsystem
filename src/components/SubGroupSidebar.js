@@ -10,10 +10,11 @@ export default function SubComponentSidebar({
 }) {
   const [modalVisible, setModalVisible] = useState(false);
 
-  console.log("subgroup", selectedAccount)
-  console.log("account", accounts)
-  const subgroupAccounts = accounts.filter(account => account.subGroupAccountId === selectedAccount.id);
+  console.log("subgroup", selectedAccount);
+  console.log("account", accounts);
 
+  // Check if selectedAccount is null before accessing its id property
+  const subgroupAccounts = selectedAccount ? accounts.filter(account => account.subGroupAccountId === selectedAccount.id) : [];
 
   return (
     <>
@@ -89,7 +90,8 @@ export default function SubComponentSidebar({
             <p style={{ marginTop: "10px", fontFamily: "sans-serif" }}>
               No accounts available for this subgroup.
             </p>
-          )}          <div style={{ display: "flex", justifyContent: "center" }}>
+          )}
+          <div style={{ display: "flex", justifyContent: "center" }}>
             <button
               type="button"
               style={{
