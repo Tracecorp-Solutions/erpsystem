@@ -352,6 +352,35 @@ const AccountCreation = () => {
 
               <div className="mb-4">
                 <label
+                  htmlFor="groupId"
+                  className="block mb-1"
+                  style={{
+                    fontFamily: "outFit, Sans-serif",
+                    fontSize: "16px",
+                    fontWeight: "600",
+                  }}
+                >
+                  SubGroup
+                </label>
+                <select
+                  id="groupId"
+                  name="groupId"
+                  value={newAccount.groupId}
+                  onChange={handleChange}
+                  className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                  style={{ borderRadius: "12px", padding: "15px" }}
+                >
+                  <option value="">Select Group</option>
+                  {group.map((group) => (
+                    <option key={group.id} value={group.id}>
+                      {group.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="mb-4">
+                <label
                   htmlFor="description"
                   className="block mb-1"
                   style={{
@@ -372,8 +401,9 @@ const AccountCreation = () => {
                   style={{ borderRadius: "12px", padding: "15px" }}
                 ></textarea>
               </div>
-
-              <div className="flex justify-between">
+            </form>
+        </div>
+        <div className="flex justify-between">
                 <button
                   type="button"
                   onClick={handleCancel}
@@ -400,8 +430,6 @@ const AccountCreation = () => {
                   Save Account
                 </button>
               </div>
-            </form>
-        </div>
       </Modal>
       <div>
         <div style={{ overflowY: "auto" }}>
