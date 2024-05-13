@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Modal, Button, Dropdown, Menu, Pagination } from "antd";
+import { Modal, Button, Dropdown, Menu, Pagination, Select } from "antd";
 import { EyeOutlined, EditOutlined } from "@ant-design/icons";
 import AccountForm from "../components/EditAccountForm";
 import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
@@ -32,10 +32,12 @@ const AccountCreation = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(3);
   const [loading, setLoading] = useState(true);
+  const [group, setGroup] = useState([]);
 
   useEffect(() => {
     fetchAccounts();
     fetchSubGroupAccounts();
+    fetchGroupAccount();
   }, []);
 
   const fetchAccounts = async () => {
@@ -56,6 +58,18 @@ const AccountCreation = () => {
         "http://54.226.71.2/GetAllSubGroupAccounts"
       );
       setSubGroupAccounts(response.data);
+      console.log("xuxuuxuxuuxuux", response.data);
+    } catch (error) {
+      console.error("Error fetching subGroup accounts", error);
+    }
+  };
+
+  const fetchGroupAccount = async () => {
+    try {
+      const response = await axios.get(
+        "http://54.226.71.2/GetAllGroupAccounts"
+      );
+      setGroup(response.data);
       console.log(response.data);
     } catch (error) {
       console.error("Error fetching subGroup accounts", error);
@@ -120,12 +134,12 @@ const AccountCreation = () => {
         `${process.env.REACT_APP_API_URL}/GetSubGroupById?id=${accountId}`
       );
       setSelectedAccount(response.data);
-      console.log("details", response.data)
+      console.log("details", response.data);
       setDrawerVisible(true);
     } catch (error) {
       console.error("Error fetching account details:", error);
     }
-  };  
+  };
 
   const handleDropdownVisibleChange = (visible, accountId) => {
     setDropdownVisible({ ...dropdownVisible, [accountId]: visible });
@@ -284,73 +298,6 @@ const AccountCreation = () => {
           <form className="max-w-md mx-auto">
             <div className="mb-4">
               <label
-                htmlFor="name"
-                className="block mb-1"
-                style={{
-                  fontFamily: "outFit, Sans-serif",
-                  fontSize: "16px",
-                  fontWeight: "600",
-                }}
-              >
-                Account Name
-              </label>
-              <p
-                className="text-gray-600 text-sm mb-1"
-                style={{ fontFamily: "outFit, Sans-serif" }}
-              >
-                Choose a unique name for your account that reflects its purpose
-              </p>
-              <input
-                type="text"
-                id="name"
-                name="name"
-                value={newAccount.name}
-                onChange={(e) =>
-                  setNewAccount({
-                    ...newAccount,
-                    name: e.target.value,
-                  })
-                }
-                placeholder="Please enter account name..."
-                className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
-                style={{ borderRadius: "12px", padding: "15px" }}
-              />
-            </div>
-            <div className="mb-4">
-              <label
-                htmlFor="accountType"
-                className="block mb-1"
-                style={{
-                  fontFamily: "outFit, Sans-serif",
-                  fontSize: "16px",
-                  fontWeight: "600",
-                }}
-              >
-                Account Type
-              </label>
-              <p className="text-gray-600 text-sm mb-1">
-                This account can be a Bank account or an In-house account
-              </p>
-              <select
-                id="accountType"
-                name="accountType"
-                value={newAccount.accountType}
-                onChange={(e) =>
-                  setNewAccount({
-                    ...newAccount,
-                    accountType: e.target.value,
-                  })
-                }
-                className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
-                style={{ borderRadius: "12px", padding: "15px" }}
-              >
-                <option value="">Select Account Type</option>
-                <option value="Bank">Bank</option>
-                <option value="InHouse">InHouse</option>
-              </select>
-            </div>
-            <div className="mb-4">
-              <label
                 htmlFor="subGroupAccountId"
                 className="block mb-1"
                 style={{
@@ -359,9 +306,11 @@ const AccountCreation = () => {
                   fontWeight: "600",
                 }}
               >
-                SubGroup
+                Subgroup Name
               </label>
-              <p>Select the subgroup this account belongs to</p>
+              <p>
+                Choose a unique name for your subgroup that reflects its purpose
+              </p>
               <select
                 id="subGroupAccountId"
                 name="subGroupAccountId"
@@ -375,54 +324,18 @@ const AccountCreation = () => {
                 className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
                 style={{ borderRadius: "12px", padding: "15px" }}
               >
-                <option value="">Select SubGroup</option>
-                {subGroupAccounts.map((subGroup) => (
-                  <option
-                    key={subGroup.subGroupAccount.id}
-                    value={subGroup.subGroupAccount.id}
-                  >
+                <option value="">Select Group</option>
+                {subGroupAccounts.map((subGroup, index) => (
+                  <option key={index} value={subGroup.subGroupAccount.id}>
                     {subGroup.subGroupAccount.name}
                   </option>
                 ))}
               </select>
             </div>
-            {newAccount.accountType !== "InHouse" && (
-              <div className="mb-4">
-                <label
-                  htmlFor="accountNumber"
-                  className="block mb-1"
-                  style={{
-                    fontFamily: "outFit, Sans-serif",
-                    fontSize: "16px",
-                    fontWeight: "600",
-                  }}
-                >
-                  Account Number
-                </label>
-                <p className="text-gray-600 text-sm mb-1">
-                  To ensure accurate tracking of transactions
-                </p>
-                <input
-                  type="number"
-                  id="accountNumber"
-                  name="accountNumber"
-                  value={newAccount.accountNumber}
-                  onChange={(e) =>
-                    setNewAccount({
-                      ...newAccount,
-                      accountNumber: e.target.value,
-                    })
-                  }
-                  placeholder="Please enter account number..."
-                  className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
-                  style={{ borderRadius: "12px", padding: "15px" }}
-                />
-              </div>
-            )}
 
             <div className="mb-4">
               <label
-                htmlFor="balance"
+                htmlFor="subGroupAccountId"
                 className="block mb-1"
                 style={{
                   fontFamily: "outFit, Sans-serif",
@@ -430,58 +343,29 @@ const AccountCreation = () => {
                   fontWeight: "600",
                 }}
               >
-                Opening Date
+                Group
               </label>
-              <p style={{ fontFamily: "outFit, Sans-serif", color: "#a1a1a1" }}>
-                Initial account value at creation
-              </p>
-              <input
-                type="date"
-                id="openingBalanceDate"
-                name="openingBalanceDate"
-                value={newAccount.openingBalanceDate}
+              <p>Select the group this account belongs to</p>
+              <select
+                id="subGroupAccountId"
+                name="subGroupAccountId"
+                value={newAccount.subGroupAccountId}
                 onChange={(e) =>
                   setNewAccount({
                     ...newAccount,
-                    openingBalanceDate: e.target.value,
+                    subGroupAccountId: e.target.value,
                   })
                 }
-                placeholder="Please enter account balance..."
                 className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
                 style={{ borderRadius: "12px", padding: "15px" }}
-              />
-            </div>
-
-            <div className="mb-4">
-              <label
-                htmlFor="balance"
-                className="block mb-1"
-                style={{
-                  fontFamily: "outFit, Sans-serif",
-                  fontSize: "16px",
-                  fontWeight: "600",
-                }}
               >
-                Opening Balance
-              </label>
-              <p style={{ fontFamily: "outFit, Sans-serif", color: "#a1a1a1" }}>
-                Initial account value at creation
-              </p>
-              <input
-                type="number"
-                id="balance"
-                name="balance"
-                value={newAccount.balance}
-                onChange={(e) =>
-                  setNewAccount({
-                    ...newAccount,
-                    balance: e.target.value,
-                  })
-                }
-                placeholder="Please enter account balance..."
-                className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
-                style={{ borderRadius: "12px", padding: "15px" }}
-              />
+                <option value="">Select Group</option>
+                {group.map((group) => (
+                  <option key={group.id} value={group.id}>
+                    {group.name}
+                  </option>
+                ))}
+              </select>
             </div>
             {/* Description */}
             <div className="mb-4">
@@ -609,7 +493,10 @@ const AccountCreation = () => {
                           justifyContent: "center",
                         }}
                       >
-                        <Dropdown overlay={renderMenu(account.groupAccount.id)} trigger={["click"]}>
+                        <Dropdown
+                          overlay={renderMenu(account.groupAccount.id)}
+                          trigger={["click"]}
+                        >
                           <EllipsisVerticalIcon
                             className="h-5 w-5"
                             aria-hidden="true"
