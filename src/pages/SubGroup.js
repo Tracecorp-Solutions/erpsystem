@@ -145,18 +145,18 @@ const AccountCreation = () => {
     setShowEditForm(false);
   };
 
-  const renderMenu = (accountId) => (
+  const renderMenu = () => (
     <Menu style={{ width: "200px" }}>
       <Menu.Item
         key="1"
-        onClick={() => handleViewDetails(accountId)}
+        onClick={() => console.log("View clicked")}
         icon={<EyeOutlined />}
       >
         View
       </Menu.Item>
       <Menu.Item
         key="2"
-        onClick={() => handleEdit(accountId)}
+        onClick={() => console.log("Edit clicked")}
         icon={<EditOutlined />}
       >
         Edit
@@ -606,14 +606,7 @@ const AccountCreation = () => {
                           justifyContent: "center",
                         }}
                       >
-                        <Dropdown
-                          overlay={renderMenu(account.id)}
-                          trigger={["click"]}
-                          visible={dropdownVisible[account.id]}
-                          onVisibleChange={(visible) =>
-                            handleDropdownVisibleChange(visible, account.id)
-                          }
-                        >
+                        <Dropdown overlay={renderMenu} trigger={["click"]}>
                           <EllipsisVerticalIcon
                             className="h-5 w-5"
                             aria-hidden="true"
