@@ -18,12 +18,8 @@ const AccountCreation = () => {
   const [subGroupAccounts, setSubGroupAccounts] = useState([]);
   const [newAccount, setNewAccount] = useState({
     name: "",
-    subGroupAccountId: "",
-    accountType: "",
-    accountNumber: "",
-    balance: 0,
     description: "",
-    openingBalanceDate: "",
+    groupId: "",
   });
   const [dropdownVisible, setDropdownVisible] = useState({});
   const [selectedAccount, setSelectedAccount] = useState(null);
@@ -84,31 +80,28 @@ const AccountCreation = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        `${process.env.REACT_APP_API_URL}/accounts`,
-        {
-          name: newAccount.name,
-          balance: parseFloat(newAccount.balance),
-          accountType: newAccount.accountType,
-          subGroupAccountId: parseInt(newAccount.subGroupAccountId),
-          accountNumber: newAccount.accountNumber,
-          description: newAccount.description,
-          openingBalanceDate: newAccount.openingBalanceDate,
-        }
+        "http://54.226.71.2/CreateSubGroupAccount",
+        newAccount
       );
       console.log(response.data);
       setNewAccount({
         name: "",
-        subGroupAccountId: "",
-        balance: 0,
         description: "",
-        openingBalanceDate: "",
+        groupId: "",
       });
-      fetchAccounts();
-      setTimeout(() => {}, 5000);
       setShowModal(false);
+      fetchSubGroupAccounts();
     } catch (error) {
-      console.error("Validation failed:", error);
+      console.error("Error creating subGroup account:", error);
     }
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setNewAccount({
+      ...newAccount,
+      [name]: value,
+    });
   };
 
   const handleEditSubmit = async (e) => {
@@ -295,107 +288,113 @@ const AccountCreation = () => {
           }}
           className="overflow-y-auto"
         >
-          <form className="max-w-md mx-auto">
-            <div className="mb-4">
-              <label
-                htmlFor="subGroupAccountId"
-                className="block mb-1"
-                style={{
-                  fontFamily: "outFit, Sans-serif",
-                  fontSize: "16px",
-                  fontWeight: "600",
-                }}
-              >
-                Subgroup Name
-              </label>
-              <p>
-                Choose a unique name for your subgroup that reflects its purpose
-              </p>
-              <select
-                id="subGroupAccountId"
-                name="subGroupAccountId"
-                value={newAccount.subGroupAccountId}
-                onChange={(e) =>
-                  setNewAccount({
-                    ...newAccount,
-                    subGroupAccountId: e.target.value,
-                  })
-                }
-                className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
-                style={{ borderRadius: "12px", padding: "15px" }}
-              >
-                <option value="">Select Group</option>
-                {subGroupAccounts.map((subGroup, index) => (
-                  <option key={index} value={subGroup.subGroupAccount.id}>
-                    {subGroup.subGroupAccount.name}
-                  </option>
-                ))}
-              </select>
-            </div>
+          <Modal visible={showModal} onCancel={handleCancel} footer={null}>
+            <h3>Account Creation</h3>
+            <form className="max-w-md mx-auto" onSubmit={handleSubmit}>
+              <div className="mb-4">
+                <label
+                  htmlFor="name"
+                  className="block mb-1"
+                  style={{
+                    fontFamily: "outFit, Sans-serif",
+                    fontSize: "16px",
+                    fontWeight: "600",
+                  }}
+                >
+                  Name
+                </label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  value={newAccount.name}
+                  onChange={handleChange}
+                  className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                  style={{ borderRadius: "12px", padding: "15px" }}
+                />
+              </div>
 
-            <div className="mb-4">
-              <label
-                htmlFor="subGroupAccountId"
-                className="block mb-1"
-                style={{
-                  fontFamily: "outFit, Sans-serif",
-                  fontSize: "16px",
-                  fontWeight: "600",
-                }}
-              >
-                Group
-              </label>
-              <p>Select the group this account belongs to</p>
-              <select
-                id="subGroupAccountId"
-                name="subGroupAccountId"
-                value={newAccount.subGroupAccountId}
-                onChange={(e) =>
-                  setNewAccount({
-                    ...newAccount,
-                    subGroupAccountId: e.target.value,
-                  })
-                }
-                className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
-                style={{ borderRadius: "12px", padding: "15px" }}
-              >
-                <option value="">Select Group</option>
-                {group.map((group) => (
-                  <option key={group.id} value={group.id}>
-                    {group.name}
-                  </option>
-                ))}
-              </select>
-            </div>
-            {/* Description */}
-            <div className="mb-4">
-              <label
-                htmlFor="description"
-                className="block mb-1"
-                style={{
-                  fontFamily: "outFit, Sans-serif",
-                  fontSize: "16px",
-                  fontWeight: "600",
-                }}
-              >
-                Description
-              </label>
-              <textarea
-                id="description"
-                name="description"
-                value={newAccount.description}
-                onChange={(e) =>
-                  setNewAccount({
-                    ...newAccount,
-                    description: e.target.value,
-                  })
-                }
-                placeholder="Please enter description..."
-                className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
-                style={{ borderRadius: "12px", padding: "15px" }}
-              ></textarea>
-            </div>
-          </form>
+              <div className="mb-4">
+                <label
+                  htmlFor="groupId"
+                  className="block mb-1"
+                  style={{
+                    fontFamily: "outFit, Sans-serif",
+                    fontSize: "16px",
+                    fontWeight: "600",
+                  }}
+                >
+                  Group
+                </label>
+                <select
+                  id="groupId"
+                  name="groupId"
+                  value={newAccount.groupId}
+                  onChange={handleChange}
+                  className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                  style={{ borderRadius: "12px", padding: "15px" }}
+                >
+                  <option value="">Select Group</option>
+                  {group.map((group) => (
+                    <option key={group.id} value={group.id}>
+                      {group.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="mb-4">
+                <label
+                  htmlFor="description"
+                  className="block mb-1"
+                  style={{
+                    fontFamily: "outFit, Sans-serif",
+                    fontSize: "16px",
+                    fontWeight: "600",
+                  }}
+                >
+                  Description
+                </label>
+                <textarea
+                  id="description"
+                  name="description"
+                  value={newAccount.description}
+                  onChange={handleChange}
+                  placeholder="Please enter description..."
+                  className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                  style={{ borderRadius: "12px", padding: "15px" }}
+                ></textarea>
+              </div>
+
+              <div className="flex justify-between">
+                <button
+                  type="button"
+                  onClick={handleCancel}
+                  className="py-2 px-4 text-gray-700 rounded focus:outline-none"
+                  style={{
+                    borderRadius: "28px",
+                    fontFamily: "outFit, Sans-serif",
+                    width: "40%",
+                    border: "#505050 1px solid",
+                  }}
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none"
+                  style={{
+                    background: "#4467a1",
+                    borderRadius: "28px",
+                    fontFamily: "outFit, Sans-serif",
+                    width: "40%",
+                  }}
+                >
+                  Save Account
+                </button>
+              </div>
+            </form>
+          </Modal>
         </div>
         <div className="flex justify-between">
           <button
