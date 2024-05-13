@@ -561,25 +561,13 @@ const AccountCreation = () => {
                     scope="col"
                     className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                   >
-                    ACCOUNT NO
+                    DESCRIPTION
                   </th>
                   <th
                     scope="col"
                     className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                   >
-                    SubGroup
-                  </th>
-                  <th
-                    scope="col"
-                    className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                  >
-                    ACCOUNT TYPE
-                  </th>
-                  <th
-                    scope="col"
-                    className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                  >
-                    0PENING BALANCE
+                    GROUP
                   </th>
                   <th
                     scope="col"
@@ -590,7 +578,7 @@ const AccountCreation = () => {
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {currentItems.map((account) => {
+                {subGroupAccounts.map((account) => {
                   const subGroupInfo = subGroupAccounts.find(
                     (subGroup) =>
                       subGroup.subGroupAccount.id === account.subGroupAccountId
@@ -603,21 +591,13 @@ const AccountCreation = () => {
                         style={{ marginLeft: "10px", marginTop: "15px" }}
                       />
                       <td className="px-3 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                        {account.name}
-                      </td>
-                      <td className="px-3 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                        {account.accountNumber}
+                        {account.subGroupAccount.name}
                       </td>
                       <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">
-                        {subGroupInfo
-                          ? subGroupInfo.subGroupAccount.name
-                          : "N/A"}
+                        {account.subGroupAccount.description}
                       </td>
                       <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">
-                        {account.accountType}
-                      </td>
-                      <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">
-                        ${account.balance}
+                        {account.groupAccount.behaviour}
                       </td>
                       <div
                         style={{

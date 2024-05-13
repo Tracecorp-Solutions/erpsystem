@@ -8,7 +8,6 @@ export default function SubComponentSidebar({
 }) {
   const [modalVisible, setModalVisible] = useState(false);
   
-
   return (
     <>
       <Drawer
