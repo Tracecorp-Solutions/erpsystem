@@ -92,11 +92,28 @@ namespace Services.Repositories
             };
         }
 
-        public async Task<IEnumerable<TransactionEntry>> GetAllTransactions() 
+        public async Task<IEnumerable<TransactionsViewModel>> GetAllTransactions() 
         {
-            IEnumerable<TransactionEntry> transactions = await _context.transactionEntries.ToListAsync();
+            //get all transactions with the corresponding accounts  and order the, by transaction id in descending order
 
-            return transactions;
+
+            var tan = await _context.transactionEntries
+                .Include(t => t.Account).OrderByDescending(t => t.Id)
+                .ToListAsync();
+
+            // map the transactions to the transaction view model
+            var transactions =  tan.Select(t => new TransactionsViewModel
+            {
+                Id = t.Id,
+                TransactionDate = t.TransactionDate,
+                Amount = t.Amount,
+                TransactionType = t.TransactionType,
+                TranAccount = t.Account.Name,
+                TransactionReference = t.TransactionReference,
+                Narration = t.Narration
+            });
+
+            return transactions == null? throw new ArgumentException("No Transactions Found") : transactions;
         }
 
         public async Task RecordJournalEntry(JournalItem journalItem) 
@@ -130,11 +147,26 @@ namespace Services.Repositories
         }
 
 
-        public async Task<IEnumerable<TransactionEntry>> GetTransactionEntriesByAccountId(int accountId) 
+        public async Task<IEnumerable<TransactionsViewModel>> GetTransactionEntriesByAccountId(int accountId) 
         {
-            var transactions = await _context.transactionEntries.Where(t => t.TranAccount == accountId).ToListAsync();
+            var trans = await _context.transactionEntries
+                .Include(t => t.Account)
+                .Where(t => t.TranAccount == accountId)
+                .OrderByDescending(t => t.Id).ToListAsync();
 
-            return transactions == null? throw new ArgumentException("No transaction found for that particular account"): transactions; 
+            //map trans to TransactionsViewModel
+            var transaction = trans.Select(t => new TransactionsViewModel 
+            {
+                Id = t.Id,
+                TransactionDate = t.TransactionDate,
+                Amount = t.Amount,
+                TransactionType = t.TransactionType,
+                TranAccount = t.Account.Name,
+                TransactionReference = t.TransactionReference,
+                Narration = t.Narration
+            });
+
+            return transaction == null? throw new ArgumentException("No transaction found for that particular account"): transaction; 
         }
     }
 }
