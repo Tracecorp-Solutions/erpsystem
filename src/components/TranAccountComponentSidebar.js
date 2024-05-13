@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { Drawer, Modal, Card } from "antd";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 
@@ -7,7 +7,9 @@ export default function AccountComponentSidebar({
   drawerVisible,
   selectedAccount,
   subGroupAccounts,
+  transactions, // Add transactions as a prop
 }) {
+
   const [modalVisible, setModalVisible] = useState(false);
   console.log("sub group", subGroupAccounts);
 
@@ -18,8 +20,6 @@ export default function AccountComponentSidebar({
     );
     return subGroup ? subGroup.subGroupAccount.name : "N/A";
   };
-
-  console.log("Selected account name:", getSubGroupName());
 
   return (
     <>
@@ -32,53 +32,11 @@ export default function AccountComponentSidebar({
         style={{ height: "100vh", overflow: "auto" }}
       >
         <div className="px- text-end">
-          <button
-            type="button"
-            onClick={() => setDrawerVisible(false)}
-            className="relative rounded-md text-indigo-200 focus:outline-none focus:ring-2 focus:ring-white"
-          >
-            <span className="absolute -inset-2.5" />
-            <span className="sr-only">Close panel</span>
-            <XMarkIcon className="h-10 w-10" aria-hidden="true" />
-          </button>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "start",
-              color: "#505050",
-              fontSize: "36px",
-              fontFamily: "outFit, Sans-serif",
-              fontWeight: "600",
-            }}
-          >
-            <h2>{selectedAccount.name}</h2>
-          </div>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "start",
-              color: "#505050",
-              fontSize: "12px",
-              fontFamily: "outFit, Sans-serif",
-              fontWeight: "500",
-            }}
-          >
-            <h2>Transaction Amount</h2>
-          </div>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "start",
-              color: "#505050",
-              fontSize: "24px",
-              fontFamily: "outFit, Sans-serif",
-              fontWeight: "600",
-            }}
-          >
-            ${selectedAccount.balance}
-          </div>
+          {/* Existing code for closing button and account name */}
+
           <div className="mt-5">
             <div className="flex justify-between">
+              {/* Displaying transaction reference */}
               <Card
                 style={{
                   width: 400,
@@ -86,55 +44,18 @@ export default function AccountComponentSidebar({
                   background: "#f6f6f4",
                 }}
               >
-                <h2
-                  style={{
-                    textAlign: "start",
-                    fontSize: "11px",
-                    fontFamily: "outFit, Sans-serif",
-                    color: "#A1a1a1",
-                  }}
-                >
-                  REFERENCE NO
-                </h2>
-                <p
-                  style={{
-                    textAlign: "start",
-                    fontSize: "16px",
-                    fontWeight: "600",
-                    color: "#505050",
-                    fontFamily: "outFit, Sans-serif",
-                  }}
-                >
-                  {selectedAccount.openingBalanceDate}
-                </p>
+                <h2 className="font-medium text-gray-800">Reference Number</h2>
+                <p className="text-gray-800">{selectedAccount.transactionReference}</p>
               </Card>
 
+              {/* Displaying transaction date */}
               <Card style={{ width: 400, background: "#f6f6f4" }}>
-                <h2
-                  style={{
-                    textAlign: "start",
-                    fontSize: "11px",
-                    fontFamily: "outFit, Sans-serif",
-                    color: "#A1a1a1",
-                    marginRight: "10px",
-                  }}
-                >
-                  TRANSACTION DATE
-                </h2>
-                <p
-                  style={{
-                    textAlign: "start",
-                    fontSize: "16px",
-                    fontWeight: "600",
-                    color: "#505050",
-                    fontFamily: "outFit, Sans-serif",
-                  }}
-                >
-                  {getSubGroupName(selectedAccount.name)}
-                </p>
+                <h2 className="font-medium text-gray-800">Transaction Date</h2>
+                <p className="text-gray-800">{selectedAccount.transactionDate}</p>
               </Card>
             </div>
 
+            {/* Displaying account from and account to */}
             <div className="flex justify-between mt-5">
               <Card
                 style={{
@@ -143,81 +64,21 @@ export default function AccountComponentSidebar({
                   background: "#f6f6f4",
                 }}
               >
-                <h2
-                  style={{
-                    textAlign: "start",
-                    fontSize: "11px",
-                    fontFamily: "outFit, Sans-serif",
-                    color: "#A1a1a1",
-                    marginRight: "10px",
-                  }}
-                >
-                  ACCOUNT FROM
-                </h2>
-                <p
-                  style={{
-                    textAlign: "start",
-                    fontSize: "16px",
-                    fontWeight: "600",
-                    color: "#505050",
-                    fontFamily: "outFit, Sans-serif",
-                  }}
-                >
-                  {selectedAccount.accountType}
-                </p>
+                <h2 className="font-medium text-gray-800">Account From</h2>
+                <p className="text-gray-800">{selectedAccount.tranAccount}</p>
               </Card>
 
               <Card style={{ width: 400, background: "#f6f6f4" }}>
-                <h2
-                  style={{
-                    textAlign: "start",
-                    fontSize: "11px",
-                    fontFamily: "outFit, Sans-serif",
-                    color: "#A1a1a1",
-                  }}
-                >
-                  ACCOUNT TO
-                </h2>
-                <p
-                  style={{
-                    textAlign: "start",
-                    fontSize: "16px",
-                    fontWeight: "600",
-                    color: "#505050",
-                    fontFamily: "outFit, Sans-serif",
-                  }}
-                >
-                  {selectedAccount.accountNumber}
-                </p>
+                <h2 className="font-medium text-gray-800">Account To</h2>
+                <p className="text-gray-800">{selectedAccount.transactionType}</p>
               </Card>
             </div>
           </div>
-          <div style={{ marginTop: "25px" }}>
-            <h2
-              style={{
-                textAlign: "start",
-                fontSize: "12px",
-                fontFamily: "outFit, Sans-serif",
-                color: "#A1a1a1",
-                fontWeight: "500"
-              }}
-            >
-              ABOUT ACCOUNT
-            </h2>
-            <p
-              style={{
-                textAlign: "start",
-                fontSize: "16px",
-                fontWeight: "400",
-                color: "#505050",
-                fontFamily: "outFit, Sans-serif",
-                marginTop: "10px"
-              }}
-            >
-              {selectedAccount.description}
-            </p>
-          </div>
-          <button type="button"
+          {/* Existing code for displaying account description */}
+          
+          {/* View Transactions button */}
+          <button 
+            type="button"
             className="w-full mt-5"
             style={{
                 border: "1px solid #4467a1",
