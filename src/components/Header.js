@@ -35,7 +35,7 @@ import Invoice from "../pages/Invoice";
 import GroupAccount from "../pages/GroupCreation";
 import AccountCreation from "../pages/AccountCreation";
 import Products from "../pages/Products";
-import Account from "../pages/AccountCreation";
+// import Account from "../pages/AccountCreation";
 import Petty from "../pages/Petty";
 import SubGroup from "../pages/SubGroup";
 import Billing from "../pages/Billing";
@@ -93,7 +93,7 @@ const navigation = [
     current: false,
     submenuItem: true,
     submenu: [
-      { name: "Main Accounts", href: "/main-accounts", current: false },
+      { name: "Accounts", href: "/account", current: false },
       { name: "Group Accounts", href: "/account-creation", current: false },
       { name: "SubGroup Accounts", href: "/sub-group", current: false },
       { name: "Transactions", href: "/transactions", current: false },
@@ -632,7 +632,7 @@ export default function Main() {
                 <Route path="/profit" element={<Profit />} />
                 <Route path="/loss" element={<Loss />} />
                 <Route path="/expense" element={<Expense />} />
-                <Route path="/main-accounts" element={<MainAccounts />} />
+                <Route path="/" element={<MainAccounts />} />
                 <Route path="/about" element={<About />} />
                 <Route path="/reconciliation" element={<Reconciliation />} />
                 <Route path="/cashflows" element={<Cashflows />} />
@@ -641,7 +641,6 @@ export default function Main() {
                 <Route path="/transfers" element={<Transfers />} />
                 <Route path="/account-creation" element={<GroupAccount />} />
                 <Route path="/account" element={<AccountCreation />} />
-                <Route path="/account-creation" element={<Account />} />
                 <Route path="/petty" element={<Petty />} />
                 <Route path="/sub-group" element={<SubGroup />} />
                 <Route path="/invoice" element={<Invoice />} />

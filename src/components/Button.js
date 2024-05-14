@@ -228,7 +228,7 @@ export default function NavigationHeader() {
                     }}
                   >
                     <a
-                      href="/main-accounts"
+                      href="/account"
                       style={{
                         width: "100%",
                         textDecoration: "none",
