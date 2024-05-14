@@ -43,6 +43,7 @@ const AccountCreation = () => {
         `${process.env.REACT_APP_API_URL}/GetAccounts`
       );
       setAccounts(response.data);
+      console.log("get accounts", response.data);
       setLoading(false);
     } catch (error) {
       console.error("Error fetching groups:", error);

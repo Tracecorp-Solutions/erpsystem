@@ -205,6 +205,12 @@ const AccountCreation = () => {
           drawerVisible={drawerVisible}
           selectedAccount={selectedAccount}
           accounts={accounts}
+          group={group}
+          subGroupData={subGroupAccounts}
+          showModal={showModal}
+          setShowModal={setShowModal}
+          fetchSubGroupAccounts={fetchSubGroupAccounts}
+          handleCancel={handleCancel}
         />
       )}
 

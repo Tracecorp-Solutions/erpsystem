@@ -1,30 +1,35 @@
 import React, { useState } from "react";
 import { Drawer, Modal, Table } from "antd";
 import { XMarkIcon } from "@heroicons/react/24/outline";
-import AccountCreationForm from "./AccountForm";
+import axios from "axios";
 
 export default function SubComponentSidebar({
   setDrawerVisible,
   drawerVisible,
   selectedAccount,
   accounts,
-  setNewAccount,
-  newAccount,
-  handleSubmit,
-  handleCancel,
-  subGroupAccounts,
+  subGroupData,
+  group,
+  showModal,
+  setShowModal,
+  fetchSubGroupAccounts,
+  handleCancel
 }) {
   const [modalVisible, setModalVisible] = useState(false);
-  const [showModal, setShowModal] = useState(false);
-  const [showAccountForm, setShowAccountForm] = useState(false);
-  
+
+  const [newAccount, setNewAccount] = useState({
+    name: "",
+    description: "",
+    groupId: "",
+  });
+
+  console.log("subgrror",subGroupData);
 
   const handleCloseDrawer = () => {
     setDrawerVisible(false);
   };
 
   const handleOpenModal = () => {
-    setShowModal(true);
     setModalVisible(true);
   };
 
@@ -48,6 +53,34 @@ export default function SubComponentSidebar({
       render: (date) => new Date(date).toLocaleDateString(),
     },
   ];
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setNewAccount({
+      ...newAccount,
+      [name]: value,
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(
+        "http://54.226.71.2/CreateSubGroupAccount",
+        newAccount
+      );
+      console.log(response.data);
+      setNewAccount({
+        name: "",
+        description: "",
+        groupId: "",
+      });
+      setShowModal(false);
+      fetchSubGroupAccounts();
+    } catch (error) {
+      console.error("Error creating subGroup account:", error);
+    }
+  };
 
   return (
     <>
@@ -145,7 +178,7 @@ export default function SubComponentSidebar({
                   color: "#fff",
                   fontFamily: "outFit, Sans-serif",
                 }}
-                onClick={() => setShowAccountForm(true)}
+                onClick={handleOpenModal}
               >
                 + Create Account
               </button>
@@ -157,24 +190,127 @@ export default function SubComponentSidebar({
           onCancel={() => setModalVisible(false)}
           footer={null}
         >
-          <AccountCreationForm
-            showModal={showModal}
-            subGroupAccounts={subGroupAccounts}
-            setNewAccount={setNewAccount}
-            newAccount={newAccount}
-            handleSubmit={handleSubmit}
-            handleCancel={handleCancel}
-            setShowModal={setShowModal}
-          />
-        </Modal>
-        {showAccountForm && (
-          <Modal
-            visible={showAccountForm}
-            onCancel={() => setShowAccountForm(false)}
-            footer={null}
+        <form className="max-w-md mx-auto">
+            <div className="mb-4">
+              <label
+                htmlFor="subGroupId"
+                className="block mb-1"
+                style={{
+                  fontFamily: "outFit, Sans-serif",
+                  fontSize: "16px",
+                  fontWeight: "600",
+                }}
+              >
+                SubGroup
+              </label>
+              <p>
+                Choose a unique name for your subgroup that reflects its purpose
+              </p>
+              <select
+                id="name"
+                name="name"
+                value={newAccount.name}
+                onChange={handleChange}
+                className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                style={{ borderRadius: "12px", padding: "15px" }}
+              >
+                <option value="">Select SubGroup</option>
+                {subGroupData.map((subGroup) => (
+                  <option
+                    key={subGroup.subGroupAccount.id}
+                    value={subGroup.subGroupAccount.name}
+                  >
+                    {subGroup.subGroupAccount.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="mb-4">
+              <label
+                htmlFor="groupId"
+                className="block mb-1"
+                style={{
+                  fontFamily: "outFit, Sans-serif",
+                  fontSize: "16px",
+                  fontWeight: "600",
+                }}
+              >
+                Group
+              </label>
+              <p>Select the group this subgroup belongs to</p>
+              <select
+                id="groupId"
+                name="groupId"
+                value={newAccount.groupId}
+                onChange={handleChange}
+                className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                style={{ borderRadius: "12px", padding: "15px" }}
+              >
+                <option value="">Select Group</option>
+                {group.map((group) => (
+                  <option key={group.id} value={group.id}>
+                    {group.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="mb-4">
+              <label
+                htmlFor="description"
+                className="block mb-1"
+                style={{
+                  fontFamily: "outFit, Sans-serif",
+                  fontSize: "16px",
+                  fontWeight: "600",
+                }}
+              >
+                Description
+              </label>
+              <p>
+                Add a brief description to help identify this subgroup's purpose
+              </p>
+              <textarea
+                id="description"
+                name="description"
+                value={newAccount.description}
+                onChange={handleChange}
+                placeholder="Please enter description..."
+                className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                style={{ borderRadius: "12px", padding: "15px" }}
+              ></textarea>
+            </div>
+          </form>
+          <div className="flex justify-between">
+          <button
+            type="button"
+            onClick={handleCancel}
+            className="py-2 px-4 text-gray-700 rounded focus:outline-none"
+            style={{
+              borderRadius: "28px",
+              fontFamily: "outFit, Sans-serif",
+              width: "40%",
+              border: "#505050 1px solid",
+            }}
           >
-          </Modal>
-        )}
+            Cancel
+          </button>
+          <button
+            type="submit"
+            className="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none"
+            style={{
+              background: "#4467a1",
+              borderRadius: "28px",
+              fontFamily: "outFit, Sans-serif",
+              width: "40%",
+            }}
+            onClick={handleSubmit}
+          >
+            Save Account
+          </button>
+        </div>
+        </Modal>
       </Drawer>
     </>
   );
