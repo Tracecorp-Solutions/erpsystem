@@ -252,7 +252,7 @@ const AccountCreation = () => {
             fontFamily: "outFit, Sans-serif",
           }}
         >
-          + Create Account
+          + Create SubGroup
         </Button>
       </div>
       {!loading && (
@@ -458,7 +458,7 @@ const AccountCreation = () => {
                         type="checkbox"
                         style={{ marginLeft: "10px", marginTop: "15px" }}
                       />
-                      <td className="px-3 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                      <td className="px-3 py-4 whitespace-nowrap text-sm  text-gray-500">
                         {account.subGroupAccount.name}
                       </td>
                       <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">
