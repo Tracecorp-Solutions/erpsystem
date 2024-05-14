@@ -9,8 +9,9 @@ export default function AccountComponentSidebar({
   subGroupAccounts,
   transactions, // Add transactions as a prop
 }) {
-
   const [modalVisible, setModalVisible] = useState(false);
+  const [selectedTransaction, setSelectedTransaction] = useState(null);
+
   console.log("sub group", subGroupAccounts);
 
   const getSubGroupName = () => {
@@ -19,6 +20,15 @@ export default function AccountComponentSidebar({
       (item) => item.groupAccount.id === selectedAccount.id
     );
     return subGroup ? subGroup.subGroupAccount.name : "N/A";
+  };
+
+  const handleViewTransactions = (transactionId) => {
+    // Find the transaction with the provided ID
+    const transaction = transactions.find((transaction) => transaction.id === transactionId);
+    // Set the selected transaction
+    setSelectedTransaction(transaction);
+    // Show the modal
+    setModalVisible(true);
   };
 
   return (
@@ -86,8 +96,9 @@ export default function AccountComponentSidebar({
                 borderRadius: "28px",
                 color: "#4467a1",
                 fontFamily: "outFit, Sans-serif"
-                }}>
-                View Transactions
+                }}
+            onClick={() => handleViewTransactions(selectedAccount.id)}> {/* Pass the transaction ID */}
+            View Transactions
           </button>
         </div>
         <Modal
@@ -95,7 +106,16 @@ export default function AccountComponentSidebar({
           onCancel={() => setModalVisible(false)}
           footer={null}
         >
-          {/* <SubGroupForm onCancel={() => setModalVisible(false)} /> */}
+          {/* Render details of the selected transaction */}
+          {selectedTransaction && (
+            <div>
+              <h2>Transaction Details</h2>
+              <p>Reference Number: {selectedTransaction.transactionReference}</p>
+              <p>Transaction Date: {selectedTransaction.transactionDate}</p>
+              <p>Account From: {selectedTransaction.tranAccount}</p>
+              {/* Add more details as needed */}
+            </div>
+          )}
         </Modal>
       </Drawer>
     </>
