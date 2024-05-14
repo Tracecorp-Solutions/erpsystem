@@ -114,7 +114,7 @@ namespace Services.Repositories
 
         public async Task<SubGroupAccount> GetSubGroupById(int id) 
         {
-            //get subgroup with the corresponding group account
+            //get subgroup with the corresponding group account details
             var subgroup = await _context.SubGroupAccounts
                 .Include(sg => sg.GroupAccount)
                 .FirstOrDefaultAsync(sg => sg.Id == id);
