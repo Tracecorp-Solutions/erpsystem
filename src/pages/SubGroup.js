@@ -205,6 +205,7 @@ const AccountCreation = () => {
           drawerVisible={drawerVisible}
           selectedAccount={selectedAccount}
           accounts={accounts}
+          setShowModal={setShowModal}
         />
       )}
 

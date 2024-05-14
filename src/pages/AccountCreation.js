@@ -206,6 +206,7 @@ const AccountCreation = () => {
           setDrawerVisible={setDrawerVisible}
           drawerVisible={drawerVisible}
           selectedAccount={selectedAccount}
+          setShowModal={setShowModal}
         />
       )}
       <div

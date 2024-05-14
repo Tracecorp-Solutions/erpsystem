@@ -1,17 +1,22 @@
 import { useState } from "react";
 import { Drawer, Modal, Card, Table } from "antd";
 import { XMarkIcon } from "@heroicons/react/24/outline";
+import AccountCreationForm from "./AccountForm";
 
 export default function SubComponentSidebar({
   setDrawerVisible,
   drawerVisible,
   selectedAccount,
   accounts,
+  setNewAccount,
+  newAccount,
+  handleSubmit,
+  handleCancel,
+  showModal,
+  subGroupAccounts,
+  setShowModal,
 }) {
   const [modalVisible, setModalVisible] = useState(false);
-
-  console.log("subgroup", selectedAccount);
-  console.log("account", accounts);
 
   const subgroupAccounts = selectedAccount
     ? accounts.filter(
@@ -24,6 +29,7 @@ export default function SubComponentSidebar({
       title: "NAME",
       dataIndex: "name",
       key: "name",
+      render: (data) => data?.name || "N/A",
     },
     {
       title: "CREATED",
@@ -61,20 +67,33 @@ export default function SubComponentSidebar({
               textAlign: "start",
             }}
           >
-            {selectedAccount?.name}
+            {selectedAccount && selectedAccount.name
+              ? selectedAccount.name
+              : ""}
           </h2>
           <p style={{ textAlign: "start", fontFamily: "Sans-serif" }}>
-            {selectedAccount?.description}
+            {selectedAccount ? selectedAccount.description : ""}
           </p>
         </div>
         {subgroupAccounts.length > 0 ? (
-          <div style={{
-            border: "1px solid #7a7a7a",
-            marginTop: "10px",
-            padding: "10px",
-            borderRadius: "24px"
-          }}>
-            <h3 className="text-lg font-semibold mb-2" style={{ color: "#4467a1", fontFamily: "outFit, Sans-serif", fontSize: "24" }}>Accounts</h3>
+          <div
+            style={{
+              border: "1px solid #7a7a7a",
+              marginTop: "10px",
+              padding: "10px",
+              borderRadius: "24px",
+            }}
+          >
+            <h3
+              className="text-lg font-semibold mb-2"
+              style={{
+                color: "#4467a1",
+                fontFamily: "outFit, Sans-serif",
+                fontSize: "24",
+              }}
+            >
+              Accounts
+            </h3>
             <Table
               columns={columns}
               dataSource={subgroupAccounts}
@@ -118,6 +137,7 @@ export default function SubComponentSidebar({
                   color: "#fff",
                   fontFamily: "outFit, Sans-serif",
                 }}
+                onClick={() => setShowModal(true)}
               >
                 + Create Account
               </button>
@@ -128,7 +148,16 @@ export default function SubComponentSidebar({
           visible={modalVisible}
           onCancel={() => setModalVisible(false)}
           footer={null}
-        ></Modal>
+        >
+          <AccountCreationForm
+            showModal={showModal}
+            subGroupAccounts={subGroupAccounts}
+            setNewAccount={setNewAccount}
+            newAccount={newAccount}
+            handleSubmit={handleSubmit}
+            handleCancel={handleCancel}
+          />
+        </Modal>
       </Drawer>
     </>
   );

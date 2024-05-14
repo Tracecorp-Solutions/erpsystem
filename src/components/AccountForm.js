@@ -1,6 +1,6 @@
 import { Modal } from "antd";
 
-const AccountCreationForm = ({setNewAccount, newAccount, handleSubmit, handleCancel, showModal, subGroupAccounts}) => {
+const AccountCreationForm = ({setShowModal,setNewAccount, newAccount, handleSubmit, handleCancel, showModal, subGroupAccounts}) => {
     return (
         <Modal visible={showModal} onCancel={handleCancel} footer={null}>
         <h3
