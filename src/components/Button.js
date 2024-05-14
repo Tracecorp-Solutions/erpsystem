@@ -72,7 +72,7 @@ export default function NavigationHeader() {
 
             {isOpen && (
               <div
-                className="absolute left-0 z-10 mt-2 w-46 origin-top-left divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                className="absolute left-0 z-10 mt-2 w-38 origin-top-left divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                 role="menu"
                 aria-orientation="vertical"
                 aria-labelledby="menu-button"
@@ -80,15 +80,16 @@ export default function NavigationHeader() {
                 style={{ top: "calc(100% + 0.5rem)" }}
               >
                 <div className="py-1" role="none">
-                <div
+                  <div
                     style={{
                       width: "180px",
                       height: "35px",
-                      backgroundColor: "#e5e5e5",
+                      backgroundColor: "white",
                       borderRadius: "10px",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
+                      PaddingLeft: "3px",
                     }}
                   >
                     <a
@@ -96,151 +97,166 @@ export default function NavigationHeader() {
                       style={{
                         width: "100%",
                         textDecoration: "none",
-                        color: "#4b5563",
-                        textAlign: "center",
+                        color: "blue",
+                        textAlign: "left",
                         fontSize: "14px",
+                        marginLeft: "20px",
                       }}
                       role="menuitem"
                       tabIndex="-1"
                       id="menu-item-1"
                     >
-                      ~Products
+                      Products
                     </a>
                   </div>
                   <div
                     style={{
                       width: "180px",
                       height: "35px",
-                      backgroundColor: "#e5e5e5",
+                      backgroundColor: "white",
                       borderRadius: "10px",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
                     }}
+                   
                   >
                     <a
                       href="/account-creation"
                       style={{
                         width: "100%",
                         textDecoration: "none",
-                        color: "#4b5563",
-                        textAlign: "center",
+                        color: "blue",
+                        textAlign: "left",
                         fontSize: "14px",
+                        marginLeft: "20px",
                       }}
                       role="menuitem"
                       tabIndex="-1"
                       id="menu-item-1"
                     >
-                      ~Groups
+                      Groups
                     </a>
                   </div>
                   <div
                     style={{
                       width: "180px",
                       height: "35px",
-                      backgroundColor: "#e5e5e5",
+                      backgroundColor: "white",
                       borderRadius: "10px",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
                     }}
+                    
                   >
                     <a
                       href="/petty"
                       style={{
                         width: "100%",
                         textDecoration: "none",
-                        color: "#4b5563",
-                        textAlign: "center",
+                        color: "blue",
+                        textAlign: "left",
                         fontSize: "14px",
+                        marginLeft: "20px",
                       }}
+
                       role="menuitem"
                       tabIndex="-1"
                       id="menu-item-1"
                     >
-                      ~Petty Cash
+                      Petty Cash
                     </a>
                   </div>
                   <div
                     style={{
                       width: "180px",
                       height: "35px",
-                      backgroundColor: "#e5e5e5",
+                      backgroundColor: "white",
                       borderRadius: "10px",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
                     }}
+                   
                   >
                     <a
                       href="/sub-groups"
                       style={{
                         width: "100%",
                         textDecoration: "none",
-                        color: "#4b5563",
-                        textAlign: "center",
+                        color: "blue",
+                        textAlign: "left",
                         fontSize: "14px",
+                        marginLeft: "20px",
                       }}
                       role="menuitem"
                       tabIndex="-1"
                       id="menu-item-1"
                     >
-                      ~SubGroupS
+                      SubGroupS
                     </a>
                   </div>
                   <div
                     style={{
                       width: "180px",
                       height: "35px",
-                      backgroundColor: "#e5e5e5",
+                      backgroundColor: "white",
                       borderRadius: "10px",
                       display: "flex",
-                      alignItems: "center",
+                      alignItems: "left",
                       justifyContent: "center",
+                      marginBottom: "-5px",
                     }}
+                   
                   >
                     <a
                       href="/transactions"
                       style={{
                         width: "100%",
                         textDecoration: "none",
-                        color: "#4b5563",
-                        textAlign: "center",
+                        color: "blue",
+                        textAlign: "left",
                         fontSize: "14px",
+                        marginLeft: "20px",
                       }}
+
+                    
                       role="menuitem"
                       tabIndex="-1"
                       id="menu-item-1"
                     >
-                      ~Transactions
+                      Transactions
                     </a>
                   </div>
 
                   <div
                     style={{
                       width: "180px",
-                      height: "35px",
-                      backgroundColor: "#e5e5e5",
+                      height: "32px",
+                      backgroundColor: "white",
                       borderRadius: "10px",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
                     }}
+                    
                   >
                     <a
                       href="/account"
                       style={{
                         width: "100%",
                         textDecoration: "none",
-                        color: "#4b5563",
-                        textAlign: "center",
+                        color: "blue",
+                        textAlign: "left",
                         fontSize: "14px",
+                        marginLeft: "20px",
                       }}
                       role="menuitem"
                       tabIndex="-1"
                       id="menu-item-1"
                     >
-                      ~Accounts
+                      Accounts
                     </a>
                   </div>
                 </div>
