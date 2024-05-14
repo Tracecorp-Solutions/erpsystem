@@ -342,7 +342,7 @@ const AccountCreation = () => {
               >
                 <option value="">Select Account Type</option>
                 <option value="Bank">Bank</option>
-                <option value="InHouse">InHouse</option>
+                <option value="Cash at hand">Cash at hand</option>
               </select>
             </div>
             <div className="mb-4">
