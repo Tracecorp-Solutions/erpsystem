@@ -36,6 +36,14 @@
   border: none;
   font-size: 16px;
   cursor: pointer;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.dp-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .logo {
