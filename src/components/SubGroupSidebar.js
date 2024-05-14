@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Drawer, Modal, Card, Table } from "antd";
+import React, { useState } from "react";
+import { Drawer, Modal, Table } from "antd";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import AccountCreationForm from "./AccountForm";
 
@@ -12,11 +12,23 @@ export default function SubComponentSidebar({
   newAccount,
   handleSubmit,
   handleCancel,
-  showModal,
   subGroupAccounts,
-  setShowModal,
 }) {
+  // State for managing the visibility of the modal
   const [modalVisible, setModalVisible] = useState(false);
+  // State for managing the visibility of the modal for account creation
+  const [showModal, setShowModal] = useState(false);
+
+  // Function to handle closing the drawer
+  const handleCloseDrawer = () => {
+    setDrawerVisible(false);
+  };
+
+  // Function to handle opening the modal for account creation
+  const handleOpenModal = () => {
+    setShowModal(true);
+    setModalVisible(true);
+  };
 
   const subgroupAccounts = selectedAccount
     ? accounts.filter(
@@ -44,7 +56,7 @@ export default function SubComponentSidebar({
       <Drawer
         placement="right"
         closable={false}
-        onClose={() => setDrawerVisible(false)}
+        onClose={handleCloseDrawer}
         visible={drawerVisible}
         width={400}
         style={{ height: "100vh", overflow: "auto" }}
@@ -52,7 +64,7 @@ export default function SubComponentSidebar({
         <div className="px- text-end">
           <button
             type="button"
-            onClick={() => setDrawerVisible(false)}
+            onClick={handleCloseDrawer}
             className="relative rounded-md text-indigo-200 focus:outline-none focus:ring-2 focus:ring-white"
           >
             <span className="absolute -inset-2.5" />
@@ -67,9 +79,7 @@ export default function SubComponentSidebar({
               textAlign: "start",
             }}
           >
-            {selectedAccount && selectedAccount.name
-              ? selectedAccount.name
-              : ""}
+            {selectedAccount && selectedAccount.name ? selectedAccount.name : ""}
           </h2>
           <p style={{ textAlign: "start", fontFamily: "Sans-serif" }}>
             {selectedAccount ? selectedAccount.description : ""}
@@ -137,7 +147,7 @@ export default function SubComponentSidebar({
                   color: "#fff",
                   fontFamily: "outFit, Sans-serif",
                 }}
-                onClick={() => setShowModal(true)}
+                onClick={handleOpenModal} // Call handleOpenModal function on click
               >
                 + Create Account
               </button>
@@ -156,6 +166,7 @@ export default function SubComponentSidebar({
             newAccount={newAccount}
             handleSubmit={handleSubmit}
             handleCancel={handleCancel}
+            setShowModal={setShowModal}
           />
         </Modal>
       </Drawer>
