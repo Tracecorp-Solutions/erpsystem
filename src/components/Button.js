@@ -72,7 +72,7 @@ export default function NavigationHeader() {
 
             {isOpen && (
               <div
-                className="absolute left-0 z-10 mt-2 w-56 origin-top-left divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                className="absolute left-0 z-10 mt-2 w-46 origin-top-left divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                 role="menu"
                 aria-orientation="vertical"
                 aria-labelledby="menu-button"
@@ -80,65 +80,173 @@ export default function NavigationHeader() {
                 style={{ top: "calc(100% + 0.5rem)" }}
               >
                 <div className="py-1" role="none">
-                  <a
-                    href="/products"
-                    className="text-gray-700 block px-4 py-2 text-sm"
-                    role="menuitem"
-                    tabIndex="-1"
-                    id="menu-item-0"
+                <div
+                    style={{
+                      width: "180px",
+                      height: "35px",
+                      backgroundColor: "#e5e5e5",
+                      borderRadius: "10px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
                   >
-                    Products
-                  </a>
-                  <a
-                    href="/account-creation"
-                    className="text-gray-700 block px-4 py-2 text-sm hover:green"
-                    role="menuitem"
-                    tabIndex="-1"
-                    id="menu-item-1"
+                    <a
+                      href="/products"
+                      style={{
+                        width: "100%",
+                        textDecoration: "none",
+                        color: "#4b5563",
+                        textAlign: "center",
+                        fontSize: "14px",
+                      }}
+                      role="menuitem"
+                      tabIndex="-1"
+                      id="menu-item-1"
+                    >
+                      ~Products
+                    </a>
+                  </div>
+                  <div
+                    style={{
+                      width: "180px",
+                      height: "35px",
+                      backgroundColor: "#e5e5e5",
+                      borderRadius: "10px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
                   >
-                    Group Account
-                  </a>
-                  <a
-                    href="/petty"
-                    className="text-gray-700 block px-4 py-2 text-sm hover:green"
-                    role="menuitem"
-                    tabIndex="-1"
-                    id="menu-item-1"
+                    <a
+                      href="/account-creation"
+                      style={{
+                        width: "100%",
+                        textDecoration: "none",
+                        color: "#4b5563",
+                        textAlign: "center",
+                        fontSize: "14px",
+                      }}
+                      role="menuitem"
+                      tabIndex="-1"
+                      id="menu-item-1"
+                    >
+                      ~Groups
+                    </a>
+                  </div>
+                  <div
+                    style={{
+                      width: "180px",
+                      height: "35px",
+                      backgroundColor: "#e5e5e5",
+                      borderRadius: "10px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
                   >
-                    Petty Cash
-                  </a>
-                  <a
-                    href="/sub-group"
-                    className="text-gray-700 block px-4 py-2 text-sm hover:green"
-                    role="menuitem"
-                    tabIndex="-1"
-                    id="menu-item-1"
+                    <a
+                      href="/petty"
+                      style={{
+                        width: "100%",
+                        textDecoration: "none",
+                        color: "#4b5563",
+                        textAlign: "center",
+                        fontSize: "14px",
+                      }}
+                      role="menuitem"
+                      tabIndex="-1"
+                      id="menu-item-1"
+                    >
+                      ~Petty Cash
+                    </a>
+                  </div>
+                  <div
+                    style={{
+                      width: "180px",
+                      height: "35px",
+                      backgroundColor: "#e5e5e5",
+                      borderRadius: "10px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
                   >
-                    SubGroup Accounts
-                  </a>
-                  <a
-                    href="/billing"
-                    className="text-gray-700 block px-4 py-2 text-sm hover:green"
-                    role="menuitem"
-                    tabIndex="-1"
-                    id="menu-item-1"
+                    <a
+                      href="/sub-groups"
+                      style={{
+                        width: "100%",
+                        textDecoration: "none",
+                        color: "#4b5563",
+                        textAlign: "center",
+                        fontSize: "14px",
+                      }}
+                      role="menuitem"
+                      tabIndex="-1"
+                      id="menu-item-1"
+                    >
+                      ~SubGroupS
+                    </a>
+                  </div>
+                  <div
+                    style={{
+                      width: "180px",
+                      height: "35px",
+                      backgroundColor: "#e5e5e5",
+                      borderRadius: "10px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
                   >
-                    Billing
-                  </a>
-                  <a
-                    href="/account-creation"
-                    className="text-gray-700 block px-4 py-2 text-sm hover:green"
-                    role="menuitem"
-                    tabIndex="-1"
-                    id="menu-item-1"
+                    <a
+                      href="/transactions"
+                      style={{
+                        width: "100%",
+                        textDecoration: "none",
+                        color: "#4b5563",
+                        textAlign: "center",
+                        fontSize: "14px",
+                      }}
+                      role="menuitem"
+                      tabIndex="-1"
+                      id="menu-item-1"
+                    >
+                      ~Transactions
+                    </a>
+                  </div>
+
+                  <div
+                    style={{
+                      width: "180px",
+                      height: "35px",
+                      backgroundColor: "#e5e5e5",
+                      borderRadius: "10px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
                   >
-                    Add Account
-                  </a>
+                    <a
+                      href="/main-accounts"
+                      style={{
+                        width: "100%",
+                        textDecoration: "none",
+                        color: "#4b5563",
+                        textAlign: "center",
+                        fontSize: "14px",
+                      }}
+                      role="menuitem"
+                      tabIndex="-1"
+                      id="menu-item-1"
+                    >
+                      ~Accounts
+                    </a>
+                  </div>
                 </div>
                 {/* Remaining menu items */}
               </div>
             )}
-
           </div>
         </div>
       </div>
