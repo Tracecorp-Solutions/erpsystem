@@ -570,7 +570,7 @@ const Transaction = () => {
                     scope="col"
                     className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                   >
-                    AMOUNT
+                    AMOUNT ($)
                   </th>
                   <th
                     scope="col"
@@ -610,7 +610,7 @@ const Transaction = () => {
                         {transaction.transactionDate}
                       </td>
                       <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-800">
-                        ${transaction.amount}
+                        {transaction.amount}
                       </td>
                       <td>
                         <Dropdown
