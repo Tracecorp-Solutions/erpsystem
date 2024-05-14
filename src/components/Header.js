@@ -42,6 +42,7 @@ import Billing from "../pages/Billing";
 import LineChart from "./LineGraph";
 import View from "./View";
 import TrialBalance from "../pages/TrialBalance";
+import Transactions from "../pages/Transactions";
 
 const navigation = [
   {
@@ -95,6 +96,7 @@ const navigation = [
       { name: "Main Accounts", href: "/main-accounts", current: false },
       { name: "Group Accounts", href: "/account-creation", current: false },
       { name: "SubGroup Accounts", href: "/sub-group", current: false },
+      { name: "Transactions", href: "/transactions", current: false },
     ],
   },
   {
@@ -648,6 +650,7 @@ export default function Main() {
                 <Route path="/products" element={<Products />} />
                 <Route path="/grap" element={<LineChart />} />
                 <Route path="/view" element={<View />} />
+                <Route path="/transactions" element={<Transactions />} />
               </Routes>
             </div>
           </main>
