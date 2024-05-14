@@ -106,7 +106,6 @@ const AccountCreation = () => {
 
 
   const handleViewDetails = async (accountId) => {
-    console.log("id id id", accountId);
     setDrawerVisible(true);
     try {
       const response = await axios.get(
@@ -120,6 +119,7 @@ const AccountCreation = () => {
   };
 
   const handleEdit = async (accountId) => {
+    console.log("correct id", accountId);
     try {
       const response = await axios.get(
         `${process.env.REACT_APP_API_URL}/GetSubGroupById?id=${accountId}`
@@ -299,7 +299,7 @@ const AccountCreation = () => {
               <select
                 id="subGroupId"
                 name="subGroupId"
-                value={newAccount.subGroupId}
+                value={newAccount.name}
                 onChange={handleChange}
                 className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
                 style={{ borderRadius: "12px", padding: "15px" }}
@@ -471,7 +471,7 @@ const AccountCreation = () => {
                         }}
                       >
                         <Dropdown
-                          overlay={renderMenu(account.groupAccount.id)}
+                          overlay={renderMenu(account.subGroupAccount.id)}
                           trigger={["click"]}
                         >
                           <EllipsisVerticalIcon
