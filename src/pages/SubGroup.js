@@ -104,7 +104,6 @@ const AccountCreation = () => {
     });
   };
 
-
   const handleViewDetails = async (accountId) => {
     setDrawerVisible(true);
     try {
@@ -173,8 +172,8 @@ const AccountCreation = () => {
   );
 
   const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = (currentPage - 1) * itemsPerPage;
-  const currentItems = filteredAccounts.slice(
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = subGroupAccounts.slice(
     indexOfFirstItem,
     indexOfLastItem
   );
@@ -441,7 +440,7 @@ const AccountCreation = () => {
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {subGroupAccounts.map((account) => {
+                {currentItems.map((account) => {
                   const subGroupInfo = subGroupAccounts.find(
                     (subGroup) =>
                       subGroup.subGroupAccount.id === account.subGroupAccountId
@@ -510,9 +509,11 @@ const AccountCreation = () => {
           </div>
           <Pagination
             current={currentPage}
-            total={filteredAccounts.length}
+            total={subGroupAccounts.length}
             pageSize={itemsPerPage}
             onChange={paginate}
+            showSizeChanger={false}
+            style={{ marginTop: "10px", textAlign: "center" }}
           />
         </div>
       )}
