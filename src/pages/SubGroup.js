@@ -187,6 +187,7 @@ const AccountCreation = () => {
     currentPage * itemsPerPage,
     filteredAccounts.length
   );
+  
 
   const truncateText = (text, maxWords) => {
     const words = text.split(" ");
@@ -205,7 +206,6 @@ const AccountCreation = () => {
           drawerVisible={drawerVisible}
           selectedAccount={selectedAccount}
           accounts={accounts}
-          setShowModal={setShowModal}
         />
       )}
 
@@ -297,23 +297,24 @@ const AccountCreation = () => {
                 Choose a unique name for your subgroup that reflects its purpose
               </p>
               <select
-                id="subGroupId"
-                name="subGroupId"
-                value={newAccount.name}
-                onChange={handleChange}
-                className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
-                style={{ borderRadius: "12px", padding: "15px" }}
-              >
-                <option value="">Select SubGroup</option>
-                {subGroupAccounts.map((subGroup) => (
-                  <option
-                    key={subGroup.subGroupAccount.id}
-                    value={subGroup.subGroupAccount.name}
-                  >
-                    {subGroup.subGroupAccount.name}{" "}
-                  </option>
-                ))}
-              </select>
+  id="subGroupId"
+  name="subGroupId"
+  value={newAccount.subGroupId}
+  onChange={handleChange}
+  className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+  style={{ borderRadius: "12px", padding: "15px" }}
+>
+  <option value="">Select SubGroup</option>
+  {subGroupAccounts.map((subGroup) => (
+    <option
+      key={subGroup.subGroupAccount.id}
+      value={subGroup.subGroupAccount.id}
+    >
+      {subGroup.subGroupAccount.name}
+    </option>
+  ))}
+</select>
+
             </div>
 
             <div className="mb-4">
