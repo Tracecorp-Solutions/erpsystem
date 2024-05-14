@@ -40,8 +40,8 @@ builder.Services.AddSwaggerGen();
 //    c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "Your API", Version = "v1" });
 //});
 
-//var urls = new[] { "http://127.0.0.1:5001" };
-//builder.WebHost.UseUrls(urls);
+var urls = new[] { "http://127.0.0.1:8095" };
+builder.WebHost.UseUrls(urls);
 var app = builder.Build();
 // Configure CORS
 app.UseCors("AllowAll");
