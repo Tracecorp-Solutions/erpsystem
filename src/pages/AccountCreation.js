@@ -325,7 +325,7 @@ const AccountCreation = () => {
                 Account Type
               </label>
               <p className="text-gray-600 text-sm mb-1">
-                This account can be a Bank account or an In-house account
+                This account can be a Bank account or cash at hand account
               </p>
               <select
                 id="accountType"
@@ -345,6 +345,41 @@ const AccountCreation = () => {
                 <option value="Cash at hand">Cash at hand</option>
               </select>
             </div>
+
+            {newAccount.accountType === "Bank" && (
+              <div className="mb-4">
+                <label
+                  htmlFor="accountNumber"
+                  className="block mb-1"
+                  style={{
+                    fontFamily: "outFit, Sans-serif",
+                    fontSize: "16px",
+                    fontWeight: "600",
+                  }}
+                >
+                  Enter Bank Name
+                </label>
+                <p className="text-gray-600 text-sm mb-1">
+                  Register the exact name of the bank the account belongs to.
+                </p>
+                <input
+                  type="text"
+                  id="accountNumber"
+                  name="accountNumber"
+                  value={newAccount.accountNumber}
+                  onChange={(e) =>
+                    setNewAccount({
+                      ...newAccount,
+                      accountNumber: e.target.value,
+                    })
+                  }
+                  placeholder="Please enter bank name..."
+                  className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                  style={{ borderRadius: "12px", padding: "15px" }}
+                />
+              </div>
+            )}
+
             <div className="mb-4">
               <label
                 htmlFor="subGroupAccountId"
@@ -578,7 +613,7 @@ const AccountCreation = () => {
                     scope="col"
                     className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                   >
-                 BALANCE ($) 
+                    BALANCE ($)
                   </th>
                   <th
                     scope="col"
