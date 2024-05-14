@@ -14,17 +14,15 @@ export default function SubComponentSidebar({
   handleCancel,
   subGroupAccounts,
 }) {
-  // State for managing the visibility of the modal
   const [modalVisible, setModalVisible] = useState(false);
-  // State for managing the visibility of the modal for account creation
   const [showModal, setShowModal] = useState(false);
+  const [showAccountForm, setShowAccountForm] = useState(false);
+  
 
-  // Function to handle closing the drawer
   const handleCloseDrawer = () => {
     setDrawerVisible(false);
   };
 
-  // Function to handle opening the modal for account creation
   const handleOpenModal = () => {
     setShowModal(true);
     setModalVisible(true);
@@ -147,7 +145,7 @@ export default function SubComponentSidebar({
                   color: "#fff",
                   fontFamily: "outFit, Sans-serif",
                 }}
-                onClick={handleOpenModal} // Call handleOpenModal function on click
+                onClick={() => setShowAccountForm(true)}
               >
                 + Create Account
               </button>
@@ -169,6 +167,14 @@ export default function SubComponentSidebar({
             setShowModal={setShowModal}
           />
         </Modal>
+        {showAccountForm && (
+          <Modal
+            visible={showAccountForm}
+            onCancel={() => setShowAccountForm(false)}
+            footer={null}
+          >
+          </Modal>
+        )}
       </Drawer>
     </>
   );
