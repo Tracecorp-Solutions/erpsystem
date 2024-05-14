@@ -1,27 +1,12 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { LayoutDashboard, Files, ArrowRightLeft, Users, CreditCard, ReceiptText, FileText, FolderClosed, Settings, ChevronDown, Minus } from 'lucide-react';
 
 function SideNav() {
-  const [showAccountsSublinks, setShowAccountsSublinks] = useState(false);
-  const [showPeopleSublinks, setShowPeopleSublinks] = useState(false);
-  const [showBillsSublinks, setShowBillsSublinks] = useState(false);
-  const [showBankSublinks, setShowBankSublinks] = useState(false);
+  const [openDropdown, setOpenDropdown] = useState(null);
 
-  const toggleAccountsSublinks = () => {
-    setShowAccountsSublinks(!showAccountsSublinks);
-  };
-
-  const togglePeopleSublinks = () => {
-    setShowPeopleSublinks(!showPeopleSublinks);
-  };
-
-  const toggleBillsSublinks = () => {
-    setShowBillsSublinks(!showBillsSublinks);
-  };
-
-  const toggleBankSublinks = () => {
-    setShowBankSublinks(!showBankSublinks);
+  const toggleDropdown = (dropdownName) => {
+    setOpenDropdown(openDropdown === dropdownName ? null : dropdownName);
   };
 
   return (
@@ -39,133 +24,133 @@ function SideNav() {
           <p className="caption">Main menu</p>
         </li>
         <li>
-          <Link to="/">
+          <NavLink exact to="/" activeClassName="active">
             <LayoutDashboard /><span>Dashboard</span>
-          </Link>
+          </NavLink>
         </li>
         <li>
           <div className="dropdown">
-            <button className="dropdown-toggle" onClick={toggleAccountsSublinks}>
+            <button className="dropdown-toggle" onClick={() => toggleDropdown('chartOfAccounts')}>
               <span className="dp-label">
                 <Files />
                 <span>Chart of Accounts</span>
               </span>
               <ChevronDown />
             </button>
-            {showAccountsSublinks && (
+            {openDropdown === 'chartOfAccounts' && (
               <div className="dropdown-menu">
-                <Link to="/groups">
+                <NavLink to="/groups" activeClassName="active">
                   <Minus />
                   <span>Groups</span>
-                </Link>
-                <Link to="/subgroups">
+                </NavLink>
+                <NavLink to="/subgroups" activeClassName="active">
                   <Minus />
                   <span>Subgroups</span>
-                </Link>
-                <Link to="/accounts">
+                </NavLink>
+                <NavLink to="/accounts" activeClassName="active">
                   <Minus />
                   <span>Accounts</span>
-                </Link>
+                </NavLink>
               </div>
             )}
           </div>
         </li>
         <li>
-          <Link to="/transactions">
+          <NavLink to="/transactions" activeClassName="active">
             <ArrowRightLeft />
             <span>Transactions</span> 
-          </Link>
+          </NavLink>
         </li>
         <li>
           <div className="dropdown">
-            <button className="dropdown-toggle" onClick={togglePeopleSublinks}>
+            <button className="dropdown-toggle" onClick={() => toggleDropdown('people')}>
             <span className="dp-label">
               <Users />
               <span>People</span>
             </span>
             <ChevronDown />
             </button>
-            {showPeopleSublinks && (
+            {openDropdown === 'people' && (
               <div className="dropdown-menu">
-                <Link to="/customers">
+                <NavLink to="/customers" activeClassName="active">
                   <Minus />
                   <span>Customers</span>
-                </Link>
-                <Link to="/vendors">
+                </NavLink>
+                <NavLink to="/vendors" activeClassName="active">
                   <Minus />
                   <span>Vendors</span>
-                </Link>
+                </NavLink>
               </div>
             )}
           </div>
         </li>
         <li>
           <div className="dropdown">
-            <button className="dropdown-toggle" onClick={toggleBankSublinks}>
+            <button className="dropdown-toggle" onClick={() => toggleDropdown('bank')}>
               <span className="dp-label">
                 <CreditCard />
                 <span>Banking</span>
               </span>
               <ChevronDown />
             </button>
-            {showBankSublinks && (
+            {openDropdown === 'bank' && (
               <div className="dropdown-menu">
-                <Link to="/deposits">
+                <NavLink to="/deposits">
                   <Minus />
                   <span>Deposits</span>
-                </Link>
-                <Link to="/transfers">
+                </NavLink>
+                <NavLink to="/transfers">
                   <Minus />
                   <span>Transfers</span>
-                </Link>
-                <Link to="/reconciliations">
+                </NavLink>
+                <NavLink to="/reconciliations">
                   <Minus />
                   <span>Reconciliations</span>
-                </Link>
+                </NavLink>
               </div>
             )}
           </div>
         </li>
         <li>
           <div className="dropdown">
-            <button className="dropdown-toggle" onClick={toggleBillsSublinks}>
+            <button className="dropdown-toggle" onClick={() => toggleDropdown('billsInvoices')}>
               <span className="dp-label">
                 <ReceiptText />
                 <span>Bills & invoices</span>
               </span>
               <ChevronDown />
             </button>
-            {showBillsSublinks && (
+            {openDropdown === 'billsInvoices' && (
               <div className="dropdown-menu">
-                <Link to="/bills">
+                <NavLink to="/bills" activeClassName="active">
                   <Minus />
                   <span>Bills</span>
-                </Link>
-                <Link to="/invoices">
+                </NavLink>
+                <NavLink to="/invoices" activeClassName="active">
                   <Minus />
                   <span>Invoices</span>
-                </Link>
+                </NavLink>
               </div>
             )}
           </div>
         </li>
         <li>
-          <Link to="/transactions">
+          <NavLink to="/files" activeClassName="active">
             <FileText />
             <span>Files</span>
-          </Link>
+          </NavLink>
         </li>
         <li>
-          <Link to="/transactions">
+          <NavLink to="/reports" activeClassName="active">
           <FolderClosed />
             <span>Reports</span>
-          </Link>
+          </NavLink>
         </li>
         <li>
-          <Link to="/transactions">
+          <NavLink to="/settings">
             <Settings />
             <span>Settings</span>
-          </Link>
+          </NavLink>
         </li>
       </ul>
     </nav>

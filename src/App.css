@@ -46,6 +46,15 @@
   gap: 8px;
 }
 
+.sidenav a.active,
+.dropdown-menu .active {
+  background-color: #E2ECC3;
+  height: 48px;
+  color: #4467A1;
+  font-weight: 600;
+  padding: 16px;
+}
+
 .logo {
   background-color: #FFFFFF;
   min-height: 80px;
