@@ -93,13 +93,32 @@ const SubGroupEditForm = ({ visible, subgroup, onEdit, onCancel, group, }) => {
           ></textarea>
         </div>
 
-        <div className="flex justify-end">
-          <Button type="default" onClick={onCancel} className="mr-2">
+        <div className="flex justify-between">
+          <button
+            type="button"
+            onClick={onCancel}
+            className="py-2 px-4 text-gray-700 rounded focus:outline-none"
+            style={{
+              borderRadius: "28px",
+              fontFamily: "outFit, Sans-serif",
+              width: "40%",
+              border: "#505050 1px solid",
+            }}
+          >
             Cancel
-          </Button>
-          <Button type="primary" htmlType="submit">
-            Save
-          </Button>
+          </button>
+          <button
+            type="submit"
+            className="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none"
+            style={{
+              background: "#4467a1",
+              borderRadius: "28px",
+              fontFamily: "outFit, Sans-serif",
+              width: "40%",
+            }}
+          >
+            Save Account
+          </button>
         </div>
       </form>
     </Modal>
