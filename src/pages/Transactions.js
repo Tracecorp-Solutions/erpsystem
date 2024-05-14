@@ -153,7 +153,7 @@ const Transaction = () => {
         onClick={() => handleEdit(accountId)}
         icon={<EditOutlined />}
       >
-        Edit
+        Reverse
       </Menu.Item>
     </Menu>
   );
