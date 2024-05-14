@@ -18,7 +18,8 @@
   height: 100%;
 }
 
-.sidenav a {
+.sidenav a,
+.sidenav button {
   text-decoration: none;
   color: #A1A1A1;
   display: block;
@@ -28,6 +29,13 @@
   align-items: center;
   gap: 8px;
   height: 40px;
+}
+
+.sidenav button {
+  background-color: #F6F6F4;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
 }
 
 .logo {
@@ -277,7 +285,8 @@ form {
   gap: 8px;
 }
 
-.form-group input {
+.form-group input,
+.form-group select {
   height: 48px;
 }
 

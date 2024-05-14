@@ -1,7 +1,14 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { LayoutDashboard, Files, ArrowRightLeft, Users, CreditCard, ReceiptText, FileText, FolderClosed, Settings, ChevronDown } from 'lucide-react';
+import { LayoutDashboard, Files, ArrowRightLeft, Users, CreditCard, ReceiptText, FileText, FolderClosed, Settings, ChevronDown, Minus } from 'lucide-react';
 
 function SideNav() {
+  const [showSublinks, setShowSublinks] = useState(false);
+
+  const toggleSublinks = () => {
+    setShowSublinks(!showSublinks);
+  };
+
   return (
     <nav className="sidenav">
       <div className="logo">
@@ -22,11 +29,29 @@ function SideNav() {
           </Link>
         </li>
         <li>
-          <Link to="/accounts">
-            <Files />
-            <span>Chart of Accounts</span>
-            <ChevronDown />
-          </Link>
+          <div className="dropdown">
+            <button className="dropdown-toggle" onClick={toggleSublinks}>
+              <Files />
+              <span>Chart of Accounts</span>
+              <ChevronDown />
+            </button>
+            {showSublinks && (
+              <div className="dropdown-menu">
+                <Link to="/groups">
+                  <Minus />
+                  <span>Groups</span>
+                </Link>
+                <Link to="/subgroups">
+                  <Minus />
+                  <span>Subgroups</span>
+                </Link>
+                <Link to="/accounts">
+                  <Minus />
+                  <span>Accounts</span>
+                </Link>
+              </div>
+            )}
+          </div>
         </li>
         <li>
           <Link to="/transactions">

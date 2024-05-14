@@ -100,7 +100,6 @@ function Transactions() {
           </table>
         )}
       </div>
-      {/* <CreateTransaction isOpen={isModalOpen} onClose={closeModal} onSubmit={handleSubmit} /> */}
     </div>
   );
 }
