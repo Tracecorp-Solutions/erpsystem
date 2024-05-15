@@ -11,6 +11,7 @@ import { EllipsisHorizontalIcon } from "@heroicons/react/20/solid";
 import classNames from "classnames";
 import AccountSidebar from "../components/AccountSidebar ";
 import GroupAccountDetails from "../components/GroupAccountDetails ";
+import SlideInCard from "../components/SlideInCard ";
 
 const EditForm = ({ editedGroupAccount, handleSubmitEdit, closeEditForm }) => {
   const [editedAccount, setEditedAccount] = useState(editedGroupAccount);
@@ -220,6 +221,7 @@ export default function GroupAccount() {
   const [isEditing, setIsEditing] = useState(false);
   const [showEditForm, setShowEditForm] = useState(false);
   const [showDetails, setShowDetails] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
 
 
   useEffect(() => {
@@ -319,17 +321,7 @@ export default function GroupAccount() {
           }
         );
 
-        if (response?.data) {
-          setSuccessMessage("Group account created successfully.");
-          setTimeout(() => {
-            setSuccessMessage("");
-          }, 5000);
-        } else {
-          console.error(
-            "Error creating group account: Response data is undefined"
-          );
-        }
-
+       setShowSuccess(true);
         setNewAccount({ name: "", behaviour: "" });
         toggleForm();
         fetchGroupAccounts();
@@ -401,6 +393,14 @@ export default function GroupAccount() {
     setShowDetails(false);
   };
 
+  const handleShowSuccess = () => {
+    setShowSuccess(true);
+  };
+
+  const handleCloseSuccess = () => {
+    setShowSuccess(false);
+  };
+
   return (
     <div className="px-4 sm:px-6 lg:px-8 group-container">
       {selectedAccount && sidebarVisible && (
@@ -410,6 +410,13 @@ export default function GroupAccount() {
           showForm={showForm}
           setShowForm={setShowForm}
           subGroups={subGroups}
+        />
+      )}
+      {showSuccess && (
+        <SlideInCard
+          title="Group Created!"
+          message="You'v successfully created a new group. You are on your way to categorize and track your financial transactions."
+          onClose={handleCloseSuccess}
         />
       )}
       {successMessage && (
