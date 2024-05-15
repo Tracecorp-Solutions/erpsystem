@@ -217,7 +217,20 @@ export default function SubComponentSidebar({
           onCancel={() => setModalVisible(false)}
           footer={null}
         >
-          <form className="max-w-md mx-auto">
+          <div 
+          style={{
+            maxHeight: "70vh",
+            overflowY: "auto",
+            paddingRight: "15px",
+            msOverflowStyle: "none",
+            scrollbarWidth: "none",
+            "&::-webkit-scrollbar": {
+              display: "none",
+            },
+          }}
+          className="overflow-y-auto"
+          >
+           <form className="max-w-md mx-auto">
             <div className="mb-4">
               <label
                 htmlFor="name"
@@ -483,6 +496,7 @@ export default function SubComponentSidebar({
               ></textarea>
             </div>
           </form>
+          </div>
           <div className="flex justify-between">
             <button
               type="button"
