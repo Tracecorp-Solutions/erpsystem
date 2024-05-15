@@ -30,7 +30,9 @@ const AccountCreation = () => {
   const [accountNameFilter, setAccountNameFilter] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(3);
+  const [successMessage, setSuccessMessage] = useState("");
   const [loading, setLoading] = useState(true);
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     fetchAccounts();
@@ -52,7 +54,8 @@ const AccountCreation = () => {
 
   const fetchSubGroupAccounts = async () => {
     try {
-      const response = await axios.get(process.env.REACT_APP_API_URL+"/GetAllSubGroupAccounts"
+      const response = await axios.get(
+        process.env.REACT_APP_API_URL + "/GetAllSubGroupAccounts"
         // "http://54.226.71.2/GetAllSubGroupAccounts"
       );
       setSubGroupAccounts(response.data);
@@ -82,6 +85,8 @@ const AccountCreation = () => {
         }
       );
       console.log(response.data);
+      setSuccessMessage("Account created successfully.");
+      setErrorMessage(""); // Reset error message
       setNewAccount({
         name: "",
         subGroupAccountId: "",
@@ -90,10 +95,14 @@ const AccountCreation = () => {
         openingBalanceDate: "",
       });
       fetchAccounts();
-      setTimeout(() => {}, 5000);
+      setTimeout(() => {
+        setSuccessMessage("");
+      }, 5000);
       setShowModal(false);
     } catch (error) {
       console.error("Validation failed:", error);
+      setErrorMessage("Failed to create account.");
+      setSuccessMessage(""); // Reset success message
     }
   };
 
@@ -214,6 +223,14 @@ const AccountCreation = () => {
           justifyContent: "space-between",
         }}
       >
+        {successMessage && (
+          <div
+            className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-1"
+            role="alert"
+          >
+            <span className="block sm:inline">{successMessage}</span>
+          </div>
+        )}
         <h2
           style={{
             fontFamily: "outFit,Sans-serif",
@@ -350,7 +367,7 @@ const AccountCreation = () => {
             {newAccount.accountType === "Bank" && (
               <div className="mb-4">
                 <label
-                  htmlFor="accountNumber"
+                  htmlFor="bankName"
                   className="block mb-1"
                   style={{
                     fontFamily: "outFit, Sans-serif",
@@ -365,9 +382,9 @@ const AccountCreation = () => {
                 </p>
                 <input
                   type="text"
-                  id="accountNumber"
-                  name="accountNumber"
-                  value={newAccount.accountNumber}
+                  id="bankName"
+                  name="bankName"
+                 
                   onChange={(e) =>
                     setNewAccount({
                       ...newAccount,
@@ -418,7 +435,7 @@ const AccountCreation = () => {
                 ))}
               </select>
             </div>
-            {newAccount.accountType !== "InHouse" && (
+            {newAccount.accountType !== "Cash at hand" && (
               <div className="mb-4">
                 <label
                   htmlFor="accountNumber"
