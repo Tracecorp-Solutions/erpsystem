@@ -26,7 +26,7 @@ namespace Services.Repositories
                 throw new ArgumentException("Invalid subgroup account id.");
 
             // Check if the AccountType is provided is valid
-            if (account.AccountType !="InHouse" && account.AccountType !="Bank")
+            if (account.AccountType !="Cash at hand" && account.AccountType !="Bank")
                 throw new ArgumentException("Please Account type should be InHouse or Bank");
 
             _context.Accounts.Add(account);
