@@ -279,7 +279,7 @@
               "RelativeDocumentMoniker": "Controllers\\AccountController.cs",
               "ToolTip": "D:\\working directory\\erpsystem\\Trace\\Controllers\\AccountController.cs",
               "RelativeToolTip": "Controllers\\AccountController.cs",
-              "ViewState": "AQIAADUAAAAAAAAAAAAgwF4AAAAxAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAF4AAAAxAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-04-22T09:38:32.813Z",
               "EditorCaption": ""
@@ -306,8 +306,7 @@
               "RelativeToolTip": "..\\Services\\Repositories\\TransactionRepository.cs",
               "ViewState": "AQIAABMAAAAAAAAAAAAzwAwAAAABAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-30T09:04:31.504Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-04-30T09:04:31.504Z"
             },
             {
               "$type": "Document",
