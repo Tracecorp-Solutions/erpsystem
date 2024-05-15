@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Drawer, Modal, Table } from "antd";
+import { Drawer, Modal, Table, Pagination } from "antd";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import axios from "axios";
 
@@ -14,6 +14,7 @@ export default function SubComponentSidebar({
   fetchSubGroupAccounts,
 }) {
   const [modalVisible, setModalVisible] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1); // Current page of pagination
 
   const [newAccount, setNewAccount] = useState({
     name: "",
@@ -34,6 +35,11 @@ export default function SubComponentSidebar({
         (account) => account.subGroupAccountId === selectedAccount.id
       )
     : [];
+
+  const pageSize = 2;
+  const indexOfLastItem = currentPage * pageSize;
+  const indexOfFirstItem = indexOfLastItem - pageSize;
+  const currentItems = subgroupAccounts.slice(indexOfFirstItem, indexOfLastItem);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -60,6 +66,10 @@ export default function SubComponentSidebar({
     } catch (error) {
       console.error("Error creating subGroup account:", error);
     }
+  };
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
   };
 
   return (
@@ -130,7 +140,7 @@ export default function SubComponentSidebar({
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
-                  {subgroupAccounts.map((account) => (
+                  {currentItems.map((account) => (
                     <tr key={account.id}>
                       <td className="px-3 py-4 whitespace-nowrap text-sm  text-gray-500">
                         {account.name}
@@ -145,6 +155,13 @@ export default function SubComponentSidebar({
                 </tbody>
               </table>
             </div>
+            <Pagination
+                current={currentPage}
+                pageSize={pageSize}
+                total={subgroupAccounts.length}
+                onChange={handlePageChange}
+                style={{ marginTop: '10px', textAlign: 'center' }}
+              />
           </div>
         ) : (
           <div
