@@ -427,7 +427,7 @@ const Transaction = () => {
             </div>
             <div className="mb-4">
               <label
-                htmlFor="description"
+                htmlFor="amount"
                 className="block mb-1"
                 style={{
                   fontFamily: "outFit, Sans-serif",
@@ -441,23 +441,24 @@ const Transaction = () => {
                 className="text-gray-500 text-xs mb-2"
                 style={{ fontFamily: "outFit, Sans-serif" }}
               >
-                Amount being transfered
+                Amount being transferred
               </p>
 
               <input
-                type="number"
+                type="text"
                 id="amount"
                 value={newTransaction.amount}
                 onChange={(e) =>
                   setNewTransaction({
                     ...newTransaction,
-                    amount: parseFloat(e.target.value),
+                    amount: e.target.value,
                   })
                 }
                 className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
                 style={{ borderRadius: "12px", padding: "15px" }}
               />
             </div>
+
             {/* <div>
               <label
                 htmlFor="behaviour"
@@ -633,7 +634,9 @@ const Transaction = () => {
                         {transaction.transactionType}
                       </td>
                       <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-800">
-                      {new Date(transaction.transactionDate).toLocaleDateString("en-GB")}
+                        {new Date(
+                          transaction.transactionDate
+                        ).toLocaleDateString("en-GB")}
                       </td>
                       <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-800">
                         {transaction.amount}

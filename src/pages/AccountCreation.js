@@ -384,7 +384,6 @@ const AccountCreation = () => {
                   type="text"
                   id="bankName"
                   name="bankName"
-                 
                   onChange={(e) =>
                     setNewAccount({
                       ...newAccount,
@@ -503,24 +502,28 @@ const AccountCreation = () => {
 
             <div className="mb-4">
               <label
-                htmlFor="balance"
+                htmlFor="amount"
                 className="block mb-1"
                 style={{
                   fontFamily: "outFit, Sans-serif",
-                  fontSize: "16px",
-                  fontWeight: "600",
+                  fontSize: "15px",
+                  fontWeight: "80",
                 }}
               >
-                Opening Balance
+                Opening balance
               </label>
-              <p style={{ fontFamily: "outFit, Sans-serif", color: "#a1a1a1" }}>
-                Initial account value at creation
+              <p
+                className="text-gray-500 text-xs mb-2"
+                style={{ fontFamily: "outFit, Sans-serif" }}
+              >
+                Amount being deposited
               </p>
+
               <input
                 type="number"
                 id="balance"
                 name="balance"
-                value={newAccount.balance}
+                value={newAccount.balance !== 0 ? newAccount.balance : ""}
                 onChange={(e) =>
                   setNewAccount({
                     ...newAccount,
@@ -529,9 +532,14 @@ const AccountCreation = () => {
                 }
                 placeholder="Please enter account balance..."
                 className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
-                style={{ borderRadius: "12px", padding: "15px" }}
+                style={{
+                  borderRadius: "12px",
+                  padding: "15px",
+                  appearance: "textfield",
+                }}
               />
             </div>
+
             {/* Description */}
             <div className="mb-4">
               <label
