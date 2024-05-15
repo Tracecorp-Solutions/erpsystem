@@ -16,8 +16,12 @@ export default function SubComponentSidebar({
 
   const [newAccount, setNewAccount] = useState({
     name: "",
+    subGroupAccountId: "",
+    accountType: "",
+    accountNumber: "",
+    balance: 0,
     description: "",
-    groupId: "",
+    openingBalanceDate: "",
   });
 
   const handleCloseDrawer = () => {
@@ -214,19 +218,111 @@ export default function SubComponentSidebar({
           footer={null}
         >
           <form className="max-w-md mx-auto">
-            <h2
-              style={{
-                fontFamily: "outFit, Sans-serif,",
-                fcolor: "#505050",
-                fontSize: "25px",
-                marginTop: "30px",
-              }}
-            >
-              Account Creation
-            </h2>
             <div className="mb-4">
               <label
-                htmlFor="subGroupId"
+                htmlFor="name"
+                className="block mb-1"
+                style={{
+                  fontFamily: "outFit, Sans-serif",
+                  fontSize: "16px",
+                  fontWeight: "600",
+                }}
+              >
+                Account Name
+              </label>
+              <p
+                className="text-gray-600 text-sm mb-1"
+                style={{ fontFamily: "outFit, Sans-serif" }}
+              >
+                Choose a unique name for your account that reflects its purpose
+              </p>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                value={newAccount.name}
+                onChange={(e) =>
+                  setNewAccount({
+                    ...newAccount,
+                    name: e.target.value,
+                  })
+                }
+                placeholder="Please enter account name..."
+                className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                style={{ borderRadius: "12px", padding: "15px" }}
+              />
+            </div>
+            <div className="mb-4">
+              <label
+                htmlFor="accountType"
+                className="block mb-1"
+                style={{
+                  fontFamily: "outFit, Sans-serif",
+                  fontSize: "16px",
+                  fontWeight: "600",
+                }}
+              >
+                Account Type
+              </label>
+              <p className="text-gray-600 text-sm mb-1">
+                This account can be a Bank account or cash at hand account
+              </p>
+              <select
+                id="accountType"
+                name="accountType"
+                value={newAccount.accountType}
+                onChange={(e) =>
+                  setNewAccount({
+                    ...newAccount,
+                    accountType: e.target.value,
+                  })
+                }
+                className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                style={{ borderRadius: "12px", padding: "15px" }}
+              >
+                <option value="">Select Account Type</option>
+                <option value="Bank">Bank</option>
+                <option value="Cash at hand">Cash at hand</option>
+              </select>
+            </div>
+
+            {newAccount.accountType === "Bank" && (
+              <div className="mb-4">
+                <label
+                  htmlFor="accountNumber"
+                  className="block mb-1"
+                  style={{
+                    fontFamily: "outFit, Sans-serif",
+                    fontSize: "16px",
+                    fontWeight: "600",
+                  }}
+                >
+                  Enter Bank Name
+                </label>
+                <p className="text-gray-600 text-sm mb-1">
+                  Register the exact name of the bank the account belongs to.
+                </p>
+                <input
+                  type="text"
+                  id="accountNumber"
+                  name="accountNumber"
+                  value={newAccount.accountNumber}
+                  onChange={(e) =>
+                    setNewAccount({
+                      ...newAccount,
+                      accountNumber: e.target.value,
+                    })
+                  }
+                  placeholder="Please enter bank name..."
+                  className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                  style={{ borderRadius: "12px", padding: "15px" }}
+                />
+              </div>
+            )}
+
+            <div className="mb-4">
+              <label
+                htmlFor="subGroupAccountId"
                 className="block mb-1"
                 style={{
                   fontFamily: "outFit, Sans-serif",
@@ -236,14 +332,17 @@ export default function SubComponentSidebar({
               >
                 SubGroup
               </label>
-              <p>
-                Choose a unique name for your subgroup that reflects its purpose
-              </p>
+              <p>Select the subgroup this account belongs to</p>
               <select
-                id="name"
-                name="name"
-                value={newAccount.name}
-                onChange={handleChange}
+                id="subGroupAccountId"
+                name="subGroupAccountId"
+                value={newAccount.subGroupAccountId}
+                onChange={(e) =>
+                  setNewAccount({
+                    ...newAccount,
+                    subGroupAccountId: e.target.value,
+                  })
+                }
                 className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
                 style={{ borderRadius: "12px", padding: "15px" }}
               >
@@ -251,17 +350,50 @@ export default function SubComponentSidebar({
                 {subGroupData.map((subGroup) => (
                   <option
                     key={subGroup.subGroupAccount.id}
-                    value={subGroup.subGroupAccount.name}
+                    value={subGroup.subGroupAccount.id}
                   >
                     {subGroup.subGroupAccount.name}
                   </option>
                 ))}
               </select>
             </div>
+            {newAccount.accountType !== "InHouse" && (
+              <div className="mb-4">
+                <label
+                  htmlFor="accountNumber"
+                  className="block mb-1"
+                  style={{
+                    fontFamily: "outFit, Sans-serif",
+                    fontSize: "16px",
+                    fontWeight: "600",
+                  }}
+                >
+                  Account Number
+                </label>
+                <p className="text-gray-600 text-sm mb-1">
+                  To ensure accurate tracking of transactions
+                </p>
+                <input
+                  type="number"
+                  id="accountNumber"
+                  name="accountNumber"
+                  value={newAccount.accountNumber}
+                  onChange={(e) =>
+                    setNewAccount({
+                      ...newAccount,
+                      accountNumber: e.target.value,
+                    })
+                  }
+                  placeholder="Please enter account number..."
+                  className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                  style={{ borderRadius: "12px", padding: "15px" }}
+                />
+              </div>
+            )}
 
             <div className="mb-4">
               <label
-                htmlFor="groupId"
+                htmlFor="balance"
                 className="block mb-1"
                 style={{
                   fontFamily: "outFit, Sans-serif",
@@ -269,26 +401,60 @@ export default function SubComponentSidebar({
                   fontWeight: "600",
                 }}
               >
-                Group
+                Opening Date
               </label>
-              <p>Select the group this subgroup belongs to</p>
-              <select
-                id="groupId"
-                name="groupId"
-                value={newAccount.groupId}
-                onChange={handleChange}
+              <p style={{ fontFamily: "outFit, Sans-serif", color: "#a1a1a1" }}>
+                Initial account value at creation
+              </p>
+              <input
+                type="date"
+                id="openingBalanceDate"
+                name="openingBalanceDate"
+                value={newAccount.openingBalanceDate}
+                onChange={(e) =>
+                  setNewAccount({
+                    ...newAccount,
+                    openingBalanceDate: e.target.value,
+                  })
+                }
+                placeholder="Please enter account balance..."
                 className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
                 style={{ borderRadius: "12px", padding: "15px" }}
-              >
-                <option value="">Select Group</option>
-                {group.map((group) => (
-                  <option key={group.id} value={group.id}>
-                    {group.name}
-                  </option>
-                ))}
-              </select>
+              />
             </div>
 
+            <div className="mb-4">
+              <label
+                htmlFor="balance"
+                className="block mb-1"
+                style={{
+                  fontFamily: "outFit, Sans-serif",
+                  fontSize: "16px",
+                  fontWeight: "600",
+                }}
+              >
+                Opening Balance
+              </label>
+              <p style={{ fontFamily: "outFit, Sans-serif", color: "#a1a1a1" }}>
+                Initial account value at creation
+              </p>
+              <input
+                type="number"
+                id="balance"
+                name="balance"
+                value={newAccount.balance}
+                onChange={(e) =>
+                  setNewAccount({
+                    ...newAccount,
+                    balance: e.target.value,
+                  })
+                }
+                placeholder="Please enter account balance..."
+                className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                style={{ borderRadius: "12px", padding: "15px" }}
+              />
+            </div>
+            {/* Description */}
             <div className="mb-4">
               <label
                 htmlFor="description"
@@ -301,14 +467,16 @@ export default function SubComponentSidebar({
               >
                 Description
               </label>
-              <p>
-                Add a brief description to help identify this subgroup's purpose
-              </p>
               <textarea
                 id="description"
                 name="description"
                 value={newAccount.description}
-                onChange={handleChange}
+                onChange={(e) =>
+                  setNewAccount({
+                    ...newAccount,
+                    description: e.target.value,
+                  })
+                }
                 placeholder="Please enter description..."
                 className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
                 style={{ borderRadius: "12px", padding: "15px" }}
