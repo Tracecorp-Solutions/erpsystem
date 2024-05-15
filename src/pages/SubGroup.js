@@ -51,7 +51,8 @@ const AccountCreation = () => {
   const fetchSubGroupAccounts = async () => {
     try {
       const response = await axios.get(
-        "http://54.226.71.2/GetAllSubGroupAccounts"
+        process.env.REACT_APP_API_URL+"/GetAllSubGroupAccounts"
+        // "http://54.226.71.2/GetAllSubGroupAccounts"
       );
       setSubGroupAccounts(response.data);
     } catch (error) {
@@ -62,7 +63,8 @@ const AccountCreation = () => {
   const fetchGroupAccount = async () => {
     try {
       const response = await axios.get(
-        "http://54.226.71.2/GetAllGroupAccounts"
+        process.env.REACT_APP_API_URL+"/GetAllGroupAccounts"
+        // "http://54.226.71.2/GetAllGroupAccounts"
       );
       setGroup(response.data);
       console.log(response.data);
@@ -79,8 +81,8 @@ const AccountCreation = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(
-        "http://54.226.71.2/CreateSubGroupAccount",
+      const response = await axios.post(process.env.REACT_APP_API_URL+"/CreateSubGroupAccount",
+        // "http://54.226.71.2/CreateSubGroupAccount",
         newAccount
       );
       console.log(response.data);

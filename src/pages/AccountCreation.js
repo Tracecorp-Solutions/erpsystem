@@ -52,8 +52,8 @@ const AccountCreation = () => {
 
   const fetchSubGroupAccounts = async () => {
     try {
-      const response = await axios.get(
-        "http://54.226.71.2/GetAllSubGroupAccounts"
+      const response = await axios.get(process.env.REACT_APP_API_URL+"/GetAllSubGroupAccounts"
+        // "http://54.226.71.2/GetAllSubGroupAccounts"
       );
       setSubGroupAccounts(response.data);
       console.log(response.data);
