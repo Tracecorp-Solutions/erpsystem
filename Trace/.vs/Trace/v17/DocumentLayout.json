@@ -306,8 +306,7 @@
               "RelativeToolTip": "..\\Services\\Repositories\\AccountRepository.cs",
               "ViewState": "AQIAABYAAAAAAAAAAAAjwBwAAAAzAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-30T08:34:59.824Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-04-30T08:34:59.824Z"
             },
             {
               "$type": "Document",
@@ -319,8 +318,7 @@
               "RelativeToolTip": "..\\Core\\Repositories\\IAccountRepository.cs",
               "ViewState": "AQIAAAIAAAAAAAAAAAAWwAsAAAAoAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-22T09:29:40.481Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-04-22T09:29:40.481Z"
             },
             {
               "$type": "Document",
@@ -330,7 +328,7 @@
               "RelativeDocumentMoniker": "Trace.csproj",
               "ToolTip": "D:\\working directory\\erpsystem\\Trace\\Trace.csproj",
               "RelativeToolTip": "Trace.csproj",
-              "ViewState": "AQIAABIAAAAAAAAAAAD4vx8AAAAAAAAA",
+              "ViewState": "AQIAAAMAAAAAAAAAAAD4vxoAAAA2AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
               "WhenOpened": "2024-04-22T08:16:01.724Z",
               "EditorCaption": ""
@@ -345,7 +343,8 @@
               "RelativeToolTip": "Controllers\\TransactionsController.cs",
               "ViewState": "AQIAABQAAAAAAAAAAIA9wBkAAAA0AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-22T10:34:36.437Z"
+              "WhenOpened": "2024-04-22T10:34:36.437Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -645,7 +644,8 @@
               "RelativeToolTip": "..\\Services\\Repositories\\VendorRepository.cs",
               "ViewState": "AQIAADMAAAAAAAAAAAAcwC4AAAAMAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-30T09:04:42.785Z"
+              "WhenOpened": "2024-04-30T09:04:42.785Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -681,7 +681,8 @@
               "RelativeToolTip": "Controllers\\VendorController.cs",
               "ViewState": "AQIAABwAAAAAAAAAAAAuwCYAAAA8AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-25T08:20:56.566Z"
+              "WhenOpened": "2024-04-25T08:20:56.566Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -789,7 +790,8 @@
               "RelativeToolTip": "..\\Services\\Services.csproj",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAA4AAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2024-04-22T08:18:26.954Z"
+              "WhenOpened": "2024-04-22T08:18:26.954Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -849,7 +851,8 @@
               "RelativeToolTip": "..\\Infrastructure\\Infrastructure.csproj",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2024-04-22T08:33:28.041Z"
+              "WhenOpened": "2024-04-22T08:33:28.041Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -897,7 +900,8 @@
               "RelativeToolTip": "..\\Core\\Core.csproj",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2024-04-22T09:26:31.842Z"
+              "WhenOpened": "2024-04-22T09:26:31.842Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
