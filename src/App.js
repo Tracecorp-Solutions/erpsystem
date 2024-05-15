@@ -10,9 +10,7 @@ function App() {
     <div className="min-h-full">
       <div className="py-">
         <Routers>
-       
          <Main />
-         
         </Routers>
       </div>
     </div>
