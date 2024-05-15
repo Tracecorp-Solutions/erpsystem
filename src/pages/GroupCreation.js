@@ -12,6 +12,7 @@ import classNames from "classnames";
 import AccountSidebar from "../components/AccountSidebar ";
 import GroupAccountDetails from "../components/GroupAccountDetails ";
 import SlideInCard from "../components/SlideInCard ";
+import FailureSlideInCard from "../components/FailureSlideInCard ";
 
 const EditForm = ({ editedGroupAccount, handleSubmitEdit, closeEditForm }) => {
   const [editedAccount, setEditedAccount] = useState(editedGroupAccount);
@@ -222,7 +223,7 @@ export default function GroupAccount() {
   const [showEditForm, setShowEditForm] = useState(false);
   const [showDetails, setShowDetails] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
-
+  const [showFailure, setShowFailure] = useState(false);
 
   useEffect(() => {
     fetchGroupAccounts();
@@ -326,6 +327,7 @@ export default function GroupAccount() {
         toggleForm();
         fetchGroupAccounts();
       } catch (error) {
+        setShowFailure(true);
         console.error("Error creating group account:", error);
       }
     }
@@ -426,6 +428,13 @@ export default function GroupAccount() {
         >
           <span className="block sm:inline">{successMessage}</span>
         </div>
+      )}
+       {showFailure && (
+        <FailureSlideInCard
+        title="Creation Error!"
+          message="An error occurred while creating the group account. Please try again later."
+          onClose={() => setShowFailure(false)}
+        />
       )}
       <div className="sm:flex sm:items-center">
         <div className="sm:flex-auto">
