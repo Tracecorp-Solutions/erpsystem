@@ -63,7 +63,7 @@ export default function AccountComponentSidebar({
               fontWeight: "500",
             }}
           >
-            <h2>OPENING BALANCE</h2>
+            <h2>BALANCE</h2>
           </div>
           <div
             style={{
@@ -79,13 +79,7 @@ export default function AccountComponentSidebar({
           </div>
           <div className="mt-5">
             <div className="flex justify-between">
-              <Card
-                style={{
-                  width: 400,
-                  marginRight: "10px",
-                  background: "#f6f6f4",
-                }}
-              >
+            <Card style={{ width: 360, background: "#f6f6f4", marginRight:"5px" }}>
                 <h2
                   style={{
                     textAlign: "start",
@@ -94,7 +88,7 @@ export default function AccountComponentSidebar({
                     color: "#A1a1a1",
                   }}
                 >
-                  OPENING BALANCE DATE
+                  ACCOUNT NUMBER
                 </h2>
                 <p
                   style={{
@@ -105,10 +99,9 @@ export default function AccountComponentSidebar({
                     fontFamily: "outFit, Sans-serif",
                   }}
                 >
-                  {selectedAccount.openingBalanceDate}
+                  {selectedAccount.accountNumber}
                 </p>
               </Card>
-
               <Card style={{ width: 400, background: "#f6f6f4" }}>
                 <h2
                   style={{
@@ -138,7 +131,7 @@ export default function AccountComponentSidebar({
             <div className="flex justify-between mt-5">
               <Card
                 style={{
-                  width: 400,
+                  width: 540,
                   marginRight: "10px",
                   background: "#f6f6f4",
                 }}
@@ -167,29 +160,7 @@ export default function AccountComponentSidebar({
                 </p>
               </Card>
 
-              <Card style={{ width: 400, background: "#f6f6f4" }}>
-                <h2
-                  style={{
-                    textAlign: "start",
-                    fontSize: "11px",
-                    fontFamily: "outFit, Sans-serif",
-                    color: "#A1a1a1",
-                  }}
-                >
-                  ACCOUNT NUMBER
-                </h2>
-                <p
-                  style={{
-                    textAlign: "start",
-                    fontSize: "16px",
-                    fontWeight: "600",
-                    color: "#505050",
-                    fontFamily: "outFit, Sans-serif",
-                  }}
-                >
-                  {selectedAccount.accountNumber}
-                </p>
-              </Card>
+             
             </div>
           </div>
           <div style={{ marginTop: "25px" }}>

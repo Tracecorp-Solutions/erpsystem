@@ -2,27 +2,27 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Modal, Button, Dropdown, Menu, Pagination } from "antd";
 import { EyeOutlined, EditOutlined } from "@ant-design/icons";
-import AccountForm from "../components/EditAccountForm";
+import AccountForm from "../components/TranEditAccountForm";
 import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
-import AccountComponentSidebar from "../components/AccountComponentSidebar";
-import AccountNavigationFilter from "../components/AccountNavigationFilter";
+import AccountComponentSidebar from "../components/TranAccountComponentSidebar";
+import AccountNavigationFilter from "../components/TranAccountNavigationFilter";
 import "../styles/AccountCreation.css";
-import AccountLoadingMessage from "../components/AccountLoadingMessage";
+import AccountLoadingMessage from "../components/TranAccountLoadingMessage";
 
-const AccountCreation = () => {
+const Transaction = () => {
   const [showModal, setShowModal] = useState(false);
   const [showEditForm, setShowEditForm] = useState(false);
   const [drawerVisible, setDrawerVisible] = useState(false);
   const [accounts, setAccounts] = useState([]);
+  const [transactions, setTransactions] = useState([]);
   const [subGroupAccounts, setSubGroupAccounts] = useState([]);
-  const [newAccount, setNewAccount] = useState({
-    name: "",
-    subGroupAccountId: "",
-    accountType: "",
-    accountNumber: "",
-    balance: 0,
-    description: "",
-    openingBalanceDate: "",
+  const [newTransaction, setNewTransaction] = useState({
+    accountFromId: 0,
+    accountToId: 0,
+    transactionDate: "",
+    amount: 0,
+    narration: "",
+    tranReference: "",
   });
   const [dropdownVisible, setDropdownVisible] = useState({});
   const [selectedAccount, setSelectedAccount] = useState(null);
@@ -31,10 +31,11 @@ const AccountCreation = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(3);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     fetchAccounts();
-    fetchSubGroupAccounts();
+    fetchTransactions();
   }, []);
 
   const fetchAccounts = async () => {
@@ -43,22 +44,24 @@ const AccountCreation = () => {
         `${process.env.REACT_APP_API_URL}/GetAccounts`
       );
       setAccounts(response.data);
-      console.log("get accounts", response.data);
-      setLoading(false);
     } catch (error) {
-      console.error("Error fetching groups:", error);
+      console.error("Error fetching accounts:", error);
+      setError("Failed to fetch accounts");
     }
   };
 
-  const fetchSubGroupAccounts = async () => {
+  const fetchTransactions = async () => {
     try {
       const response = await axios.get(
-        "http://54.226.71.2/GetAllSubGroupAccounts"
+        `${process.env.REACT_APP_API_URL}/RetrieveTransactions`
       );
-      setSubGroupAccounts(response.data);
-      console.log(response.data);
+      setTransactions(response.data);
+      console.log("skkskskkskskkskksk", response.data);
     } catch (error) {
-      console.error("Error fetching subGroup accounts", error);
+      console.error("Error fetching transactions:", error);
+      setError("Failed to fetch transactions");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -70,35 +73,24 @@ const AccountCreation = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        `${process.env.REACT_APP_API_URL}/accounts`,
-        {
-          name: newAccount.name,
-          balance: parseFloat(newAccount.balance),
-          accountType: newAccount.accountType,
-          subGroupAccountId: parseInt(newAccount.subGroupAccountId),
-          accountNumber: newAccount.accountNumber,
-          description: newAccount.description,
-          openingBalanceDate: newAccount.openingBalanceDate,
-        }
+        `${process.env.REACT_APP_API_URL}/RecordTransaction`,
+        newTransaction
       );
       console.log(response.data);
-      setNewAccount({
-        name: "",
-        subGroupAccountId: "",
-        balance: 0,
-        description: "",
-        openingBalanceDate: "",
-      });
-      fetchAccounts();
-      setTimeout(() => {}, 5000);
       setShowModal(false);
+      // Refresh transactions after successful submission
+      fetchTransactions();
     } catch (error) {
-      console.error("Validation failed:", error);
+      console.error("Failed to record transaction:", error);
     }
   };
 
+  const handleBehaviorChange = (e) => {
+    const { value } = e.target;
+    setEditedAccount({ ...editedAccount, behaviour: value });
+  };
+
   const handleEditSubmit = async (e) => {
-    console.log("aoo", editedAccount);
     e.preventDefault();
     try {
       const response = await axios.post(
@@ -107,6 +99,8 @@ const AccountCreation = () => {
       );
       console.log("Account updated:", response.data);
       setShowEditForm(false);
+      // Refresh accounts after successful submission
+      fetchAccounts();
     } catch (error) {
       console.error("Error updating account:", error);
     }
@@ -159,7 +153,7 @@ const AccountCreation = () => {
         onClick={() => handleEdit(accountId)}
         icon={<EditOutlined />}
       >
-        Edit
+        Reverse
       </Menu.Item>
     </Menu>
   );
@@ -189,8 +183,6 @@ const AccountCreation = () => {
   );
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
-
-  // const totalPages = Math.ceil(filteredAccounts.length / itemsPerPage);
 
   const rangeStart = (currentPage - 1) * itemsPerPage + 1;
   const rangeEnd = Math.min(
@@ -222,7 +214,7 @@ const AccountCreation = () => {
             fontSize: "25px",
           }}
         >
-          Accounts
+          Transact
         </h2>
         <Button
           type="primary"
@@ -233,7 +225,7 @@ const AccountCreation = () => {
             fontFamily: "outFit, Sans-serif",
           }}
         >
-          + Create Account
+          + Start Transaction
         </Button>
       </div>
       <Modal visible={showEditForm} onCancel={CancelEdit} footer={null}>
@@ -260,14 +252,14 @@ const AccountCreation = () => {
             color: "#505050",
             fontFamily: "outFit, Sans-serif",
             fontSize: "25px",
-            marginTop: "30px",
+            marginTop: "20px",
           }}
         >
-          Account Creation
+          Transact
         </h3>
         <div
           style={{
-            maxHeight: "70vh",
+            maxHeight: "60vh",
             overflowY: "auto",
             paddingRight: "15px",
             msOverflowStyle: "none",
@@ -281,31 +273,59 @@ const AccountCreation = () => {
           <form className="max-w-md mx-auto">
             <div className="mb-4">
               <label
-                htmlFor="name"
-                className="block mb-1"
-                style={{
-                  fontFamily: "outFit, Sans-serif",
-                  fontSize: "16px",
-                  fontWeight: "600",
-                }}
+                htmlFor="transactionDate"
+                className="block text-sm font-medium text-gray-700"
               >
-                Account Name
+                Transaction Date
               </label>
               <p
-                className="text-gray-600 text-sm mb-1"
+                className="text-gray-500 text-xs mb-1"
                 style={{ fontFamily: "outFit, Sans-serif" }}
               >
-                Choose a unique name for your account that reflects its purpose
+                Enter date when transaction occurred
+              </p>
+              <input
+                type="datetime-local"
+                id="transactionDate"
+                value={newTransaction.transactionDate}
+                onChange={(e) =>
+                  setNewTransaction({
+                    ...newTransaction,
+                    transactionDate: e.target.value,
+                  })
+                }
+                placeholder="Please enter account balance..."
+                className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                style={{ borderRadius: "12px", padding: "15px" }}
+              />
+            </div>
+            <div className="mb-4">
+              <label
+                htmlFor="tranReference"
+                className="block mb-2"
+                style={{
+                  fontFamily: "outFit, Sans-serif",
+                  fontSize: "15px",
+                  fontWeight: "80",
+                }}
+              >
+                Reference Number
+              </label>
+              <p
+                className="text-gray-500 text-xs mb-1"
+                style={{ fontFamily: "outFit, Sans-serif" }}
+              >
+                If you have an invoice or cheque number related to this number
               </p>
               <input
                 type="text"
-                id="name"
-                name="name"
-                value={newAccount.name}
+                id="tranReference"
+                name="tranReference"
+                value={newTransaction.tranReference}
                 onChange={(e) =>
-                  setNewAccount({
-                    ...newAccount,
-                    name: e.target.value,
+                  setNewTransaction({
+                    ...newTransaction,
+                    tranReference: e.target.value,
                   })
                 }
                 placeholder="Please enter account name..."
@@ -315,233 +335,169 @@ const AccountCreation = () => {
             </div>
             <div className="mb-4">
               <label
-                htmlFor="accountType"
-                className="block mb-1"
-                style={{
-                  fontFamily: "outFit, Sans-serif",
-                  fontSize: "16px",
-                  fontWeight: "600",
-                }}
+                htmlFor="accountFromId"
+                className="block text-sm font-medium text-gray-700"
               >
-                Account Type
+                Account From
               </label>
-              <p className="text-gray-600 text-sm mb-1">
-                This account can be a Bank account or cash at hand account
+              <p
+                className="text-gray-500 text-xs mb-2"
+                style={{ fontFamily: "outFit, Sans-serif" }}
+              >
+                Source of the funds
               </p>
               <select
-                id="accountType"
-                name="accountType"
-                value={newAccount.accountType}
+                id="accountFromId"
+                value={newTransaction.name}
                 onChange={(e) =>
-                  setNewAccount({
-                    ...newAccount,
-                    accountType: e.target.value,
+                  setNewTransaction({
+                    ...newTransaction,
+                    accountFromId: parseInt(e.target.value),
                   })
                 }
                 className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
                 style={{ borderRadius: "12px", padding: "15px" }}
               >
-                <option value="">Select Account Type</option>
-                <option value="Bank">Bank</option>
-                <option value="Cash at hand">Cash at hand</option>
-              </select>
-            </div>
-
-            {newAccount.accountType === "Bank" && (
-              <div className="mb-4">
-                <label
-                  htmlFor="accountNumber"
-                  className="block mb-1"
-                  style={{
-                    fontFamily: "outFit, Sans-serif",
-                    fontSize: "16px",
-                    fontWeight: "600",
-                  }}
-                >
-                  Enter Bank Name
-                </label>
-                <p className="text-gray-600 text-sm mb-1">
-                  Register the exact name of the bank the account belongs to.
-                </p>
-                <input
-                  type="text"
-                  id="accountNumber"
-                  name="accountNumber"
-                  value={newAccount.accountNumber}
-                  onChange={(e) =>
-                    setNewAccount({
-                      ...newAccount,
-                      accountNumber: e.target.value,
-                    })
-                  }
-                  placeholder="Please enter bank name..."
-                  className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
-                  style={{ borderRadius: "12px", padding: "15px" }}
-                />
-              </div>
-            )}
-
-            <div className="mb-4">
-              <label
-                htmlFor="subGroupAccountId"
-                className="block mb-1"
-                style={{
-                  fontFamily: "outFit, Sans-serif",
-                  fontSize: "16px",
-                  fontWeight: "600",
-                }}
-              >
-                SubGroup
-              </label>
-              <p>Select the subgroup this account belongs to</p>
-              <select
-                id="subGroupAccountId"
-                name="subGroupAccountId"
-                value={newAccount.subGroupAccountId}
-                onChange={(e) =>
-                  setNewAccount({
-                    ...newAccount,
-                    subGroupAccountId: e.target.value,
-                  })
-                }
-                className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
-                style={{ borderRadius: "12px", padding: "15px" }}
-              >
-                <option value="">Select SubGroup</option>
-                {subGroupAccounts.map((subGroup) => (
-                  <option
-                    key={subGroup.subGroupAccount.id}
-                    value={subGroup.subGroupAccount.id}
-                  >
-                    {subGroup.subGroupAccount.name}
+                <option value="">Select an account</option>
+                {accounts.map((account) => (
+                  <option key={account.id} value={account.id}>
+                    {account.name}
                   </option>
                 ))}
               </select>
             </div>
-            {newAccount.accountType !== "InHouse" && (
-              <div className="mb-4">
-                <label
-                  htmlFor="accountNumber"
-                  className="block mb-1"
-                  style={{
-                    fontFamily: "outFit, Sans-serif",
-                    fontSize: "16px",
-                    fontWeight: "600",
-                  }}
-                >
-                  Account Number
-                </label>
-                <p className="text-gray-600 text-sm mb-1">
-                  To ensure accurate tracking of transactions
-                </p>
-                <input
-                  type="number"
-                  id="accountNumber"
-                  name="accountNumber"
-                  value={newAccount.accountNumber}
-                  onChange={(e) =>
-                    setNewAccount({
-                      ...newAccount,
-                      accountNumber: e.target.value,
-                    })
-                  }
-                  placeholder="Please enter account number..."
-                  className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
-                  style={{ borderRadius: "12px", padding: "15px" }}
-                />
-              </div>
-            )}
-
             <div className="mb-4">
               <label
-                htmlFor="balance"
-                className="block mb-1"
-                style={{
-                  fontFamily: "outFit, Sans-serif",
-                  fontSize: "16px",
-                  fontWeight: "600",
-                }}
+                htmlFor="accountToId"
+                className="block text-sm font-medium text-gray-700"
               >
-                Opening Date
+                Account To
               </label>
-              <p style={{ fontFamily: "outFit, Sans-serif", color: "#a1a1a1" }}>
-                Initial account value at creation
+              <p
+                className="text-gray-500 text-xs mb-2"
+                style={{ fontFamily: "outFit, Sans-serif" }}
+              >
+                Account receiving the funds
               </p>
-              <input
-                type="date"
-                id="openingBalanceDate"
-                name="openingBalanceDate"
-                value={newAccount.openingBalanceDate}
+              <select
+                id="accountToId"
+                value={newTransaction.name}
                 onChange={(e) =>
-                  setNewAccount({
-                    ...newAccount,
-                    openingBalanceDate: e.target.value,
+                  setNewTransaction({
+                    ...newTransaction,
+                    accountToId: parseInt(e.target.value),
                   })
                 }
-                placeholder="Please enter account balance..."
                 className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
                 style={{ borderRadius: "12px", padding: "15px" }}
-              />
-            </div>
-
-            <div className="mb-4">
-              <label
-                htmlFor="balance"
-                className="block mb-1"
-                style={{
-                  fontFamily: "outFit, Sans-serif",
-                  fontSize: "16px",
-                  fontWeight: "600",
-                }}
               >
-                Opening Balance
-              </label>
-              <p style={{ fontFamily: "outFit, Sans-serif", color: "#a1a1a1" }}>
-                Initial account value at creation
-              </p>
-              <input
-                type="number"
-                id="balance"
-                name="balance"
-                value={newAccount.balance}
-                onChange={(e) =>
-                  setNewAccount({
-                    ...newAccount,
-                    balance: e.target.value,
-                  })
-                }
-                placeholder="Please enter account balance..."
-                className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
-                style={{ borderRadius: "12px", padding: "15px" }}
-              />
+                <option value="">Select an account</option>
+                {accounts.map((account) => (
+                  <option key={account.id} value={account.id}>
+                    {account.name}
+                  </option>
+                ))}
+              </select>
             </div>
-            {/* Description */}
             <div className="mb-4">
               <label
                 htmlFor="description"
                 className="block mb-1"
                 style={{
                   fontFamily: "outFit, Sans-serif",
-                  fontSize: "16px",
-                  fontWeight: "600",
+                  fontSize: "15px",
+                  fontWeight: "80",
                 }}
               >
-                Description
+                Amount
               </label>
-              <textarea
-                id="description"
-                name="description"
-                value={newAccount.description}
+              <p
+                className="text-gray-500 text-xs mb-2"
+                style={{ fontFamily: "outFit, Sans-serif" }}
+              >
+                Amount being transfered
+              </p>
+
+              <input
+                type="number"
+                id="amount"
+                value={newTransaction.amount}
                 onChange={(e) =>
-                  setNewAccount({
-                    ...newAccount,
-                    description: e.target.value,
+                  setNewTransaction({
+                    ...newTransaction,
+                    amount: parseFloat(e.target.value),
                   })
                 }
-                placeholder="Please enter description..."
                 className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
                 style={{ borderRadius: "12px", padding: "15px" }}
-              ></textarea>
+              />
+            </div>
+            {/* <div>
+              <label
+                htmlFor="behaviour"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Behaviour:
+              </label>
+              <select
+                id="behaviour"
+                name="behaviour"
+                className="
+                   mt-1
+                   focus:ring-indigo-500
+                  focus:border-indigo-500
+                   p-4 block
+                   w-full
+                   border-gray-300
+                   rounded-md
+                   sm:text-sm
+                   text-input
+                    "
+                value={editedAccount.behaviour}
+                onChange={(e) =>
+                  setEditedAccount({
+                    ...editedAccount,
+                    behaviour: e.target.value,
+                  })
+                }
+              >
+                <option value="">Select transaction behavior</option>
+                <option value="Debit">Debit</option>
+                <option value="Credit">Credit</option>
+              </select>
+            </div> */}
+
+            <div className="mb-4">
+              <label
+                htmlFor="description"
+                className="block mb-1"
+                style={{
+                  fontFamily: "outFit, Sans-serif",
+                  fontSize: "15px",
+                  fontWeight: "80",
+                }}
+              >
+                Narration
+              </label>
+              <p
+                className="text-gray-500 text-xs mb-2"
+                style={{ fontFamily: "outFit, Sans-serif" }}
+              >
+                A brief explanation of the transaction for reference.
+              </p>
+              <input
+                type="text"
+                id="narration"
+                value={newTransaction.narration}
+                onChange={(e) =>
+                  setNewTransaction({
+                    ...newTransaction,
+                    narration: e.target.value,
+                  })
+                }
+                className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                style={{ borderRadius: "12px", padding: "15px" }}
+              />
             </div>
           </form>
         </div>
@@ -570,7 +526,7 @@ const AccountCreation = () => {
             }}
             onClick={handleSubmit}
           >
-            Save Account
+            Save Transaction
           </button>
         </div>
       </Modal>
@@ -590,83 +546,79 @@ const AccountCreation = () => {
                     scope="col"
                     className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                   >
-                    Name
+                    REF NUMBER
                   </th>
                   <th
                     scope="col"
                     className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                   >
-                    ACCOUNT NO
+                    ACCOUNT
                   </th>
                   <th
                     scope="col"
                     className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                   >
-                    SubGroup
+                    Behaviour
                   </th>
                   <th
                     scope="col"
                     className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                   >
-                    ACCOUNT TYPE
+                    DATE
                   </th>
                   <th
                     scope="col"
                     className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                   >
-                    BALANCE ($)
+                    AMOUNT ($)
                   </th>
                   <th
                     scope="col"
                     className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                   >
-                    ACTION
+                    Running Balance
                   </th>
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {currentItems.map((account) => {
-                  const subGroupInfo = subGroupAccounts.find(
-                    (subGroup) =>
-                      subGroup.subGroupAccount.id === account.subGroupAccountId
+                {transactions.map((transaction) => {
+                  // Find the account names based on the IDs
+                  const accountTo = accounts.find(
+                    (acc) => acc.id === transaction.accountToId
+                  );
+                  const accountFrom = accounts.find(
+                    (acc) => acc.id === transaction.accountFromId
                   );
 
                   return (
-                    <tr key={account.id}>
+                    <tr key={transaction.id}>
                       <input
                         type="checkbox"
                         style={{ marginLeft: "10px", marginTop: "15px" }}
                       />
+                      <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-800">
+                        {transaction.transactionReference}
+                      </td>
+
                       <td className="px-3 py-4 whitespace-nowrap text-sm  text-gray-800">
-                        {account.name}
+                        {transaction.tranAccount}
                       </td>
                       <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-800">
-                        {account.accountNumber}
+                        {transaction.transactionType}
                       </td>
                       <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-800">
-                        {subGroupInfo
-                          ? subGroupInfo.subGroupAccount.name
-                          : "N/A"}
+                        {transaction.transactionDate}
                       </td>
                       <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-800">
-                        {account.accountType}
+                        {transaction.amount}
                       </td>
-                      <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-800">
-                        {account.balance}
-                      </td>
-                      <div
-                        style={{
-                          width: "100px",
-                          display: "flex",
-                          justifyContent: "center",
-                        }}
-                      >
+                      <td>
                         <Dropdown
-                          overlay={renderMenu(account.id)}
+                          overlay={renderMenu(transaction.id)}
                           trigger={["click"]}
-                          visible={dropdownVisible[account.id]}
+                          visible={dropdownVisible[transaction.id]}
                           onVisibleChange={(visible) =>
-                            handleDropdownVisibleChange(visible, account.id)
+                            handleDropdownVisibleChange(visible, transaction.id)
                           }
                         >
                           <EllipsisVerticalIcon
@@ -674,7 +626,7 @@ const AccountCreation = () => {
                             aria-hidden="true"
                           />
                         </Dropdown>
-                      </div>
+                      </td>
                     </tr>
                   );
                 })}
@@ -715,4 +667,4 @@ const AccountCreation = () => {
   );
 };
 
-export default AccountCreation;
+export default Transaction;

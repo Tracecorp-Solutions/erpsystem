@@ -35,13 +35,14 @@ import Invoice from "../pages/Invoice";
 import GroupAccount from "../pages/GroupCreation";
 import AccountCreation from "../pages/AccountCreation";
 import Products from "../pages/Products";
-import Account from "../pages/AccountCreation";
+// import Account from "../pages/AccountCreation";
 import Petty from "../pages/Petty";
 import SubGroup from "../pages/SubGroup";
 import Billing from "../pages/Billing";
 import LineChart from "./LineGraph";
 import View from "./View";
 import TrialBalance from "../pages/TrialBalance";
+import Transactions from "../pages/Transactions";
 
 const navigation = [
   {
@@ -92,10 +93,10 @@ const navigation = [
     current: false,
     submenuItem: true,
     submenu: [
-      { name: "Main Accounts", href: "/main-accounts", current: false },
-      { name: "Group Accounts", href: "/group-creation", current: false },
+      { name: "Accounts", href: "/account", current: false },
+      { name: "Group Accounts", href: "/account-creation", current: false },
       { name: "SubGroup Accounts", href: "/sub-group", current: false },
-      { name: "Accounts", href: "/accounts", current: false },
+      { name: "Transactions", href: "/transactions", current: false },
     ],
   },
   {
@@ -179,10 +180,14 @@ export default function Main() {
                     </div>
                   </Transition.Child>
                   {/* Sidebar component, swap this element with another sidebar if you like */}
-                  <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-gray-300 px-6 pb-4">
+                  <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-gray-200 px-6 pb-4">
                     <div
                       className="flex grow flex-col gap-y-5 overflow-y-auto h-16 shrink-0 items-center bg-white px-6 pb-4"
-                      style={{ width: "310px", marginLeft: "-24px", height: "80px" }}
+                      style={{
+                        width: "310px",
+                        marginLeft: "-24px",
+                        height: "80px",
+                      }}
                     >
                       <img
                         className="h-16 w-24 rounded-full "
@@ -194,15 +199,15 @@ export default function Main() {
                       <ul className="flex flex-1 flex-col gap-y-7">
                         <li>
                           <h6
-                            className="group -mx-2 flex gap-x-3 rounded-md p-1 text-center text-xs leading-6 text-gray-500"
+                            className="group -mx-2 flex gap-x-3 rounded-xl p-1 text-center text-xs leading-6 text-gray-500"
                             style={{ fontFamily: "outfit, sans-serif" }}
                           >
                             You are managing
                           </h6>
-                          <li className="mt-auto bg-white rounded-md mb-3">
+                          <li className="mt-auto bg-white rounded-xl mb-3">
                             <a
                               href="/"
-                              className="group -mx-2 flex gap-x-3 rounded-md p-2 pl-9 text-center text-sm leading-6 text-blue-500"
+                              className="group -mx-2 flex gap-x-3 rounded-xl p-2 pl-9 text-center text-sm leading-6 text-blue-500"
                               style={{ fontFamily: "outfit, sans-serif" }}
                             >
                               TraceCorp
@@ -210,7 +215,7 @@ export default function Main() {
                           </li>
                           <hr className=" flex gap-x-3 bg-gray-700 rounded-md text-center mb-3" />
                           <h6
-                            className="group -mx-2 flex gap-x-3 rounded-md text-center text-xs leading-6 text-gray-500"
+                            className="group -mx-2 flex gap-x-3 rounded-xl text-center text-xs leading-6 text-gray-500"
                             style={{ fontFamily: "outfit, sans-serif" }}
                           >
                             Main Menu
@@ -219,40 +224,36 @@ export default function Main() {
                             <Menu key={item.name} as="div" className="relative">
                               <Menu.Button
                                 className={classNames(
+                                  "group flex gap-x-3 rounded-xl p-2 text-sm leading-6",
                                   item.current
-                                    ? "bg-green-300 text-gray-700"
-                                    : "text-gray-700 hover:text-gray hover:bg-green-300",
-                                  "group flex items-center px-2 py-2 text-sm font-medium rounded-md"
+                                    ? "bg-gray-300 text-gray-500"
+                                    : "text-gray-500",
+                                  "hover:bg-green-300"
                                 )}
                                 style={{
-                                  fontFamily: "outfit, sans-serif",
                                   width: "250px",
+                                  fontFamily: "outfit, sans-serif",
                                 }}
                               >
                                 <item.icon
                                   className={classNames(
-                                    item.current
-                                      ? "text-gary-400"
-                                      : "text-gray-400 group-hover:text-white",
-                                    "mr-3 flex-shrink-0 h-6 w-6"
+                                    "text-gray-500 group-hover:text-blue-600",
+                                    "h-6 w-6 saynk-0"
                                   )}
-                                  style={{
-                                    fontFamily: "outfit, sans-serif",
-                                  }}
                                   aria-hidden="true"
                                 />
                                 {item.name}
-                                {item.submenu && (
+                                <div className="flex-grow" />
+                                <div>
                                   <ChevronDownIcon
                                     className={classNames(
-                                      item.current
-                                        ? "text-gray-700"
-                                        : "text-gray-700 group-hover:text-white",
-                                      "ml-auto h-5 w-5"
+                                      "text-gray-500 group-hover:text-gray-300",
+                                      "h-5 w-5 text-gray-500 group-hover:text-gray-300"
                                     )}
+                                    style={{ fontFamily: "outfit, sans-serif" }}
                                     aria-hidden="true"
                                   />
-                                )}
+                                </div>
                               </Menu.Button>
 
                               <Transition
@@ -264,15 +265,15 @@ export default function Main() {
                                 leaveFrom="transform opacity-100 scale-100"
                                 leaveTo="transform opacity-0 scale-95"
                               >
-                                <Menu.Items className="mt-2 w-48 px-2 origin-top-right divide-gray-100 text-white rounded-md focus:outline-none">
+                                <Menu.Items className="mt-2 w-48 px-2 origin-top-right divide-gray-100 text-white rounded-xl focus:outline-none">
                                   {item.submenu.map((subItem) => (
                                     <Menu.Item key={subItem.name}>
                                       {({ active }) => (
                                         <a
                                           href={subItem.href}
                                           className={classNames(
-                                            active ? "bg-gray-700" : "",
-                                            "block px-4 py-2 text-sm"
+                                            active ? "bg-green-300" : "",
+                                            "block px-4 py-2 text-sm text-gray-500"
                                           )}
                                           style={{
                                             fontFamily: "outfit, sans-serif",
@@ -304,7 +305,7 @@ export default function Main() {
                                     team.current
                                       ? "bg-gray-700 text-gray-700"
                                       : "text-gray-700 hover:text-gray-700 hover:bg-green-300",
-                                    "group flex gap-x-3 rounded-md p-2 text-sm leading-6"
+                                    "group flex gap-x-3 rounded-xl p-2 text-sm leading-6"
                                   )}
                                   style={{ fontFamily: "outfit, sans-serif" }}
                                 >
@@ -320,7 +321,7 @@ export default function Main() {
                         <li className="mt-auto bg-white rounded-md">
                           <a
                             href="/"
-                            className="group -mx-2 flex gap-x-3 rounded-md p-2 pl-5 text-sm font-semibold leading-6 text-gray-500 hover:bg-green-300 hover:text-ray 500"
+                            className="group -mx-2 flex gap-x-3 rounded-xl p-2 pl-5 text-sm font-semibold leading-6 text-gray-500 hover:bg-green-300 hover:text-ray 500"
                             style={{ fontFamily: "outfit, sans-serif" }}
                           >
                             <Cog6ToothIcon
@@ -342,7 +343,7 @@ export default function Main() {
         {/* Static sidebar for desktop */}
         <div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col">
           {/* Sidebar component, swap this element with another sidebar if you like */}
-          <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-gray-300 px-4 pb-4">
+          <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-gray-200 px-4 pb-4">
             <div
               className="flex grow flex-col gap-y-5 h-16 shrink-0 flex justify-center items-center bg-white rounded-lg lg:w-full"
               style={{ width: "290px", marginLeft: "-12px" }}
@@ -362,10 +363,10 @@ export default function Main() {
                   >
                     You are managing
                   </h6>
-                  <li className="mt-auto bg-white rounded-md mb-3">
+                  <li className="mt-auto bg-white rounded-xl mb-3">
                     <a
                       href="/"
-                      className="group -mx-2 flex gap-x-3 rounded-md p-2 pl-9 text-center text-sm leading-6 text-blue-500"
+                      className="group -mx-2 flex gap-x-3 rounded-xl p-2 pl-9 text-center text-sm leading-6 text-blue-500"
                       style={{ fontFamily: "outfit, sans-serif" }}
                     >
                       TraceCorp
@@ -384,10 +385,11 @@ export default function Main() {
                         <Menu as="div" className="relative">
                           <Menu.Button
                             className={classNames(
-                              "group flex gap-x-3 rounded-md p-2 text-sm leading-6",
+                              "group flex gap-x-3 rounded-xl p-2 text-sm leading-6",
                               item.current
-                                ? "bg-green-300 text-gray-500"
-                                : "text-gray-500 hover:text-blue-600 hover:bg-green-300"
+                                ? "bg-gray-300 text-gray-500"
+                                : "text-gray-500",
+                              "hover:bg-green-300"
                             )}
                             style={{
                               width: "250px",
@@ -396,10 +398,8 @@ export default function Main() {
                           >
                             <item.icon
                               className={classNames(
-                                item.current
-                                  ? "text-gray-500"
-                                  : "text-gray-500 group-hover:text-blue-600",
-                                "h-6 w-6 shrink-0"
+                                "text-gray-500 group-hover:text-blue-600",
+                                "h-6 w-6 saynk-0"
                               )}
                               aria-hidden="true"
                             />
@@ -408,10 +408,8 @@ export default function Main() {
                             <div>
                               <ChevronDownIcon
                                 className={classNames(
-                                  item.current
-                                    ? "text-gray-500"
-                                    : "text-gray-500 group-hover:text-gray-500",
-                                  "h-5 w-5 text-gray-500 group-hover:text-gray-500"
+                                  "text-gray-500 group-hover:text-gray-300",
+                                  "h-5 w-5 text-gray-500 group-hover:text-gray-300"
                                 )}
                                 style={{ fontFamily: "outfit, sans-serif" }}
                                 aria-hidden="true"
@@ -439,11 +437,11 @@ export default function Main() {
                                       href={subItem.href}
                                       className={classNames(
                                         active
-                                          ? " text-gray-900  hover:bg-gray-700"
+                                          ? " text-gray-900  hover:bg-green-300"
                                           : "text-gray-700",
-                                        "block px-4 py-2 text-sm  hover:bg-gray-700"
+                                        "block px-4 py-2 text-sm  hover:bg-green-300"
                                       )}
-                                      style={{ color: "white" }}
+                                      style={{ color: "gray" }}
                                     >
                                       {subItem.name}
                                     </a>
@@ -634,7 +632,7 @@ export default function Main() {
                 <Route path="/profit" element={<Profit />} />
                 <Route path="/loss" element={<Loss />} />
                 <Route path="/expense" element={<Expense />} />
-                <Route path="/main-accounts" element={<MainAccounts />} />
+                <Route path="/" element={<MainAccounts />} />
                 <Route path="/about" element={<About />} />
                 <Route path="/reconciliation" element={<Reconciliation />} />
                 <Route path="/cashflows" element={<Cashflows />} />
@@ -642,8 +640,7 @@ export default function Main() {
                 <Route path="/financial" element={<Financial />} />
                 <Route path="/transfers" element={<Transfers />} />
                 <Route path="/account-creation" element={<GroupAccount />} />
-                <Route path="/accounts" element={<AccountCreation />} />
-                {/* <Route path="/account-creation" element={<Account />} /> */}
+                <Route path="/account" element={<AccountCreation />} />
                 <Route path="/petty" element={<Petty />} />
                 <Route path="/sub-group" element={<SubGroup />} />
                 <Route path="/invoice" element={<Invoice />} />
@@ -652,6 +649,7 @@ export default function Main() {
                 <Route path="/products" element={<Products />} />
                 <Route path="/grap" element={<LineChart />} />
                 <Route path="/view" element={<View />} />
+                <Route path="/transactions" element={<Transactions />} />
               </Routes>
             </div>
           </main>
