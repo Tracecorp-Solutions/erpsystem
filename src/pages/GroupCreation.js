@@ -357,8 +357,8 @@ export default function GroupAccount() {
 
   const handleSubmitEdit = async (editedAccount) => {
     try {
-      const response = await axios.post(
-        "http://54.226.71.2/EditGroupAccount",
+      const response = await axios.post(process.env.REACT_APP_API_URL+'/EditGroupAccount',
+        // "http://54.226.71.2/EditGroupAccount",
         {
           id: editedAccount.id,
           name: editedAccount.name,
