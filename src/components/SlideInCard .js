@@ -1,9 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { CloseOutlined } from "@ant-design/icons";
 
 const SlideInCard = ({ message, onClose, title }) => {
-  const [isVisible, setIsVisible] = useState(true);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    setIsVisible(true);
+  }, []);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setIsVisible(false);
+      if (onClose) onClose();
+    }, 30000);
+
+    return () => clearTimeout(timeout);
+  }, []);
 
   const handleClose = () => {
     setIsVisible(false);
@@ -21,7 +34,7 @@ const SlideInCard = ({ message, onClose, title }) => {
     transition: "transform 0.3s ease-in-out",
     cursor: "pointer",
     zIndex: "1000",
-    transform: isVisible ? "translateX(0%)" : "translateX(100%)",
+    transform: isVisible ? "translateY(0)" : "translateY(100%)",
     width: "450px"
   };
 
@@ -32,37 +45,35 @@ const SlideInCard = ({ message, onClose, title }) => {
     cursor: "pointer",
     color: "white",
     padding: "10px",
-    fontSize: "25px",
-    color: "#505050"
+    fontSize: "25px"
   };
 
   return (
     <div style={cardStyle}>
-        <span style={closeButtonStyle} onClick={handleClose}>
+      <span style={closeButtonStyle} onClick={handleClose}>
         <CloseOutlined />
       </span>
-        <h2 style={{
-            textAlign: "center",
-            fontSize: "36px",
-            color: "#505050",
-            fontFamily: "outFit, Sans-serif",
-            fontWeight: "600",
-            marginTop: "20px"
-            }}
-        >
-         {title}
-        </h2>
-      <div
-       className="card-content"
-       style={{
+      <h2 style={{
         textAlign: "center",
-        fontSize: "16px",
-        color: "#505050",
+        fontSize: "36px",
         fontFamily: "outFit, Sans-serif",
-        fontWeight: "400",
-        marginTop: "10px"
-       }}
-       >{message}</div>
+        fontWeight: "600",
+        marginTop: "20px"
+      }}>
+        {title}
+      </h2>
+      <div
+        className="card-content"
+        style={{
+          textAlign: "center",
+          fontSize: "16px",
+          fontFamily: "outFit, Sans-serif",
+          fontWeight: "400",
+          marginTop: "10px"
+        }}
+      >
+        {message}
+      </div>
     </div>
   );
 };
@@ -70,6 +81,7 @@ const SlideInCard = ({ message, onClose, title }) => {
 SlideInCard.propTypes = {
   message: PropTypes.string.isRequired,
   onClose: PropTypes.func,
+  title: PropTypes.string
 };
 
 export default SlideInCard;

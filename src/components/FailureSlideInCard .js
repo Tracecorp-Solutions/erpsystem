@@ -8,7 +8,7 @@ const FailureSlideInCard = ({ message, title, onClose }) => {
   useEffect(() => {
     const timeout = setTimeout(() => {
       setIsVisible(false);
-    onClose();
+      onClose();
     }, 5000);
 
     return () => clearTimeout(timeout);
@@ -17,10 +17,10 @@ const FailureSlideInCard = ({ message, title, onClose }) => {
   const cardStyle = {
     position: "fixed",
     bottom: "20px",
-    right: "20px",
+    right: isVisible ? "20px" : "-450px", // Start outside the viewport
     padding: "20px",
     borderRadius: "24px",
-    transition: "transform 0.3s ease-in-out",
+    transition: "transform 0.3s ease-in-out, right 0.3s ease-in-out", // Add right property to the transition
     cursor: "pointer",
     zIndex: "1000",
     width: "450px",
