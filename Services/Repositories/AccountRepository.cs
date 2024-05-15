@@ -38,6 +38,13 @@ namespace Services.Repositories
         {
             // Only retrieve the accounts if they exist
             var accounts =  await _context.Accounts.ToListAsync();
+            
+            //calculate account balance and update the account balance
+            foreach (var account in accounts)
+            {
+                account.Balance = await GetAccountBalance(account.Id);
+            }
+            
 
             return accounts == null ? throw new ArgumentException("No Account found"): accounts;
         }
