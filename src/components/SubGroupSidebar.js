@@ -10,10 +10,8 @@ export default function SubComponentSidebar({
   accounts,
   subGroupData,
   group,
-  showModal,
   setShowModal,
   fetchSubGroupAccounts,
-  handleCancel
 }) {
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -23,7 +21,6 @@ export default function SubComponentSidebar({
     groupId: "",
   });
 
-  console.log("subgrror",subGroupData);
 
   const handleCloseDrawer = () => {
     setDrawerVisible(false);
@@ -66,7 +63,7 @@ export default function SubComponentSidebar({
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://54.226.71.2/CreateSubGroupAccount",
+        "http://3.216.182.63:8095/CreateSubGroupAccount",
         newAccount
       );
       console.log(response.data);
@@ -75,8 +72,7 @@ export default function SubComponentSidebar({
         description: "",
         groupId: "",
       });
-      setShowModal(false);
-      fetchSubGroupAccounts();
+      handleCloseDrawer();
     } catch (error) {
       console.error("Error creating subGroup account:", error);
     }
@@ -285,7 +281,6 @@ export default function SubComponentSidebar({
           <div className="flex justify-between">
           <button
             type="button"
-            onClick={handleCancel}
             className="py-2 px-4 text-gray-700 rounded focus:outline-none"
             style={{
               borderRadius: "28px",
@@ -293,6 +288,7 @@ export default function SubComponentSidebar({
               width: "40%",
               border: "#505050 1px solid",
             }}
+            onClick={handleCloseDrawer}
           >
             Cancel
           </button>
