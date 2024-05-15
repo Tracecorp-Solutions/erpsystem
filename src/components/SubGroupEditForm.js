@@ -10,7 +10,7 @@ const SubGroupEditForm = ({ visible, subgroup, onEdit, onCancel, group, }) => {
     groupId: subgroup.groupId,
   });
 
-  console.log("sub group", subgroup)
+  console.log("editedddd", subgroup)
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -24,7 +24,7 @@ const SubGroupEditForm = ({ visible, subgroup, onEdit, onCancel, group, }) => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://54.226.71.2/EditSubGroupAccount",
+        `${process.env.REACT_APP_API_URL}/EditSubGroupAccount`,
         editedSubgroup
       );
       console.log("Subgroup updated:", response.data);

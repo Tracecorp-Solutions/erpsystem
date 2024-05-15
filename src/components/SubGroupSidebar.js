@@ -21,7 +21,6 @@ export default function SubComponentSidebar({
     groupId: "",
   });
 
-
   const handleCloseDrawer = () => {
     setDrawerVisible(false);
   };
@@ -35,21 +34,6 @@ export default function SubComponentSidebar({
         (account) => account.subGroupAccountId === selectedAccount.id
       )
     : [];
-
-  const columns = [
-    {
-      title: "NAME",
-      dataIndex: "name",
-      key: "name",
-      render: (data) => data?.name || "N/A",
-    },
-    {
-      title: "CREATED",
-      dataIndex: "openingBalanceDate",
-      key: "date",
-      render: (date) => new Date(date).toLocaleDateString(),
-    },
-  ];
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -106,7 +90,9 @@ export default function SubComponentSidebar({
               textAlign: "start",
             }}
           >
-            {selectedAccount && selectedAccount.name ? selectedAccount.name : ""}
+            {selectedAccount && selectedAccount.name
+              ? selectedAccount.name
+              : ""}
           </h2>
           <p style={{ textAlign: "start", fontFamily: "Sans-serif" }}>
             {selectedAccount ? selectedAccount.description : ""}
@@ -131,11 +117,34 @@ export default function SubComponentSidebar({
             >
               Accounts
             </h3>
-            <Table
-              columns={columns}
-              dataSource={subgroupAccounts}
-              pagination={false}
-            />
+            <div className="overflow-x-auto">
+              <table className="table-auto min-w-full divide-gray-200">
+                <thead className="bg-gray-50">
+                  <tr>
+                    <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      NAME
+                    </th>
+                    <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      CREATED
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200">
+                  {subgroupAccounts.map((account) => (
+                    <tr key={account.id}>
+                      <td className="px-3 py-4 whitespace-nowrap text-sm  text-gray-500">
+                        {account.name}
+                      </td>
+                      <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">
+                        {new Date(
+                          account.openingBalanceDate
+                        ).toLocaleDateString()}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         ) : (
           <div
@@ -186,7 +195,7 @@ export default function SubComponentSidebar({
           onCancel={() => setModalVisible(false)}
           footer={null}
         >
-        <form className="max-w-md mx-auto">
+          <form className="max-w-md mx-auto">
             <div className="mb-4">
               <label
                 htmlFor="subGroupId"
@@ -279,33 +288,33 @@ export default function SubComponentSidebar({
             </div>
           </form>
           <div className="flex justify-between">
-          <button
-            type="button"
-            className="py-2 px-4 text-gray-700 rounded focus:outline-none"
-            style={{
-              borderRadius: "28px",
-              fontFamily: "outFit, Sans-serif",
-              width: "40%",
-              border: "#505050 1px solid",
-            }}
-            onClick={handleCloseDrawer}
-          >
-            Cancel
-          </button>
-          <button
-            type="submit"
-            className="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none"
-            style={{
-              background: "#4467a1",
-              borderRadius: "28px",
-              fontFamily: "outFit, Sans-serif",
-              width: "40%",
-            }}
-            onClick={handleSubmit}
-          >
-            Save Account
-          </button>
-        </div>
+            <button
+              type="button"
+              className="py-2 px-4 text-gray-700 rounded focus:outline-none"
+              style={{
+                borderRadius: "28px",
+                fontFamily: "outFit, Sans-serif",
+                width: "40%",
+                border: "#505050 1px solid",
+              }}
+              onClick={handleCloseDrawer}
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              className="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none"
+              style={{
+                background: "#4467a1",
+                borderRadius: "28px",
+                fontFamily: "outFit, Sans-serif",
+                width: "40%",
+              }}
+              onClick={handleSubmit}
+            >
+              Save Account
+            </button>
+          </div>
         </Modal>
       </Drawer>
     </>
