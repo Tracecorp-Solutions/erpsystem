@@ -365,12 +365,14 @@ export default function GroupAccount() {
           },
         }
       );
-      console.log("Edit account response:", response.data);
       setIsEditing(false);
       setEditedGroupAccount(null);
       setShowEditForm(false);
       fetchGroupAccounts();
+      setShowSuccess(true)
     } catch (error) {
+      setShowFailure(true)
+      setSuccessMessage("An error occurred while Editing the group account. Please try again later.")
       console.error("Error editing group account:", error);
     }
   };
@@ -421,14 +423,6 @@ export default function GroupAccount() {
           onClose={handleCloseSuccess}
         />
       )}
-      {successMessage && (
-        <div
-          className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-1"
-          role="alert"
-        >
-          <span className="block sm:inline">{successMessage}</span>
-        </div>
-      )}
        {showFailure && (
         <FailureSlideInCard
         title="Creation Error!"
@@ -436,6 +430,13 @@ export default function GroupAccount() {
           onClose={() => setShowFailure(false)}
         />
       )}
+
+      {/* {showFailure && (
+        <FailureSlideInCard
+          message="An error occurred while creating the group account. Please try again later."
+          onClose={() => setShowFailure(false)}
+        />
+      )} */}
       <div className="sm:flex sm:items-center">
         <div className="sm:flex-auto">
           <h1 className="text-base font-semibold leading-6 text-gray-900">
