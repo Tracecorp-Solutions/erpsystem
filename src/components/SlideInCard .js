@@ -13,9 +13,12 @@ const SlideInCard = ({ message, onClose, title }) => {
     const timeout = setTimeout(() => {
       setIsVisible(false);
       if (onClose) onClose();
-    }, 30000);
+    }, 10000);
 
-    return () => clearTimeout(timeout);
+    return () => {
+      clearTimeout(timeout);
+      setIsVisible(false);
+    };
   }, []);
 
   const handleClose = () => {
@@ -34,7 +37,7 @@ const SlideInCard = ({ message, onClose, title }) => {
     transition: "transform 0.3s ease-in-out",
     cursor: "pointer",
     zIndex: "1000",
-    transform: isVisible ? "translateY(0)" : "translateY(100%)",
+    transform: isVisible ? "translateX(0)" : "translateX(100%)",
     width: "450px"
   };
 
