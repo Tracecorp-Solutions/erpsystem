@@ -89,6 +89,7 @@ namespace Services.Repositories
                 TranAccount = accountId,
                 TransactionReference = transView.TranReference,
                 Narration = transView.Narration,
+                RecordDate = DateTime.Now
             };
         }
 
@@ -154,7 +155,7 @@ namespace Services.Repositories
                 .Where(t => t.TranAccount == accountId)
                 .OrderByDescending(t => t.Id).ToListAsync();
 
-            //map trans to TransactionsViewModel
+            //map trans to TransactionsViewModel with running balance
             var transaction = trans.Select(t => new TransactionsViewModel 
             {
                 Id = t.Id,
@@ -163,10 +164,24 @@ namespace Services.Repositories
                 TransactionType = t.TransactionType,
                 TranAccount = t.Account.Name,
                 TransactionReference = t.TransactionReference,
-                Narration = t.Narration
+                Narration = t.Narration,
+                RunningBalance = GetRunningBalance(t.TranAccount, t.Id, t.RecordDate)
             });
 
             return transaction == null? throw new ArgumentException("No transaction found for that particular account"): transaction; 
+        }
+
+        private string GetRunningBalance(int tranAccount, int id, DateTime dateTime)
+        {
+            var debitTotal = _context.transactionEntries
+                .Where(t => t.TranAccount == tranAccount && t.TransactionType == "Debit" && t.Id <= id && t.TransactionDate<= dateTime)
+                .Sum(t => t.Amount);
+
+            var creditTotal = _context.transactionEntries
+                .Where(t => t.TranAccount == tranAccount && t.TransactionType == "Credit" && t.Id <= id && t.TransactionDate <= dateTime)
+                .Sum(t => t.Amount);
+
+            return (creditTotal - debitTotal).ToString("C");
         }
     }
 }

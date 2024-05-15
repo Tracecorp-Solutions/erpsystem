@@ -258,6 +258,9 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
+                    b.Property<DateTime>("RecordDate")
+                        .HasColumnType("datetime(6)");
+
                     b.Property<int>("TranAccount")
                         .HasColumnType("int");
 
