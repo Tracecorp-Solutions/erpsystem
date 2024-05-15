@@ -285,9 +285,9 @@ const Transaction = () => {
                 Enter date when transaction occurred
               </p>
               <input
-                type="datetime-local"
+                type="date"
                 id="transactionDate"
-                value={newTransaction.transactionDate}
+                value={newTransaction.transactionDate.split("T")[0]} // Extracts the date part
                 onChange={(e) =>
                   setNewTransaction({
                     ...newTransaction,
@@ -299,6 +299,7 @@ const Transaction = () => {
                 style={{ borderRadius: "12px", padding: "15px" }}
               />
             </div>
+
             <div className="mb-4">
               <label
                 htmlFor="tranReference"
