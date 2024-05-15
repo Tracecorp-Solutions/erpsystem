@@ -30,8 +30,10 @@ const Transaction = () => {
   const [accountNameFilter, setAccountNameFilter] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(3);
+  const [successMessage, setSuccessMessage] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     fetchAccounts();
@@ -80,8 +82,23 @@ const Transaction = () => {
       setShowModal(false);
       // Refresh transactions after successful submission
       fetchTransactions();
+
+      if (response?.data) {
+        setSuccessMessage("Transaction was successful.");
+        setErrorMessage(""); // Reset error message
+        setTimeout(() => {
+          setSuccessMessage("");
+        }, 5000);
+      } else {
+        setErrorMessage("Failed to record transaction");
+        console.error(
+          "Error creating group account: Response data is undefined"
+        );
+      }
     } catch (error) {
       console.error("Failed to record transaction:", error);
+      setErrorMessage("Failed to record transaction");
+      setSuccessMessage(""); // Reset success message
     }
   };
 
@@ -206,6 +223,14 @@ const Transaction = () => {
           justifyContent: "space-between",
         }}
       >
+        {successMessage && (
+          <div
+            className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-1"
+            role="alert"
+          >
+            <span className="block sm:inline">{successMessage}</span>
+          </div>
+        )}
         <h2
           style={{
             fontFamily: "outFit,Sans-serif",
@@ -577,7 +602,7 @@ const Transaction = () => {
                     scope="col"
                     className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                   >
-                    Running Balance
+                    Action
                   </th>
                 </tr>
               </thead>
@@ -608,7 +633,7 @@ const Transaction = () => {
                         {transaction.transactionType}
                       </td>
                       <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-800">
-                        {transaction.transactionDate}
+                      {new Date(transaction.transactionDate).toLocaleDateString("en-GB")}
                       </td>
                       <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-800">
                         {transaction.amount}
