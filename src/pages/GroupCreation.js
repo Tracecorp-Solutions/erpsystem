@@ -309,7 +309,7 @@ export default function GroupAccount() {
     if (validateForm()) {
       try {
         const response = await axios.post(
-          `${process.env.REACT_APP_API_URL}j/CreateGroupAccount`,
+          `${process.env.REACT_APP_API_URL}/CreateGroupAccount`,
           {
             name: newAccount.name,
             behaviour: newAccount.behaviour,
