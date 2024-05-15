@@ -10,11 +10,9 @@ export default function SubComponentSidebar({
   accounts,
   subGroupData,
   group,
-  setShowModal,
-  fetchSubGroupAccounts,
 }) {
   const [modalVisible, setModalVisible] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1); // Current page of pagination
+  const [currentPage, setCurrentPage] = useState(1);
 
   const [newAccount, setNewAccount] = useState({
     name: "",
@@ -36,7 +34,7 @@ export default function SubComponentSidebar({
       )
     : [];
 
-  const pageSize = 2;
+  const pageSize = 4;
   const indexOfLastItem = currentPage * pageSize;
   const indexOfFirstItem = indexOfLastItem - pageSize;
   const currentItems = subgroupAccounts.slice(indexOfFirstItem, indexOfLastItem);
