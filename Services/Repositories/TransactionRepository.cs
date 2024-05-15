@@ -15,11 +15,15 @@ namespace Services.Repositories
     {
 
         private readonly ApplicationDbContext _context;
+        private readonly IAccountRepository _accountRepository;
 
-        public TransactionRepository(ApplicationDbContext context)
+        public TransactionRepository(ApplicationDbContext context, IAccountRepository accountRepository)
         {
             _context = context;
+            _accountRepository = accountRepository;
         }
+
+
 
         public async Task RecordTransactionAsync(TransactionViewModel transView)
         {
@@ -63,17 +67,18 @@ namespace Services.Repositories
                 throw new ArgumentException("One or both accounts not found.");
             }
 
-            if (accountFrom.SubGroupAccount.GroupAccount.Behaviour != "Debit")
-            {
-                throw new InvalidOperationException("The source account must belong to a group with 'Debit' behavior.");
-            }
+            //if (accountFrom.SubGroupAccount.GroupAccount.Behaviour != "Debit")
+            //{
+            //    throw new InvalidOperationException("The source account must belong to a group with 'Debit' behavior.");
+            //}
 
-            if (accountTo.SubGroupAccount.GroupAccount.Behaviour != "Credit")
-            {
-                throw new InvalidOperationException("The destination account must belong to a group with 'Credit' behavior.");
-            }
+            //if (accountTo.SubGroupAccount.GroupAccount.Behaviour != "Credit")
+            //{
+            //    throw new InvalidOperationException("The destination account must belong to a group with 'Credit' behavior.");
+            //}
 
-            if (accountFrom.Balance < amount)
+            //get account balance of the source account
+            if (_accountRepository.GetAccountBalance(accountFrom.Id).Result < amount)
             {
                 throw new InvalidOperationException("Insufficient funds in the source account.");
             }

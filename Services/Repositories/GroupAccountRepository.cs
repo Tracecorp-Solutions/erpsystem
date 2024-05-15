@@ -26,6 +26,12 @@ namespace Services.Repositories
                 grpView.Behaviour.Equals("Credit", StringComparison.Ordinal)))
                 throw new ArgumentException("Please supply the behaviour of the account as Debit or Credit");
 
+            // check whether group account already exists with the same name
+            var groupaccountexists = await _context.GroupAccounts
+                .FirstOrDefaultAsync(ga => ga.Name == grpView.Name);
+
+            if (groupaccountexists != null)
+                throw new ArgumentException("Group Account with this name already exists");
 
             var groupAccount = new GroupAccount
             {
