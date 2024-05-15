@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Modal, Button, Dropdown, Menu, Pagination, Select } from "antd";
 import { EyeOutlined, EditOutlined } from "@ant-design/icons";
-import AccountForm from "../components/EditAccountForm";
 import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
 // import AccountComponentSidebar from "../components/AccountComponentSidebar";
 import "../styles/AccountCreation.css";
@@ -272,7 +271,7 @@ const AccountCreation = () => {
             marginTop: "30px",
           }}
         >
-          Account Creation
+          Subgroup Creation
         </h3>
         <div
           style={{
@@ -290,7 +289,7 @@ const AccountCreation = () => {
           <form className="max-w-md mx-auto">
             <div className="mb-4">
               <label
-                htmlFor="subGroupId"
+                htmlFor="name"
                 className="block mb-1"
                 style={{
                   fontFamily: "outFit, Sans-serif",
@@ -298,29 +297,21 @@ const AccountCreation = () => {
                   fontWeight: "600",
                 }}
               >
-                SubGroup
+                SubGroup Name
               </label>
               <p>
                 Choose a unique name for your subgroup that reflects its purpose
               </p>
-              <select
-                id="subGroupId"
-                name="subGroupId"
-                value={newAccount.subGroupId}
+              <input
+                type="text"
+                id="name"
+                name="name"
+                value={newAccount.name}
                 onChange={handleChange}
+                placeholder="Subgroup Name"
                 className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
                 style={{ borderRadius: "12px", padding: "15px" }}
-              >
-                <option value="">Select SubGroup</option>
-                {subGroupAccounts.map((subGroup) => (
-                  <option
-                    key={subGroup.subGroupAccount.id}
-                    value={subGroup.subGroupAccount.id}
-                  >
-                    {subGroup.subGroupAccount.name}
-                  </option>
-                ))}
-              </select>
+              />
             </div>
 
             <div className="mb-4">
