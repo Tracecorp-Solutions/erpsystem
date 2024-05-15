@@ -58,7 +58,7 @@ export default function SubComponentSidebar({
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://3.216.182.63:8095/CreateSubGroupAccount",
+        "http://3.216.182.63:8095/accounts",
         newAccount
       );
       console.log(response.data);
