@@ -37,7 +37,10 @@ export default function SubComponentSidebar({
   const pageSize = 4;
   const indexOfLastItem = currentPage * pageSize;
   const indexOfFirstItem = indexOfLastItem - pageSize;
-  const currentItems = subgroupAccounts.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = subgroupAccounts.slice(
+    indexOfFirstItem,
+    indexOfLastItem
+  );
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -154,12 +157,12 @@ export default function SubComponentSidebar({
               </table>
             </div>
             <Pagination
-                current={currentPage}
-                pageSize={pageSize}
-                total={subgroupAccounts.length}
-                onChange={handlePageChange}
-                style={{ marginTop: '10px', textAlign: 'center' }}
-              />
+              current={currentPage}
+              pageSize={pageSize}
+              total={subgroupAccounts.length}
+              onChange={handlePageChange}
+              style={{ marginTop: "10px", textAlign: "center" }}
+            />
           </div>
         ) : (
           <div
@@ -211,6 +214,16 @@ export default function SubComponentSidebar({
           footer={null}
         >
           <form className="max-w-md mx-auto">
+            <h2
+              style={{
+                fontFamily: "outFit, Sans-serif,",
+                fcolor: "#505050",
+                fontSize: "25px",
+                marginTop: "30px",
+              }}
+            >
+              Account Creation
+            </h2>
             <div className="mb-4">
               <label
                 htmlFor="subGroupId"
