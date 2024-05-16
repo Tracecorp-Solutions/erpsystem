@@ -9,6 +9,7 @@ import AccountLoadingMessage from "../components/AccountLoadingMessage";
 import SubComponentSidebar from "../components/SubGroupSidebar";
 import AccountNavigationFilter from "../components/SubGroupNavigationFilter";
 import SubGroupEditForm from "../components/SubGroupEditForm";
+import SlideInCard from "../components/SlideInCard ";
 
 const AccountCreation = () => {
   const [showModal, setShowModal] = useState(false);
@@ -28,6 +29,10 @@ const AccountCreation = () => {
   const [itemsPerPage] = useState(5);
   const [loading, setLoading] = useState(true);
   const [group, setGroup] = useState([]);
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [showFailure, setShowFailure] = useState(false);
+  const [messageInfo, setMessageInfo] = useState({ title: "", message: "" });
+
 
   useEffect(() => {
     fetchAccounts();
@@ -92,6 +97,11 @@ const AccountCreation = () => {
       });
       setShowModal(false);
       fetchSubGroupAccounts();
+      setShowSuccess(true)
+      setMessageInfo({
+        title: "Subgroup Created!",
+        message: "Subgroup account created successfully"
+      })
     } catch (error) {
       console.error("Error creating subGroup account:", error);
     }
@@ -197,6 +207,10 @@ const AccountCreation = () => {
     return words.slice(0, maxWords).join(" ") + "...";
   };
 
+  const handleCloseSuccess = () => {
+    setShowSuccess(false);
+  };
+
   return (
     <div>
       {drawerVisible && (
@@ -227,6 +241,8 @@ const AccountCreation = () => {
           onCancel={CancelEdit}
         />
       )}
+
+      {showSuccess && <SlideInCard title={messageInfo.title} message={messageInfo.message} onClose={handleCloseSuccess}/>}
 
       <div
         style={{
