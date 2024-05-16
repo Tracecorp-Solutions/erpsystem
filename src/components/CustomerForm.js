@@ -416,10 +416,10 @@ const CustomerForm = ({ showModal }) => {
           </div>
         )}
         {section === 3 && (
-          <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <div>
             <div>
-                  <div className="grid max-w-xl w-full mx-4">
-                    {/* {isActive ? (
+              <div className="grid max-w-xl w-full mx-4">
+                {/* {isActive ? (
                       <div className="mb-3 mr-3">
                         <label
                           htmlFor="name"
@@ -479,37 +479,44 @@ const CustomerForm = ({ showModal }) => {
                       </div>
                     )} */}
 
-                    <div className="mb-4 mr-3">
-                      <label
-                        htmlFor="subGroupAccountId"
-                        className="block mb-1"
-                        style={{
-                          fontFamily: "outFit, Sans-serif",
-                          fontSize: "16px",
-                          fontWeight: "400",
-                        }}
-                      >
-                        SubGroup
-                      </label>
-                      <p 
-                      className="text-gray-600 text-sm mb-1"
+                <div className="mb-4 mr-3">
+                  <label
+                    htmlFor="subGroupAccountId"
+                    className="block mb-1"
+                    style={{
+                      fontFamily: "outFit, Sans-serif",
+                      fontSize: "16px",
+                      fontWeight: "400",
+                    }}
+                  >
+                    SubGroup
+                  </label>
+                  <p
+                    className="text-gray-600 text-sm mb-1"
+                    style={{ fontFamily: "outFit, Sans-serif" }}
+                  >
+                    Select the subgroup this account belongs to
+                  </p>
+                  <select
+                    id="subGroupAccountId"
+                    name="subGroupAccountId"
+                    // value={newAccount.subGroupAccountId}
+                    // onChange={(e) =>
+                    //   setNewAccount({
+                    //     ...newAccount,
+                    //     subGroupAccountId: e.target.value,
+                    //   })
+                    // }
+                    className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                    style={{ borderRadius: "12px", padding: "15px" }}
+                  >
+                    <option
+                      value=""
                       style={{ fontFamily: "outFit, Sans-serif" }}
-                      >Select the subgroup this account belongs to</p>
-                      <select
-                        id="subGroupAccountId"
-                        name="subGroupAccountId"
-                        // value={newAccount.subGroupAccountId}
-                        // onChange={(e) =>
-                        //   setNewAccount({
-                        //     ...newAccount,
-                        //     subGroupAccountId: e.target.value,
-                        //   })
-                        // }
-                        className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
-                        style={{ borderRadius: "12px", padding: "15px" }}
-                      >
-                        <option value=""  style={{ fontFamily: "outFit, Sans-serif" }}>Select SubGroup</option>
-                        {/* {subGroupAccounts.map((subGroup) => (
+                    >
+                      Select SubGroup
+                    </option>
+                    {/* {subGroupAccounts.map((subGroup) => (
                           <option
                             key={subGroup.subGroupAccount.id}
                             value={subGroup.subGroupAccount.id}
@@ -517,141 +524,246 @@ const CustomerForm = ({ showModal }) => {
                             {subGroup.subGroupAccount.name}
                           </option>
                         ))} */}
-                      </select>
-                    </div>
-                    <div className="mb-4 mr-3">
-                      <label
-                        htmlFor="accountFromId"
-                        
-                        style={{
-                          fontFamily: "outFit, Sans-serif",
-                          fontSize: "16px",
-                          fontWeight: "400",
-                        }}
-                      >
-                        Account From
-                      </label>
-                      <p
-                        className="text-gray-500 text-xs mb-2"
-                        style={{ fontFamily: "outFit, Sans-serif" }}
-                      >
-                        Source of the funds
-                      </p>
-                      <select
-                        id="accountFromId"
-                        // value={newTransaction.name}
-                        // onChange={(e) =>
-                        //   setNewTransaction({
-                        //     ...newTransaction,
-                        //     accountFromId: parseInt(e.target.value),
-                        //   })
-                        // }
-                        className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
-                        style={{ borderRadius: "12px", padding: "15px" }}
-                      >
-                        <option value=""  style={{ fontFamily: "outFit, Sans-serif" }}>Select an account</option>
-                        {/* {accounts.map((account) => (
+                  </select>
+                </div>
+                <div className="mb-4 mr-3">
+                  <label
+                    htmlFor="accountFromId"
+                    style={{
+                      fontFamily: "outFit, Sans-serif",
+                      fontSize: "16px",
+                      fontWeight: "400",
+                    }}
+                  >
+                    Account From
+                  </label>
+                  <p
+                    className="text-gray-500 text-xs mb-2"
+                    style={{ fontFamily: "outFit, Sans-serif" }}
+                  >
+                    Source of the funds
+                  </p>
+                  <select
+                    id="accountFromId"
+                    // value={newTransaction.name}
+                    // onChange={(e) =>
+                    //   setNewTransaction({
+                    //     ...newTransaction,
+                    //     accountFromId: parseInt(e.target.value),
+                    //   })
+                    // }
+                    className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                    style={{ borderRadius: "12px", padding: "15px" }}
+                  >
+                    <option
+                      value=""
+                      style={{ fontFamily: "outFit, Sans-serif" }}
+                    >
+                      Select an account
+                    </option>
+                    {/* {accounts.map((account) => (
                           <option key={account.id} value={account.id}>
                             {account.name}
                           </option>
                         ))} */}
-                      </select>
-                    </div>
-
-                    <div className="mb-3 mr-3">
-                      <label
-                        htmlFor="name"
-                        className="block mb-1"
-                        style={{
-                          fontFamily: "outFit, Sans-serif",
-                          fontSize: "16px",
-                          fontWeight: "400",
-                        }}
-                      >
-                        Notes
-                      </label>
-                      <p
-                        className="text-gray-600 text-sm mb-1"
-                        style={{ fontFamily: "outFit, Sans-serif" }}
-                      >
-                        Add a description
-                      </p>
-                      <input
-                        type="text"
-                        id="name"
-                        name="name"
-                        placeholder="Please enter account name..."
-                        className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
-                        style={{ borderRadius: "12px", padding: "7px" }}
-                      />
-                    </div>
-                    {/* Add other fields for section 1 */}
-                  </div>
-                  <Button
-              type="button"
-              onClick={handleBack}
-              className="py-2 px-4 text-gray-700 rounded focus:outline-none"
-              style={{
-                borderRadius: "28px",
-                fontFamily: "outFit, Sans-serif",
-                width: "40%",
-                border: "#505050 1px solid",
-                paddingBottom: "30px"
-              }}
-            >
-              Previous
-            </Button>
-            <Button
-              type="button"
-              onClick={handleContinue}
-              className="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none"
-              style={{
-                background: "#4467a1",
-                borderRadius: "28px",
-                fontFamily: "outFit, Sans-serif",
-                width: "40%",
-                paddingBottom: "30px"
-              }}
-            >
-              Next
-            </Button>
+                  </select>
                 </div>
-          </div>
-        )}
-        {section === 4 && (
-          <div style={{
-            display: "flex",
-            justifyContent: "space-between"
-          }}>
-            
-            <Button
-              type="button"
-              onClick={handleBack}
-              className="py-2 px-4 text-gray-700 rounded focus:outline-none"
+
+                <div className="mb-3 mr-3">
+                  <label
+                    htmlFor="name"
+                    className="block mb-1"
+                    style={{
+                      fontFamily: "outFit, Sans-serif",
+                      fontSize: "16px",
+                      fontWeight: "400",
+                    }}
+                  >
+                    Notes
+                  </label>
+                  <p
+                    className="text-gray-600 text-sm mb-1"
+                    style={{ fontFamily: "outFit, Sans-serif" }}
+                  >
+                    Add a description
+                  </p>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    placeholder="Please enter account name..."
+                    className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                    style={{ borderRadius: "12px", padding: "7px" }}
+                  />
+                </div>
+                {/* Add other fields for section 1 */}
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                }}
+              >
+                <Button
+                  type="button"
+                  onClick={handleBack}
+                  className="py-2 px-4 text-gray-700 rounded focus:outline-none"
                   style={{
                     borderRadius: "28px",
                     fontFamily: "outFit, Sans-serif",
                     width: "40%",
                     border: "#505050 1px solid",
-                    paddingBottom: "30px"
+                    paddingBottom: "30px",
                   }}
-            >
-              Previous
-            </Button>
-            <Button
-              type="submit"
-              onClick={handleSubmit}
-              className="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none"
+                >
+                  Previous
+                </Button>
+                <Button
+                  type="button"
+                  onClick={handleContinue}
+                  className="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none"
+                  style={{
+                    background: "#4467a1",
+                    borderRadius: "28px",
+                    fontFamily: "outFit, Sans-serif",
+                    width: "40%",
+                    paddingBottom: "30px",
+                  }}
+                >
+                  Next
+                </Button>
+              </div>
+            </div>
+          </div>
+        )}
+        {section === 4 && (
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
+            <div style={{ padding: "20px" }}>
+              <div className="mb-3">
+                <label
+                  htmlFor="name"
+                  className="block mb-1"
+                  style={{
+                    fontFamily: "outFit, Sans-serif",
+                    fontSize: "16px",
+                    fontWeight: "400",
+                  }}
+                >
+                  Payment method
+                </label>
+                <p
+                  className="text-gray-600 text-sm mb-1"
+                  style={{ fontFamily: "outFit, Sans-serif" }}
+                >
+                  Add a description
+                </p>
+                <input
+                  type="text"
+                  name="Payment method"
+                  id="payment method"
+                  placeholder="Please enter account name..."
+                  className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                  style={{ borderRadius: "12px", padding: "7px" }}
+                />
+              </div>
+
+              <div className="mb-3">
+                <label
+                  htmlFor="name"
+                  className="block mb-1"
+                  style={{
+                    fontFamily: "outFit, Sans-serif",
+                    fontSize: "16px",
+                    fontWeight: "400",
+                  }}
+                >
+                  Billing Rate
+                </label>
+                <p
+                  className="text-gray-600 text-sm mb-1"
+                  style={{ fontFamily: "outFit, Sans-serif" }}
+                >
+                  Add a description
+                </p>
+                <input
+                  type="text"
+                  name="billingRate"
+                  id="billingRate"
+                  placeholder="Please enter account name..."
+                  className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                  style={{ borderRadius: "12px", padding: "7px" }}
+                />
+              </div>
+
+              <div className="mb-3">
+                <label
+                  htmlFor="name"
+                  className="block mb-1"
+                  style={{
+                    fontFamily: "outFit, Sans-serif",
+                    fontSize: "16px",
+                    fontWeight: "400",
+                  }}
+                >
+                  Opening Balance
+                </label>
+                <p
+                  className="text-gray-600 text-sm mb-1"
+                  style={{ fontFamily: "outFit, Sans-serif" }}
+                >
+                  Add a description
+                </p>
+                <input
+                  type="number"
+                  name="openingBalance"
+                  id="openingBalance"
+                  placeholder="Please enter account balance..."
+                  className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                  style={{ borderRadius: "12px", padding: "7px" }}
+                />
+              </div>
+            </div>
+            <div
               style={{
-                background: "#4467a1",
-                borderRadius: "28px",
-                fontFamily: "outFit, Sans-serif",
-                width: "40%",
-                paddingBottom: "30px"
+                padding: "20px",
+                display: "flex",
+                justifyContent: "space-between",
               }}
             >
-              Submit
-            </Button>
+              <Button
+                type="button"
+                onClick={handleBack}
+                className="py-2 px-4 text-gray-700 rounded focus:outline-none"
+                style={{
+                  borderRadius: "28px",
+                  fontFamily: "outFit, Sans-serif",
+                  width: "48%",
+                  border: "#505050 1px solid",
+                  paddingBottom: "30px",
+                }}
+              >
+                Previous
+              </Button>
+              <Button
+                type="submit"
+                onClick={handleSubmit}
+                className="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none"
+                style={{
+                  background: "#4467a1",
+                  borderRadius: "28px",
+                  fontFamily: "outFit, Sans-serif",
+                  width: "48%",
+                  paddingBottom: "30px",
+                }}
+              >
+                Submit
+              </Button>
+            </div>
           </div>
         )}
       </div>
