@@ -205,10 +205,10 @@ const Vendor = () => {
         <div className="mt-6" aria-hidden="true"></div>
 
         {showForm && (
-          <div className="absolute inset-0 bg-gray-900 bg-opacity-50 mt-6 flex items-center justify-center">
+          <div className="absolute inset-0 bg-gray-900 bg-opacity-50 mt-10 flex items-center justify-center">
             <div className="bg-white p-4 rounded-lg max-w-md w-full mx-4">
               <h2 className="text-lg font-semibold mb-3">Add Vendor</h2>
-              <div className="mb-4">
+              <div className="mb-2">
                 <div className="overflow-hidden rounded-full bg-gray-200">
                   <div
                     className="h-2 rounded-full bg-green-500"
@@ -225,7 +225,7 @@ const Vendor = () => {
                       fontSize: "14px",
                     }}
                   >
-                    Personal Information
+                    Personal details
                   </div>
                   <div
                     className={`text-gray-400 ${
@@ -461,7 +461,7 @@ const Vendor = () => {
                           fontWeight: "400",
                         }}
                       >
-                        website
+                        Website
                       </label>
                       <p
                         className="text-gray-600 text-sm mb-1"
@@ -471,6 +471,7 @@ const Vendor = () => {
                         type="text"
                         name="website"
                         id="website"
+                        placeholder="Http..."
                         value={newVendor.website}
                         onChange={(e) =>
                           setNewVendor({
