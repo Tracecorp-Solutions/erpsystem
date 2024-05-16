@@ -16,7 +16,7 @@ namespace Core.Models
 
         public string AccountType { get; set; }
 
-        public string AccountNumber { get; set; }
+        public string? AccountNumber { get; set; }
 
         //foreign key
         [ForeignKey("SubGroupAccount")]

@@ -27,7 +27,7 @@ namespace Services.Repositories
 
             // Check if the AccountType is provided is valid
             if (account.AccountType !="Cash at hand" && account.AccountType !="Bank")
-                throw new ArgumentException("Please Account type should be InHouse or Bank");
+                throw new ArgumentException("Please Account type should be Cash at hand or Bank");
 
             _context.Accounts.Add(account);
             await _context.SaveChangesAsync();

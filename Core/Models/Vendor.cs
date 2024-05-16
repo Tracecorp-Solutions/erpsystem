@@ -34,7 +34,7 @@ namespace Core.Models
         public int SubGroupId { get; set; }
 
         [JsonIgnore]
-        public Account Account { get; set; }
+        public Account? Account { get; set; }
         public string VendorType { get; set; }
     }
 
