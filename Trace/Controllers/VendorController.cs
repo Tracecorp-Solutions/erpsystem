@@ -24,6 +24,9 @@ namespace Trace.Controllers
             {
                 await _vendorRepository.CreateVendorAsync(vendor);
                 return Ok("Vendor recorded successfully.");
+            }catch(ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
             }
             catch (Exception ex)
             {

@@ -27,27 +27,37 @@ namespace Services.Repositories
 
         public async Task<Vendor> CreateVendorAsync(Vendor vendor)
         {
-            // Create an account for the vendor with the opening balance
-           if (vendor.CompanyName == null)
+            // Validate vendor type
+            if (vendor.VendorType != "Vendor" && vendor.VendorType != "Customer")
             {
-                vendor.CompanyName = vendor.FullName;
+                throw new ArgumentException("Vendor type must be either 'Vendor' or 'Customer'");
             }
+
+            // Set CompanyName to FullName if null
+            vendor.CompanyName = vendor.CompanyName ?? vendor.FullName;
+
+            // Create and initialize account
             var account = new Account
             {
-                Name = vendor.CompanyName, //$"{vendor.FirstName} {vendor.LastName}",
+                Name = vendor.CompanyName,
                 Balance = vendor.OpeningBalance,
                 SubGroupAccountId = vendor.SubGroupId,
-                Description = "Vendor Account ",
+                Description = "Vendor Account",
                 AccountType = "Cash at hand",
-                AccountNumber = vendor.AccountNo,
+                AccountNumber = vendor.AccountNo
             };
+
+            // Save account and set vendor's AccountId
             var createdAccount = await _accountService.CreateAccountAsync(account);
             vendor.AccountId = createdAccount.Id;
-            // Create the vendor
+
+            // Add vendor to context and save changes
             _context.Vendors.Add(vendor);
             await _context.SaveChangesAsync();
+
             return vendor;
         }
+
 
 
         public async Task<IEnumerable<Vendor>> GetAllVendors() 
