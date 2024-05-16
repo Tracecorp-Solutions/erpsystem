@@ -5,11 +5,12 @@ import axios from "axios";
 import AccountNavigationFilter from "../components/SubGroupNavigationFilter";
 import FailureSlideInCard from "../components/FailureSlideInCard ";
 import ReusableEmptyData from "../components/ReusableEmptyData";
+import CustomerForm from "../components/CustomerForm";
 
 const Customer = () => {
   const [customerList, setCustomerList] = useState([]);
-  const [showSuccess, setShowSuccess] = useState(false);
   const [showFailure, setShowFailure] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const [messageInfo, setMessageInfo] = useState({ title: "", message: "" });
 
   useEffect(() => {
@@ -31,6 +32,11 @@ const Customer = () => {
 
     fetchData();
   }, []);
+
+  const handleModal = () => {
+    setShowModal(true);
+  }
+
   const menu = (
     <Menu style={{ width: "250px" }}>
       <Menu.Item key="1">Action 1</Menu.Item>
@@ -68,10 +74,13 @@ const Customer = () => {
             borderRadius: "24px",
             marginTop: "15px"
           }}
+
+          onClick={handleModal}
         >
           + Create Customer
         </Button>
       </div>
+      <CustomerForm showModal={showModal} />
       <div style={{ background: "#fff", padding: "15px", borderRadius: "24px" }}>
       <AccountNavigationFilter />
       {showFailure && (
