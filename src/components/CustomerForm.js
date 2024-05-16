@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Modal, Button, Progress } from "antd";
 import axios from "axios";
 
@@ -28,12 +28,44 @@ const CustomerForm = ({ showModal }) => {
     notes: "",
     businessIdNo: "",
     status: "",
+    subGroupId: 0,
   });
 
   const [section, setSection] = useState(1);
   const [errorMessage, setErrorMessage] = useState("");
+  const [isActive, setIsActive] = useState(true);
+  const [subGroupAccounts, setSubGroupAccounts] = useState([]);
+  const [accounts, setAccounts] = useState([]);
 
   const totalSections = 4;
+
+  useEffect(() => {
+    fetchSubGroupAccounts();
+    fetchAccounts();
+  }, []);
+
+  const fetchSubGroupAccounts = async () => {
+    try {
+      const response = await axios.get(
+        process.env.REACT_APP_API_URL + "/GetAllSubGroupAccounts"
+      );
+      setSubGroupAccounts(response.data);
+    } catch (error) {
+      console.error("Error fetching subGroup accounts", error);
+    }
+  };
+
+  const fetchAccounts = async () => {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}/GetAccounts`
+      );
+      setAccounts(response.data);
+      console.log("get accounts", response.data);
+    } catch (error) {
+      console.error("Error fetching groups:", error);
+    }
+  };
 
   const handleSubmit = async () => {
     try {
@@ -52,6 +84,13 @@ const CustomerForm = ({ showModal }) => {
 
   const handleBack = () => {
     setSection(section - 1);
+  };
+
+  const handleSubGroupChange = (e) => {
+    setNewVendor({
+      ...newVendor,
+      subGroupId: e.target.value,
+    });
   };
 
   return (
@@ -83,7 +122,7 @@ const CustomerForm = ({ showModal }) => {
               <div className="grid max-w-xl w-full mx-4">
                 <div className="mb-3 mr-3">
                   <label
-                    htmlFor="name"
+                    htmlFor="title"
                     className="block mb-1"
                     style={{
                       fontFamily: "outFit, Sans-serif",
@@ -97,21 +136,25 @@ const CustomerForm = ({ showModal }) => {
                     className="text-gray-600 text-sm mb-1"
                     style={{ fontFamily: "outFit, Sans-serif" }}
                   >
-                    Choose an appropraite title e.g Mr , Mrs
+                    Choose an appropriate title e.g Mr, Mrs
                   </p>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
+                  <select
+                    id="title"
+                    name="title"
                     value={newVendor.title}
                     onChange={(e) =>
                       setNewVendor({ ...newVendor, title: e.target.value })
                     }
-                    placeholder="Please enter account name..."
                     className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
                     style={{ borderRadius: "12px", padding: "6px" }}
-                  />
+                  >
+                    <option value="Mr">Mr</option>
+                    <option value="Mrs">Mrs</option>
+                    <option value="Miss">Miss</option>
+                    <option value="Miss">Dr</option>
+                  </select>
                 </div>
+
                 <div className="mb-3 mr-3">
                   <label
                     htmlFor="name"
@@ -299,13 +342,13 @@ const CustomerForm = ({ showModal }) => {
                     name="website"
                     id="website"
                     placeholder="Http..."
-                    // value={newVendor.website}
-                    // onChange={(e) =>
-                    //   setNewVendor({
-                    //     ...newVendor,
-                    //     website: e.target.value,
-                    //   })
-                    // }
+                    value={newVendor.website}
+                    onChange={(e) =>
+                      setNewVendor({
+                        ...newVendor,
+                        website: e.target.value,
+                      })
+                    }
                     className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
                     style={{ borderRadius: "12px", padding: "6px" }}
                   />
@@ -332,10 +375,10 @@ const CustomerForm = ({ showModal }) => {
                     type="text"
                     name="mobile"
                     id="mobile"
-                    // value={newVendor.mobile}
-                    // onChange={(e) =>
-                    //   setNewVendor({ ...newVendor, mobile: e.target.value })
-                    // }
+                    value={newVendor.mobile}
+                    onChange={(e) =>
+                      setNewVendor({ ...newVendor, mobile: e.target.value })
+                    }
                     placeholder="Please enter mobile number..."
                     className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
                     style={{ borderRadius: "12px", padding: "7px" }}
@@ -364,17 +407,17 @@ const CustomerForm = ({ showModal }) => {
                     type="text"
                     name="zipCode"
                     id="zipCode"
-                    // placeholder="Zipcode..."
-                    // value={newVendor.addres.zipCode}
-                    // onChange={(e) =>
-                    //   setNewVendor({
-                    //     ...newVendor,
-                    //     addres: {
-                    //       ...newVendor.addres,
-                    //       zipCode: e.target.value,
-                    //     },
-                    //   })
-                    // }
+                    placeholder="Zipcode..."
+                    value={newVendor.address.zipCode}
+                    onChange={(e) =>
+                      setNewVendor({
+                        ...newVendor,
+                        addres: {
+                          ...newVendor.address,
+                          zipCode: e.target.value,
+                        },
+                      })
+                    }
                     className="w-full p-2 mb-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
                     style={{ borderRadius: "12px", padding: "7px" }}
                   />
@@ -383,16 +426,16 @@ const CustomerForm = ({ showModal }) => {
                     name="city"
                     id="city"
                     placeholder="City..."
-                    // value={newVendor.addres.city}
-                    // onChange={(e) =>
-                    //   setNewVendor({
-                    //     ...newVendor,
-                    //     addres: {
-                    //       ...newVendor.addres,
-                    //       city: e.target.value,
-                    //     },
-                    //   })
-                    // }
+                    value={newVendor.address.city}
+                    onChange={(e) =>
+                      setNewVendor({
+                        ...newVendor,
+                        addres: {
+                          ...newVendor.address,
+                          city: e.target.value,
+                        },
+                      })
+                    }
                     className="w-full p-2 mb-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
                     style={{ borderRadius: "12px", padding: "7px" }}
                   />
@@ -401,6 +444,16 @@ const CustomerForm = ({ showModal }) => {
                     name="country"
                     id="country"
                     placeholder="Country..."
+                    value={newVendor.address.country}
+                    onChange={(e) =>
+                      setNewVendor({
+                        ...newVendor,
+                        addres: {
+                          ...newVendor.address,
+                          country: e.target.value,
+                        },
+                      })
+                    }
                     className="w-full p-2 mb-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
                     style={{ borderRadius: "12px", padding: "7px" }}
                   />
@@ -453,66 +506,65 @@ const CustomerForm = ({ showModal }) => {
               className="overflow-y-auto"
             >
               <div className="grid max-w-xl w-full mx-4">
-                {/* {isActive ? (
-                      <div className="mb-3 mr-3">
-                        <label
-                          htmlFor="name"
-                          className="block mb-1"
-                          style={{
-                            fontFamily: "outFit, Sans-serif",
-                            fontSize: "16px",
-                            fontWeight: "400",
-                          }}
-                        >
-                          Active Status
-                        </label>
-                        <p
-                          className="text-gray-600 text-sm mb-1"
-                          style={{ fontFamily: "outFit, Sans-serif" }}
-                        >
-                          Choose an appropriate status (e.g. Active or Inactive)
-                        </p>
-                        <select
-                          id="status"
-                          name="status"
-                          className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
-                          style={{ borderRadius: "12px", padding: "6px" }}
-                        >
-                          <option value="active">Active</option>
-                          <option value="inactive">Inactive</option>
-                        </select>
-                      </div>
-                    ) : (
-                      <div className="mb-3 mr-3">
-                        <label
-                          htmlFor="name"
-                          className="block mb-1"
-                          style={{
-                            fontFamily: "outFit, Sans-serif",
-                            fontSize: "16px",
-                            fontWeight: "400",
-                          }}
-                        >
-                          Inactive Status
-                        </label>
-                        <p
-                          className="text-gray-600 text-sm mb-1"
-                          style={{ fontFamily: "outFit, Sans-serif" }}
-                        >
-                          Choose an appropriate status (e.g. Active or Inactive)
-                        </p>
-                        <select
-                          id="status"
-                          name="status"
-                          className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
-                          style={{ borderRadius: "12px", padding: "6px" }}
-                        >
-                          <option value="active">Active</option>
-                          <option value="inactive">Inactive</option>
-                        </select>
-                      </div>
-                    )} */}
-
+                {isActive ? (
+                  <div className="mb-3 mr-3">
+                    <label
+                      htmlFor="name"
+                      className="block mb-1"
+                      style={{
+                        fontFamily: "outFit, Sans-serif",
+                        fontSize: "16px",
+                        fontWeight: "400",
+                      }}
+                    >
+                      Active Status
+                    </label>
+                    <p
+                      className="text-gray-600 text-sm mb-1"
+                      style={{ fontFamily: "outFit, Sans-serif" }}
+                    >
+                      Choose an appropriate status (e.g. Active or Inactive)
+                    </p>
+                    <select
+                      id="status"
+                      name="status"
+                      className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                      style={{ borderRadius: "12px", padding: "6px" }}
+                    >
+                      <option value="active">Active</option>
+                      <option value="inactive">Inactive</option>
+                    </select>
+                  </div>
+                ) : (
+                  <div className="mb-3 mr-3">
+                    <label
+                      htmlFor="name"
+                      className="block mb-1"
+                      style={{
+                        fontFamily: "outFit, Sans-serif",
+                        fontSize: "16px",
+                        fontWeight: "400",
+                      }}
+                    >
+                      Inactive Status
+                    </label>
+                    <p
+                      className="text-gray-600 text-sm mb-1"
+                      style={{ fontFamily: "outFit, Sans-serif" }}
+                    >
+                      Choose an appropriate status (e.g. Active or Inactive)
+                    </p>
+                    <select
+                      id="status"
+                      name="status"
+                      className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                      style={{ borderRadius: "12px", padding: "6px" }}
+                    >
+                      <option value="active">Active</option>
+                      <option value="inactive">Inactive</option>
+                    </select>
+                  </div>
+                )}
                 <div className="mb-4 mr-3">
                   <label
                     htmlFor="subGroupAccountId"
@@ -534,13 +586,8 @@ const CustomerForm = ({ showModal }) => {
                   <select
                     id="subGroupAccountId"
                     name="subGroupAccountId"
-                    // value={newAccount.subGroupAccountId}
-                    // onChange={(e) =>
-                    //   setNewAccount({
-                    //     ...newAccount,
-                    //     subGroupAccountId: e.target.value,
-                    //   })
-                    // }
+                    value={newVendor.subGroupId}
+                    onChange={handleSubGroupChange}
                     className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
                     style={{ borderRadius: "12px", padding: "15px" }}
                   >
@@ -550,14 +597,14 @@ const CustomerForm = ({ showModal }) => {
                     >
                       Select SubGroup
                     </option>
-                    {/* {subGroupAccounts.map((subGroup) => (
-                          <option
-                            key={subGroup.subGroupAccount.id}
-                            value={subGroup.subGroupAccount.id}
-                          >
-                            {subGroup.subGroupAccount.name}
-                          </option>
-                        ))} */}
+                    {subGroupAccounts.map((subGroup) => (
+                      <option
+                        key={subGroup.subGroupAccount.id}
+                        value={subGroup.subGroupAccount.id}
+                      >
+                        {subGroup.subGroupAccount.name}
+                      </option>
+                    ))}
                   </select>
                 </div>
                 <div className="mb-4 mr-3">
@@ -579,13 +626,13 @@ const CustomerForm = ({ showModal }) => {
                   </p>
                   <select
                     id="accountFromId"
-                    // value={newTransaction.name}
-                    // onChange={(e) =>
-                    //   setNewTransaction({
-                    //     ...newTransaction,
-                    //     accountFromId: parseInt(e.target.value),
-                    //   })
-                    // }
+                    value={newVendor.accountId}
+                    onChange={(e) =>
+                      setNewVendor({
+                        ...newVendor,
+                        accountId: e.target.value,
+                      })
+                    }
                     className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
                     style={{ borderRadius: "12px", padding: "15px" }}
                   >
@@ -595,17 +642,17 @@ const CustomerForm = ({ showModal }) => {
                     >
                       Select an account
                     </option>
-                    {/* {accounts.map((account) => (
-                          <option key={account.id} value={account.id}>
-                            {account.name}
-                          </option>
-                        ))} */}
+                    {accounts.map((account) => (
+                      <option key={account.id} value={account.id}>
+                        {account.name}
+                      </option>
+                    ))}
                   </select>
                 </div>
 
                 <div className="mb-3 mr-3">
                   <label
-                    htmlFor="name"
+                    htmlFor="notes"
                     className="block mb-1"
                     style={{
                       fontFamily: "outFit, Sans-serif",
@@ -623,14 +670,20 @@ const CustomerForm = ({ showModal }) => {
                   </p>
                   <input
                     type="text"
-                    id="name"
-                    name="name"
+                    id="notes"
+                    name="notes"
+                    value={newVendor.notes}
+                    onChange={(e) =>
+                      setNewVendor((prevVendor) => ({
+                        ...prevVendor,
+                        notes: e.target.value,
+                      }))
+                    }
                     placeholder="Please enter account name..."
                     className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
                     style={{ borderRadius: "12px", padding: "7px" }}
                   />
                 </div>
-                {/* Add other fields for section 1 */}
               </div>
             </div>
             <div
@@ -708,6 +761,13 @@ const CustomerForm = ({ showModal }) => {
                     type="text"
                     name="Payment method"
                     id="payment method"
+                    value={newVendor.paymentMethod}
+                    onChange={(e) =>
+                      setNewVendor({
+                        ...newVendor,
+                        other: e.target.value,
+                      })
+                    }
                     placeholder="Please enter account name..."
                     className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
                     style={{ borderRadius: "12px", padding: "7px" }}
@@ -736,6 +796,13 @@ const CustomerForm = ({ showModal }) => {
                     type="text"
                     name="billingRate"
                     id="billingRate"
+                    value={newVendor.billingRate}
+                    onChange={(e) =>
+                      setNewVendor({
+                        ...newVendor,
+                        billingRate: e.target.value,
+                      })
+                    }
                     placeholder="Please enter account name..."
                     className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
                     style={{ borderRadius: "12px", padding: "7px" }}
@@ -764,6 +831,13 @@ const CustomerForm = ({ showModal }) => {
                     type="number"
                     name="openingBalance"
                     id="openingBalance"
+                    value={newVendor.openingBalance}
+                    onChange={(e) =>
+                      setNewVendor({
+                        ...newVendor,
+                        openingBalance: e.target.value,
+                      })
+                    }
                     placeholder="Please enter account balance..."
                     className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
                     style={{ borderRadius: "12px", padding: "7px" }}

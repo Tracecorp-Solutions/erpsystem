@@ -12,7 +12,7 @@ const Customer = () => {
   const [showFailure, setShowFailure] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [messageInfo, setMessageInfo] = useState({ title: "", message: "" });
-
+ 
   useEffect(() => {
     const fetchData = async () => {
       try {
