@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Dropdown, Menu } from "antd";
+import { Dropdown, Menu, Button } from "antd";
 import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
 import axios from "axios";
 import AccountNavigationFilter from "../components/SubGroupNavigationFilter";
@@ -44,7 +44,35 @@ const Customer = () => {
   //   };
 
   return (
-    <div style={{ background: "#fff", padding: "15px", borderRadius: "24px" }}>
+    <div>
+      <div style={{
+        display: "flex",
+        justifyContent: "space-between",
+        marginBottom: "10px"
+      }}>
+        <h2 style={{
+          fontSize: "36px",
+          fontFamily: "Sans-serif",
+          color: "#505050",
+          fontWeight: "600"
+          }}>
+            Customer
+        </h2>
+        <Button
+          type="button"
+          style={{
+            background: "#4467a1",
+            fontFamily: "outFit, Sans-serif",
+            color: "#fff",
+            padding: "",
+            borderRadius: "24px",
+            marginTop: "15px"
+          }}
+        >
+          + Create Customer
+        </Button>
+      </div>
+      <div style={{ background: "#fff", padding: "15px", borderRadius: "24px" }}>
       <AccountNavigationFilter />
       {showFailure && (
         <FailureSlideInCard
@@ -138,6 +166,7 @@ const Customer = () => {
           </table>
         </div>
       )}
+    </div>
     </div>
   );
 };
