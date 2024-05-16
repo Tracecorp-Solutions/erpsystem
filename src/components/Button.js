@@ -151,7 +151,7 @@ export default function NavigationHeader() {
                     
                   >
                     <a
-                      href="/petty"
+                      href="/vendors"
                       style={{
                         width: "100%",
                         textDecoration: "none",
@@ -165,7 +165,7 @@ export default function NavigationHeader() {
                       tabIndex="-1"
                       id="menu-item-1"
                     >
-                      Petty Cash
+                      Vendors
                     </a>
                   </div>
                   <div

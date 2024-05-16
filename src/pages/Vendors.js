@@ -44,7 +44,7 @@ const Vendor = () => {
   };
 
 
-  const vendorsApiUrl = "http://54.226.71.2/GetAllVendors";
+  const vendorsApiUrl = "http://3.216.182.63:8095/GetAllVendors";
 
   const fetchVendors = async () => {
     try {

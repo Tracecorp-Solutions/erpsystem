@@ -627,7 +627,7 @@ export default function Main() {
             <div className="px-4 sm:px-6 lg:px-8">
               <Routes>
                 <Route path="/" element={<Dashboard />} />
-                <Route path="/dashboard/vendors" element={<Vendors />} />
+                <Route path="/vendors" element={<Vendors />} />
                 <Route path="/deposit" element={<Deposit />} />
                 <Route path="/profit" element={<Profit />} />
                 <Route path="/loss" element={<Loss />} />

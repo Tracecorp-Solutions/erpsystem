@@ -71,6 +71,19 @@ const AccountCreation = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (
+      !newAccount.name ||
+      !newAccount.balance ||
+      !newAccount.accountType ||
+      !newAccount.subGroupAccountId ||
+      !newAccount.accountNumber ||
+      !newAccount.description ||
+      !newAccount.openingBalanceDate
+    ) {
+      setErrorMessage("Please fill in all fields.");
+      setSuccessMessage(""); // Reset success message
+      return;
+    }
     try {
       const response = await axios.post(
         `${process.env.REACT_APP_API_URL}/accounts`,
@@ -100,7 +113,7 @@ const AccountCreation = () => {
       }, 5000);
       setShowModal(false);
     } catch (error) {
-      console.error("Validation failed:", error);
+      console.error("Failed to create account:", error);
       setErrorMessage("Failed to create account.");
       setSuccessMessage(""); // Reset success message
     }
@@ -329,6 +342,11 @@ const AccountCreation = () => {
                 className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
                 style={{ borderRadius: "12px", padding: "15px" }}
               />
+              {!newAccount.name && (
+                <p className="text-red-500 text-sm mt-1">
+                  Please enter account name
+                </p>
+              )}
             </div>
             <div className="mb-4">
               <label
