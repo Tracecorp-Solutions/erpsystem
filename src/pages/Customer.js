@@ -1,9 +1,25 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Dropdown, Menu } from "antd";
 import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
+import axios from "axios";
 import AccountNavigationFilter from "../components/SubGroupNavigationFilter";
 
 const Customer = () => {
+    const [customerList, setCustomerList] = useState([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get(`${process.env.REACT_APP_API_URL}/GetAllVendors`);
+                console.log("dataatatata", response.data);
+                setCustomerList(response.data);
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        };
+
+        fetchData();
+    }, []);
   const menu = (
     <Menu style={{ width: "250px" }}>
       <Menu.Item key="1">Action 1</Menu.Item>
@@ -54,22 +70,24 @@ const Customer = () => {
               </th>
             </tr>
           </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
+          {
+            customerList.map((customer) => (
+                <tbody className="bg-white divide-y divide-gray-200" key={customer.id}>
             <tr className="px-3 py-4 whitespace-nowrap mt-3 text-sm  text-gray-800">
               <td className="px-3 py-4 whitespace-nowrap mt-3 text-sm  text-gray-800">
                 <input type="checkbox" />
               </td>
               <td className="px-3 py-4 whitespace-nowrap mt-3 text-sm  text-gray-800">
-                heeee
+                {customer.companyName}
               </td>
               <td className="px-3 py-4 whitespace-nowrap mt-3 text-sm text-gray-800">
-                heeee
+                {customer.email}
               </td>
               <td className="px-3 py-4 whitespace-nowrap mt-3 text-sm text-gray-800">
-                ajajjaja
+                {customer.mobile}
               </td>
               <td className="px-3 py-4 whitespace-nowrap mt-3 text-sm text-gray-800">
-                ajjaj
+                {customer.openingBalance}
               </td>
               <div
                 style={{
@@ -88,6 +106,8 @@ const Customer = () => {
               </div>
             </tr>
           </tbody>
+            ))
+          }
         </table>
       </div>
     </div>
