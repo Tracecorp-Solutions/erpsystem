@@ -6,6 +6,7 @@ const { Option } = Select;
 
 const Vendor = () => {
   const [showForm, setShowForm] = useState(false);
+  const [isActive, setIsActive] = useState(true);
   const [newVendor, setNewVendor] = useState({
     title: "",
     firstName: "",
@@ -175,7 +176,7 @@ const Vendor = () => {
 
         {showForm && (
           <div className="absolute inset-0 bg-gray-900 bg-opacity-50 mt-6 flex items-center justify-center">
-           <div className="bg-white p-4 rounded-lg max-w-md w-full mx-4">
+            <div className="bg-white p-4 rounded-lg max-w-md w-full mx-4">
               <h2 className="text-lg font-semibold mb-3">Add Vendor</h2>
               <div className="mb-4">
                 <div className="overflow-hidden rounded-full bg-gray-200">
@@ -257,6 +258,10 @@ const Vendor = () => {
                         type="text"
                         id="name"
                         name="name"
+                        value={newVendor.title}
+                        onChange={(e) =>
+                          setNewVendor({ ...newVendor, title: e.target.value })
+                        }
                         placeholder="Please enter account name..."
                         className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
                         style={{ borderRadius: "12px", padding: "6px" }}
@@ -278,13 +283,20 @@ const Vendor = () => {
                         className="text-gray-600 text-sm mb-1"
                         style={{ fontFamily: "outFit, Sans-serif" }}
                       >
-                        Choose an appropraite title e.g Mr , Mrs
+                        Enter Vendor's name
                       </p>
                       <input
                         type="text"
                         id="name"
                         name="name"
-                        placeholder="Please enter account name..."
+                        value={newVendor.fullName}
+                        onChange={(e) =>
+                          setNewVendor({
+                            ...newVendor,
+                            firstName: e.target.value,
+                          })
+                        }
+                        placeholder="Please enter full name..."
                         className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
                         style={{ borderRadius: "12px", padding: "7px" }}
                       />
@@ -305,18 +317,22 @@ const Vendor = () => {
                         className="text-gray-600 text-sm mb-1"
                         style={{ fontFamily: "outFit, Sans-serif" }}
                       >
-                        Choose an appropraite title e.g Mr , Mrs
+                        Enter vendor's email Address for communication
                       </p>
                       <input
                         type="text"
-                        id="name"
-                        name="name"
+                        name="email"
+                        id="email"
+                        value={newVendor.email}
+                        onChange={(e) =>
+                          setNewVendor({ ...newVendor, email: e.target.value })
+                        }
                         placeholder="Please enter account name..."
                         className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
                         style={{ borderRadius: "12px", padding: "7px" }}
                       />
                     </div>
-                    {/* <div className="mb-3">
+                    <div className="mb-3 mr-3">
                       <label
                         htmlFor="name"
                         className="block mb-1"
@@ -332,17 +348,24 @@ const Vendor = () => {
                         className="text-gray-600 text-sm mb-1"
                         style={{ fontFamily: "outFit, Sans-serif" }}
                       >
-                        Choose an appropraite title e.g Mr , Mrs
+                        Enter company details
                       </p>
                       <input
                         type="text"
-                        id="name"
-                        name="name"
-                        placeholder="Please enter account name..."
+                        name="company"
+                        id="company"
+                        value={newVendor.company}
+                        onChange={(e) =>
+                          setNewVendor({
+                            ...newVendor,
+                            company: e.target.value,
+                          })
+                        }
+                        placeholder="Please enter company name..."
                         className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
                         style={{ borderRadius: "12px", padding: "7px" }}
                       />
-                    </div> */}
+                    </div>
                     <div className="mb-3 mr-3">
                       <label
                         htmlFor="name"
@@ -359,13 +382,17 @@ const Vendor = () => {
                         className="text-gray-600 text-sm mb-1"
                         style={{ fontFamily: "outFit, Sans-serif" }}
                       >
-                        Choose an appropraite title e.g Mr , Mrs
+                        Enter personal phone number
                       </p>
                       <input
                         type="text"
-                        id="name"
-                        name="name"
-                        placeholder="Please enter account name..."
+                        name="phone"
+                        id="phone"
+                        value={newVendor.phone}
+                        onChange={(e) =>
+                          setNewVendor({ ...newVendor, phone: e.target.value })
+                        }
+                        placeholder="Please enter phone number..."
                         className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
                         style={{ borderRadius: "12px", padding: "7px" }}
                       />
@@ -404,19 +431,23 @@ const Vendor = () => {
                           fontWeight: "400",
                         }}
                       >
-                        Title
+                        website
                       </label>
                       <p
                         className="text-gray-600 text-sm mb-1"
                         style={{ fontFamily: "outFit, Sans-serif" }}
-                      >
-                        Choose an appropraite title e.g Mr , Mrs
-                      </p>
+                      ></p>
                       <input
                         type="text"
-                        id="name"
-                        name="name"
-                        placeholder="Please enter account name..."
+                        name="website"
+                        id="website"
+                        value={newVendor.website}
+                        onChange={(e) =>
+                          setNewVendor({
+                            ...newVendor,
+                            website: e.target.value,
+                          })
+                        }
                         className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
                         style={{ borderRadius: "12px", padding: "6px" }}
                       />
@@ -431,19 +462,23 @@ const Vendor = () => {
                           fontWeight: "400",
                         }}
                       >
-                        Full Name
+                        Mobile
                       </label>
                       <p
                         className="text-gray-600 text-sm mb-1"
                         style={{ fontFamily: "outFit, Sans-serif" }}
                       >
-                        Choose an appropraite title e.g Mr , Mrs
+                        Enter mobile number
                       </p>
                       <input
                         type="text"
-                        id="name"
-                        name="name"
-                        placeholder="Please enter account name..."
+                        name="mobile"
+                        id="mobile"
+                        value={newVendor.mobile}
+                        onChange={(e) =>
+                          setNewVendor({ ...newVendor, mobile: e.target.value })
+                        }
+                        placeholder="Please enter mobile number..."
                         className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
                         style={{ borderRadius: "12px", padding: "7px" }}
                       />
@@ -458,77 +493,71 @@ const Vendor = () => {
                           fontWeight: "400",
                         }}
                       >
-                        Email Address
+                        Address
                       </label>
                       <p
                         className="text-gray-600 text-sm mb-1"
                         style={{ fontFamily: "outFit, Sans-serif" }}
                       >
-                        Choose an appropraite title e.g Mr , Mrs
+                        Enter physical address
                       </p>
+
                       <input
                         type="text"
-                        id="name"
-                        name="name"
-                        placeholder="Please enter account name..."
-                        className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                        name="zipCode"
+                        id="zipCode"
+                        placeholder="Zipcode..."
+                        value={newVendor.addres.zipCode}
+                        onChange={(e) =>
+                          setNewVendor({
+                            ...newVendor,
+                            addres: {
+                              ...newVendor.addres,
+                              zipCode: e.target.value,
+                            },
+                          })
+                        }
+                        className="w-full p-2 mb-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                        style={{ borderRadius: "12px", padding: "7px" }}
+                      />
+                      <input
+                        type="text"
+                        name="city"
+                        id="city"
+                        placeholder="City..."
+                        value={newVendor.addres.city}
+                        onChange={(e) =>
+                          setNewVendor({
+                            ...newVendor,
+                            addres: {
+                              ...newVendor.addres,
+                              city: e.target.value,
+                            },
+                          })
+                        }
+                        className="w-full p-2 mb-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                        style={{ borderRadius: "12px", padding: "7px" }}
+                      />
+                      <input
+                        type="text"
+                        name="country"
+                        id="country"
+                        value={newVendor.addres.country}
+                        onChange={(e) =>
+                          setNewVendor({
+                            ...newVendor,
+                            addres: {
+                              ...newVendor.addres,
+                              country: e.target.value,
+                            },
+                          })
+                        }
+                        placeholder="Country..."
+                        className="w-full p-2 mb-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
                         style={{ borderRadius: "12px", padding: "7px" }}
                       />
                     </div>
-                    {/* <div className="mb-3">
-                     <label
-                       htmlFor="name"
-                       className="block mb-1"
-                       style={{
-                         fontFamily: "outFit, Sans-serif",
-                         fontSize: "16px",
-                         fontWeight: "400",
-                       }}
-                     >
-                       Company
-                     </label>
-                     <p
-                       className="text-gray-600 text-sm mb-1"
-                       style={{ fontFamily: "outFit, Sans-serif" }}
-                     >
-                       Choose an appropraite title e.g Mr , Mrs
-                     </p>
-                     <input
-                       type="text"
-                       id="name"
-                       name="name"
-                       placeholder="Please enter account name..."
-                       className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
-                       style={{ borderRadius: "12px", padding: "7px" }}
-                     />
-                   </div> */}
-                    <div className="mb-3 mr-3">
-                      <label
-                        htmlFor="name"
-                        className="block mb-1"
-                        style={{
-                          fontFamily: "outFit, Sans-serif",
-                          fontSize: "16px",
-                          fontWeight: "400",
-                        }}
-                      >
-                        Phone
-                      </label>
-                      <p
-                        className="text-gray-600 text-sm mb-1"
-                        style={{ fontFamily: "outFit, Sans-serif" }}
-                      >
-                        Choose an appropraite title e.g Mr , Mrs
-                      </p>
-                      <input
-                        type="text"
-                        id="name"
-                        name="name"
-                        placeholder="Please enter account name..."
-                        className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
-                        style={{ borderRadius: "12px", padding: "7px" }}
-                      />
-                    </div>
+
                     {/* Add other fields for section 1 */}
                   </div>
                   <div className="flex justify-between">
@@ -565,6 +594,66 @@ const Vendor = () => {
               {section === 3 && (
                 <div>
                   <div className="grid max-w-xl w-full mx-4">
+                    {isActive ? (
+                      <div className="mb-3 mr-3">
+                        <label
+                          htmlFor="name"
+                          className="block mb-1"
+                          style={{
+                            fontFamily: "outFit, Sans-serif",
+                            fontSize: "16px",
+                            fontWeight: "400",
+                          }}
+                        >
+                          Active Status
+                        </label>
+                        <p
+                          className="text-gray-600 text-sm mb-1"
+                          style={{ fontFamily: "outFit, Sans-serif" }}
+                        >
+                          Choose an appropriate status (e.g. Active or Inactive)
+                        </p>
+                        <select
+                          id="status"
+                          name="status"
+                          className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                          style={{ borderRadius: "12px", padding: "6px" }}
+                        >
+                          <option value="active">Active</option>
+                          <option value="inactive">Inactive</option>
+                        </select>
+                      </div>
+                    ) : (
+                      <div className="mb-3 mr-3">
+                        <label
+                          htmlFor="name"
+                          className="block mb-1"
+                          style={{
+                            fontFamily: "outFit, Sans-serif",
+                            fontSize: "16px",
+                            fontWeight: "400",
+                          }}
+                        >
+                          Inactive Status
+                        </label>
+                        <p
+                          className="text-gray-600 text-sm mb-1"
+                          style={{ fontFamily: "outFit, Sans-serif" }}
+                        >
+                          Choose an appropriate status (e.g. Active or Inactive)
+                        </p>
+                        <select
+                          id="status"
+                          name="status"
+                          className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                          style={{ borderRadius: "12px", padding: "6px" }}
+                        >
+                          <option value="active">Active</option>
+                          <option value="inactive">Inactive</option>
+                        </select>
+                      </div>
+                    )}
+
                     <div className="mb-3 mr-3">
                       <label
                         htmlFor="name"
@@ -575,34 +664,7 @@ const Vendor = () => {
                           fontWeight: "400",
                         }}
                       >
-                        Title
-                      </label>
-                      <p
-                        className="text-gray-600 text-sm mb-1"
-                        style={{ fontFamily: "outFit, Sans-serif" }}
-                      >
-                        Choose an appropraite title e.g Mr , Mrs
-                      </p>
-                      <input
-                        type="text"
-                        id="name"
-                        name="name"
-                        placeholder="Please enter account name..."
-                        className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
-                        style={{ borderRadius: "12px", padding: "6px" }}
-                      />
-                    </div>
-                    <div className="mb-3 mr-3">
-                      <label
-                        htmlFor="name"
-                        className="block mb-1"
-                        style={{
-                          fontFamily: "outFit, Sans-serif",
-                          fontSize: "16px",
-                          fontWeight: "400",
-                        }}
-                      >
-                        Full Name
+                        SubGroup
                       </label>
                       <p
                         className="text-gray-600 text-sm mb-1"
@@ -629,7 +691,7 @@ const Vendor = () => {
                           fontWeight: "400",
                         }}
                       >
-                        Email Address
+                        Account From
                       </label>
                       <p
                         className="text-gray-600 text-sm mb-1"
@@ -646,33 +708,7 @@ const Vendor = () => {
                         style={{ borderRadius: "12px", padding: "7px" }}
                       />
                     </div>
-                    {/* <div className="mb-3">
-                     <label
-                       htmlFor="name"
-                       className="block mb-1"
-                       style={{
-                         fontFamily: "outFit, Sans-serif",
-                         fontSize: "16px",
-                         fontWeight: "400",
-                       }}
-                     >
-                       Company
-                     </label>
-                     <p
-                       className="text-gray-600 text-sm mb-1"
-                       style={{ fontFamily: "outFit, Sans-serif" }}
-                     >
-                       Choose an appropraite title e.g Mr , Mrs
-                     </p>
-                     <input
-                       type="text"
-                       id="name"
-                       name="name"
-                       placeholder="Please enter account name..."
-                       className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
-                       style={{ borderRadius: "12px", padding: "7px" }}
-                     />
-                   </div> */}
+
                     <div className="mb-3 mr-3">
                       <label
                         htmlFor="name"
@@ -683,13 +719,13 @@ const Vendor = () => {
                           fontWeight: "400",
                         }}
                       >
-                        Phone
+                        Notes
                       </label>
                       <p
                         className="text-gray-600 text-sm mb-1"
                         style={{ fontFamily: "outFit, Sans-serif" }}
                       >
-                        Choose an appropraite title e.g Mr , Mrs
+                        Add a description
                       </p>
                       <input
                         type="text"
@@ -735,8 +771,114 @@ const Vendor = () => {
 
               {section === 4 && (
                 <div>
-                  <div className="grid grid-cols-2 gap-4">
-                    {/* Form inputs for section 4 */}
+                  <div className="grid max-w-xl w-full mx-4">
+                    <div className="mb-3 mr-3">
+                      <div className="mb-3">
+                        <label
+                          htmlFor="name"
+                          className="block mb-1"
+                          style={{
+                            fontFamily: "outFit, Sans-serif",
+                            fontSize: "16px",
+                            fontWeight: "400",
+                          }}
+                        >
+                          Payment method
+                        </label>
+                        <p
+                          className="text-gray-600 text-sm mb-1"
+                          style={{ fontFamily: "outFit, Sans-serif" }}
+                        >
+                          Add a description
+                        </p>
+                        <input
+                          type="text"
+                          name="Payment method"
+                          id="payment method"
+                          value={newVendor.paymentMethod}
+                          onChange={(e) =>
+                            setNewVendor({
+                              ...newVendor,
+                              other: e.target.value,
+                            })
+                          }
+                          placeholder="Please enter account name..."
+                          className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                          style={{ borderRadius: "12px", padding: "7px" }}
+                        />
+                      </div>
+                    </div>
+                    <div className="mb-3 mr-3">
+                      <div className="mb-3">
+                        <label
+                          htmlFor="name"
+                          className="block mb-1"
+                          style={{
+                            fontFamily: "outFit, Sans-serif",
+                            fontSize: "16px",
+                            fontWeight: "400",
+                          }}
+                        >
+                          Billing Rate
+                        </label>
+                        <p
+                          className="text-gray-600 text-sm mb-1"
+                          style={{ fontFamily: "outFit, Sans-serif" }}
+                        >
+                          Add a description
+                        </p>
+                        <input
+                          type="text"
+                          name="billingRate"
+                          id="billingRate"
+                          value={newVendor.billingRate}
+                          onChange={(e) =>
+                            setNewVendor({
+                              ...newVendor,
+                              billingRate: e.target.value,
+                            })
+                          }
+                          placeholder="Please enter account name..."
+                          className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                          style={{ borderRadius: "12px", padding: "7px" }}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="mb-3 mr-3">
+                      <label
+                        htmlFor="name"
+                        className="block mb-1"
+                        style={{
+                          fontFamily: "outFit, Sans-serif",
+                          fontSize: "16px",
+                          fontWeight: "400",
+                        }}
+                      >
+                        Opening Balance
+                      </label>
+                      <p
+                        className="text-gray-600 text-sm mb-1"
+                        style={{ fontFamily: "outFit, Sans-serif" }}
+                      >
+                        Add a description
+                      </p>
+                      <input
+                        type="number"
+                        name="openingBalance"
+                        id="openingBalance"
+                        value={newVendor.openingBalance}
+                        onChange={(e) =>
+                          setNewVendor({
+                            ...newVendor,
+                            openingBalance: e.target.value,
+                          })
+                        }
+                        placeholder="Please enter account balance..."
+                        className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                        style={{ borderRadius: "12px", padding: "7px" }}
+                      />
+                    </div>
                   </div>
                   <div className="flex justify-between mt-4">
                     <button
