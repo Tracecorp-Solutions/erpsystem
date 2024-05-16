@@ -7,6 +7,7 @@ const Customer = () => {
   return (
     <div style={{ background: "#fff", padding: "15px", borderRadius: "24px" }}>
         <AccountNavigationFilter />
+      <div style={{ overflowY: "auto" }}>
       <table className="table-auto min-w-full divide-gray-200">
         <thead className="bg-gray-50">
           <tr style={{ borderRadius: "50px" }}>
@@ -80,6 +81,7 @@ const Customer = () => {
           </tr>
         </tbody>
       </table>
+      </div>
     </div>
   );
 };
