@@ -11,6 +11,8 @@ import { EllipsisHorizontalIcon } from "@heroicons/react/20/solid";
 import classNames from "classnames";
 import AccountSidebar from "../components/AccountSidebar ";
 import GroupAccountDetails from "../components/GroupAccountDetails ";
+import SlideInCard from "../components/SlideInCard ";
+import FailureSlideInCard from "../components/FailureSlideInCard ";
 
 const EditForm = ({ editedGroupAccount, handleSubmitEdit, closeEditForm }) => {
   const [editedAccount, setEditedAccount] = useState(editedGroupAccount);
@@ -220,7 +222,8 @@ export default function GroupAccount() {
   const [isEditing, setIsEditing] = useState(false);
   const [showEditForm, setShowEditForm] = useState(false);
   const [showDetails, setShowDetails] = useState(false);
-
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [showFailure, setShowFailure] = useState(false);
 
   useEffect(() => {
     fetchGroupAccounts();
@@ -319,21 +322,12 @@ export default function GroupAccount() {
           }
         );
 
-        if (response?.data) {
-          setSuccessMessage("Group account created successfully.");
-          setTimeout(() => {
-            setSuccessMessage("");
-          }, 5000);
-        } else {
-          console.error(
-            "Error creating group account: Response data is undefined"
-          );
-        }
-
+       setShowSuccess(true);
         setNewAccount({ name: "", behaviour: "" });
         toggleForm();
         fetchGroupAccounts();
       } catch (error) {
+        setShowFailure(true);
         console.error("Error creating group account:", error);
       }
     }
@@ -371,12 +365,14 @@ export default function GroupAccount() {
           },
         }
       );
-      console.log("Edit account response:", response.data);
       setIsEditing(false);
       setEditedGroupAccount(null);
       setShowEditForm(false);
       fetchGroupAccounts();
+      setShowSuccess(true)
     } catch (error) {
+      setShowFailure(true)
+      setSuccessMessage("An error occurred while Editing the group account. Please try again later.")
       console.error("Error editing group account:", error);
     }
   };
@@ -401,6 +397,14 @@ export default function GroupAccount() {
     setShowDetails(false);
   };
 
+  const handleShowSuccess = () => {
+    setShowSuccess(true);
+  };
+
+  const handleCloseSuccess = () => {
+    setShowSuccess(false);
+  };
+
   return (
     <div className="px-4 sm:px-6 lg:px-8 group-container">
       {selectedAccount && sidebarVisible && (
@@ -412,14 +416,27 @@ export default function GroupAccount() {
           subGroups={subGroups}
         />
       )}
-      {successMessage && (
-        <div
-          className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-1"
-          role="alert"
-        >
-          <span className="block sm:inline">{successMessage}</span>
-        </div>
+      {showSuccess && (
+        <SlideInCard
+          title="Group Created!"
+          message="You'v successfully created a new group. You are on your way to categorize and track your financial transactions."
+          onClose={handleCloseSuccess}
+        />
       )}
+       {showFailure && (
+        <FailureSlideInCard
+        title="Creation Error!"
+          message="An error occurred while creating the group account. Please try again later."
+          onClose={() => setShowFailure(false)}
+        />
+      )}
+
+      {/* {showFailure && (
+        <FailureSlideInCard
+          message="An error occurred while creating the group account. Please try again later."
+          onClose={() => setShowFailure(false)}
+        />
+      )} */}
       <div className="sm:flex sm:items-center">
         <div className="sm:flex-auto">
           <h1 className="text-base font-semibold leading-6 text-gray-900">

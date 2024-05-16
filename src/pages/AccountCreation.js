@@ -8,6 +8,7 @@ import AccountComponentSidebar from "../components/AccountComponentSidebar";
 import AccountNavigationFilter from "../components/AccountNavigationFilter";
 import "../styles/AccountCreation.css";
 import AccountLoadingMessage from "../components/AccountLoadingMessage";
+import SlideInCard from "../components/SlideInCard ";
 
 const AccountCreation = () => {
   const [showModal, setShowModal] = useState(false);
@@ -33,6 +34,9 @@ const AccountCreation = () => {
   const [successMessage, setSuccessMessage] = useState("");
   const [loading, setLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [showFailure, setShowFailure] = useState(false);
+  const [messageInfo, setMessageInfo] = useState({ title: "", message: "" });
 
   useEffect(() => {
     fetchAccounts();
@@ -97,21 +101,22 @@ const AccountCreation = () => {
           openingBalanceDate: newAccount.openingBalanceDate,
         }
       );
-      console.log(response.data);
-      setSuccessMessage("Account created successfully.");
-      setErrorMessage(""); // Reset error message
+      setErrorMessage("");
       setNewAccount({
         name: "",
         subGroupAccountId: "",
         balance: 0,
         description: "",
         openingBalanceDate: "",
+        accountNumber: "",
       });
+      setShowSuccess(true)
       fetchAccounts();
-      setTimeout(() => {
-        setSuccessMessage("");
-      }, 5000);
       setShowModal(false);
+      setMessageInfo({
+        title: "Account Created!",
+        message: "Account created successfully."
+      })
     } catch (error) {
       console.error("Failed to create account:", error);
       setErrorMessage("Failed to create account.");
@@ -127,8 +132,12 @@ const AccountCreation = () => {
         `${process.env.REACT_APP_API_URL}/UpdateAccountDetails`,
         editedAccount
       );
-      console.log("Account updated:", response.data);
+      setShowSuccess(true)
       setShowEditForm(false);
+      setMessageInfo({
+        title: "Account Updated!",
+        message: "Account updated successfully."
+      })
     } catch (error) {
       console.error("Error updating account:", error);
     }
@@ -220,8 +229,13 @@ const AccountCreation = () => {
     filteredAccounts.length
   );
 
+  const handleCloseSuccess = () => {
+    setShowSuccess(false);
+  };
+
   return (
     <div>
+       {showSuccess && <SlideInCard title={messageInfo.title} message={messageInfo.message} onClose={handleCloseSuccess}/>}
       {drawerVisible && (
         <AccountComponentSidebar
           subGroupAccounts={subGroupAccounts}
