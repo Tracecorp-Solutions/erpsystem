@@ -174,28 +174,28 @@ const Vendor = () => {
         <div className="mt-6" aria-hidden="true"></div>
 
         {showForm && (
-          <div className="absolute inset-0 bg-gray-900 bg-opacity-50 mt-20 flex items-center justify-center">
-            <div className="bg-white p-8 rounded-lg max-w-xl w-full mx-4">
-              <h2 className="text-lg font-semibold mb-4">Add Vendor</h2>
-              <div className="mb-4">
-                <div className="overflow-hidden rounded-full bg-gray-200">
-                  <div
-                    className="h-2 rounded-full bg-green-500"
-                    style={{ width: `${(section - 1) * 25}%` }}
-                  />
-                </div>
-                <div className="mt-2 flex justify-between text-sm text-gray-600">
-                  <div className="text-indigo-600">Personal Information</div>
-                  <div className="text-indigo-600">Contact details</div>
-                  <div className="text-indigo-600">Additional Information</div>
-                  <div className="text-indigo-600">Financial details</div>
-                </div>
-              </div>
+  <div className="absolute inset-0 bg-gray-900 bg-opacity-50 mt-20 flex items-center justify-center">
+    <div className="bg-white p-8 rounded-lg max-w-xl w-full mx-4">
+      <h2 className="text-lg font-semibold mb-4">Add Vendor</h2>
+      <div className="mb-4">
+        <div className="overflow-hidden rounded-full bg-gray-200">
+          <div
+            className="h-2 rounded-full bg-green-500"
+            style={{ width: `${(section - 1) * 25}%` }}
+          />
+        </div>
+        <div className="mt-2 flex justify-between text-sm text-gray-600">
+          <div className={`text-indigo-600 ${section === 1 ? 'font-semibold' : 'opacity-50'}`}>Personal Information</div>
+          <div className={`text-indigo-600 ${section === 2 ? 'font-semibold' : 'opacity-50'}`}>Contact details</div>
+          <div className={`text-indigo-600 ${section === 3 ? 'font-semibold' : 'opacity-50'}`}>Additional Information</div>
+          <div className={`text-indigo-600 ${section === 4 ? 'font-semibold' : 'opacity-50'}`}>Financial details</div>
+        </div>
+      </div>
 
-              {section === 1 && (
-                <div>
-                  <div className="grid grid-cols-2 gap-4">
-                  <div className="mb-4">
+      {section === 1 && (
+        <div>
+          <div className="grid max-w-xl w-full mx-4">
+            <div className="mb-4">
               <label
                 htmlFor="name"
                 className="block mb-1"
@@ -217,106 +217,101 @@ const Vendor = () => {
                 type="text"
                 id="name"
                 name="name"
-               
                 placeholder="Please enter account name..."
                 className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
                 style={{ borderRadius: "12px", padding: "15px" }}
               />
-              {!newAccount.name && (
-                <p className="text-red-500 text-sm mt-1">
-                  Please enter account name
-                </p>
-              )}
             </div>
-                    {/* Add other fields for section 1 */}
-                  </div>
-                  <button
-                    onClick={handleContinue}
-                    className="mt-4 px-4 py-2 bg-indigo-600 text-white rounded-md text-sm font-semibold hover:bg-indigo-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-indigo-500"
-                  >
-                    Continue
-                  </button>
-                </div>
-              )}
-
-              {section === 2 && (
-                <div>
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="mb-4">
-                      <label
-                        htmlFor="title"
-                        className="block text-sm font-medium text-gray-700"
-                      >
-                        Title
-                      </label>
-                      <input
-                        type="text"
-                        name="title"
-                        id="title"
-                        value={newVendor.title}
-                        onChange={(e) =>
-                          setNewVendor({ ...newVendor, title: e.target.value })
-                        }
-                        className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                      />
-                    </div>
-                    {/* Add other fields for section 1 */}
-                  </div>
-                  <button
-                    onClick={handleContinue}
-                    className="mt-4 px-4 py-2 bg-indigo-600 text-white rounded-md text-sm font-semibold hover:bg-indigo-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-indigo-500"
-                  >
-                    Continue
-                  </button>
-                </div>
-              )}
-
-              {section === 3 && (
-                <div>
-                  <div className="grid grid-cols-3 gap-4">
-                    {/* Form inputs for section 2 */}
-                  </div>
-                  <div className="flex justify-between mt-4">
-                    <button
-                      onClick={handleBack}
-                      className="px-4 py-2 bg-gray-300 text-gray-700 rounded-md text-sm font-semibold hover:bg-gray-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-gray-500"
-                    >
-                      Back
-                    </button>
-                    <button
-                      onClick={handleContinue}
-                      className="px-4 py-2 bg-indigo-600 text-white rounded-md text-sm font-semibold hover:bg-indigo-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-indigo-500"
-                    >
-                      Continue
-                    </button>
-                  </div>
-                </div>
-              )}
-
-              {section === 4 && (
-                <div>
-                  <div className="grid grid-cols-2 gap-4">
-                    {/* Form inputs for section 3 */}
-                  </div>
-                  <div className="flex justify-between mt-4">
-                    <button
-                      onClick={handleBack}
-                      className="px-4 py-2 bg-gray-300 text-gray-700 rounded-md text-sm font-semibold hover:bg-gray-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-gray-500"
-                    >
-                      Back
-                    </button>
-                    <button
-                      onClick={handleSubmit}
-                      className="px-4 py-2 bg-indigo-600 text-white rounded-md text-sm font-semibold hover:bg-indigo-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-indigo-500"
-                    >
-                      Save
-                    </button>
-                  </div>
-                </div>
-              )}
-            </div>
+            {/* Add other fields for section 1 */}
           </div>
-        )}
+          <button
+            onClick={handleContinue}
+            className="mt-4 px-4 py-2 bg-indigo-600 text-white rounded-md text-sm font-semibold hover:bg-indigo-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-indigo-500"
+          >
+            Continue
+          </button>
+        </div>
+      )}
+
+      {section === 2 && (
+        <div>
+          <div className="grid grid-cols-2 gap-4">
+            <div className="mb-4">
+              <label
+                htmlFor="title"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Title
+              </label>
+              <input
+                type="text"
+                name="title"
+                id="title"
+                value={newVendor.title}
+                onChange={(e) =>
+                  setNewVendor({ ...newVendor, title: e.target.value })
+                }
+                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+              />
+            </div>
+            {/* Add other fields for section 2 */}
+          </div>
+          <button
+            onClick={handleContinue}
+            className="mt-4 px-4 py-2 bg-indigo-600 text-white rounded-md text-sm font-semibold hover:bg-indigo-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-indigo-500"
+          >
+            Continue
+          </button>
+        </div>
+      )}
+
+      {section === 3 && (
+        <div>
+          <div className="grid grid-cols-3 gap-4">
+            {/* Form inputs for section 3 */}
+          </div>
+          <div className="flex justify-between mt-4">
+            <button
+              onClick={handleBack}
+              className="px-4 py-2 bg-gray-300 text-gray-700 rounded-md text-sm font-semibold hover:bg-gray-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-gray-500"
+            >
+              Back
+            </button>
+            <button
+              onClick={handleContinue}
+              className="px-4 py-2 bg-indigo-600 text-white rounded-md text-sm font-semibold hover:bg-indigo-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-indigo-500"
+            >
+              Continue
+            </button>
+          </div>
+        </div>
+      )}
+
+      {section === 4 && (
+        <div>
+          <div className="grid grid-cols-2 gap-4">
+            {/* Form inputs for section 4 */}
+          </div>
+          <div className="flex justify-between mt-4">
+            <button
+              onClick={handleBack}
+              className="px-4 py-2 bg-gray-300 text-gray-700 rounded-md text-sm font-semibold hover:bg-gray-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-gray-500"
+            >
+              Back
+            </button>
+            <button
+              onClick={handleSubmit}
+              className="px-4 py-2 bg-indigo-600 text-white rounded-md text-sm font-semibold hover:bg-indigo-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-indigo-500"
+            >
+              Save
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
+  </div>
+)}
+
       </div>
 
       <div class="px-4 sm:px-6 lg:px-8">
