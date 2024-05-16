@@ -174,144 +174,589 @@ const Vendor = () => {
         <div className="mt-6" aria-hidden="true"></div>
 
         {showForm && (
-  <div className="absolute inset-0 bg-gray-900 bg-opacity-50 mt-20 flex items-center justify-center">
-    <div className="bg-white p-8 rounded-lg max-w-xl w-full mx-4">
-      <h2 className="text-lg font-semibold mb-4">Add Vendor</h2>
-      <div className="mb-4">
-        <div className="overflow-hidden rounded-full bg-gray-200">
-          <div
-            className="h-2 rounded-full bg-green-500"
-            style={{ width: `${(section - 1) * 25}%` }}
-          />
-        </div>
-        <div className="mt-2 flex justify-between text-sm text-gray-600">
-          <div className={`text-indigo-600 ${section === 1 ? 'font-semibold' : 'opacity-50'}`}>Personal Information</div>
-          <div className={`text-indigo-600 ${section === 2 ? 'font-semibold' : 'opacity-50'}`}>Contact details</div>
-          <div className={`text-indigo-600 ${section === 3 ? 'font-semibold' : 'opacity-50'}`}>Additional Information</div>
-          <div className={`text-indigo-600 ${section === 4 ? 'font-semibold' : 'opacity-50'}`}>Financial details</div>
-        </div>
-      </div>
+          <div className="absolute inset-0 bg-gray-900 bg-opacity-50 mt-6 flex items-center justify-center">
+           <div className="bg-white p-4 rounded-lg max-w-md w-full mx-4">
+              <h2 className="text-lg font-semibold mb-3">Add Vendor</h2>
+              <div className="mb-4">
+                <div className="overflow-hidden rounded-full bg-gray-200">
+                  <div
+                    className="h-2 rounded-full bg-green-500"
+                    style={{ width: `${(section - 1) * 25}%` }}
+                  />
+                </div>
+                <div className="mt-1 flex justify-between text-sm text-gray-600">
+                  <div
+                    className={`text-gray-500 ${
+                      section === 1 ? "font-semibold" : "opacity-0"
+                    }`}
+                    style={{
+                      fontFamily: "outFit, Sans-serif",
+                      fontSize: "14px",
+                    }}
+                  >
+                    Personal Information
+                  </div>
+                  <div
+                    className={`text-gray-400 ${
+                      section === 2 ? "font-semibold" : "opacity-0"
+                    }`}
+                    style={{
+                      fontFamily: "outFit, Sans-serif",
+                      fontSize: "14px",
+                    }}
+                  >
+                    Contact details
+                  </div>
+                  <div
+                    className={`text-gray-400 ${
+                      section === 3 ? "font-semibold" : "opacity-0"
+                    }`}
+                    style={{
+                      fontFamily: "outFit, Sans-serif",
+                      fontSize: "14px",
+                    }}
+                  >
+                    Additional Information
+                  </div>
+                  <div
+                    className={`text-gray-400 ${
+                      section === 4 ? "font-semibold" : "opacity-0"
+                    }`}
+                    style={{
+                      fontFamily: "outFit, Sans-serif",
+                      fontSize: "14px",
+                    }}
+                  >
+                    Financial details
+                  </div>
+                </div>
+              </div>
 
-      {section === 1 && (
-        <div>
-          <div className="grid max-w-xl w-full mx-4">
-            <div className="mb-4">
-              <label
-                htmlFor="name"
-                className="block mb-1"
-                style={{
-                  fontFamily: "outFit, Sans-serif",
-                  fontSize: "16px",
-                  fontWeight: "600",
-                }}
-              >
-                Title
-              </label>
-              <p
-                className="text-gray-600 text-sm mb-1"
-                style={{ fontFamily: "outFit, Sans-serif" }}
-              >
-                Choose an appropriate title (e.g Mr Mrs)
-              </p>
-              <input
-                type="text"
-                id="name"
-                name="name"
-                placeholder="Please enter account name..."
-                className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
-                style={{ borderRadius: "12px", padding: "15px" }}
-              />
+              {section === 1 && (
+                <div>
+                  <div className="grid max-w-xl w-full mx-4">
+                    <div className="mb-3 mr-3">
+                      <label
+                        htmlFor="name"
+                        className="block mb-1"
+                        style={{
+                          fontFamily: "outFit, Sans-serif",
+                          fontSize: "16px",
+                          fontWeight: "400",
+                        }}
+                      >
+                        Title
+                      </label>
+                      <p
+                        className="text-gray-600 text-sm mb-1"
+                        style={{ fontFamily: "outFit, Sans-serif" }}
+                      >
+                        Choose an appropraite title e.g Mr , Mrs
+                      </p>
+                      <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        placeholder="Please enter account name..."
+                        className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                        style={{ borderRadius: "12px", padding: "6px" }}
+                      />
+                    </div>
+                    <div className="mb-3 mr-3">
+                      <label
+                        htmlFor="name"
+                        className="block mb-1"
+                        style={{
+                          fontFamily: "outFit, Sans-serif",
+                          fontSize: "16px",
+                          fontWeight: "400",
+                        }}
+                      >
+                        Full Name
+                      </label>
+                      <p
+                        className="text-gray-600 text-sm mb-1"
+                        style={{ fontFamily: "outFit, Sans-serif" }}
+                      >
+                        Choose an appropraite title e.g Mr , Mrs
+                      </p>
+                      <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        placeholder="Please enter account name..."
+                        className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                        style={{ borderRadius: "12px", padding: "7px" }}
+                      />
+                    </div>
+                    <div className="mb-3 mr-3">
+                      <label
+                        htmlFor="name"
+                        className="block mb-1"
+                        style={{
+                          fontFamily: "outFit, Sans-serif",
+                          fontSize: "16px",
+                          fontWeight: "400",
+                        }}
+                      >
+                        Email Address
+                      </label>
+                      <p
+                        className="text-gray-600 text-sm mb-1"
+                        style={{ fontFamily: "outFit, Sans-serif" }}
+                      >
+                        Choose an appropraite title e.g Mr , Mrs
+                      </p>
+                      <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        placeholder="Please enter account name..."
+                        className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                        style={{ borderRadius: "12px", padding: "7px" }}
+                      />
+                    </div>
+                    {/* <div className="mb-3">
+                      <label
+                        htmlFor="name"
+                        className="block mb-1"
+                        style={{
+                          fontFamily: "outFit, Sans-serif",
+                          fontSize: "16px",
+                          fontWeight: "400",
+                        }}
+                      >
+                        Company
+                      </label>
+                      <p
+                        className="text-gray-600 text-sm mb-1"
+                        style={{ fontFamily: "outFit, Sans-serif" }}
+                      >
+                        Choose an appropraite title e.g Mr , Mrs
+                      </p>
+                      <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        placeholder="Please enter account name..."
+                        className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                        style={{ borderRadius: "12px", padding: "7px" }}
+                      />
+                    </div> */}
+                    <div className="mb-3 mr-3">
+                      <label
+                        htmlFor="name"
+                        className="block mb-1"
+                        style={{
+                          fontFamily: "outFit, Sans-serif",
+                          fontSize: "16px",
+                          fontWeight: "400",
+                        }}
+                      >
+                        Phone
+                      </label>
+                      <p
+                        className="text-gray-600 text-sm mb-1"
+                        style={{ fontFamily: "outFit, Sans-serif" }}
+                      >
+                        Choose an appropraite title e.g Mr , Mrs
+                      </p>
+                      <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        placeholder="Please enter account name..."
+                        className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                        style={{ borderRadius: "12px", padding: "7px" }}
+                      />
+                    </div>
+                    {/* Add other fields for section 1 */}
+                  </div>
+                  <div className="flex justify-between">
+                    <button
+                      type="submit"
+                      className="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none"
+                      style={{
+                        background: "#4467a1",
+                        borderRadius: "28px",
+                        marginLeft: "24px",
+                        fontFamily: "outFit, Sans-serif",
+                        width: "95%",
+                      }}
+                      onClick={handleContinue}
+                    >
+                      Continue
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {section === 2 && (
+                <div>
+                  <div className="grid max-w-xl w-full mx-4">
+                    <div className="mb-3 mr-3">
+                      <label
+                        htmlFor="name"
+                        className="block mb-1"
+                        style={{
+                          fontFamily: "outFit, Sans-serif",
+                          fontSize: "16px",
+                          fontWeight: "400",
+                        }}
+                      >
+                        Title
+                      </label>
+                      <p
+                        className="text-gray-600 text-sm mb-1"
+                        style={{ fontFamily: "outFit, Sans-serif" }}
+                      >
+                        Choose an appropraite title e.g Mr , Mrs
+                      </p>
+                      <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        placeholder="Please enter account name..."
+                        className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                        style={{ borderRadius: "12px", padding: "6px" }}
+                      />
+                    </div>
+                    <div className="mb-3 mr-3">
+                      <label
+                        htmlFor="name"
+                        className="block mb-1"
+                        style={{
+                          fontFamily: "outFit, Sans-serif",
+                          fontSize: "16px",
+                          fontWeight: "400",
+                        }}
+                      >
+                        Full Name
+                      </label>
+                      <p
+                        className="text-gray-600 text-sm mb-1"
+                        style={{ fontFamily: "outFit, Sans-serif" }}
+                      >
+                        Choose an appropraite title e.g Mr , Mrs
+                      </p>
+                      <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        placeholder="Please enter account name..."
+                        className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                        style={{ borderRadius: "12px", padding: "7px" }}
+                      />
+                    </div>
+                    <div className="mb-3 mr-3">
+                      <label
+                        htmlFor="name"
+                        className="block mb-1"
+                        style={{
+                          fontFamily: "outFit, Sans-serif",
+                          fontSize: "16px",
+                          fontWeight: "400",
+                        }}
+                      >
+                        Email Address
+                      </label>
+                      <p
+                        className="text-gray-600 text-sm mb-1"
+                        style={{ fontFamily: "outFit, Sans-serif" }}
+                      >
+                        Choose an appropraite title e.g Mr , Mrs
+                      </p>
+                      <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        placeholder="Please enter account name..."
+                        className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                        style={{ borderRadius: "12px", padding: "7px" }}
+                      />
+                    </div>
+                    {/* <div className="mb-3">
+                     <label
+                       htmlFor="name"
+                       className="block mb-1"
+                       style={{
+                         fontFamily: "outFit, Sans-serif",
+                         fontSize: "16px",
+                         fontWeight: "400",
+                       }}
+                     >
+                       Company
+                     </label>
+                     <p
+                       className="text-gray-600 text-sm mb-1"
+                       style={{ fontFamily: "outFit, Sans-serif" }}
+                     >
+                       Choose an appropraite title e.g Mr , Mrs
+                     </p>
+                     <input
+                       type="text"
+                       id="name"
+                       name="name"
+                       placeholder="Please enter account name..."
+                       className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                       style={{ borderRadius: "12px", padding: "7px" }}
+                     />
+                   </div> */}
+                    <div className="mb-3 mr-3">
+                      <label
+                        htmlFor="name"
+                        className="block mb-1"
+                        style={{
+                          fontFamily: "outFit, Sans-serif",
+                          fontSize: "16px",
+                          fontWeight: "400",
+                        }}
+                      >
+                        Phone
+                      </label>
+                      <p
+                        className="text-gray-600 text-sm mb-1"
+                        style={{ fontFamily: "outFit, Sans-serif" }}
+                      >
+                        Choose an appropraite title e.g Mr , Mrs
+                      </p>
+                      <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        placeholder="Please enter account name..."
+                        className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                        style={{ borderRadius: "12px", padding: "7px" }}
+                      />
+                    </div>
+                    {/* Add other fields for section 1 */}
+                  </div>
+                  <div className="flex justify-between">
+                    <button
+                      type="button"
+                      onClick={handleBack}
+                      className="py-2 px-4 text-gray-700 rounded focus:outline-none"
+                      style={{
+                        borderRadius: "28px",
+                        fontFamily: "outFit, Sans-serif",
+                        width: "40%",
+                        border: "#505050 1px solid",
+                      }}
+                    >
+                      Back
+                    </button>
+                    <button
+                      type="submit"
+                      className="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none"
+                      style={{
+                        background: "#4467a1",
+                        borderRadius: "28px",
+                        fontFamily: "outFit, Sans-serif",
+                        width: "40%",
+                      }}
+                      onClick={handleContinue}
+                    >
+                      Continue
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {section === 3 && (
+                <div>
+                  <div className="grid max-w-xl w-full mx-4">
+                    <div className="mb-3 mr-3">
+                      <label
+                        htmlFor="name"
+                        className="block mb-1"
+                        style={{
+                          fontFamily: "outFit, Sans-serif",
+                          fontSize: "16px",
+                          fontWeight: "400",
+                        }}
+                      >
+                        Title
+                      </label>
+                      <p
+                        className="text-gray-600 text-sm mb-1"
+                        style={{ fontFamily: "outFit, Sans-serif" }}
+                      >
+                        Choose an appropraite title e.g Mr , Mrs
+                      </p>
+                      <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        placeholder="Please enter account name..."
+                        className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                        style={{ borderRadius: "12px", padding: "6px" }}
+                      />
+                    </div>
+                    <div className="mb-3 mr-3">
+                      <label
+                        htmlFor="name"
+                        className="block mb-1"
+                        style={{
+                          fontFamily: "outFit, Sans-serif",
+                          fontSize: "16px",
+                          fontWeight: "400",
+                        }}
+                      >
+                        Full Name
+                      </label>
+                      <p
+                        className="text-gray-600 text-sm mb-1"
+                        style={{ fontFamily: "outFit, Sans-serif" }}
+                      >
+                        Choose an appropraite title e.g Mr , Mrs
+                      </p>
+                      <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        placeholder="Please enter account name..."
+                        className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                        style={{ borderRadius: "12px", padding: "7px" }}
+                      />
+                    </div>
+                    <div className="mb-3 mr-3">
+                      <label
+                        htmlFor="name"
+                        className="block mb-1"
+                        style={{
+                          fontFamily: "outFit, Sans-serif",
+                          fontSize: "16px",
+                          fontWeight: "400",
+                        }}
+                      >
+                        Email Address
+                      </label>
+                      <p
+                        className="text-gray-600 text-sm mb-1"
+                        style={{ fontFamily: "outFit, Sans-serif" }}
+                      >
+                        Choose an appropraite title e.g Mr , Mrs
+                      </p>
+                      <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        placeholder="Please enter account name..."
+                        className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                        style={{ borderRadius: "12px", padding: "7px" }}
+                      />
+                    </div>
+                    {/* <div className="mb-3">
+                     <label
+                       htmlFor="name"
+                       className="block mb-1"
+                       style={{
+                         fontFamily: "outFit, Sans-serif",
+                         fontSize: "16px",
+                         fontWeight: "400",
+                       }}
+                     >
+                       Company
+                     </label>
+                     <p
+                       className="text-gray-600 text-sm mb-1"
+                       style={{ fontFamily: "outFit, Sans-serif" }}
+                     >
+                       Choose an appropraite title e.g Mr , Mrs
+                     </p>
+                     <input
+                       type="text"
+                       id="name"
+                       name="name"
+                       placeholder="Please enter account name..."
+                       className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                       style={{ borderRadius: "12px", padding: "7px" }}
+                     />
+                   </div> */}
+                    <div className="mb-3 mr-3">
+                      <label
+                        htmlFor="name"
+                        className="block mb-1"
+                        style={{
+                          fontFamily: "outFit, Sans-serif",
+                          fontSize: "16px",
+                          fontWeight: "400",
+                        }}
+                      >
+                        Phone
+                      </label>
+                      <p
+                        className="text-gray-600 text-sm mb-1"
+                        style={{ fontFamily: "outFit, Sans-serif" }}
+                      >
+                        Choose an appropraite title e.g Mr , Mrs
+                      </p>
+                      <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        placeholder="Please enter account name..."
+                        className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                        style={{ borderRadius: "12px", padding: "7px" }}
+                      />
+                    </div>
+                    {/* Add other fields for section 1 */}
+                  </div>
+                  <div className="flex justify-between">
+                    <button
+                      type="button"
+                      onClick={handleBack}
+                      className="py-2 px-4 text-gray-700 rounded focus:outline-none"
+                      style={{
+                        borderRadius: "28px",
+                        fontFamily: "outFit, Sans-serif",
+                        width: "40%",
+                        border: "#505050 1px solid",
+                      }}
+                    >
+                      Back
+                    </button>
+                    <button
+                      type="submit"
+                      className="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none"
+                      style={{
+                        background: "#4467a1",
+                        borderRadius: "28px",
+                        fontFamily: "outFit, Sans-serif",
+                        width: "40%",
+                      }}
+                      onClick={handleContinue}
+                    >
+                      Continue
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {section === 4 && (
+                <div>
+                  <div className="grid grid-cols-2 gap-4">
+                    {/* Form inputs for section 4 */}
+                  </div>
+                  <div className="flex justify-between mt-4">
+                    <button
+                      onClick={handleBack}
+                      className="px-4 py-2 bg-gray-300 text-gray-700 rounded-md text-sm font-semibold hover:bg-gray-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-gray-500"
+                    >
+                      Back
+                    </button>
+                    <button
+                      onClick={handleSubmit}
+                      className="px-4 py-2 bg-indigo-600 text-white rounded-md text-sm font-semibold hover:bg-indigo-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-indigo-500"
+                    >
+                      Save
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
-            {/* Add other fields for section 1 */}
           </div>
-          <button
-            onClick={handleContinue}
-            className="mt-4 px-4 py-2 bg-indigo-600 text-white rounded-md text-sm font-semibold hover:bg-indigo-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-indigo-500"
-          >
-            Continue
-          </button>
-        </div>
-      )}
-
-      {section === 2 && (
-        <div>
-          <div className="grid grid-cols-2 gap-4">
-            <div className="mb-4">
-              <label
-                htmlFor="title"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Title
-              </label>
-              <input
-                type="text"
-                name="title"
-                id="title"
-                value={newVendor.title}
-                onChange={(e) =>
-                  setNewVendor({ ...newVendor, title: e.target.value })
-                }
-                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-              />
-            </div>
-            {/* Add other fields for section 2 */}
-          </div>
-          <button
-            onClick={handleContinue}
-            className="mt-4 px-4 py-2 bg-indigo-600 text-white rounded-md text-sm font-semibold hover:bg-indigo-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-indigo-500"
-          >
-            Continue
-          </button>
-        </div>
-      )}
-
-      {section === 3 && (
-        <div>
-          <div className="grid grid-cols-3 gap-4">
-            {/* Form inputs for section 3 */}
-          </div>
-          <div className="flex justify-between mt-4">
-            <button
-              onClick={handleBack}
-              className="px-4 py-2 bg-gray-300 text-gray-700 rounded-md text-sm font-semibold hover:bg-gray-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-gray-500"
-            >
-              Back
-            </button>
-            <button
-              onClick={handleContinue}
-              className="px-4 py-2 bg-indigo-600 text-white rounded-md text-sm font-semibold hover:bg-indigo-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-indigo-500"
-            >
-              Continue
-            </button>
-          </div>
-        </div>
-      )}
-
-      {section === 4 && (
-        <div>
-          <div className="grid grid-cols-2 gap-4">
-            {/* Form inputs for section 4 */}
-          </div>
-          <div className="flex justify-between mt-4">
-            <button
-              onClick={handleBack}
-              className="px-4 py-2 bg-gray-300 text-gray-700 rounded-md text-sm font-semibold hover:bg-gray-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-gray-500"
-            >
-              Back
-            </button>
-            <button
-              onClick={handleSubmit}
-              className="px-4 py-2 bg-indigo-600 text-white rounded-md text-sm font-semibold hover:bg-indigo-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-indigo-500"
-            >
-              Save
-            </button>
-          </div>
-        </div>
-      )}
-    </div>
-  </div>
-)}
-
+        )}
       </div>
 
       <div class="px-4 sm:px-6 lg:px-8">
