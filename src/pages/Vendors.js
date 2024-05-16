@@ -713,7 +713,7 @@ const Vendor = () => {
                         className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
                         style={{ borderRadius: "12px", padding: "15px" }}
                       >
-                        <option value="">Select SubGroup</option>
+                        <option value=""  style={{ fontFamily: "outFit, Sans-serif" }}>Select SubGroup</option>
                         {subGroupAccounts.map((subGroup) => (
                           <option
                             key={subGroup.subGroupAccount.id}
@@ -727,7 +727,12 @@ const Vendor = () => {
                     <div className="mb-4 mr-3">
                       <label
                         htmlFor="accountFromId"
-                        className="block text-sm font-medium text-gray-700"
+                        
+                        style={{
+                          fontFamily: "outFit, Sans-serif",
+                          fontSize: "16px",
+                          fontWeight: "400",
+                        }}
                       >
                         Account From
                       </label>
@@ -749,7 +754,7 @@ const Vendor = () => {
                         className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
                         style={{ borderRadius: "12px", padding: "15px" }}
                       >
-                        <option value="">Select an account</option>
+                        <option value=""  style={{ fontFamily: "outFit, Sans-serif" }}>Select an account</option>
                         {accounts.map((account) => (
                           <option key={account.id} value={account.id}>
                             {account.name}
