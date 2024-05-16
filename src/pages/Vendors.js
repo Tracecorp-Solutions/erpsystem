@@ -7,6 +7,10 @@ const { Option } = Select;
 const Vendor = () => {
   const [showForm, setShowForm] = useState(false);
   const [isActive, setIsActive] = useState(true);
+  const [accounts, setAccounts] = useState([]);
+  const [subGroupAccounts, setSubGroupAccounts] = useState([]);
+  const [newAccount, setNewAccount] = useState({});
+  const [newTransaction, setNewTransaction] = useState({});
   const [newVendor, setNewVendor] = useState({
     title: "",
     firstName: "",
@@ -99,6 +103,32 @@ const Vendor = () => {
     } catch (error) {
       console.error("Error creating vendor:", error);
       setErrorMessage("Failed to create vendor. Please try again later.");
+    }
+  };
+
+  const fetchAccounts = async () => {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}/GetAccounts`
+      );
+      setAccounts(response.data);
+      console.log("get accounts", response.data);
+      setLoading(false);
+    } catch (error) {
+      console.error("Error fetching groups:", error);
+    }
+  };
+
+  const fetchSubGroupAccounts = async () => {
+    try {
+      const response = await axios.get(
+        process.env.REACT_APP_API_URL + "/GetAllSubGroupAccounts"
+        // "http://54.226.71.2/GetAllSubGroupAccounts"
+      );
+      setSubGroupAccounts(response.data);
+      console.log(response.data);
+    } catch (error) {
+      console.error("Error fetching subGroup accounts", error);
     }
   };
 
@@ -654,9 +684,9 @@ const Vendor = () => {
                       </div>
                     )}
 
-                    <div className="mb-3 mr-3">
+                    <div className="mb-4 mr-3">
                       <label
-                        htmlFor="name"
+                        htmlFor="subGroupAccountId"
                         className="block mb-1"
                         style={{
                           fontFamily: "outFit, Sans-serif",
@@ -666,47 +696,66 @@ const Vendor = () => {
                       >
                         SubGroup
                       </label>
-                      <p
-                        className="text-gray-600 text-sm mb-1"
-                        style={{ fontFamily: "outFit, Sans-serif" }}
-                      >
-                        Choose an appropraite title e.g Mr , Mrs
-                      </p>
-                      <input
-                        type="text"
-                        id="name"
-                        name="name"
-                        placeholder="Please enter account name..."
+                      <p 
+                      className="text-gray-600 text-sm mb-1"
+                      style={{ fontFamily: "outFit, Sans-serif" }}
+                      >Select the subgroup this account belongs to</p>
+                      <select
+                        id="subGroupAccountId"
+                        name="subGroupAccountId"
+                        value={newAccount.subGroupAccountId}
+                        onChange={(e) =>
+                          setNewAccount({
+                            ...newAccount,
+                            subGroupAccountId: e.target.value,
+                          })
+                        }
                         className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
-                        style={{ borderRadius: "12px", padding: "7px" }}
-                      />
+                        style={{ borderRadius: "12px", padding: "15px" }}
+                      >
+                        <option value="">Select SubGroup</option>
+                        {subGroupAccounts.map((subGroup) => (
+                          <option
+                            key={subGroup.subGroupAccount.id}
+                            value={subGroup.subGroupAccount.id}
+                          >
+                            {subGroup.subGroupAccount.name}
+                          </option>
+                        ))}
+                      </select>
                     </div>
-                    <div className="mb-3 mr-3">
+                    <div className="mb-4 mr-3">
                       <label
-                        htmlFor="name"
-                        className="block mb-1"
-                        style={{
-                          fontFamily: "outFit, Sans-serif",
-                          fontSize: "16px",
-                          fontWeight: "400",
-                        }}
+                        htmlFor="accountFromId"
+                        className="block text-sm font-medium text-gray-700"
                       >
                         Account From
                       </label>
                       <p
-                        className="text-gray-600 text-sm mb-1"
+                        className="text-gray-500 text-xs mb-2"
                         style={{ fontFamily: "outFit, Sans-serif" }}
                       >
-                        Choose an appropraite title e.g Mr , Mrs
+                        Source of the funds
                       </p>
-                      <input
-                        type="text"
-                        id="name"
-                        name="name"
-                        placeholder="Please enter account name..."
+                      <select
+                        id="accountFromId"
+                        value={newTransaction.name}
+                        onChange={(e) =>
+                          setNewTransaction({
+                            ...newTransaction,
+                            accountFromId: parseInt(e.target.value),
+                          })
+                        }
                         className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
-                        style={{ borderRadius: "12px", padding: "7px" }}
-                      />
+                        style={{ borderRadius: "12px", padding: "15px" }}
+                      >
+                        <option value="">Select an account</option>
+                        {accounts.map((account) => (
+                          <option key={account.id} value={account.id}>
+                            {account.name}
+                          </option>
+                        ))}
+                      </select>
                     </div>
 
                     <div className="mb-3 mr-3">
@@ -880,18 +929,32 @@ const Vendor = () => {
                       />
                     </div>
                   </div>
-                  <div className="flex justify-between mt-4">
+                  <div className="flex justify-between">
                     <button
+                      type="button"
                       onClick={handleBack}
-                      className="px-4 py-2 bg-gray-300 text-gray-700 rounded-md text-sm font-semibold hover:bg-gray-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-gray-500"
+                      className="py-2 px-4 text-gray-700 rounded focus:outline-none"
+                      style={{
+                        borderRadius: "28px",
+                        fontFamily: "outFit, Sans-serif",
+                        width: "40%",
+                        border: "#505050 1px solid",
+                      }}
                     >
                       Back
                     </button>
                     <button
+                      type="submit"
+                      className="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none"
+                      style={{
+                        background: "#4467a1",
+                        borderRadius: "28px",
+                        fontFamily: "outFit, Sans-serif",
+                        width: "40%",
+                      }}
                       onClick={handleSubmit}
-                      className="px-4 py-2 bg-indigo-600 text-white rounded-md text-sm font-semibold hover:bg-indigo-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-indigo-500"
                     >
-                      Save
+                      Continue
                     </button>
                   </div>
                 </div>
