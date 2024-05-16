@@ -3,23 +3,33 @@ import { Dropdown, Menu } from "antd";
 import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
 import axios from "axios";
 import AccountNavigationFilter from "../components/SubGroupNavigationFilter";
+import FailureSlideInCard from "../components/FailureSlideInCard ";
 
 const Customer = () => {
-    const [customerList, setCustomerList] = useState([]);
+  const [customerList, setCustomerList] = useState([]);
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [showFailure, setShowFailure] = useState(false);
+  const [messageInfo, setMessageInfo] = useState({ title: "", message: "" });
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await axios.get(`${process.env.REACT_APP_API_URL}/GetAllVendors`);
-                console.log("dataatatata", response.data);
-                setCustomerList(response.data);
-            } catch (error) {
-                console.error("Error fetching data:", error);
-            }
-        };
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          `${process.env.REACT_APP_API_URL}/GetAllVendors`
+        );
+        setCustomerList(response.data);
+      } catch (error) {
+        setShowFailure(true);
+        setMessageInfo({
+          title: "Server Error!",
+          message: "Failed to fetch customer details.",
+        });
+        console.error("Error fetching data:", error);
+      }
+    };
 
-        fetchData();
-    }, []);
+    fetchData();
+  }, []);
   const menu = (
     <Menu style={{ width: "250px" }}>
       <Menu.Item key="1">Action 1</Menu.Item>
@@ -27,9 +37,15 @@ const Customer = () => {
       <Menu.Item key="3">Action 3</Menu.Item>
     </Menu>
   );
+
+//   const handleCloseSuccess = () => {
+//     setShowFailure(false);
+//   };
+
   return (
     <div style={{ background: "#fff", padding: "15px", borderRadius: "24px" }}>
       <AccountNavigationFilter />
+      {showFailure && <FailureSlideInCard title={messageInfo.title} message={messageInfo.message} onClose={() => setShowFailure(false)}/>}
       <div style={{ overflowY: "auto" }}>
         <table className="table-auto min-w-full divide-gray-200">
           <thead className="bg-gray-50">
@@ -70,44 +86,45 @@ const Customer = () => {
               </th>
             </tr>
           </thead>
-          {
-            customerList.map((customer) => (
-                <tbody className="bg-white divide-y divide-gray-200" key={customer.id}>
-            <tr className="px-3 py-4 whitespace-nowrap mt-3 text-sm  text-gray-800">
-              <td className="px-3 py-4 whitespace-nowrap mt-3 text-sm  text-gray-800">
-                <input type="checkbox" />
-              </td>
-              <td className="px-3 py-4 whitespace-nowrap mt-3 text-sm  text-gray-800">
-                {customer.companyName}
-              </td>
-              <td className="px-3 py-4 whitespace-nowrap mt-3 text-sm text-gray-800">
-                {customer.email}
-              </td>
-              <td className="px-3 py-4 whitespace-nowrap mt-3 text-sm text-gray-800">
-                {customer.mobile}
-              </td>
-              <td className="px-3 py-4 whitespace-nowrap mt-3 text-sm text-gray-800">
-                {customer.openingBalance}
-              </td>
-              <div
-                style={{
-                  width: "100px",
-                  display: "flex",
-                  justifyContent: "center",
-                  marginTop: "10px",
-                }}
-              >
-                <Dropdown overlay={menu} trigger={["click"]}>
-                  <EllipsisVerticalIcon
-                    className="h-5 w-5 mt-3"
-                    aria-hidden="true"
-                  />
-                </Dropdown>
-              </div>
-            </tr>
-          </tbody>
-            ))
-          }
+          {customerList.map((customer) => (
+            <tbody
+              className="bg-white divide-y divide-gray-200"
+              key={customer.id}
+            >
+              <tr className="px-3 py-4 whitespace-nowrap mt-3 text-sm  text-gray-800">
+                <td className="px-3 py-4 whitespace-nowrap mt-3 text-sm  text-gray-800">
+                  <input type="checkbox" />
+                </td>
+                <td className="px-3 py-4 whitespace-nowrap mt-3 text-sm  text-gray-800">
+                  {customer.companyName}
+                </td>
+                <td className="px-3 py-4 whitespace-nowrap mt-3 text-sm text-gray-800">
+                  {customer.email}
+                </td>
+                <td className="px-3 py-4 whitespace-nowrap mt-3 text-sm text-gray-800">
+                  {customer.mobile}
+                </td>
+                <td className="px-3 py-4 whitespace-nowrap mt-3 text-sm text-gray-800">
+                  {customer.openingBalance}
+                </td>
+                <div
+                  style={{
+                    width: "100px",
+                    display: "flex",
+                    justifyContent: "center",
+                    marginTop: "10px",
+                  }}
+                >
+                  <Dropdown overlay={menu} trigger={["click"]}>
+                    <EllipsisVerticalIcon
+                      className="h-5 w-5 mt-3"
+                      aria-hidden="true"
+                    />
+                  </Dropdown>
+                </div>
+              </tr>
+            </tbody>
+          ))}
         </table>
       </div>
     </div>

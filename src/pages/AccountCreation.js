@@ -116,7 +116,7 @@ const AccountCreation = () => {
       setMessageInfo({
         title: "Account Created!",
         message: "Account created successfully."
-      })
+      });
     } catch (error) {
       console.error("Failed to create account:", error);
       setErrorMessage("Failed to create account.");
