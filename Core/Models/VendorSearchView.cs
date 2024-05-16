@@ -9,6 +9,6 @@ namespace Core.Models
     public class VendorSearchView
     {
         public int Id { get; set; }
-        public VendType VendType { get; set; }
+        public string VendType { get; set; }
     }
 }

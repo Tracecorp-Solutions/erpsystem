@@ -2,6 +2,7 @@
 using Core.Repositories;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 using System;
 using System.Collections.Generic;
 using System.Formats.Asn1;
@@ -27,9 +28,13 @@ namespace Services.Repositories
         public async Task<Vendor> CreateVendorAsync(Vendor vendor)
         {
             // Create an account for the vendor with the opening balance
+           if (vendor.CompanyName == null)
+            {
+                vendor.CompanyName = vendor.FullName;
+            }
             var account = new Account
             {
-                Name = $"{vendor.FirstName} {vendor.LastName}",
+                Name = vendor.CompanyName, //$"{vendor.FirstName} {vendor.LastName}",
                 Balance = vendor.OpeningBalance,
                 SubGroupAccountId = vendor.SubGroupId,
                 Description = "Vendor Account "
@@ -42,6 +47,7 @@ namespace Services.Repositories
             return vendor;
         }
 
+
         public async Task<IEnumerable<Vendor>> GetAllVendors() 
         {
             IEnumerable<Vendor> vendors = await _context.Vendors
@@ -50,9 +56,10 @@ namespace Services.Repositories
             return vendors;
         }
 
+        
         public async Task<IEnumerable<Vendor>> GetVendorById(VendorSearchView view) 
         {
-            var vendor =  await _context.Vendors.Where(v => v.Type == view.VendType && v.Id == view.Id).ToListAsync();
+            var vendor =  await _context.Vendors.Where(v => v.VendorType == view.VendType && v.Id == view.Id).ToListAsync();
 
             return vendor == null ? throw new ArgumentException("No Record found found") : vendor;
         }
