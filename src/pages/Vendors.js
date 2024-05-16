@@ -171,11 +171,7 @@ const Vendor = () => {
         </div>
       </div>
       <div>
-        
-        <div className="mt-6" aria-hidden="true">
-         
-         
-        </div>
+        <div className="mt-6" aria-hidden="true"></div>
 
         {showForm && (
           <div className="absolute inset-0 bg-gray-900 bg-opacity-50 mt-20 flex items-center justify-center">
@@ -184,16 +180,15 @@ const Vendor = () => {
               <div className="mb-4">
                 <div className="overflow-hidden rounded-full bg-gray-200">
                   <div
-                    className="h-2 rounded-full bg-indigo-600"
-                    style={{ width: `${(section - 1) * 33.33}%` }}
+                    className="h-2 rounded-full bg-green-500"
+                    style={{ width: `${(section - 1) * 25}%` }}
                   />
                 </div>
                 <div className="mt-2 flex justify-between text-sm text-gray-600">
-                  <div className="text-indigo-600">Personal Infor</div>
+                  <div className="text-indigo-600">Personal Information</div>
                   <div className="text-indigo-600">Contact details</div>
                   <div className="text-indigo-600">Additional Information</div>
                   <div className="text-indigo-600">Financial details</div>
-
                 </div>
               </div>
 
@@ -231,6 +226,38 @@ const Vendor = () => {
 
               {section === 2 && (
                 <div>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="mb-4">
+                      <label
+                        htmlFor="title"
+                        className="block text-sm font-medium text-gray-700"
+                      >
+                        Title
+                      </label>
+                      <input
+                        type="text"
+                        name="title"
+                        id="title"
+                        value={newVendor.title}
+                        onChange={(e) =>
+                          setNewVendor({ ...newVendor, title: e.target.value })
+                        }
+                        className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                      />
+                    </div>
+                    {/* Add other fields for section 1 */}
+                  </div>
+                  <button
+                    onClick={handleContinue}
+                    className="mt-4 px-4 py-2 bg-indigo-600 text-white rounded-md text-sm font-semibold hover:bg-indigo-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-indigo-500"
+                  >
+                    Continue
+                  </button>
+                </div>
+              )}
+
+              {section === 3 && (
+                <div>
                   <div className="grid grid-cols-3 gap-4">
                     {/* Form inputs for section 2 */}
                   </div>
@@ -251,7 +278,7 @@ const Vendor = () => {
                 </div>
               )}
 
-              {section === 3 && (
+              {section === 4 && (
                 <div>
                   <div className="grid grid-cols-2 gap-4">
                     {/* Form inputs for section 3 */}
