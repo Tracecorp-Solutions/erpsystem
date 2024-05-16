@@ -1,78 +1,85 @@
-import React, { useState } from 'react';
-import { Progress } from 'antd';
+import React, { useState } from "react";
+import { Dropdown } from "antd";
+import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
+import AccountNavigationFilter from "../components/SubGroupNavigationFilter";
 
 const Customer = () => {
-  const [formData, setFormData] = useState({
-    field1: '',
-    field2: '',
-    field3: '',
-  });
-  
-  const [step, setStep] = useState(1);
-  const totalSteps = Object.keys(formData).length;
-  
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prevData => ({
-      ...prevData,
-      [name]: value
-    }));
-  };
-  
-  const handleBack = () => {
-    setStep(prevStep => prevStep - 1);
-  };
-  
-  const handleContinue = () => {
-    if (step < totalSteps) {
-      setStep(prevStep => prevStep + 1);
-    } else {
-    }
-  };
-  
   return (
-    <div>
-      <div>Step {step} of {totalSteps}</div>
-      <Progress percent={(step / totalSteps) * 100} />
-      
-      {step === 1 && (
-        <div>
-        <div>
-          <label htmlFor="title">Title</label>
-          <input type="text" id="title" name="title" />
-        </div>
-        <div>
-          <label htmlFor="fullname">Full Name</label>
-          <input type="text" id="fullname" name="fullname" />
-        </div>
-        </div>
-      )}
-      
-      {step === 2 && (
-        <div>
-          <label htmlFor="field2">Field 2:</label>
-          <input type="text" id="field2" name="field2" value={formData.field2} onChange={handleChange} />
-        </div>
-      )}
-      
-      {step === 3 && (
-        <div>
-          <label htmlFor="field3">Field 3:</label>
-          <input type="text" id="field3" name="field3" value={formData.field3} onChange={handleChange} />
-        </div>
-      )}
-      
-      <div>
-        {step > 1 && (
-          <button onClick={handleBack}>Back</button>
-        )}
-        {step < totalSteps && (
-          <button onClick={handleContinue}>Continue</button>
-        )}
-        {step === totalSteps && (
-          <button onClick={handleContinue}>Submit</button>
-        )}
-      </div>
+    <div style={{ background: "#fff", padding: "15px", borderRadius: "24px" }}>
+        <AccountNavigationFilter />
+      <table className="table-auto min-w-full divide-gray-200">
+        <thead className="bg-gray-50">
+          <tr style={{ borderRadius: "50px" }}>
+            <input
+              type="checkbox"
+              style={{ marginLeft: "10px", marginTop: "15px" }}
+            />
+            <th
+              scope="col"
+              className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+            >
+             Company Name
+            </th>
+            <th
+              scope="col"
+              className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+            >
+              Email
+            </th>
+            <th
+              scope="col"
+              className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+            >
+              Phone
+            </th>
+            <th
+              scope="col"
+              className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+            >
+              Opening Balance
+            </th>
+            <th
+              scope="col"
+              className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+            >
+              ACTION
+            </th>
+          </tr>
+        </thead>
+        <tbody className="bg-white divide-y divide-gray-200">
+          <tr className="px-3 py-4 whitespace-nowrap mt-3 text-sm  text-gray-800">
+            <td className="px-3 py-4 whitespace-nowrap mt-3 text-sm  text-gray-800">
+            <input
+              type="checkbox"
+            />
+            </td>
+            <td className="px-3 py-4 whitespace-nowrap mt-3 text-sm  text-gray-800">
+              heeee
+            </td>
+            <td className="px-3 py-4 whitespace-nowrap mt-3 text-sm text-gray-800">
+              heeee
+            </td>
+            <td className="px-3 py-4 whitespace-nowrap mt-3 text-sm text-gray-800">
+              ajajjaja
+            </td>
+            <td className="px-3 py-4 whitespace-nowrap mt-3 text-sm text-gray-800">
+                ajjaj
+            </td>
+            <div
+              style={{
+                width: "100px",
+                display: "flex",
+                justifyContent: "center",
+                marginTop: "10px"
+              }}
+            >
+              <Dropdown overlay={true} trigger={["click"]}>
+                <EllipsisVerticalIcon className="h-5 w-5 mt-3" aria-hidden="true" />
+              </Dropdown>
+            </div>
+          </tr>
+        </tbody>
+      </table>
     </div>
   );
 };
