@@ -67,7 +67,19 @@ const CustomerForm = ({ showModal }) => {
       <div>
         {section === 1 && (
           <div>
-            <div>
+            <div
+              style={{
+                maxHeight: "50vh",
+                overflowY: "auto",
+                paddingRight: "15px",
+                msOverflowStyle: "none",
+                scrollbarWidth: "none",
+                "&::-webkit-scrollbar": {
+                  display: "none",
+                },
+              }}
+              className="overflow-y-auto"
+            >
               <div className="grid max-w-xl w-full mx-4">
                 <div className="mb-3 mr-3">
                   <label
@@ -231,28 +243,40 @@ const CustomerForm = ({ showModal }) => {
                   />
                 </div>
               </div>
-              <div className="flex justify-between">
-                <button
-                  type="submit"
-                  className="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none"
-                  style={{
-                    background: "#4467a1",
-                    borderRadius: "28px",
-                    marginLeft: "24px",
-                    fontFamily: "outFit, Sans-serif",
-                    width: "95%",
-                  }}
-                  onClick={handleContinue}
-                >
-                  Continue
-                </button>
-              </div>
+            </div>
+            <div className="flex justify-between">
+              <button
+                type="submit"
+                className="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none"
+                style={{
+                  background: "#4467a1",
+                  borderRadius: "28px",
+                  marginLeft: "24px",
+                  fontFamily: "outFit, Sans-serif",
+                  width: "95%",
+                }}
+                onClick={handleContinue}
+              >
+                Continue
+              </button>
             </div>
           </div>
         )}
         {section === 2 && (
           <div>
-            <div>
+            <div
+              style={{
+                maxHeight: "50vh",
+                overflowY: "auto",
+                paddingRight: "15px",
+                msOverflowStyle: "none",
+                scrollbarWidth: "none",
+                "&::-webkit-scrollbar": {
+                  display: "none",
+                },
+              }}
+              className="overflow-y-auto"
+            >
               <div className="grid max-w-xl w-full mx-4">
                 <div className="mb-3 mr-3">
                   <label
@@ -381,43 +405,53 @@ const CustomerForm = ({ showModal }) => {
                     style={{ borderRadius: "12px", padding: "7px" }}
                   />
                 </div>
-
-                {/* Add other fields for section 1 */}
               </div>
-              <div className="flex justify-between">
-                <button
-                  type="button"
-                  onClick={handleBack}
-                  className="py-2 px-4 text-gray-700 rounded focus:outline-none"
-                  style={{
-                    borderRadius: "28px",
-                    fontFamily: "outFit, Sans-serif",
-                    width: "40%",
-                    border: "#505050 1px solid",
-                  }}
-                >
-                  Back
-                </button>
-                <button
-                  type="submit"
-                  className="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none"
-                  style={{
-                    background: "#4467a1",
-                    borderRadius: "28px",
-                    fontFamily: "outFit, Sans-serif",
-                    width: "40%",
-                  }}
-                  onClick={handleContinue}
-                >
-                  Continue
-                </button>
-              </div>
+            </div>
+            <div className="flex justify-between">
+              <button
+                type="button"
+                onClick={handleBack}
+                className="py-2 px-4 text-gray-700 rounded focus:outline-none"
+                style={{
+                  borderRadius: "28px",
+                  fontFamily: "outFit, Sans-serif",
+                  width: "40%",
+                  border: "#505050 1px solid",
+                }}
+              >
+                Back
+              </button>
+              <button
+                type="submit"
+                className="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none"
+                style={{
+                  background: "#4467a1",
+                  borderRadius: "28px",
+                  fontFamily: "outFit, Sans-serif",
+                  width: "40%",
+                }}
+                onClick={handleContinue}
+              >
+                Continue
+              </button>
             </div>
           </div>
         )}
         {section === 3 && (
           <div>
-            <div>
+            <div
+              style={{
+                maxHeight: "50vh",
+                overflowY: "auto",
+                paddingRight: "15px",
+                msOverflowStyle: "none",
+                scrollbarWidth: "none",
+                "&::-webkit-scrollbar": {
+                  display: "none",
+                },
+              }}
+              className="overflow-y-auto"
+            >
               <div className="grid max-w-xl w-full mx-4">
                 {/* {isActive ? (
                       <div className="mb-3 mr-3">
@@ -598,134 +632,143 @@ const CustomerForm = ({ showModal }) => {
                 </div>
                 {/* Add other fields for section 1 */}
               </div>
-              <div
+            </div>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+              }}
+            >
+              <Button
+                type="button"
+                onClick={handleBack}
+                className="py-2 px-4 text-gray-700 rounded focus:outline-none"
                 style={{
-                  display: "flex",
-                  justifyContent: "space-between",
+                  borderRadius: "28px",
+                  fontFamily: "outFit, Sans-serif",
+                  width: "40%",
+                  border: "#505050 1px solid",
+                  paddingBottom: "30px",
                 }}
               >
-                <Button
-                  type="button"
-                  onClick={handleBack}
-                  className="py-2 px-4 text-gray-700 rounded focus:outline-none"
-                  style={{
-                    borderRadius: "28px",
-                    fontFamily: "outFit, Sans-serif",
-                    width: "40%",
-                    border: "#505050 1px solid",
-                    paddingBottom: "30px",
-                  }}
-                >
-                  Previous
-                </Button>
-                <Button
-                  type="button"
-                  onClick={handleContinue}
-                  className="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none"
-                  style={{
-                    background: "#4467a1",
-                    borderRadius: "28px",
-                    fontFamily: "outFit, Sans-serif",
-                    width: "40%",
-                    paddingBottom: "30px",
-                  }}
-                >
-                  Next
-                </Button>
-              </div>
+                Previous
+              </Button>
+              <Button
+                type="button"
+                onClick={handleContinue}
+                className="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none"
+                style={{
+                  background: "#4467a1",
+                  borderRadius: "28px",
+                  fontFamily: "outFit, Sans-serif",
+                  width: "40%",
+                  paddingBottom: "30px",
+                }}
+              >
+                Next
+              </Button>
             </div>
           </div>
         )}
         {section === 4 && (
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-            }}
-          >
-            <div style={{ padding: "20px" }}>
-              <div className="mb-3">
-                <label
-                  htmlFor="name"
-                  className="block mb-1"
-                  style={{
-                    fontFamily: "outFit, Sans-serif",
-                    fontSize: "16px",
-                    fontWeight: "400",
-                  }}
-                >
-                  Payment method
-                </label>
-                <p
-                  className="text-gray-600 text-sm mb-1"
-                  style={{ fontFamily: "outFit, Sans-serif" }}
-                >
-                  Add a description
-                </p>
-                <input
-                  type="text"
-                  name="Payment method"
-                  id="payment method"
-                  placeholder="Please enter account name..."
-                  className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
-                  style={{ borderRadius: "12px", padding: "7px" }}
-                />
-              </div>
+          <div>
+            <div
+              style={{
+                maxHeight: "45vh",
+                overflowY: "auto",
+                paddingRight: "15px",
+                msOverflowStyle: "none",
+                scrollbarWidth: "none",
+                "&::-webkit-scrollbar": {
+                  display: "none",
+                },
+              }}
+              className="overflow-y-auto"
+            >
+              <div style={{ padding: "20px" }}>
+                <div className="mb-3">
+                  <label
+                    htmlFor="name"
+                    className="block mb-1"
+                    style={{
+                      fontFamily: "outFit, Sans-serif",
+                      fontSize: "16px",
+                      fontWeight: "400",
+                    }}
+                  >
+                    Payment method
+                  </label>
+                  <p
+                    className="text-gray-600 text-sm mb-1"
+                    style={{ fontFamily: "outFit, Sans-serif" }}
+                  >
+                    Add a description
+                  </p>
+                  <input
+                    type="text"
+                    name="Payment method"
+                    id="payment method"
+                    placeholder="Please enter account name..."
+                    className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                    style={{ borderRadius: "12px", padding: "7px" }}
+                  />
+                </div>
 
-              <div className="mb-3">
-                <label
-                  htmlFor="name"
-                  className="block mb-1"
-                  style={{
-                    fontFamily: "outFit, Sans-serif",
-                    fontSize: "16px",
-                    fontWeight: "400",
-                  }}
-                >
-                  Billing Rate
-                </label>
-                <p
-                  className="text-gray-600 text-sm mb-1"
-                  style={{ fontFamily: "outFit, Sans-serif" }}
-                >
-                  Add a description
-                </p>
-                <input
-                  type="text"
-                  name="billingRate"
-                  id="billingRate"
-                  placeholder="Please enter account name..."
-                  className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
-                  style={{ borderRadius: "12px", padding: "7px" }}
-                />
-              </div>
+                <div className="mb-3">
+                  <label
+                    htmlFor="name"
+                    className="block mb-1"
+                    style={{
+                      fontFamily: "outFit, Sans-serif",
+                      fontSize: "16px",
+                      fontWeight: "400",
+                    }}
+                  >
+                    Billing Rate
+                  </label>
+                  <p
+                    className="text-gray-600 text-sm mb-1"
+                    style={{ fontFamily: "outFit, Sans-serif" }}
+                  >
+                    Add a description
+                  </p>
+                  <input
+                    type="text"
+                    name="billingRate"
+                    id="billingRate"
+                    placeholder="Please enter account name..."
+                    className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                    style={{ borderRadius: "12px", padding: "7px" }}
+                  />
+                </div>
 
-              <div className="mb-3">
-                <label
-                  htmlFor="name"
-                  className="block mb-1"
-                  style={{
-                    fontFamily: "outFit, Sans-serif",
-                    fontSize: "16px",
-                    fontWeight: "400",
-                  }}
-                >
-                  Opening Balance
-                </label>
-                <p
-                  className="text-gray-600 text-sm mb-1"
-                  style={{ fontFamily: "outFit, Sans-serif" }}
-                >
-                  Add a description
-                </p>
-                <input
-                  type="number"
-                  name="openingBalance"
-                  id="openingBalance"
-                  placeholder="Please enter account balance..."
-                  className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
-                  style={{ borderRadius: "12px", padding: "7px" }}
-                />
+                <div className="mb-3">
+                  <label
+                    htmlFor="name"
+                    className="block mb-1"
+                    style={{
+                      fontFamily: "outFit, Sans-serif",
+                      fontSize: "16px",
+                      fontWeight: "400",
+                    }}
+                  >
+                    Opening Balance
+                  </label>
+                  <p
+                    className="text-gray-600 text-sm mb-1"
+                    style={{ fontFamily: "outFit, Sans-serif" }}
+                  >
+                    Add a description
+                  </p>
+                  <input
+                    type="number"
+                    name="openingBalance"
+                    id="openingBalance"
+                    placeholder="Please enter account balance..."
+                    className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                    style={{ borderRadius: "12px", padding: "7px" }}
+                  />
+                </div>
               </div>
             </div>
             <div
