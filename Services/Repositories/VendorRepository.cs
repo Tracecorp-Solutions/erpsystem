@@ -69,12 +69,39 @@ namespace Services.Repositories
         }
 
         
-        public async Task<IEnumerable<Vendor>> GetVendorById(VendorSearchView view) 
-        {
-            var vendor =  await _context.Vendors.Where(v => v.VendorType == view.VendType && v.Id == view.Id).ToListAsync();
 
-            return vendor == null ? throw new ArgumentException("No Record found found") : vendor;
+        public async Task<IEnumerable<Vendor>> GetVendorByIdAsync(VendorSearchView view)
+        {
+            // Validate vendor type
+            if (view.VendType != "Vendor" && view.VendType != "Customer")
+                throw new ArgumentException("Vendor type must be either 'Vendor' or 'Customer'");
+
+            // Get vendor(s) by id or vendor type
+            var vendors = await _context.Vendors
+                .Where(v => v.VendorType == view.VendType && v.Id == view.Id)
+                .ToListAsync();
+
+            // Check if any vendors were found and throw exception if not
+            if (vendors == null || !vendors.Any())
+                throw new ArgumentException("No record found");
+
+            return vendors;
         }
+
+        public async Task<IEnumerable<Vendor>> GetVendorsByTypeAsync(string type) 
+        {
+            // Get vendors by type
+            var vendors = await _context.Vendors
+                .Where(v => v.VendorType == type)
+                .ToListAsync();
+
+            // Check if any vendors were found and throw exception if not
+            if (vendors == null || !vendors.Any())
+                throw new ArgumentException("No record found");
+
+            return vendors;
+        }
+
 
         public async Task<string> UpdateVendor(Vendor vendor) 
         {

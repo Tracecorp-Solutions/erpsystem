@@ -56,10 +56,28 @@ namespace Trace.Controllers
         {
             try
             {
-                var vendor = await _vendorRepository.GetVendorById(view);
+                var vendor = await _vendorRepository.GetVendorByIdAsync(view);
                 return Ok(vendor);
             }
             catch (ArgumentException ex) 
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
+        }
+
+        [HttpGet("/GetVendorsByType")]
+        public async Task<IActionResult> GetVendorsByType(string type)
+        {
+            try
+            {
+                var vendors = await _vendorRepository.GetVendorsByTypeAsync(type);
+                return Ok(vendors);
+            }
+            catch (ArgumentException ex)
             {
                 return BadRequest(ex.Message);
             }
