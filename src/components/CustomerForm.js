@@ -78,6 +78,25 @@ const CustomerForm = ({ showModal }) => {
     }
   };
 
+  const handleAddressChange = (e) => {
+    const { name, value } = e.target;
+    setNewVendor((prevVendor) => ({
+      ...prevVendor,
+      address: {
+        ...prevVendor.address,
+        [name]: value,
+      },
+    }));
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setNewVendor((prevVendor) => ({
+      ...prevVendor,
+      [name]: value,
+    }));
+  };
+
   const handleContinue = () => {
     setSection(section + 1);
   };
@@ -385,78 +404,60 @@ const CustomerForm = ({ showModal }) => {
                   />
                 </div>
                 <div className="mb-3 mr-3">
-                  <label
-                    htmlFor="name"
-                    className="block mb-1"
-                    style={{
-                      fontFamily: "outFit, Sans-serif",
-                      fontSize: "16px",
-                      fontWeight: "400",
-                    }}
-                  >
-                    Address
-                  </label>
-                  <p
-                    className="text-gray-600 text-sm mb-1"
-                    style={{ fontFamily: "outFit, Sans-serif" }}
-                  >
-                    Enter physical address
-                  </p>
-
-                  <input
-                    type="text"
-                    name="zipCode"
-                    id="zipCode"
-                    placeholder="Zipcode..."
-                    value={newVendor.address.zipCode}
-                    onChange={(e) =>
-                      setNewVendor({
-                        ...newVendor,
-                        addres: {
-                          ...newVendor.address,
-                          zipCode: e.target.value,
-                        },
-                      })
-                    }
-                    className="w-full p-2 mb-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
-                    style={{ borderRadius: "12px", padding: "7px" }}
-                  />
-                  <input
-                    type="text"
-                    name="city"
-                    id="city"
-                    placeholder="City..."
-                    value={newVendor.address.city}
-                    onChange={(e) =>
-                      setNewVendor({
-                        ...newVendor,
-                        addres: {
-                          ...newVendor.address,
-                          city: e.target.value,
-                        },
-                      })
-                    }
-                    className="w-full p-2 mb-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
-                    style={{ borderRadius: "12px", padding: "7px" }}
-                  />
-                  <input
-                    type="text"
-                    name="country"
-                    id="country"
-                    placeholder="Country..."
-                    value={newVendor.address.country}
-                    onChange={(e) =>
-                      setNewVendor({
-                        ...newVendor,
-                        addres: {
-                          ...newVendor.address,
-                          country: e.target.value,
-                        },
-                      })
-                    }
-                    className="w-full p-2 mb-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
-                    style={{ borderRadius: "12px", padding: "7px" }}
-                  />
+                  <div className="address-fields">
+                    <input
+                      type="text"
+                      name="street"
+                      value={newVendor.address.street}
+                      onChange={handleAddressChange}
+                      placeholder="Street..."
+                      className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                      style={{
+                        borderRadius: "12px",
+                        padding: "7px",
+                        marginTop: "5px",
+                      }}
+                    />
+                    <input
+                      type="text"
+                      name="city"
+                      value={newVendor.address.city}
+                      onChange={handleAddressChange}
+                      placeholder="City..."
+                      className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                      style={{
+                        borderRadius: "12px",
+                        padding: "7px",
+                        marginTop: "5px",
+                      }}
+                    />
+                    <input
+                      type="text"
+                      name="zipCode"
+                      value={newVendor.address.zipCode}
+                      onChange={handleAddressChange}
+                      placeholder="Zip Code..."
+                      className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                      style={{
+                        borderRadius: "12px",
+                        padding: "7px",
+                        marginTop: "5px",
+                      }}
+                    />
+                    <input
+                      type="text"
+                      name="country"
+                      value={newVendor.address.country}
+                      onChange={handleAddressChange}
+                      placeholder="Country..."
+                      className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                      style={{
+                        borderRadius: "12px",
+                        padding: "7px",
+                        marginTop: "5px",
+                      }}
+                    />
+                  </div>
                 </div>
               </div>
             </div>
@@ -668,7 +669,7 @@ const CustomerForm = ({ showModal }) => {
                   >
                     Add a description
                   </p>
-                  <input
+                  <textarea
                     type="text"
                     id="notes"
                     name="notes"
