@@ -195,24 +195,39 @@ const Vendor = () => {
               {section === 1 && (
                 <div>
                   <div className="grid grid-cols-2 gap-4">
-                    <div className="mb-4">
-                      <label
-                        htmlFor="title"
-                        className="block text-sm font-medium text-gray-700"
-                      >
-                        Title
-                      </label>
-                      <input
-                        type="text"
-                        name="title"
-                        id="title"
-                        value={newVendor.title}
-                        onChange={(e) =>
-                          setNewVendor({ ...newVendor, title: e.target.value })
-                        }
-                        className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                      />
-                    </div>
+                  <div className="mb-4">
+              <label
+                htmlFor="name"
+                className="block mb-1"
+                style={{
+                  fontFamily: "outFit, Sans-serif",
+                  fontSize: "16px",
+                  fontWeight: "600",
+                }}
+              >
+                Title
+              </label>
+              <p
+                className="text-gray-600 text-sm mb-1"
+                style={{ fontFamily: "outFit, Sans-serif" }}
+              >
+                Choose an appropriate title (e.g Mr Mrs)
+              </p>
+              <input
+                type="text"
+                id="name"
+                name="name"
+               
+                placeholder="Please enter account name..."
+                className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                style={{ borderRadius: "12px", padding: "15px" }}
+              />
+              {!newAccount.name && (
+                <p className="text-red-500 text-sm mt-1">
+                  Please enter account name
+                </p>
+              )}
+            </div>
                     {/* Add other fields for section 1 */}
                   </div>
                   <button
