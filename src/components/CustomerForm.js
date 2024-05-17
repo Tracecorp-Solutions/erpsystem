@@ -5,14 +5,11 @@ import axios from "axios";
 const CustomerForm = ({ showModal }) => {
   const [newVendor, setNewVendor] = useState({
     title: "",
-    FullName: "",
-    suffix: "",
+    fullName: "",
     email: "",
     company: "",
     phone: "",
     mobile: "",
-    fax: "",
-    other: "",
     website: "",
     addres: {
       street: "",
@@ -28,7 +25,8 @@ const CustomerForm = ({ showModal }) => {
     status: "",
     subGroupId: 0,
     vendorType: "Customer",
-    businessIdNo: ""
+    businessIdNo: "",
+    paymentAccount: ""
   });
 
   const [section, setSection] = useState(1);
@@ -36,6 +34,8 @@ const CustomerForm = ({ showModal }) => {
   const [isActive, setIsActive] = useState(true);
   const [subGroupAccounts, setSubGroupAccounts] = useState([]);
   const [accounts, setAccounts] = useState([]);
+
+  console.log("dadadadadadadaddaddaddada", newVendor);
 
   const totalSections = 4;
 
@@ -70,8 +70,8 @@ const CustomerForm = ({ showModal }) => {
   const handleSubmit = async () => {
     try {
       const createVendorApiUrl = "http://44.220.143.46/CreateVendor";
-      await axios.post(createVendorApiUrl, newVendor);
-      setNewVendor({ ...newVendor, title: "" });
+      const response = await axios.post(createVendorApiUrl, newVendor);
+      setNewVendor({ ...newVendor });
     } catch (error) {
       console.error("Error creating vendor:", error);
       setErrorMessage("Failed to create vendor. Please try again later.");
@@ -82,8 +82,8 @@ const CustomerForm = ({ showModal }) => {
     const { name, value } = e.target;
     setNewVendor((prevVendor) => ({
       ...prevVendor,
-      address: {
-        ...prevVendor.address,
+      addres: {
+        ...prevVendor.addres,
         [name]: value,
       },
     }));
@@ -200,7 +200,7 @@ const CustomerForm = ({ showModal }) => {
                     onChange={(e) =>
                       setNewVendor({
                         ...newVendor,
-                        firstName: e.target.value,
+                        fullName: e.target.value,
                       })
                     }
                     placeholder="Please enter full name..."
@@ -507,36 +507,6 @@ const CustomerForm = ({ showModal }) => {
               className="overflow-y-auto"
             >
               <div className="grid max-w-xl w-full mx-4">
-                {isActive ? (
-                  <div className="mb-3 mr-3">
-                    <label
-                      htmlFor="name"
-                      className="block mb-1"
-                      style={{
-                        fontFamily: "outFit, Sans-serif",
-                        fontSize: "16px",
-                        fontWeight: "400",
-                      }}
-                    >
-                      Active Status
-                    </label>
-                    <p
-                      className="text-gray-600 text-sm mb-1"
-                      style={{ fontFamily: "outFit, Sans-serif" }}
-                    >
-                      Choose an appropriate status (e.g. Active or Inactive)
-                    </p>
-                    <select
-                      id="status"
-                      name="status"
-                      className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
-                      style={{ borderRadius: "12px", padding: "6px" }}
-                    >
-                      <option value="active">Active</option>
-                      <option value="inactive">Inactive</option>
-                    </select>
-                  </div>
-                ) : (
                   <div className="mb-3 mr-3">
                     <label
                       htmlFor="name"
@@ -558,6 +528,13 @@ const CustomerForm = ({ showModal }) => {
                     <select
                       id="status"
                       name="status"
+                      value={newVendor.status}
+                        onChange={(e) =>
+                      setNewVendor({
+                        ...newVendor,
+                        status: e.target.value,
+                      })
+                    }
                       className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
                       style={{ borderRadius: "12px", padding: "6px" }}
                     >
@@ -565,7 +542,6 @@ const CustomerForm = ({ showModal }) => {
                       <option value="inactive">Inactive</option>
                     </select>
                   </div>
-                )}
                 <div className="mb-4 mr-3">
                   <label
                     htmlFor="subGroupAccountId"
@@ -627,11 +603,12 @@ const CustomerForm = ({ showModal }) => {
                   </p>
                   <select
                     id="accountFromId"
-                    value={newVendor.accountId}
+                    name="accountFromId"
+                    value={newVendor.paymentAccount}
                     onChange={(e) =>
                       setNewVendor({
                         ...newVendor,
-                        accountId: e.target.value,
+                        paymentAccount: e.target.value,
                       })
                     }
                     className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
@@ -740,7 +717,7 @@ const CustomerForm = ({ showModal }) => {
               className="overflow-y-auto"
             >
               <div style={{ padding: "20px" }}>
-                <div className="mb-3">
+                {/* <div className="mb-3">
                   <label
                     htmlFor="name"
                     className="block mb-1"
@@ -773,11 +750,43 @@ const CustomerForm = ({ showModal }) => {
                     className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
                     style={{ borderRadius: "12px", padding: "7px" }}
                   />
+                </div> */}
+
+                <div className="mb-3 mr-3">
+                  <label
+                    htmlFor="businessIdNo"
+                    className="block mb-1"
+                    style={{
+                      fontFamily: "outFit, Sans-serif",
+                      fontSize: "16px",
+                      fontWeight: "400",
+                    }}
+                  >
+                    Opening Balance Date
+                  </label>
+                  <p
+                    className="text-gray-600 text-sm mb-1"
+                    style={{ fontFamily: "outFit, Sans-serif" }}
+                  >
+                    Please select the opening balance date
+                  </p>
+                  <input
+                    type="Date"
+                    name="openingBalanceDate"
+                    id="openingBalanceDate"
+                    value={newVendor.openingBalanceDate}
+                    onChange={(e) =>
+                      setNewVendor({ ...newVendor, openingBalanceDate: e.target.value })
+                    }
+                    placeholder=""
+                    className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                    style={{ borderRadius: "12px", padding: "7px" }}
+                  />
                 </div>
 
                 <div className="mb-3 mr-3">
                   <label
-                    htmlFor="name"
+                    htmlFor="businessIdNo"
                     className="block mb-1"
                     style={{
                       fontFamily: "outFit, Sans-serif",
