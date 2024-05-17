@@ -788,9 +788,9 @@ const VendorForm = ({ showModal }) => {
                   </p>
                   <input
                     type="text"
-                    name="Payment method"
-                    id="payment method"
-                    value={newVendor.paymentMethod}
+                    name="Payment account"
+                    id="paymentAccount"
+                    value={newVendor.paymentAccount}
                     onChange={(e) =>
                       setNewVendor({
                         ...newVendor,
@@ -870,6 +870,34 @@ const VendorForm = ({ showModal }) => {
                     placeholder="Please enter account balance..."
                     className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
                     style={{ borderRadius: "12px", padding: "7px" }}
+                  />
+                </div>
+                <div className="mb-4">
+                  <label
+                    htmlFor="transactionDate"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Opening openingBalanceDate
+                  </label>
+                  <p
+                    className="text-gray-500 text-xs mb-1"
+                    style={{ fontFamily: "outFit, Sans-serif" }}
+                  >
+                    Enter date when transaction occurred
+                  </p>
+                  <input
+                    type="date"
+                    id="openingBalanceDate"
+                    value={newVendor.openingBalanceDate.split("T")[0]} // Extracts the date part
+                    onChange={(e) =>
+                      setNewVendor({
+                        ...newVendor,
+                        openingBalanceDate: e.target.value,
+                      })
+                    }
+                    placeholder="Please enter account balance..."
+                    className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                    style={{ borderRadius: "12px", padding: "15px" }}
                   />
                 </div>
               </div>
