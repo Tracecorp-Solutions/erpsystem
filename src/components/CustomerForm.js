@@ -29,6 +29,7 @@ const CustomerForm = ({ showModal }) => {
     businessIdNo: "",
     status: "",
     subGroupId: 0,
+    vendorType: "Customer"
   });
 
   const [section, setSection] = useState(1);
@@ -69,7 +70,7 @@ const CustomerForm = ({ showModal }) => {
 
   const handleSubmit = async () => {
     try {
-      const createVendorApiUrl = "http://3.216.182.63:8095/CreateVendor";
+      const createVendorApiUrl = "http://44.220.143.46/CreateVendor";
       await axios.post(createVendorApiUrl, newVendor);
       setNewVendor({ ...newVendor, title: "" });
     } catch (error) {
