@@ -75,7 +75,7 @@ const VendorForm = ({ showModal }) => {
     }
   };
 
-  const handleAddressChange = (e) => {
+  const handleAddresChange = (e) => {
     const { name, value } = e.target;
     setNewVendor((prevVendor) => ({
       ...prevVendor,
@@ -246,7 +246,7 @@ const VendorForm = ({ showModal }) => {
                       fontWeight: "400",
                     }}
                   >
-                    Company
+                    Company Name
                   </label>
                   <p
                     className="text-gray-600 text-sm mb-1"
@@ -256,13 +256,13 @@ const VendorForm = ({ showModal }) => {
                   </p>
                   <input
                     type="text"
-                    name="company"
-                    id="company"
-                    value={newVendor.company}
+                    name="companyName"
+                    id="companyName"
+                    value={newVendor.companyName}
                     onChange={(e) =>
                       setNewVendor({
                         ...newVendor,
-                        company: e.target.value,
+                        companyName: e.target.value,
                       })
                     }
                     placeholder="Please enter company name..."
@@ -406,7 +406,7 @@ const VendorForm = ({ showModal }) => {
                       type="text"
                       name="street"
                       value={newVendor.addres.street}
-                      onChange={handleAddressChange}
+                      onChange={handleAddresChange}
                       placeholder="Street..."
                       className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
                       style={{
@@ -419,7 +419,7 @@ const VendorForm = ({ showModal }) => {
                       type="text"
                       name="city"
                       value={newVendor.addres.city}
-                      onChange={handleAddressChange}
+                      onChange={handleAddresChange}
                       placeholder="City..."
                       className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
                       style={{
@@ -432,7 +432,7 @@ const VendorForm = ({ showModal }) => {
                       type="text"
                       name="zipCode"
                       value={newVendor.addres.zipCode}
-                      onChange={handleAddressChange}
+                      onChange={handleAddresChange}
                       placeholder="Zip Code..."
                       className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
                       style={{
@@ -445,7 +445,7 @@ const VendorForm = ({ showModal }) => {
                       type="text"
                       name="country"
                       value={newVendor.addres.country}
-                      onChange={handleAddressChange}
+                      onChange={handleAddresChange}
                       placeholder="Country..."
                       className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
                       style={{
@@ -877,7 +877,7 @@ const VendorForm = ({ showModal }) => {
                     htmlFor="transactionDate"
                     className="block text-sm font-medium text-gray-700"
                   >
-                    Opening openingBalanceDate
+                    Opening Balance Date
                   </label>
                   <p
                     className="text-gray-500 text-xs mb-1"
@@ -886,7 +886,7 @@ const VendorForm = ({ showModal }) => {
                     Enter date when transaction occurred
                   </p>
                   <input
-                    type="number"
+                    type="date" // Change type to "date"
                     id="openingBalanceDate"
                     value={newVendor.openingBalanceDate.split("T")[0]} // Extracts the date part
                     onChange={(e) =>

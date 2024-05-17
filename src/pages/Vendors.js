@@ -7,8 +7,8 @@ import AccountNavigationFilter from "../components/SubGroupNavigationFilter";
 import ReusableEmptyData from "../components/ReusableEmptyData";
 import VendorForm from "../components/VendorForm";
 
-const Customer = () => {
-  const [customerList, setCustomerList] = useState([]);
+const Vendor = () => {
+  const [vendorList, setvendorList] = useState([]);
   const [showFailure, setShowFailure] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [messageInfo, setMessageInfo] = useState({ title: "", message: "" });
@@ -20,12 +20,12 @@ const Customer = () => {
         const response = await axios.get(
           `${process.env.REACT_APP_API_URL}/GetAllVendors`
         );
-        setCustomerList(response.data);
+        setvendorList(response.data);
       } catch (error) {
         setShowFailure(true);
         setMessageInfo({
           title: "Server Error!",
-          message: "Failed to fetch customer details.",
+          message: "Failed to fetch vendor details.",
         });
         console.error("Error fetching data:", error);
       }
@@ -91,7 +91,7 @@ const Customer = () => {
           onClose={() => setShowFailure(false)}
         />
       )} */}
-      {customerList.length < 0 ? (
+      {vendorList.length < 0 ? (
         <ReusableEmptyData />
       ) : (
         <div style={{ overflowY: "auto" }}>
@@ -134,26 +134,26 @@ const Customer = () => {
                 </th>
               </tr>
             </thead>
-            {customerList.map((customer) => (
+            {vendorList.map((vendor) => (
               <tbody
                 className="bg-white divide-y divide-gray-200"
-                key={customer.id}
+                key={vendor.id}
               >
                 <tr className="px-3 py-4 whitespace-nowrap mt-3 text-sm  text-gray-800">
                   <td className="px-3 py-4 whitespace-nowrap mt-3 text-sm  text-gray-800">
                     <input type="checkbox" />
                   </td>
                   <td className="px-3 py-4 whitespace-nowrap mt-3 text-sm  text-gray-800">
-                    {customer.companyName}
+                    {vendor.companyName}
                   </td>
                   <td className="px-3 py-4 whitespace-nowrap mt-3 text-sm text-gray-800">
-                    {customer.email}
+                    {vendor.email}
                   </td>
                   <td className="px-3 py-4 whitespace-nowrap mt-3 text-sm text-gray-800">
-                    {customer.mobile}
+                    {vendor.mobile}
                   </td>
                   <td className="px-3 py-4 whitespace-nowrap mt-3 text-sm text-gray-800">
-                    {customer.openingBalance}
+                    {vendor.openingBalance}
                   </td>
                   <div
                     style={{
@@ -181,4 +181,4 @@ const Customer = () => {
   );
 };
 
-export default Customer;
+export default Vendor;
