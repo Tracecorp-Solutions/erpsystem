@@ -227,14 +227,14 @@ const CustomerForm = ({ showModal }) => {
                     Enter vendor's email Address for communication
                   </p>
                   <input
-                    type="text"
+                    type="email"
                     name="email"
                     id="email"
                     value={newVendor.email}
                     onChange={(e) =>
                       setNewVendor({ ...newVendor, email: e.target.value })
                     }
-                    placeholder="Please enter account name..."
+                    placeholder="Please enter email address..."
                     className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
                     style={{ borderRadius: "12px", padding: "7px" }}
                   />
@@ -770,6 +770,38 @@ const CustomerForm = ({ showModal }) => {
                       })
                     }
                     placeholder="Please enter account name..."
+                    className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                    style={{ borderRadius: "12px", padding: "7px" }}
+                  />
+                </div>
+
+                <div className="mb-3 mr-3">
+                  <label
+                    htmlFor="name"
+                    className="block mb-1"
+                    style={{
+                      fontFamily: "outFit, Sans-serif",
+                      fontSize: "16px",
+                      fontWeight: "400",
+                    }}
+                  >
+                    businessIdNo
+                  </label>
+                  <p
+                    className="text-gray-600 text-sm mb-1"
+                    style={{ fontFamily: "outFit, Sans-serif" }}
+                  >
+                    Enter customer's id number
+                  </p>
+                  <input
+                    type="text"
+                    name="businessIdNo"
+                    id="businessIdNo"
+                    value={newVendor.businessIdNo}
+                    onChange={(e) =>
+                      setNewVendor({ ...newVendor, businessIdNo: e.target.value })
+                    }
+                    placeholder="Please enter business id number..."
                     className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
                     style={{ borderRadius: "12px", padding: "7px" }}
                   />
