@@ -3,7 +3,7 @@ import { Dropdown, Menu, Button } from "antd";
 import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
 import axios from "axios";
 import AccountNavigationFilter from "../components/SubGroupNavigationFilter";
-import FailureSlideInCard from "../components/FailureSlideInCard ";
+// import FailureSlideInCard from "../components/FailureSlideInCard ";
 import ReusableEmptyData from "../components/ReusableEmptyData";
 import VendorForm from "../components/VendorForm";
 
@@ -12,6 +12,7 @@ const Customer = () => {
   const [showFailure, setShowFailure] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [messageInfo, setMessageInfo] = useState({ title: "", message: "" });
+
  
   useEffect(() => {
     const fetchData = async () => {
@@ -83,13 +84,13 @@ const Customer = () => {
       <VendorForm showModal={showModal} />
       <div style={{ background: "#fff", padding: "15px", borderRadius: "24px" }}>
       <AccountNavigationFilter />
-      {showFailure && (
+      {/* {showFailure && (
         <FailureSlideInCard
           title={messageInfo.title}
           message={messageInfo.message}
           onClose={() => setShowFailure(false)}
         />
-      )}
+      )} */}
       {customerList.length < 0 ? (
         <ReusableEmptyData />
       ) : (

@@ -6,13 +6,10 @@ const VendorForm = ({ showModal }) => {
   const [newVendor, setNewVendor] = useState({
     title: "",
     FullName: "",
-    suffix: "",
     email: "",
     company: "",
     phone: "",
     mobile: "",
-    fax: "",
-    other: "",
     website: "",
     addres: {
       street: "",
@@ -28,7 +25,7 @@ const VendorForm = ({ showModal }) => {
     status: "",
     subGroupId: 0,
     vendorType: "Customer",
-    businessIdNo: ""
+    businessIdNo: "",
   });
 
   const [section, setSection] = useState(1);
@@ -82,8 +79,8 @@ const VendorForm = ({ showModal }) => {
     const { name, value } = e.target;
     setNewVendor((prevVendor) => ({
       ...prevVendor,
-      address: {
-        ...prevVendor.address,
+      addres: {
+        ...prevVendor.addres,
         [name]: value,
       },
     }));
@@ -114,7 +111,7 @@ const VendorForm = ({ showModal }) => {
 
   return (
     <Modal
-      title="Add Customer"
+      title="Add Vendor Details"
       visible={showModal}
       footer={null}
       onCancel={() => setNewVendor({ ...newVendor, title: "" })}
@@ -739,6 +736,37 @@ const VendorForm = ({ showModal }) => {
               }}
               className="overflow-y-auto"
             >
+              <div className="mb-3 mr-3">
+                <label
+                  htmlFor="name"
+                  className="block mb-1"
+                  style={{
+                    fontFamily: "outFit, Sans-serif",
+                    fontSize: "16px",
+                    fontWeight: "400",
+                  }}
+                >
+                  BusinessIdNO
+                </label>
+                <p
+                  className="text-gray-600 text-sm mb-1"
+                  style={{ fontFamily: "outFit, Sans-serif" }}
+                >
+                  Enter BusinessIdNo
+                </p>
+                <input
+                  type="text"
+                  name="businessIdNo"
+                  id="businessIdNo"
+                  value={newVendor.businessIdNo}
+                  onChange={(e) =>
+                    setNewVendor({ ...newVendor, businessIdNo: e.target.value })
+                  }
+                  placeholder="Please enter business Id number..."
+                  className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                  style={{ borderRadius: "12px", padding: "7px" }}
+                />
+              </div>
               <div style={{ padding: "20px" }}>
                 <div className="mb-3">
                   <label
