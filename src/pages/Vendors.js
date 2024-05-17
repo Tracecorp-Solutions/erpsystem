@@ -1,31 +1,34 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import FailureSlideInCard from "../components/FailureSlideInCard ";
+import ReusableEmptyData from "../components/ReusableEmptyData";
+import AccountNavigationFilter from "../components/SubGroupNavigationFilter";
+import { Dropdown, Menu, Button } from "antd";
+import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
 import { Select } from "antd";
 
 const { Option } = Select;
 
 const Vendor = () => {
   const [showForm, setShowForm] = useState(false);
+  const [customerList, setCustomerList] = useState([]);
   const [isActive, setIsActive] = useState(true);
   const [accounts, setAccounts] = useState([]);
   const [subGroupAccounts, setSubGroupAccounts] = useState([]);
   const [newAccount, setNewAccount] = useState({});
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [showFailure, setShowFailure] = useState(false);
+  const [messageInfo, setMessageInfo] = useState({ title: "", message: "" });
   const [newTransaction, setNewTransaction] = useState({});
   const [newVendor, setNewVendor] = useState({
     title: "",
-    firstName: "",
-    middleName: "",
-    lastName: "",
-    suffix: "",
+    fullName:"",
     email: "",
     company: "",
     phone: "",
     mobile: "",
-    fax: "",
-    other: "",
     website: "",
     addres: {
-      street: "",
       city: "",
       zipCode: "",
       country: "",
@@ -50,21 +53,33 @@ const Vendor = () => {
   };
 
   useEffect(() => {
-    fetchVendors();
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          `${process.env.REACT_APP_API_URL}/GetAllVendors`
+        );
+        setCustomerList(response.data);
+      } catch (error) {
+        setShowFailure(true);
+        setMessageInfo({
+          title: "Server Error!",
+          message: "Failed to fetch customer details.",
+        });
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
   }, []);
 
-  const vendorsApiUrl = "http://3.216.182.63:8095/GetAllVendors";
+  const menu = (
+    <Menu style={{ width: "250px" }}>
+      <Menu.Item key="1">Action 1</Menu.Item>
+      <Menu.Item key="2">Action 2</Menu.Item>
+      <Menu.Item key="3">Action 3</Menu.Item>
+    </Menu>
+  );
 
-  const fetchVendors = async () => {
-    try {
-      const response = await axios.get(vendorsApiUrl);
-      setVendors(response.data);
-      setLoading(false);
-    } catch (error) {
-      console.error("Error fetching vendors:", error);
-      setErrorMessage("Failed to fetch vendors. Please try again later.");
-    }
-  };
 
   const handleSubmit = async () => {
     try {
@@ -74,19 +89,13 @@ const Vendor = () => {
       // Clear the form fields
       setNewVendor({
         title: "",
-        firstName: "",
-        middleName: "",
-        lastName: "",
-        suffix: "",
+        fullName: "",
         email: "",
         company: "",
         phone: "",
         mobile: "",
-        fax: "",
-        other: "",
         website: "",
         addres: {
-          street: "",
           city: "",
           zipCode: "",
           country: "",
@@ -970,110 +979,101 @@ const Vendor = () => {
         )}
       </div>
 
-      <div class="px-4 sm:px-6 lg:px-8">
-        <div class="mt-8 flow-root">
-          <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-            <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-              <table className="min-w-full divide-y divide-gray-300 bg-gray-400 rounded-lg">
-                <thead>
-                  <tr>
-                    <th
-                      scope="col"
-                      class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-3"
-                    >
-                      Date
-                    </th>
-
-                    <th
-                      scope="col"
-                      class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-                    >
-                      Name
-                    </th>
-                    <th
-                      scope="col"
-                      class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-                    >
-                      Balance
-                    </th>
-                    <th
-                      scope="col"
-                      class="py-3.5 pl-4 pr-3 text-right text-sm font-semibold text-gray-900 sm:pl-3"
-                    >
-                      Edit
-                    </th>
-                  </tr>
-                </thead>
-                <tbody class="bg-white">
-                  {vendors.map((vendor) => (
-                    <tr key={vendor.id} class="even:bg-gray-50">
-                      <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-3">
-                        {new Date(vendor.openingBalanceDate).toLocaleString(
-                          "en-US",
-                          { timeZone: "UTC" }
-                        )}
-                      </td>
-                      <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                        {" "}
-                        {vendor.title} {vendor.firstName} {vendor.lastName}
-                      </td>
-                      <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                        {vendor.openingBalance}
-                      </td>
-                      <td className="relative whitespace-nowrap py-4 pr-4 text-right text-sm font-medium">
-                        <div className="relative">
-                          <select
-                            className="text-indigo-600 hover:text-indigo-900"
-                            onChange={(e) => handleEdit(e.target.value)}
-                          >
-                            <option value="">Actions</option>
-                            <option value="edit">Edit</option>
-                            <option value="delete">Delete</option>
-                          </select>
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-              <nav
-                className="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6"
-                aria-label="Pagination"
+      <div style={{ background: "#fff", padding: "15px", borderRadius: "24px" }}>
+      <AccountNavigationFilter />
+      {showFailure && (
+        <FailureSlideInCard
+          title={messageInfo.title}
+          message={messageInfo.message}
+          onClose={() => setShowFailure(false)}
+        />
+      )}
+      {customerList.length < 0 ? (
+        <ReusableEmptyData />
+      ) : (
+        <div style={{ overflowY: "auto" }}>
+          <table className="table-auto min-w-full divide-gray-200">
+            <thead className="bg-gray-50">
+              <tr style={{ borderRadius: "50px" }}>
+                <input
+                  type="checkbox"
+                  style={{ marginLeft: "10px", marginTop: "15px" }}
+                />
+                <th
+                  scope="col"
+                  className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >
+                  Company Name
+                </th>
+                <th
+                  scope="col"
+                  className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >
+                  Email
+                </th>
+                <th
+                  scope="col"
+                  className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >
+                  Phone
+                </th>
+                <th
+                  scope="col"
+                  className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >
+                  Opening Balance
+                </th>
+                <th
+                  scope="col"
+                  className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >
+                  ACTION
+                </th>
+              </tr>
+            </thead>
+            {customerList.map((customer) => (
+              <tbody
+                className="bg-white divide-y divide-gray-200"
+                key={customer.id}
               >
-                <div className="hidden sm:block">
-                  <p className="text-sm text-gray-700">
-                    Showing
-                    <span className="font-medium mx-1">
-                      {indexOfFirstItem + 1}
-                    </span>
-                    to
-                    <span className="font-medium mx-1">{indexOfLastItem}</span>
-                    of
-                    <span className="font-medium mx-1">{vendors.length}</span>
-                    results
-                  </p>
-                </div>
-                <div className="flex-1 flex justify-between sm:justify-end">
-                  <button
-                    onClick={prevPage}
-                    disabled={currentPage === 1}
-                    className="relative inline-flex items-center px-4 py-2 rounded-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+                <tr className="px-3 py-4 whitespace-nowrap mt-3 text-sm  text-gray-800">
+                  <td className="px-3 py-4 whitespace-nowrap mt-3 text-sm  text-gray-800">
+                    <input type="checkbox" />
+                  </td>
+                  <td className="px-3 py-4 whitespace-nowrap mt-3 text-sm  text-gray-800">
+                    {customer.companyName}
+                  </td>
+                  <td className="px-3 py-4 whitespace-nowrap mt-3 text-sm text-gray-800">
+                    {customer.email}
+                  </td>
+                  <td className="px-3 py-4 whitespace-nowrap mt-3 text-sm text-gray-800">
+                    {customer.mobile}
+                  </td>
+                  <td className="px-3 py-4 whitespace-nowrap mt-3 text-sm text-gray-800">
+                    {customer.openingBalance}
+                  </td>
+                  <div
+                    style={{
+                      width: "100px",
+                      display: "flex",
+                      justifyContent: "center",
+                      marginTop: "10px",
+                    }}
                   >
-                    Previous
-                  </button>
-                  <button
-                    onClick={nextPage}
-                    disabled={currentPage === totalPages}
-                    className="ml-3 relative inline-flex items-center px-4 py-2 rounded-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
-                  >
-                    Next
-                  </button>
-                </div>
-              </nav>
-            </div>
-          </div>
+                    <Dropdown overlay={menu} trigger={["click"]}>
+                      <EllipsisVerticalIcon
+                        className="h-5 w-5 mt-3"
+                        aria-hidden="true"
+                      />
+                    </Dropdown>
+                  </div>
+                </tr>
+              </tbody>
+            ))}
+          </table>
         </div>
-      </div>
+      )}
+    </div>
 
       {/* Display success or error message */}
       {successMessage && <p className="text-green-600">{successMessage}</p>}
