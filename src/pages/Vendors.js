@@ -52,38 +52,27 @@ const Vendor = () => {
     setShowForm(!showForm);
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          `${process.env.REACT_APP_API_URL}/GetAllVendors`
-        );
-        setCustomerList(response.data);
-      } catch (error) {
-        setShowFailure(true);
-        setMessageInfo({
-          title: "Server Error!",
-          message: "Failed to fetch customer details.",
-        });
-        console.error("Error fetching data:", error);
+  const fetchVendors = async () => {
+    try {
+      const response = await fetch('http://44.220.143.46/GetAllVendors');
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
       }
-    };
+      const data = await response.json();
+      setVendors(data); // Assuming data is an array of vendors
+    } catch (error) {
+      console.error('Error fetching vendors:', error);
+      setErrorMessage('Failed to fetch vendors. Please try again later.');
+    }
+  };
 
-    fetchData();
-  }, []);
-
-  const menu = (
-    <Menu style={{ width: "250px" }}>
-      <Menu.Item key="1">Action 1</Menu.Item>
-      <Menu.Item key="2">Action 2</Menu.Item>
-      <Menu.Item key="3">Action 3</Menu.Item>
-    </Menu>
-  );
+  useEffect(() => {
+    fetchVendors();
 
 
   const handleSubmit = async () => {
     try {
-      const createVendorApiUrl = "http://3.216.182.63:8095/CreateVendor";
+      const createVendorApiUrl = "http://44.220.143.46/CreateVendor";
       const response = await axios.post(createVendorApiUrl, newVendor);
       setSuccessMessage("Vendor created successfully!");
       // Clear the form fields
@@ -91,21 +80,27 @@ const Vendor = () => {
         title: "",
         fullName: "",
         email: "",
-        company: "",
+        companyName: "",
         phone: "",
         mobile: "",
         website: "",
-        addres: {
+        address: {
+          street: "",
           city: "",
           zipCode: "",
           country: "",
         },
+        accountNo: "",
         billingRate: 0,
         openingBalance: 0,
         openingBalanceDate: new Date().toISOString(),
         notes: "",
         businessIdNo: "",
-        status: "",
+        status: true,
+        accountId: 0,
+        paymentAccount: 0,
+        subGroupId: 0,
+        vendorType: "",
       });
       // Refresh vendors list
       fetchVendors();
@@ -114,7 +109,6 @@ const Vendor = () => {
       setErrorMessage("Failed to create vendor. Please try again later.");
     }
   };
-
   const fetchAccounts = async () => {
     try {
       const response = await axios.get(
@@ -140,6 +134,14 @@ const Vendor = () => {
       console.error("Error fetching subGroup accounts", error);
     }
   };
+
+  const menu = (
+    <Menu style={{ width: "250px" }}>
+      <Menu.Item key="1">Action 1</Menu.Item>
+      <Menu.Item key="2">Action 2</Menu.Item>
+      <Menu.Item key="3">Action 3</Menu.Item>
+    </Menu>
+  );
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
