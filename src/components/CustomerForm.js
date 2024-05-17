@@ -22,13 +22,13 @@ const CustomerForm = ({ showModal }) => {
     openingBalanceDate: "",
     notes: "",
     businessIdNo: "",
-    status: "",
+    status: true,
     accountId: "",
     subGroupId: "",
     vendorType: "Customer",
     businessIdNo: "",
     paymentAccount: "",
-    accountNo: ""
+    accountNo: "",
   });
 
   const [section, setSection] = useState(1);
@@ -71,8 +71,9 @@ const CustomerForm = ({ showModal }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      await axios.post("http://3.216.182.63:8095/CreateVendor", {
+    try { 
+      await axios.post(process.env.REACT_APP_API_URL+"/CreateVendor",
+       {
         title: newVendor.title,
         fullName: newVendor.fullName,
         email: newVendor.email,
@@ -81,22 +82,23 @@ const CustomerForm = ({ showModal }) => {
         mobile: newVendor.mobile,
         website: newVendor.website,
         addres: {
-          city: newVendor.addres.city,
           street: newVendor.addres.street,
+          city: newVendor.addres.city,
           zipCode: newVendor.addres.zipCode,
           country: newVendor.addres.country,
         },
+        accountNo: newVendor.accountNo,
         billingRate: newVendor.billingRate,
         openingBalance: newVendor.openingBalance,
         openingBalanceDate: newVendor.openingBalanceDate,
         notes: newVendor.notes,
         businessIdNo: newVendor.businessIdNo,
         status: newVendor.status,
-        accountId: parseInt(newVendor.accountId),
-        subGroupId: parseInt(newVendor.subGroupId),
+        accountId: newVendor.accountId,
+        subGroupId: newVendor.subGroupId,
         vendorType: newVendor.vendorType,
         paymentAccount: newVendor.paymentAccount,
-        accountNo: newVendor.accountNo
+        vendor: "hello"
       });
       setNewVendor({
         title: "",
@@ -121,7 +123,8 @@ const CustomerForm = ({ showModal }) => {
         subGroupId: "",
         vendorType: "Customer",
         paymentAccount: "",
-        accountNo: ""
+        accountNo: "",
+        accountId: ""
       });
     } catch (error) {
       console.error("Error creating vendor:", error);
@@ -310,7 +313,8 @@ const CustomerForm = ({ showModal }) => {
                   </p>
                   <input
                     type="text"
-                    name="company"
+                    name="com
+                    pany"
                     id="company"
                     value={newVendor.companyName}
                     onChange={(e) =>
@@ -1024,7 +1028,7 @@ const CustomerForm = ({ showModal }) => {
                 Previous
               </Button>
               <Button
-                type="submit"
+                type="submit "
                 onClick={handleSubmit}
                 className="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none"
                 style={{
