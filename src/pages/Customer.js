@@ -17,7 +17,7 @@ const Customer = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `${process.env.REACT_APP_API_URL}/GetAllVendors`
+          `http://3.216.182.63:8095/GetAllVendors`
         );
         setCustomerList(response.data);
       } catch (error) {
