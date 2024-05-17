@@ -5,9 +5,7 @@ import axios from "axios";
 const CustomerForm = ({ showModal }) => {
   const [newVendor, setNewVendor] = useState({
     title: "",
-    firstName: "",
-    middleName: "",
-    lastName: "",
+    FullName: "",
     suffix: "",
     email: "",
     company: "",
@@ -16,7 +14,7 @@ const CustomerForm = ({ showModal }) => {
     fax: "",
     other: "",
     website: "",
-    address: {
+    addres: {
       street: "",
       city: "",
       zipCode: "",
@@ -29,7 +27,8 @@ const CustomerForm = ({ showModal }) => {
     businessIdNo: "",
     status: "",
     subGroupId: 0,
-    vendorType: "Customer"
+    vendorType: "Customer",
+    businessIdNo: ""
   });
 
   const [section, setSection] = useState(1);
@@ -409,7 +408,7 @@ const CustomerForm = ({ showModal }) => {
                     <input
                       type="text"
                       name="street"
-                      value={newVendor.address.street}
+                      value={newVendor.addres.street}
                       onChange={handleAddressChange}
                       placeholder="Street..."
                       className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
@@ -422,7 +421,7 @@ const CustomerForm = ({ showModal }) => {
                     <input
                       type="text"
                       name="city"
-                      value={newVendor.address.city}
+                      value={newVendor.addres.city}
                       onChange={handleAddressChange}
                       placeholder="City..."
                       className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
@@ -435,7 +434,7 @@ const CustomerForm = ({ showModal }) => {
                     <input
                       type="text"
                       name="zipCode"
-                      value={newVendor.address.zipCode}
+                      value={newVendor.addres.zipCode}
                       onChange={handleAddressChange}
                       placeholder="Zip Code..."
                       className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
@@ -448,7 +447,7 @@ const CustomerForm = ({ showModal }) => {
                     <input
                       type="text"
                       name="country"
-                      value={newVendor.address.country}
+                      value={newVendor.addres.country}
                       onChange={handleAddressChange}
                       placeholder="Country..."
                       className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
