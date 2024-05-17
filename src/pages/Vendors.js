@@ -63,7 +63,7 @@ const Customer = () => {
           color: "#505050",
           fontWeight: "600"
           }}>
-            Customer
+            Vendor
         </h2>
         <Button
           type="button"
@@ -78,7 +78,7 @@ const Customer = () => {
 
           onClick={handleModal}
         >
-          + Create Customer
+          + Create Vendor
         </Button>
       </div>
       <VendorForm showModal={showModal} />

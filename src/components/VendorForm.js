@@ -24,7 +24,7 @@ const VendorForm = ({ showModal }) => {
     businessIdNo: "",
     status: "",
     subGroupId: 0,
-    vendorType: "Customer",
+    vendorType: "Vendor",
     businessIdNo: "",
   });
 
@@ -66,7 +66,7 @@ const VendorForm = ({ showModal }) => {
 
   const handleSubmit = async () => {
     try {
-      const createVendorApiUrl = "http://44.220.143.46/CreateVendor";
+      const createVendorApiUrl = "http://3.216.182.63:8095//CreateVendor";
       await axios.post(createVendorApiUrl, newVendor);
       setNewVendor({ ...newVendor, title: "" });
     } catch (error) {
@@ -778,7 +778,7 @@ const VendorForm = ({ showModal }) => {
                       fontWeight: "400",
                     }}
                   >
-                    Payment method
+                    Payment Account
                   </label>
                   <p
                     className="text-gray-600 text-sm mb-1"
@@ -787,7 +787,7 @@ const VendorForm = ({ showModal }) => {
                     Add a description
                   </p>
                   <input
-                    type="text"
+                    type="number"
                     name="Payment account"
                     id="paymentAccount"
                     value={newVendor.paymentAccount}
@@ -805,7 +805,7 @@ const VendorForm = ({ showModal }) => {
 
                 <div className="mb-3">
                   <label
-                    htmlFor="name"
+                    htmlFor="billing rate"
                     className="block mb-1"
                     style={{
                       fontFamily: "outFit, Sans-serif",
@@ -822,7 +822,7 @@ const VendorForm = ({ showModal }) => {
                     Add a description
                   </p>
                   <input
-                    type="text"
+                    type="number"
                     name="billingRate"
                     id="billingRate"
                     value={newVendor.billingRate}
@@ -840,7 +840,7 @@ const VendorForm = ({ showModal }) => {
 
                 <div className="mb-3">
                   <label
-                    htmlFor="name"
+                    htmlFor="opening balance"
                     className="block mb-1"
                     style={{
                       fontFamily: "outFit, Sans-serif",
@@ -886,7 +886,7 @@ const VendorForm = ({ showModal }) => {
                     Enter date when transaction occurred
                   </p>
                   <input
-                    type="date"
+                    type="number"
                     id="openingBalanceDate"
                     value={newVendor.openingBalanceDate.split("T")[0]} // Extracts the date part
                     onChange={(e) =>
