@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Modal, Button, Progress } from "antd";
 import axios from "axios";
 
-const CustomerForm = ({ showModal }) => {
+const VendorForm = ({ showModal }) => {
   const [newVendor, setNewVendor] = useState({
     title: "",
     FullName: "",
@@ -889,4 +889,4 @@ const CustomerForm = ({ showModal }) => {
   );
 };
 
-export default CustomerForm;
+export default VendorForm;
