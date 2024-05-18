@@ -6,8 +6,34 @@ import CustomerNavigationbar from "../components/CustomerNavigationbar";
 import FailureSlideInCard from "../components/FailureSlideInCard ";
 import ReusableEmptyData from "../components/ReusableEmptyData";
 import CustomerForm from "../components/CustomerForm";
+import SlideInCard from "../components/SlideInCard ";
 
 const Customer = () => {
+  const [formData, setFormData] = useState({
+    title: "",
+    fullName: "",
+    email: "",
+    companyName: "",
+    phone: "",
+    mobile: "",
+    website: "",
+    addres: {
+      street: "",
+      city: "",
+      zipCode: "",
+      country: "",
+    },
+    accountNo: "",
+    billingRate: 0,
+    openingBalance: 0,
+    openingBalanceDate: "",
+    notes: "",
+    businessIdNo: "",
+    status: true,
+    paymentAccount: 0,
+    subGroupId: 0,
+    vendorType: "Customer",
+  });
   const [customerList, setCustomerList] = useState([]);
   const [showFailure, setShowFailure] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -16,6 +42,7 @@ const Customer = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(5);
   const [searchQuery, setSearchQuery] = useState("");
+  const [showSuccess, setShowSuccess] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -36,6 +63,66 @@ const Customer = () => {
 
     fetchData();
   }, []);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    axios
+      .post(`${process.env.REACT_APP_API_URL}/CreateVendor`, formData)
+      .then((response) => {
+        console.log("Form submitted successfully:", response.data);
+        setShowModal(false);
+        setShowSuccess(true);
+        setMessageInfo({
+          title: "Success!",
+          message: response.data.message,
+        });
+        setFormData({
+          title: "",
+          fullName: "",
+          email: "",
+          companyName: "",
+          phone: "",
+          mobile: "",
+          website: "",
+          addres: {
+            street: "",
+            city: "",
+            zipCode: "",
+            country: "",
+          },
+          accountNo: "",
+          billingRate: 0,
+          openingBalance: 0,
+          openingBalanceDate: "",
+          notes: "",
+          businessIdNo: "",
+          status: true,
+          paymentAccount: 0,
+          subGroupId: 0,
+          vendorType: "Customer",
+        })
+      })
+      .catch((error) => {
+        console.error("Error submitting form:", error);
+        setShowFailure(true);
+        if (error.response) {
+          setMessageInfo({
+            title: "Server Error!",
+            message: error.response.data.message,
+          });
+        } else if (error.request) {
+          setMessageInfo({
+            title: "Network Error!",
+            message: "Failed to connect to the server.",
+          });
+        } else {
+          setMessageInfo({
+            title: "Request Error!",
+            message: "Failed to send request.",
+          });
+        }
+      });
+  };
 
   const handleModal = () => {
     setShowModal(true);
@@ -61,7 +148,10 @@ const Customer = () => {
         customer.mobile.toLowerCase().includes(searchQuery.toLowerCase()))
   );
 
-  const currentItems = filteredCustomerList.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = filteredCustomerList.slice(
+    indexOfFirstItem,
+    indexOfLastItem
+  );
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
@@ -78,6 +168,20 @@ const Customer = () => {
           marginBottom: "10px",
         }}
       >
+        {showSuccess && (
+          <SlideInCard
+            title={messageInfo.title}
+            message={messageInfo.message}
+            onClose={() => setShowSuccess(false)}
+          />
+        )}
+        {showFailure && (
+          <FailureSlideInCard
+            title={messageInfo.title}
+            message={messageInfo.message}
+            onClose={() => setShowFailure(false)}
+          />
+        )}
         <h2
           style={{
             fontSize: "36px",
@@ -103,7 +207,14 @@ const Customer = () => {
           + Create Customer
         </Button>
       </div>
-      <CustomerForm showModal={showModal} setShowModal={setShowModal} />
+      <CustomerForm
+        handleSearch={handleSearch}
+        handleSubmit={handleSubmit}
+        setFormData={setFormData}
+        formData={formData}
+        showModal={showModal}
+        setShowModal={setShowModal}
+      />
       <div
         style={{ background: "#fff", padding: "15px", borderRadius: "24px" }}
       >
@@ -111,7 +222,6 @@ const Customer = () => {
           toggleDisabled={toggleDisabled}
           setToggleDisabled={setToggleDisabled}
           searchQuery={searchQuery}
-          handleSearch={handleSearch}
         />
         {showFailure && (
           <FailureSlideInCard
@@ -221,7 +331,8 @@ const Customer = () => {
               color: "#a1a1a1",
             }}
           >
-            Showing {indexOfFirstItem + 1} - {indexOfLastItem} of {filteredCustomerList.length} results
+            Showing {indexOfFirstItem + 1} - {indexOfLastItem} of{" "}
+            {filteredCustomerList.length} results
           </div>
           <Pagination
             current={currentPage}

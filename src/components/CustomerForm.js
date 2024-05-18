@@ -2,32 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Modal, Button, Progress } from "antd";
 import axios from "axios";
 
-const CustomerForm = ({ showModal, setShowModal }) => {
-  const [formData, setFormData] = useState({
-    title: "",
-    fullName: "",
-    email: "",
-    companyName: "",
-    phone: "",
-    mobile: "",
-    website: "",
-    addres: {
-      street: "",
-      city: "",
-      zipCode: "",
-      country: "",
-    },
-    accountNo: "",
-    billingRate: 0,
-    openingBalance: 0,
-    openingBalanceDate: "",
-    notes: "",
-    businessIdNo: "",
-    status: true,
-    paymentAccount: 0,
-    subGroupId: 0,
-    vendorType: "Customer",
-  });
+const CustomerForm = ({ showModal, setShowModal, setFormData, handleSubmit, formData }) => {
 
   const [section, setSection] = useState(1);
   const [errorMessage, setErrorMessage] = useState("");
@@ -87,18 +62,6 @@ const CustomerForm = ({ showModal, setShowModal }) => {
     }
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    axios
-      .post(`${process.env.REACT_APP_API_URL}/CreateVendor`, formData)
-      .then((response) => {
-        console.log("Form submitted successfully:", response.data);
-        setShowModal(false);
-      })
-      .catch((error) => {
-        console.error("Error submitting form:", error);
-      });
-  };
   
   const handleContinue = () => {
     setSection(section + 1);
