@@ -22,7 +22,7 @@ const VendorForm = ({ showModal }) => {
     openingBalanceDate: "",
     notes: "",
     businessIdNo: "",
-    status: "",
+    status: "True",
     accountId: "",
     subGroupId: "",
     vendorType: "Vendors",
@@ -102,7 +102,7 @@ const VendorForm = ({ showModal }) => {
         title: "",
         fullName: "",
         email: "",
-        company: "",
+        companyName: "",
         phone: "",
         mobile: "",
         website: "",
@@ -117,7 +117,7 @@ const VendorForm = ({ showModal }) => {
         openingBalanceDate: "",
         notes: "",
         businessIdNo: "",
-        status: "",
+        status: "True",
         accountId:"",
         subGroupId: "",
         vendorType: "Vendor",
@@ -222,7 +222,6 @@ const VendorForm = ({ showModal }) => {
                     <option value="Mr">Mr</option>
                     <option value="Mrs">Mrs</option>
                     <option value="Miss">Miss</option>
-                    <option value="Miss">Dr</option>
                   </select>
                 </div>
 
@@ -246,8 +245,8 @@ const VendorForm = ({ showModal }) => {
                   </p>
                   <input
                     type="text"
-                    id="name"
-                    name="name"
+                    id="fullName"
+                    name="fullName"
                     value={newVendor.fullName}
                     onChange={(e) =>
                       setNewVendor({
@@ -293,7 +292,7 @@ const VendorForm = ({ showModal }) => {
                 </div>
                 <div className="mb-3 mr-3">
                   <label
-                    htmlFor="company name"
+                    htmlFor="companyName"
                     className="block mb-1"
                     style={{
                       fontFamily: "outFit, Sans-serif",
@@ -394,7 +393,7 @@ const VendorForm = ({ showModal }) => {
               <div className="grid max-w-xl w-full mx-4">
                 <div className="mb-3 mr-3">
                   <label
-                    htmlFor="name"
+                    htmlFor="website"
                     className="block mb-1"
                     style={{
                       fontFamily: "outFit, Sans-serif",
@@ -409,7 +408,7 @@ const VendorForm = ({ showModal }) => {
                     style={{ fontFamily: "outFit, Sans-serif" }}
                   ></p>
                   <input
-                    type="text"
+                    type="website"
                     name="website"
                     id="website"
                     placeholder="Http..."
@@ -426,7 +425,7 @@ const VendorForm = ({ showModal }) => {
                 </div>
                 <div className="mb-3 mr-3">
                   <label
-                    htmlFor="name"
+                    htmlFor="mobile"
                     className="block mb-1"
                     style={{
                       fontFamily: "outFit, Sans-serif",
@@ -561,7 +560,7 @@ const VendorForm = ({ showModal }) => {
               <div className="grid max-w-xl w-full mx-4">
                   <div className="mb-3 mr-3">
                     <label
-                      htmlFor="name"
+                      htmlFor="status"
                       className="block mb-1"
                       style={{
                         fontFamily: "outFit, Sans-serif",
