@@ -50,6 +50,7 @@ const CustomerForm = ({ showModal }) => {
         process.env.REACT_APP_API_URL + "/GetAllSubGroupAccounts"
       );
       setSubGroupAccounts(response.data);
+      console.log("sugrrrorororooror", response.data)
     } catch (error) {
       console.error("Error fetching subGroup accounts", error);
     }
@@ -193,9 +194,14 @@ const CustomerForm = ({ showModal }) => {
     <input type="number" name="paymentAccount" value={formData.paymentAccount} onChange={handleChange} placeholder="Payment Account" className="w-full px-3 py-2 border rounded-md" />
   </div>
   <div className="mb-4">
-    <label className="block mb-2">Sub Group ID</label>
-    <input type="number" name="subGroupId" value={formData.subGroupId} onChange={handleChange} placeholder="Sub Group ID" className="w-full px-3 py-2 border rounded-md" />
-  </div>
+  <label className="block mb-2">Sub Group ID</label>
+  <select name="subGroupId" value={formData.subGroupId} onChange={handleChange} className="w-full px-3 py-2 border rounded-md">
+    {subGroupAccounts.map((subGroup, index) => (
+      <option key={index} value={subGroup.subGroupAccount.id}>{subGroup.subGroupAccount.name}</option>
+    ))}
+  </select>
+</div>
+
   <button type="submit" className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
     Submit
   </button>
