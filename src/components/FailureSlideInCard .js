@@ -19,7 +19,7 @@ const FailureSlideInCard = ({ message, title, onClose }) => {
       clearTimeout(timeout);
       setIsVisible(false);
     };
-  }, []);
+  }, [onClose]);
 
   const handleClose = () => {
     setIsVisible(false);
