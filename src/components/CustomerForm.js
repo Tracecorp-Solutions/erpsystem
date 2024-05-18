@@ -119,15 +119,22 @@ const CustomerForm = ({ showModal }) => {
       <form onSubmit={handleSubmit} className="max-w-lg mx-auto mt-8">
         <div className="mb-4">
           <label className="block mb-2">Title</label>
-          <input
-            type="text"
+          <select
             name="title"
             value={formData.title}
             onChange={handleChange}
-            placeholder="Title"
             className="w-full px-3 py-2 border rounded-md"
-          />
+          >
+            <option value="">Select Title</option>
+            <option value="Mr.">Mr.</option>
+            <option value="Ms.">Ms.</option>
+            <option value="Mrs.">Mrs.</option>
+            <option value="Dr.">Dr.</option>
+            <option value="Dr.">Rev.</option>
+            <option value="Dr.">Prof.</option>
+          </select>
         </div>
+
         <div className="mb-4">
           <label className="block mb-2">Full Name</label>
           <input
