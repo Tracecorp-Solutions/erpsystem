@@ -30,7 +30,7 @@ const CustomerNavigationbar = ({ toggleDisabled, setToggleDisabled, searchQuery,
               fontFamily: "outFit, Sans-serif",
             }}
           >
-            Show Disabled Customer
+            Show Active Customers
           </p>
           <Switch
             checked={toggleDisabled}

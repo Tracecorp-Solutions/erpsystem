@@ -12,7 +12,7 @@ const Customer = () => {
   const [showFailure, setShowFailure] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [messageInfo, setMessageInfo] = useState({ title: "", message: "" });
-  const [toggleDisabled, setToggleDisabled] = useState(false);
+  const [toggleDisabled, setToggleDisabled] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(10);
   const [searchQuery, setSearchQuery] = useState("");
