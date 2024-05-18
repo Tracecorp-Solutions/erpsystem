@@ -5,9 +5,9 @@ import axios from "axios";
 const VendorForm = ({ showModal }) => {
   const [newVendor, setNewVendor] = useState({
     title: "",
-    FullName: "",
+    fullName: "",
     email: "",
-    company: "",
+    companyName: "",
     phone: "",
     mobile: "",
     website: "",
@@ -17,15 +17,18 @@ const VendorForm = ({ showModal }) => {
       zipCode: "",
       country: "",
     },
-    billingRate: 0,
-    openingBalance: 0,
-    openingBalanceDate: new Date().toISOString(),
+    billingRate: "",
+    openingBalance: "",
+    openingBalanceDate: "",
     notes: "",
     businessIdNo: "",
     status: "",
-    subGroupId: 0,
-    vendorType: "Vendor",
+    accountId: "",
+    subGroupId: "",
+    vendorType: "Vendors",
     businessIdNo: "",
+    paymentAccount: "",
+    accountNo: ""
   });
 
   const [section, setSection] = useState(1);
@@ -33,6 +36,8 @@ const VendorForm = ({ showModal }) => {
   const [isActive, setIsActive] = useState(true);
   const [subGroupAccounts, setSubGroupAccounts] = useState([]);
   const [accounts, setAccounts] = useState([]);
+
+  console.log("", newVendor);
 
   const totalSections = 4;
 
@@ -64,18 +69,68 @@ const VendorForm = ({ showModal }) => {
     }
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     try {
-      const createVendorApiUrl = "http://3.216.182.63:8095//CreateVendor";
-      await axios.post(createVendorApiUrl, newVendor);
-      setNewVendor({ ...newVendor, title: "" });
+      await axios.post("http://3.216.182.63:8095/CreateVendor", {
+        title: newVendor.title,
+        fullName: newVendor.fullName,
+        email: newVendor.email,
+        companyName: newVendor.companyName,
+        phone: newVendor.phone,
+        mobile: newVendor.mobile,
+        website: newVendor.website,
+        addres: {
+          city: newVendor.addres.city,
+          street: newVendor.addres.street,
+          zipCode: newVendor.addres.zipCode,
+          country: newVendor.addres.country,
+        },
+        billingRate: newVendor.billingRate,
+        openingBalance: newVendor.openingBalance,
+        openingBalanceDate: newVendor.openingBalanceDate,
+        notes: newVendor.notes,
+        businessIdNo: newVendor.businessIdNo,
+        status: newVendor.status,
+        accountId: parseInt(newVendor.accountId),
+        subGroupId: parseInt(newVendor.subGroupId),
+        vendorType: newVendor.vendorType,
+        paymentAccount: newVendor.paymentAccount,
+        accountNo: newVendor.accountNo
+      });
+      setNewVendor({
+        title: "",
+        fullName: "",
+        email: "",
+        company: "",
+        phone: "",
+        mobile: "",
+        website: "",
+        addres: {
+          street: "",
+          city: "",
+          zipCode: "",
+          country: "",
+        },
+        billingRate: "",
+        openingBalance: "",
+        openingBalanceDate: "",
+        notes: "",
+        businessIdNo: "",
+        status: "",
+        accountId:"",
+        subGroupId: "",
+        vendorType: "Vendor",
+        paymentAccount: "",
+        accountNo: ""
+      });
     } catch (error) {
       console.error("Error creating vendor:", error);
       setErrorMessage("Failed to create vendor. Please try again later.");
     }
   };
 
-  const handleAddresChange = (e) => {
+  const handleAddressChange = (e) => {
     const { name, value } = e.target;
     setNewVendor((prevVendor) => ({
       ...prevVendor,
@@ -111,7 +166,7 @@ const VendorForm = ({ showModal }) => {
 
   return (
     <Modal
-      title="Add Vendor Details"
+      title="Add Vendor"
       visible={showModal}
       footer={null}
       onCancel={() => setNewVendor({ ...newVendor, title: "" })}
@@ -197,7 +252,7 @@ const VendorForm = ({ showModal }) => {
                     onChange={(e) =>
                       setNewVendor({
                         ...newVendor,
-                        firstName: e.target.value,
+                        fullName: e.target.value,
                       })
                     }
                     placeholder="Please enter full name..."
@@ -224,14 +279,14 @@ const VendorForm = ({ showModal }) => {
                     Enter vendor's email Address for communication
                   </p>
                   <input
-                    type="text"
+                    type="email"
                     name="email"
                     id="email"
                     value={newVendor.email}
                     onChange={(e) =>
                       setNewVendor({ ...newVendor, email: e.target.value })
                     }
-                    placeholder="Please enter account name..."
+                    placeholder="Please enter email address..."
                     className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
                     style={{ borderRadius: "12px", padding: "7px" }}
                   />
@@ -256,8 +311,8 @@ const VendorForm = ({ showModal }) => {
                   </p>
                   <input
                     type="text"
-                    name="companyName"
-                    id="companyName"
+                    name="company"
+                    id="company"
                     value={newVendor.companyName}
                     onChange={(e) =>
                       setNewVendor({
@@ -406,7 +461,7 @@ const VendorForm = ({ showModal }) => {
                       type="text"
                       name="street"
                       value={newVendor.addres.street}
-                      onChange={handleAddresChange}
+                      onChange={handleAddressChange}
                       placeholder="Street..."
                       className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
                       style={{
@@ -419,7 +474,7 @@ const VendorForm = ({ showModal }) => {
                       type="text"
                       name="city"
                       value={newVendor.addres.city}
-                      onChange={handleAddresChange}
+                      onChange={handleAddressChange}
                       placeholder="City..."
                       className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
                       style={{
@@ -432,7 +487,7 @@ const VendorForm = ({ showModal }) => {
                       type="text"
                       name="zipCode"
                       value={newVendor.addres.zipCode}
-                      onChange={handleAddresChange}
+                      onChange={handleAddressChange}
                       placeholder="Zip Code..."
                       className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
                       style={{
@@ -445,7 +500,7 @@ const VendorForm = ({ showModal }) => {
                       type="text"
                       name="country"
                       value={newVendor.addres.country}
-                      onChange={handleAddresChange}
+                      onChange={handleAddressChange}
                       placeholder="Country..."
                       className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
                       style={{
@@ -504,36 +559,6 @@ const VendorForm = ({ showModal }) => {
               className="overflow-y-auto"
             >
               <div className="grid max-w-xl w-full mx-4">
-                {isActive ? (
-                  <div className="mb-3 mr-3">
-                    <label
-                      htmlFor="name"
-                      className="block mb-1"
-                      style={{
-                        fontFamily: "outFit, Sans-serif",
-                        fontSize: "16px",
-                        fontWeight: "400",
-                      }}
-                    >
-                      Active Status
-                    </label>
-                    <p
-                      className="text-gray-600 text-sm mb-1"
-                      style={{ fontFamily: "outFit, Sans-serif" }}
-                    >
-                      Choose an appropriate status (e.g. Active or Inactive)
-                    </p>
-                    <select
-                      id="status"
-                      name="status"
-                      className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
-                      style={{ borderRadius: "12px", padding: "6px" }}
-                    >
-                      <option value="active">Active</option>
-                      <option value="inactive">Inactive</option>
-                    </select>
-                  </div>
-                ) : (
                   <div className="mb-3 mr-3">
                     <label
                       htmlFor="name"
@@ -555,14 +580,20 @@ const VendorForm = ({ showModal }) => {
                     <select
                       id="status"
                       name="status"
+                      value={newVendor.status}
+                        onChange={(e) =>
+                      setNewVendor({
+                        ...newVendor,
+                        status: e.target.value,
+                      })
+                    }
                       className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
                       style={{ borderRadius: "12px", padding: "6px" }}
                     >
-                      <option value="active">Active</option>
-                      <option value="inactive">Inactive</option>
+                      <option value="true">Active</option>
+                      <option value="false">Inactive</option>
                     </select>
                   </div>
-                )}
                 <div className="mb-4 mr-3">
                   <label
                     htmlFor="subGroupAccountId"
@@ -624,6 +655,7 @@ const VendorForm = ({ showModal }) => {
                   </p>
                   <select
                     id="accountFromId"
+                    name="accountFromId"
                     value={newVendor.accountId}
                     onChange={(e) =>
                       setNewVendor({
@@ -736,41 +768,109 @@ const VendorForm = ({ showModal }) => {
               }}
               className="overflow-y-auto"
             >
-              <div className="mb-3 mr-3">
-                <label
-                  htmlFor="name"
-                  className="block mb-1"
-                  style={{
-                    fontFamily: "outFit, Sans-serif",
-                    fontSize: "16px",
-                    fontWeight: "400",
-                  }}
-                >
-                  BusinessIdNO
-                </label>
-                <p
-                  className="text-gray-600 text-sm mb-1"
-                  style={{ fontFamily: "outFit, Sans-serif" }}
-                >
-                  Enter BusinessIdNo
-                </p>
-                <input
-                  type="text"
-                  name="businessIdNo"
-                  id="businessIdNo"
-                  value={newVendor.businessIdNo}
-                  onChange={(e) =>
-                    setNewVendor({ ...newVendor, businessIdNo: e.target.value })
-                  }
-                  placeholder="Please enter business Id number..."
-                  className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
-                  style={{ borderRadius: "12px", padding: "7px" }}
-                />
-              </div>
               <div style={{ padding: "20px" }}>
-                <div className="mb-3">
+                {/* <div className="mb-3">
                   <label
                     htmlFor="name"
+                    className="block mb-1"
+                    style={{
+                      fontFamily: "outFit, Sans-serif",
+                      fontSize: "16px",
+                      fontWeight: "400",
+                    }}
+                  >
+                    Payment method
+                  </label>
+                  <p
+                    className="text-gray-600 text-sm mb-1"
+                    style={{ fontFamily: "outFit, Sans-serif" }}
+                  >
+                    Add a description
+                  </p>
+                  <input
+                    type="text"
+                    name="Payment method"
+                    id="payment method"
+                    value={newVendor.paymentMethod}
+                    onChange={(e) =>
+                      setNewVendor({
+                        ...newVendor,
+                        other: e.target.value,
+                      })
+                    }
+                    placeholder="Please enter account name..."
+                    className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                    style={{ borderRadius: "12px", padding: "7px" }}
+                  />
+                </div> */}
+
+                <div className="mb-3 mr-3">
+                  <label
+                    htmlFor="businessIdNo"
+                    className="block mb-1"
+                    style={{
+                      fontFamily: "outFit, Sans-serif",
+                      fontSize: "16px",
+                      fontWeight: "400",
+                    }}
+                  >
+                    Opening Balance Date
+                  </label>
+                  <p
+                    className="text-gray-600 text-sm mb-1"
+                    style={{ fontFamily: "outFit, Sans-serif" }}
+                  >
+                    Please select the opening balance date
+                  </p>
+                  <input
+                    type="Date"
+                    name="openingBalanceDate"
+                    id="openingBalanceDate"
+                    value={newVendor.openingBalanceDate}
+                    onChange={(e) =>
+                      setNewVendor({ ...newVendor, openingBalanceDate: e.target.value })
+                    }
+                    placeholder=""
+                    className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                    style={{ borderRadius: "12px", padding: "7px" }}
+                  />
+                </div>
+
+                <div className="mb-3 mr-3">
+                  <label
+                    htmlFor="accountNo"
+                    className="block mb-1"
+                    style={{
+                      fontFamily: "outFit, Sans-serif",
+                      fontSize: "16px",
+                      fontWeight: "400",
+                    }}
+                  >
+                    Account Number
+                  </label>
+                  <p
+                    className="text-gray-600 text-sm mb-1"
+                    style={{ fontFamily: "outFit, Sans-serif" }}
+                  >
+                    Please add the account number
+                  </p>
+                  <input
+                    type="text"
+                    name="accountNo"
+                    id="accountNo"
+                    value={newVendor.accountNo}
+                    onChange={(e) =>
+                      setNewVendor({ ...newVendor, accountNo: e.target.value })
+                    }
+                    placeholder=""
+                    className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                    style={{ borderRadius: "12px", padding: "7px" }}
+                  />
+                </div>
+
+                <div className="mb-3 mr-3">
+                  <label
+                    htmlFor="paymentAccount"
                     className="block mb-1"
                     style={{
                       fontFamily: "outFit, Sans-serif",
@@ -784,20 +884,49 @@ const VendorForm = ({ showModal }) => {
                     className="text-gray-600 text-sm mb-1"
                     style={{ fontFamily: "outFit, Sans-serif" }}
                   >
-                    Add a description
+                    Please enter payment account number
                   </p>
                   <input
                     type="number"
-                    name="Payment account"
+                    name="paymentAccount"
                     id="paymentAccount"
                     value={newVendor.paymentAccount}
                     onChange={(e) =>
-                      setNewVendor({
-                        ...newVendor,
-                        other: e.target.value,
-                      })
+                      setNewVendor({ ...newVendor, paymentAccount: e.target.value })
                     }
-                    placeholder="Please enter account name..."
+                    placeholder="Payment account number"
+                    className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                    style={{ borderRadius: "12px", padding: "7px" }}
+                  />
+                </div>
+
+                <div className="mb-3 mr-3">
+                  <label
+                    htmlFor="businessIdNo"
+                    className="block mb-1"
+                    style={{
+                      fontFamily: "outFit, Sans-serif",
+                      fontSize: "16px",
+                      fontWeight: "400",
+                    }}
+                  >
+                    businessIdNo
+                  </label>
+                  <p
+                    className="text-gray-600 text-sm mb-1"
+                    style={{ fontFamily: "outFit, Sans-serif" }}
+                  >
+                    Enter Vendor's id number
+                  </p>
+                  <input
+                    type="text"
+                    name="businessIdNo"
+                    id="businessIdNo"
+                    value={newVendor.businessIdNo}
+                    onChange={(e) =>
+                      setNewVendor({ ...newVendor, businessIdNo: e.target.value })
+                    }
+                    placeholder="Please enter business id number..."
                     className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
                     style={{ borderRadius: "12px", padding: "7px" }}
                   />
@@ -805,7 +934,7 @@ const VendorForm = ({ showModal }) => {
 
                 <div className="mb-3">
                   <label
-                    htmlFor="billing rate"
+                    htmlFor="name"
                     className="block mb-1"
                     style={{
                       fontFamily: "outFit, Sans-serif",
@@ -822,7 +951,7 @@ const VendorForm = ({ showModal }) => {
                     Add a description
                   </p>
                   <input
-                    type="number"
+                    type="text"
                     name="billingRate"
                     id="billingRate"
                     value={newVendor.billingRate}
@@ -840,7 +969,7 @@ const VendorForm = ({ showModal }) => {
 
                 <div className="mb-3">
                   <label
-                    htmlFor="opening balance"
+                    htmlFor="name"
                     className="block mb-1"
                     style={{
                       fontFamily: "outFit, Sans-serif",
@@ -870,34 +999,6 @@ const VendorForm = ({ showModal }) => {
                     placeholder="Please enter account balance..."
                     className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
                     style={{ borderRadius: "12px", padding: "7px" }}
-                  />
-                </div>
-                <div className="mb-4">
-                  <label
-                    htmlFor="transactionDate"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    Opening Balance Date
-                  </label>
-                  <p
-                    className="text-gray-500 text-xs mb-1"
-                    style={{ fontFamily: "outFit, Sans-serif" }}
-                  >
-                    Enter date when transaction occurred
-                  </p>
-                  <input
-                    type="date" // Change type to "date"
-                    id="openingBalanceDate"
-                    value={newVendor.openingBalanceDate.split("T")[0]} // Extracts the date part
-                    onChange={(e) =>
-                      setNewVendor({
-                        ...newVendor,
-                        openingBalanceDate: e.target.value,
-                      })
-                    }
-                    placeholder="Please enter account balance..."
-                    className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
-                    style={{ borderRadius: "12px", padding: "15px" }}
                   />
                 </div>
               </div>
