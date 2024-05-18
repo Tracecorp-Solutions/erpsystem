@@ -262,7 +262,7 @@ const VendorForm = ({ showModal }) => {
                 </div>
                 <div className="mb-3 mr-3">
                   <label
-                    htmlFor="name"
+                    htmlFor="email address"
                     className="block mb-1"
                     style={{
                       fontFamily: "outFit, Sans-serif",
@@ -293,7 +293,7 @@ const VendorForm = ({ showModal }) => {
                 </div>
                 <div className="mb-3 mr-3">
                   <label
-                    htmlFor="name"
+                    htmlFor="company name"
                     className="block mb-1"
                     style={{
                       fontFamily: "outFit, Sans-serif",
@@ -311,8 +311,8 @@ const VendorForm = ({ showModal }) => {
                   </p>
                   <input
                     type="text"
-                    name="company"
-                    id="company"
+                    name="companyName"
+                    id="companyName"
                     value={newVendor.companyName}
                     onChange={(e) =>
                       setNewVendor({
@@ -327,7 +327,7 @@ const VendorForm = ({ showModal }) => {
                 </div>
                 <div className="mb-3 mr-3">
                   <label
-                    htmlFor="name"
+                    htmlFor="phone"
                     className="block mb-1"
                     style={{
                       fontFamily: "outFit, Sans-serif",
@@ -344,7 +344,7 @@ const VendorForm = ({ showModal }) => {
                     Enter personal phone number
                   </p>
                   <input
-                    type="text"
+                    type="number"
                     name="phone"
                     id="phone"
                     value={newVendor.phone}
@@ -443,7 +443,7 @@ const VendorForm = ({ showModal }) => {
                     Enter mobile number
                   </p>
                   <input
-                    type="text"
+                    type="number"
                     name="mobile"
                     id="mobile"
                     value={newVendor.mobile}
