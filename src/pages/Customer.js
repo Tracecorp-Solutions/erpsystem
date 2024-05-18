@@ -69,7 +69,6 @@ const Customer = () => {
     axios
       .post(`${process.env.REACT_APP_API_URL}/CreateVendor`, formData)
       .then((response) => {
-        console.log("Form submitted successfully:", response.data);
         setShowModal(false);
         setShowSuccess(true);
         setMessageInfo({
