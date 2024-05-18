@@ -20,6 +20,7 @@ const Customer = () => {
           `http://3.216.182.63:8095/GetAllVendors`
         );
         setCustomerList(response.data);
+        console.log("customer", response.data)
       } catch (error) {
         setShowFailure(true);
         setMessageInfo({
