@@ -90,7 +90,7 @@ const CustomerForm = ({ showModal }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .post("http://3.216.182.63:8095/CreateVendor", formData)
+      .post(`${process.env.REACT_APP_API_URL}/CreateVendor`, formData)
       .then((response) => {
         console.log("Form submitted successfully:", response.data);
       })
@@ -183,26 +183,13 @@ const CustomerForm = ({ showModal }) => {
             </div>
             <div className="flex justify-between">
               <button
-                type="button"
-                onClick={handleBack}
-                className="py-2 px-4 text-gray-700 rounded focus:outline-none"
-                style={{
-                  borderRadius: "28px",
-                  fontFamily: "outFit, Sans-serif",
-                  width: "40%",
-                  border: "#505050 1px solid",
-                }}
-              >
-                Back
-              </button>
-              <button
                 type="submit"
                 className="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none"
                 style={{
                   background: "#4467a1",
                   borderRadius: "28px",
                   fontFamily: "outFit, Sans-serif",
-                  width: "40%",
+                  width: "100%",
                 }}
                 onClick={handleContinue}
               >
@@ -210,7 +197,6 @@ const CustomerForm = ({ showModal }) => {
               </button>
             </div>
           </div>
-          
         )}
         {section === 2 && (
           <div>
@@ -357,16 +343,22 @@ const CustomerForm = ({ showModal }) => {
 
             <div className="mb-4">
               <label className="block mb-2">Status</label>
-              <input
-                type="checkbox"
+              <select
                 name="status"
-                checked={formData.status}
+                value={formData.status}
                 onChange={(e) =>
-                  setFormData({ ...formData, status: e.target.checked })
+                  setFormData({
+                    ...formData,
+                    status: e.target.value === "true",
+                  })
                 }
-                className="form-checkbox h-5 w-5 text-blue-600"
-              />
+                className="w-full px-3 py-2 border rounded-md"
+              >
+                <option value="true">Active</option>
+                <option value="false">Inactive</option>
+              </select>
             </div>
+
             <div
               style={{
                 display: "flex",
@@ -416,7 +408,7 @@ const CustomerForm = ({ showModal }) => {
                 className="w-full px-3 py-2 border rounded-md"
               />
             </div>
-             <div className="mb-4">
+            <div className="mb-4">
               <label className="block mb-2">Opening Balance</label>
               <input
                 type="number"
@@ -498,7 +490,6 @@ const CustomerForm = ({ showModal }) => {
             </div>
           </div>
         )}
-
       </form>
     </Modal>
   );
