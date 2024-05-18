@@ -466,6 +466,7 @@ const CustomerForm = ({ showModal }) => {
           <div>
             <div className="mb-4">
               <label className="block mb-2">Opening Balance Date</label>
+
               <input
                 type="datetime-local"
                 name="openingBalanceDate"
@@ -476,6 +477,8 @@ const CustomerForm = ({ showModal }) => {
             </div>
             <div className="mb-4">
               <label className="block mb-2">Opening Balance</label>
+
+
               <input
                 type="number"
                 name="openingBalance"
@@ -498,6 +501,12 @@ const CustomerForm = ({ showModal }) => {
             </div>
             <div className="mb-4">
               <label className="block mb-2">Notes</label>
+              <p
+                className="text-gray-600 text-sm mb-1"
+                style={{ fontFamily: "outFit, Sans-serif" }}
+              >
+                Write a short description about the Business
+              </p>
               <textarea
                 name="notes"
                 value={formData.notes}
@@ -508,6 +517,12 @@ const CustomerForm = ({ showModal }) => {
             </div>
             <div className="mb-4">
               <label className="block mb-2">Business ID No</label>
+              <p
+                className="text-gray-600 text-sm mb-1"
+                style={{ fontFamily: "outFit, Sans-serif" }}
+              >
+                add the business number
+              </p>
               <input
                 type="text"
                 name="businessIdNo"
