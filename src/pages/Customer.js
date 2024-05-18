@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Dropdown, Menu, Button } from "antd";
+import { Dropdown, Menu, Button, Pagination } from "antd";
 import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
 import axios from "axios";
 import CustomerNavigationbar from "../components/CustomerNavigationbar";
@@ -13,6 +13,8 @@ const Customer = () => {
   const [showModal, setShowModal] = useState(false);
   const [messageInfo, setMessageInfo] = useState({ title: "", message: "" });
   const [toggleDisabled, setToggleDisabled] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(10);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -34,16 +36,6 @@ const Customer = () => {
     fetchData();
   }, []);
 
-  const filteredCustomerList = toggleDisabled
-    ? customerList.filter(
-        (customer) =>
-          customer.status === true && customer.vendorType === "Customer"
-      )
-    : customerList.filter(
-        (customer) =>
-          customer.status === false && customer.vendorType === "Customer"
-      );
-
   const handleModal = () => {
     setShowModal(true);
   };
@@ -55,6 +47,27 @@ const Customer = () => {
       <Menu.Item key="3">Action 3</Menu.Item>
     </Menu>
   );
+
+  // Pagination
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+
+  const filteredCustomerList = toggleDisabled
+    ? customerList.filter(
+        (customer) =>
+          customer.status === true && customer.vendorType === "Customer"
+      )
+    : customerList.filter(
+        (customer) =>
+          customer.status === false && customer.vendorType === "Customer"
+      );
+
+  const currentItems = filteredCustomerList.slice(
+    indexOfFirstItem,
+    indexOfLastItem
+  );
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
     <div>
@@ -105,7 +118,7 @@ const Customer = () => {
             onClose={() => setShowFailure(false)}
           />
         )}
-        {filteredCustomerList.length < 0 ? (
+        {currentItems.length === 0 ? (
           <ReusableEmptyData />
         ) : (
           <div style={{ overflowY: "auto" }}>
@@ -148,7 +161,7 @@ const Customer = () => {
                   </th>
                 </tr>
               </thead>
-              {filteredCustomerList.map((customer) => (
+              {currentItems.map((customer) => (
                 <tbody
                   className="bg-white divide-y divide-gray-200"
                   key={customer.id}
@@ -190,6 +203,31 @@ const Customer = () => {
             </table>
           </div>
         )}
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            marginRight: "40px",
+            marginTop: "10px",
+          }}
+        >
+          <div
+            style={{
+              textAlign: "center",
+              marginTop: "15px",
+              fontSize: "12px",
+              color: "#a1a1a1",
+            }}
+          >
+            Showing {indexOfFirstItem + 1} - {indexOfLastItem} of {filteredCustomerList.length} results
+          </div>
+          <Pagination
+            current={currentPage}
+            total={filteredCustomerList.length}
+            pageSize={itemsPerPage}
+            onChange={paginate}
+          />
+        </div>
       </div>
     </div>
   );
