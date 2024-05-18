@@ -14,14 +14,14 @@ const Customer = () => {
   const [messageInfo, setMessageInfo] = useState({ title: "", message: "" });
   const [toggleDisabled, setToggleDisabled] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(10);
+  const [itemsPerPage] = useState(5);
   const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `http://3.216.182.63:8095/GetAllVendors`
+          `${process.env.REACT_APP_API_URL}/GetAllVendors`
         );
         setCustomerList(response.data);
       } catch (error) {
@@ -65,7 +65,6 @@ const Customer = () => {
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-  // Handle search query change
   const handleSearch = (e) => {
     setSearchQuery(e.target.value);
   };

@@ -23,7 +23,9 @@ const CustomerNavigationbar = ({ toggleDisabled, setToggleDisabled, searchQuery,
             justifyContent: "space-around",
           }}
         >
-          <p
+          {
+            !toggleDisabled ? (
+                <p
             style={{
               marginRight: "10px",
               color: "#a1a1a1",
@@ -32,11 +34,23 @@ const CustomerNavigationbar = ({ toggleDisabled, setToggleDisabled, searchQuery,
           >
             Show Active Customers
           </p>
+            ) : (
+                <p
+            style={{
+              marginRight: "10px",
+              color: "#a1a1a1",
+              fontFamily: "outFit, Sans-serif",
+            }}
+          >
+            Show Inactive Customers
+          </p>
+            )
+          }
           <Switch
             checked={toggleDisabled}
             onChange={setToggleDisabled}
             className={`${
-              toggleDisabled ? "bg-gray-300" : "bg-blue-500"
+              toggleDisabled ? "bg-gray-100" : "bg-gray-200"
             } relative z-10`}
           />
           <div className="absolute top-0 left-0 right-0 bottom-0 flex justify-between items-center px-2">
