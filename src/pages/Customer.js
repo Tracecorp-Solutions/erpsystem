@@ -12,7 +12,7 @@ const Customer = () => {
   const [showFailure, setShowFailure] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [messageInfo, setMessageInfo] = useState({ title: "", message: "" });
-  const [toggleDisabled, setToggleDisabled] = useState(false); // State for toggle
+  const [toggleDisabled, setToggleDisabled] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -35,8 +35,8 @@ const Customer = () => {
   }, []);
 
   const filteredCustomerList = toggleDisabled
-    ? customerList.filter((customer) => customer.status)
-    : customerList;
+    ? customerList.filter((customer) => customer.status && customer.vendorType === "Customer")
+    : customerList.filter((customer) => customer.vendorType === "Customer");
 
   const handleModal = () => {
     setShowModal(true);
