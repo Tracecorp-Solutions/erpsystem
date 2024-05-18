@@ -313,6 +313,37 @@ const CustomerForm = ({ showModal }) => {
         {section === 3 && (
           <div>
             <div className="mb-4">
+              <label className="block mb-2">Sub Group ID</label>
+              <select
+                name="subGroupId"
+                value={formData.subGroupId}
+                onChange={handleChange}
+                className="w-full px-3 py-2 border rounded-md"
+              >
+                {subGroupAccounts.map((subGroup, index) => (
+                  <option key={index} value={subGroup.subGroupAccount.id}>
+                    {subGroup.subGroupAccount.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="mb-4">
+              <label className="block mb-2">Payment Account</label>
+              <select
+                name="paymentAccount"
+                value={formData.paymentAccount}
+                onChange={handleChange}
+                className="w-full px-3 py-2 border rounded-md"
+              >
+                {accounts.map((account, index) => (
+                  <option key={index} value={account.id}>
+                    {account.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="mb-4">
               <label className="block mb-2">Account Number</label>
               <input
                 type="text"
@@ -323,36 +354,17 @@ const CustomerForm = ({ showModal }) => {
                 className="w-full px-3 py-2 border rounded-md"
               />
             </div>
+
             <div className="mb-4">
-              <label className="block mb-2">Billing Rate</label>
+              <label className="block mb-2">Status</label>
               <input
-                type="number"
-                name="billingRate"
-                value={formData.billingRate}
-                onChange={handleChange}
-                placeholder="Billing Rate"
-                className="w-full px-3 py-2 border rounded-md"
-              />
-            </div>
-            <div className="mb-4">
-              <label className="block mb-2">Opening Balance</label>
-              <input
-                type="number"
-                name="openingBalance"
-                value={formData.openingBalance}
-                onChange={handleChange}
-                placeholder="Opening Balance"
-                className="w-full px-3 py-2 border rounded-md"
-              />
-            </div>
-            <div className="mb-4">
-              <label className="block mb-2">Opening Balance Date</label>
-              <input
-                type="datetime-local"
-                name="openingBalanceDate"
-                value={formData.openingBalanceDate}
-                onChange={handleChange}
-                className="w-full px-3 py-2 border rounded-md"
+                type="checkbox"
+                name="status"
+                checked={formData.status}
+                onChange={(e) =>
+                  setFormData({ ...formData, status: e.target.checked })
+                }
+                className="form-checkbox h-5 w-5 text-blue-600"
               />
             </div>
             <div
@@ -395,6 +407,38 @@ const CustomerForm = ({ showModal }) => {
         {section === 4 && (
           <div>
             <div className="mb-4">
+              <label className="block mb-2">Opening Balance Date</label>
+              <input
+                type="datetime-local"
+                name="openingBalanceDate"
+                value={formData.openingBalanceDate}
+                onChange={handleChange}
+                className="w-full px-3 py-2 border rounded-md"
+              />
+            </div>
+             <div className="mb-4">
+              <label className="block mb-2">Opening Balance</label>
+              <input
+                type="number"
+                name="openingBalance"
+                value={formData.openingBalance}
+                onChange={handleChange}
+                placeholder="Opening Balance"
+                className="w-full px-3 py-2 border rounded-md"
+              />
+            </div>
+            <div className="mb-4">
+              <label className="block mb-2">Billing Rate</label>
+              <input
+                type="number"
+                name="billingRate"
+                value={formData.billingRate}
+                onChange={handleChange}
+                placeholder="Billing Rate"
+                className="w-full px-3 py-2 border rounded-md"
+              />
+            </div>
+            <div className="mb-4">
               <label className="block mb-2">Notes</label>
               <textarea
                 name="notes"
@@ -414,49 +458,6 @@ const CustomerForm = ({ showModal }) => {
                 placeholder="Business ID No"
                 className="w-full px-3 py-2 border rounded-md"
               />
-            </div>
-            <div className="mb-4">
-              <label className="block mb-2">Status</label>
-              <input
-                type="checkbox"
-                name="status"
-                checked={formData.status}
-                onChange={(e) =>
-                  setFormData({ ...formData, status: e.target.checked })
-                }
-                className="form-checkbox h-5 w-5 text-blue-600"
-              />
-            </div>
-            <div className="mb-4">
-              <label className="block mb-2">Payment Account</label>
-              <select
-                name="paymentAccount"
-                value={formData.paymentAccount}
-                onChange={handleChange}
-                className="w-full px-3 py-2 border rounded-md"
-              >
-                {accounts.map((account, index) => (
-                  <option key={index} value={account.id}>
-                    {account.name}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <div className="mb-4">
-              <label className="block mb-2">Sub Group ID</label>
-              <select
-                name="subGroupId"
-                value={formData.subGroupId}
-                onChange={handleChange}
-                className="w-full px-3 py-2 border rounded-md"
-              >
-                {subGroupAccounts.map((subGroup, index) => (
-                  <option key={index} value={subGroup.subGroupAccount.id}>
-                    {subGroup.subGroupAccount.name}
-                  </option>
-                ))}
-              </select>
             </div>
 
             <div
