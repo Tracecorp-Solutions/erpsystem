@@ -42,7 +42,7 @@ const CustomerNavigationbar = ({ toggleDisabled, setToggleDisabled, searchQuery,
               fontFamily: "outFit, Sans-serif",
             }}
           >
-            Show Inactive Customers
+            Show non active Customers
           </p>
             )
           }
