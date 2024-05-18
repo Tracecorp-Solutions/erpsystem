@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Modal, Button, Progress } from "antd";
 import axios from "axios";
 
-const CustomerForm = ({ showModal }) => {
+const CustomerForm = ({ showModal, setShowModal }) => {
   const [formData, setFormData] = useState({
     title: "",
     fullName: "",
@@ -93,11 +93,13 @@ const CustomerForm = ({ showModal }) => {
       .post(`${process.env.REACT_APP_API_URL}/CreateVendor`, formData)
       .then((response) => {
         console.log("Form submitted successfully:", response.data);
+        setShowModal(false);
       })
       .catch((error) => {
         console.error("Error submitting form:", error);
       });
   };
+  
   const handleContinue = () => {
     setSection(section + 1);
   };
@@ -111,7 +113,7 @@ const CustomerForm = ({ showModal }) => {
       title="Add Customer"
       visible={showModal}
       footer={null}
-      onCancel={() => setFormData({ ...formData })}
+      onCancel={() => setShowModal(false)}
     >
       <div style={{ marginBottom: "20px" }}>
         <Progress percent={(section / totalSections) * 100} />
