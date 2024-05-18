@@ -121,6 +121,12 @@ const CustomerForm = ({ showModal }) => {
           <div>
             <div className="mb-4">
               <label className="block mb-2">Title</label>
+              <p
+                className="text-gray-600 text-sm mb-1"
+                style={{ fontFamily: "outFit, Sans-serif" }}
+              >
+                Choose a title
+              </p>
               <select
                 name="title"
                 value={formData.title}
@@ -139,6 +145,12 @@ const CustomerForm = ({ showModal }) => {
 
             <div className="mb-4">
               <label className="block mb-2">Full Name</label>
+              <p
+                className="text-gray-600 text-sm mb-1"
+                style={{ fontFamily: "outFit, Sans-serif" }}
+              >
+                Please enter your full names
+              </p>
               <input
                 type="text"
                 name="fullName"
@@ -150,6 +162,12 @@ const CustomerForm = ({ showModal }) => {
             </div>
             <div className="mb-4">
               <label className="block mb-2">Email</label>
+              <p
+                className="text-gray-600 text-sm mb-1"
+                style={{ fontFamily: "outFit, Sans-serif" }}
+              >
+                Add an email address we can use to contact you
+              </p>
               <input
                 type="email"
                 name="email"
@@ -161,6 +179,12 @@ const CustomerForm = ({ showModal }) => {
             </div>
             <div className="mb-4">
               <label className="block mb-2">Company Name</label>
+              <p
+                className="text-gray-600 text-sm mb-1"
+                style={{ fontFamily: "outFit, Sans-serif" }}
+              >
+                Add the registered company name.
+              </p>
               <input
                 type="text"
                 name="companyName"
@@ -172,6 +196,12 @@ const CustomerForm = ({ showModal }) => {
             </div>
             <div className="mb-4">
               <label className="block mb-2">Phone</label>
+              <p
+                className="text-gray-600 text-sm mb-1"
+                style={{ fontFamily: "outFit, Sans-serif" }}
+              >
+               Add valid phone number
+              </p>
               <input
                 type="text"
                 name="phone"
@@ -202,6 +232,12 @@ const CustomerForm = ({ showModal }) => {
           <div>
             <div className="mb-4">
               <label className="block mb-2">Mobile</label>
+              <p
+                className="text-gray-600 text-sm mb-1"
+                style={{ fontFamily: "outFit, Sans-serif" }}
+              >
+                 Add a company phone number if any
+              </p>
               <input
                 type="text"
                 name="mobile"
@@ -213,6 +249,12 @@ const CustomerForm = ({ showModal }) => {
             </div>
             <div className="mb-4">
               <label className="block mb-2">Website</label>
+              <p
+                className="text-gray-600 text-sm mb-1"
+                style={{ fontFamily: "outFit, Sans-serif" }}
+              >
+               Please provide a link to your Company website if any
+              </p>
               <input
                 type="text"
                 name="website"
@@ -223,7 +265,7 @@ const CustomerForm = ({ showModal }) => {
               />
             </div>
             <div className="mb-4">
-              <label className="block mb-2">Street</label>
+              <label className="block mb-2">Address Section</label>
               <input
                 type="text"
                 name="addres.street"
@@ -234,7 +276,7 @@ const CustomerForm = ({ showModal }) => {
               />
             </div>
             <div className="mb-4">
-              <label className="block mb-2">City</label>
+             
               <input
                 type="text"
                 name="addres.city"
@@ -245,7 +287,7 @@ const CustomerForm = ({ showModal }) => {
               />
             </div>
             <div className="mb-4">
-              <label className="block mb-2">Zip Code</label>
+             
               <input
                 type="text"
                 name="addres.zipCode"
@@ -256,7 +298,7 @@ const CustomerForm = ({ showModal }) => {
               />
             </div>
             <div className="mb-4">
-              <label className="block mb-2">Country</label>
+             
               <input
                 type="text"
                 name="addres.country"
@@ -300,6 +342,12 @@ const CustomerForm = ({ showModal }) => {
           <div>
             <div className="mb-4">
               <label className="block mb-2">Sub Group ID</label>
+              <p
+                className="text-gray-600 text-sm mb-1"
+                style={{ fontFamily: "outFit, Sans-serif" }}
+              >
+                Pick a subgroup to which you belong
+              </p>
               <select
                 name="subGroupId"
                 value={formData.subGroupId}
@@ -315,6 +363,12 @@ const CustomerForm = ({ showModal }) => {
             </div>
             <div className="mb-4">
               <label className="block mb-2">Payment Account</label>
+              <p
+                className="text-gray-600 text-sm mb-1"
+                style={{ fontFamily: "outFit, Sans-serif" }}
+              >
+                Enter the account dealing with payment
+              </p>
               <select
                 name="paymentAccount"
                 value={formData.paymentAccount}
@@ -331,6 +385,12 @@ const CustomerForm = ({ showModal }) => {
 
             <div className="mb-4">
               <label className="block mb-2">Account Number</label>
+              <p
+                className="text-gray-600 text-sm mb-1"
+                style={{ fontFamily: "outFit, Sans-serif" }}
+              >
+                Enter your account number
+              </p>
               <input
                 type="text"
                 name="accountNo"
@@ -343,6 +403,12 @@ const CustomerForm = ({ showModal }) => {
 
             <div className="mb-4">
               <label className="block mb-2">Status</label>
+              <p
+                className="text-gray-600 text-sm mb-1"
+                style={{ fontFamily: "outFit, Sans-serif" }}
+              >
+                add a status for the Business
+              </p>
               <select
                 name="status"
                 value={formData.status}
