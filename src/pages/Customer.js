@@ -15,6 +15,7 @@ const Customer = () => {
   const [toggleDisabled, setToggleDisabled] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(10);
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -48,26 +49,26 @@ const Customer = () => {
     </Menu>
   );
 
-  // Pagination
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
 
-  const filteredCustomerList = toggleDisabled
-    ? customerList.filter(
-        (customer) =>
-          customer.status === true && customer.vendorType === "Customer"
-      )
-    : customerList.filter(
-        (customer) =>
-          customer.status === false && customer.vendorType === "Customer"
-      );
-
-  const currentItems = filteredCustomerList.slice(
-    indexOfFirstItem,
-    indexOfLastItem
+  const filteredCustomerList = customerList.filter(
+    (customer) =>
+      (toggleDisabled ? customer.status === true : customer.status === false) &&
+      customer.vendorType === "Customer" &&
+      (customer.companyName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        customer.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        customer.mobile.toLowerCase().includes(searchQuery.toLowerCase()))
   );
 
+  const currentItems = filteredCustomerList.slice(indexOfFirstItem, indexOfLastItem);
+
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  // Handle search query change
+  const handleSearch = (e) => {
+    setSearchQuery(e.target.value);
+  };
 
   return (
     <div>
@@ -110,6 +111,8 @@ const Customer = () => {
         <CustomerNavigationbar
           toggleDisabled={toggleDisabled}
           setToggleDisabled={setToggleDisabled}
+          searchQuery={searchQuery}
+          handleSearch={handleSearch}
         />
         {showFailure && (
           <FailureSlideInCard

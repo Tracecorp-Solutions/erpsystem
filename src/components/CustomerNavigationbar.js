@@ -3,7 +3,7 @@ import { Switch, Input } from "antd";
 import { FilterOutlined, SearchOutlined } from "@ant-design/icons";
 import "../styles/components/AccountNavigationFilter.css";
 
-const CustomerNavigationbar = ({ toggleDisabled, setToggleDisabled }) => {
+const CustomerNavigationbar = ({ toggleDisabled, setToggleDisabled, searchQuery, handleSearch }) => {
   return (
     <div className="flex flex-col md:flex-row md:items-center md:mb-4 w-full">
       <Input
@@ -11,6 +11,8 @@ const CustomerNavigationbar = ({ toggleDisabled, setToggleDisabled }) => {
         prefix={<SearchOutlined />}
         className="mb-2 md:mb-0 md:mr-4 w-full md:w-auto"
         style={{ borderRadius: "24px", padding: "10px" }}
+        value={searchQuery}
+        onChange={handleSearch}
       />
       <div className="relative flex md:ml-auto md:mr-4">
         <div
