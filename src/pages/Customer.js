@@ -7,6 +7,7 @@ import FailureSlideInCard from "../components/FailureSlideInCard ";
 import ReusableEmptyData from "../components/ReusableEmptyData";
 import CustomerForm from "../components/CustomerForm";
 import SlideInCard from "../components/SlideInCard ";
+import CustomerSidebar from "../components/CustomerSidebar";
 
 const Customer = () => {
   const [formData, setFormData] = useState({
@@ -43,6 +44,10 @@ const Customer = () => {
   const [itemsPerPage] = useState(5);
   const [searchQuery, setSearchQuery] = useState("");
   const [showSuccess, setShowSuccess] = useState(false);
+  const [drawerVisible, setDrawerVisible] = useState(false);
+  const [customerDetails, setCustomerDetails] = useState(null);
+
+  console.log("customer details",customerDetails);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -63,6 +68,33 @@ const Customer = () => {
 
     fetchData();
   }, []);
+
+  const fetchCustomerDetails = async (customerId) => {
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_API_URL}/GetVendorById`,
+        {
+          id: customerId,
+          vendType: "Customer",
+        }
+      );
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching customer details:", error);
+      throw error;
+    }
+  };
+
+  const handleViewCustomerDetails = async (customerId) => {
+    console.log("Selected Customer ID:", customerId);
+    try {
+      const customerDetails = await fetchCustomerDetails(customerId);
+      setCustomerDetails(customerDetails);
+      setDrawerVisible(true);
+    } catch (error) {
+      console.error("Error viewing customer details:", error);
+    }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -99,7 +131,7 @@ const Customer = () => {
           paymentAccount: 0,
           subGroupId: 0,
           vendorType: "Customer",
-        })
+        });
       })
       .catch((error) => {
         console.error("Error submitting form:", error);
@@ -126,14 +158,6 @@ const Customer = () => {
   const handleModal = () => {
     setShowModal(true);
   };
-
-  const menu = (
-    <Menu style={{ width: "250px" }}>
-      <Menu.Item key="1">Action 1</Menu.Item>
-      <Menu.Item key="2">Action 2</Menu.Item>
-      <Menu.Item key="3">Action 3</Menu.Item>
-    </Menu>
-  );
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -213,6 +237,11 @@ const Customer = () => {
         formData={formData}
         showModal={showModal}
         setShowModal={setShowModal}
+      />
+      <CustomerSidebar
+        drawerVisible={drawerVisible}
+        setDrawerVisible={setDrawerVisible}
+        customerDetails={customerDetails}
       />
       <div
         style={{ background: "#fff", padding: "15px", borderRadius: "24px" }}
@@ -302,7 +331,24 @@ const Customer = () => {
                         marginTop: "10px",
                       }}
                     >
-                      <Dropdown overlay={menu} trigger={["click"]}>
+                      {/* Define menu here where you have access to customer.id */}
+                      <Dropdown
+                        overlay={
+                          <Menu style={{ width: "250px" }}>
+                            <Menu.Item
+                              key="1"
+                              onClick={() =>
+                                handleViewCustomerDetails(customer.id)
+                              }
+                            >
+                              View
+                            </Menu.Item>
+                            <Menu.Item key="2">Action 2</Menu.Item>
+                            <Menu.Item key="3">Action 3</Menu.Item>
+                          </Menu>
+                        }
+                        trigger={["click"]}
+                      >
                         <EllipsisVerticalIcon
                           className="h-5 w-5 mt-3"
                           aria-hidden="true"
