@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Dropdown, Menu, Button, Pagination } from "antd";
+import { EyeOutlined, EditOutlined } from "@ant-design/icons";
 import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
 import axios from "axios";
 import VendorNavigationbar from "../components/VendorNavigationbar";
@@ -8,7 +9,7 @@ import ReusableEmptyData from "../components/ReusableEmptyData";
 import VendorForm from "../components/VendorForm";
 // import SlideInCard from "../components/SlideInCard ";
 
-const Vendor = () => {
+const Customer = () => {
   const [formData, setFormData] = useState({
     title: "",
     fullName: "",
@@ -32,9 +33,9 @@ const Vendor = () => {
     status: true,
     paymentAccount: 0,
     subGroupId: 0,
-    vendorType: "vendor",
+    vendorType: "Vendor",
   });
-  const [vendorList, setvendorList] = useState([]);
+  const [customerList, setCustomerList] = useState([]);
   const [showFailure, setShowFailure] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [messageInfo, setMessageInfo] = useState({ title: "", message: "" });
@@ -42,7 +43,12 @@ const Vendor = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(5);
   const [searchQuery, setSearchQuery] = useState("");
+  const [selectedVendor, setSelectedVendor] = useState(null);
+  const [drawerVisible, setDrawerVisible] = useState(false);
+  const [editedVendor, setEditedVendor] = useState(null);
+  const [showEditForm, setShowEditForm] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
+  const [dropdownVisible, setDropdownVisible] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -50,12 +56,12 @@ const Vendor = () => {
         const response = await axios.get(
           `${process.env.REACT_APP_API_URL}/GetAllVendors`
         );
-        setvendorList(response.data);
+        setCustomerList(response.data);
       } catch (error) {
         setShowFailure(true);
         setMessageInfo({
           title: "Server Error!",
-          message: "Failed to fetch vendor details.",
+          message: "Failed to fetch customer details.",
         });
         console.error("Error fetching data:", error);
       }
@@ -98,8 +104,8 @@ const Vendor = () => {
           status: true,
           paymentAccount: 0,
           subGroupId: 0,
-          vendorType: "vendor",
-        })
+          vendorType: "Vendor",
+        });
       })
       .catch((error) => {
         console.error("Error submitting form:", error);
@@ -123,8 +129,93 @@ const Vendor = () => {
       });
   };
 
+  const handleViewDetails = async (vendorId) => {
+    try {
+      const response = await axios.get(
+        `http://3.216.182.63:8095/GetVendorById?id=${vendorId}`
+      );
+      setSelectedVendor(response.data); // Adjust this line if necessary based on the response structure
+      setDrawerVisible(true);
+    } catch (error) {
+      console.error("Error fetching vendor details:", error);
+    }
+  };
+
+  const handleEdit = async (identifier, type = "id") => {
+    try {
+      let response;
+      if (type === "id") {
+        response = await axios.get(
+          `http://3.216.182.63:8095/GetVendorById?id=${identifier}`
+        );
+        setSelectedVendor(response.data);
+        setEditedVendor(response.data);
+      } else if (type === "type") {
+        response = await axios.get(
+          `http://3.216.182.63:8095/GetVendorsByType?type=${identifier}`
+        );
+        const vendors = response.data;
+        if (vendors.length > 0) {
+          setSelectedVendor(vendors[0]);
+          setEditedVendor(vendors[0]);
+        } else {
+          console.warn("No vendors found for the specified type.");
+          return;
+        }
+      }
+      setShowEditForm(true);
+    } catch (error) {
+      console.error("Error fetching vendor details for edit:", error);
+    }
+  };
+
+  const handleEditSubmit = async (e) => {
+    e.preventDefault();
+    console.log("Editing vendor:", editedVendor); // Updated log message for clarity
+    try {
+      const response = await axios.post(
+        `http://3.216.182.63:8095/UpdateVendorDetails`,
+        editedVendor
+      );
+      console.log("Vendor updated:", response.data);
+      setShowEditForm(false);
+    } catch (error) {
+      console.error("Error updating vendor:", error);
+    }
+  };
+
   const handleModal = () => {
     setShowModal(true);
+  };
+
+  const renderMenu = (vendorId) => (
+    <Menu style={{ width: "200px" }}>
+      <Menu.Item
+        key="1"
+        onClick={() => handleViewDetails(vendorId)}
+        icon={<EyeOutlined />}
+      >
+        View
+      </Menu.Item>
+      <Menu.Item
+        key="2"
+        onClick={() => handleEdit(vendorId)}
+        icon={<EditOutlined />}
+      >
+        Edit
+      </Menu.Item>
+      <Menu.Item
+        key="2"
+        onClick={() => handleEdit(vendorId)}
+        icon={<EditOutlined />}
+      >
+        Disable
+      </Menu.Item>
+    </Menu>
+  );
+
+  const handleDropdownVisibleChange = (visible, vendorId) => {
+    setDropdownVisible({ ...dropdownVisible, [vendorId]: visible });
   };
 
   const menu = (
@@ -138,16 +229,16 @@ const Vendor = () => {
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
 
-  const filteredvendorList = vendorList.filter(
-    (vendor) =>
-      (toggleDisabled ? vendor.status === true : vendor.status === false) &&
-      vendor.vendorType === "vendor" &&
-      (vendor.companyName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        vendor.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        vendor.mobile.toLowerCase().includes(searchQuery.toLowerCase()))
+  const filteredCustomerList = customerList.filter(
+    (customer) =>
+      (toggleDisabled ? customer.status === true : customer.status === false) &&
+      customer.vendorType === "Customer" &&
+      (customer.companyName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        customer.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        customer.mobile.toLowerCase().includes(searchQuery.toLowerCase()))
   );
 
-  const currentItems = filteredvendorList.slice(
+  const currentItems = filteredCustomerList.slice(
     indexOfFirstItem,
     indexOfLastItem
   );
@@ -173,8 +264,8 @@ const Vendor = () => {
             message={messageInfo.message}
             onClose={() => setShowSuccess(false)}
           />
-        )} */}
-        {/* {showFailure && (
+        )}
+        {showFailure && (
           <FailureSlideInCard
             title={messageInfo.title}
             message={messageInfo.message}
@@ -203,7 +294,7 @@ const Vendor = () => {
           }}
           onClick={handleModal}
         >
-          + Create Vendors
+          + Create Vendor
         </Button>
       </div>
       <VendorForm
@@ -302,9 +393,16 @@ const Vendor = () => {
                         marginTop: "10px",
                       }}
                     >
-                      <Dropdown overlay={menu} trigger={["click"]}>
+                      <Dropdown
+                        overlay={renderMenu(vendor.id)}
+                        trigger={["click"]}
+                        visible={dropdownVisible[vendor.id]}
+                        onVisibleChange={(visible) =>
+                          handleDropdownVisibleChange(visible, vendor.id)
+                        }
+                      >
                         <EllipsisVerticalIcon
-                          className="h-5 w-5 mt-3"
+                          className="h-5 w-5"
                           aria-hidden="true"
                         />
                       </Dropdown>
@@ -332,11 +430,11 @@ const Vendor = () => {
             }}
           >
             Showing {indexOfFirstItem + 1} - {indexOfLastItem} of{" "}
-            {filteredvendorList.length} results
+            {filteredCustomerList.length} results
           </div>
           <Pagination
             current={currentPage}
-            total={filteredvendorList.length}
+            total={filteredCustomerList.length}
             pageSize={itemsPerPage}
             onChange={paginate}
           />
@@ -346,4 +444,4 @@ const Vendor = () => {
   );
 };
 
-export default Vendor;
+export default Customer;

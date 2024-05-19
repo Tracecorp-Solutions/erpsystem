@@ -72,7 +72,7 @@ const VendorForm = ({
 
   return (
     <Modal
-      title="Add Customer"
+      title="Add Vendor"
       visible={showModal}
       footer={null}
       onCancel={() => setShowModal(false)}
@@ -158,7 +158,7 @@ const VendorForm = ({
                     fontWeight: "400",
                   }}
                 >
-                  Enter the customer's name
+                  Enter the vendor's name
                 </p>
                 <input
                   type="text"
@@ -224,7 +224,7 @@ const VendorForm = ({
                     fontWeight: "400",
                   }}
                 >
-                  Enter the name of the customer's company
+                  Enter the name of the vendor's company
                 </p>
                 <input
                   type="text"
