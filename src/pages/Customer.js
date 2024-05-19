@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Dropdown, Menu, Button, Pagination } from "antd";
 import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
+import { EyeOutlined } from "@ant-design/icons";
 import axios from "axios";
 import CustomerNavigationbar from "../components/CustomerNavigationbar";
 import FailureSlideInCard from "../components/FailureSlideInCard ";
@@ -341,7 +342,8 @@ const Customer = () => {
                                 handleViewCustomerDetails(customer.id)
                               }
                             >
-                              View
+                              <EyeOutlined style={{ marginRight: "5px" }} />
+                              <span>View</span>
                             </Menu.Item>
                             <Menu.Item key="2">Action 2</Menu.Item>
                             <Menu.Item key="3">Action 3</Menu.Item>
