@@ -9,7 +9,7 @@ import ReusableEmptyData from "../components/ReusableEmptyData";
 import VendorForm from "../components/VendorForm";
 // import SlideInCard from "../components/SlideInCard ";
 
-const Customer = () => {
+const Vendor = () => {
   const [formData, setFormData] = useState({
     title: "",
     fullName: "",
@@ -182,6 +182,17 @@ const Customer = () => {
     } catch (error) {
       console.error("Error updating vendor:", error);
     }
+  };  
+
+  const handleDisable = async (vendorId) => {
+    try {
+      const response = await axios.get(`http://3.216.182.63:8095/GetVendorById?id=${vendorId}`);
+      console.log("Vendor :", response.data);
+      setSelectedVendor(response.data); // Assuming you want to update the selected vendor data
+      setToggleDisabled(false); // Example state update to enable some feature
+    } catch (error) {
+      console.error("Error fetching vendor data:", error);
+    }
   };
 
   const handleModal = () => {
@@ -205,8 +216,8 @@ const Customer = () => {
         Edit
       </Menu.Item>
       <Menu.Item
-        key="2"
-        onClick={() => handleEdit(vendorId)}
+        key="3"
+        onClick={() => handleDisable(vendorId)}
         icon={<EditOutlined />}
       >
         Disable
@@ -230,12 +241,12 @@ const Customer = () => {
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
 
   const filteredCustomerList = customerList.filter(
-    (customer) =>
-      (toggleDisabled ? customer.status === true : customer.status === false) &&
-      customer.vendorType === "Customer" &&
-      (customer.companyName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        customer.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        customer.mobile.toLowerCase().includes(searchQuery.toLowerCase()))
+    (vendor) =>
+      (toggleDisabled ? vendor.status === true : vendor.status === false) &&
+      vendor.vendorType === "Vendor" &&
+      (vendor.companyName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        vendor.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        vendor.mobile.toLowerCase().includes(searchQuery.toLowerCase()))
   );
 
   const currentItems = filteredCustomerList.slice(
@@ -444,4 +455,4 @@ const Customer = () => {
   );
 };
 
-export default Customer;
+export default Vendor;
