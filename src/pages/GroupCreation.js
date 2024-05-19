@@ -343,7 +343,6 @@ export default function GroupAccount() {
   };
 
   const handleEdit = (account) => {
-    // setIsEditing(true);
     setEditedGroupAccount(account);
     setShowEditForm(true);
     console.log("Editing", account);
@@ -387,18 +386,10 @@ export default function GroupAccount() {
     setSidebarVisible(false);
   };
 
-  const handleViewDetails = (account) => {
-    setSelectedAccount(account);
-    setShowDetails(true);
-  };
 
   const handleCloseDetails = () => {
     setSelectedAccount(null);
     setShowDetails(false);
-  };
-
-  const handleShowSuccess = () => {
-    setShowSuccess(true);
   };
 
   const handleCloseSuccess = () => {

@@ -332,7 +332,6 @@ const Customer = () => {
                         marginTop: "10px",
                       }}
                     >
-                      {/* Define menu here where you have access to customer.id */}
                       <Dropdown
                         overlay={
                           <Menu style={{ width: "250px" }}>
