@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Modal, Button, Progress } from "antd";
 import axios from "axios";
 
-const CustomerForm = ({
+const VendorForm = ({
   showModal,
   setShowModal,
   setFormData,
@@ -619,7 +619,7 @@ const CustomerForm = ({
                     fontWeight: "400",
                   }}
                 >
-                  Specify the customer's current status
+                  Specify the vendor's current status
                 </p>
                 <select
                   name="status"
@@ -776,7 +776,7 @@ const CustomerForm = ({
                     fontWeight: "400",
                   }}
                 >
-                  Specify the customer's hourly or daily billing rate
+                  Specify the Vendor's hourly or daily billing rate
                 </p>
                 <input
                   type="number"
@@ -896,4 +896,4 @@ const CustomerForm = ({
   );
 };
 
-export default CustomerForm;
+export default VendorForm;

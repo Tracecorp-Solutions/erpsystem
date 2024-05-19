@@ -6,9 +6,9 @@ import VendorNavigationbar from "../components/VendorNavigationbar";
 // import FailureSlideInCard from "../components/FailureSlideInCard ";
 import ReusableEmptyData from "../components/ReusableEmptyData";
 import VendorForm from "../components/VendorForm";
-import SlideInCard from "../components/SlideInCard ";
+// import SlideInCard from "../components/SlideInCard ";
 
-const Customer = () => {
+const Vendor = () => {
   const [formData, setFormData] = useState({
     title: "",
     fullName: "",
@@ -32,9 +32,9 @@ const Customer = () => {
     status: true,
     paymentAccount: 0,
     subGroupId: 0,
-    vendorType: "Customer",
+    vendorType: "vendor",
   });
-  const [customerList, setCustomerList] = useState([]);
+  const [vendorList, setvendorList] = useState([]);
   const [showFailure, setShowFailure] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [messageInfo, setMessageInfo] = useState({ title: "", message: "" });
@@ -50,12 +50,12 @@ const Customer = () => {
         const response = await axios.get(
           `${process.env.REACT_APP_API_URL}/GetAllVendors`
         );
-        setCustomerList(response.data);
+        setvendorList(response.data);
       } catch (error) {
         setShowFailure(true);
         setMessageInfo({
           title: "Server Error!",
-          message: "Failed to fetch customer details.",
+          message: "Failed to fetch vendor details.",
         });
         console.error("Error fetching data:", error);
       }
@@ -98,7 +98,7 @@ const Customer = () => {
           status: true,
           paymentAccount: 0,
           subGroupId: 0,
-          vendorType: "Customer",
+          vendorType: "vendor",
         })
       })
       .catch((error) => {
@@ -138,16 +138,16 @@ const Customer = () => {
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
 
-  const filteredCustomerList = customerList.filter(
-    (customer) =>
-      (toggleDisabled ? customer.status === true : customer.status === false) &&
-      customer.vendorType === "Customer" &&
-      (customer.companyName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        customer.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        customer.mobile.toLowerCase().includes(searchQuery.toLowerCase()))
+  const filteredvendorList = vendorList.filter(
+    (vendor) =>
+      (toggleDisabled ? vendor.status === true : vendor.status === false) &&
+      vendor.vendorType === "vendor" &&
+      (vendor.companyName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        vendor.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        vendor.mobile.toLowerCase().includes(searchQuery.toLowerCase()))
   );
 
-  const currentItems = filteredCustomerList.slice(
+  const currentItems = filteredvendorList.slice(
     indexOfFirstItem,
     indexOfLastItem
   );
@@ -167,13 +167,13 @@ const Customer = () => {
           marginBottom: "10px",
         }}
       >
-        {showSuccess && (
+        {/* {showSuccess && (
           <SlideInCard
             title={messageInfo.title}
             message={messageInfo.message}
             onClose={() => setShowSuccess(false)}
           />
-        )}
+        )} */}
         {/* {showFailure && (
           <FailureSlideInCard
             title={messageInfo.title}
@@ -189,7 +189,7 @@ const Customer = () => {
             fontWeight: "600",
           }}
         >
-          Customer
+          Vendor
         </h2>
         <Button
           type="button"
@@ -203,7 +203,7 @@ const Customer = () => {
           }}
           onClick={handleModal}
         >
-          + Create Customer
+          + Create Vendors
         </Button>
       </div>
       <VendorForm
@@ -273,26 +273,26 @@ const Customer = () => {
                   </th>
                 </tr>
               </thead>
-              {currentItems.map((customer) => (
+              {currentItems.map((vendor) => (
                 <tbody
                   className="bg-white divide-y divide-gray-200"
-                  key={customer.id}
+                  key={vendor.id}
                 >
                   <tr className="px-3 py-4 whitespace-nowrap mt-3 text-sm  text-gray-800">
                     <td className="px-3 py-4 whitespace-nowrap mt-3 text-sm  text-gray-800">
                       <input type="checkbox" />
                     </td>
                     <td className="px-3 py-4 whitespace-nowrap mt-3 text-sm  text-gray-800">
-                      {customer.companyName}
+                      {vendor.companyName}
                     </td>
                     <td className="px-3 py-4 whitespace-nowrap mt-3 text-sm text-gray-800">
-                      {customer.email}
+                      {vendor.email}
                     </td>
                     <td className="px-3 py-4 whitespace-nowrap mt-3 text-sm text-gray-800">
-                      {customer.mobile}
+                      {vendor.mobile}
                     </td>
                     <td className="px-3 py-4 whitespace-nowrap mt-3 text-sm text-gray-800">
-                      {customer.openingBalance}
+                      {vendor.openingBalance}
                     </td>
                     <div
                       style={{
@@ -332,11 +332,11 @@ const Customer = () => {
             }}
           >
             Showing {indexOfFirstItem + 1} - {indexOfLastItem} of{" "}
-            {filteredCustomerList.length} results
+            {filteredvendorList.length} results
           </div>
           <Pagination
             current={currentPage}
-            total={filteredCustomerList.length}
+            total={filteredvendorList.length}
             pageSize={itemsPerPage}
             onChange={paginate}
           />
@@ -346,4 +346,4 @@ const Customer = () => {
   );
 };
 
-export default Customer;
+export default Vendor;
