@@ -156,7 +156,6 @@ const Customer = () => {
 
   const handleSearch = (e) => {
     setSearchQuery(e.target.value);
-    console.log("click data")
   };
 
   return (
@@ -222,6 +221,7 @@ const Customer = () => {
           toggleDisabled={toggleDisabled}
           setToggleDisabled={setToggleDisabled}
           searchQuery={searchQuery}
+          handleSearch={handleSearch}
         />
         {showFailure && (
           <FailureSlideInCard
