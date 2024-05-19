@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Dropdown, Menu, Button, Pagination } from "antd";
 import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
 import axios from "axios";
-import CustomerNavigationbar from "../components/CustomerNavigationbar";
+import VendorNavigationbar from "../components/VendorNavigationbar";
 // import FailureSlideInCard from "../components/FailureSlideInCard ";
 import ReusableEmptyData from "../components/ReusableEmptyData";
 import VendorForm from "../components/VendorForm";
@@ -217,7 +217,7 @@ const Customer = () => {
       <div
         style={{ background: "#fff", padding: "15px", borderRadius: "24px" }}
       >
-        <CustomerNavigationbar
+        <VendorNavigationbar
           toggleDisabled={toggleDisabled}
           setToggleDisabled={setToggleDisabled}
           searchQuery={searchQuery}
