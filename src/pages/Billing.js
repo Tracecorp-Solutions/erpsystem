@@ -258,6 +258,7 @@ const handleSubmit = (e) => {
 
   return (
     <div>
+      <BillsCard />
       <div
         style={{
           display: "flex",
