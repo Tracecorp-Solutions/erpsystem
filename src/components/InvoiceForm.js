@@ -160,6 +160,7 @@ const AddItem = ({ visible, handleAddItem, handleCloseModal }) => {
               color: "#505050",
               border: "1px solid #7a7a7a",
             }}
+            onClick={handleCloseModal}
           >
             Cancel
           </Button>
