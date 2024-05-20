@@ -281,7 +281,7 @@ export default function CustomerSidebar({
                             color: "#505050",
                           }}
                         >
-                          {selectedCustomer.companyName}
+                          {selectedCustomer.addres.street} {" "} {selectedCustomer.addres.city} {" "} {" "} {selectedCustomer.addres.country}
                         </span>
                       </div>
                     </Col>
