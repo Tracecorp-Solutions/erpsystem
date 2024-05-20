@@ -15,16 +15,16 @@ namespace Core.Models
         public string FullName { get; set; }
         public string Email { get; set; }
         public string? CompanyName { get; set; }
-        public string Phone { get; set; }
+        public string? Phone { get; set; }
         public string Mobile { get; set; }
-        public string Website { get; set; }
+        public string? Website { get; set; }
         public Address Addres { get; set; }
-        public string AccountNo { get; set; }
+        public string? AccountNo { get; set; }
         public decimal BillingRate { get; set; }
         public decimal OpeningBalance { get; set; }
         public DateTime OpeningBalanceDate { get; set; }
-        public string Notes { get; set; }
-        public string BusinessIdNo { get; set; }
+        public string? Notes { get; set; }
+        public string? BusinessIdNo { get; set; }
         public bool Status { get; set; }
         public int? AccountId { get; set; }
 
