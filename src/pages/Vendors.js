@@ -4,10 +4,11 @@ import { EyeOutlined, EditOutlined } from "@ant-design/icons";
 import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
 import axios from "axios";
 import VendorNavigationbar from "../components/VendorNavigationbar";
-// import FailureSlideInCard from "../components/FailureSlideInCard ";
+import FailureSlideInCard from '../components/FailureSlideInCard';
+import SlideInCard from '../components/SlideInCard';
 import ReusableEmptyData from "../components/ReusableEmptyData";
 import VendorForm from "../components/VendorForm";
-// import SlideInCard from "../components/SlideInCard ";
+
 
 const Vendor = () => {
   const [formData, setFormData] = useState({
@@ -269,7 +270,7 @@ const Vendor = () => {
           marginBottom: "10px",
         }}
       >
-        {/* {showSuccess && (
+        {showSuccess && (
           <SlideInCard
             title={messageInfo.title}
             message={messageInfo.message}
@@ -282,7 +283,7 @@ const Vendor = () => {
             message={messageInfo.message}
             onClose={() => setShowFailure(false)}
           />
-        )} */}
+        )}
         <h2
           style={{
             fontSize: "36px",
@@ -325,13 +326,13 @@ const Vendor = () => {
           searchQuery={searchQuery}
           handleSearch={handleSearch}
         />
-        {/* {showFailure && (
+        {showFailure && (
           <FailureSlideInCard
             title={messageInfo.title}
             message={messageInfo.message}
             onClose={() => setShowFailure(false)}
           />
-        )} */}
+        )}
         {currentItems.length === 0 ? (
           <ReusableEmptyData />
         ) : (
