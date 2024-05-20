@@ -3,6 +3,7 @@ import { Dropdown, Menu, Button, Pagination } from "antd";
 import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
 import { EyeOutlined } from "@ant-design/icons";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import InvoiceCard from "../components/InvoiceCard";
 import InvoiceNavigationbar from "../components/InvoicesNavigationbar";
 
@@ -19,6 +20,8 @@ const Invoice = () => {
   const [drawerVisible, setDrawerVisible] = useState(false);
 
   console.log("invoice details", invoice);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -40,8 +43,8 @@ const Invoice = () => {
     fetchData();
   }, []);
 
-  const handleModal = () => {
-    setShowModal(true);
+  const handleCreateInvoice = () => {
+    navigate("/create-invoice");
   };
 
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -83,6 +86,7 @@ const Invoice = () => {
             borderRadius: "24px",
             marginTop: "15px",
           }}
+          onClick={handleCreateInvoice}
         >
           + Create Invoice
         </Button>
@@ -143,12 +147,6 @@ const Invoice = () => {
                   scope="col"
                   className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                 >
-                  AMOUNT DUE
-                </th>
-                <th
-                  scope="col"
-                  className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                >
                   ACTION
                 </th>
               </tr>
@@ -178,9 +176,6 @@ const Invoice = () => {
                     </td>
                     <td className="px-3 py-4 whitespace-nowrap mt-3 text-sm text-gray-800">
                       {inv.totalAmount}
-                    </td>
-                    <td className="px-3 py-4 whitespace-nowrap mt-3 text-sm text-gray-800">
-                      {inv.amountDue}
                     </td>
                     <td className="px-3 py-4 whitespace-nowrap mt-3 text-sm text-gray-800">
                       <div
