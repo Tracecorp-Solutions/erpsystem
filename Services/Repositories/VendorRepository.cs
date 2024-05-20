@@ -78,6 +78,7 @@ namespace Services.Repositories
 
             // Get vendor(s) by id or vendor type
             var vendors = await _context.Vendors
+                .Include(e => e.Addres)
                 .Where(v => v.VendorType == view.VendType && v.Id == view.Id)
                 .ToListAsync();
 
