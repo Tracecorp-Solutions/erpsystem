@@ -4,7 +4,7 @@ import "../styles/components/InvoiceForm.css";
 
 const AddItem = ({ visible, handleAddItem, handleCloseModal }) => {
   const [itemName, setItemName] = useState("");
-  const [amount, setAmount] = useState("");
+  const [amount, setAmount] = useState(0);
   const [description, setDescription] = useState("");
 
   const handleItemNameChange = (e) => {
@@ -27,20 +27,42 @@ const AddItem = ({ visible, handleAddItem, handleCloseModal }) => {
   };
 
   return (
-    <Modal
-      title="Add Invoice Item"
-      visible={visible}
-      onCancel={handleCloseModal}
-      footer={null}
-    >
+    <Modal visible={visible} onCancel={handleCloseModal} footer={null}>
       <form onSubmit={handleSubmit} className="space-y-4">
+        <h2
+          style={{
+            marginTop: "20px",
+            fontSize: "36px",
+            color: "#505050",
+            fontWeight: "600",
+            fontFamily: "outFit, Sans-serif",
+          }}
+        >
+          Create Invoice Item
+        </h2>
         <div>
           <label
             htmlFor="itemName"
             className="block text-sm font-medium text-gray-700"
+            style={{
+              fontWeight: "600",
+              fontFamily: "outFit, Sans-serif",
+              fontSize: "16px",
+              color: "#505050",
+            }}
           >
-            Item Name:
+            Attach Account
           </label>
+          <p
+            style={{
+              fontSize: "14px",
+              fontFamily: "outFit, Sans-serif",
+              color: "#a1a1a1",
+              fontWeight: "400",
+            }}
+          >
+            Select the account associated with this invoice item
+          </p>
           <input
             type="text"
             id="itemName"
@@ -58,9 +80,25 @@ const AddItem = ({ visible, handleAddItem, handleCloseModal }) => {
           <label
             htmlFor="amount"
             className="block text-sm font-medium text-gray-700"
+            style={{
+              fontWeight: "600",
+              fontFamily: "outFit, Sans-serif",
+              fontSize: "16px",
+              color: "#505050",
+            }}
           >
-            Amount:
+            Item Amount
           </label>
+          <p
+            style={{
+              fontSize: "14px",
+              fontFamily: "outFit, Sans-serif",
+              color: "#a1a1a1",
+              fontWeight: "400",
+            }}
+          >
+            Enter the cost of each invoice item
+          </p>
           <input
             type="number"
             id="amount"
@@ -78,12 +116,29 @@ const AddItem = ({ visible, handleAddItem, handleCloseModal }) => {
           <label
             htmlFor="description"
             className="block text-sm font-medium text-gray-700"
+            style={{
+              fontWeight: "600",
+              fontFamily: "outFit, Sans-serif",
+              fontSize: "16px",
+              color: "#505050",
+            }}
           >
-            Description:
+            Description
           </label>
+          <p
+            style={{
+              fontSize: "14px",
+              fontFamily: "outFit, Sans-serif",
+              color: "#a1a1a1",
+              fontWeight: "400",
+            }}
+          >
+            Describe what you are being paid for
+          </p>
           <textarea
             id="description"
             value={description}
+            placeholder="Description..."
             onChange={handleDescriptionChange}
             className="mt-1 block w-full sm:text-sm border-gray-300 rounded-md"
             style={{
@@ -92,13 +147,35 @@ const AddItem = ({ visible, handleAddItem, handleCloseModal }) => {
             }}
           />
         </div>
-        <div>
-          <button
+        <div className="mt-4 flex justify-between">
+          <Button
             type="submit"
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            className="py-2 px-4  text-white rounded focus:outline-none"
+            style={{
+              borderRadius: "28px",
+              fontFamily: "outFit, Sans-serif",
+              width: "150px",
+              paddingBottom: "30px",
+              marginRight: "10px",
+              color: "#505050",
+              border: "1px solid #7a7a7a",
+            }}
           >
-            Add
-          </button>
+            Cancel
+          </Button>
+          <Button
+            type="submit"
+            className="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none"
+            style={{
+              background: "#4467a1",
+              borderRadius: "28px",
+              fontFamily: "outFit, Sans-serif",
+              width: "150px",
+              paddingBottom: "30px",
+            }}
+          >
+            Add Item
+          </Button>
         </div>
       </form>
     </Modal>
@@ -414,42 +491,40 @@ const InvoiceForm = () => {
           </div>
         </div>
       </div>
-      <div style={{}}>
-        <div
-          className="mt-4 flex justify-end"
+      <div
+        className="mt-4 flex justify-end"
+        style={{
+          width: "90%",
+        }}
+      >
+        <Button
+          type="submit"
+          className="py-2 px-4  text-white rounded focus:outline-none"
           style={{
-            width: "90%",
+            borderRadius: "28px",
+            fontFamily: "outFit, Sans-serif",
+            width: "150px",
+            paddingBottom: "30px",
+            marginRight: "10px",
+            color: "#505050",
+            border: "1px solid #7a7a7a",
           }}
         >
-          <Button
-            type="submit"
-            className="py-2 px-4  text-white rounded focus:outline-none"
-            style={{
-              borderRadius: "28px",
-              fontFamily: "outFit, Sans-serif",
-              width: "150px",
-              paddingBottom: "30px",
-              marginRight: "10px",
-              color: "#505050",
-              border: "1px solid #7a7a7a",
-            }}
-          >
-            Cancel
-          </Button>
-          <Button
-            type="submit"
-            className="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none"
-            style={{
-              background: "#4467a1",
-              borderRadius: "28px",
-              fontFamily: "outFit, Sans-serif",
-              width: "150px",
-              paddingBottom: "30px",
-            }}
-          >
-            Save Invoice
-          </Button>
-        </div>
+          Cancel
+        </Button>
+        <Button
+          type="submit"
+          className="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none"
+          style={{
+            background: "#4467a1",
+            borderRadius: "28px",
+            fontFamily: "outFit, Sans-serif",
+            width: "150px",
+            paddingBottom: "30px",
+          }}
+        >
+          Save Invoice
+        </Button>
       </div>
       <AddItem
         visible={visible}
