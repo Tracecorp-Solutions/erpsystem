@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Button } from "antd";
 import "../styles/components/InvoiceForm.css";
 
 const InvoiceForm = () => {
@@ -68,10 +69,27 @@ const InvoiceForm = () => {
         <h2 className="text-2xl font-semibold mb-4">Basic Information</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label className="block text-gray-700 text-sm font-bold mb-2">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              style={{
+                fontSize: "16px",
+                fontFamily: "outFit, Sans-serif",
+                color: "#505050",
+                fontWeight: "600",
+              }}
+            >
               Customer
             </label>
-            <p>Select the customer associated with this invoice</p>
+            <p
+              style={{
+                color: "#a1a1a1",
+                fontFamily: "outFit, Sans-serif",
+                fontSize: "16px",
+                fontWeight: "400",
+              }}
+            >
+              Select the customer associated with this invoice
+            </p>
             <select
               name="customer"
               value={invoiceData.customer}
@@ -85,10 +103,31 @@ const InvoiceForm = () => {
             </select>
           </div>
           <div>
-            <label className="block text-gray-700 text-sm font-bold mb-2">
+            <label
+              className="
+                block
+                text-gray-700
+                text-sm
+                font-bold
+                mb-2
+                "
+              style={{
+                fontSize: "16px",
+                fontFamily: "outFit, Sans-serif",
+                color: "#505050",
+                fontWeight: "600",
+              }}
+            >
               Invoice Number:
             </label>
-            <p>
+            <p
+              style={{
+                color: "#a1a1a1",
+                fontFamily: "outFit, Sans-serif",
+                fontSize: "16px",
+                fontWeight: "400",
+              }}
+            >
               Enter unique identifier for this invoice. Its sometimes
               auto-generated.
             </p>
@@ -101,10 +140,27 @@ const InvoiceForm = () => {
             />
           </div>
           <div>
-            <label className="block text-gray-700 text-sm font-bold mb-2">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              style={{
+                fontSize: "16px",
+                fontFamily: "outFit, Sans-serif",
+                color: "#505050",
+                fontWeight: "600",
+              }}
+            >
               Invoice Date
             </label>
-            <p>Choose the date the invoice was issued</p>
+            <p
+              style={{
+                color: "#a1a1a1",
+                fontFamily: "outFit, Sans-serif",
+                fontSize: "16px",
+                fontWeight: "400",
+              }}
+            >
+              Choose the date the invoice was issued
+            </p>
             <input
               type="date"
               name="invoiceDate"
@@ -114,10 +170,27 @@ const InvoiceForm = () => {
             />
           </div>
           <div>
-            <label className="block text-gray-700 text-sm font-bold mb-2">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              style={{
+                fontSize: "16px",
+                fontFamily: "outFit, Sans-serif",
+                color: "#505050",
+                fontWeight: "600",
+              }}
+            >
               Due Date
             </label>
-            <p>Specify when the payment is due</p>
+            <p
+              style={{
+                color: "#a1a1a1",
+                fontFamily: "outFit, Sans-serif",
+                fontSize: "16px",
+                fontWeight: "400",
+              }}
+            >
+              Specify when the payment is due
+            </p>
             <input
               type="date"
               name="dueDate"
@@ -154,25 +227,21 @@ const InvoiceForm = () => {
           >
             Invoice Items
           </h2>
-          <button
-            type="submit"
-            className="
-            text-white
-            py-2 px-4
-            rounded
-            focus:outline-none
-            focus:shadow-outline"
-            style={{
-              background: "#4467a1",
-              borderRadius: "24px",
-              fontFamily: "outFit, Sans-serif",
-              fontSize: "16px",
-              fontWeight: "600",
-            }}
-            onClick={handleSubmit}
-          >
-            + Add invoice
-          </button>
+          <Button
+                type="submit"
+                onClick={handleSubmit}
+                className="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none"
+                style={{
+                  background: "#4467a1",
+                  borderRadius: "28px",
+                  fontFamily: "outFit, Sans-serif",
+                  width: "150px",
+                  paddingBottom: "30px",
+                }}
+               
+              >
+                + Add Invoice Item
+              </Button>
         </div>
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-gray-200">
