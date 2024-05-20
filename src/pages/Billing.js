@@ -8,6 +8,7 @@ import FailureSlideInCard from '../components/FailureSlideInCard';
 import SlideInCard from '../components/SlideInCard';
 import ReusableEmptyData from "../components/ReusableEmptyData";
 import VendorForm from "../components/VendorForm";
+import BillsCard from "../components/BillsCard"
 
 
 const Bill = () => {
