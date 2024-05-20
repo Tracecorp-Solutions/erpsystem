@@ -48,7 +48,7 @@ const Customer = () => {
   const [drawerVisible, setDrawerVisible] = useState(false);
   const [customerDetails, setCustomerDetails] = useState(null);
 
-  console.log("customer details",customerDetails);
+  console.log("customer details", customerDetails);
 
   useEffect(() => {
     const fetchData = async () => {
