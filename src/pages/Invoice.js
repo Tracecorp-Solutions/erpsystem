@@ -3,6 +3,7 @@ import { Dropdown, Menu, Button, Pagination } from "antd";
 import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
 import { EyeOutlined } from "@ant-design/icons";
 import axios from "axios";
+import InvoiceCard from "../components/InvoiceCard";
 
 const Invoice = () => {
   const [invoice, setInvoice] = useState([]);
@@ -53,6 +54,7 @@ const Invoice = () => {
 
   return (
     <div>
+      <InvoiceCard />
       <div
         style={{
           display: "flex",
