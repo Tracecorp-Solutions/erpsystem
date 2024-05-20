@@ -140,20 +140,20 @@ const InvoiceForm = () => {
             marginBottom: "10px",
           }}
         >
-          <h2 
+          <h2
             className="
               text-2xl
               font-semibold
               mb-4"
-              style={{
-                fontFamily: "outFit, Sans-serif",
-                fontWeight: "600",
-                color: "#505050",
-                fontSize: "24px",
-              }}
-            >
-              Invoice Items
-            </h2>
+            style={{
+              fontFamily: "outFit, Sans-serif",
+              fontWeight: "600",
+              color: "#505050",
+              fontSize: "24px",
+            }}
+          >
+            Invoice Items
+          </h2>
           <button
             type="submit"
             className="
@@ -167,45 +167,51 @@ const InvoiceForm = () => {
               borderRadius: "24px",
               fontFamily: "outFit, Sans-serif",
               fontSize: "16px",
-              fontWeight: "600"
+              fontWeight: "600",
             }}
             onClick={handleSubmit}
           >
             + Add invoice
           </button>
         </div>
-        <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gray-50">
-            <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Invoice Number
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Invoice Date
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Due Date
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Customer
-              </th>
-            </tr>
-          </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
-            {items.map((item, index) => (
-              <tr key={index}>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  {item.invoiceNumber}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  {item.invoiceDate}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">{item.dueDate}</td>
-                <td className="px-6 py-4 whitespace-nowrap">{item.customer}</td>
+        <div className="overflow-x-auto">
+          <table className="min-w-full divide-y divide-gray-200">
+            <thead className="bg-gray-50">
+              <tr>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Invoice Number
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Invoice Date
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Due Date
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Customer
+                </th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className="bg-white divide-y divide-gray-200">
+              {items.map((item, index) => (
+                <tr key={index}>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    {item.invoiceNumber}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    {item.invoiceDate}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    {item.dueDate}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    {item.customer}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );
