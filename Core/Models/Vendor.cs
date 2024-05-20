@@ -19,8 +19,11 @@ namespace Core.Models
         public string Mobile { get; set; }
         public string? Website { get; set; }
         public Address Addres { get; set; }
+
+        public string? BankName { get; set; }
         public string? AccountNo { get; set; }
         public decimal BillingRate { get; set; }
+       
         public decimal OpeningBalance { get; set; }
         public DateTime OpeningBalanceDate { get; set; }
         public string? Notes { get; set; }
