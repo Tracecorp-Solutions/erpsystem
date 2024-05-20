@@ -583,7 +583,7 @@ const CustomerForm = ({
                     fontFamily: "outFit, Sans-serif",
                   }}
                 >
-                  Account From
+                  Payment Account
                 </label>
                 <p
                   style={{
@@ -595,7 +595,7 @@ const CustomerForm = ({
                     fontWeight: "400",
                   }}
                 >
-                  Account where the funds will be paid to
+                  Account where the customer will pay to
                 </p>
                 <select
                   name="paymentAccount"
@@ -609,28 +609,6 @@ const CustomerForm = ({
                     </option>
                   ))}
                 </select>
-              </div>
-
-              <div className="mb-4">
-                <label
-                  className="block mb-2"
-                  style={{
-                    fontSize: "16px",
-                    fontWeight: "600",
-                    color: "#505050",
-                    fontFamily: "outFit, Sans-serif",
-                  }}
-                >
-                  Account Number
-                </label>
-                <input
-                  type="text"
-                  name="accountNo"
-                  value={formData.accountNo}
-                  onChange={handleChange}
-                  placeholder="Account No"
-                  className="w-full px-3 py-2 border rounded-md"
-                />
               </div>
 
               <div className="mb-4">
@@ -705,7 +683,6 @@ const CustomerForm = ({
                   paddingBottom: "30px",
                   ...(formData.subGroupId &&
                   formData.paymentAccount &&
-                  formData.accountNo &&
                   formData.status !== ""
                     ? {}
                     : {
@@ -716,7 +693,6 @@ const CustomerForm = ({
                 disabled={
                   !formData.subGroupId ||
                   !formData.paymentAccount ||
-                  !formData.accountNo ||
                   formData.status === ""
                 }
               >
@@ -794,7 +770,7 @@ const CustomerForm = ({
                     fontWeight: "400",
                   }}
                 >
-                  Enter the vendor's initial account balance
+                  Enter the customer's initial account balance
                 </p>
                 <input
                   type="number"

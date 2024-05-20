@@ -122,7 +122,6 @@ const Customer = () => {
             zipCode: "",
             country: "",
           },
-          accountNo: "",
           billingRate: 0,
           openingBalance: 0,
           openingBalanceDate: "",
