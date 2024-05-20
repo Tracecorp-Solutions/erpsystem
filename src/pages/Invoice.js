@@ -4,6 +4,7 @@ import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
 import { EyeOutlined } from "@ant-design/icons";
 import axios from "axios";
 import InvoiceCard from "../components/InvoiceCard";
+import InvoiceNavigationbar from "../components/InvoicesNavigationbar";
 
 const Invoice = () => {
   const [invoice, setInvoice] = useState([]);
@@ -86,7 +87,14 @@ const Invoice = () => {
           + Create Invoice
         </Button>
       </div>
-      <div
+     <div style={{
+      background: "#fff",
+      padding: "15px",
+      borderRadius: "24px"
+     }}>
+     <InvoiceNavigationbar />
+
+     <div
         style={{
           display: "flex",
           justifyContent: "space-between",
@@ -209,6 +217,7 @@ const Invoice = () => {
           </table>
         </div>
       </div>
+     </div>
     </div>
   );
 };
