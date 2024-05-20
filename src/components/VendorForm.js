@@ -12,6 +12,7 @@ const VendorForm = ({
   const [section, setSection] = useState(1);
   const [subGroupAccounts, setSubGroupAccounts] = useState([]);
   const [accounts, setAccounts] = useState([]);
+  const sections = ["Personal", "Contact", "Additional", "Financial"];
 
   const totalSections = 4;
 
@@ -81,7 +82,7 @@ const VendorForm = ({
         <Progress percent={(section / totalSections) * 100} />
       </div>
       <form onSubmit={handleSubmit} className="max-w-lg mx-auto mt-8">
-        {section === 1 && (
+        {section === 1 && "Personal Details" (
           <div>
             <div
               style={{
@@ -547,7 +548,7 @@ const VendorForm = ({
                     fontFamily: "outFit, Sans-serif",
                   }}
                 >
-                  Account From
+                  Payment account
                 </label>
                 <p
                   style={{
