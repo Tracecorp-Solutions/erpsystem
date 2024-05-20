@@ -23,7 +23,6 @@ const InvoiceForm = () => {
     e.preventDefault();
     console.log("Submitted Invoice Data:", invoiceData);
     setItems([...items, invoiceData]);
-    // Reset the form fields
     setInvoiceData({
       invoiceNumber: "",
       invoiceDate: "",
@@ -141,13 +140,38 @@ const InvoiceForm = () => {
             marginBottom: "10px",
           }}
         >
-          <h2 className="text-2xl font-semibold mb-4">Invoice Items</h2>
+          <h2 
+            className="
+              text-2xl
+              font-semibold
+              mb-4"
+              style={{
+                fontFamily: "outFit, Sans-serif",
+                fontWeight: "600",
+                color: "#505050",
+                fontSize: "24px",
+              }}
+            >
+              Invoice Items
+            </h2>
           <button
             type="submit"
-            className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            className="
+            text-white
+            py-2 px-4
+            rounded
+            focus:outline-none
+            focus:shadow-outline"
+            style={{
+              background: "#4467a1",
+              borderRadius: "24px",
+              fontFamily: "outFit, Sans-serif",
+              fontSize: "16px",
+              fontWeight: "600"
+            }}
             onClick={handleSubmit}
           >
-            + Add invoice Item
+            + Add invoice
           </button>
         </div>
         <table className="min-w-full divide-y divide-gray-200">
