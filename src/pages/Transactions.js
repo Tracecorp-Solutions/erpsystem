@@ -102,6 +102,8 @@ const Transaction = () => {
     }
   };
 
+  
+
   const handleBehaviorChange = (e) => {
     const { value } = e.target;
     setEditedAccount({ ...editedAccount, behaviour: value });
@@ -459,40 +461,6 @@ const Transaction = () => {
               />
             </div>
 
-            {/* <div>
-              <label
-                htmlFor="behaviour"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Behaviour:
-              </label>
-              <select
-                id="behaviour"
-                name="behaviour"
-                className="
-                   mt-1
-                   focus:ring-indigo-500
-                  focus:border-indigo-500
-                   p-4 block
-                   w-full
-                   border-gray-300
-                   rounded-md
-                   sm:text-sm
-                   text-input
-                    "
-                value={editedAccount.behaviour}
-                onChange={(e) =>
-                  setEditedAccount({
-                    ...editedAccount,
-                    behaviour: e.target.value,
-                  })
-                }
-              >
-                <option value="">Select transaction behavior</option>
-                <option value="Debit">Debit</option>
-                <option value="Credit">Credit</option>
-              </select>
-            </div> */}
 
             <div className="mb-4">
               <label
