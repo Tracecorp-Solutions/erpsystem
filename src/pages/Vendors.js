@@ -61,7 +61,7 @@ const Vendor = () => {
         setShowFailure(true);
         setMessageInfo({
           title: "Server Error!",
-          message: "Failed to fetch customer details.",
+          message: "Failed to fetch vendor details.",
         });
         console.error("Error fetching data:", error);
       }
