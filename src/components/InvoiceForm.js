@@ -1,6 +1,109 @@
 import React, { useState } from "react";
-import { Button } from "antd";
+import { Button, Modal, Form, Input } from "antd";
 import "../styles/components/InvoiceForm.css";
+
+const AddItem = ({ visible, handleAddItem, handleCloseModal }) => {
+  const [itemName, setItemName] = useState("");
+  const [amount, setAmount] = useState("");
+  const [description, setDescription] = useState("");
+
+  const handleItemNameChange = (e) => {
+    setItemName(e.target.value);
+  };
+
+  const handleAmountChange = (e) => {
+    setAmount(e.target.value);
+  };
+
+  const handleDescriptionChange = (e) => {
+    setDescription(e.target.value);
+  };
+
+  const handleSubmit = () => {
+    handleAddItem({ itemName, amount, description });
+    setItemName("");
+    setAmount("");
+    setDescription("");
+  };
+
+  return (
+    <Modal
+      title="Add Invoice Item"
+      visible={visible}
+      onCancel={handleCloseModal}
+      footer={null}
+    >
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <div>
+          <label
+            htmlFor="itemName"
+            className="block text-sm font-medium text-gray-700"
+          >
+            Item Name:
+          </label>
+          <input
+            type="text"
+            id="itemName"
+            value={itemName}
+            onChange={handleItemNameChange}
+            required
+            className="mt-1 block w-full sm:text-sm border-gray-300 rounded-md"
+            style={{
+              border: "1px solid #7a7a7a",
+              padding: "10px",
+            }}
+          />
+        </div>
+        <div>
+          <label
+            htmlFor="amount"
+            className="block text-sm font-medium text-gray-700"
+          >
+            Amount:
+          </label>
+          <input
+            type="number"
+            id="amount"
+            value={amount}
+            onChange={handleAmountChange}
+            required
+            className="mt-1 block w-full sm:text-sm border-gray-300 rounded-md"
+            style={{
+              border: "1px solid #7a7a7a",
+              padding: "10px",
+            }}
+          />
+        </div>
+        <div>
+          <label
+            htmlFor="description"
+            className="block text-sm font-medium text-gray-700"
+          >
+            Description:
+          </label>
+          <textarea
+            id="description"
+            value={description}
+            onChange={handleDescriptionChange}
+            className="mt-1 block w-full sm:text-sm border-gray-300 rounded-md"
+            style={{
+              border: "1px solid #7a7a7a",
+              padding: "10px",
+            }}
+          />
+        </div>
+        <div>
+          <button
+            type="submit"
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          >
+            Add
+          </button>
+        </div>
+      </form>
+    </Modal>
+  );
+};
 
 const InvoiceForm = () => {
   const [invoiceData, setInvoiceData] = useState({
@@ -11,6 +114,20 @@ const InvoiceForm = () => {
   });
 
   const [items, setItems] = useState([]);
+  const [visible, setVisible] = useState(false);
+
+  const handleOpenModal = () => {
+    setVisible(true);
+  };
+
+  const handleCloseModal = () => {
+    setVisible(false);
+  };
+
+  const handleAddItem = (values) => {
+    console.log("Received values:", values);
+    setVisible(false);
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -103,6 +220,7 @@ const InvoiceForm = () => {
             <select
               name="customer"
               value={invoiceData.customer}
+              required
               onChange={handleChange}
               className="w-full appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             >
@@ -146,6 +264,7 @@ const InvoiceForm = () => {
               name="invoiceNumber"
               value={invoiceData.invoiceNumber}
               onChange={handleChange}
+              required
               className="w-full appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             />
           </div>
@@ -175,6 +294,7 @@ const InvoiceForm = () => {
               type="date"
               name="invoiceDate"
               value={invoiceData.invoiceDate}
+              required
               onChange={handleChange}
               className="w-full appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             />
@@ -206,6 +326,7 @@ const InvoiceForm = () => {
               name="dueDate"
               value={invoiceData.dueDate}
               onChange={handleChange}
+              required
               className="w-full appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             />
           </div>
@@ -239,7 +360,7 @@ const InvoiceForm = () => {
           </h2>
           <Button
             type="submit"
-            onClick={handleSubmit}
+            onClick={handleOpenModal}
             className="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none"
             style={{
               background: "#4467a1",
@@ -310,7 +431,7 @@ const InvoiceForm = () => {
               paddingBottom: "30px",
               marginRight: "10px",
               color: "#505050",
-              border: "1px solid #7a7a7a"
+              border: "1px solid #7a7a7a",
             }}
           >
             Cancel
@@ -330,6 +451,11 @@ const InvoiceForm = () => {
           </Button>
         </div>
       </div>
+      <AddItem
+        visible={visible}
+        handleAddItem={handleAddItem}
+        handleCloseModal={handleCloseModal}
+      />
     </div>
   );
 };
