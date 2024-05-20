@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, Col, Row } from 'antd';
 
-const InvoiceCard = () => (
+const BillsCard = () => (
   <Row gutter={[16, 16]}>
     <Col xs={24} sm={12} md={6} lg={6}>
       <Card bordered={false} className="w-full">
@@ -42,4 +42,4 @@ const InvoiceCard = () => (
   </Row>
 );
 
-export default InvoiceCard;
+export default BillsCard;

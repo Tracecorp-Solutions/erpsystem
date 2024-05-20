@@ -258,12 +258,12 @@ const handleSubmit = (e) => {
 
   return (
     <div>
-      <BillsCard />
+     
       <div
         style={{
           display: "flex",
           justifyContent: "space-between",
-          marginBottom: "10px",
+          marginBottom: "7px",
         }}
       >
         {showSuccess && (
@@ -305,6 +305,7 @@ const handleSubmit = (e) => {
           + Add Bill
         </Button>
       </div>
+      <BillsCard />
       <VendorForm
         handleSearch={handleSearch}
         handleSubmit={handleSubmit}
@@ -314,7 +315,7 @@ const handleSubmit = (e) => {
         setShowModal={setShowModal}
       />
       <div
-        style={{ background: "#fff", padding: "15px", borderRadius: "24px" }}
+        style={{ background: "#fff", padding: "15px", borderRadius: "24px", marginTop: "10px" }}
       >
         <BillsNavigationBar
           toggleDisabled={toggleDisabled}
