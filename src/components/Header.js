@@ -44,6 +44,8 @@ import TrialBalance from "../pages/TrialBalance";
 import Transactions from "../pages/Transactions";
 import Customer from "../pages/Customer";
 
+
+
 const navigation = [
   {
     name: "Dashboard",
@@ -82,7 +84,7 @@ const navigation = [
     current: false,
     submenuItem: true,
     submenu: [
-      { name: "Billing", href: "/billing", current: false },
+     
       { name: "Expense", href: "/expense", current: false },
     ],
   },
@@ -100,6 +102,17 @@ const navigation = [
     ],
   },
   {
+    name: "Bills & Invoice",
+    icon: FolderIcon,
+    current: false,
+    submenuItem: true,
+    submenu: [
+      { name: "Billing", href: "/billing", current: false },
+      { name: "Invoice", href: "/invoice", current: false },
+     
+    ],
+  },
+  {
     name: "People",
     href: "#",
     icon: DocumentDuplicateIcon,
@@ -107,6 +120,7 @@ const navigation = [
     submenuItem: true,
     submenu: [
       { name: "Customer", href: "/customer", current: false },
+      { name: "Vendors", href: "/vendors", current: false },
     ],
   },
   {
@@ -661,6 +675,7 @@ export default function Main() {
                 <Route path="/view" element={<View />} />
                 <Route path="/transactions" element={<Transactions />} />
                 <Route path="/customer" element={<Customer />} />
+              
               </Routes>
             </div>
           </main>
