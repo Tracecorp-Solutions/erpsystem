@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Modal, Button, Progress } from "antd";
+import { LockOutlined } from "@ant-design/icons";
 import axios from "axios";
 
 const CustomerForm = ({
@@ -278,8 +279,25 @@ const CustomerForm = ({
                   borderRadius: "28px",
                   fontFamily: "outFit, Sans-serif",
                   width: "100%",
+                  ...(formData.title &&
+                  formData.fullName &&
+                  formData.email &&
+                  formData.companyName &&
+                  formData.phone
+                    ? {}
+                    : {
+                        backgroundColor: "gray",
+                        cursor: "not-allowed",
+                      }),
                 }}
                 onClick={handleContinue}
+                disabled={
+                  !formData.title ||
+                  !formData.fullName ||
+                  !formData.email ||
+                  !formData.companyName ||
+                  !formData.phone
+                }
               >
                 Continue
               </button>
@@ -358,7 +376,7 @@ const CustomerForm = ({
                       fontWeight: "400",
                     }}
                   >
-                    Provide the URL of the vendor's website, if available
+                    Provide the URL of the customer's website, if available
                   </p>
                   <input
                     type="text"
@@ -477,8 +495,27 @@ const CustomerForm = ({
                   borderRadius: "28px",
                   fontFamily: "outFit, Sans-serif",
                   width: "40%",
+                  ...(formData.mobile &&
+                  formData.website &&
+                  formData.addres.street &&
+                  formData.addres.city &&
+                  formData.addres.zipCode &&
+                  formData.addres.country
+                    ? {}
+                    : {
+                        backgroundColor: "gray",
+                        cursor: "not-allowed",
+                      }),
                 }}
                 onClick={handleContinue}
+                disabled={
+                  !formData.mobile ||
+                  !formData.website ||
+                  !formData.addres.street ||
+                  !formData.addres.city ||
+                  !formData.addres.zipCode ||
+                  !formData.addres.country
+                }
               >
                 Continue
               </button>
@@ -559,7 +596,7 @@ const CustomerForm = ({
                     fontWeight: "400",
                   }}
                 >
-                  Account where the funds will be pulled from
+                  Account where the funds will be paid to
                 </p>
                 <select
                   name="paymentAccount"
@@ -667,7 +704,22 @@ const CustomerForm = ({
                   fontFamily: "outFit, Sans-serif",
                   width: "40%",
                   paddingBottom: "30px",
+                  ...(formData.subGroupId &&
+                  formData.paymentAccount &&
+                  formData.accountNo &&
+                  formData.status !== ""
+                    ? {}
+                    : {
+                        backgroundColor: "gray",
+                        cursor: "not-allowed",
+                      }),
                 }}
+                disabled={
+                  !formData.subGroupId ||
+                  !formData.paymentAccount ||
+                  !formData.accountNo ||
+                  formData.status === ""
+                }
               >
                 Next
               </Button>
@@ -809,7 +861,7 @@ const CustomerForm = ({
                     fontWeight: "400",
                   }}
                 >
-                  Add any additional comments or notes related to the vendor.
+                  Add any additional comments or notes related to the customer.
                 </p>
                 <textarea
                   name="notes"
@@ -884,7 +936,24 @@ const CustomerForm = ({
                   fontFamily: "outFit, Sans-serif",
                   width: "48%",
                   paddingBottom: "30px",
+                  ...(formData.openingBalanceDate &&
+                  formData.openingBalance &&
+                  formData.billingRate &&
+                  formData.notes &&
+                  formData.businessIdNo
+                    ? {}
+                    : {
+                        backgroundColor: "gray",
+                        cursor: "not-allowed",
+                      }),
                 }}
+                disabled={
+                  !formData.openingBalanceDate ||
+                  !formData.openingBalance ||
+                  !formData.billingRate ||
+                  !formData.notes ||
+                  !formData.businessIdNo
+                }
               >
                 Submit
               </Button>
