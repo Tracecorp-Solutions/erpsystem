@@ -66,7 +66,17 @@ const InvoiceForm = () => {
       </div>
 
       <div className="max-w-screen-xl mx-auto mt-10 p-6 bg-white rounded-lg">
-        <h2 className="text-2xl font-semibold mb-4">Basic Information</h2>
+        <h2
+          className="text-2xl font-semibold mb-4"
+          style={{
+            fontFamily: "outFit, Sans-serif",
+            color: "#505050",
+            fontWeight: "600",
+            fontSize: "24px",
+          }}
+        >
+          Basic Information
+        </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label
@@ -228,58 +238,96 @@ const InvoiceForm = () => {
             Invoice Items
           </h2>
           <Button
-                type="submit"
-                onClick={handleSubmit}
-                className="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none"
-                style={{
-                  background: "#4467a1",
-                  borderRadius: "28px",
-                  fontFamily: "outFit, Sans-serif",
-                  width: "150px",
-                  paddingBottom: "30px",
-                }}
-               
-              >
-                + Add Invoice Item
-              </Button>
+            type="submit"
+            onClick={handleSubmit}
+            className="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none"
+            style={{
+              background: "#4467a1",
+              borderRadius: "28px",
+              fontFamily: "outFit, Sans-serif",
+              width: "150px",
+              paddingBottom: "30px",
+            }}
+          >
+            + Add Invoice Item
+          </Button>
         </div>
-        <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
-              <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Invoice Number
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Invoice Date
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Due Date
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Customer
-                </th>
-              </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {items.map((item, index) => (
-                <tr key={index}>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    {item.invoiceNumber}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    {item.invoiceDate}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    {item.dueDate}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    {item.customer}
-                  </td>
+        <div>
+          <div className="overflow-x-auto">
+            <table className="min-w-full divide-y divide-gray-200">
+              <thead className="bg-gray-50">
+                <tr>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Invoice Number
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Invoice Date
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Due Date
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Customer
+                  </th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200">
+                {items.map((item, index) => (
+                  <tr key={index}>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      {item.invoiceNumber}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      {item.invoiceDate}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      {item.dueDate}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      {item.customer}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div style={{}}>
+        <div
+          className="mt-4 flex justify-end"
+          style={{
+            width: "90%",
+          }}
+        >
+          <Button
+            type="submit"
+            className="py-2 px-4  text-white rounded focus:outline-none"
+            style={{
+              borderRadius: "28px",
+              fontFamily: "outFit, Sans-serif",
+              width: "150px",
+              paddingBottom: "30px",
+              marginRight: "10px",
+              color: "#505050",
+              border: "1px solid #7a7a7a"
+            }}
+          >
+            Cancel
+          </Button>
+          <Button
+            type="submit"
+            className="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none"
+            style={{
+              background: "#4467a1",
+              borderRadius: "28px",
+              fontFamily: "outFit, Sans-serif",
+              width: "150px",
+              paddingBottom: "30px",
+            }}
+          >
+            Save Invoice
+          </Button>
         </div>
       </div>
     </div>
