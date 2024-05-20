@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Modal, Button, Progress } from "antd";
-import { LockOutlined } from "@ant-design/icons";
 import axios from "axios";
 
 const CustomerForm = ({
