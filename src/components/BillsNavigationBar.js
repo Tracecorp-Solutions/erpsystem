@@ -21,12 +21,7 @@ const BillsNavigationbar = ({
         style={{ display: "flex", justifyContent: "space-between", flex: 1 }}
       >
         <div style={{ marginBottom: "16px",  }}>
-          <p
-            className="text-gray-600 text-sm mb-1"
-            style={{ fontFamily: "outFit, Sans-serif" }}
-          >
-            To
-          </p>
+          
           <div
             style={{
               display: "flex",
@@ -36,8 +31,9 @@ const BillsNavigationbar = ({
               padding: "3px",
             }}
           >
+            < SearchOutlined style={{ fontSize: "16px", color: "#bfbfbf" }} />
             <Input
-              placeholder="Choose bill date"
+              placeholder="Enter bill number"
               value={searchQuery}
               onChange={handleSearch}
               style={{
@@ -48,7 +44,7 @@ const BillsNavigationbar = ({
               }}
               bordered={false}
             />
-            <CalendarOutlined style={{ fontSize: "16px", color: "#bfbfbf" }} />
+            
           </div>
         </div>
       </div>
@@ -56,34 +52,30 @@ const BillsNavigationbar = ({
         style={{ display: "flex", justifyContent: "end", flex: 1,  alignItems: "center", }}
       >
         <div style={{ marginBottom: "16px",    alignItems: "center", }}>
-          <p
-            className="text-gray-600 text-sm mb-1"
-            style={{ fontFamily: "outFit, Sans-serif" }}
-          >
-            To
-          </p>
+          
           <div
             style={{
               display: "flex",
               alignItems: "center",
               border: "1px solid #d9d9d9",
-              borderRadius: "24px",
+              borderRadius: "16px",
               padding: "3px",
             }}
           >
+             <FilterOutlined style={{ fontSize: "16px", color: "#bfbfbf" }} />
             <Input
-              placeholder=""
+              placeholder="filter"
               value={searchQuery}
               onChange={handleSearch}
               style={{
                 border: "none",
                 boxShadow: "none",
                 flex: 1,
+                width: "58px",
                 marginRight: "4px",
               }}
               bordered={false}
             />
-            <CalendarOutlined style={{ fontSize: "16px", color: "#bfbfbf" }} />
           </div>
         </div>
       </div>
