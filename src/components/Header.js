@@ -35,7 +35,6 @@ import Invoice from "../pages/Invoice";
 import GroupAccount from "../pages/GroupCreation";
 import AccountCreation from "../pages/AccountCreation";
 import Products from "../pages/Products";
-// import Account from "../pages/AccountCreation";
 import Petty from "../pages/Petty";
 import SubGroup from "../pages/SubGroup";
 import Billing from "../pages/Billing";
@@ -43,6 +42,7 @@ import LineChart from "./LineGraph";
 import View from "./View";
 import TrialBalance from "../pages/TrialBalance";
 import Transactions from "../pages/Transactions";
+import Customer from "../pages/Customer";
 
 const navigation = [
   {
@@ -97,6 +97,16 @@ const navigation = [
       { name: "Group Accounts", href: "/account-creation", current: false },
       { name: "SubGroup Accounts", href: "/sub-group", current: false },
       { name: "Transactions", href: "/transactions", current: false },
+    ],
+  },
+  {
+    name: "People",
+    href: "#",
+    icon: DocumentDuplicateIcon,
+    current: false,
+    submenuItem: true,
+    submenu: [
+      { name: "Customer", href: "/customer", current: false },
     ],
   },
   {
@@ -650,6 +660,7 @@ export default function Main() {
                 <Route path="/grap" element={<LineChart />} />
                 <Route path="/view" element={<View />} />
                 <Route path="/transactions" element={<Transactions />} />
+                <Route path="/customer" element={<Customer />} />
               </Routes>
             </div>
           </main>

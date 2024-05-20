@@ -33,7 +33,6 @@ const AccountCreation = () => {
   const [showFailure, setShowFailure] = useState(false);
   const [messageInfo, setMessageInfo] = useState({ title: "", message: "" });
 
-
   useEffect(() => {
     fetchAccounts();
     fetchSubGroupAccounts();
