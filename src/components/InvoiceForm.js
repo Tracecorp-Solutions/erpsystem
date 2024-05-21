@@ -134,12 +134,24 @@ const InvoiceForm = () => {
     }
   };
 
+  const calculateTotalAmount = () => {
+    let total = 0;
+    items.forEach((item) => {
+      item.billTranItems.forEach((tranItem) => {
+        total += parseFloat(tranItem.amount);
+      });
+    });
+    return total.toFixed(2);
+  };
+
   return (
     <form onSubmit={handleSubmit}>
       <div>
         <div className="sm:flex justify-between items-center mb-8">
           <h2 className="text-2xl font-semibold mb-4">Invoice Creation</h2>
-          <strong className="text-2xl font-semibold">$1,000.00</strong>
+          <strong className="text-2xl font-semibold">
+            ${calculateTotalAmount()}
+          </strong>
         </div>
 
         <div className="max-w-screen-xl mx-auto mt-10 p-6 bg-white rounded-lg">
