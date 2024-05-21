@@ -43,8 +43,7 @@ import View from "./View";
 import TrialBalance from "../pages/TrialBalance";
 import Transactions from "../pages/Transactions";
 import Customer from "../pages/Customer";
-
-
+import BillsForm from "./BillsForm";
 
 const navigation = [
   {
@@ -675,7 +674,7 @@ export default function Main() {
                 <Route path="/view" element={<View />} />
                 <Route path="/transactions" element={<Transactions />} />
                 <Route path="/customer" element={<Customer />} />
-              
+                <Route path="/create-bills" element={<BillsForm/>} />
               </Routes>
             </div>
           </main>
