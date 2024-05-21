@@ -203,7 +203,14 @@ const BillsForm = () => {
 
         <div className="max-w-screen-xl mx-auto mt-10 p-6 bg-white rounded-lg">
           <div className="flex justify-between mb-4">
-            <h2 className="text-2xl font-semibold">Bill Items</h2>
+            <h2 className="text-2xl"
+            style={{
+              
+              fontFamily: "outFit, Sans-serif",
+              width: "150px",
+              paddingBottom: "30px",
+            }}
+            >Bill Items</h2>
             <Button
               type="submit"
               onClick={handleOpenModal}
@@ -223,6 +230,10 @@ const BillsForm = () => {
             <table className="min-w-full divide-y divide-gray-200">
               <thead className="bg-gray-50">
                 <tr>
+                <input
+                    type="checkbox"
+                    style={{ marginLeft: "10px", marginTop: "15px" }}
+                  />
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Description
                   </th>
@@ -237,6 +248,10 @@ const BillsForm = () => {
               <tbody className="bg-white divide-y divide-gray-200">
                 {items.map((item, index) => (
                   <tr key={index}>
+                   <input
+                    type="checkbox"
+                    style={{ marginLeft: "10px", marginTop: "15px" }}
+                  />
                   {item.billTranItems.map((tranItem, index) => (
                     <td key={index} className="px-6 py-4 whitespace-nowrap">
                       {tranItem.description}
