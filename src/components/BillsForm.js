@@ -533,38 +533,46 @@ const BillForm = () => {
             </div>
           </div>
         </div>
-        <div className="mt-4 flex justify-between">
-          <Button
-            type="button"
-            className="py-2 px-4 text-white rounded focus:outline-none"
-            style={{
-              borderRadius: "28px",
-              fontFamily: "outFit, Sans-serif",
-              width: "150px",
-              paddingBottom: "30px",
-              marginRight: "10px",
-              color: "#505050",
-              border: "1px solid #7a7a7a",
-            }}
-            onClick={handleOpenModal}
-          >
-            Add Item
-          </Button>
-          <Button
-            type="submit"
-            className="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none"
-            style={{
-              background: "#4467a1",
-              borderRadius: "28px",
-              fontFamily: "outFit, Sans-serif",
-              width: "150px",
-              paddingBottom: "30px",
-            }}
-            onClick={handleSubmit}
-          >
-            Save Bill
-          </Button>
-        </div>
+        <div className="max-w-screen-xl mx-auto mt-4 flex justify-end">
+        <Button
+          onClick={() =>
+            setBillData({
+              billNumber: "",
+              billDate: "",
+              dueDate: "",
+              vendor: "",
+              itemName: "",
+              amount: "",
+              description: "",
+            })
+          }
+          className="py-2 px-4 text-white rounded focus:outline-none"
+          style={{
+            borderRadius: "28px",
+            fontFamily: "outFit, Sans-serif",
+            width: "150px",
+            paddingBottom: "30px",
+            color: "#505050",
+            marginRight: "15px",
+          }}
+        >
+          Cancel
+        </Button>
+        <Button
+          type="submit"
+          onClick={handleSubmit}
+          className="py-2 px-4 text-white rounded focus:outline-none"
+          style={{
+            background: "#4467a1",
+            borderRadius: "28px",
+            fontFamily: "outFit, Sans-serif",
+            width: "150px",
+            paddingBottom: "30px",
+          }}
+        >
+          Save Bill
+        </Button>
+      </div>
       </div>
       <AddItem
         visible={visible}
