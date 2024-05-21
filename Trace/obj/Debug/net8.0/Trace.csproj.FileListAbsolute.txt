@@ -115,3 +115,13 @@ D:\working directory\erpsystem\Trace\bin\Debug\net8.0\xunit.abstractions.dll
 D:\working directory\erpsystem\Trace\bin\Debug\net8.0\xunit.assert.dll
 D:\working directory\erpsystem\Trace\bin\Debug\net8.0\xunit.core.dll
 D:\working directory\erpsystem\Trace\bin\Debug\net8.0\xunit.execution.dotnet.dll
+D:\working directory\erpsystem\Trace\bin\Debug\net8.0\Microsoft.AspNet.Identity.Core.dll
+D:\working directory\erpsystem\Trace\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+D:\working directory\erpsystem\Trace\bin\Debug\net8.0\Microsoft.IdentityModel.Abstractions.dll
+D:\working directory\erpsystem\Trace\bin\Debug\net8.0\Microsoft.IdentityModel.JsonWebTokens.dll
+D:\working directory\erpsystem\Trace\bin\Debug\net8.0\Microsoft.IdentityModel.Logging.dll
+D:\working directory\erpsystem\Trace\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.dll
+D:\working directory\erpsystem\Trace\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+D:\working directory\erpsystem\Trace\bin\Debug\net8.0\Microsoft.IdentityModel.Tokens.dll
+D:\working directory\erpsystem\Trace\bin\Debug\net8.0\System.IdentityModel.Tokens.Jwt.dll
+D:\working directory\erpsystem\Trace\bin\Debug\net8.0\System.Security.Permissions.dll

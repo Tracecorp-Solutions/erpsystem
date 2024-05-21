@@ -11,6 +11,9 @@ namespace Infrastructure.Data
         public DbSet<GroupAccount> GroupAccounts { get; set; }
         public DbSet<Account> Accounts { get; set; }
 
+        public DbSet<User> Users { get; set; }
+        public DbSet<AuditTrail> AuditTrails { get; set; }  
+
         //public DbSet<Transaction> Transactions { get; set; }
 
         public DbSet<TransactionEntry> transactionEntries { get; set; }
