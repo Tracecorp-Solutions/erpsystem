@@ -141,7 +141,7 @@ const Invoice = () => {
                   scope="col"
                   className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                 >
-                  TOTAL
+                  Amount Due
                 </th>
                 <th
                   scope="col"
@@ -153,7 +153,7 @@ const Invoice = () => {
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
               {invoice
-                .filter((inv) => inv.type === "INVOICE")
+                .filter((inv) => inv.type === "Income")
                 .map((inv, index) => (
                   <tr
                     key={index}
@@ -166,7 +166,7 @@ const Invoice = () => {
                       {inv.status}
                     </td>
                     <td className="px-3 py-4 whitespace-nowrap mt-3 text-sm text-gray-800">
-                      {inv.customer}
+                      {inv.vendor.fullName}
                     </td>
                     <td className="px-3 py-4 whitespace-nowrap mt-3 text-sm text-gray-800">
                       {inv.billDate}
@@ -175,7 +175,7 @@ const Invoice = () => {
                       {inv.billNo}
                     </td>
                     <td className="px-3 py-4 whitespace-nowrap mt-3 text-sm text-gray-800">
-                      {inv.totalAmount}
+                      {inv.billNo}
                     </td>
                     <td className="px-3 py-4 whitespace-nowrap mt-3 text-sm text-gray-800">
                       <div
