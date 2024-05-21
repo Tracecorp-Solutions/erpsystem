@@ -18,6 +18,7 @@ const Invoice = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [showSuccess, setShowSuccess] = useState(false);
   const [drawerVisible, setDrawerVisible] = useState(false);
+  const [total, setTotalAmount] = useState(0);
 
   console.log("invoice details", invoice);
 
@@ -30,6 +31,12 @@ const Invoice = () => {
           `${process.env.REACT_APP_API_URL}/GetAllBills`
         );
         setInvoice(response.data);
+        const total = response.data.reduce(
+          (acc, inv) =>
+            acc + inv.billTranItems.reduce((acc, item) => acc + item.amount, 0),
+          0
+        );
+        setTotalAmount(total);
       } catch (error) {
         setShowFailure(true);
         setMessageInfo({
@@ -58,7 +65,7 @@ const Invoice = () => {
 
   return (
     <div>
-      <InvoiceCard />
+      <InvoiceCard total={total} />
       <div
         style={{
           display: "flex",
