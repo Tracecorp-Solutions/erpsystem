@@ -91,128 +91,134 @@ const Invoice = () => {
           + Create Invoice
         </Button>
       </div>
-     <div style={{
-      background: "#fff",
-      padding: "15px",
-      borderRadius: "24px"
-     }}>
-     <InvoiceNavigationbar />
-
-     <div
+      <div
         style={{
-          display: "flex",
-          justifyContent: "space-between",
-          marginBottom: "10px",
+          background: "#fff",
+          padding: "15px",
+          borderRadius: "24px",
         }}
       >
-        <div style={{ overflowY: "auto", width: "100%" }}>
-          <table className="table-auto min-w-full divide-gray-200">
-            <thead className="bg-gray-50">
-              <tr style={{ borderRadius: "50px" }}>
-                <input
-                  type="checkbox"
-                  style={{ marginLeft: "10px", marginTop: "15px" }}
-                />
-                <th
-                  scope="col"
-                  className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                >
-                  STATUS
-                </th>
-                <th
-                  scope="col"
-                  className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                >
-                  CUSTOMER
-                </th>
-                <th
-                  scope="col"
-                  className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                >
-                  DATE
-                </th>
-                <th
-                  scope="col"
-                  className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                >
-                  NUMBER
-                </th>
-                <th
-                  scope="col"
-                  className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                >
-                  Amount Due
-                </th>
-                <th
-                  scope="col"
-                  className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                >
-                  ACTION
-                </th>
-              </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {invoice
-                .filter((inv) => inv.type === "Income")
-                .map((inv, index) => (
-                  <tr
-                    key={index}
-                    className="px-3 py-4 whitespace-nowrap mt-3 text-sm text-gray-800"
+        <InvoiceNavigationbar />
+
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            marginBottom: "10px",
+          }}
+        >
+          <div style={{ overflowY: "auto", width: "100%" }}>
+            <table className="table-auto min-w-full divide-gray-200">
+              <thead className="bg-gray-50">
+                <tr style={{ borderRadius: "50px" }}>
+                  <input
+                    type="checkbox"
+                    style={{ marginLeft: "10px", marginTop: "15px" }}
+                  />
+                  <th
+                    scope="col"
+                    className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                   >
-                    <td className="px-3 py-4 whitespace-nowrap mt-3 text-sm text-gray-800">
-                      <input type="checkbox" />
-                    </td>
-                    <td className="px-3 py-4 whitespace-nowrap mt-3 text-sm text-gray-800">
-                      {inv.status}
-                    </td>
-                    <td className="px-3 py-4 whitespace-nowrap mt-3 text-sm text-gray-800">
-                      {inv.vendor.fullName}
-                    </td>
-                    <td className="px-3 py-4 whitespace-nowrap mt-3 text-sm text-gray-800">
-                      {inv.billDate}
-                    </td>
-                    <td className="px-3 py-4 whitespace-nowrap mt-3 text-sm text-gray-800">
-                      {inv.billNo}
-                    </td>
-                    <td className="px-3 py-4 whitespace-nowrap mt-3 text-sm text-gray-800">
-                      {inv.billNo}
-                    </td>
-                    <td className="px-3 py-4 whitespace-nowrap mt-3 text-sm text-gray-800">
-                      <div
-                        style={{
-                          width: "100px",
-                          display: "flex",
-                          justifyContent: "center",
-                          marginTop: "10px",
-                        }}
-                      >
-                        <Dropdown
-                          overlay={
-                            <Menu style={{ width: "250px" }}>
-                              <Menu.Item key="1">
-                                <EyeOutlined style={{ marginRight: "5px" }} />
-                                <span>View</span>
-                              </Menu.Item>
-                              <Menu.Item key="2">Action 2</Menu.Item>
-                              <Menu.Item key="3">Action 3</Menu.Item>
-                            </Menu>
-                          }
-                          trigger={["click"]}
+                    STATUS
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    CUSTOMER
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    DATE
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    NUMBER
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    Amount Due
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    ACTION
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200">
+                {invoice
+                  .filter((inv) => inv.type === "Income")
+                  .map((inv, index) => (
+                    <tr
+                      key={index}
+                      className="px-3 py-4 whitespace-nowrap mt-3 text-sm text-gray-800"
+                    >
+                      <td className="px-3 py-4 whitespace-nowrap mt-3 text-sm text-gray-800">
+                        <input type="checkbox" />
+                      </td>
+                      <td className="px-3 py-4 whitespace-nowrap mt-3 text-sm text-gray-800">
+                        {inv.status}
+                      </td>
+                      <td className="px-3 py-4 whitespace-nowrap mt-3 text-sm text-gray-800">
+                        {inv.vendor.fullName}
+                      </td>
+                      <td className="px-3 py-4 whitespace-nowrap mt-3 text-sm text-gray-800">
+                        {inv.billDate}
+                      </td>
+                      <td className="px-3 py-4 whitespace-nowrap mt-3 text-sm text-gray-800">
+                        {inv.billNo}
+                      </td>
+                      <td className="px-3 py-4 whitespace-nowrap mt-3 text-sm text-gray-800">
+                        {inv.billTranItems.reduce(
+                          (total, item) => total + item.amount,
+                          0
+                        )}
+                      </td>
+
+                      <td className="px-3 py-4 whitespace-nowrap mt-3 text-sm text-gray-800">
+                        <div
+                          style={{
+                            width: "100px",
+                            display: "flex",
+                            justifyContent: "center",
+                            marginTop: "10px",
+                          }}
                         >
-                          <EllipsisVerticalIcon
-                            className="h-5 w-5 mt-3"
-                            aria-hidden="true"
-                          />
-                        </Dropdown>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-            </tbody>
-          </table>
+                          <Dropdown
+                            overlay={
+                              <Menu style={{ width: "250px" }}>
+                                <Menu.Item key="1">
+                                  <EyeOutlined style={{ marginRight: "5px" }} />
+                                  <span>View</span>
+                                </Menu.Item>
+                                <Menu.Item key="2">Action 2</Menu.Item>
+                                <Menu.Item key="3">Action 3</Menu.Item>
+                              </Menu>
+                            }
+                            trigger={["click"]}
+                          >
+                            <EllipsisVerticalIcon
+                              className="h-5 w-5 mt-3"
+                              aria-hidden="true"
+                            />
+                          </Dropdown>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
-     </div>
     </div>
   );
 };
