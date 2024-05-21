@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button, Modal } from "antd";
+import axios from "axios";
 
 const InvoiceForm = () => {
   const [formData, setFormData] = useState({
@@ -14,6 +15,38 @@ const InvoiceForm = () => {
 
   const [items, setItems] = useState([]);
   const [visible, setVisible] = useState(false);
+  const [accounts, setAccounts] = useState([]);
+  const [customer, setCustomer] = useState([]);
+  console.log("cusommerrr", customer);
+
+  useEffect(() => {
+    fetchAccounts();
+    fetchCustomer();
+  }, []);
+
+  const fetchAccounts = async () => {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}/GetAccounts`
+      );
+      setAccounts(response.data);
+      console.log("get accounts", response.data);
+    } catch (error) {
+      console.error("Error fetching groups:", error);
+    }
+  };
+
+  const fetchCustomer = async () => {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}/GetAllVendors`
+      );
+      setCustomer(response.data);
+      console.log("get accounts", response.data);
+    } catch (error) {
+      console.error("Error fetching groups:", error);
+    }
+  };
 
   const handleOpenModal = () => {
     setVisible(true);
@@ -86,11 +119,14 @@ const InvoiceForm = () => {
               className="w-full appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             >
               <option value="">Select Customer</option>
-              <option value="customer1">Customer 1</option>
-              <option value="customer2">Customer 2</option>
-              <option value="customer3">Customer 3</option>
+              {customer.map((customerData) => (
+                <option key={customerData.id} value={customerData.fullName}>
+                  {customerData.fullName}
+                </option>
+              ))}
             </select>
           </div>
+
           <div>
             <label className="block text-gray-700 text-sm font-bold mb-2">
               Invoice Number:
@@ -207,7 +243,7 @@ const InvoiceForm = () => {
             fontSize: "36px",
             fontFamily: "sans-serif",
             color: "#505050",
-            marginTop: "15px"
+            marginTop: "15px",
           }}
         >
           Create Invoice Item
@@ -235,15 +271,23 @@ const InvoiceForm = () => {
           >
             Select the account associated with this invoice item
           </p>
-          <input
-            type="text"
+          <select
             id="itemName"
             name="itemName"
             value={formData.itemName}
             onChange={handleChange}
+            required
             className="w-full appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          />
+          >
+            <option value="">Select Account</option>
+            {accounts.map((account) => (
+              <option key={account.id} value={account.name}>
+                {account.name}
+              </option>
+            ))}
+          </select>
         </div>
+
         <div>
           <label
             htmlFor="amount"
