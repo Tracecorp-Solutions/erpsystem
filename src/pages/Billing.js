@@ -141,7 +141,7 @@ const handleSubmit = (e) => {
   };
 
   const handleCreateInvoice = () => {
-    navigate("/create-bill");
+    navigate("/create-bills");
   };
 
   const handleEdit = async (identifier, type = "id") => {
