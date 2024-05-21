@@ -17,7 +17,6 @@ const InvoiceForm = () => {
   const [visible, setVisible] = useState(false);
   const [accounts, setAccounts] = useState([]);
   const [customer, setCustomer] = useState([]);
-  console.log("cusommerrr", customer);
 
   useEffect(() => {
     fetchAccounts();
