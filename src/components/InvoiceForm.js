@@ -64,18 +64,12 @@ const InvoiceForm = () => {
   return (
     <div>
       <div className="sm:flex justify-between items-center mb-8">
-        <h2 className="text-2xl font-semibold mb-4">
-          Invoice Creation
-        </h2>
-        <strong className="text-2xl font-semibold">
-          $1,000.00
-        </strong>
+        <h2 className="text-2xl font-semibold mb-4">Invoice Creation</h2>
+        <strong className="text-2xl font-semibold">$1,000.00</strong>
       </div>
 
       <div className="max-w-screen-xl mx-auto mt-10 p-6 bg-white rounded-lg">
-        <h2 className="text-2xl font-semibold mb-4">
-          Basic Information
-        </h2>
+        <h2 className="text-2xl font-semibold mb-4">Basic Information</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label className="block text-gray-700 text-sm font-bold mb-2">
@@ -102,7 +96,8 @@ const InvoiceForm = () => {
               Invoice Number:
             </label>
             <p className="text-gray-500 text-sm mb-2">
-              Enter unique identifier for this invoice. It's sometimes auto-generated.
+              Enter unique identifier for this invoice. It's sometimes
+              auto-generated.
             </p>
             <input
               type="text"
@@ -150,10 +145,19 @@ const InvoiceForm = () => {
 
       <div className="max-w-screen-xl mx-auto mt-10 p-6 bg-white rounded-lg">
         <div className="flex justify-between mb-4">
-          <h2 className="text-2xl font-semibold">
-            Invoice Items
-          </h2>
-          <Button onClick={handleOpenModal}>
+          <h2 className="text-2xl font-semibold">Invoice Items</h2>
+          <Button
+            type="submit"
+            onClick={handleOpenModal}
+            className="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none"
+            style={{
+              background: "#4467a1",
+              borderRadius: "28px",
+              fontFamily: "outFit, Sans-serif",
+              width: "150px",
+              paddingBottom: "30px",
+            }}
+          >
             + Add Invoice Item
           </Button>
         </div>
@@ -198,9 +202,39 @@ const InvoiceForm = () => {
       </div>
 
       <Modal visible={visible} onCancel={handleCloseModal} footer={null}>
-        <h2>Create Invoice Item</h2>
+        <h2
+          style={{
+            fontSize: "36px",
+            fontFamily: "sans-serif",
+            color: "#505050",
+            marginTop: "15px"
+          }}
+        >
+          Create Invoice Item
+        </h2>
         <div>
-          <label htmlFor="itemName">Item Name:</label>
+          <label
+            htmlFor="itemName"
+            style={{
+              color: "#505050",
+              fontFamily: "sans-serif",
+              fontWeight: "600",
+              fontSize: "16px",
+            }}
+          >
+            Attach Account
+          </label>
+          <p
+            style={{
+              fontWeight: "400",
+              color: "#a1a1a1",
+              fontSize: "14px",
+              fontFamily: "outFit, Sans-serif",
+              marginBottom: "5px",
+            }}
+          >
+            Select the account associated with this invoice item
+          </p>
           <input
             type="text"
             id="itemName"
@@ -211,7 +245,28 @@ const InvoiceForm = () => {
           />
         </div>
         <div>
-          <label htmlFor="amount">Amount:</label>
+          <label
+            htmlFor="amount"
+            style={{
+              color: "#505050",
+              fontFamily: "sans-serif",
+              fontWeight: "600",
+              fontSize: "16px",
+            }}
+          >
+            Item Amount
+          </label>
+          <p
+            style={{
+              fontWeight: "400",
+              color: "#a1a1a1",
+              fontSize: "14px",
+              fontFamily: "outFit, Sans-serif",
+              marginBottom: "5px",
+            }}
+          >
+            Enter the cost of each invoice item
+          </p>
           <input
             type="number"
             id="amount"
@@ -222,7 +277,28 @@ const InvoiceForm = () => {
           />
         </div>
         <div>
-          <label htmlFor="description">Description:</label>
+          <label
+            htmlFor="description"
+            style={{
+              color: "#505050",
+              fontFamily: "sans-serif",
+              fontWeight: "600",
+              fontSize: "16px",
+            }}
+          >
+            Description
+          </label>
+          <p
+            style={{
+              fontWeight: "400",
+              color: "#a1a1a1",
+              fontSize: "14px",
+              fontFamily: "outFit, Sans-serif",
+              marginBottom: "5px",
+            }}
+          >
+            Describe what you are being paid for
+          </p>
           <textarea
             id="description"
             name="description"
@@ -232,26 +308,74 @@ const InvoiceForm = () => {
           ></textarea>
         </div>
         <div className="mt-4 flex justify-between">
-          <Button onClick={handleCloseModal}>Cancel</Button>
-          <Button type="primary" onClick={handleAddItem}>
+          <Button
+            onClick={handleCloseModal}
+            className="py-2 px-4 text-white rounded focus:outline-none"
+            style={{
+              borderRadius: "28px",
+              fontFamily: "outFit, Sans-serif",
+              width: "150px",
+              paddingBottom: "30px",
+              color: "#505050",
+              marginRight: "15px",
+            }}
+          >
+            Cancel
+          </Button>
+          <Button
+            type="primary"
+            onClick={handleAddItem}
+            className="py-2 px-4 text-white rounded focus:outline-none"
+            style={{
+              background: "#4467a1",
+              borderRadius: "28px",
+              fontFamily: "outFit, Sans-serif",
+              width: "150px",
+              paddingBottom: "30px",
+            }}
+          >
             Add Item
           </Button>
         </div>
       </Modal>
 
       <div className="max-w-screen-xl mx-auto mt-4 flex justify-end">
-        <Button className="mr-4" onClick={() => setFormData({
-            invoiceNumber: "",
-            invoiceDate: "",
-            dueDate: "",
-            customer: "",
-            itemName: "",
-            amount: "",
-            description: "",
-          })}>
+        <Button
+          onClick={() =>
+            setFormData({
+              invoiceNumber: "",
+              invoiceDate: "",
+              dueDate: "",
+              customer: "",
+              itemName: "",
+              amount: "",
+              description: "",
+            })
+          }
+          className="py-2 px-4 text-white rounded focus:outline-none"
+          style={{
+            borderRadius: "28px",
+            fontFamily: "outFit, Sans-serif",
+            width: "150px",
+            paddingBottom: "30px",
+            color: "#505050",
+            marginRight: "15px",
+          }}
+        >
           Cancel
         </Button>
-        <Button type="primary" onClick={handleSubmit}>
+        <Button
+          type="submit"
+          onClick={handleSubmit}
+          className="py-2 px-4 text-white rounded focus:outline-none"
+          style={{
+            background: "#4467a1",
+            borderRadius: "28px",
+            fontFamily: "outFit, Sans-serif",
+            width: "150px",
+            paddingBottom: "30px",
+          }}
+        >
           Save Invoice
         </Button>
       </div>
