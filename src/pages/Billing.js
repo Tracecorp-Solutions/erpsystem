@@ -48,6 +48,8 @@ const Bill = () => {
   const [showSuccess, setShowSuccess] = useState(false);
   const [dropdownVisible, setDropdownVisible] = useState(false);
 
+  const navigate = useNavigate();
+
 
  ;useEffect(() => {
   // Fetch all bills when component mounts
@@ -139,7 +141,7 @@ const handleSubmit = (e) => {
   };
 
   const handleCreateInvoice = () => {
-    navigate("/create-invoice");
+    navigate("/create-bill");
   };
 
   const handleEdit = async (identifier, type = "id") => {
@@ -305,7 +307,7 @@ const handleSubmit = (e) => {
             borderRadius: "24px",
             marginTop: "15px",
           }}
-          onClick={handleModal}
+          onClick={handleCreateInvoice}
         >
           + Add Bill
         </Button>
