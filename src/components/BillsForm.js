@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Modal, Form, Input } from "antd";
+import { Button, Modal } from "antd";
 import "../styles/components/InvoiceForm.css";
 
 const AddItem = ({ visible, handleAddItem, handleCloseModal }) => {
@@ -19,7 +19,8 @@ const AddItem = ({ visible, handleAddItem, handleCloseModal }) => {
     setDescription(e.target.value);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
     handleAddItem({ itemName, amount, description });
     setItemName("");
     setAmount("");
@@ -38,7 +39,7 @@ const AddItem = ({ visible, handleAddItem, handleCloseModal }) => {
             fontFamily: "outFit, Sans-serif",
           }}
         >
-          Create Invoice Item
+          Create Bill Items
         </h2>
         <div>
           <label
@@ -61,7 +62,7 @@ const AddItem = ({ visible, handleAddItem, handleCloseModal }) => {
               fontWeight: "400",
             }}
           >
-            Select the account associated with this invoice item
+            Select the account associated with this bill item
           </p>
           <input
             type="text"
@@ -97,7 +98,7 @@ const AddItem = ({ visible, handleAddItem, handleCloseModal }) => {
               fontWeight: "400",
             }}
           >
-            Enter the cost of each invoice item
+            Enter the cost of each bill item
           </p>
           <input
             type="number"
@@ -149,8 +150,8 @@ const AddItem = ({ visible, handleAddItem, handleCloseModal }) => {
         </div>
         <div className="mt-4 flex justify-between">
           <Button
-            type="submit"
-            className="py-2 px-4  text-white rounded focus:outline-none"
+            type="button"
+            className="py-2 px-4 text-white rounded focus:outline-none"
             style={{
               borderRadius: "28px",
               fontFamily: "outFit, Sans-serif",
@@ -183,12 +184,12 @@ const AddItem = ({ visible, handleAddItem, handleCloseModal }) => {
   );
 };
 
-const InvoiceForm = () => {
-  const [invoiceData, setInvoiceData] = useState({
-    invoiceNumber: "",
-    invoiceDate: "",
+const BillForm = () => {
+  const [billData, setBillData] = useState({
+    billNumber: "",
+    billDate: "",
     dueDate: "",
-    customer: "",
+    vendor: "",
   });
 
   const [items, setItems] = useState([]);
@@ -204,26 +205,27 @@ const InvoiceForm = () => {
 
   const handleAddItem = (values) => {
     console.log("Received values:", values);
+    setItems([...items, values]);
     setVisible(false);
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setInvoiceData({
-      ...invoiceData,
+    setBillData({
+      ...billData,
       [name]: value,
     });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Submitted Invoice Data:", invoiceData);
-    setItems([...items, invoiceData]);
-    setInvoiceData({
-      invoiceNumber: "",
-      invoiceDate: "",
+    console.log("Submitted Bill Data:", billData);
+    // Handle bill submission logic here
+    setBillData({
+      billNumber: "",
+      billDate: "",
       dueDate: "",
-      customer: "",
+      vendor: "",
     });
   };
 
@@ -245,7 +247,7 @@ const InvoiceForm = () => {
             fontWeight: "600",
           }}
         >
-          Invoice Creation
+          Bill Creation
         </h2>
         <strong
           className="text-2xl font-semibold"
@@ -256,11 +258,11 @@ const InvoiceForm = () => {
             fontWeight: "600",
           }}
         >
-          $1,000.00
+          $3,000.00
         </strong>
       </div>
 
-      <div className="max-w-screen-xl mx-auto mt-10 p-6 bg-white rounded-lg">
+      <div className="max-w-screen-xl mx-auto mt-7 p-8 bg-white rounded-lg">
         <h2
           className="text-2xl font-semibold mb-4"
           style={{
@@ -283,7 +285,7 @@ const InvoiceForm = () => {
                 fontWeight: "600",
               }}
             >
-              Customer
+              Vendor
             </label>
             <p
               style={{
@@ -293,30 +295,24 @@ const InvoiceForm = () => {
                 fontWeight: "400",
               }}
             >
-              Select the customer associated with this invoice
+              Select the vendor associated with this bill
             </p>
             <select
-              name="customer"
-              value={invoiceData.customer}
+              name="vendor"
+              value={billData.vendor}
               required
               onChange={handleChange}
               className="w-full appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             >
-              <option value="">Select Customer</option>
-              <option value="customer1">Customer 1</option>
-              <option value="customer2">Customer 2</option>
-              <option value="customer3">Customer 3</option>
+              <option value="">Select Vendor</option>
+              <option value="vendor1">Vendor 1</option>
+              <option value="vendor2">Vendor 2</option>
+              <option value="vendor3">Vendor 3</option>
             </select>
           </div>
           <div>
             <label
-              className="
-                block
-                text-gray-700
-                text-sm
-                font-bold
-                mb-2
-                "
+              className="block text-gray-700 text-sm font-bold mb-2"
               style={{
                 fontSize: "16px",
                 fontFamily: "outFit, Sans-serif",
@@ -324,7 +320,7 @@ const InvoiceForm = () => {
                 fontWeight: "600",
               }}
             >
-              Invoice Number:
+              Bill Number
             </label>
             <p
               style={{
@@ -334,13 +330,12 @@ const InvoiceForm = () => {
                 fontWeight: "400",
               }}
             >
-              Enter unique identifier for this invoice. Its sometimes
-              auto-generated.
+              Enter the unique bill number
             </p>
             <input
               type="text"
-              name="invoiceNumber"
-              value={invoiceData.invoiceNumber}
+              name="billNumber"
+              value={billData.billNumber}
               onChange={handleChange}
               required
               className="w-full appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -356,7 +351,7 @@ const InvoiceForm = () => {
                 fontWeight: "600",
               }}
             >
-              Invoice Date
+              Bill Date
             </label>
             <p
               style={{
@@ -366,14 +361,14 @@ const InvoiceForm = () => {
                 fontWeight: "400",
               }}
             >
-              Choose the date the invoice was issued
+              Enter the date of this bill
             </p>
             <input
               type="date"
-              name="invoiceDate"
-              value={invoiceData.invoiceDate}
-              required
+              name="billDate"
+              value={billData.billDate}
               onChange={handleChange}
+              required
               className="w-full appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             />
           </div>
@@ -397,48 +392,100 @@ const InvoiceForm = () => {
                 fontWeight: "400",
               }}
             >
-              Specify when the payment is due
+              Enter the due date for this bill
             </p>
             <input
               type="date"
               name="dueDate"
-              value={invoiceData.dueDate}
+              value={billData.dueDate}
               onChange={handleChange}
               required
               className="w-full appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             />
           </div>
+          <div className="max-w-screen-xl rounded-lg">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              style={{
+                fontSize: "16px",
+                fontFamily: "outFit, Sans-serif",
+                color: "#505050",
+                fontWeight: "600",
+              }}
+            >
+              Description
+            </label>
+            <p
+              style={{
+                color: "#a1a1a1",
+                fontFamily: "outFit, Sans-serif",
+                fontSize: "16px",
+                fontWeight: "400",
+              }}
+            >
+              Provide a detailed description for this bill
+            </p>
+            <textarea
+              name="description"
+              value={billData.description}
+              onChange={handleChange}
+              required
+              className="w-full appearance-none border rounded-xl py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              style={{
+                height: "100px",
+                resize: "vertical",
+                width : "100%",
+              }}
+            />
+          </div>
         </div>
       </div>
-
-      <div
-        className="max-w-screen-xl mx-auto mt-10 p-6 bg-white rounded-lg"
-        style={{ borderRadius: "24px" }}
-      >
-        <div
+      <div className="max-w-screen-xl mx-auto mt-4 p-8 bg-white rounded-lg">
+        <h2
+          className="text-2xl font-semibold mb-4"
           style={{
-            display: "flex",
-            justifyContent: "space-between",
-            marginBottom: "10px",
+            fontFamily: "outFit, Sans-serif",
+            color: "#505050",
+            fontWeight: "600",
+            fontSize: "24px",
           }}
         >
-          <h2
-            className="
-              text-2xl
-              font-semibold
-              mb-4"
+          Add Items
+        </h2>
+        <div className="space-y-4">
+          {items.length > 0 ? (
+            <div>
+              {items.map((item, index) => (
+                <div key={index} className="bg-gray-100 p-4 rounded-lg mb-4">
+                  <p className="font-medium">{item.itemName}</p>
+                  <p>Amount: ${item.amount}</p>
+                  <p>Description: {item.description}</p>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p>No items added yet</p>
+          )}
+        </div>
+        <div className="mt-4 flex justify-between">
+          <Button
+            type="button"
+            className="py-2 px-4 text-white rounded focus:outline-none"
             style={{
+              borderRadius: "28px",
               fontFamily: "outFit, Sans-serif",
-              fontWeight: "600",
+              width: "150px",
+              paddingBottom: "30px",
+              marginRight: "10px",
               color: "#505050",
-              fontSize: "24px",
+              border: "1px solid #7a7a7a",
             }}
+            onClick={handleOpenModal}
           >
-            Invoice Items
-          </h2>
+            Add Item
+          </Button>
           <Button
             type="submit"
-            onClick={handleOpenModal}
             className="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none"
             style={{
               background: "#4467a1",
@@ -447,85 +494,11 @@ const InvoiceForm = () => {
               width: "150px",
               paddingBottom: "30px",
             }}
+            onClick={handleSubmit}
           >
-            + Add Invoice Item
+            Save Bill
           </Button>
         </div>
-        <div>
-          <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
-                <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Invoice Number
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Invoice Date
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Due Date
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Customer
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
-                {items.map((item, index) => (
-                  <tr key={index}>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      {item.invoiceNumber}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      {item.invoiceDate}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      {item.dueDate}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      {item.customer}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-      <div
-        className="mt-4 flex justify-end"
-        style={{
-          width: "90%",
-        }}
-      >
-        <Button
-          type="submit"
-          className="py-2 px-4  text-white rounded focus:outline-none"
-          style={{
-            borderRadius: "28px",
-            fontFamily: "outFit, Sans-serif",
-            width: "150px",
-            paddingBottom: "30px",
-            marginRight: "10px",
-            color: "#505050",
-            border: "1px solid #7a7a7a",
-          }}
-        >
-          Cancel
-        </Button>
-        <Button
-          type="submit"
-          className="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none"
-          style={{
-            background: "#4467a1",
-            borderRadius: "28px",
-            fontFamily: "outFit, Sans-serif",
-            width: "150px",
-            paddingBottom: "30px",
-          }}
-        >
-          Save Invoice
-        </Button>
       </div>
       <AddItem
         visible={visible}
@@ -536,4 +509,4 @@ const InvoiceForm = () => {
   );
 };
 
-export default InvoiceForm;
+export default BillForm;
