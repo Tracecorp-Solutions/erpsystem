@@ -20,6 +20,7 @@ const Invoice = () => {
   const [drawerVisible, setDrawerVisible] = useState(false);
   const [total, setTotalAmount] = useState(0);
   const [paidTotalAmount, setPaidTotalAmount] = useState(0);
+  const [unpaidTotalAmount, setUnpaidTotalAmount] = useState(0);
 
   console.log("invoice details", invoice);
 
@@ -49,6 +50,16 @@ const Invoice = () => {
             0
           );
         setPaidTotalAmount(paidTotal);
+
+        const unpaidTotal = response.data
+        .filter((inv) => inv.status !== "Paid")
+        .reduce(
+          (acc, inv) =>
+            acc +
+            inv.billTranItems.reduce((acc, item) => acc + item.amount, 0),
+          0
+        );
+      setUnpaidTotalAmount(unpaidTotal);
       } catch (error) {
         setShowFailure(true);
         setMessageInfo({
@@ -77,7 +88,7 @@ const Invoice = () => {
 
   return (
     <div>
-      <InvoiceCard total={total} paidTotalAmount={paidTotalAmount} />
+      <InvoiceCard total={total} paidTotalAmount={paidTotalAmount} unpaidTotalAmount={unpaidTotalAmount} />
       <div
         style={{
           display: "flex",
