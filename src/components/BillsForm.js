@@ -441,26 +441,16 @@ const BillForm = () => {
         </div>
       </div>
       <div className="max-w-screen-xl mx-auto mt-4 p-8 bg-white rounded-lg">
-        <h2
-          className="text-2xl font-semibold mb-4"
-          style={{
-            fontFamily: "outFit, Sans-serif",
-            color: "#505050",
-            fontWeight: "600",
-            fontSize: "24px",
-          }}
-        >
-          Add Items
-        </h2>
+        
         <div
-          className="max-w-screen-xl mx-auto mt-10 p-6 bg-white rounded-lg"
+          className="max-w-screen-xl mx-auto mt-5 p-6 bg-white rounded-lg"
           style={{ borderRadius: "24px" }}
         >
           <div
             style={{
               display: "flex",
               justifyContent: "space-between",
-              marginBottom: "10px",
+              marginBottom: "5px",
             }}
           >
             <h2
