@@ -46,7 +46,7 @@ const InvoiceCard = ({ total, paidTotalAmount, unpaidTotalAmount }) => (
           />
           <strong className="text-lg font-semibold text-gray-800">$3000</strong>
         </div>
-        <p className="text-xs text-gray-500">DRAFTED TOTALS</p>
+        <p className="text-xs text-gray-500">PAST DUE INVOICES</p>
       </Card>
     </Col>
     <Col xs={24} sm={12} md={6} lg={6}>

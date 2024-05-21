@@ -6,6 +6,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import InvoiceCard from "../components/InvoiceCard";
 import InvoiceNavigationbar from "../components/InvoicesNavigationbar";
+import InvoiceSidebar from "../components/InvoiceSidebar";
 
 const Invoice = () => {
   const [invoice, setInvoice] = useState([]);
@@ -75,6 +76,11 @@ const Invoice = () => {
 
   const handleCreateInvoice = () => {
     navigate("/create-invoice");
+  };
+
+  const handleViewClick = () => {
+    // Open the sidebar drawer when "View" is clicked
+    setDrawerVisible(true);
   };
 
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -175,12 +181,6 @@ const Invoice = () => {
                   >
                     Amount Due
                   </th>
-                  <th
-                    scope="col"
-                    className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                  >
-                    ACTION
-                  </th>
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
@@ -225,7 +225,7 @@ const Invoice = () => {
                           <Dropdown
                             overlay={
                               <Menu style={{ width: "250px" }}>
-                                <Menu.Item key="1">
+                                <Menu.Item key="1" onClick={handleViewClick}>
                                   <EyeOutlined style={{ marginRight: "5px" }} />
                                   <span>View</span>
                                 </Menu.Item>
@@ -249,6 +249,10 @@ const Invoice = () => {
           </div>
         </div>
       </div>
+      <InvoiceSidebar
+        drawerVisible={drawerVisible}
+        setDrawerVisible={setDrawerVisible}
+      />
     </div>
   );
 };
