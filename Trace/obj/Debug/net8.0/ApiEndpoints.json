@@ -310,6 +310,22 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "Trace.Controllers.VendorController",
+    "Method": "GetVendorsByType",
+    "RelativePath": "GetVendorsByType",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "type",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "Trace.Controllers.TransactionsController",
     "Method": "RecordTransaction",
     "RelativePath": "RecordTransaction",

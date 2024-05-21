@@ -18,27 +18,59 @@ namespace Services.Repositories
         public async Task<Bill> CreateBillAsync(Bill bill)
         {
             if (bill.BillTranItems.Count < 1)
-            {
                 throw new ArgumentException("No transactions entered in the bill");
-            }
-            // Validate transaction items asynchronously
-            foreach (var transaction in bill.BillTranItems)
-            {
-                var accountto = await _context.Accounts.FirstOrDefaultAsync( a => a.Id == transaction.AccountId);
-                if (accountto == null)
-                {
-                    throw new ArgumentException("Account category not specified");
-                }
-            }
-            // Add bill to context and save changes asynchronously
+
+            await ValidateBillType(bill.Type);
+            ValidateBillStatus(bill.Status);
+
+            await ValidateVendorAsync(bill.VendorId);
+
+            await ValidateTransactionItemsAsync(bill.BillTranItems);
+
             _context.Bills.Add(bill);
             await _context.SaveChangesAsync();
 
             return bill;
         }
+
+        private async Task ValidateBillType(string type)
+        {
+            if (type != "Expense" && type != "Income")
+                throw new ArgumentException("Bill type must be either 'Expense' or 'Income'");
+        }   
+
+        private void ValidateBillStatus(string status)
+        {
+            if (status != "Paid" && status != "Unpaid")
+                throw new ArgumentException("Bill status must be either 'Paid' or 'Unpaid'");
+        }
+
+        private async Task ValidateVendorAsync(int vendorId)
+        {
+            var vendor = await _context.Vendors.FirstOrDefaultAsync(v => v.Id == vendorId);
+            if (vendor == null)
+                throw new ArgumentException("Vendor not specified");
+        }
+
+        private async Task ValidateTransactionItemsAsync(List<BillTranItems> transactions)
+        {
+            var accountTasks = transactions.Select(t => ValidateAccountAsync(t.AccountId)).ToList();
+            await Task.WhenAll(accountTasks);
+        }
+
+        private async Task ValidateAccountAsync(int accountId)
+        {
+            var account = await _context.Accounts.FirstOrDefaultAsync(a => a.Id == accountId);
+            if (account == null)
+                throw new ArgumentException("Account category not specified");
+        }
+
         public async Task<IEnumerable<Bill>> GetBills()
         {
-            var bills = await _context.Bills.Include(b => b.BillTranItems).ToListAsync();
+            var bills = await _context.Bills
+                .Include(b => b.BillTranItems)
+                .Include(b => b.Vendor)
+                .ToListAsync();
             return bills;
         }
     }

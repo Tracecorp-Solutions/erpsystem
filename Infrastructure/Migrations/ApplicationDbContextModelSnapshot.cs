@@ -125,7 +125,12 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
+                    b.Property<int>("VendorId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("VendorId");
 
                     b.ToTable("Bills");
                 });
@@ -371,6 +376,17 @@ namespace Infrastructure.Migrations
                     b.HasOne("Core.Models.Vendor", null)
                         .WithOne("Addres")
                         .HasForeignKey("Core.Models.Address", "VendorId");
+                });
+
+            modelBuilder.Entity("Core.Models.Bill", b =>
+                {
+                    b.HasOne("Core.Models.Vendor", "Vendor")
+                        .WithMany()
+                        .HasForeignKey("VendorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Vendor");
                 });
 
             modelBuilder.Entity("Core.Models.BillTranItems", b =>

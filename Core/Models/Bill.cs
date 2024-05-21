@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Core.Models
@@ -20,6 +22,15 @@ namespace Core.Models
         public string? Narration { get; set; }
 
         public string Status { get; set; }
+
+        //vendor foreign key
+        [ForeignKey("Vendor")]
+        public int VendorId { get; set; }
+
+        //navigation property
+        [JsonIgnore]
+        public Vendor? Vendor { get; set; }
+
 
     }
 }
