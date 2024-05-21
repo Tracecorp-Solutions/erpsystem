@@ -64,10 +64,6 @@ const Bill = () => {
     e.preventDefault();
     axios
       .post("http://3.216.182.63:8095/CreateBill", formData, {
-        headers: {
-          accept: "*/*",
-          "Content-Type": "application/json",
-        },
       })
       .then((response) => {
         setShowModal(false);
