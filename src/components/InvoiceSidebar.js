@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Drawer, Modal, Card, Row, Col, Table, Button } from "antd";
 import { XMarkIcon } from "@heroicons/react/24/outline";
+import jsPDF from "jspdf";
 
 export default function InvoiceSidebar({ setDrawerVisible, drawerVisible }) {
   const [modalVisible, setModalVisible] = useState(false);
@@ -35,6 +36,31 @@ export default function InvoiceSidebar({ setDrawerVisible, drawerVisible }) {
       key: "amount",
     },
   ];
+
+  const handleDownloadInvoice = () => {
+    const invoiceData = generateInvoice(tableData);
+    const blob = new Blob([invoiceData], { type: "application/pdf" });
+
+    const link = document.createElement("a");
+    link.href = window.URL.createObjectURL(blob);
+    link.download = "invoice.pdf";
+    link.click();
+  };
+
+  const generateInvoice = (data) => {
+    const doc = new jsPDF();
+
+    doc.setFontSize(16);
+    doc.text("Invoice", 20, 20);
+
+    let y = 30;
+    data.forEach((item, index) => {
+      doc.text(`${index + 1}. ${item.description} - $${item.amount}`, 20, y);
+      y += 10;
+    });
+
+    return doc.output("blob");
+  };
 
   return (
     <>
@@ -242,6 +268,7 @@ export default function InvoiceSidebar({ setDrawerVisible, drawerVisible }) {
               fontFamily: "outFit, Sans-serif",
               borderRadius: "24px",
             }}
+            onClick={handleDownloadInvoice}
           >
             Download Invoice
           </Button>
