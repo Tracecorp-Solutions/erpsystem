@@ -78,19 +78,17 @@ const InvoiceForm = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Submitted Invoice Data:", formData);
-    setItems([...items, formData]);
-    setFormData({
-      invoiceNumber: "",
-      invoiceDate: "",
-      dueDate: "",
-      customer: "",
-      itemName: "",
-      amount: "",
-      description: "",
-    });
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_API_URL}/CreateBill`,
+        formData
+      );
+      console.log("Invoice created successfully:", response.data);
+    } catch (error) {
+      console.error("Error creating invoice:", error);
+    }
   };
 
   return (
