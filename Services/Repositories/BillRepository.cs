@@ -65,13 +65,28 @@ namespace Services.Repositories
                 throw new ArgumentException("Account category not specified");
         }
 
-        public async Task<IEnumerable<Bill>> GetBills()
+        public async Task<IEnumerable<BillViewModel>> GetBills()
         {
             var bills = await _context.Bills
                 .Include(b => b.BillTranItems)
                 .Include(b => b.Vendor)
                 .ToListAsync();
-            return bills;
+
+            // map bills to view model
+            var billviewmodels = bills.Select(b => new BillViewModel
+            {
+                Id = b.Id,
+                BillDate = b.BillDate,
+                DueDate = b.DueDate,
+                BillNo = b.BillNo,
+                BillTranItems = b.BillTranItems,
+                TotalAmount = b.TotalAmount,
+                Type = b.Type,
+                Narration = b.Narration,
+                Status = b.Status,
+                Vendor = b.Vendor
+            });
+            return billviewmodels;
         }
     }
 }

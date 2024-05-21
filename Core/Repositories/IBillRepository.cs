@@ -10,6 +10,6 @@ namespace Core.Repositories
     public interface IBillRepository
     {
         Task<Bill> CreateBillAsync(Bill bill);
-        Task<IEnumerable<Bill>> GetBills();
+        Task<IEnumerable<BillViewModel>> GetBills();
     }
 }
