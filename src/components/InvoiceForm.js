@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Button, Modal } from "antd";
 import axios from "axios";
+import SlideInCard from "./SlideInCard ";
 
 const InvoiceForm = () => {
   const [formData, setFormData] = useState({
@@ -23,6 +24,8 @@ const InvoiceForm = () => {
   const [visible, setVisible] = useState(false);
   const [accounts, setAccounts] = useState([]);
   const [customer, setCustomer] = useState([]);
+  const [isInvoiceCreated, setIsInvoiceCreated] = useState(false);
+  const [message, setMessage] = useState("");
 
   console.log("formDatata", formData);
 
@@ -109,7 +112,8 @@ const InvoiceForm = () => {
         `${process.env.REACT_APP_API_URL}/CreateBill`,
         formData
       );
-      console.log("Invoice created successfully:", response.data);
+      setIsInvoiceCreated(true);
+      setMessage(response.data.message);
     } catch (error) {
       console.error("Error creating invoice:", error);
     }
@@ -396,7 +400,13 @@ const InvoiceForm = () => {
             </Button>
           </div>
         </Modal>
-
+        {isInvoiceCreated && (
+          <SlideInCard
+            message={JSON.stringify(message)}
+            onClose={() => setIsInvoiceCreated(false)}
+            title="Invoices created!"
+          />
+        )}
         <div className="max-w-screen-xl mx-auto mt-4 flex justify-end">
           <Button
             onClick={() =>
