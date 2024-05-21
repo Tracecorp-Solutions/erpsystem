@@ -1,11 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button, Modal } from "antd";
+import axios from "axios";
 import "../styles/components/InvoiceForm.css";
 
 const AddItem = ({ visible, handleAddItem, handleCloseModal }) => {
   const [itemName, setItemName] = useState("");
   const [amount, setAmount] = useState(0);
   const [description, setDescription] = useState("");
+  const [vendors, setVendors] = useState([]);
+  const [showFailure, setShowFailure] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [messageInfo, setMessageInfo] = useState({ title: "", message: "" });
 
   const handleItemNameChange = (e) => {
     setItemName(e.target.value);
@@ -194,6 +199,22 @@ const BillForm = () => {
 
   const [items, setItems] = useState([]);
   const [visible, setVisible] = useState(false);
+  const [vendors, setVendors] = useState([]);
+
+  useEffect(() => {
+    const fetchVendors = async () => {
+      try {
+        const response = await axios.get(
+          "http://3.216.182.63:8095/GetAllVendors"
+        );
+        setVendors(response.data); // Assuming the response data is an array of vendors
+      } catch (error) {
+        console.error("Error fetching vendors:", error);
+      }
+    };
+
+    fetchVendors();
+  }, []);
 
   const handleOpenModal = () => {
     setVisible(true);
@@ -302,12 +323,14 @@ const BillForm = () => {
               value={billData.vendor}
               required
               onChange={handleChange}
-              className="w-full appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="w-full appearance-none border rounded py-2 px-3 text-gray-900 leading-tight focus:outline-none focus:shadow-outline"
             >
               <option value="">Select Vendor</option>
-              <option value="vendor1">Vendor 1</option>
-              <option value="vendor2">Vendor 2</option>
-              <option value="vendor3">Vendor 3</option>
+              {vendors.map((vendor) => (
+                <option key={vendor.id} value={vendor.id}>
+                  {vendor.name}
+                </option>
+              ))}
             </select>
           </div>
           <div>
@@ -441,7 +464,6 @@ const BillForm = () => {
         </div>
       </div>
       <div className="max-w-screen-xl mx-auto mt-4 p-8 bg-white rounded-lg">
-        
         <div
           className="max-w-screen-xl mx-auto mt-5 p-6 bg-white rounded-lg"
           style={{ borderRadius: "24px" }}
@@ -465,7 +487,7 @@ const BillForm = () => {
                 fontSize: "24px",
               }}
             >
-              Invoice Items
+              Bill Items
             </h2>
             <Button
               type="submit"
@@ -479,7 +501,7 @@ const BillForm = () => {
                 paddingBottom: "30px",
               }}
             >
-              + Add Invoice Item
+              + Add bill Item
             </Button>
           </div>
           <div>
@@ -524,45 +546,45 @@ const BillForm = () => {
           </div>
         </div>
         <div className="max-w-screen-xl mx-auto mt-4 flex justify-end">
-        <Button
-          onClick={() =>
-            setBillData({
-              billNumber: "",
-              billDate: "",
-              dueDate: "",
-              vendor: "",
-              itemName: "",
-              amount: "",
-              description: "",
-            })
-          }
-          className="py-2 px-4 text-white rounded focus:outline-none"
-          style={{
-            borderRadius: "28px",
-            fontFamily: "outFit, Sans-serif",
-            width: "150px",
-            paddingBottom: "30px",
-            color: "#505050",
-            marginRight: "15px",
-          }}
-        >
-          Cancel
-        </Button>
-        <Button
-          type="submit"
-          onClick={handleSubmit}
-          className="py-2 px-4 text-white rounded focus:outline-none"
-          style={{
-            background: "#4467a1",
-            borderRadius: "28px",
-            fontFamily: "outFit, Sans-serif",
-            width: "150px",
-            paddingBottom: "30px",
-          }}
-        >
-          Save Bill
-        </Button>
-      </div>
+          <Button
+            onClick={() =>
+              setBillData({
+                billNumber: "",
+                billDate: "",
+                dueDate: "",
+                vendor: "",
+                itemName: "",
+                amount: "",
+                description: "",
+              })
+            }
+            className="py-2 px-4 text-white rounded focus:outline-none"
+            style={{
+              borderRadius: "28px",
+              fontFamily: "outFit, Sans-serif",
+              width: "150px",
+              paddingBottom: "30px",
+              color: "#505050",
+              marginRight: "15px",
+            }}
+          >
+            Cancel
+          </Button>
+          <Button
+            type="submit"
+            onClick={handleSubmit}
+            className="py-2 px-4 text-white rounded focus:outline-none"
+            style={{
+              background: "#4467a1",
+              borderRadius: "28px",
+              fontFamily: "outFit, Sans-serif",
+              width: "150px",
+              paddingBottom: "30px",
+            }}
+          >
+            Save Bill
+          </Button>
+        </div>
       </div>
       <AddItem
         visible={visible}
