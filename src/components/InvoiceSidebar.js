@@ -88,7 +88,7 @@ export default function InvoiceSidebar({ setDrawerVisible, drawerVisible }) {
           >
             <span className="absolute -inset-2.5" />
             <span className="sr-only">Close panel</span>
-            <XMarkIcon className="h-10 w-10" aria-hidden="true" />
+            <XMarkIcon className="h-10 w-10" aria-hidden="true" style={{ color: "#505050" }} />
           </button>
         </div>
         <div id="invoiceContent">
