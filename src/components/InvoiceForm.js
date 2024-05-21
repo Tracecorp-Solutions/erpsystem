@@ -112,8 +112,23 @@ const InvoiceForm = () => {
         `${process.env.REACT_APP_API_URL}/CreateBill`,
         formData
       );
+      setFormData({
+        billDate: "",
+        dueDate: "",
+        billNo: "",
+        billTranItems: [
+          {
+            accountId: "",
+            amount: "",
+            description: "",
+          },
+        ],
+        vendorId: "",
+        type: "Income",
+        status: "Paid",
+      });
       setIsInvoiceCreated(true);
-      setMessage(response.data.message);
+      setMessage(response.data);
     } catch (error) {
       console.error("Error creating invoice:", error);
     }
