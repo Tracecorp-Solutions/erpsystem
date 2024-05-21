@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, } from "react";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 import { Dropdown, Menu, Button, Pagination } from "antd";
 import { EyeOutlined, EditOutlined } from "@ant-design/icons";
 import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
@@ -135,6 +136,10 @@ const handleSubmit = (e) => {
     } catch (error) {
       console.error("Error fetching vendor details:", error);
     }
+  };
+
+  const handleCreateInvoice = () => {
+    navigate("/create-invoice");
   };
 
   const handleEdit = async (identifier, type = "id") => {
