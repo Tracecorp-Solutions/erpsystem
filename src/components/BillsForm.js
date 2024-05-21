@@ -227,7 +227,7 @@ const BillsForm = () => {
                     Description
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Account
+                    Account
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Amount Due
@@ -237,19 +237,22 @@ const BillsForm = () => {
               <tbody className="bg-white divide-y divide-gray-200">
                 {items.map((item, index) => (
                   <tr key={index}>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      {item.billDescription}
+                  {item.billTranItems.map((tranItem, index) => (
+                    <td key={index} className="px-6 py-4 whitespace-nowrap">
+                      {tranItem.description}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      {item.billAccount}
+                  ))}
+                  {item.billTranItems.map((tranItem, index) => (
+                    <td key={index} className="px-6 py-4 whitespace-nowrap">
+                      {tranItem.account}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      {item.dueDate}
+                  ))}
+                  {item.billTranItems.map((tranItem, index) => (
+                    <td key={index} className="px-6 py-4 whitespace-nowrap">
+                      {tranItem.amount}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      {item.vendor}
-                    </td>
-                  </tr>
+                  ))}
+                </tr>
                 ))}
               </tbody>
             </table>
