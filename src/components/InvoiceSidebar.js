@@ -35,6 +35,7 @@ export default function InvoiceSidebar({ setDrawerVisible, drawerVisible }) {
       title: "Amount",
       dataIndex: "amount",
       key: "amount",
+      render: (text) => `$${text}`,
     },
   ];
 
@@ -59,6 +60,11 @@ export default function InvoiceSidebar({ setDrawerVisible, drawerVisible }) {
       doc.save("invoice.pdf");
     });
   };
+
+   const totalAmount = tableData.reduce((acc, curr) => acc + curr.amount, 0);
+
+   const tableDataWithTotal = [...tableData, { key: "total", description: "GRAND TOTAL:", amount: totalAmount }];
+ 
 
   return (
     <>
@@ -87,8 +93,7 @@ export default function InvoiceSidebar({ setDrawerVisible, drawerVisible }) {
         </div>
         <div id="invoiceContent">
           <div className="px- text-end" style={{
-            marginLeft: "20px",
-            marginRight: "20px"
+            marginLeft: "27px",
           }}>
             <h2
               style={{
@@ -247,7 +252,7 @@ export default function InvoiceSidebar({ setDrawerVisible, drawerVisible }) {
             Invoice Items
           </h2>
           <Table
-            dataSource={tableData}
+            dataSource={tableDataWithTotal}
             columns={columns}
             pagination={false}
             style={{ marginTop: "20px",  marginLeft: "20px",
