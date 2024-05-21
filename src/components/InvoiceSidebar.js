@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Drawer, Modal, Card, Row, Col, Table } from "antd";
+import { Drawer, Modal, Card, Row, Col, Table, Button } from "antd";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 
 export default function InvoiceSidebar({ setDrawerVisible, drawerVisible }) {
@@ -216,6 +216,36 @@ export default function InvoiceSidebar({ setDrawerVisible, drawerVisible }) {
           pagination={false}
           style={{ marginTop: "20px" }}
         />
+        <div
+          style={{
+            marginTop: "30px",
+            display: "flex",
+            justifyContent: "space-between",
+          }}
+        >
+          <Button
+            type="default"
+            onClick={() => setDrawerVisible(false)}
+            style={{
+              width: "150px",
+              borderRadius: "24px",
+            }}
+          >
+            Cancel
+          </Button>
+          <Button
+            type="button"
+            style={{
+              marginLeft: "10px",
+              background: "#4467a1",
+              color: "#fff",
+              fontFamily: "outFit, Sans-serif",
+              borderRadius: "24px",
+            }}
+          >
+            Download Invoice
+          </Button>
+        </div>
         <Modal
           visible={modalVisible}
           onCancel={() => setModalVisible(false)}
