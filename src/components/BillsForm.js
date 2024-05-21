@@ -434,7 +434,7 @@ const BillForm = () => {
               style={{
                 height: "100px",
                 resize: "vertical",
-                width : "100%",
+                width: "100%",
               }}
             />
           </div>
@@ -452,20 +452,86 @@ const BillForm = () => {
         >
           Add Items
         </h2>
-        <div className="space-y-4">
-          {items.length > 0 ? (
-            <div>
-              {items.map((item, index) => (
-                <div key={index} className="bg-gray-100 p-4 rounded-lg mb-4">
-                  <p className="font-medium">{item.itemName}</p>
-                  <p>Amount: ${item.amount}</p>
-                  <p>Description: {item.description}</p>
-                </div>
-              ))}
+        <div
+          className="max-w-screen-xl mx-auto mt-10 p-6 bg-white rounded-lg"
+          style={{ borderRadius: "24px" }}
+        >
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              marginBottom: "10px",
+            }}
+          >
+            <h2
+              className="
+              text-2xl
+              font-semibold
+              mb-4"
+              style={{
+                fontFamily: "outFit, Sans-serif",
+                fontWeight: "600",
+                color: "#505050",
+                fontSize: "24px",
+              }}
+            >
+              Invoice Items
+            </h2>
+            <Button
+              type="submit"
+              onClick={handleOpenModal}
+              className="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none"
+              style={{
+                background: "#4467a1",
+                borderRadius: "28px",
+                fontFamily: "outFit, Sans-serif",
+                width: "150px",
+                paddingBottom: "30px",
+              }}
+            >
+              + Add Invoice Item
+            </Button>
+          </div>
+          <div>
+            <div className="overflow-x-auto">
+              <table className="min-w-full divide-y divide-gray-200">
+                <thead className="bg-gray-50">
+                  <tr>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Bill Number
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Bill Date
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Due Date
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Vendor
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200">
+                  {items.map((item, index) => (
+                    <tr key={index}>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        {item.billNumber}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        {item.billDate}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        {item.dueDate}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        {item.customer}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
-          ) : (
-            <p>No items added yet</p>
-          )}
+          </div>
         </div>
         <div className="mt-4 flex justify-between">
           <Button
