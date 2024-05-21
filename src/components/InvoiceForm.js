@@ -4,19 +4,25 @@ import axios from "axios";
 
 const InvoiceForm = () => {
   const [formData, setFormData] = useState({
-    invoiceNumber: "",
-    invoiceDate: "",
+    billDate: "",
     dueDate: "",
-    customer: "",
-    itemName: "",
-    amount: "",
-    description: "",
+    billTranItems: [
+      {
+        accountId: "",
+        amount: "",
+      },
+    ],
+    vendorId: "",
+    narration: "",
+    type: "Income",
   });
 
   const [items, setItems] = useState([]);
   const [visible, setVisible] = useState(false);
   const [accounts, setAccounts] = useState([]);
   const [customer, setCustomer] = useState([]);
+
+  console.log("formDatata", formData);
 
   useEffect(() => {
     fetchAccounts();
@@ -60,22 +66,46 @@ const InvoiceForm = () => {
     setVisible(false);
     setItems([...items, formData]);
     setFormData({
-      invoiceNumber: "",
-      invoiceDate: "",
+      billDate: "",
       dueDate: "",
-      customer: "",
-      itemName: "",
-      amount: "",
-      description: "",
+      billNo: "",
+      billTranItems: [
+        {
+          accountId: "",
+          amount: "",
+        },
+      ],
+      vendorId: "",
+      narration: "",
+      type: "Income",
     });
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+    if (name === "customer") {
+      setFormData({
+        ...formData,
+        vendorId: value,
+      });
+    } else if (name === "itemName") {
+      const updatedItem = { ...formData.billTranItems[0], accountId: value };
+      setFormData({
+        ...formData,
+        billTranItems: [updatedItem],
+      });
+    } else if (name === "amount") {
+      const updatedItem = { ...formData.billTranItems[0], amount: value };
+      setFormData({
+        ...formData,
+        billTranItems: [updatedItem],
+      });
+    } else {
+      setFormData({
+        ...formData,
+        [name]: value,
+      });
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -110,14 +140,14 @@ const InvoiceForm = () => {
             </p>
             <select
               name="customer"
-              value={formData.customer}
+              value={formData.vendorId}
               onChange={handleChange}
               required
               className="w-full appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             >
               <option value="">Select Customer</option>
               {customer.map((customerData) => (
-                <option key={customerData.id} value={customerData.fullName}>
+                <option key={customerData.id} value={customerData.id}>
                   {customerData.fullName}
                 </option>
               ))}
@@ -150,8 +180,8 @@ const InvoiceForm = () => {
             </p>
             <input
               type="date"
-              name="invoiceDate"
-              value={formData.invoiceDate}
+              name="billDate"
+              value={formData.billDate}
               onChange={handleChange}
               required
               className="w-full appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -271,14 +301,14 @@ const InvoiceForm = () => {
           <select
             id="itemName"
             name="itemName"
-            value={formData.itemName}
+            value={formData.billTranItems.accountId}
             onChange={handleChange}
             required
             className="w-full appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           >
             <option value="">Select Account</option>
             {accounts.map((account) => (
-              <option key={account.id} value={account.name}>
+              <option key={account.id} value={account.id}>
                 {account.name}
               </option>
             ))}
@@ -312,7 +342,7 @@ const InvoiceForm = () => {
             type="number"
             id="amount"
             name="amount"
-            value={formData.amount}
+            value={formData.billTranItems.amount}
             onChange={handleChange}
             className="w-full appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           />
@@ -341,9 +371,9 @@ const InvoiceForm = () => {
             Describe what you are being paid for
           </p>
           <textarea
-            id="description"
-            name="description"
-            value={formData.description}
+            id="narration"
+            name="narration"
+            value={formData.narration}
             onChange={handleChange}
             className="w-full appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           ></textarea>
