@@ -83,6 +83,8 @@ const EditInvoiceForm = () => {
         billNo,
         billTranItems,
         vendorId,
+        type,
+        status
       }));
     } catch (error) {
       console.error("Error fetching bill:", error);
@@ -141,10 +143,11 @@ const EditInvoiceForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("Submitting with id:", id);
+    const updataFormData = {...formData, id}
     try {
-      const response = await axios.post(
-        `${process.env.REACT_APP_API_URL}/UpdateBill/${id}`,
-        formData
+      const response = await axios.put(
+        `${process.env.REACT_APP_API_URL}/UpdateBill`,
+        updataFormData
       );
       setIsInvoiceCreated(true);
       setMessage(response.data);
