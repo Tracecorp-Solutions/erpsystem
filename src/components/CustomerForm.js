@@ -585,6 +585,7 @@ const CustomerForm = ({
                   onChange={handleChange}
                   className="w-full px-3 py-2 border rounded-md"
                 >
+                  <option value="">Select Subgroup</option>{" "}
                   {subGroupAccounts.map((subGroup, index) => (
                     <option key={index} value={subGroup.subGroupAccount.id}>
                       {subGroup.subGroupAccount.name}
@@ -592,6 +593,7 @@ const CustomerForm = ({
                   ))}
                 </select>
               </div>
+
               <div className="mb-4">
                 <label
                   className="block mb-2"
@@ -622,6 +624,8 @@ const CustomerForm = ({
                   onChange={handleChange}
                   className="w-full px-3 py-2 border rounded-md"
                 >
+                  <option value="">Choose Account</option>{" "}
+                  {/* Default option */}
                   {accounts.map((account, index) => (
                     <option key={index} value={account.id}>
                       {account.name}
@@ -665,6 +669,7 @@ const CustomerForm = ({
                   }
                   className="w-full px-3 py-2 border rounded-md"
                 >
+                  <option value="">Choose Status</option> {/* Default option */}
                   <option value="true">Active</option>
                   <option value="false">Inactive</option>
                 </select>
