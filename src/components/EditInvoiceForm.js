@@ -12,8 +12,8 @@ const EditInvoiceForm = () => {
     billNo: "",
     billTranItems: [],
     vendorId: "",
-    type: "",
-    status: "",
+    type: "Income",
+    status: "Unpaid",
   });
   const [items, setItems] = useState([]);
   const [visible, setVisible] = useState(false);
@@ -22,10 +22,12 @@ const EditInvoiceForm = () => {
   const [isInvoiceCreated, setIsInvoiceCreated] = useState(false);
   const [message, setMessage] = useState("");
 
+  console.log("updating invoices", formData);
+
   useEffect(() => {
     fetchAccounts();
     fetchCustomer();
-    fetchBillById(id); // Fetch bill data by ID when component mounts
+    fetchBillById(id);
   }, [id]);
 
   const fetchAccounts = async () => {
@@ -93,13 +95,6 @@ const EditInvoiceForm = () => {
     setItems([...items, formData]);
     setFormData({
       ...formData,
-      billTranItems: [
-        {
-          accountId: "",
-          amount: "",
-          description: "",
-        },
-      ],
     });
   };
 
@@ -107,7 +102,12 @@ const EditInvoiceForm = () => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
-      [name]: value,
+      billTranItems: [
+        {
+          ...formData.billTranItems[0],
+          [name]: value,
+        },
+      ],
     });
   };
 
@@ -293,7 +293,7 @@ const EditInvoiceForm = () => {
           </h2>
           <div>
             <label
-              htmlFor="itemName"
+              htmlFor="accountId"
               style={{
                 color: "#505050",
                 fontFamily: "sans-serif",
@@ -315,8 +315,8 @@ const EditInvoiceForm = () => {
               Select the account associated with this invoice item
             </p>
             <select
-              id="itemName"
-              name="itemName"
+              id="accountId"
+              name="accountId"
               value={
                 formData.billTranItems.length > 0
                   ? formData.billTranItems[0].accountId

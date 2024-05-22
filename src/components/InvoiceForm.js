@@ -17,7 +17,7 @@ const InvoiceForm = () => {
     ],
     vendorId: "",
     type: "Income",
-    status: "Paid",
+    status: "Unpaid",
   });
 
   const [items, setItems] = useState([]);
