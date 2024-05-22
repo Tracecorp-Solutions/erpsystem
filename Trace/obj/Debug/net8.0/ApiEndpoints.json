@@ -220,6 +220,22 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "Trace.Controllers.BillController",
+    "Method": "GetBillById",
+    "RelativePath": "GetBillById/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "Trace.Controllers.GroupAccountsController",
     "Method": "GetGroupAccountById",
     "RelativePath": "GetGroupAccountById",
@@ -362,6 +378,22 @@
       {
         "Name": "account",
         "Type": "Core.Models.Account",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Trace.Controllers.BillController",
+    "Method": "UpdateBill",
+    "RelativePath": "UpdateBill",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "bill",
+        "Type": "Core.Models.Bill",
         "IsRequired": true
       }
     ],

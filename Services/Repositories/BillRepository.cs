@@ -130,7 +130,7 @@ namespace Services.Repositories
 
             await ValidateTransactionItemsAsync(bill.BillTranItems);
 
-            _context.Bills.Update(bill);
+            _context.Entry(existingBill).CurrentValues.SetValues(bill);//.Update(bill);
             await _context.SaveChangesAsync();
         }
     }
