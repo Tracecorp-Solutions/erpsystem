@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Button, Modal } from "antd";
-import { ArrowLeftOutlined  } from "@ant-design/icons";
+import { ArrowLeftOutlined } from "@ant-design/icons";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 import SlideInCard from "./SlideInCard ";
@@ -178,7 +178,8 @@ const EditInvoiceForm = () => {
     <form onSubmit={handleSubmit}>
       <div>
         <div className="sm:flex justify-between items-center mb-8">
-          <h2 className="text-2xl font-semibold mb-4"
+          <h2
+            className="text-2xl font-semibold mb-4"
             style={{ display: "flex", cursor: "pointer" }}
             onClick={() => navigate("/invoice")}
           >
@@ -490,17 +491,13 @@ const EditInvoiceForm = () => {
         )}
         <div className="max-w-screen-xl mx-auto mt-4 flex justify-end">
           <Button
-            onClick={() =>
-              setFormData({
-                invoiceNumber: "",
-                invoiceDate: "",
-                dueDate: "",
-                customer: "",
-                itemName: "",
-                amount: "",
-                description: "",
-              })
-            }
+            onClick={() => {
+              setFormData((prevFormData) => ({
+                ...prevFormData,
+                billTranItems: [],
+              }));
+              setItems([]);
+            }}
             className="py-2 px-4 text-white rounded focus:outline-none"
             style={{
               borderRadius: "28px",
@@ -513,6 +510,7 @@ const EditInvoiceForm = () => {
           >
             Cancel
           </Button>
+
           <Button
             htmlType="submit"
             className="py-2 px-4 text-white rounded focus:outline-none"

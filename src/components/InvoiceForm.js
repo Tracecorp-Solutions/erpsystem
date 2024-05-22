@@ -135,7 +135,8 @@ const InvoiceForm = () => {
     <form onSubmit={handleSubmit}>
       <div>
         <div className="sm:flex justify-between items-center mb-8">
-        <h2 className="text-2xl font-semibold mb-4"
+          <h2
+            className="text-2xl font-semibold mb-4"
             style={{ display: "flex", cursor: "pointer" }}
             onClick={() => navigate("/invoice")}
           >
@@ -282,7 +283,8 @@ const InvoiceForm = () => {
         </div>
 
         <Modal visible={visible} onCancel={handleCloseModal} footer={null}>
-        <h2 className="text-2xl font-semibold mb-4"
+          <h2
+            className="text-2xl font-semibold mb-4"
             style={{ display: "flex", cursor: "pointer" }}
             onClick={() => navigate("/invoice")}
           >
@@ -438,17 +440,13 @@ const InvoiceForm = () => {
         )}
         <div className="max-w-screen-xl mx-auto mt-4 flex justify-end">
           <Button
-            onClick={() =>
-              setFormData({
-                invoiceNumber: "",
-                invoiceDate: "",
-                dueDate: "",
-                customer: "",
-                itemName: "",
-                amount: "",
-                description: "",
-              })
-            }
+            onClick={() => {
+              setFormData((prevFormData) => ({
+                ...prevFormData,
+                billTranItems: [],
+              }));
+              setItems([]);
+            }}
             className="py-2 px-4 text-white rounded focus:outline-none"
             style={{
               borderRadius: "28px",
@@ -461,6 +459,7 @@ const InvoiceForm = () => {
           >
             Cancel
           </Button>
+
           <Button
             htmlType="submit"
             className="py-2 px-4 text-white rounded focus:outline-none"
