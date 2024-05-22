@@ -23,6 +23,7 @@ const EditInvoiceForm = () => {
   const [message, setMessage] = useState("");
 
   console.log("updating invoices", formData);
+  console.log("custmoner iddd", customer);
 
   useEffect(() => {
     fetchAccounts();
@@ -46,7 +47,14 @@ const EditInvoiceForm = () => {
       const response = await axios.get(
         `${process.env.REACT_APP_API_URL}/GetAllVendors`
       );
-      setCustomer(response.data);
+      const customerData = response.data;
+      const defaultCustomerId =
+        customerData.length > 0 ? customerData[0].id : "";
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        vendorId: defaultCustomerId,
+      }));
+      setCustomer(customerData);
     } catch (error) {
       console.error("Error fetching customers:", error);
     }
@@ -113,6 +121,7 @@ const EditInvoiceForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log("Submitting with id:", id);
     try {
       const response = await axios.post(
         `${process.env.REACT_APP_API_URL}/UpdateBill/${id}`,
