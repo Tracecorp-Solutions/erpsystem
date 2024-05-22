@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Button, Modal } from "antd";
+import { ArrowLeftOutlined  } from "@ant-design/icons";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import SlideInCard from "./SlideInCard ";
 
 const EditInvoiceForm = () => {
@@ -22,7 +23,7 @@ const EditInvoiceForm = () => {
   const [isInvoiceCreated, setIsInvoiceCreated] = useState(false);
   const [message, setMessage] = useState("");
 
-  console.log("updating invoices", formData);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchAccounts();
@@ -84,7 +85,7 @@ const EditInvoiceForm = () => {
         billTranItems,
         vendorId,
         type,
-        status
+        status,
       }));
     } catch (error) {
       console.error("Error fetching bill:", error);
@@ -109,7 +110,7 @@ const EditInvoiceForm = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    if (name === "customer") {
+    if (name === "vendorId") {
       setFormData({
         ...formData,
         vendorId: value,
@@ -143,7 +144,7 @@ const EditInvoiceForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("Submitting with id:", id);
-    const updataFormData = {...formData, id}
+    const updataFormData = { ...formData, id };
     try {
       const response = await axios.put(
         `${process.env.REACT_APP_API_URL}/UpdateBill`,
@@ -177,7 +178,19 @@ const EditInvoiceForm = () => {
     <form onSubmit={handleSubmit}>
       <div>
         <div className="sm:flex justify-between items-center mb-8">
-          <h2 className="text-2xl font-semibold mb-4">Invoice Creation</h2>
+          <h2 className="text-2xl font-semibold mb-4"
+            style={{ display: "flex", cursor: "pointer" }}
+            onClick={() => navigate("/invoice")}
+          >
+            <ArrowLeftOutlined
+              style={{
+                fontSize: "24px",
+                marginRight: "8px",
+                marginBottom: "15px",
+              }}
+            />
+            <h2 className="text-2xl font-semibold mb-4">Edit Invoice</h2>
+          </h2>
           <strong className="text-2xl font-semibold">
             ${calculateTotalAmount()}
           </strong>
@@ -320,7 +333,7 @@ const EditInvoiceForm = () => {
               marginTop: "15px",
             }}
           >
-            Create Invoice Item
+            Edit Invoice Item
           </h2>
           <div>
             <label

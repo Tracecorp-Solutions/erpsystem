@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Button, Modal } from "antd";
 import axios from "axios";
+import { ArrowLeftOutlined } from "@ant-design/icons";
+import { useNavigate } from "react-router-dom";
 import SlideInCard from "./SlideInCard ";
 
 const InvoiceForm = () => {
@@ -27,7 +29,7 @@ const InvoiceForm = () => {
   const [isInvoiceCreated, setIsInvoiceCreated] = useState(false);
   const [message, setMessage] = useState("");
 
-  console.log("formDatata", formData);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchAccounts();
@@ -133,7 +135,19 @@ const InvoiceForm = () => {
     <form onSubmit={handleSubmit}>
       <div>
         <div className="sm:flex justify-between items-center mb-8">
-          <h2 className="text-2xl font-semibold mb-4">Invoice Creation</h2>
+        <h2 className="text-2xl font-semibold mb-4"
+            style={{ display: "flex", cursor: "pointer" }}
+            onClick={() => navigate("/invoice")}
+          >
+            <ArrowLeftOutlined
+              style={{
+                fontSize: "24px",
+                marginRight: "8px",
+                marginBottom: "15px",
+              }}
+            />
+            <h2 className="text-2xl font-semibold mb-4">Invoice Creation</h2>
+          </h2>
           <strong className="text-2xl font-semibold">
             ${calculateTotalAmount()}
           </strong>
@@ -268,15 +282,18 @@ const InvoiceForm = () => {
         </div>
 
         <Modal visible={visible} onCancel={handleCloseModal} footer={null}>
-          <h2
-            style={{
-              fontSize: "36px",
-              fontFamily: "sans-serif",
-              color: "#505050",
-              marginTop: "15px",
-            }}
+        <h2 className="text-2xl font-semibold mb-4"
+            style={{ display: "flex", cursor: "pointer" }}
+            onClick={() => navigate("/invoice")}
           >
-            Create Invoice Item
+            <ArrowLeftOutlined
+              style={{
+                fontSize: "24px",
+                marginRight: "8px",
+                marginBottom: "15px",
+              }}
+            />
+            <h2 className="text-2xl font-semibold mb-4">Invoice Creation</h2>
           </h2>
           <div>
             <label

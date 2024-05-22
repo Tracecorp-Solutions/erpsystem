@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Dropdown, Menu, Button, Pagination } from "antd";
 import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
-import { EyeOutlined } from "@ant-design/icons";
+import { EyeOutlined, ArrowLeftOutlined } from "@ant-design/icons";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import InvoiceCard from "../components/InvoiceCard";
