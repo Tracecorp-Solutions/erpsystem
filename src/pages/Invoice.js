@@ -78,6 +78,10 @@ const Invoice = () => {
     navigate("/create-invoice");
   };
 
+  const handleEditInvoice = (id) => {
+    navigate(`/edit-invoice/${id}`)
+  }
+
   const handleViewClick = () => {
     // Open the sidebar drawer when "View" is clicked
     setDrawerVisible(true);
@@ -181,6 +185,12 @@ const Invoice = () => {
                   >
                     Amount Due
                   </th>
+                  <th
+                    scope="col"
+                    className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    Action
+                  </th>
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
@@ -229,7 +239,7 @@ const Invoice = () => {
                                   <EyeOutlined style={{ marginRight: "5px" }} />
                                   <span>View</span>
                                 </Menu.Item>
-                                <Menu.Item key="2">Action 2</Menu.Item>
+                                <Menu.Item key="2" onClick={() => handleEditInvoice(inv.id)}>Edit View</Menu.Item>
                                 <Menu.Item key="3">Action 3</Menu.Item>
                               </Menu>
                             }
