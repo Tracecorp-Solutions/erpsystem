@@ -172,7 +172,7 @@ const EditInvoiceForm = () => {
                 Select the customer associated with this invoice
               </p>
               <select
-                name="customer"
+                name="vendorId"
                 value={formData.vendorId}
                 onChange={handleChange}
                 required
