@@ -13,5 +13,6 @@ namespace Core.Repositories
         Task<IEnumerable<BillViewModel>> GetBills();
 
         Task<BillViewModel> GetBillById(int id);
+        Task UpdateBill(Bill bill);
     }
 }

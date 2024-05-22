@@ -116,5 +116,22 @@ namespace Services.Repositories
             };
             return billviewmodel;
         }
+
+        public async Task UpdateBill(Bill bill)
+        {
+            var existingBill = await _context.Bills.FirstOrDefaultAsync(b => b.Id == bill.Id);
+            if (existingBill == null)
+                throw new ArgumentException("No bill found with that id");
+
+            await ValidateBillType(bill.Type);
+            ValidateBillStatus(bill.Status);
+
+            await ValidateVendorAsync(bill.VendorId);
+
+            await ValidateTransactionItemsAsync(bill.BillTranItems);
+
+            _context.Bills.Update(bill);
+            await _context.SaveChangesAsync();
+        }
     }
 }

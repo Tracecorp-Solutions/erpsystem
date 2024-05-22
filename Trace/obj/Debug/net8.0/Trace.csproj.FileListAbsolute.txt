@@ -125,3 +125,7 @@ D:\working directory\erpsystem\Trace\bin\Debug\net8.0\Microsoft.IdentityModel.Pr
 D:\working directory\erpsystem\Trace\bin\Debug\net8.0\Microsoft.IdentityModel.Tokens.dll
 D:\working directory\erpsystem\Trace\bin\Debug\net8.0\System.IdentityModel.Tokens.Jwt.dll
 D:\working directory\erpsystem\Trace\bin\Debug\net8.0\System.Security.Permissions.dll
+D:\working directory\erpsystem\Trace\bin\Debug\net8.0\Microsoft.AspNetCore.Cryptography.Internal.dll
+D:\working directory\erpsystem\Trace\bin\Debug\net8.0\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
+D:\working directory\erpsystem\Trace\bin\Debug\net8.0\Microsoft.Extensions.Identity.Core.dll
+D:\working directory\erpsystem\Trace\bin\Debug\net8.0\Microsoft.Extensions.Options.dll
