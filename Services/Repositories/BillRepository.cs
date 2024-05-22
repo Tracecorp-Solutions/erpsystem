@@ -88,5 +88,33 @@ namespace Services.Repositories
             });
             return billviewmodels;
         }
+
+        public async Task<BillViewModel> GetBillById(int id) 
+        {
+            //get bill by id
+            var bills = await _context.Bills
+                .Include(b => b.BillTranItems)
+                .Include(b => b.Vendor)
+                .FirstOrDefaultAsync(b => b.Id == id);
+
+            if (bills == null)
+                throw new ArgumentException("No bill found with that id");
+
+            //map bill to billviewModel
+            var billviewmodel = new BillViewModel
+            {
+                Id = bills.Id,
+                BillDate = bills.BillDate,
+                DueDate = bills.DueDate,
+                BillNo = bills.BillNo,
+                BillTranItems = bills.BillTranItems,
+                TotalAmount = bills.TotalAmount,
+                Type = bills.Type,
+                Narration = bills.Narration,
+                Status = bills.Status,
+                Vendor = bills.Vendor
+            };
+            return billviewmodel;
+        }
     }
 }

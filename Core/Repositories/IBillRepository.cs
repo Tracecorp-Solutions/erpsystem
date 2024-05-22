@@ -11,5 +11,7 @@ namespace Core.Repositories
     {
         Task<Bill> CreateBillAsync(Bill bill);
         Task<IEnumerable<BillViewModel>> GetBills();
+
+        Task<BillViewModel> GetBillById(int id);
     }
 }
