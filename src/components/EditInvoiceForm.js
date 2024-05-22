@@ -317,7 +317,11 @@ const EditInvoiceForm = () => {
             <select
               id="itemName"
               name="itemName"
-              value={formData.billTranItems.accountId}
+              value={
+                formData.billTranItems.length > 0
+                  ? formData.billTranItems[0].accountId
+                  : ""
+              }
               onChange={handleChange}
               required
               className="w-full appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -358,7 +362,11 @@ const EditInvoiceForm = () => {
               type="number"
               id="amount"
               name="amount"
-              value={formData.billTranItems.amount}
+              value={
+                formData.billTranItems.length > 0
+                  ? formData.billTranItems[0].amount
+                  : ""
+              }
               onChange={handleChange}
               className="w-full appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             />
@@ -389,7 +397,11 @@ const EditInvoiceForm = () => {
             <textarea
               id="description"
               name="description"
-              value={formData.billTranItems.description}
+              value={
+                formData.billTranItems.length > 0
+                  ? formData.billTranItems[0].description
+                  : ""
+              }
               onChange={handleChange}
               className="w-full appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             ></textarea>
