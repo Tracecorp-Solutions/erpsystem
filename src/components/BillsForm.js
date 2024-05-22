@@ -16,7 +16,7 @@ const BillsForm = () => {
     ],
     vendorId: "",
     type: " Expense",
-    status: "Paid",
+    status: "Unpaid",
   });
 
   const [items, setItems] = useState([]);
@@ -119,8 +119,8 @@ const BillsForm = () => {
     <form onSubmit={handleSubmit}>
       <div>
         <div className="sm:flex justify-between items-center mb-8">
-          <h2 className="text-2xl font-semibold mb-4">Invoice Creation</h2>
-          <strong className="text-2xl font-semibold">$3,000.00</strong>
+          <h2 className="text-2xl font-semibold mb-4">Bills Creation</h2>
+          <strong className="text-2xl font-semibold">$2,000.00</strong>
         </div>
 
         <div className="max-w-screen-xl mx-auto mt-10 p-6 bg-white rounded-lg">
