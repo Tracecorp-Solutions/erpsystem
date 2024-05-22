@@ -96,6 +96,7 @@ const Vendor = () => {
             zipCode: "",
             country: "",
           },
+          bankName: "",
           accountNo: "",
           billingRate: 0,
           openingBalance: 0,

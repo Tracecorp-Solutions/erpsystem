@@ -78,7 +78,17 @@ const VendorForm = ({
       onCancel={() => setShowModal(false)}
     >
       <div style={{ marginBottom: "20px" }}>
+      <div style={{ display: "flex", justifyContent: "center" }}>
+      <div style={{ width: "100%" }}>
         <Progress percent={(section / totalSections) * 100} />
+        <p style={{ fontFamily: "outFit, Sans-serif"}}>
+          {section === 1 && "Personal Information"}
+          {section === 2 && "Contact Information"}
+          {section === 3 && "Additional"}
+          {section === 4 && "Financial Details"}
+        </p>
+      </div>
+    </div>
       </div>
       <form onSubmit={handleSubmit} className="max-w-lg mx-auto mt-8">
         {section === 1 && (
@@ -530,6 +540,7 @@ const VendorForm = ({
                   onChange={handleChange}
                   className="w-full px-3 py-2 border rounded-md"
                 >
+                  <option value="">Select Subgroup</option>
                   {subGroupAccounts.map((subGroup, index) => (
                     <option key={index} value={subGroup.subGroupAccount.id}>
                       {subGroup.subGroupAccount.name}
@@ -567,6 +578,7 @@ const VendorForm = ({
                   onChange={handleChange}
                   className="w-full px-3 py-2 border rounded-md"
                 >
+                  <option value="">Select Account</option>
                   {accounts.map((account, index) => (
                     <option key={index} value={account.id}>
                       {account.name}
@@ -574,7 +586,39 @@ const VendorForm = ({
                   ))}
                 </select>
               </div>
-
+              <div className="mb-4">
+                <label
+                  className="block mb-2"
+                  style={{
+                    fontSize: "16px",
+                    fontWeight: "600",
+                    color: "#505050",
+                    fontFamily: "outFit, Sans-serif",
+                  }}
+                >
+                  Bank Name
+                </label>
+                <p
+                  style={{
+                    fontFamily: "outFit, Sans-serif",
+                    fontSize: "14px",
+                    marginTop: "10px",
+                    marginBottom: "10px",
+                    color: "#a1a1a1",
+                    fontWeight: "400",
+                  }}
+                >
+                  Enter the the bank name
+                </p>
+                <input
+                  type="text"
+                  name="bankName"
+                  value={formData.bankName}
+                  onChange={handleChange}
+                  placeholder="Bank Name"
+                  className="w-full px-3 py-2 border rounded-md"
+                />
+              </div>
               <div className="mb-4">
                 <label
                   className="block mb-2"
