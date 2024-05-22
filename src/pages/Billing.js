@@ -187,7 +187,7 @@ const Bills = () => {
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
                 {invoice
-                  .filter((inv) => inv.type === "Income")
+                  .filter((inv) => inv.type === "Expense")
                   .map((inv, index) => (
                     <tr
                       key={index}

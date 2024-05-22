@@ -119,12 +119,28 @@ const BillsForm = () => {
     <form onSubmit={handleSubmit}>
       <div>
         <div className="sm:flex justify-between items-center mb-8">
-          <h2 className="text-2xl font-semibold mb-4">Bills Creation</h2>
-          <strong className="text-2xl font-semibold">$2,000.00</strong>
+          <h2 className="text-2xl font-semibold mb-2"
+          style={{
+              
+            fontFamily: "outFit, Sans-serif",         
+          }}
+          >Bills Creation</h2>
+          <strong className="text-2xl font-semibold"
+           style={{
+              
+            fontFamily: "outFit, Sans-serif",
+          }}
+          >$2,000.00</strong>
         </div>
 
         <div className="max-w-screen-xl mx-auto mt-10 p-6 bg-white rounded-lg">
-          <h2 className="text-2xl font-semibold mb-4">Basic Information</h2>
+          <h2 className="text-2xl font-semibold mb-4"
+          style={{
+              
+            fontFamily: "outFit, Sans-serif",
+           
+          }}
+          >Basic Information</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="block text-gray-700 text-sm font-bold mb-2">
