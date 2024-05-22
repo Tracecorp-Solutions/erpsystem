@@ -77,7 +77,11 @@ const BillsForm = () => {
         ...formData,
         vendorId: value,
       });
-    } else if (name === "accountId" || name === "amount" || name === "description") {
+    } else if (
+      name === "accountId" ||
+      name === "amount" ||
+      name === "description"
+    ) {
       const updatedItem = { ...formData.billTranItems[0], [name]: value };
       setFormData({
         ...formData,
@@ -124,16 +128,25 @@ const BillsForm = () => {
     <form onSubmit={handleSubmit}>
       <div>
         <div className="sm:flex justify-between items-center mb-8">
-          <h2 className="text-2xl font-semibold mb-2" style={{ fontFamily: "outFit, Sans-serif" }}>
+          <h2
+            className="text-2xl font-semibold mb-2"
+            style={{ fontFamily: "outFit, Sans-serif" }}
+          >
             Bills Creation
           </h2>
-          <strong className="text-2xl font-semibold" style={{ fontFamily: "outFit, Sans-serif" }}>
+          <strong
+            className="text-2xl font-semibold"
+            style={{ fontFamily: "outFit, Sans-serif" }}
+          >
             $2,000.00
           </strong>
         </div>
 
         <div className="max-w-screen-xl mx-auto mt-10 p-6 bg-white rounded-lg">
-          <h2 className="text-2xl font-semibold mb-4" style={{ fontFamily: "outFit, Sans-serif" }}>
+          <h2
+            className="text-2xl font-semibold mb-4"
+            style={{ fontFamily: "outFit, Sans-serif" }}
+          >
             Basic Information
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -165,7 +178,8 @@ const BillsForm = () => {
                 Bills Number:
               </label>
               <p className="text-gray-500 text-sm mb-2">
-                Enter unique identifier for this bill. It's sometimes auto-generated.
+                Enter unique identifier for this bill. It's sometimes
+                auto-generated.
               </p>
               <input
                 type="text"
@@ -213,7 +227,14 @@ const BillsForm = () => {
 
         <div className="max-w-screen-xl mx-auto mt-10 p-6 bg-white rounded-lg">
           <div className="flex justify-between mb-4">
-            <h2 className="text-2xl" style={{ fontFamily: "outFit, Sans-serif", width: "150px", paddingBottom: "30px" }}>
+            <h2
+              className="text-2xl"
+              style={{
+                fontFamily: "outFit, Sans-serif",
+                width: "150px",
+                paddingBottom: "30px",
+              }}
+            >
               Bill Items
             </h2>
             <Button
@@ -235,6 +256,9 @@ const BillsForm = () => {
             <table className="min-w-full divide-y divide-gray-200">
               <thead className="bg-gray-50">
                 <tr>
+                  <td className="px-3 py-4 whitespace-nowrap mt-3 text-sm text-gray-800">
+                    <input type="checkbox" />
+                  </td>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Description
                   </th>
@@ -249,11 +273,19 @@ const BillsForm = () => {
               <tbody className="bg-white divide-y divide-gray-200">
                 {items.map((item, index) => (
                   <tr key={index}>
-                    <td className="px-6 py-4 whitespace-nowrap">{item.description}</td>
+                    <td className="px-3 py-4 whitespace-nowrap mt-3 text-sm text-gray-800">
+                    <input type="checkbox" />
+                  </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      {accounts.find((acc) => acc.id === item.accountId)?.name || 'Unknown Account'}
+                      {item.description}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap">${item.amount}</td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      {accounts.find((acc) => acc.id === item.accountId)
+                        ?.name || "Unknown Account"}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      ${item.amount}
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -262,7 +294,14 @@ const BillsForm = () => {
         </div>
 
         <Modal visible={visible} onCancel={handleCloseModal} footer={null}>
-          <h2 style={{ fontSize: "36px", fontFamily: "sans-serif", color: "#505050", marginTop: "15px" }}>
+          <h2
+            style={{
+              fontSize: "36px",
+              fontFamily: "sans-serif",
+              color: "#505050",
+              marginTop: "15px",
+            }}
+          >
             Create Bill Item
           </h2>
           <div>
@@ -332,19 +371,45 @@ const BillsForm = () => {
           </Button>
         </Modal>
 
-        <Button
-          type="submit"
-          className="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none"
-          style={{
-            background: "#4467a1",
-            borderRadius: "28px",
-            fontFamily: "outFit, Sans-serif",
-            width: "150px",
-            paddingBottom: "30px",
-          }}
-        >
-          Save Bill
-        </Button>
+        <div className="max-w-screen-xl mx-auto mt-4 flex justify-end">
+          <Button
+            onClick={() =>
+              setFormData({
+                billNumber: "",
+                billDate: "",
+                dueDate: "",
+                vendor: "",
+                itemName: "",
+                amount: "",
+                description: "",
+              })
+            }
+            className="py-2 px-4 text-white rounded focus:outline-none"
+            style={{
+              borderRadius: "28px",
+              fontFamily: "outFit, Sans-serif",
+              width: "150px",
+              paddingBottom: "30px",
+              color: "#505050",
+              marginRight: "15px",
+            }}
+          >
+            Cancel
+          </Button>
+          <Button
+            htmlType="submit"
+            className="py-2 px-4 text-white rounded focus:outline-none"
+            style={{
+              background: "#4467a1",
+              borderRadius: "28px",
+              fontFamily: "outFit, Sans-serif",
+              width: "150px",
+              paddingBottom: "30px",
+            }}
+          >
+            Save Invoice
+          </Button>
+        </div>
       </div>
     </form>
   );
