@@ -45,7 +45,6 @@ import Transactions from "../pages/Transactions";
 import Customer from "../pages/Customer";
 
 
-
 const navigation = [
   {
     name: "Dashboard",
@@ -100,7 +99,8 @@ const navigation = [
       { name: "SubGroup Accounts", href: "/sub-group", current: false },
       { name: "Transactions", href: "/transactions", current: false },
     ],
-  },
+  }, 
+  
   {
     name: "Bills & Invoice",
     icon: FolderIcon,
