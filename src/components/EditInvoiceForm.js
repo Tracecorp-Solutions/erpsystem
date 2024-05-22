@@ -23,7 +23,6 @@ const EditInvoiceForm = () => {
   const [message, setMessage] = useState("");
 
   console.log("updating invoices", formData);
-  console.log("custmoner iddd", customer);
 
   useEffect(() => {
     fetchAccounts();
@@ -108,15 +107,35 @@ const EditInvoiceForm = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      billTranItems: [
-        {
-          ...formData.billTranItems[0],
-          [name]: value,
-        },
-      ],
-    });
+    if (name === "customer") {
+      setFormData({
+        ...formData,
+        vendorId: value,
+      });
+    } else if (name === "itemName") {
+      const updatedItem = { ...formData.billTranItems[0], accountId: value };
+      setFormData({
+        ...formData,
+        billTranItems: [updatedItem],
+      });
+    } else if (name === "amount") {
+      const updatedItem = { ...formData.billTranItems[0], amount: value };
+      setFormData({
+        ...formData,
+        billTranItems: [updatedItem],
+      });
+    } else if (name === "description") {
+      const updatedItem = { ...formData.billTranItems[0], description: value };
+      setFormData({
+        ...formData,
+        billTranItems: [updatedItem],
+      });
+    } else {
+      setFormData({
+        ...formData,
+        [name]: value,
+      });
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -324,8 +343,8 @@ const EditInvoiceForm = () => {
               Select the account associated with this invoice item
             </p>
             <select
-              id="accountId"
-              name="accountId"
+              id="itemName"
+              name="itemName"
               value={
                 formData.billTranItems.length > 0
                   ? formData.billTranItems[0].accountId
