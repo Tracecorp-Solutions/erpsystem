@@ -12,6 +12,12 @@ const CustomerForm = ({
   const [section, setSection] = useState(1);
   const [subGroupAccounts, setSubGroupAccounts] = useState([]);
   const [accounts, setAccounts] = useState([]);
+  const [sectionTitles, setSectionTitles] = useState([
+    "Personal Information",
+    "Contact details",
+    "Additional Information",
+    "Financial Details",
+  ]);
 
   const totalSections = 4;
 
@@ -72,12 +78,25 @@ const CustomerForm = ({
 
   return (
     <Modal
-      title="Add Customer"
       visible={showModal}
       footer={null}
       onCancel={() => setShowModal(false)}
     >
+      <h1
+        style={{
+          fontSize: "36px",
+          color: "#505050",
+          fontFamily: "outFit, Sans-serif",
+          fontWeight: "600",
+          textAlign: "center",
+        }}
+      >
+        Customer Creation
+      </h1>
       <div style={{ marginBottom: "20px" }}>
+        <h2 className="text-2xl font-semibold mb-4">
+          {sectionTitles[section - 1]}
+        </h2>
         <Progress percent={(section / totalSections) * 100} />
       </div>
       <form onSubmit={handleSubmit} className="max-w-lg mx-auto mt-8">
