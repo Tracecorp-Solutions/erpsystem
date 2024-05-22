@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Button, Modal } from "antd";
 import axios from "axios";
+import SlideInCard from "./SlideInCard ";
 
-const BillsForm = () => {
+const InvoiceForm = () => {
   const [formData, setFormData] = useState({
     billDate: "",
     dueDate: "",
@@ -23,12 +24,14 @@ const BillsForm = () => {
   const [visible, setVisible] = useState(false);
   const [accounts, setAccounts] = useState([]);
   const [vendors, setVendors] = useState([]);
-  const [isBillCreated, setIsBillCreated] = useState(false);
+  const [isInvoiceCreated, setIsInvoiceCreated] = useState(false);
   const [message, setMessage] = useState("");
+
+  console.log("formDatata", formData);
 
   useEffect(() => {
     fetchAccounts();
-    fetchVendors();
+    fetchCustomer();
   }, []);
 
   const fetchAccounts = async () => {
@@ -37,21 +40,24 @@ const BillsForm = () => {
         `${process.env.REACT_APP_API_URL}/GetAccounts`
       );
       setAccounts(response.data);
+      console.log("get accounts", response.data);
     } catch (error) {
-      console.error("Error fetching accounts:", error);
+      console.error("Error fetching groups:", error);
     }
   };
 
-  const fetchVendors = async () => {
+  const fetchCustomer = async () => {
     try {
       const response = await axios.get(
         `${process.env.REACT_APP_API_URL}/GetAllVendors`
       );
       setVendors(response.data);
+      console.log("get accounts", response.data);
     } catch (error) {
-      console.error("Error fetching vendors:", error);
+      console.error("Error fetching groups:", error);
     }
   };
+
 
   const handleOpenModal = () => {
     setVisible(true);
@@ -62,27 +68,32 @@ const BillsForm = () => {
   };
 
   const handleAddItem = () => {
-    setItems([...items, ...formData.billTranItems]);
-    setFormData({
-      ...formData,
-      billTranItems: [{ accountId: "", amount: "", description: "" }],
-    });
+    console.log("Added Item:", formData);
     setVisible(false);
+    setItems([...items, formData]);
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    if (name === "vendorId") {
+    if (name === "customer") {
       setFormData({
         ...formData,
         vendorId: value,
       });
-    } else if (
-      name === "accountId" ||
-      name === "amount" ||
-      name === "description"
-    ) {
-      const updatedItem = { ...formData.billTranItems[0], [name]: value };
+    } else if (name === "itemName") {
+      const updatedItem = { ...formData.billTranItems[0], accountId: value };
+      setFormData({
+        ...formData,
+        billTranItems: [updatedItem],
+      });
+    } else if (name === "amount") {
+      const updatedItem = { ...formData.billTranItems[0], amount: value };
+      setFormData({
+        ...formData,
+        billTranItems: [updatedItem],
+      });
+    } else if (name === "description") {
+      const updatedItem = { ...formData.billTranItems[0], description: value };
       setFormData({
         ...formData,
         billTranItems: [updatedItem],
@@ -117,41 +128,38 @@ const BillsForm = () => {
         type: "Expense",
         status: "Unpaid",
       });
-      setIsBillCreated(true);
+      setIsInvoiceCreated(true);
       setMessage(response.data);
     } catch (error) {
-      console.error("Error creating bill:", error);
+      console.error("Error creating invoice:", error);
     }
+  };
+
+  const calculateTotalAmount = () => {
+    let total = 0;
+    items.forEach((item) => {
+      item.billTranItems.forEach((tranItem) => {
+        total += parseFloat(tranItem.amount);
+      });
+    });
+    return total.toFixed(2);
   };
 
   return (
     <form onSubmit={handleSubmit}>
       <div>
         <div className="sm:flex justify-between items-center mb-8">
-          <h2
-            className="text-2xl font-semibold mb-2"
-            style={{ fontFamily: "outFit, Sans-serif" }}
-          >
-            Bills Creation
-          </h2>
-          <strong
-            className="text-2xl font-semibold"
-            style={{ fontFamily: "outFit, Sans-serif" }}
-          >
-            $2,000.00
+          <h2 className="text-2xl font-semibold mb-4">Invoice Creation</h2>
+          <strong className="text-2xl font-semibold">
+            ${calculateTotalAmount()}
           </strong>
         </div>
 
         <div className="max-w-screen-xl mx-auto mt-10 p-6 bg-white rounded-lg">
-          <h2
-            className="text-2xl font-semibold mb-4"
-            style={{ fontFamily: "outFit, Sans-serif" }}
-          >
-            Basic Information
-          </h2>
+          <h2 className="text-2xl font-semibold mb-4">Basic Information</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-gray-700 text-sm font-bold mb-2">
+            <label className="block text-gray-700 text-sm font-bold mb-2">
                 Vendor
               </label>
               <p className="text-gray-500 text-sm mb-2">
@@ -164,10 +172,10 @@ const BillsForm = () => {
                 required
                 className="w-full appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               >
-                <option value="">Select vendor</option>
-                {vendors.map((vendor) => (
-                  <option key={vendor.id} value={vendor.id}>
-                    {vendor.fullName}
+                <option value="">Select Vendor</option>
+                {vendors.map((vendorData) => (
+                  <option key={vendorData.id} value={vendorData.id}>
+                    {vendorData.fullName}
                   </option>
                 ))}
               </select>
@@ -175,10 +183,10 @@ const BillsForm = () => {
 
             <div>
               <label className="block text-gray-700 text-sm font-bold mb-2">
-                Bills Number:
+                Invoice Number:
               </label>
               <p className="text-gray-500 text-sm mb-2">
-                Enter unique identifier for this bill. It's sometimes
+                Enter unique identifier for this invoice. It's sometimes
                 auto-generated.
               </p>
               <input
@@ -192,10 +200,10 @@ const BillsForm = () => {
             </div>
             <div>
               <label className="block text-gray-700 text-sm font-bold mb-2">
-                Bill Date
+                Invoice Date
               </label>
               <p className="text-gray-500 text-sm mb-2">
-                Choose the date the bill was issued
+                Choose the date the invoice was issued
               </p>
               <input
                 type="date"
@@ -227,18 +235,9 @@ const BillsForm = () => {
 
         <div className="max-w-screen-xl mx-auto mt-10 p-6 bg-white rounded-lg">
           <div className="flex justify-between mb-4">
-            <h2
-              className="text-2xl"
-              style={{
-                fontFamily: "outFit, Sans-serif",
-                width: "150px",
-                paddingBottom: "30px",
-              }}
-            >
-              Bill Items
-            </h2>
+            <h2 className="text-2xl font-semibold">Invoice Items</h2>
             <Button
-              type="button"
+              type="submit"
               onClick={handleOpenModal}
               className="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none"
               style={{
@@ -249,21 +248,15 @@ const BillsForm = () => {
                 paddingBottom: "30px",
               }}
             >
-              + Add Bill Item
+              + Add Invoice Item
             </Button>
           </div>
           <div className="overflow-x-auto">
             <table className="min-w-full divide-y divide-gray-200">
               <thead className="bg-gray-50">
                 <tr>
-                  <td className="px-3 py-4 whitespace-nowrap mt-3 text-sm text-gray-800">
-                    <input type="checkbox" />
-                  </td>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Description
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Account
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Amount Due
@@ -273,19 +266,16 @@ const BillsForm = () => {
               <tbody className="bg-white divide-y divide-gray-200">
                 {items.map((item, index) => (
                   <tr key={index}>
-                    <td className="px-3 py-4 whitespace-nowrap mt-3 text-sm text-gray-800">
-                    <input type="checkbox" />
-                  </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      {item.description}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      {accounts.find((acc) => acc.id === item.accountId)
-                        ?.name || "Unknown Account"}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      ${item.amount}
-                    </td>
+                    {item.billTranItems.map((tranItem, index) => (
+                      <td key={index} className="px-6 py-4 whitespace-nowrap">
+                        {tranItem.description}
+                      </td>
+                    ))}
+                    {item.billTranItems.map((tranItem, index) => (
+                      <td key={index} className="px-6 py-4 whitespace-nowrap">
+                        {tranItem.amount}
+                      </td>
+                    ))}
                   </tr>
                 ))}
               </tbody>
@@ -302,21 +292,40 @@ const BillsForm = () => {
               marginTop: "15px",
             }}
           >
-            Create Bill Item
+            Create Invoice Item
           </h2>
           <div>
-            <label htmlFor="account" style={{ marginTop: "15px" }}>
-              Account
+            <label
+              htmlFor="itemName"
+              style={{
+                color: "#505050",
+                fontFamily: "sans-serif",
+                fontWeight: "600",
+                fontSize: "16px",
+              }}
+            >
+              Attach Account
             </label>
-            <p>Select the account for the bill item</p>
+            <p
+              style={{
+                fontWeight: "400",
+                color: "#a1a1a1",
+                fontSize: "14px",
+                fontFamily: "outFit, Sans-serif",
+                marginBottom: "5px",
+              }}
+            >
+              Select the account associated with this invoice item
+            </p>
             <select
-              name="accountId"
-              value={formData.billTranItems[0].accountId}
+              id="itemName"
+              name="itemName"
+              value={formData.billTranItems.accountId}
               onChange={handleChange}
               required
               className="w-full appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             >
-              <option value="">Select account</option>
+              <option value="">Select Account</option>
               {accounts.map((account) => (
                 <option key={account.id} value={account.id}>
                   {account.name}
@@ -326,59 +335,114 @@ const BillsForm = () => {
           </div>
 
           <div>
-            <label htmlFor="amount" style={{ marginTop: "15px" }}>
-              Amount
+            <label
+              htmlFor="amount"
+              style={{
+                color: "#505050",
+                fontFamily: "sans-serif",
+                fontWeight: "600",
+                fontSize: "16px",
+              }}
+            >
+              Item Amount
             </label>
-            <p>Enter the amount for the bill item</p>
+            <p
+              style={{
+                fontWeight: "400",
+                color: "#a1a1a1",
+                fontSize: "14px",
+                fontFamily: "outFit, Sans-serif",
+                marginBottom: "5px",
+              }}
+            >
+              Enter the cost of each invoice item
+            </p>
             <input
               type="number"
+              id="amount"
               name="amount"
-              value={formData.billTranItems[0].amount}
+              value={formData.billTranItems.amount}
               onChange={handleChange}
-              required
               className="w-full appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             />
           </div>
-
           <div>
-            <label htmlFor="description" style={{ marginTop: "15px" }}>
+            <label
+              htmlFor="description"
+              style={{
+                color: "#505050",
+                fontFamily: "sans-serif",
+                fontWeight: "600",
+                fontSize: "16px",
+              }}
+            >
               Description
             </label>
-            <p>Provide a description for the bill item</p>
-            <input
-              type="text"
+            <p
+              style={{
+                fontWeight: "400",
+                color: "#a1a1a1",
+                fontSize: "14px",
+                fontFamily: "outFit, Sans-serif",
+                marginBottom: "5px",
+              }}
+            >
+              Describe what you are being paid for
+            </p>
+            <textarea
+              id="description"
               name="description"
-              value={formData.billTranItems[0].description}
+              value={formData.billTranItems.description}
               onChange={handleChange}
-              required
               className="w-full appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            />
+            ></textarea>
           </div>
-
-          <Button
-            type="button"
-            onClick={handleAddItem}
-            className="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none"
-            style={{
-              background: "#4467a1",
-              borderRadius: "28px",
-              fontFamily: "outFit, Sans-serif",
-              width: "150px",
-              paddingBottom: "30px",
-            }}
-          >
-            + Add Bill Item
-          </Button>
+          <div className="mt-4 flex justify-between">
+            <Button
+              onClick={handleCloseModal}
+              className="py-2 px-4 text-white rounded focus:outline-none"
+              style={{
+                borderRadius: "28px",
+                fontFamily: "outFit, Sans-serif",
+                width: "150px",
+                paddingBottom: "30px",
+                color: "#505050",
+                marginRight: "15px",
+              }}
+            >
+              Cancel
+            </Button>
+            <Button
+              type="primary"
+              onClick={handleAddItem}
+              className="py-2 px-4 text-white rounded focus:outline-none"
+              style={{
+                background: "#4467a1",
+                borderRadius: "28px",
+                fontFamily: "outFit, Sans-serif",
+                width: "150px",
+                paddingBottom: "30px",
+              }}
+            >
+              Add Item
+            </Button>
+          </div>
         </Modal>
-
+        {isInvoiceCreated && (
+          <SlideInCard
+            message={JSON.stringify(message)}
+            onClose={() => setIsInvoiceCreated(false)}
+            title="Invoices created!"
+          />
+        )}
         <div className="max-w-screen-xl mx-auto mt-4 flex justify-end">
           <Button
             onClick={() =>
               setFormData({
-                billNumber: "",
-                billDate: "",
+                invoiceNumber: "",
+                invoiceDate: "",
                 dueDate: "",
-                vendor: "",
+                customer: "",
                 itemName: "",
                 amount: "",
                 description: "",
@@ -415,4 +479,4 @@ const BillsForm = () => {
   );
 };
 
-export default BillsForm;
+export default InvoiceForm;
