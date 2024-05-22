@@ -66,7 +66,6 @@ const EditInvoiceForm = () => {
         value={formData.billNo}
         onChange={handleChange}
       />
-      {/* Other form fields */}
       <button type="submit">Save Changes</button>
     </form>
   );
