@@ -9,9 +9,10 @@ import FailureSlideInCard from "../components/FailureSlideInCard";
 import SlideInCard from "../components/SlideInCard";
 import VendorForm from "../components/VendorForm";
 import BillsCard from "../components/BillsCard";
+import BillsForm from "../components/BillsForm";
 
 const Bills = () => {
-  const [invoice, setInvoice] = useState([]);
+  const [bills, setBills] = useState([]);
   const [showFailure, setShowFailure] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [messageInfo, setMessageInfo] = useState({ title: "", message: "" });
@@ -25,7 +26,7 @@ const Bills = () => {
   const [paidTotalAmount, setPaidTotalAmount] = useState(0);
   const [unpaidTotalAmount, setUnpaidTotalAmount] = useState(0);
 
-  console.log("bills details", invoice);
+  console.log("bills details", Bills);
 
   const navigate = useNavigate();
 
@@ -35,7 +36,7 @@ const Bills = () => {
         const response = await axios.get(
           `${process.env.REACT_APP_API_URL}/GetAllBills`
         );
-        setInvoice(response.data);
+        setBills(response.data);
         const total = response.data.reduce(
           (acc, inv) =>
             acc + inv.billTranItems.reduce((acc, item) => acc + item.amount, 0),
@@ -67,7 +68,7 @@ const Bills = () => {
         setShowFailure(true);
         setMessageInfo({
           title: "Server Error!",
-          message: "Failed to fetch invoice details.",
+          message: "Failed to fetch bill details.",
         });
         console.error("Error fetching data:", error);
       }
@@ -186,9 +187,9 @@ const Bills = () => {
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {invoice
-                  .filter((inv) => inv.type === "Expense")
-                  .map((inv, index) => (
+                {bills
+                  .filter((bill) => bill.type === "Expense")
+                  .map((bill, index) => (
                     <tr
                       key={index}
                       className="px-3 py-4 whitespace-nowrap mt-3 text-sm text-gray-800"
@@ -197,19 +198,19 @@ const Bills = () => {
                         <input type="checkbox" />
                       </td>
                       <td className="px-3 py-4 whitespace-nowrap mt-3 text-sm text-gray-800">
-                        {inv.status}
+                        {bill.status}
                       </td>
                       <td className="px-3 py-4 whitespace-nowrap mt-3 text-sm text-gray-800">
-                        {inv.vendor.fullName}
+                        {bill.vendor.fullName}
                       </td>
                       <td className="px-3 py-4 whitespace-nowrap mt-3 text-sm text-gray-800">
-                        {inv.billDate}
+                        {bill.billDate}
                       </td>
                       <td className="px-3 py-4 whitespace-nowrap mt-3 text-sm text-gray-800">
-                        {inv.billNo}
+                        {bill.billNo}
                       </td>
                       <td className="px-3 py-4 whitespace-nowrap mt-3 text-sm text-gray-800">
-                        {inv.billTranItems.reduce(
+                        {bill.billTranItems.reduce(
                           (total, item) => total + item.amount,
                           0
                         )}
