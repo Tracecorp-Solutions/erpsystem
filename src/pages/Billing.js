@@ -228,15 +228,29 @@ const Bills = () => {
                             marginTop: "10px",
                           }}
                         >
-                          <Dropdown
+                         <Dropdown
                             overlay={
                               <Menu style={{ width: "250px" }}>
                                 <Menu.Item key="1" onClick={handleViewClick}>
-                                  <EyeOutlined style={{ marginRight: "5px" }} />
-                                  <span>View</span>
+                                  <span>View Invoice</span>
                                 </Menu.Item>
-                                <Menu.Item key="2">Action 2</Menu.Item>
-                                <Menu.Item key="3">Action 3</Menu.Item>
+                                <Menu.Item
+                                  key="2"
+                                  onClick={() => handleEditInvoice(bill.id)}
+                                >
+                                  Edit View
+                                </Menu.Item>
+                                {inv.status !== "Paid" && (
+                                  <Menu.Item
+                                    key="3"
+                                    onClick={() => handleMarkAsPaid(bill.id)}
+                                  >
+                                    Mark as Paid
+                                  </Menu.Item>
+                                )}
+                                <Menu.Item key="4">
+                                  Send payment reminder
+                                </Menu.Item>
                               </Menu>
                             }
                             trigger={["click"]}
