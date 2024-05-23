@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Dropdown, Menu, Button, Pagination } from "antd";
+import { Dropdown, Menu, Button, Pagination, Modal } from "antd";
 import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
 import { EyeOutlined, ArrowLeftOutlined } from "@ant-design/icons";
 import axios from "axios";
@@ -22,8 +22,8 @@ const Invoice = () => {
   const [total, setTotalAmount] = useState(0);
   const [paidTotalAmount, setPaidTotalAmount] = useState(0);
   const [unpaidTotalAmount, setUnpaidTotalAmount] = useState(0);
-
-  console.log("invoice details", invoice);
+  const [showConfirmationModal, setShowConfirmationModal] = useState(false);
+  const [selectInvoiceId, setSelectedInvoiceId] = useState(null);
 
   const navigate = useNavigate();
 
@@ -53,14 +53,14 @@ const Invoice = () => {
         setPaidTotalAmount(paidTotal);
 
         const unpaidTotal = response.data
-        .filter((inv) => inv.status !== "Paid")
-        .reduce(
-          (acc, inv) =>
-            acc +
-            inv.billTranItems.reduce((acc, item) => acc + item.amount, 0),
-          0
-        );
-      setUnpaidTotalAmount(unpaidTotal);
+          .filter((inv) => inv.status !== "Paid")
+          .reduce(
+            (acc, inv) =>
+              acc +
+              inv.billTranItems.reduce((acc, item) => acc + item.amount, 0),
+            0
+          );
+        setUnpaidTotalAmount(unpaidTotal);
       } catch (error) {
         setShowFailure(true);
         setMessageInfo({
@@ -79,12 +79,24 @@ const Invoice = () => {
   };
 
   const handleEditInvoice = (id) => {
-    navigate(`/edit-invoice/${id}`)
-  }
+    navigate(`/edit-invoice/${id}`);
+  };
 
   const handleViewClick = () => {
-    // Open the sidebar drawer when "View" is clicked
     setDrawerVisible(true);
+  };
+
+  const handleMarkAsPaid = (id) => {
+    console.log(id);
+    setSelectedInvoiceId(id);
+    setShowConfirmationModal(true);
+  };
+
+  const handleConfirmation = () => {
+    // Here you can update the status of the selected invoice to "Paid"
+    // You can use the selectedInvoiceId state variable to identify the invoice to update
+    // Make API call or update state accordingly
+    setShowConfirmationModal(false);
   };
 
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -98,7 +110,11 @@ const Invoice = () => {
 
   return (
     <div>
-      <InvoiceCard total={total} paidTotalAmount={paidTotalAmount} unpaidTotalAmount={unpaidTotalAmount} />
+      <InvoiceCard
+        total={total}
+        paidTotalAmount={paidTotalAmount}
+        unpaidTotalAmount={unpaidTotalAmount}
+      />
       <div
         style={{
           display: "flex",
@@ -236,11 +252,23 @@ const Invoice = () => {
                             overlay={
                               <Menu style={{ width: "250px" }}>
                                 <Menu.Item key="1" onClick={handleViewClick}>
-                                  <EyeOutlined style={{ marginRight: "5px" }} />
-                                  <span>View</span>
+                                  <span>View Invoice</span>
                                 </Menu.Item>
-                                <Menu.Item key="2" onClick={() => handleEditInvoice(inv.id)}>Edit View</Menu.Item>
-                                <Menu.Item key="3">Action 3</Menu.Item>
+                                <Menu.Item
+                                  key="2"
+                                  onClick={() => handleEditInvoice(inv.id)}
+                                >
+                                  Edit View
+                                </Menu.Item>
+                                <Menu.Item
+                                  key="3"
+                                  onClick={() => handleMarkAsPaid(inv.id)}
+                                >
+                                  Mark as Paid
+                                </Menu.Item>
+                                <Menu.Item key="4">
+                                  Send payment reminder
+                                </Menu.Item>
                               </Menu>
                             }
                             trigger={["click"]}
@@ -263,6 +291,14 @@ const Invoice = () => {
         drawerVisible={drawerVisible}
         setDrawerVisible={setDrawerVisible}
       />
+      <Modal
+        title="Mark Invoice as Paid"
+        visible={showConfirmationModal}
+        onOk={handleConfirmation}
+        onCancel={() => setShowConfirmationModal(false)}
+      >
+        <p>Are you sure you want to mark this invoice as paid?</p>
+      </Modal>
     </div>
   );
 };
