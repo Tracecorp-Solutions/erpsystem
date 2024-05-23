@@ -3,6 +3,7 @@ import { Button, Modal } from "antd";
 import axios from "axios";
 import { ArrowLeftOutlined } from "@ant-design/icons";
 import SlideInCard from "./SlideInCard ";
+import Billing from "../pages/Billing";
 
 const InvoiceForm = () => {
   const [formData, setFormData] = useState({
@@ -20,7 +21,7 @@ const InvoiceForm = () => {
     type: "Expense",
     status: "Unpaid",
   });
-
+  const navigate = useNavigate(); 
   const [items, setItems] = useState([]);
   const [visible, setVisible] = useState(false);
   const [accounts, setAccounts] = useState([]);
@@ -153,21 +154,23 @@ const InvoiceForm = () => {
     <form onSubmit={handleSubmit}>
       <div>
         <div className="sm:flex justify-between items-center mb-8">
-        <ArrowLeftOutlined
+        <h2
+            className="text-2xl font-semibold mb-4 bg-green-400"
+            style={{ display: "flex", cursor: "pointer" }}
+            onClick={() => navigate("/billing")}
+          >
+            <ArrowLeftOutlined
               style={{
                 fontSize: "24px",
                 marginRight: "8px",
                 marginBottom: "15px",
-                color: "blue,"
               }}
             />
-          <h2
-            className="text-2xl font-semibold mb-4"
-            style={{
+            <h2 className="text-2xl font-semibold mb-4" 
+             style={{
               fontFamily: "outFit, Sans-serif",
             }}
-          >
-            Bill Creation
+            >Bill Creation</h2>
           </h2>
           <strong className="text-2xl font-semibold">
             ${calculateTotalAmount()}
@@ -175,7 +178,7 @@ const InvoiceForm = () => {
         </div>
 
         <div className="max-w-screen-xl mx-auto mt-10 p-6 bg-white rounded-lg">
-          {/* <ArrowLeftOutlined /> */}
+        
           <h2
             className="text-2xl font-semibold mb-4"
             style={{
