@@ -4,11 +4,11 @@ import { EyeOutlined, EditOutlined } from "@ant-design/icons";
 import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
 import axios from "axios";
 import VendorNavigationbar from "../components/VendorNavigationbar";
-import FailureSlideInCard from '../components/FailureSlideInCard';
-import SlideInCard from '../components/SlideInCard';
+import FailureSlideInCard from "../components/FailureSlideInCard";
+import SlideInCard from "../components/SlideInCard";
 import ReusableEmptyData from "../components/ReusableEmptyData";
 import VendorForm from "../components/VendorForm";
-
+import VendorDetails from "../components/VendorDetails";
 
 const Vendor = () => {
   const [formData, setFormData] = useState({
@@ -50,6 +50,7 @@ const Vendor = () => {
   const [showEditForm, setShowEditForm] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const [dropdownVisible, setDropdownVisible] = useState(false);
+  const [vendorDetails, setVendorDetails] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -131,17 +132,6 @@ const Vendor = () => {
       });
   };
 
-  const handleViewDetails = async (vendorId) => {
-    try {
-      const response = await axios.get(
-        `http://3.216.182.63:8095/GetVendorById?id=${vendorId}`
-      );
-      setSelectedVendor(response.data); // Adjust this line if necessary based on the response structure
-      setDrawerVisible(true);
-    } catch (error) {
-      console.error("Error fetching vendor details:", error);
-    }
-  };
 
   const handleEdit = async (identifier, type = "id") => {
     try {
@@ -170,6 +160,7 @@ const Vendor = () => {
       console.error("Error fetching vendor details for edit:", error);
     }
   };
+  
 
   const handleEditSubmit = async (e) => {
     e.preventDefault();
@@ -184,16 +175,45 @@ const Vendor = () => {
     } catch (error) {
       console.error("Error updating vendor:", error);
     }
-  };  
+  };
 
   const handleDisable = async (vendorId) => {
     try {
-      const response = await axios.get(`http://3.216.182.63:8095/GetVendorById?id=${vendorId}`);
+      const response = await axios.get(
+        `http://3.216.182.63:8095/GetVendorById?id=${vendorId}`
+      );
       console.log("Vendor :", response.data);
       setSelectedVendor(response.data); // Assuming you want to update the selected vendor data
       setToggleDisabled(false); // Example state update to enable some feature
     } catch (error) {
       console.error("Error fetching vendor data:", error);
+    }
+  };
+
+  const fetchVendorDetails = async (vendorId) => {
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_API_URL}/GetVendorById`,
+        {
+          id: vendorId,
+          vendType: "Vendor",
+        }
+      );
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching vendor details:", error);
+      throw error;
+    }
+  };
+
+  const handleViewVendorDetails = async (vendorId) => {
+    console.log("Selected Vendor ID:", vendorId);
+    try {
+      const vendorDetails = await fetchVendorDetails(vendorId);
+      setVendorDetails(vendorDetails);
+      setDrawerVisible(true);
+    } catch (error) {
+      console.error("Error viewing vendor details:", error);
     }
   };
 
@@ -203,12 +223,10 @@ const Vendor = () => {
 
   const renderMenu = (vendorId) => (
     <Menu style={{ width: "200px" }}>
-      <Menu.Item
-        key="1"
-        onClick={() => handleViewDetails(vendorId)}
-        icon={<EyeOutlined />}
+      <Menu.Item key="1" onClick={() => handleViewVendorDetails(vendorId)}
+      icon= {<EyeOutlined/> }
       >
-        View
+        View 
       </Menu.Item>
       <Menu.Item
         key="2"
@@ -417,6 +435,7 @@ const Vendor = () => {
                         <EllipsisVerticalIcon
                           className="h-5 w-5"
                           aria-hidden="true"
+                          onClick={() => handleViewVendorDetails(vendor.id)}
                         />
                       </Dropdown>
                     </div>
