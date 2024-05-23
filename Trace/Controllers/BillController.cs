@@ -102,7 +102,7 @@ namespace Trace.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "An error occured while processing");
+                return StatusCode(StatusCodes.Status500InternalServerError, $"An error occured while processing Error : {ex.Message} Inner Exception : {ex.InnerException}");
             }
         }
     }
