@@ -454,6 +454,8 @@ const Vendor = () => {
         <VendorDetails
         drawerVisible={drawerVisible}
         setDrawerVisible={setDrawerVisible}
+        vendorDetails={vendorDetails}
+
       />
       </div>
     </div>

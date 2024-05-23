@@ -97,7 +97,7 @@ const Bills = () => {
 
   return (
     <div>
-      <BillsCard total={total} paidTotalAmount={paidTotalAmount} unpaidTotalAmount={unpaidTotalAmount} />
+      
       <div
         style={{
           display: "flex",
@@ -115,6 +115,7 @@ const Bills = () => {
         >
           Bills
         </h2>
+        
         <Button
           type="button"
           style={{
@@ -130,11 +131,13 @@ const Bills = () => {
           + Create Bills
         </Button>
       </div>
+      <BillsCard total={total} paidTotalAmount={paidTotalAmount} unpaidTotalAmount={unpaidTotalAmount} />
       <div
         style={{
           background: "#fff",
           padding: "15px",
           borderRadius: "24px",
+          marginTop: "14px"
         }}
       >
         <BillsNavigationBar />
