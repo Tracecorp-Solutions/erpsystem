@@ -87,5 +87,23 @@ namespace Trace.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "An error occured while processing");
             }
         }
+
+        [HttpGet("/PayBill/{id}")]
+        public async Task<IActionResult> PayBill(int id) 
+        {
+            try
+            {
+                string billtype = await _billrepository.PayBill(id);
+                return Ok($"{billtype} paid successfully");
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occured while processing");
+            }
+        }
     }
 }

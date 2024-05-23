@@ -1,4 +1,5 @@
-﻿using Core.Models;
+﻿using Core;
+using Core.Models;
 using Core.Repositories;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
@@ -13,8 +14,12 @@ namespace Services.Repositories
     public class BillRepository : IBillRepository
     {
         private readonly ApplicationDbContext _context;
+        private readonly ITransactionRepository _transactionRepository;
 
-        public BillRepository(ApplicationDbContext context) {  _context = context; }
+        public BillRepository(ApplicationDbContext context, ITransactionRepository transactionRepository)
+        {
+            _context = context; _transactionRepository = transactionRepository;
+        }
         public async Task<Bill> CreateBillAsync(Bill bill)
         {
             if (bill.BillTranItems.Count < 1)
@@ -32,6 +37,45 @@ namespace Services.Repositories
 
             return bill;
         }
+
+        public async Task<string> PayBill(int id)
+        {
+            var bill = await _context.Bills
+                .Include(b => b.BillTranItems)
+                .Include(b => b.Vendor)
+                .FirstOrDefaultAsync(b => b.Id == id);
+
+            if (bill == null)
+                throw new ArgumentException("No bill found with that id");
+
+            if (bill.Status == "Paid")
+                throw new ArgumentException("Bill has already been paid");
+
+            bill.Status = "Paid";
+
+            var transactions = new List<TransactionViewModel>();
+            foreach (var item in bill.BillTranItems)
+            {
+                var transaction = new TransactionViewModel
+                {
+                    AccountFromId = bill.Type == "Income" ? bill.Vendor.PaymentAccount : item.AccountId,
+                    AccountToId = bill.Type == "Income" ? item.AccountId : bill.Vendor.PaymentAccount,
+                    Amount = item.Amount,
+                    Narration = $"Bill payment for {bill.BillNo} Item {item.Description}",
+                    TransactionDate = DateTime.Now,
+                    TranReference = bill.BillNo
+                };
+                transactions.Add(transaction);
+            }
+
+            var recordTransactionTasks = transactions.Select(t => _transactionRepository.RecordTransactionAsync(t));
+            await Task.WhenAll(recordTransactionTasks);
+
+            await _context.SaveChangesAsync();
+
+            return bill.Type;
+        }
+
 
         private async Task ValidateBillType(string type)
         {

@@ -238,7 +238,7 @@
   {
     "ContainingType": "Trace.Controllers.GroupAccountsController",
     "Method": "GetGroupAccountById",
-    "RelativePath": "GetGroupAccountById",
+    "RelativePath": "GetGroupAccountById/{id}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -246,7 +246,7 @@
       {
         "Name": "id",
         "Type": "System.Int32",
-        "IsRequired": false
+        "IsRequired": true
       }
     ],
     "ReturnTypes": []
@@ -254,7 +254,7 @@
   {
     "ContainingType": "Trace.Controllers.GroupAccountsController",
     "Method": "GetSubGroupByGroupId",
-    "RelativePath": "GetSubGroupByGroupId",
+    "RelativePath": "GetSubGroupByGroupId/{id}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -263,6 +263,11 @@
         "Name": "groupid",
         "Type": "System.Int32",
         "IsRequired": false
+      },
+      {
+        "Name": "id",
+        "Type": "",
+        "IsRequired": true
       }
     ],
     "ReturnTypes": []
@@ -270,7 +275,7 @@
   {
     "ContainingType": "Trace.Controllers.GroupAccountsController",
     "Method": "GetSubGroupById",
-    "RelativePath": "GetSubGroupById",
+    "RelativePath": "GetSubGroupById/{id}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -278,7 +283,7 @@
       {
         "Name": "id",
         "Type": "System.Int32",
-        "IsRequired": false
+        "IsRequired": true
       }
     ],
     "ReturnTypes": []
@@ -342,6 +347,22 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "Trace.Controllers.BillController",
+    "Method": "PayBill",
+    "RelativePath": "PayBill/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "Trace.Controllers.TransactionsController",
     "Method": "RecordTransaction",
     "RelativePath": "RecordTransaction",
@@ -352,6 +373,22 @@
       {
         "Name": "trans",
         "Type": "Core.TransactionViewModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Trace.Controllers.AuthenticationController",
+    "Method": "RegisterUser",
+    "RelativePath": "RegisterUser",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "user",
+        "Type": "Core.Models.UserDTO",
         "IsRequired": true
       }
     ],
