@@ -72,5 +72,21 @@ namespace Trace.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
             }
         }
+
+        [HttpGet("/GetTransactionsByDateRange/{startDate}&{endDate}")]
+        public async Task<IActionResult> GetTransactionsByDateRange(DateTime startDate, DateTime endDate)
+        {
+            try
+            {
+                var transactions = await _transactionRepository.GetTransactionsByDateRange(startDate, endDate);
+                if (transactions.Any())
+                    return Ok(transactions);
+                return NotFound("No transaction found");
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
+        }
     }
 }

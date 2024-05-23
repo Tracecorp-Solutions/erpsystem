@@ -52,6 +52,26 @@ namespace Services.Repositories
             }
         }
 
+        public async Task<IEnumerable<TransactionsViewModel>> GetTransactionsByDateRange(DateTime startDate, DateTime endDate)
+        {
+            return await _context.transactionEntries
+                .AsNoTracking()
+                .Include(t => t.Account)
+                .Where(t => t.TransactionDate >= startDate && t.TransactionDate <= endDate)
+                .OrderByDescending(t => t.Id)
+                .Select(t => new TransactionsViewModel
+                {
+                    Id = t.Id,
+                    TransactionDate = t.TransactionDate,
+                    Amount = t.Amount,
+                    TransactionType = t.TransactionType,
+                    TranAccount = t.Account.Name,
+                    TransactionReference = t.TransactionReference,
+                    Narration = t.Narration
+                })
+                .ToListAsync();
+        }
+
         private async Task<Account> GetAccountWithGroupAsync(int accountId)
         {
             return await _context.Accounts
@@ -66,16 +86,6 @@ namespace Services.Repositories
             {
                 throw new ArgumentException("One or both accounts not found.");
             }
-
-            //if (accountFrom.SubGroupAccount.GroupAccount.Behaviour != "Debit")
-            //{
-            //    throw new InvalidOperationException("The source account must belong to a group with 'Debit' behavior.");
-            //}
-
-            //if (accountTo.SubGroupAccount.GroupAccount.Behaviour != "Credit")
-            //{
-            //    throw new InvalidOperationException("The destination account must belong to a group with 'Credit' behavior.");
-            //}
 
             //get account balance of the source account
             if (_accountRepository.GetAccountBalance(accountFrom.Id).Result < amount)
@@ -156,6 +166,7 @@ namespace Services.Repositories
         public async Task<IEnumerable<TransactionsViewModel>> GetTransactionEntriesByAccountId(int accountId) 
         {
             var trans = await _context.transactionEntries
+                .AsNoTracking()
                 .Include(t => t.Account)
                 .Where(t => t.TranAccount == accountId)
                 .OrderByDescending(t => t.Id).ToListAsync();

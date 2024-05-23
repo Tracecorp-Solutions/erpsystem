@@ -16,5 +16,7 @@ namespace Core.Repositories
         Task<IEnumerable<TransactionsViewModel>> GetAllTransactions(); 
 
         Task<IEnumerable<TransactionsViewModel>> GetTransactionEntriesByAccountId(int accountId);
+
+        Task<IEnumerable<TransactionsViewModel>> GetTransactionsByDateRange(DateTime startDate, DateTime endDate);
     }
 }
