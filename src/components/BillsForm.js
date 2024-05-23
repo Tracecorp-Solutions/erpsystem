@@ -160,6 +160,7 @@ const InvoiceForm = () => {
         </div>
 
         <div className="max-w-screen-xl mx-auto mt-10 p-6 bg-white rounded-lg">
+        {/* <ArrowLeftOutlined /> */}
           <h2 className="text-2xl font-semibold mb-4"
           style={{
             fontFamily: "outFit, Sans-serif",
@@ -377,7 +378,7 @@ const InvoiceForm = () => {
                 marginBottom: "5px",
               }}
             >
-              Select the account associated with this invoice item
+              Select the account associated with this bill item
             </p>
             <select
               id="itemName"
@@ -494,7 +495,7 @@ const InvoiceForm = () => {
           <SlideInCard
             message={JSON.stringify(message)}
             onClose={() => setIsInvoiceCreated(false)}
-            title="Invoices created!"
+            title="Bill created!"
           />
         )}
         <div className="max-w-screen-xl mx-auto mt-4 flex justify-end">
@@ -533,7 +534,7 @@ const InvoiceForm = () => {
               paddingBottom: "30px",
             }}
           >
-            Save Invoice
+            Save Bill
           </Button>
         </div>
       </div>
