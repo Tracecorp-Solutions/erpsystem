@@ -3,7 +3,7 @@ import { Button, Modal } from "antd";
 import axios from "axios";
 import { ArrowLeftOutlined } from "@ant-design/icons";
 import SlideInCard from "./SlideInCard ";
-import Billing from "../pages/Billing";
+import { useNavigate } from "react-router-dom";
 
 const InvoiceForm = () => {
   const [formData, setFormData] = useState({
@@ -155,11 +155,12 @@ const InvoiceForm = () => {
       <div>
         <div className="sm:flex justify-between items-center mb-8">
         <h2
-            className="text-2xl font-semibold mb-4 bg-green-400"
+            className="text-2xl font-semibold mb-4"
             style={{ display: "flex", cursor: "pointer" }}
             onClick={() => navigate("/billing")}
           >
             <ArrowLeftOutlined
+             className=" font-semibold text-blue-500"
               style={{
                 fontSize: "24px",
                 marginRight: "8px",
