@@ -26,6 +26,10 @@ const InvoiceForm = () => {
   const [vendors, setVendors] = useState([]);
   const [isInvoiceCreated, setIsInvoiceCreated] = useState(false);
   const [message, setMessage] = useState("");
+  const today = new Date().toISOString().split("T")[0];
+  const filteredVendors = vendors.filter(
+    (vendor) => vendor.vendorType === "Vendor"
+  );
 
   console.log("formDatata", formData);
 
@@ -57,7 +61,6 @@ const InvoiceForm = () => {
       console.error("Error fetching groups:", error);
     }
   };
-
 
   const handleOpenModal = () => {
     setVisible(true);
@@ -149,34 +152,42 @@ const InvoiceForm = () => {
     <form onSubmit={handleSubmit}>
       <div>
         <div className="sm:flex justify-between items-center mb-8">
-          <h2 className="text-2xl font-semibold mb-4"
-             style={{   
+          <h2
+            className="text-2xl font-semibold mb-4"
+            style={{
               fontFamily: "outFit, Sans-serif",
             }}
-          >Bill Creation</h2>
+          >
+            Bill Creation
+          </h2>
           <strong className="text-2xl font-semibold">
             ${calculateTotalAmount()}
           </strong>
         </div>
 
         <div className="max-w-screen-xl mx-auto mt-10 p-6 bg-white rounded-lg">
-        {/* <ArrowLeftOutlined /> */}
-          <h2 className="text-2xl font-semibold mb-4"
-          style={{
-            fontFamily: "outFit, Sans-serif",
-          }}
-          >Basic Information</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
-            <label className="block text-gray-700 text-sm font-bold mb-2"
-            style={{   
+          {/* <ArrowLeftOutlined /> */}
+          <h2
+            className="text-2xl font-semibold mb-4"
+            style={{
               fontFamily: "outFit, Sans-serif",
             }}
-            >
+          >
+            Basic Information
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label
+                className="block text-gray-700 text-sm font-bold mb-2"
+                style={{
+                  fontFamily: "outFit, Sans-serif",
+                }}
+              >
                 Vendor
               </label>
-              <p className="text-gray-500 text-sm mb-2"
-                 style={{   
+              <p
+                className="text-gray-500 text-sm mb-2"
+                style={{
                   fontFamily: "outFit, Sans-serif",
                 }}
               >
@@ -190,7 +201,7 @@ const InvoiceForm = () => {
                 className="w-full appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               >
                 <option value="">Select Vendor</option>
-                {vendors.map((vendorData) => (
+                {filteredVendors.map((vendorData) => (
                   <option key={vendorData.id} value={vendorData.id}>
                     {vendorData.fullName}
                   </option>
@@ -199,15 +210,17 @@ const InvoiceForm = () => {
             </div>
 
             <div>
-              <label className="block text-gray-700 text-sm font-bold mb-2"
-                 style={{   
+              <label
+                className="block text-gray-700 text-sm font-bold mb-2"
+                style={{
                   fontFamily: "outFit, Sans-serif",
                 }}
               >
                 Bill Number:
               </label>
-              <p className="text-gray-500 text-sm mb-2"
-                 style={{   
+              <p
+                className="text-gray-500 text-sm mb-2"
+                style={{
                   fontFamily: "outFit, Sans-serif",
                 }}
               >
@@ -224,8 +237,9 @@ const InvoiceForm = () => {
               />
             </div>
             <div>
-              <label className="block text-gray-700 text-sm font-bold mb-2"
-                 style={{   
+              <label
+                className="block text-gray-700 text-sm font-bold mb-2"
+                style={{
                   fontFamily: "outFit, Sans-serif",
                 }}
               >
@@ -244,8 +258,9 @@ const InvoiceForm = () => {
               />
             </div>
             <div>
-              <label className="block text-gray-700 text-sm font-bold mb-2"
-                 style={{   
+              <label
+                className="block text-gray-700 text-sm font-bold mb-2"
+                style={{
                   fontFamily: "outFit, Sans-serif",
                 }}
               >
@@ -261,6 +276,7 @@ const InvoiceForm = () => {
                 onChange={handleChange}
                 required
                 className="w-full appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                min={today} // Set the minimum allowable date to today
               />
             </div>
           </div>
@@ -268,13 +284,14 @@ const InvoiceForm = () => {
 
         <div className="max-w-screen-xl mx-auto mt-10 p-6 bg-white rounded-lg">
           <div className="flex justify-between mb-4">
-            <h2 className="text-2xl font-semibold"
-            style={{
-        
-              fontFamily: "outFit, Sans-serif",
-    
-            }}
-            >Bill Items</h2>
+            <h2
+              className="text-2xl font-semibold"
+              style={{
+                fontFamily: "outFit, Sans-serif",
+              }}
+            >
+              Bill Items
+            </h2>
             <Button
               type="submit"
               onClick={handleOpenModal}
@@ -294,19 +311,21 @@ const InvoiceForm = () => {
             <table className="min-w-full divide-y divide-gray-200">
               <thead className="bg-gray-50">
                 <tr>
-                <input
+                  <input
                     type="checkbox"
                     style={{ marginLeft: "10px", marginTop: "15px" }}
                   />
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                     style={{   
+                  <th
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    style={{
                       fontFamily: "outFit, Sans-serif",
                     }}
                   >
                     Description
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                     style={{   
+                  <th
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    style={{
                       fontFamily: "outFit, Sans-serif",
                     }}
                   >
@@ -318,23 +337,27 @@ const InvoiceForm = () => {
                 {items.map((item, index) => (
                   <tr key={index}>
                     <input
-                    type="checkbox"
-                    style={{ marginLeft: "10px", marginTop: "15px" }}
-                  />
+                      type="checkbox"
+                      style={{ marginLeft: "10px", marginTop: "15px" }}
+                    />
                     {item.billTranItems.map((tranItem, index) => (
-                      <td key={index} className="px-6 py-4 whitespace-nowrap"
-                      style={{   
-                        fontFamily: "outFit, Sans-serif",
-                      }}
+                      <td
+                        key={index}
+                        className="px-6 py-4 whitespace-nowrap"
+                        style={{
+                          fontFamily: "outFit, Sans-serif",
+                        }}
                       >
                         {tranItem.description}
                       </td>
                     ))}
                     {item.billTranItems.map((tranItem, index) => (
-                      <td key={index} className="px-6 py-4 whitespace-nowrap"
-                      style={{   
-                        fontFamily: "outFit, Sans-serif",
-                      }}
+                      <td
+                        key={index}
+                        className="px-6 py-4 whitespace-nowrap"
+                        style={{
+                          fontFamily: "outFit, Sans-serif",
+                        }}
                       >
                         {tranItem.amount}
                       </td>
