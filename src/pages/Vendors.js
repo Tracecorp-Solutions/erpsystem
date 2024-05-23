@@ -36,7 +36,7 @@ const Vendor = () => {
     subGroupId: 0,
     vendorType: "Vendor",
   });
-  const [customerList, setCustomerList] = useState([]);
+  const [vendorList, setVendorList] = useState([]);
   const [showFailure, setShowFailure] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [messageInfo, setMessageInfo] = useState({ title: "", message: "" });
@@ -58,7 +58,7 @@ const Vendor = () => {
         const response = await axios.get(
           `${process.env.REACT_APP_API_URL}/GetAllVendors`
         );
-        setCustomerList(response.data);
+        setVendorList(response.data);
       } catch (error) {
         setShowFailure(true);
         setMessageInfo({
@@ -207,7 +207,6 @@ const Vendor = () => {
   };
 
   const handleViewVendorDetails = async (vendorId) => {
-    console.log("Selected Vendor ID:", vendorId);
     try {
       const vendorDetails = await fetchVendorDetails(vendorId);
       setVendorDetails(vendorDetails);
@@ -215,52 +214,24 @@ const Vendor = () => {
     } catch (error) {
       console.error("Error viewing vendor details:", error);
     }
+    console.log(vendorId)
+     setDrawerVisible(true)
   };
 
   const handleModal = () => {
     setShowModal(true);
   };
 
-  const renderMenu = (vendorId) => (
-    <Menu style={{ width: "200px" }}>
-      <Menu.Item key="1" onClick={() => handleViewVendorDetails(vendorId)}
-      icon= {<EyeOutlined/> }
-      >
-        View 
-      </Menu.Item>
-      <Menu.Item
-        key="2"
-        onClick={() => handleEdit(vendorId)}
-        icon={<EditOutlined />}
-      >
-        Edit
-      </Menu.Item>
-      <Menu.Item
-        key="3"
-        onClick={() => handleDisable(vendorId)}
-        icon={<EditOutlined />}
-      >
-        Disable
-      </Menu.Item>
-    </Menu>
-  );
 
   const handleDropdownVisibleChange = (visible, vendorId) => {
     setDropdownVisible({ ...dropdownVisible, [vendorId]: visible });
   };
 
-  const menu = (
-    <Menu style={{ width: "250px" }}>
-      <Menu.Item key="1">Action 1</Menu.Item>
-      <Menu.Item key="2">Action 2</Menu.Item>
-      <Menu.Item key="3">Action 3</Menu.Item>
-    </Menu>
-  );
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
 
-  const filteredCustomerList = customerList.filter(
+  const filteredVendorList = vendorList.filter(
     (vendor) =>
       (toggleDisabled ? vendor.status === true : vendor.status === false) &&
       vendor.vendorType === "Vendor" &&
@@ -269,7 +240,7 @@ const Vendor = () => {
         vendor.mobile.toLowerCase().includes(searchQuery.toLowerCase()))
   );
 
-  const currentItems = filteredCustomerList.slice(
+  const currentItems = filteredVendorList.slice(
     indexOfFirstItem,
     indexOfLastItem
   );
@@ -311,7 +282,7 @@ const Vendor = () => {
             fontWeight: "600",
           }}
         >
-          Vendor
+          Vendors
         </h2>
         <Button
           type="button"
@@ -424,18 +395,27 @@ const Vendor = () => {
                         marginTop: "10px",
                       }}
                     >
-                      <Dropdown
-                        overlay={renderMenu(vendor.id)}
-                        trigger={["click"]}
-                        visible={dropdownVisible[vendor.id]}
-                        onVisibleChange={(visible) =>
-                          handleDropdownVisibleChange(visible, vendor.id)
+                        <Dropdown
+                        overlay={
+                          <Menu style={{ width: "250px" }}>
+                            <Menu.Item
+                              key="1"
+                              onClick={() =>
+                                handleViewVendorDetails(vendor.id)
+                              }
+                            >
+                              <EyeOutlined style={{ marginRight: "5px" }} />
+                              <span>View</span>
+                            </Menu.Item>
+                            <Menu.Item key="2">Edit</Menu.Item>
+                            <Menu.Item key="3">Disable</Menu.Item>
+                          </Menu>
                         }
+                        trigger={["click"]}
                       >
                         <EllipsisVerticalIcon
-                          className="h-5 w-5"
+                          className="h-5 w-5 mt-3"
                           aria-hidden="true"
-                          onClick={() => handleViewVendorDetails(vendor.id)}
                         />
                       </Dropdown>
                     </div>
@@ -462,15 +442,19 @@ const Vendor = () => {
             }}
           >
             Showing {indexOfFirstItem + 1} - {indexOfLastItem} of{" "}
-            {filteredCustomerList.length} results
+            {filteredVendorList.length} results
           </div>
           <Pagination
             current={currentPage}
-            total={filteredCustomerList.length}
+            total={filteredVendorList.length}
             pageSize={itemsPerPage}
             onChange={paginate}
           />
         </div>
+        <VendorDetails
+        drawerVisible={drawerVisible}
+        setDrawerVisible={setDrawerVisible}
+      />
       </div>
     </div>
   );

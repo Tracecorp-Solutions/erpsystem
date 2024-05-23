@@ -39,7 +39,6 @@ import Petty from "../pages/Petty";
 import SubGroup from "../pages/SubGroup";
 import Billing from "../pages/Billing";
 import LineChart from "./LineGraph";
-import View from "./View";
 import TrialBalance from "../pages/TrialBalance";
 import Transactions from "../pages/Transactions";
 import Customer from "../pages/Customer";
@@ -671,7 +670,6 @@ export default function Main() {
                 <Route path="/trial-balance" element={<TrialBalance />} />
                 <Route path="/products" element={<Products />} />
                 <Route path="/grap" element={<LineChart />} />
-                <Route path="/view" element={<View />} />
                 <Route path="/transactions" element={<Transactions />} />
                 <Route path="/customer" element={<Customer />} />
                 <Route path="/create-bills" element={<BillsForm/>} />
