@@ -22,7 +22,7 @@ namespace Trace.Controllers
             try
             {
                 var createdUser = await _userRepository.CreateUserAsync(user);
-                return CreatedAtAction(nameof(RegisterUser), new { userId = createdUser.Id }, createdUser);
+                return Ok("User Created Successfully");
             }
             catch (ArgumentException ex)
             {

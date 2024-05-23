@@ -88,7 +88,7 @@ namespace Trace.Controllers
             }
         }
 
-        [HttpGet("/GetGroupAccountById")]
+        [HttpGet("/GetGroupAccountById/{id}")]
         public async Task<IActionResult> GetGroupAccountById(int id) 
         {
             try
@@ -124,7 +124,7 @@ namespace Trace.Controllers
             }
         }
 
-        [HttpGet("/GetSubGroupById")]
+        [HttpGet("/GetSubGroupById/{id}")]
         public async Task<IActionResult> GetSubGroupById(int id) 
         {
             try
@@ -160,7 +160,7 @@ namespace Trace.Controllers
             }
         }
 
-        [HttpGet("/GetSubGroupByGroupId")]
+        [HttpGet("/GetSubGroupByGroupId/{id}")]
         public async Task<IActionResult> GetSubGroupByGroupId(int groupid) 
         {
             try

@@ -23,7 +23,7 @@ namespace Trace.Controllers
             try
             {
                 var createdAccount = await _billrepository.CreateBillAsync(bill);
-                return CreatedAtAction(nameof(CreateBill), new { createdAccount.Id, createdAccount });
+                return Ok($"{bill.Type} created successfully");
             }
             catch (ArgumentException ex)
             {
@@ -76,7 +76,7 @@ namespace Trace.Controllers
             try
             {
                 await _billrepository.UpdateBill(bill);
-                return Ok("Bill updated successfully.");
+                return Ok($"{bill.Type} updated successfully.");
             }
             catch (ArgumentException ex)
             {
