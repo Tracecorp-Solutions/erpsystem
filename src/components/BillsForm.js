@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Button, Modal } from "antd";
 import axios from "axios";
+import { ArrowLeftOutlined } from "@ant-design/icons";
 import SlideInCard from "./SlideInCard ";
 
 const InvoiceForm = () => {
@@ -157,6 +158,7 @@ const InvoiceForm = () => {
                 fontSize: "24px",
                 marginRight: "8px",
                 marginBottom: "15px",
+                color: "blue,"
               }}
             />
           <h2
