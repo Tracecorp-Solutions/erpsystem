@@ -260,12 +260,14 @@ const Invoice = () => {
                                 >
                                   Edit View
                                 </Menu.Item>
-                                <Menu.Item
-                                  key="3"
-                                  onClick={() => handleMarkAsPaid(inv.id)}
-                                >
-                                  Mark as Paid
-                                </Menu.Item>
+                                {inv.status !== "Paid" && (
+                                  <Menu.Item
+                                    key="3"
+                                    onClick={() => handleMarkAsPaid(inv.id)}
+                                  >
+                                    Mark as Paid
+                                  </Menu.Item>
+                                )}
                                 <Menu.Item key="4">
                                   Send payment reminder
                                 </Menu.Item>
