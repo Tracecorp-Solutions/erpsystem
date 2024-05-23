@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
+using System.Net.Mail;
 
 namespace Services.Repositories
 {
@@ -22,7 +23,7 @@ namespace Services.Repositories
             _passwordHasher = passwordHasher;
         }
 
-        public async Task<bool> CreateUserAsync(UserDTO userdto, string password)
+        public async Task<bool> CreateUserAsync(UserDTO userdto)
         {
             var user = new User
             {
@@ -31,10 +32,15 @@ namespace Services.Repositories
                 OrganizationName = userdto.OrganizationName,
                 Email = userdto.Email
             };
+            //generate one-time password
+            var password = Guid.NewGuid().ToString().Substring(0, 8);
+
             user.PasswordHash = _passwordHasher.HashPassword(user, password);
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
             await LogActionAsync(user.Username, "User created");
+            //send password to user email
+            await SendEmailAsync(user.Email, "Account Created", $"Your account has been created. Your password is {password}");
             return true;
         }
         public async Task<string> AuthenticateUserAsync(string username, string password)
@@ -74,6 +80,22 @@ namespace Services.Repositories
             };
            _context.AuditTrails.Add(audit);
             await _context.SaveChangesAsync();
+        }
+
+        private async Task SendEmailAsync(string email, string subject, string message)
+        {
+            var mailMessage = new MailMessage();
+            mailMessage.To.Add(email);
+            mailMessage.Subject = subject;
+            mailMessage.Body = message;
+            mailMessage.IsBodyHtml = true;
+            using (var client = new SmtpClient("smtp.gmail.com"))
+            {
+                client.Port = 587;
+                client.Credentials = new System.Net.NetworkCredential("email", "password");
+                client.EnableSsl = true;
+                await client.SendMailAsync(mailMessage);
+            }
         }
     }
 }

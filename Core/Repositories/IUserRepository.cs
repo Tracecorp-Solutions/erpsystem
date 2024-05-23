@@ -9,7 +9,7 @@ namespace Core.Repositories
 {
     public interface IUserRepository
     {
-        Task<bool> CreateUserAsync(UserDTO user,string password);
+        Task<bool> CreateUserAsync(UserDTO user);
         Task<string> AuthenticateUserAsync(string username, string password);
         Task LogActionAsync(string username, string action);
     }
