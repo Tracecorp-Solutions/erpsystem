@@ -24,6 +24,18 @@ const Invoice = () => {
   const [unpaidTotalAmount, setUnpaidTotalAmount] = useState(0);
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
   const [selectInvoiceId, setSelectedInvoiceId] = useState(null);
+  const [formData, setFormData] = useState({
+    billDate: "",
+    dueDate: "",
+    billNo: "",
+    billTranItems: [],
+    vendor: {
+      id: ""
+    },
+    status: "Paid",
+    type: "Income"
+  });
+  console.log("mark as paid form data", formData);
 
   const navigate = useNavigate();
 
@@ -86,16 +98,79 @@ const Invoice = () => {
     setDrawerVisible(true);
   };
 
-  const handleMarkAsPaid = (id) => {
+  const handleMarkAsPaid = async (id) => {
     console.log(id);
     setSelectedInvoiceId(id);
     setShowConfirmationModal(true);
+    
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}/GetBillById/${id}`
+      );
+      console.log("Fetched Invoice Data:", response.data);
+      
+      // Update the formData state with the fetched data
+      const {
+        billDate,
+        dueDate,
+        billNo,
+        billTranItems,
+        vendor: { id },
+        type,
+      } = response.data;
+    
+      setFormData({
+        billDate,
+        dueDate,
+        billNo,
+        billTranItems,
+        vendor: { id },
+        type,
+      });
+    } catch (error) {
+      console.error("Error fetching invoice data:", error);
+      // Optionally, you can display an error message to the user
+    }
   };
+  
+  
 
   const handleConfirmation = () => {
-    // Here you can update the status of the selected invoice to "Paid"
-    // You can use the selectedInvoiceId state variable to identify the invoice to update
-    // Make API call or update state accordingly
+    const id = selectInvoiceId;
+  
+    // Map fields from formData to match the backend's expected structure
+    const billTranItems = formData.billTranItems.map(item => ({
+      id: item.id,
+      accountId: item.accountId,
+      description: item.description,
+      amount: item.amount
+    }));
+  
+    // Create the invoiceToUpdate object
+    const invoiceToUpdate = {
+      id,
+      billDate: formData.billDate,
+      dueDate: formData.dueDate,
+      billNo: formData.billNo,
+      billTranItems,
+      type: formData.type,
+      status: 'Paid',
+      vendor: formData.vendor,
+      type: formData.type
+    };
+  
+    // Send the updated invoice to the backend
+    axios.put(`${process.env.REACT_APP_API_URL}/UpdateBill`, invoiceToUpdate)
+      .then(response => {
+        console.log('Invoice marked as paid:', response.data);
+        // Optionally, you can update the local state or trigger a reload of invoice data
+      })
+      .catch(error => {
+        console.error('Error marking invoice as paid:', error);
+        // Optionally, you can display an error message to the user
+      });
+  
+    // Close the confirmation modal
     setShowConfirmationModal(false);
   };
 
