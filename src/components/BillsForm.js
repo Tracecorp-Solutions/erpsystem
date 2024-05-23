@@ -152,6 +152,13 @@ const InvoiceForm = () => {
     <form onSubmit={handleSubmit}>
       <div>
         <div className="sm:flex justify-between items-center mb-8">
+        <ArrowLeftOutlined
+              style={{
+                fontSize: "24px",
+                marginRight: "8px",
+                marginBottom: "15px",
+              }}
+            />
           <h2
             className="text-2xl font-semibold mb-4"
             style={{
