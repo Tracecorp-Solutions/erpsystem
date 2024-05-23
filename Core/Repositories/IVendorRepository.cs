@@ -9,7 +9,7 @@ namespace Core.Repositories
 {
     public interface IVendorRepository
     {
-        Task<Vendor> CreateVendorAsync(Vendor vendor);
+        Task<string> CreateVendorAsync(Vendor vendor);
         Task<IEnumerable<Vendor>> GetAllVendors();
 
         Task<IEnumerable<Vendor>> GetVendorByIdAsync(VendorSearchView vendor);

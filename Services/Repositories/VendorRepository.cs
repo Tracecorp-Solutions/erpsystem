@@ -25,7 +25,7 @@ namespace Services.Repositories
             _accountService = accountService;
         }
 
-        public async Task<Vendor> CreateVendorAsync(Vendor vendor)
+        public async Task<string> CreateVendorAsync(Vendor vendor)
         {
             // Validate vendor type
             if (vendor.VendorType != "Vendor" && vendor.VendorType != "Customer")
@@ -55,7 +55,7 @@ namespace Services.Repositories
             _context.Vendors.Add(vendor);
             await _context.SaveChangesAsync();
 
-            return vendor;
+            return vendor.VendorType;
         }
 
 

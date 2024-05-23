@@ -53,13 +53,15 @@ namespace Services.Repositories
 
             bill.Status = "Paid";
 
+            
             var transactions = new List<TransactionViewModel>();
             foreach (var item in bill.BillTranItems)
             {
+                
                 var transaction = new TransactionViewModel
                 {
-                    AccountFromId = bill.Type == "Income" ? bill.Vendor.PaymentAccount : item.AccountId,
-                    AccountToId = bill.Type == "Income" ? item.AccountId : bill.Vendor.PaymentAccount,
+                    AccountFromId = bill.Type == "Income" ? bill.Vendor.AccountId ?? 0 : bill.Vendor.PaymentAccount,
+                    AccountToId = bill.Type == "Income" ? bill.Vendor.PaymentAccount : bill.Vendor.AccountId ?? 0,
                     Amount = item.Amount,
                     Narration = $"Bill payment for {bill.BillNo} Item {item.Description}",
                     TransactionDate = DateTime.Now,
@@ -73,7 +75,7 @@ namespace Services.Repositories
 
             await _context.SaveChangesAsync();
 
-            return bill.Type;
+            return bill.Type == "Income" ? "Invoice": "Bill";
         }
 
 
