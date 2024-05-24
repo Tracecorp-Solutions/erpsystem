@@ -12,6 +12,12 @@ const CustomerForm = ({
   const [section, setSection] = useState(1);
   const [subGroupAccounts, setSubGroupAccounts] = useState([]);
   const [accounts, setAccounts] = useState([]);
+  const [sectionTitles, setSectionTitles] = useState([
+    "Personal Information",
+    "Contact details",
+    "Additional Information",
+    "Financial Details",
+  ]);
 
   const totalSections = 4;
 
@@ -72,12 +78,25 @@ const CustomerForm = ({
 
   return (
     <Modal
-      title="Add Customer"
       visible={showModal}
       footer={null}
       onCancel={() => setShowModal(false)}
     >
+      <h1
+        style={{
+          fontSize: "36px",
+          color: "#505050",
+          fontFamily: "outFit, Sans-serif",
+          fontWeight: "600",
+          textAlign: "center",
+        }}
+      >
+        Customer Creation
+      </h1>
       <div style={{ marginBottom: "20px" }}>
+        <h2 className="text-2xl font-semibold mb-4">
+          {sectionTitles[section - 1]}
+        </h2>
         <Progress percent={(section / totalSections) * 100} />
       </div>
       <form onSubmit={handleSubmit} className="max-w-lg mx-auto mt-8">
@@ -566,46 +585,10 @@ const CustomerForm = ({
                   onChange={handleChange}
                   className="w-full px-3 py-2 border rounded-md"
                 >
+                  <option value="">Select Subgroup</option>{" "}
                   {subGroupAccounts.map((subGroup, index) => (
                     <option key={index} value={subGroup.subGroupAccount.id}>
                       {subGroup.subGroupAccount.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div className="mb-4">
-                <label
-                  className="block mb-2"
-                  style={{
-                    fontSize: "16px",
-                    fontWeight: "600",
-                    color: "#505050",
-                    fontFamily: "outFit, Sans-serif",
-                  }}
-                >
-                  Account From
-                </label>
-                <p
-                  style={{
-                    fontFamily: "outFit, Sans-serif",
-                    fontSize: "14px",
-                    marginTop: "10px",
-                    marginBottom: "10px",
-                    color: "#a1a1a1",
-                    fontWeight: "400",
-                  }}
-                >
-                  Account where the funds will be paid to
-                </p>
-                <select
-                  name="paymentAccount"
-                  value={formData.paymentAccount}
-                  onChange={handleChange}
-                  className="w-full px-3 py-2 border rounded-md"
-                >
-                  {accounts.map((account, index) => (
-                    <option key={index} value={account.id}>
-                      {account.name}
                     </option>
                   ))}
                 </select>
@@ -621,16 +604,34 @@ const CustomerForm = ({
                     fontFamily: "outFit, Sans-serif",
                   }}
                 >
-                  Account Number
+                  Payment Account
                 </label>
-                <input
-                  type="text"
-                  name="accountNo"
-                  value={formData.accountNo}
+                <p
+                  style={{
+                    fontFamily: "outFit, Sans-serif",
+                    fontSize: "14px",
+                    marginTop: "10px",
+                    marginBottom: "10px",
+                    color: "#a1a1a1",
+                    fontWeight: "400",
+                  }}
+                >
+                  Account where the customer will pay to
+                </p>
+                <select
+                  name="paymentAccount"
+                  value={formData.paymentAccount}
                   onChange={handleChange}
-                  placeholder="Account No"
                   className="w-full px-3 py-2 border rounded-md"
-                />
+                >
+                  <option value="">Choose Account</option>{" "}
+                  {/* Default option */}
+                  {accounts.map((account, index) => (
+                    <option key={index} value={account.id}>
+                      {account.name}
+                    </option>
+                  ))}
+                </select>
               </div>
 
               <div className="mb-4">
@@ -668,6 +669,7 @@ const CustomerForm = ({
                   }
                   className="w-full px-3 py-2 border rounded-md"
                 >
+                  <option value="">Choose Status</option> {/* Default option */}
                   <option value="true">Active</option>
                   <option value="false">Inactive</option>
                 </select>
@@ -705,7 +707,6 @@ const CustomerForm = ({
                   paddingBottom: "30px",
                   ...(formData.subGroupId &&
                   formData.paymentAccount &&
-                  formData.accountNo &&
                   formData.status !== ""
                     ? {}
                     : {
@@ -716,7 +717,6 @@ const CustomerForm = ({
                 disabled={
                   !formData.subGroupId ||
                   !formData.paymentAccount ||
-                  !formData.accountNo ||
                   formData.status === ""
                 }
               >
@@ -794,7 +794,7 @@ const CustomerForm = ({
                     fontWeight: "400",
                   }}
                 >
-                  Enter the vendor's initial account balance
+                  Enter the customer's initial account balance
                 </p>
                 <input
                   type="number"

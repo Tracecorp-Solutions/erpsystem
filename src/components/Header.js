@@ -42,7 +42,12 @@ import LineChart from "./LineGraph";
 import TrialBalance from "../pages/TrialBalance";
 import Transactions from "../pages/Transactions";
 import Customer from "../pages/Customer";
+
 import BillsForm from "./BillsForm";
+
+
+import InvoiceForm from "./InvoiceForm";
+import EditInvoiceForm from "./EditInvoiceForm";
 
 
 const navigation = [
@@ -674,7 +679,12 @@ export default function Main() {
                 <Route path="/grap" element={<LineChart />} />
                 <Route path="/transactions" element={<Transactions />} />
                 <Route path="/customer" element={<Customer />} />
+
                 <Route path="/create-bills" element={<BillsForm/>} />
+
+                <Route path="/create-invoice" element={<InvoiceForm />} />
+                <Route path="/edit-invoice/:id" element={<EditInvoiceForm />} />
+
               </Routes>
             </div>
           </main>
