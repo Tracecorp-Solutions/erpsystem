@@ -1,11 +1,34 @@
-import React, { useState } from "react";
-import { Drawer, Card, Row, Col, Table, Button } from "antd";
+import React, { useState, useEffect } from "react";
+import { Card, Row, Col, Table, Button } from "antd";
 import { XMarkIcon } from "@heroicons/react/24/outline";
+import axios from "axios";
 import jsPDF from "jspdf";
-import html2canvas from "html2canvas"; // Import html2canvas library
+import html2canvas from "html2canvas";
+import { useParams } from "react-router-dom";
 
-export default function InvoiceSidebar({ setDrawerVisible, drawerVisible }) {
-  const [modalVisible, setModalVisible] = useState(false);
+export default function InvoiceSidebar() {
+  const [invoiceData, setInvoiceData] = useState(null);
+
+  const { id } = useParams();
+  console.log("idididididididi",id);
+  console.log("invoiceeeeee",invoiceData);
+
+  useEffect(() => {
+    const fetchInvoiceData = async () => {
+      try {
+        const response = await axios.get(
+          `${process.env.REACT_APP_API_URL}/GetBillById/${id}`
+        );
+        setInvoiceData(response.data);
+      } catch (error) {
+        console.error("Error fetching invoice data:", error);
+      }
+    };
+
+    if (id) {
+      fetchInvoiceData();
+    }
+  }, [id]);
 
   const tableData = [
     {
@@ -68,14 +91,7 @@ export default function InvoiceSidebar({ setDrawerVisible, drawerVisible }) {
 
   return (
     <>
-      <Drawer
-        placement="right"
-        closable={false}
-        onClose={() => setDrawerVisible(false)}
-        visible={drawerVisible}
-        width={550}
-        style={{ height: "100vh", overflow: "auto" }}
-      >
+  
         <div
           style={{
             textAlign: "end",
@@ -83,7 +99,6 @@ export default function InvoiceSidebar({ setDrawerVisible, drawerVisible }) {
         >
           <button
             type="button"
-            onClick={() => setDrawerVisible(false)}
             className="relative rounded-md text-indigo-200 focus:outline-none focus:ring-2 focus:ring-white"
           >
             <span className="absolute -inset-2.5" />
@@ -292,7 +307,6 @@ export default function InvoiceSidebar({ setDrawerVisible, drawerVisible }) {
             Download Invoice
           </Button>
         </div>
-      </Drawer>
     </>
   );
 }
