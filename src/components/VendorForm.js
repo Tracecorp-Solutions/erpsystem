@@ -78,7 +78,17 @@ const VendorForm = ({
       onCancel={() => setShowModal(false)}
     >
       <div style={{ marginBottom: "20px" }}>
+      <div style={{ display: "flex", justifyContent: "center" }}>
+      <div style={{ width: "100%" }}>
         <Progress percent={(section / totalSections) * 100} />
+        <p style={{ fontFamily: "outFit, Sans-serif"}}>
+          {section === 1 && "Personal Information"}
+          {section === 2 && "Contact Information"}
+          {section === 3 && "Additional"}
+          {section === 4 && "Financial Details"}
+        </p>
+      </div>
+    </div>
       </div>
       <form onSubmit={handleSubmit} className="max-w-lg mx-auto mt-8">
         {section === 1 && (
@@ -270,7 +280,7 @@ const VendorForm = ({
               </div>
             </div>
             <div className="flex justify-between">
-              <button
+            <button
                 type="submit"
                 className="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none"
                 style={{
@@ -278,8 +288,25 @@ const VendorForm = ({
                   borderRadius: "28px",
                   fontFamily: "outFit, Sans-serif",
                   width: "100%",
+                  ...(formData.title &&
+                  formData.fullName &&
+                  formData.email &&
+                  formData.companyName &&
+                  formData.phone
+                    ? {}
+                    : {
+                        backgroundColor: "gray",
+                        cursor: "not-allowed",
+                      }),
                 }}
                 onClick={handleContinue}
+                disabled={
+                  !formData.title ||
+                  !formData.fullName ||
+                  !formData.email ||
+                  !formData.companyName ||
+                  !formData.phone
+                }
               >
                 Continue
               </button>
@@ -456,7 +483,7 @@ const VendorForm = ({
               </div>
             </div>
             <div className="flex justify-between">
-              <button
+            <Button
                 type="button"
                 onClick={handleBack}
                 className="py-2 px-4 text-gray-700 rounded focus:outline-none"
@@ -465,11 +492,12 @@ const VendorForm = ({
                   fontFamily: "outFit, Sans-serif",
                   width: "40%",
                   border: "#505050 1px solid",
+                  paddingBottom: "30px",
                 }}
               >
-                Back
-              </button>
-              <button
+                Previous
+              </Button>
+            <button
                 type="submit"
                 className="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none"
                 style={{
@@ -477,8 +505,27 @@ const VendorForm = ({
                   borderRadius: "28px",
                   fontFamily: "outFit, Sans-serif",
                   width: "40%",
+                  ...(formData.mobile &&
+                  formData.website &&
+                  formData.addres.street &&
+                  formData.addres.city &&
+                  formData.addres.zipCode &&
+                  formData.addres.country
+                    ? {}
+                    : {
+                        backgroundColor: "gray",
+                        cursor: "not-allowed",
+                      }),
                 }}
                 onClick={handleContinue}
+                disabled={
+                  !formData.mobile ||
+                  !formData.website ||
+                  !formData.addres.street ||
+                  !formData.addres.city ||
+                  !formData.addres.zipCode ||
+                  !formData.addres.country
+                }
               >
                 Continue
               </button>
@@ -530,6 +577,7 @@ const VendorForm = ({
                   onChange={handleChange}
                   className="w-full px-3 py-2 border rounded-md"
                 >
+                  <option value="">Select Subgroup</option>
                   {subGroupAccounts.map((subGroup, index) => (
                     <option key={index} value={subGroup.subGroupAccount.id}>
                       {subGroup.subGroupAccount.name}
@@ -567,6 +615,7 @@ const VendorForm = ({
                   onChange={handleChange}
                   className="w-full px-3 py-2 border rounded-md"
                 >
+                  <option value="">Select Account</option>
                   {accounts.map((account, index) => (
                     <option key={index} value={account.id}>
                       {account.name}
@@ -574,7 +623,39 @@ const VendorForm = ({
                   ))}
                 </select>
               </div>
-
+              <div className="mb-4">
+                <label
+                  className="block mb-2"
+                  style={{
+                    fontSize: "16px",
+                    fontWeight: "600",
+                    color: "#505050",
+                    fontFamily: "outFit, Sans-serif",
+                  }}
+                >
+                  Bank Name
+                </label>
+                <p
+                  style={{
+                    fontFamily: "outFit, Sans-serif",
+                    fontSize: "14px",
+                    marginTop: "10px",
+                    marginBottom: "10px",
+                    color: "#a1a1a1",
+                    fontWeight: "400",
+                  }}
+                >
+                  Enter the the bank name
+                </p>
+                <input
+                  type="text"
+                  name="bankName"
+                  value={formData.bankName}
+                  onChange={handleChange}
+                  placeholder="Bank Name"
+                  className="w-full px-3 py-2 border rounded-md"
+                />
+              </div>
               <div className="mb-4">
                 <label
                   className="block mb-2"
@@ -667,7 +748,24 @@ const VendorForm = ({
                   fontFamily: "outFit, Sans-serif",
                   width: "40%",
                   paddingBottom: "30px",
+                  ...(formData.subGroupId &&
+                  formData.paymentAccount &&
+                  formData.bankName &&
+                  formData.accountNo &&
+                  formData.status !== ""
+                    ? {}
+                    : {
+                        backgroundColor: "gray",
+                        cursor: "not-allowed",
+                      }),
                 }}
+                disabled={
+                  !formData.subGroupId ||
+                  !formData.paymentAccount ||
+                  !formData.bankName ||
+                  !formData.accountNo ||
+                  formData.status === ""
+                }
               >
                 Next
               </Button>
@@ -714,12 +812,13 @@ const VendorForm = ({
                   Opening Balance
                 </p>
                 <input
-                  type="datetime-local"
-                  name="openingBalanceDate"
-                  value={formData.openingBalanceDate}
-                  onChange={handleChange}
-                  className="w-full px-3 py-2 border rounded-md"
-                />
+                type="date"
+                id="openingBalanceDate"
+                value={formData.openingBalanceDate.split("T")[0]} // Extracts the date part
+                placeholder="Please enter account balance..."
+                className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                style={{ borderRadius: "12px", padding: "15px" }}
+              />
               </div>
               <div className="mb-4">
                 <label
@@ -859,35 +958,51 @@ const VendorForm = ({
                 display: "flex",
                 justifyContent: "space-between",
               }}
-            >
-              <Button
-                type="button"
-                onClick={handleBack}
-                className="py-2 px-4 text-gray-700 rounded focus:outline-none"
-                style={{
-                  borderRadius: "28px",
-                  fontFamily: "outFit, Sans-serif",
-                  width: "48%",
-                  border: "#505050 1px solid",
-                  paddingBottom: "30px",
-                }}
-              >
-                Previous
-              </Button>
-              <Button
-                type="submit"
-                onClick={handleSubmit}
-                className="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none"
-                style={{
-                  background: "#4467a1",
-                  borderRadius: "28px",
-                  fontFamily: "outFit, Sans-serif",
-                  width: "48%",
-                  paddingBottom: "30px",
-                }}
-              >
-                Submit
-              </Button>
+            ><Button
+            type="button"
+            onClick={handleBack}
+            className="py-2 px-4 text-gray-700 rounded focus:outline-none"
+            style={{
+              borderRadius: "28px",
+              fontFamily: "outFit, Sans-serif",
+              width: "48%",
+              border: "#505050 1px solid",
+              paddingBottom: "30px",
+            }}
+          >
+            Previous
+          </Button>
+          <Button
+            type="submit"
+            onClick={handleSubmit}
+            className="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none"
+            style={{
+              background: "#4467a1",
+              borderRadius: "28px",
+              fontFamily: "outFit, Sans-serif",
+              width: "48%",
+              paddingBottom: "30px",
+              ...(formData.openingBalanceDate &&
+              formData.openingBalance &&
+              formData.billingRate &&
+              formData.notes &&
+              formData.businessIdNo
+                ? {}
+                : {
+                    backgroundColor: "gray",
+                    cursor: "not-allowed",
+                  }),
+            }}
+            disabled={
+              !formData.openingBalanceDate ||
+              !formData.openingBalance ||
+              !formData.billingRate ||
+              !formData.notes ||
+              !formData.businessIdNo
+            }
+          >
+            Submit
+          </Button>
             </div>
           </div>
         )}

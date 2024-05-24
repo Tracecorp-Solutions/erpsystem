@@ -4,10 +4,11 @@ import { Modal, Button, Dropdown, Menu, Pagination } from "antd";
 import { EyeOutlined, EditOutlined } from "@ant-design/icons";
 import AccountForm from "../components/TranEditAccountForm";
 import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
-import AccountComponentSidebar from "../components/TranAccountComponentSidebar";
+import TranAccountComponentSidebar from "../components/TranAccountComponentSidebar";
 import AccountNavigationFilter from "../components/TranAccountNavigationFilter";
 import "../styles/AccountCreation.css";
 import AccountLoadingMessage from "../components/TranAccountLoadingMessage";
+
 
 const Transaction = () => {
   const [showModal, setShowModal] = useState(false);
@@ -58,7 +59,7 @@ const Transaction = () => {
         `${process.env.REACT_APP_API_URL}/RetrieveTransactions`
       );
       setTransactions(response.data);
-      console.log("skkskskkskskkskksk", response.data);
+      console.log("", response.data);
     } catch (error) {
       console.error("Error fetching transactions:", error);
       setError("Failed to fetch transactions");
@@ -128,7 +129,7 @@ const Transaction = () => {
   const handleViewDetails = async (accountId) => {
     try {
       const response = await axios.get(
-        `${process.env.REACT_APP_API_URL}/GetAccountById?id=${accountId}`
+        `${process.env.REACT_APP_API_URL}/GetTransactionsByAccountId?accountid=${accountId}`
       );
       setSelectedAccount(response.data);
       setDrawerVisible(true);
@@ -138,13 +139,14 @@ const Transaction = () => {
   };
 
   const handleDropdownVisibleChange = (visible, accountId) => {
+    console.log("transacyaiaiiia",accountId)
     setDropdownVisible({ ...dropdownVisible, [accountId]: visible });
   };
 
   const handleEdit = async (accountId) => {
     try {
       const response = await axios.get(
-        `${process.env.REACT_APP_API_URL}/GetAccountById?id=${accountId}`
+        `${process.env.REACT_APP_API_URL}/GetTransactionsByAccountId?accountid=${accountId}`
       );
       setSelectedAccount(response.data);
       setEditedAccount(response.data);
@@ -212,7 +214,7 @@ const Transaction = () => {
   return (
     <div>
       {drawerVisible && (
-        <AccountComponentSidebar
+        <TranAccountComponentSidebar
           subGroupAccounts={subGroupAccounts}
           setDrawerVisible={setDrawerVisible}
           drawerVisible={drawerVisible}

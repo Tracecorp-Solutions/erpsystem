@@ -4,11 +4,11 @@ import { EyeOutlined, EditOutlined } from "@ant-design/icons";
 import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
 import axios from "axios";
 import VendorNavigationbar from "../components/VendorNavigationbar";
-import FailureSlideInCard from '../components/FailureSlideInCard';
-import SlideInCard from '../components/SlideInCard';
+import FailureSlideInCard from "../components/FailureSlideInCard";
+import SlideInCard from "../components/SlideInCard";
 import ReusableEmptyData from "../components/ReusableEmptyData";
 import VendorForm from "../components/VendorForm";
-
+import VendorDetails from "../components/VendorDetails";
 
 const Vendor = () => {
   const [formData, setFormData] = useState({
@@ -36,7 +36,7 @@ const Vendor = () => {
     subGroupId: 0,
     vendorType: "Vendor",
   });
-  const [customerList, setCustomerList] = useState([]);
+  const [vendorList, setVendorList] = useState([]);
   const [showFailure, setShowFailure] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [messageInfo, setMessageInfo] = useState({ title: "", message: "" });
@@ -50,6 +50,7 @@ const Vendor = () => {
   const [showEditForm, setShowEditForm] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const [dropdownVisible, setDropdownVisible] = useState(false);
+  const [vendorDetails, setVendorDetails] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -57,7 +58,7 @@ const Vendor = () => {
         const response = await axios.get(
           `${process.env.REACT_APP_API_URL}/GetAllVendors`
         );
-        setCustomerList(response.data);
+        setVendorList(response.data);
       } catch (error) {
         setShowFailure(true);
         setMessageInfo({
@@ -96,6 +97,7 @@ const Vendor = () => {
             zipCode: "",
             country: "",
           },
+          bankName: "",
           accountNo: "",
           billingRate: 0,
           openingBalance: 0,
@@ -130,17 +132,6 @@ const Vendor = () => {
       });
   };
 
-  const handleViewDetails = async (vendorId) => {
-    try {
-      const response = await axios.get(
-        `http://3.216.182.63:8095/GetVendorById?id=${vendorId}`
-      );
-      setSelectedVendor(response.data); // Adjust this line if necessary based on the response structure
-      setDrawerVisible(true);
-    } catch (error) {
-      console.error("Error fetching vendor details:", error);
-    }
-  };
 
   const handleEdit = async (identifier, type = "id") => {
     try {
@@ -169,6 +160,7 @@ const Vendor = () => {
       console.error("Error fetching vendor details for edit:", error);
     }
   };
+  
 
   const handleEditSubmit = async (e) => {
     e.preventDefault();
@@ -183,11 +175,13 @@ const Vendor = () => {
     } catch (error) {
       console.error("Error updating vendor:", error);
     }
-  };  
+  };
 
   const handleDisable = async (vendorId) => {
     try {
-      const response = await axios.get(`http://3.216.182.63:8095/GetVendorById?id=${vendorId}`);
+      const response = await axios.get(
+        `http://3.216.182.63:8095/GetVendorById?id=${vendorId}`
+      );
       console.log("Vendor :", response.data);
       setSelectedVendor(response.data); // Assuming you want to update the selected vendor data
       setToggleDisabled(false); // Example state update to enable some feature
@@ -196,52 +190,48 @@ const Vendor = () => {
     }
   };
 
+  const fetchVendorDetails = async (vendorId) => {
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_API_URL}/GetVendorById`,
+        {
+          id: vendorId,
+          vendType: "Vendor",
+        }
+      );
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching vendor details:", error);
+      throw error;
+    }
+  };
+
+  const handleViewVendorDetails = async (vendorId) => {
+    try {
+      const vendorDetails = await fetchVendorDetails(vendorId);
+      setVendorDetails(vendorDetails);
+      setDrawerVisible(true);
+    } catch (error) {
+      console.error("Error viewing vendor details:", error);
+    }
+    console.log(vendorId)
+     setDrawerVisible(true)
+  };
+
   const handleModal = () => {
     setShowModal(true);
   };
 
-  const renderMenu = (vendorId) => (
-    <Menu style={{ width: "200px" }}>
-      <Menu.Item
-        key="1"
-        onClick={() => handleViewDetails(vendorId)}
-        icon={<EyeOutlined />}
-      >
-        View
-      </Menu.Item>
-      <Menu.Item
-        key="2"
-        onClick={() => handleEdit(vendorId)}
-        icon={<EditOutlined />}
-      >
-        Edit
-      </Menu.Item>
-      <Menu.Item
-        key="3"
-        onClick={() => handleDisable(vendorId)}
-        icon={<EditOutlined />}
-      >
-        Disable
-      </Menu.Item>
-    </Menu>
-  );
 
   const handleDropdownVisibleChange = (visible, vendorId) => {
     setDropdownVisible({ ...dropdownVisible, [vendorId]: visible });
   };
 
-  const menu = (
-    <Menu style={{ width: "250px" }}>
-      <Menu.Item key="1">Action 1</Menu.Item>
-      <Menu.Item key="2">Action 2</Menu.Item>
-      <Menu.Item key="3">Action 3</Menu.Item>
-    </Menu>
-  );
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
 
-  const filteredCustomerList = customerList.filter(
+  const filteredVendorList = vendorList.filter(
     (vendor) =>
       (toggleDisabled ? vendor.status === true : vendor.status === false) &&
       vendor.vendorType === "Vendor" &&
@@ -250,7 +240,7 @@ const Vendor = () => {
         vendor.mobile.toLowerCase().includes(searchQuery.toLowerCase()))
   );
 
-  const currentItems = filteredCustomerList.slice(
+  const currentItems = filteredVendorList.slice(
     indexOfFirstItem,
     indexOfLastItem
   );
@@ -292,7 +282,7 @@ const Vendor = () => {
             fontWeight: "600",
           }}
         >
-          Vendor
+          Vendors
         </h2>
         <Button
           type="button"
@@ -405,16 +395,26 @@ const Vendor = () => {
                         marginTop: "10px",
                       }}
                     >
-                      <Dropdown
-                        overlay={renderMenu(vendor.id)}
-                        trigger={["click"]}
-                        visible={dropdownVisible[vendor.id]}
-                        onVisibleChange={(visible) =>
-                          handleDropdownVisibleChange(visible, vendor.id)
+                        <Dropdown
+                        overlay={
+                          <Menu style={{ width: "250px" }}>
+                            <Menu.Item
+                              key="1"
+                              onClick={() =>
+                                handleViewVendorDetails(vendor.id)
+                              }
+                            >
+                              <EyeOutlined style={{ marginRight: "5px" }} />
+                              <span>View</span>
+                            </Menu.Item>
+                            <Menu.Item key="2">Edit</Menu.Item>
+                            <Menu.Item key="3">Disable</Menu.Item>
+                          </Menu>
                         }
+                        trigger={["click"]}
                       >
                         <EllipsisVerticalIcon
-                          className="h-5 w-5"
+                          className="h-5 w-5 mt-3"
                           aria-hidden="true"
                         />
                       </Dropdown>
@@ -442,15 +442,21 @@ const Vendor = () => {
             }}
           >
             Showing {indexOfFirstItem + 1} - {indexOfLastItem} of{" "}
-            {filteredCustomerList.length} results
+            {filteredVendorList.length} results
           </div>
           <Pagination
             current={currentPage}
-            total={filteredCustomerList.length}
+            total={filteredVendorList.length}
             pageSize={itemsPerPage}
             onChange={paginate}
           />
         </div>
+        <VendorDetails
+        drawerVisible={drawerVisible}
+        setDrawerVisible={setDrawerVisible}
+        vendorDetails={vendorDetails}
+
+      />
       </div>
     </div>
   );
