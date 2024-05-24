@@ -8,6 +8,7 @@ import Verify from './pages/authentication/Verify';
 import Login from './pages/authentication/Login';
 import Forgot from './pages/authentication/Forgot';
 
+
 function App() {
   return (
     <div className="min-h-full">
