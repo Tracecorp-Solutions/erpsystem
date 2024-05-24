@@ -11,12 +11,12 @@ namespace Core.Repositories
     {
         Task RecordTransactionAsync(TransactionViewModel transaction);
 
-        Task RecordJournalEntry(JournalItem item);
-
         Task<IEnumerable<TransactionsViewModel>> GetAllTransactions(); 
 
         Task<IEnumerable<TransactionsViewModel>> GetTransactionEntriesByAccountId(int accountId);
 
         Task<IEnumerable<TransactionsViewModel>> GetTransactionsByDateRange(DateTime startDate, DateTime endDate);
+
+        Task<TransactionDto> GetTransactionDetails(int tranid);
     }
 }

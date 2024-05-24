@@ -132,34 +132,23 @@ namespace Services.Repositories
             return transactions == null? throw new ArgumentException("No Transactions Found") : transactions;
         }
 
-        public async Task RecordJournalEntry(JournalItem journalItem) 
+        public async Task<TransactionDto> GetTransactionDetails(int tranid) 
         {
-            // Retrieve accounts involved in the transaction
-            var accountFrom = await _context.Accounts.FindAsync(journalItem.AccountFromId);
-            var accountTo = await _context.Accounts.FindAsync(journalItem.AccountToId);
-
-            if (accountFrom == null || accountTo == null)
-                throw new ArgumentException("Invalid account(s) specified.");
-
-            // Get SubGroup where the account falls under
-            var fromaccountsubgroupaccount = await _context.SubGroupAccounts.FindAsync(accountFrom.SubGroupAccountId);
-            var toaccountsubgroupaccount = await _context.SubGroupAccounts.FindAsync(accountTo.SubGroupAccountId);
-
-            var fromsgroup = await _context.GroupAccounts.FindAsync(fromaccountsubgroupaccount.GroupId);
-            var togroup = await _context.GroupAccounts.FindAsync(toaccountsubgroupaccount.GroupId);
-            //updating of balance for the accounts
-            if (fromsgroup.Behaviour.Equals("Debit"))
-            {
-                accountFrom.Balance -= journalItem.Amount;
-                accountTo.Balance += journalItem.Amount;
-            }
-            else
-            {
-                accountFrom.Balance += journalItem.Amount;
-                accountTo.Balance -= journalItem.Amount;
-            }
-
-            await _context.SaveChangesAsync();
+            var trans = _context.transactionEntries
+                .AsNoTracking()
+                .Include(t=> t.Account)
+                .Where(t => t.Id == tranid)
+                .OrderByDescending(t => t.Id)
+                .ToListAsync().Select(t => new TransactionDto 
+                {
+                    AccountFrom = t.Account.Name,
+                    AccountTo = t.Account.Name,
+                    Amount = t.Amount,
+                    TransactionDate = t.TransactionDate,
+                    TransactionType = t.TransactionType,
+                    TransactionReference = t.TransactionReference,
+                    Narration = t.Narration
+                });
         }
 
 
