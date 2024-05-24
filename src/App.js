@@ -1,17 +1,20 @@
 import React from 'react';
-import { BrowserRouter as Routers } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
 import Main from './components/Header';
-
+import Profile from './pages/onboarding/Profile';
 
 function App() {
 
   return (
     <div className="min-h-full">
       <div className="py-">
-        <Routers>
-         <Main />
-        </Routers>
+        <Router>
+         <Routes>
+          <Route path="/profile" element={<Profile />} />
+         </Routes>
+         {/* <Main /> */}
+        </Router>
       </div>
     </div>
   );
