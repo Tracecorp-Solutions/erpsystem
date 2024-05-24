@@ -78,17 +78,17 @@ const VendorForm = ({
       onCancel={() => setShowModal(false)}
     >
       <div style={{ marginBottom: "20px" }}>
-      <div style={{ display: "flex", justifyContent: "center" }}>
-      <div style={{ width: "100%" }}>
-        <Progress percent={(section / totalSections) * 100} />
-        <p style={{ fontFamily: "outFit, Sans-serif"}}>
-          {section === 1 && "Personal Information"}
-          {section === 2 && "Contact Information"}
-          {section === 3 && "Additional"}
-          {section === 4 && "Financial Details"}
-        </p>
-      </div>
-    </div>
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          <div style={{ width: "100%" }}>
+            <Progress percent={(section / totalSections) * 100} />
+            <p style={{ fontFamily: "outFit, Sans-serif" }}>
+              {section === 1 && "Personal Information"}
+              {section === 2 && "Contact Information"}
+              {section === 3 && "Additional"}
+              {section === 4 && "Financial Details"}
+            </p>
+          </div>
+        </div>
       </div>
       <form onSubmit={handleSubmit} className="max-w-lg mx-auto mt-8">
         {section === 1 && (
@@ -280,7 +280,7 @@ const VendorForm = ({
               </div>
             </div>
             <div className="flex justify-between">
-            <button
+              <button
                 type="submit"
                 className="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none"
                 style={{
@@ -483,7 +483,7 @@ const VendorForm = ({
               </div>
             </div>
             <div className="flex justify-between">
-            <Button
+              <Button
                 type="button"
                 onClick={handleBack}
                 className="py-2 px-4 text-gray-700 rounded focus:outline-none"
@@ -497,7 +497,7 @@ const VendorForm = ({
               >
                 Previous
               </Button>
-            <button
+              <button
                 type="submit"
                 className="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none"
                 style={{
@@ -812,14 +812,14 @@ const VendorForm = ({
                   Opening Balance
                 </p>
                 <input
-                type="date"
-                id="openingBalanceDate"
-                value={formData.openingBalanceDate.split("T")[0]} // Extracts the date part
-                placeholder="Please enter account balance..."
-                className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
-                style={{ borderRadius: "12px", padding: "15px" }}
-              />
+                  type="date"
+                  name="openingBalanceDate"
+                  value={formData.openingBalanceDate}
+                  onChange={handleChange}
+                  className="w-full px-3 py-2 border rounded-md"
+                />
               </div>
+
               <div className="mb-4">
                 <label
                   className="block mb-2"
@@ -958,51 +958,52 @@ const VendorForm = ({
                 display: "flex",
                 justifyContent: "space-between",
               }}
-            ><Button
-            type="button"
-            onClick={handleBack}
-            className="py-2 px-4 text-gray-700 rounded focus:outline-none"
-            style={{
-              borderRadius: "28px",
-              fontFamily: "outFit, Sans-serif",
-              width: "48%",
-              border: "#505050 1px solid",
-              paddingBottom: "30px",
-            }}
-          >
-            Previous
-          </Button>
-          <Button
-            type="submit"
-            onClick={handleSubmit}
-            className="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none"
-            style={{
-              background: "#4467a1",
-              borderRadius: "28px",
-              fontFamily: "outFit, Sans-serif",
-              width: "48%",
-              paddingBottom: "30px",
-              ...(formData.openingBalanceDate &&
-              formData.openingBalance &&
-              formData.billingRate &&
-              formData.notes &&
-              formData.businessIdNo
-                ? {}
-                : {
-                    backgroundColor: "gray",
-                    cursor: "not-allowed",
-                  }),
-            }}
-            disabled={
-              !formData.openingBalanceDate ||
-              !formData.openingBalance ||
-              !formData.billingRate ||
-              !formData.notes ||
-              !formData.businessIdNo
-            }
-          >
-            Submit
-          </Button>
+            >
+              <Button
+                type="button"
+                onClick={handleBack}
+                className="py-2 px-4 text-gray-700 rounded focus:outline-none"
+                style={{
+                  borderRadius: "28px",
+                  fontFamily: "outFit, Sans-serif",
+                  width: "48%",
+                  border: "#505050 1px solid",
+                  paddingBottom: "30px",
+                }}
+              >
+                Previous
+              </Button>
+              <Button
+                type="submit"
+                onClick={handleSubmit}
+                className="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none"
+                style={{
+                  background: "#4467a1",
+                  borderRadius: "28px",
+                  fontFamily: "outFit, Sans-serif",
+                  width: "48%",
+                  paddingBottom: "30px",
+                  ...(formData.openingBalanceDate &&
+                  formData.openingBalance &&
+                  formData.billingRate &&
+                  formData.notes &&
+                  formData.businessIdNo
+                    ? {}
+                    : {
+                        backgroundColor: "gray",
+                        cursor: "not-allowed",
+                      }),
+                }}
+                disabled={
+                  !formData.openingBalanceDate ||
+                  !formData.openingBalance ||
+                  !formData.billingRate ||
+                  !formData.notes ||
+                  !formData.businessIdNo
+                }
+              >
+                Submit
+              </Button>
             </div>
           </div>
         )}
