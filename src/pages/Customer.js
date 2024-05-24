@@ -204,13 +204,6 @@ const Customer = () => {
             onClose={() => setShowSuccess(false)}
           />
         )}
-        {showFailure && (
-          <FailureSlideInCard
-            title={messageInfo.title}
-            message={messageInfo.message}
-            onClose={() => setShowFailure(false)}
-          />
-        )}
         <h2
           style={{
             fontSize: "36px",
