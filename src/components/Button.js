@@ -194,7 +194,7 @@ export default function NavigationHeader() {
                       tabIndex="-1"
                       id="menu-item-1"
                     >
-                      SubGroupS
+                      SubGroups
                     </a>
                   </div>
                   <div

@@ -100,7 +100,8 @@ const navigation = [
       { name: "SubGroup Accounts", href: "/sub-group", current: false },
       { name: "Transactions", href: "/transactions", current: false },
     ],
-  },
+  }, 
+  
   {
     name: "Bills & Invoice",
     icon: FolderIcon,
