@@ -107,23 +107,20 @@ const Invoice = () => {
   
   
 
-  const handleConfirmation = () => {
+  const handleConfirmation = async () => {
     const id = selectInvoiceId;
   
-    // Close the confirmation modal
     setShowConfirmationModal(false);
   
-    // Send request to mark invoice as paid
-    axios.get(`${process.env.REACT_APP_API_URL}/PayBill/${id}`)
-      .then(response => {
-        console.log('Invoice marked as paid:', response.data);
-        // Optionally, you can update the local state or trigger a reload of invoice data
-      })
-      .catch(error => {
-        console.error('Error marking invoice as paid:', error);
-        // Optionally, you can display an error message to the user
-      });
+    try {
+      await axios.get(`${process.env.REACT_APP_API_URL}/PayBill/${id}`);
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/GetAllBills`);
+      setInvoice(response.data);
+    } catch (error) {
+      console.error('Error marking invoice as paid:', error);
+    }
   };
+  
   
 
   const indexOfLastItem = currentPage * itemsPerPage;
