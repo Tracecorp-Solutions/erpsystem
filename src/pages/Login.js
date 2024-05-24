@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import About from '../components/About';
+import { Link } from 'react-router-dom';
 
 function Login({ onSubmit }) {
   const [formData, setFormData] = useState({
@@ -56,10 +57,10 @@ function Login({ onSubmit }) {
                 onChange={handleChange}
               />
             </div>
-            <p>Forgot Password?</p>
+            <p><Link to="/forgot">Forgot Password?</Link></p>
             <button type="submit" className="create-btn">Login</button>
           </form>
-          <p>Don’t have an account? Register here.</p>
+          <p>Don’t have an account? <Link to="/signup">Register here</Link></p>
         </div>
       </div>
       <About />

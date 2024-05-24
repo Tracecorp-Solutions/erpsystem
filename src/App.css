@@ -440,3 +440,8 @@ button[type="submit"] {
 .img-wrapper img {
   width: 100%;
 }
+
+.form-content a {
+  font-weight: 600;
+  color: #505050;
+}

@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import About from '../components/About';
+import { Link } from 'react-router-dom';
+import Login from './Login';
 
 function Signup({ onSubmit }) {
   const [formData, setFormData] = useState({
@@ -58,7 +60,7 @@ function Signup({ onSubmit }) {
             </div>
             <button type="submit" className="create-btn">Create an Account</button>
           </form>
-          <p>Already have an account? Login</p>
+          <p>Already have an account? <Link to='/login'>Login</Link></p>
         </div>
       </div>
       <About />
