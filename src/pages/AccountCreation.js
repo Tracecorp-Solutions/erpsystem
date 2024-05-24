@@ -357,11 +357,7 @@ const AccountCreation = () => {
                 className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
                 style={{ borderRadius: "12px", padding: "15px" }}
               />
-              {!newAccount.name && (
-                <p className="text-red-500 text-sm mt-1">
-                  Please enter account name
-                </p>
-              )}
+            
             </div>
             <div className="mb-4">
               <label
