@@ -1,8 +1,11 @@
 import TopNav from "../components/TopNav";
 import { Plus } from 'lucide-react';
+import SideNav from "../components/SideNav";
 
 function Subgroups() {
   return (
+    <>
+    <SideNav />
     <div className="content">
       <TopNav />
       <div className="top-content">
@@ -12,6 +15,7 @@ function Subgroups() {
         </div>
       </div>
     </div>
+    </>
   );
 }
 

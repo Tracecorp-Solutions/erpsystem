@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import About from '../components/About';
+import About from '../../components/About';
 import { Link } from 'react-router-dom';
 
 function Login({ onSubmit }) {

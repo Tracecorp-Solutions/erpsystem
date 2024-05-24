@@ -4,11 +4,11 @@ import Groups from './pages/Groups';
 import Subgroups from './pages/Subgroups';
 import Accounts from './pages/Accounts';
 import Transactions from './pages/Transactions';
-import Signup from './pages/Signup';
-import Login from './pages/Login';
-import VerifyAccount from './pages/VerifyAccount';
-import ResetPassword from './pages/ResetPassword';
-import ForgotPassword from './pages/ForgotPassword';
+import Signup from './pages/setup/Signup';
+import Login from './pages/setup/Login';
+import VerifyAccount from './pages/setup/VerifyAccount';
+import ResetPassword from './pages/setup/ResetPassword';
+import ForgotPassword from './pages/setup/ForgotPassword';
 import "./App.css";
 
 function App() {

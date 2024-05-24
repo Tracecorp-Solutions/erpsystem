@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import About from '../components/About';
+import About from '../../components/About';
 
-function ForgotPassword({ onSubmit }) {
+function VerifyAccount({ onSubmit }) {
     const [formData, setFormData] = useState({
-      email: ''
+      otp: ''
     });
   
     const handleChange = (e) => {
@@ -25,25 +25,25 @@ function ForgotPassword({ onSubmit }) {
           <div className="form-content">
             <div className="form-intro">
               <span className="greeting">
-                <h2>Forgot Password?</h2>
-                <img src="/img/reset.png" alt="signup" />
+                <h2>Verify Account</h2>
+                <img src="/img/wave.png" alt="signup" />
               </span>
-              <p>No worries! Let us send you instructions to help you reset it.</p>
+              <p>A one-time password (OTP) has been sent to your email address. Enter the code to verify your account.</p>
             </div>
             <form onSubmit={handleSubmit}>
               <div className="form-group">
                 <div className="label-desc">
-                  <label>Email Address</label>
+                  <label>One-time Password</label>
                 </div>
                 <input
-                  type="email"
-                  name="email"
-                  placeholder="Enter your email address"
-                  value={formData.email}
+                  type="text"
+                  name="otp"
+                  placeholder="Enter OTP"
+                  value={formData.otp}
                   onChange={handleChange}
                 />
               </div>
-              <button type="submit" className="create-btn">Send Reset Instructions</button>
+              <button type="submit" className="create-btn">Verify Account</button>
             </form>
           </div>
         </div>
@@ -53,4 +53,4 @@ function ForgotPassword({ onSubmit }) {
 
 }
 
-export default ForgotPassword;
+export default VerifyAccount;

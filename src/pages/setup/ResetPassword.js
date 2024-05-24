@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import About from '../components/About';
+import About from '../../components/About';
 
 function ResetPassword({ onSubmit }) {
     const [formData, setFormData] = useState({

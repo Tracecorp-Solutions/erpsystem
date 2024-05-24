@@ -3,6 +3,7 @@ import TopNav from "../components/TopNav";
 import { Plus, EllipsisVertical } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import CreateTransaction from "../components/CreateTransaction";
+import SideNav from "../components/SideNav";
 
 function Transactions() {
   const [transactions, setTransactions] = useState([]);
@@ -53,54 +54,57 @@ function Transactions() {
   };
 
   return (
-    <div className="content">
-      <TopNav />
-      <div className="top-content">
-        <div className="title">
-          <h2>Transactions</h2>
-          <button onClick={openModal} className="create-btn"><Plus /><span>Create Transaction</span></button>
-        </div>
-        {isModalOpen && (
-          <CreateTransaction isOpen={isModalOpen} onClose={closeModal} onSubmit={handleSubmit} />
-        )}
-        {loading ? (
-          <p>Loading...</p>
-        ) : error ? (
-          <p>Error: {error}</p>
-        ) : (
-          <table className="transactions-table">
-            <thead>
-              <tr>
-                {/* <th className="caption">ID</th> */}
-                <th className="caption">Ref Number</th>
-                <th className="caption">Account to</th>
-                <th className="caption">Account from</th>
-                <th className="caption date">Date</th>
-                <th className="caption amount">Amount</th>
-                <th className="caption actions">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {transactions.map(transaction => (
-                <tr key={transaction.id}>
-                  {/* <td>{transaction.id}</td> */}
-                  <td>{transaction.tranReference}</td>
-                  <td>{transaction.accountToId}</td>
-                  <td>{transaction.accountFromId}</td>
-                  <td className="date">{formatDate(transaction.transactionDate)}</td>
-                  <td className="amount">{transaction.amount}</td>
-                  <td className="actions">
-                    <Link to="/" className="more">
-                      <EllipsisVertical />
-                    </Link>
-                  </td>
+    <>
+      <SideNav />
+      <div className="content">
+        <TopNav />
+        <div className="top-content">
+          <div className="title">
+            <h2>Transactions</h2>
+            <button onClick={openModal} className="create-btn"><Plus /><span>Create Transaction</span></button>
+          </div>
+          {isModalOpen && (
+            <CreateTransaction isOpen={isModalOpen} onClose={closeModal} onSubmit={handleSubmit} />
+          )}
+          {loading ? (
+            <p>Loading...</p>
+          ) : error ? (
+            <p>Error: {error}</p>
+          ) : (
+            <table className="transactions-table">
+              <thead>
+                <tr>
+                  {/* <th className="caption">ID</th> */}
+                  <th className="caption">Ref Number</th>
+                  <th className="caption">Account to</th>
+                  <th className="caption">Account from</th>
+                  <th className="caption date">Date</th>
+                  <th className="caption amount">Amount</th>
+                  <th className="caption actions">Actions</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        )}
+              </thead>
+              <tbody>
+                {transactions.map(transaction => (
+                  <tr key={transaction.id}>
+                    {/* <td>{transaction.id}</td> */}
+                    <td>{transaction.tranReference}</td>
+                    <td>{transaction.accountToId}</td>
+                    <td>{transaction.accountFromId}</td>
+                    <td className="date">{formatDate(transaction.transactionDate)}</td>
+                    <td className="amount">{transaction.amount}</td>
+                    <td className="actions">
+                      <Link to="/" className="more">
+                        <EllipsisVertical />
+                      </Link>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 

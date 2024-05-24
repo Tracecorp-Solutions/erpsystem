@@ -445,3 +445,42 @@ button[type="submit"] {
   font-weight: 600;
   color: #505050;
 }
+
+@media (max-width: 1024px) {
+  .flex {
+    flex-direction: column-reverse
+  }
+
+  .form-side {
+    width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .img-side {
+    width: 100%;
+  }
+
+  .form-content {
+    width: 90%;
+  }
+}
+
+@media (max-width: 1200px) {
+  .form-content,
+  .img-content {
+    width: 50%;
+  }
+}
+
+@media (max-width: 768px) {
+  .img-side {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .form-content {
+    width: 70%;
+  }
+}
