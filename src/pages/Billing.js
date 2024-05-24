@@ -329,7 +329,7 @@ const Bills = () => {
           },
         }}
       >
-        <p>Are you sure you want to mark this invoice as paid?</p>
+        <p>Are you sure you want to mark this bill as paid?</p>
       </Modal>
     </div>
   );
