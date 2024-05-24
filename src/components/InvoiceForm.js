@@ -28,6 +28,7 @@ const InvoiceForm = () => {
   const [customer, setCustomer] = useState([]);
   const [isInvoiceCreated, setIsInvoiceCreated] = useState(false);
   const [message, setMessage] = useState("");
+  const [isSaving, setIsSaving] = useState();
 
   const navigate = useNavigate();
 
@@ -109,6 +110,7 @@ const InvoiceForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsSaving(true);
     try {
       const response = await axios.post(
         `${process.env.REACT_APP_API_URL}/CreateBill`,
@@ -118,6 +120,8 @@ const InvoiceForm = () => {
       setMessage(response.data);
     } catch (error) {
       console.error("Error creating invoice:", error);
+    } finally {
+      setIsSaving(false);
     }
   };
 
@@ -471,6 +475,7 @@ const InvoiceForm = () => {
               width: "150px",
               paddingBottom: "30px",
             }}
+            disabled={isSaving}
           >
             Save Invoice
           </Button>
