@@ -765,7 +765,7 @@ const CustomerForm = ({
                   Opening Balance
                 </p>
                 <input
-                  type="datetime-local"
+                  type="date"
                   name="openingBalanceDate"
                   value={formData.openingBalanceDate}
                   onChange={handleChange}

@@ -80,12 +80,11 @@ const AccountCreation = () => {
       !newAccount.balance ||
       !newAccount.accountType ||
       !newAccount.subGroupAccountId ||
-      !newAccount.accountNumber ||
       !newAccount.description ||
       !newAccount.openingBalanceDate
     ) {
       setErrorMessage("Please fill in all fields.");
-      setSuccessMessage(""); // Reset success message
+      setSuccessMessage("");
       return;
     }
     try {
@@ -110,12 +109,12 @@ const AccountCreation = () => {
         openingBalanceDate: "",
         accountNumber: "",
       });
-      setShowSuccess(true)
+      setShowSuccess(true);
       fetchAccounts();
       setShowModal(false);
       setMessageInfo({
         title: "Account Created!",
-        message: "Account created successfully."
+        message: "Account created successfully.",
       });
     } catch (error) {
       console.error("Failed to create account:", error);
@@ -132,12 +131,12 @@ const AccountCreation = () => {
         `${process.env.REACT_APP_API_URL}/UpdateAccountDetails`,
         editedAccount
       );
-      setShowSuccess(true)
+      setShowSuccess(true);
       setShowEditForm(false);
       setMessageInfo({
         title: "Account Updated!",
-        message: "Account updated successfully."
-      })
+        message: "Account updated successfully.",
+      });
     } catch (error) {
       console.error("Error updating account:", error);
     }
@@ -192,7 +191,6 @@ const AccountCreation = () => {
       >
         Edit
       </Menu.Item>
-      
     </Menu>
   );
 
@@ -236,7 +234,13 @@ const AccountCreation = () => {
 
   return (
     <div>
-       {showSuccess && <SlideInCard title={messageInfo.title} message={messageInfo.message} onClose={handleCloseSuccess}/>}
+      {showSuccess && (
+        <SlideInCard
+          title={messageInfo.title}
+          message={messageInfo.message}
+          onClose={handleCloseSuccess}
+        />
+      )}
       {drawerVisible && (
         <AccountComponentSidebar
           subGroupAccounts={subGroupAccounts}
@@ -378,12 +382,14 @@ const AccountCreation = () => {
                 id="accountType"
                 name="accountType"
                 value={newAccount.accountType}
-                onChange={(e) =>
+                onChange={(e) => {
+                  console.log("Selected value:", e.target.value);
                   setNewAccount({
                     ...newAccount,
                     accountType: e.target.value,
-                  })
-                }
+                  });
+                }}
+                
                 className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
                 style={{ borderRadius: "12px", padding: "15px" }}
               >

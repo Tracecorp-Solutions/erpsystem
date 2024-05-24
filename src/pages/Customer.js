@@ -97,62 +97,68 @@ const Customer = () => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    axios
-      .post(`${process.env.REACT_APP_API_URL}/CreateVendor`, formData)
-      .then((response) => {
-        setShowModal(false);
-        setShowSuccess(true);
-        setMessageInfo({
-          title: "Success!",
-          message: response.data.message,
-        });
-        setFormData({
-          title: "",
-          fullName: "",
-          email: "",
-          companyName: "",
-          phone: "",
-          mobile: "",
-          website: "",
-          addres: {
-            street: "",
-            city: "",
-            zipCode: "",
-            country: "",
-          },
-          billingRate: 0,
-          openingBalance: 0,
-          openingBalanceDate: "",
-          notes: "",
-          businessIdNo: "",
-          status: true,
-          paymentAccount: 0,
-          subGroupId: 0,
-          vendorType: "Customer",
-        });
-      })
-      .catch((error) => {
-        console.error("Error submitting form:", error);
-        setShowFailure(true);
-        if (error.response) {
-          setMessageInfo({
-            title: "Server Error!",
-            message: error.response.data.message,
-          });
-        } else if (error.request) {
-          setMessageInfo({
-            title: "Network Error!",
-            message: "Failed to connect to the server.",
-          });
-        } else {
-          setMessageInfo({
-            title: "Request Error!",
-            message: "Failed to send request.",
-          });
-        }
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_API_URL}/CreateVendor`,
+        formData
+      );
+      setShowModal(false);
+      setShowSuccess(true);
+      setMessageInfo({
+        title: "Success!",
+        message: response.data.message,
       });
+      setFormData({
+        title: "",
+        fullName: "",
+        email: "",
+        companyName: "",
+        phone: "",
+        mobile: "",
+        website: "",
+        addres: {
+          street: "",
+          city: "",
+          zipCode: "",
+          country: "",
+        },
+        billingRate: 0,
+        openingBalance: 0,
+        openingBalanceDate: "",
+        notes: "",
+        businessIdNo: "",
+        status: true,
+        paymentAccount: 0,
+        subGroupId: 0,
+        vendorType: "Customer",
+      });
+
+      const updatedCustomerListResponse = await axios.get(
+        `${process.env.REACT_APP_API_URL}/GetAllVendors`
+      );
+      setCustomerList(updatedCustomerListResponse.data);
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      setShowFailure(true);
+      if (error.response) {
+        setMessageInfo({
+          title: "Server Error!",
+          message: error.response.data.message,
+        });
+      } else if (error.request) {
+        setMessageInfo({
+          title: "Network Error!",
+          message: "Failed to connect to the server.",
+        });
+      } else {
+        setMessageInfo({
+          title: "Request Error!",
+          message: "Failed to send request.",
+        });
+      }
+    }
   };
 
   const handleModal = () => {
