@@ -5,7 +5,10 @@ import Subgroups from './pages/Subgroups';
 import Accounts from './pages/Accounts';
 import Transactions from './pages/Transactions';
 import Signup from './pages/Signup';
+import Login from './pages/Login';
 import VerifyAccount from './pages/VerifyAccount';
+import ResetPassword from './pages/ResetPassword';
+import ForgotPassword from './pages/ForgotPassword';
 import "./App.css";
 
 function App() {
@@ -19,10 +22,10 @@ function App() {
           <Route path="/accounts" element={<Accounts />} />
           <Route path="/transactions" element={<Transactions />} />
           <Route path="/signup" element={<Signup />} />
-          {/* <Route path="/login" element={<Login />} /> */}
+          <Route path="/login" element={<Login />} />
           <Route path="/verify" element={<VerifyAccount />} />
-          {/* <Route path="/reset" element={<ResetPassword />} /> */}
-          {/* <Route path="/forgot" element={<ForgotPassword />} /> */}
+          <Route path="/reset" element={<ResetPassword />} />
+          <Route path="/forgot" element={<ForgotPassword />} />
         </Routes>
       </div>
     </BrowserRouter>
