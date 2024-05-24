@@ -181,6 +181,7 @@ const Bills = () => {
                   >
                     NUMBER
                   </th>
+                  
                   <th
                     scope="col"
                     className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
@@ -234,7 +235,7 @@ const Bills = () => {
                                 <Menu.Item key="1" onClick={handleViewClick}>
                                   <span>View Invoice</span>
                                 </Menu.Item>
-                                <Menu.Item
+                                {/* <Menu.Item
                                   key="2"
                                   onClick={() => handleEditInvoice(bill.id)}
                                 >
@@ -250,7 +251,7 @@ const Bills = () => {
                                 )}
                                 <Menu.Item key="4">
                                   Send payment reminder
-                                </Menu.Item>
+                                </Menu.Item> */}
                               </Menu>
                             }
                             trigger={["click"]}
