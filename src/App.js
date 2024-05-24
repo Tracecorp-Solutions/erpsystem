@@ -13,7 +13,7 @@ function App() {
     <div className="min-h-full">
       <div className="py-">
         <Router>
-          <Main />
+          {/* <Main /> */}
           <Routes>
             <Route path="/" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
