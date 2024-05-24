@@ -24,18 +24,8 @@ const Invoice = () => {
   const [unpaidTotalAmount, setUnpaidTotalAmount] = useState(0);
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
   const [selectInvoiceId, setSelectedInvoiceId] = useState(null);
-  const [formData, setFormData] = useState({
-    billDate: "",
-    dueDate: "",
-    billNo: "",
-    billTranItems: [],
-    vendor: {
-      id: ""
-    },
-    status: "Paid",
-    type: "Income"
-  });
-  console.log("mark as paid form data", formData);
+  
+  console.log("mark as paid form data", selectInvoiceId);
 
   const navigate = useNavigate();
 
@@ -108,25 +98,7 @@ const Invoice = () => {
         `${process.env.REACT_APP_API_URL}/GetBillById/${id}`
       );
       console.log("Fetched Invoice Data:", response.data);
-      
-      // Update the formData state with the fetched data
-      const {
-        billDate,
-        dueDate,
-        billNo,
-        billTranItems,
-        vendor: { id },
-        type,
-      } = response.data;
     
-      setFormData({
-        billDate,
-        dueDate,
-        billNo,
-        billTranItems,
-        vendor: { id },
-        type,
-      });
     } catch (error) {
       console.error("Error fetching invoice data:", error);
       // Optionally, you can display an error message to the user
@@ -138,29 +110,11 @@ const Invoice = () => {
   const handleConfirmation = () => {
     const id = selectInvoiceId;
   
-    // Map fields from formData to match the backend's expected structure
-    const billTranItems = formData.billTranItems.map(item => ({
-      id: item.id,
-      accountId: item.accountId,
-      description: item.description,
-      amount: item.amount
-    }));
+    // Close the confirmation modal
+    setShowConfirmationModal(false);
   
-    // Create the invoiceToUpdate object
-    const invoiceToUpdate = {
-      id,
-      billDate: formData.billDate,
-      dueDate: formData.dueDate,
-      billNo: formData.billNo,
-      billTranItems,
-      type: formData.type,
-      status: 'Paid',
-      vendor: formData.vendor,
-      type: formData.type
-    };
-  
-    // Send the updated invoice to the backend
-    axios.put(`${process.env.REACT_APP_API_URL}/UpdateBill`, invoiceToUpdate)
+    // Send request to mark invoice as paid
+    axios.get(`${process.env.REACT_APP_API_URL}/PayBill/${id}`)
       .then(response => {
         console.log('Invoice marked as paid:', response.data);
         // Optionally, you can update the local state or trigger a reload of invoice data
@@ -169,10 +123,8 @@ const Invoice = () => {
         console.error('Error marking invoice as paid:', error);
         // Optionally, you can display an error message to the user
       });
-  
-    // Close the confirmation modal
-    setShowConfirmationModal(false);
   };
+  
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
