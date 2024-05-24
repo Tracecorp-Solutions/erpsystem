@@ -39,7 +39,6 @@ const Vendor = () => {
   const [vendorList, setVendorList] = useState([]);
   const [showFailure, setShowFailure] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const [messageInfo, setMessageInfo] = useState({ title: "", message: "" });
   const [toggleDisabled, setToggleDisabled] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(5);
@@ -50,6 +49,8 @@ const Vendor = () => {
   const [showEditForm, setShowEditForm] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const [dropdownVisible, setDropdownVisible] = useState(false);
+  const [showMessage, setShowMessage] = useState(false);
+  const [messageInfo, setMessageInfo] = useState({ title: '', message: '', color: '' });
   const [vendorDetails, setVendorDetails] = useState(null);
 
   useEffect(() => {
@@ -58,12 +59,26 @@ const Vendor = () => {
         const response = await axios.get(
           `${process.env.REACT_APP_API_URL}/GetAllVendors`
         );
-        setVendorList(response.data);
+        if (response.data.length === 0) {
+          setVendorList([]); // No vendors found
+          setShowMessage(true);
+          setMessageInfo({
+            title: "No Vendors Found",
+            message: "Start your journey by creating vendors.",
+            color: "yellow",
+          });
+        } else {
+          setVendorList(response.data);
+          setShowMessage(false); // Hide any previous messages
+          setMessageInfo({ title: '', message: '', color: '' }); // Clear previous message
+        }
       } catch (error) {
-        setShowFailure(true);
+        setVendorList([]); // Clear vendor list on error
+        setShowMessage(true);
         setMessageInfo({
           title: "Server Error!",
           message: "Failed to fetch vendor details.",
+          color: "red",
         });
         console.error("Error fetching data:", error);
       }
@@ -71,6 +86,7 @@ const Vendor = () => {
 
     fetchData();
   }, []);
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
