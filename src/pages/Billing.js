@@ -268,7 +268,7 @@ const Bills = () => {
                             overlay={
                               <Menu style={{ width: "250px" }}>
                                 <Menu.Item key="1" onClick={handleViewClick}>
-                                  <span>View Invoice</span>
+                                  <span>View Bill</span>
                                 </Menu.Item>
                                 <Menu.Item
                                   key="2"
@@ -306,7 +306,7 @@ const Bills = () => {
         </div>
       </div>
       <Modal
-        title="Mark Invoice as Paid"
+        title="Mark Bill as Paid"
         visible={showConfirmationModal}
         onOk={handleConfirmation}
         onCancel={() => setShowConfirmationModal(false)}
