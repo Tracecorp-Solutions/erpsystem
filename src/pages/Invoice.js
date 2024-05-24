@@ -24,7 +24,7 @@ const Invoice = () => {
   const [unpaidTotalAmount, setUnpaidTotalAmount] = useState(0);
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
   const [selectInvoiceId, setSelectedInvoiceId] = useState(null);
-  
+
   console.log("mark as paid form data", selectInvoiceId);
 
   const navigate = useNavigate();
@@ -92,36 +92,33 @@ const Invoice = () => {
     console.log(id);
     setSelectedInvoiceId(id);
     setShowConfirmationModal(true);
-    
+
     try {
       const response = await axios.get(
         `${process.env.REACT_APP_API_URL}/GetBillById/${id}`
       );
       console.log("Fetched Invoice Data:", response.data);
-    
     } catch (error) {
       console.error("Error fetching invoice data:", error);
       // Optionally, you can display an error message to the user
     }
   };
-  
-  
 
   const handleConfirmation = async () => {
     const id = selectInvoiceId;
-  
+
     setShowConfirmationModal(false);
-  
+
     try {
       await axios.get(`${process.env.REACT_APP_API_URL}/PayBill/${id}`);
-      const response = await axios.get(`${process.env.REACT_APP_API_URL}/GetAllBills`);
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}/GetAllBills`
+      );
       setInvoice(response.data);
     } catch (error) {
-      console.error('Error marking invoice as paid:', error);
+      console.error("Error marking invoice as paid:", error);
     }
   };
-  
-  
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -322,6 +319,24 @@ const Invoice = () => {
         visible={showConfirmationModal}
         onOk={handleConfirmation}
         onCancel={() => setShowConfirmationModal(false)}
+        okButtonProps={{
+          // Style props for OK button
+          style: {
+            backgroundColor: "#4467a1",
+            color: "#fff",
+            borderRadius: "4px",
+            borderColor: "#4467a1",
+            marginRight: "8px",
+          },
+        }}
+        cancelButtonProps={{
+          style: {
+            backgroundColor: "#fff",
+            color: "#4467a1",
+            borderRadius: "4px",
+            borderColor: "#4467a1",
+          },
+        }}
       >
         <p>Are you sure you want to mark this invoice as paid?</p>
       </Modal>
