@@ -121,6 +121,9 @@ namespace Services.Repositories
             if (user == null)
                 throw new ArgumentException("Invalid Email Address");
 
+            if (!user.Verified)
+                throw new ArgumentException("User has not been verified");
+
             var password = Guid.NewGuid().ToString().Substring(0, 8);
             user.PasswordHash = _passwordHasher.HashPassword(user, password);
             await _context.SaveChangesAsync();
