@@ -315,7 +315,7 @@ const Profile = () => {
                 backgroundImage: `url(${imagePreview || "placeholder.jpg"})`,
                 backgroundSize: "cover",
                 backgroundPosition: "center",
-                marginLeft: "10px"
+                marginLeft: "10px",
               }}
             ></div>
           </div>
@@ -343,6 +343,7 @@ const Profile = () => {
               onChange={handleFileChange}
             />
             <button
+              type="button"
               style={{
                 padding: "7px 15px 7px 15px",
                 background: "#4467a1",
@@ -355,6 +356,33 @@ const Profile = () => {
               Upload image
             </button>
           </div>
+        </div>
+      </div>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
+        <div
+          style={{
+            width: "80%",
+            display: "flex",
+            justifyContent: "end",
+          }}
+        >
+          <button
+            type="button"
+            style={{
+              padding: "7px 20px 7px 20px",
+              background: "#4467a1",
+              borderRadius: "28px",
+              color: "#fff",
+              marginBottom: "10px"
+            }}
+          >
+            Save Profile
+          </button>
         </div>
       </div>
     </div>
