@@ -3,17 +3,17 @@
   "WorkspaceRootPath": "D:\\working directory\\erpsystem\\Trace\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{D0C5D151-D98C-46B1-A85E-DFAA22B5EE2F}|..\\Services\\Services.csproj|d:\\working directory\\erpsystem\\services\\repositories\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{97CA6EF6-720A-4545-8A15-EBF2D4F20DA0}|Trace.csproj|d:\\working directory\\erpsystem\\trace\\controllers\\authenticationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{97CA6EF6-720A-4545-8A15-EBF2D4F20DA0}|Trace.csproj|solutionrelative:controllers\\authenticationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A176F11F-4BEC-4DAC-9205-CF64F57D23C0}|..\\Core\\Core.csproj|d:\\working directory\\erpsystem\\core\\dtos\\changepwddto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D0C5D151-D98C-46B1-A85E-DFAA22B5EE2F}|..\\Services\\Services.csproj|d:\\working directory\\erpsystem\\services\\repositories\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A176F11F-4BEC-4DAC-9205-CF64F57D23C0}|..\\Core\\Core.csproj|d:\\working directory\\erpsystem\\core\\repositories\\iuserrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A176F11F-4BEC-4DAC-9205-CF64F57D23C0}|..\\Core\\Core.csproj|d:\\working directory\\erpsystem\\core\\dtos\\changepwddto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{D0C5D151-D98C-46B1-A85E-DFAA22B5EE2F}|..\\Services\\Services.csproj|d:\\working directory\\erpsystem\\services\\repositories\\vendorrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
@@ -143,11 +143,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "ChangePwdDto.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Core\\DTOs\\ChangePwdDto.cs",
               "RelativeDocumentMoniker": "..\\Core\\DTOs\\ChangePwdDto.cs",
@@ -155,8 +155,7 @@
               "RelativeToolTip": "..\\Core\\DTOs\\ChangePwdDto.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAuwAwAAAAkAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-25T06:29:30.02Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-25T06:29:30.02Z"
             },
             {
               "$type": "Document",
@@ -196,39 +195,39 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "UserRepository.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Services\\Repositories\\UserRepository.cs",
               "RelativeDocumentMoniker": "..\\Services\\Repositories\\UserRepository.cs",
-              "ToolTip": "D:\\working directory\\erpsystem\\Services\\Repositories\\UserRepository.cs",
-              "RelativeToolTip": "..\\Services\\Repositories\\UserRepository.cs",
-              "ViewState": "AQIAAFkAAAAAAAAAAADgv24AAABKAAAA",
+              "ToolTip": "D:\\working directory\\erpsystem\\Services\\Repositories\\UserRepository.cs*",
+              "RelativeToolTip": "..\\Services\\Repositories\\UserRepository.cs*",
+              "ViewState": "AQIAAHIAAAAAAAAAAAASwIAAAAAJAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-05-22T10:05:39.032Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "AuthenticationController.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Trace\\Controllers\\AuthenticationController.cs",
               "RelativeDocumentMoniker": "Controllers\\AuthenticationController.cs",
               "ToolTip": "D:\\working directory\\erpsystem\\Trace\\Controllers\\AuthenticationController.cs",
               "RelativeToolTip": "Controllers\\AuthenticationController.cs",
-              "ViewState": "AQIAADgAAAAAAAAAAAAgwE4AAAAsAAAA",
+              "ViewState": "AQIAAFIAAAAAAAAAAAAkwGsAAAAJAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-05-24T12:52:04.806Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 2,
               "Title": "IUserRepository.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Core\\Repositories\\IUserRepository.cs",
               "RelativeDocumentMoniker": "..\\Core\\Repositories\\IUserRepository.cs",
               "ToolTip": "D:\\working directory\\erpsystem\\Core\\Repositories\\IUserRepository.cs",
               "RelativeToolTip": "..\\Core\\Repositories\\IUserRepository.cs",
-              "ViewState": "AQIAAAMAAAAAAAAAAAAuwBIAAAA7AAAA",
+              "ViewState": "AQIAAAkAAAAAAAAAAAAuwBQAAAAIAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-05-22T10:26:30.678Z",
               "EditorCaption": ""
@@ -243,8 +242,7 @@
               "RelativeToolTip": "..\\Services\\Repositories\\VendorRepository.cs",
               "ViewState": "AQIAABEAAAAAAAAAAAAUwBsAAAAgAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-23T18:16:01.631Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-23T18:16:01.631Z"
             },
             {
               "$type": "Document",

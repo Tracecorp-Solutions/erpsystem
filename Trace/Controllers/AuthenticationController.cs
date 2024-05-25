@@ -88,5 +88,23 @@ namespace Trace.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
             }
         }
+
+        [HttpPost("/ResetPassword")]
+        public async Task<IActionResult> ResetPassword([FromBody] string email)
+        {
+            try
+            {
+                await _userRepository.ResetPasswordAsync(email);
+                return Ok("Password reset link sent to your email");
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
+        }
     }
 }

@@ -17,5 +17,7 @@ namespace Core.Repositories
         Task VerifyOtpAsync(OTPDto oTPDto);
 
         Task ChangePasswordAsync(ChangePwdDto changePwdDto);
+
+        Task ResetPasswordAsync(string email);
     }
 }

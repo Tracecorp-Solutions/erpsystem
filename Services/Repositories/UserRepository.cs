@@ -115,5 +115,18 @@ namespace Services.Repositories
             await LogActionAsync(user.Username, "User Password updated");
         }
 
+        public async Task ResetPasswordAsync(string email)
+        {
+            var user = _context.Users.FirstOrDefault(u => u.Email == email);
+            if (user == null)
+                throw new ArgumentException("Invalid Email Address");
+
+            var password = Guid.NewGuid().ToString().Substring(0, 8);
+            user.PasswordHash = _passwordHasher.HashPassword(user, password);
+            await _context.SaveChangesAsync();
+            await LogActionAsync(user.Email, "User password reset");
+            await emailService.SendEmailAsync(user.Email, "Password Reset", $"Your password has been reset. Your new password is {password}");
+        }
+
     }
 }
