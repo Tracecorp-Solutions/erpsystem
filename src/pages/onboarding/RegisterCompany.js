@@ -1,35 +1,17 @@
 import React, { useState, useRef } from "react";
 
 const RegisterCompany = () => {
-  const [formData, setFormData] = useState({
-    fullName: "",
-    jobTitle: "",
-    email: "",
-    phoneNumber: "",
-    gender: "",
-    dateOfBirth: "",
-  });
   const [imagePreview, setImagePreview] = useState(null);
+  const [formData, setFormData] = useState({
+    companyName: "",
+    country: "",
+  });
 
   const fileInputRef = useRef(null);
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
 
   const handleButtonClick = () => {
     fileInputRef.current.click();
   };
-
-  // const handleFileChange = (e) => {
-  //   const file = e.target.files[0];
-
-  //   console.log("Selected file:", file)
-  // }
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -37,9 +19,17 @@ const RegisterCompany = () => {
     setImagePreview(imageUrl);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(formData);
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const handleSaveProfile = () => {
+    // Here you can perform actions like saving the profile
+    console.log("Profile saved!");
   };
 
   return (
@@ -73,202 +63,36 @@ const RegisterCompany = () => {
             >
               Personal Information
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <div className="mb-4">
-                  <label
-                    className="font-semibold"
-                    style={{
-                      color: "#505050",
-                      fontFamily: "outFit, Sans-serif",
-                      fontSize: "16px",
-                      fontWeight: "600",
-                    }}
-                  >
-                    Full Name
-                  </label>
-                  <p
-                    style={{
-                      color: "#a1a1a1",
-                      fontFamily: "400",
-                      fontWeight: "outFit, Sans-serif",
-                      fontSize: "14px",
-                    }}
-                  >
-                    To personalize your experience and communicate with you
-                  </p>
-                  <input
-                    type="text"
-                    name="fullName"
-                    value={formData.fullName}
-                    onChange={handleChange}
-                    className="border border-gray-300 rounded px-3 py-1 w-full"
-                    style={{ padding: "10px", borderRadius: "12px" }}
-                  />
-                </div>
-                <div className="mb-4">
-                  <label
-                    className="font-semibold"
-                    style={{
-                      color: "#505050",
-                      fontFamily: "outFit, Sans-serif",
-                      fontSize: "16px",
-                      fontWeight: "600",
-                    }}
-                  >
-                    Job Title
-                  </label>
-                  <p
-                    style={{
-                      color: "#a1a1a1",
-                      fontFamily: "400",
-                      fontWeight: "outFit, Sans-serif",
-                      fontSize: "14px",
-                    }}
-                  >
-                    Provides context about your professional background and app
-                    usage
-                  </p>
-                  <input
-                    type="text"
-                    name="jobTitle"
-                    value={formData.jobTitle}
-                    onChange={handleChange}
-                    className="border border-gray-300 rounded px-3 py-1 w-full"
-                    style={{ padding: "10px", borderRadius: "12px" }}
-                  />
-                </div>
-                <div className="mb-4">
-                  <label
-                    className="font-semibold"
-                    style={{
-                      color: "#505050",
-                      fontFamily: "outFit, Sans-serif",
-                      fontSize: "16px",
-                      fontWeight: "600",
-                    }}
-                  >
-                    Gender
-                  </label>
-                  <p
-                    style={{
-                      color: "#a1a1a1",
-                      fontFamily: "400",
-                      fontWeight: "outFit, Sans-serif",
-                      fontSize: "14px",
-                    }}
-                  >
-                    Helps us tailor certain aspects of the app according to your
-                    preferences
-                  </p>
-                  <input
-                    type="text"
-                    name="gender"
-                    value={formData.gender}
-                    onChange={handleChange}
-                    className="border border-gray-300 rounded px-3 py-1 w-full"
-                    style={{ padding: "10px", borderRadius: "12px" }}
-                  />
-                </div>
-              </div>
-              <div>
-                <div className="mb-4">
-                  <label
-                    className="font-semibold"
-                    style={{
-                      color: "#505050",
-                      fontFamily: "outFit, Sans-serif",
-                      fontSize: "16px",
-                      fontWeight: "600",
-                    }}
-                  >
-                    Email Address
-                  </label>
-                  <p
-                    style={{
-                      color: "#a1a1a1",
-                      fontFamily: "400",
-                      fontWeight: "outFit, Sans-serif",
-                      fontSize: "14px",
-                    }}
-                  >
-                    For account verification, app updates, and communication
-                    purposes
-                  </p>
-                  <input
-                    type="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    className="border border-gray-300 rounded px-3 py-1 w-full"
-                    style={{ padding: "10px", borderRadius: "12px" }}
-                  />
-                </div>
-                <div className="mb-4">
-                  <label
-                    className="font-semibold"
-                    style={{
-                      color: "#505050",
-                      fontFamily: "outFit, Sans-serif",
-                      fontSize: "16px",
-                      fontWeight: "600",
-                    }}
-                  >
-                    Phone Number
-                  </label>
-                  <p
-                    style={{
-                      color: "#a1a1a1",
-                      fontFamily: "400",
-                      fontWeight: "outFit, Sans-serif",
-                      fontSize: "14px",
-                    }}
-                  >
-                    To help us reach you for account-related matters or
-                    notifications
-                  </p>
-                  <input
-                    type="tel"
-                    name="phoneNumber"
-                    value={formData.phoneNumber}
-                    onChange={handleChange}
-                    className="border border-gray-300 rounded px-3 py-1 w-full"
-                    style={{ padding: "10px", borderRadius: "12px" }}
-                  />
-                </div>
-                <div className="mb-4">
-                  <label
-                    className="font-semibold"
-                    style={{
-                      color: "#505050",
-                      fontFamily: "outFit, San-serif",
-                      fontSize: "16px",
-                      fontWeight: "600",
-                    }}
-                  >
-                    Date of Birth
-                  </label>
-                  <p
-                    style={{
-                      color: "#a1a1a1",
-                      fontFamily: "400",
-                      fontWeight: "outFit, Sans-serif",
-                      fontSize: "14px",
-                    }}
-                  >
-                    To ensure you're of legal age and to send you special offers
-                    or birthday wishes
-                  </p>
-                  <input
-                    type="date"
-                    name="dateOfBirth"
-                    value={formData.dateOfBirth}
-                    onChange={handleChange}
-                    className="border border-gray-300 rounded px-3 py-1 w-full"
-                    style={{ padding: "10px", borderRadius: "12px" }}
-                  />
-                </div>
-              </div>
+            <div className="flex flex-col md:flex-row" style={{
+                width: "100%"
+            }}>
+              <input
+                type="text"
+                name="companyName"
+                placeholder="Company Name"
+                value={formData.companyName}
+                onChange={handleInputChange}
+                className="border border-gray-300 rounded px-3 py-1 w-full md:w-auto mb-4 md:mb-0 mr-0 md:mr-4"
+                style={{
+                    width: "300px"
+                }}
+              />
+              <select
+                name="country"
+                value={formData.country}
+                onChange={handleInputChange}
+                className="border border-gray-300 rounded px-3 py-1 w-full md:w-auto"
+                style={{
+                    width: "300px"
+                }}
+              >
+                <option value="">Select Country</option>
+                <option value="USA">USA</option>
+                <option value="UK">UK</option>
+                <option value="Canada">Canada</option>
+                <option value="Australia">Australia</option>
+                <option value="Germany">Germany</option>
+              </select>
             </div>
           </div>
         </div>
@@ -307,7 +131,7 @@ const RegisterCompany = () => {
                 marginLeft: "10px",
               }}
             >
-              Profile Image
+              Company Logo
             </h2>
             <div
               className="w-20 h-20 md:w-32 md:h-32 bg-gray-300 rounded-full mr-4"
@@ -353,7 +177,7 @@ const RegisterCompany = () => {
               }}
               onClick={handleButtonClick}
             >
-              Upload image
+              Upload Logo
             </button>
           </div>
         </div>
@@ -380,6 +204,7 @@ const RegisterCompany = () => {
               color: "#fff",
               marginBottom: "10px"
             }}
+            onClick={handleSaveProfile}
           >
             Save Profile
           </button>

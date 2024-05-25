@@ -1,5 +1,5 @@
-import ProfileCompletionForm from "./ProfileCompletionForm ";
+import RegisterCompany from "./RegisterCompany";
 
-const Profile = () => <ProfileCompletionForm />
+const Profile = () => <RegisterCompany />
 
 export default Profile;
