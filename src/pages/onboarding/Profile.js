@@ -2,18 +2,21 @@ import { useState } from 'react';
 import { CheckCircleIcon } from '@heroicons/react/20/solid';
 
 const steps = [
-  { name: 'Complete Profile', href: '#', status: 'complete', fields: ['firstName', 'lastName', 'email'] },
-  { name: 'Register Company', href: '#', status: 'current', fields: ['companyName', 'companyAddress', 'companyType'] },
-  { name: 'Create Roles', href: '#', status: 'upcoming', fields: [] }, // Add relevant fields
-  { name: 'Invite Users', href: '#', status: 'upcoming', fields: [] }, // Add relevant fields
+  { name: 'Complete Profile', href: '#', status: 'current', fields: ['fullName', 'jobTitle', 'email', 'phone', 'gender', 'dateOfBirth'] },
+  { name: 'Register Company', href: '#', status: 'upcoming', fields: ['companyName', 'companyAddress', 'companyType'] },
+  { name: 'Create Roles', href: '#', status: 'upcoming', fields: [] },
+  { name: 'Invite Users', href: '#', status: 'upcoming', fields: [] },
 ];
 
 export default function Profile() {
   // State to manage form data
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
+    fullName: '',
+    jobTitle: '',
     email: '',
+    phone: '',
+    gender: '',
+    dateOfBirth: '',
     companyName: '',
     companyAddress: '',
     companyType: '',
@@ -35,12 +38,14 @@ export default function Profile() {
       steps[currentStepIndex + 1].status = 'current';
       // Reset form data
       setFormData({
-        firstName: '',
-        lastName: '',
+        fullName: '',
+        jobTitle: '',
         email: '',
+        phone: '',
+        gender: '',
+        dateOfBirth: '',
         companyName: '',
         companyAddress: '',
-        companyType: '',
       });
     }
   };
@@ -93,10 +98,10 @@ export default function Profile() {
               {steps.find(step => step.status === 'current').fields.map(field => (
                 <div key={field}>
                   <label htmlFor={field} className="block text-sm font-medium text-gray-700">
-                    {field === 'firstName' ? 'First Name' : field === 'lastName' ? 'Last Name' : field === 'email' ? 'Email Address' : 'Company ' + field.replace(/([A-Z])/g, ' $1').toLowerCase()}
+                    {field === 'fullName' ? 'Full Name' : field === 'jobTitle' ? 'Job Title' : field === 'email' ? 'Email Address' : field === 'phone' ? 'Phone Number' : field === 'gender' ? 'Gender' : field === 'dateOfBirth' ? 'Date of Birth' : 'Company ' + field.replace(/([A-Z])/g, ' $1').toLowerCase()}
                   </label>
                   <input
-                    type="text"
+                    type={field === 'email' ? 'email' : 'text'} // Use email type for email field
                     name={field}
                     id={field}
                     className="mt-1 p-2 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
