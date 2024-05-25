@@ -17,7 +17,11 @@ const Profile = () => {
             justifyContent: "space-between"
           }}>
         <div className="col-span-1">
-          <nav className="flex justify-center" aria-label="Progress">
+          <nav className="flex justify-center" aria-label="Progress" style={{
+            position: "relative",
+            left: "1px",
+            top: "10px"
+          }}>
             <ol role="list" className="space-y-6">
               <li>
                 <span className="flex items-start">

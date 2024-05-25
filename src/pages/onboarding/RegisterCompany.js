@@ -72,9 +72,12 @@ const RegisterCompany = () => {
               Basic Information
             </h2>
             <div className="flex flex-col md:flex-row justify-between">
-              <div className="mt-4" style={{
-                marginRight: "10px"
-              }}>
+              <div
+                className="mt-4"
+                style={{
+                  marginRight: "10px",
+                }}
+              >
                 <label
                   className="font-semibold"
                   style={{
@@ -87,9 +90,17 @@ const RegisterCompany = () => {
                   Company Name
                 </label>
                 <br />
-                <p style={{
-                    marginRight: "10px"
-                }}>To personalize your experience and communicate with you</p>
+                <p
+                  style={{
+                    marginRight: "10px",
+                    fontSize: "14px",
+                    fontFamily: "outFit, Sans-serif",
+                    fontWeight: "400",
+                    marginBottom: "10px"
+                  }}
+                >
+                  To personalize your experience and communicate with you
+                </p>
                 <input
                   type="text"
                   name="companyName"
@@ -97,7 +108,10 @@ const RegisterCompany = () => {
                   value={formData.companyName}
                   onChange={handleInputChange}
                   className="border border-gray-300 rounded px-3 py-1 w-full md:w-300 mb-4 md:mb-0 mr-0 md:mr-4"
-                  />
+                  style={{
+                    padding: "10px"
+                  }}
+                />
               </div>
               <div className="mt-4" style={{}}>
                 <label
@@ -112,12 +126,26 @@ const RegisterCompany = () => {
                   Country of Operation
                 </label>
                 <br />
-                <p>Helps us tailor certain aspects of the app according to your preferences</p>
+                <p
+                  style={{
+                    marginRight: "10px",
+                    fontSize: "14px",
+                    fontFamily: "outFit, Sans-serif",
+                    fontWeight: "400",
+                    marginBottom: "10px"
+                  }}
+                >
+                  Helps us tailor certain aspects of the app according to your
+                  preferences
+                </p>
                 <select
                   name="country"
                   value={formData.country}
                   onChange={handleInputChange}
                   className="border border-gray-300 rounded px-3 py-1 w-full md:w-300 mb-4 md:mb-0 mr-0 md:mr-4"
+                  style={{
+                    padding: "10px"
+                  }}
                 >
                   <option value="">Select Country</option>
                   <option value="USA">USA</option>
