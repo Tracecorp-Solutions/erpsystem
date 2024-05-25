@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 
 const Profile = () => {
   const [formData, setFormData] = useState({
@@ -10,6 +10,8 @@ const Profile = () => {
     dateOfBirth: "",
   });
 
+  const fileInputRef = useRef(null);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -17,6 +19,16 @@ const Profile = () => {
       [name]: value,
     });
   };
+
+  const handleButtonClick = () => {
+    fileInputRef.current.click();
+  }
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+
+    console.log("Selected file:", file)
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -300,13 +312,22 @@ const Profile = () => {
               fontSize: "16px",
               fontFamily: "outFit, Sans-serif"
             }}>Upload a profile picture to personalize your account and help others recognize you within the app.</p>
+            <input
+                type="file"
+                accept="image/*"
+                ref={fileInputRef}
+                style={{ display: "none" }}
+                onChange={handleFileChange}
+              />
             <button style={{
               padding: "7px 15px 7px 15px",
               background: "#4467a1",
               borderRadius: "28px",
               color: "#fff",
               marginTop: "5px"
-            }}>Upload image</button>
+            }}
+            onClick={handleButtonClick}
+            >Upload image</button>
           </div>
         </div>
       </div>
