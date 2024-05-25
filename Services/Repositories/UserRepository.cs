@@ -11,6 +11,8 @@ using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
 using System.Net.Mail;
 using Core.DTOs;
+using Microsoft.Extensions.Configuration;
+using System.Net;
 
 namespace Services.Repositories
 {
@@ -18,10 +20,12 @@ namespace Services.Repositories
     {
         private readonly ApplicationDbContext _context;
         private readonly IPasswordHasher<User> _passwordHasher;
-        public UserRepository(ApplicationDbContext context, IPasswordHasher<User> passwordHasher)
+        private readonly EmailService emailService;
+        public UserRepository(ApplicationDbContext context, IPasswordHasher<User> passwordHasher, EmailService emailService)
         {
             _context = context;
             _passwordHasher = passwordHasher;
+            this.emailService = emailService;
         }
 
         public async Task<bool> CreateUserAsync(RegisterDto registerDto)
@@ -42,8 +46,22 @@ namespace Services.Repositories
             await _context.SaveChangesAsync();
             await LogActionAsync(user.Email, "User created");
             //send password to user email
-            await SendEmailAsync(user.Email, "Account Created", $"Your account has been created. Your OTP is {password}");
+            await emailService.SendEmailAsync(user.Email, "Account Created", $"Your account has been created. Your OTP is {password}");
             return true;
+        }
+
+        public async Task VerifyOtpAsync(OTPDto oTPDto)
+        {
+            var user = _context.Users.FirstOrDefault(u => u.Email == oTPDto.Email);
+            if (user == null)
+                throw new ArgumentException("Invalid Email Address");
+
+            if (_passwordHasher.VerifyHashedPassword(user, user.PasswordHash, oTPDto.OTP) == PasswordVerificationResult.Failed)
+                throw new ArgumentException("Invalid OTP");
+
+            user.Verified = true;
+            await _context.SaveChangesAsync();
+            await LogActionAsync(user.Email, "User verified");
         }
         public async Task<string> AuthenticateUserAsync(LoginDTo loginDTo)
         {
@@ -82,48 +100,5 @@ namespace Services.Repositories
             await _context.SaveChangesAsync();
         }
 
-        private async Task SendEmailAsync(string email, string subject, string message)
-        {
-            var mailMessage = new MailMessage();
-            mailMessage.To.Add(email);
-            mailMessage.Subject = subject;
-            mailMessage.Body = message;
-            mailMessage.IsBodyHtml = true;
-            mailMessage.From = new MailAddress("traceerp@tracecorpsolutions.com");
-            using (var client = new SmtpClient("mail.@tracecorpsolutions.com"))//("smtp.gmail.com"))
-            {
-                client.Port = 465;//587;
-                client.Credentials = new System.Net.NetworkCredential("traceerp@tracecorpsolutions.com", "TraceCorpInnovate");
-                //client.EnableSsl = true;
-                await client.SendMailAsync(mailMessage);
-            }
-
-            //using (MimeMessage emailMessage = new MimeMessage())
-            //{
-            //    MailboxAddress emailFrom = new MailboxAddress(_mailSettings.SenderName, _mailSettings.SenderEmail);
-            //    emailMessage.From.Add(emailFrom);
-            //    MailboxAddress emailTo = new MailboxAddress(mailData.EmailToName, mailData.EmailToId);
-            //    emailMessage.To.Add(emailTo);
-
-            //    // you can add the CCs and BCCs here.
-            //    //emailMessage.Cc.Add(new MailboxAddress("Cc Receiver", "cc@example.com"));
-            //    //emailMessage.Bcc.Add(new MailboxAddress("Bcc Receiver", "bcc@example.com"));
-
-            //    emailMessage.Subject = mailData.EmailSubject;
-
-            //    BodyBuilder emailBodyBuilder = new BodyBuilder();
-            //    emailBodyBuilder.TextBody = mailData.EmailBody;
-
-            //    emailMessage.Body = emailBodyBuilder.ToMessageBody();
-            //    //this is the SmtpClient from the Mailkit.Net.Smtp namespace, not the System.Net.Mail one
-            //    using (SmtpClient mailClient = new SmtpClient())
-            //    {
-            //        await mailClient.ConnectAsync(_mailSettings.Server, _mailSettings.Port, MailKit.Security.SecureSocketOptions.StartTls);
-            //        await mailClient.AuthenticateAsync(_mailSettings.UserName, _mailSettings.Password);
-            //        await mailClient.SendAsync(emailMessage);
-            //        await mailClient.DisconnectAsync(true);
-            //    }
-            //}
-        }
     }
 }

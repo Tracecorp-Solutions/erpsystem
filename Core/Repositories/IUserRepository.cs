@@ -13,5 +13,7 @@ namespace Core.Repositories
         Task<bool> CreateUserAsync(RegisterDto registerDto);
         Task<string> AuthenticateUserAsync(LoginDTo dTo);
         Task LogActionAsync(string username, string action);
+
+        Task VerifyOtpAsync(OTPDto oTPDto);
     }
 }

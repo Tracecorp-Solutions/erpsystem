@@ -129,3 +129,6 @@ D:\working directory\erpsystem\Trace\bin\Debug\net8.0\Microsoft.AspNetCore.Crypt
 D:\working directory\erpsystem\Trace\bin\Debug\net8.0\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
 D:\working directory\erpsystem\Trace\bin\Debug\net8.0\Microsoft.Extensions.Identity.Core.dll
 D:\working directory\erpsystem\Trace\bin\Debug\net8.0\Microsoft.Extensions.Options.dll
+D:\working directory\erpsystem\Trace\bin\Debug\net8.0\BouncyCastle.Cryptography.dll
+D:\working directory\erpsystem\Trace\bin\Debug\net8.0\MailKit.dll
+D:\working directory\erpsystem\Trace\bin\Debug\net8.0\MimeKit.dll

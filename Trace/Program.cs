@@ -1,3 +1,4 @@
+using Core.DTOs;
 using Core.Models;
 using Core.Repositories;
 using Infrastructure.Data;
@@ -24,6 +25,8 @@ builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<ITrialBalanceRepository, TrialBalanceRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddSingleton<IPasswordHasher<User>, PasswordHasher<User>>();
+builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
+builder.Services.AddSingleton<EmailService>();
 
 builder.Services.AddControllers();
 builder.Services.AddCors(options =>

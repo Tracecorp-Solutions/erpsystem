@@ -23,7 +23,7 @@ namespace Trace.Controllers
             try
             {
                 var createdUser = await _userRepository.CreateUserAsync(user);
-                return Ok("User Created Successfully");
+                return Ok("Account created Successfully and pending verification");
             }
             catch (ArgumentException ex)
             {
@@ -52,5 +52,23 @@ namespace Trace.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
             }
         }   
+
+        [HttpPost("/VerifyUser")]
+        public async Task<IActionResult> VerifyUser([FromBody] OTPDto verifyDto)
+        {
+            try
+            {
+                await _userRepository.VerifyOtpAsync(verifyDto);
+                return Ok("User OTP has been verified successfully");
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
+        }
     }
 }
