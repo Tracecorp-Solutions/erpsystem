@@ -31,7 +31,7 @@ function Transactions() {
   useEffect(() => {
     const fetchTransactions = async () => {
       try {
-        const response = await fetch("http://54.226.71.2/RetrieveTransactions");
+        const response = await fetch("http://3.216.182.63:8095/RetrieveTransactions");
         if (!response.ok) {
           throw new Error('Failed to fetch transactions');
         }

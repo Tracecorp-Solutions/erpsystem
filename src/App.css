@@ -446,6 +446,16 @@ button[type="submit"] {
   color: #505050;
 }
 
+.complete-form {
+  padding: 56px 0;
+  display: flex;
+  justify-content: center;
+}
+
+.complete-form form {
+  width: 65%;
+}
+
 @media (max-width: 1024px) {
   .flex {
     flex-direction: column-reverse
