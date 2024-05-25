@@ -70,5 +70,23 @@ namespace Trace.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
             }
         }
+
+        [HttpPost("/ChangePassword")]
+        public async Task<IActionResult> ChangePassword([FromBody] ChangePwdDto changePwdDto)
+        {
+            try
+            {
+                await _userRepository.ChangePasswordAsync(changePwdDto);
+                return Ok("Password changed successfully");
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
+        }
     }
 }

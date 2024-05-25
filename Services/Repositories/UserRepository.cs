@@ -100,5 +100,20 @@ namespace Services.Repositories
             await _context.SaveChangesAsync();
         }
 
+        public async Task ChangePasswordAsync(ChangePwdDto changePwdDto) 
+        {
+            var user = _context.Users.FirstOrDefault(u => u.Username == changePwdDto.Username);
+
+            if (user == null || changePwdDto.NewPassord != changePwdDto.RepeatPassword)
+                throw new ArgumentException("Invalid User or password do not match");
+
+            if (!user.Verified)
+                throw new ArgumentException("User has not been verified");
+
+            user.PasswordHash = _passwordHasher.HashPassword(user, changePwdDto.RepeatPassword);
+            await _context.SaveChangesAsync();
+            await LogActionAsync(user.Username, "User Password updated");
+        }
+
     }
 }

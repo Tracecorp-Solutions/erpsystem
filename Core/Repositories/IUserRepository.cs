@@ -15,5 +15,7 @@ namespace Core.Repositories
         Task LogActionAsync(string username, string action);
 
         Task VerifyOtpAsync(OTPDto oTPDto);
+
+        Task ChangePasswordAsync(ChangePwdDto changePwdDto);
     }
 }
