@@ -1,79 +1,32 @@
-import React, { useState } from "react";
-import About from "../../components/About";
-import { Link } from "react-router-dom";
+import React, { useState } from 'react';
+import About from '../../components/About';
+import { Link } from 'react-router-dom';
 
-function Signup({ onSubmit }) {
-  const [formData, setFormData] = useState({
-    fullName: "",
-    email: "",
-  });
-  const [errorMessage, setErrorMessage] = useState("");
-  const [successMessage, setSuccessMessage] = useState("");
+function RegistrationForm() {
+  const [fullName, setFullName] = useState('');
+  const [email, setEmail] = useState('');
+  const [message, setMessage] = useState('');
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setErrorMessage("");
-    setSuccessMessage("");
-
-    if (!formData.fullName || !formData.email) {
-      setErrorMessage("Please fill in all fields.");
-      return;
-    }
-
-    console.log("Form data being submitted:", formData); // Log form data before the request
-
-    // Helper function to create a timeout promise
-    const timeout = (ms, promise) => {
-      return new Promise((resolve, reject) => {
-        const timer = setTimeout(() => {
-          reject(new Error("Request timed out"));
-        }, ms);
-
-        promise
-          .then((res) => {
-            clearTimeout(timer);
-            resolve(res);
-          })
-          .catch((err) => {
-            clearTimeout(timer);
-            reject(err);
-          });
-      });
-    };
+  const handleSubmit = async (event) => {
+    event.preventDefault();
 
     try {
-      const response = await timeout(60000, fetch("http://3.216.182.63:8095/RegisterUser", {
-        method: "POST",
+      const response = await fetch('http://3.216.182.63:8095/RegisterUser', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
-      }));
+        body: JSON.stringify({ fullName, email }),
+      });
 
-      console.log("Raw response:", response); // Log the raw response
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        console.error("Error response data:", errorData);
-        setErrorMessage(errorData.message || "Error registering user.");
-        return;
+      if (response.ok) {
+        setMessage('Registration successful!');
+      } else {
+        const errorMessage = await response.text();
+        setMessage(`Error: ${errorMessage}`);
       }
-
-      const data = await response.json();
-      console.log("Success response data:", data); // Log the parsed JSON data
-      onSubmit(formData);
-      setSuccessMessage("An OTP has been sent to your email. Please open your email and verify.");
     } catch (error) {
-      console.error("Network error:", error);
-      setErrorMessage(error.message || "Network error. Please try again later.");
+      setMessage(`Error: ${error.message}`);
     }
   };
 
@@ -89,30 +42,33 @@ function Signup({ onSubmit }) {
             <p>Get started by creating an Account</p>
           </div>
           <form onSubmit={handleSubmit}>
-            {errorMessage && <div className="error-message">{errorMessage}</div>}
-            {successMessage && <div className="success-message">{successMessage}</div>}
+            {message && <div className={`message ${message.startsWith('Error') ? 'error-message' : 'success-message'}`}>{message}</div>}
             <div className="form-group">
               <div className="label-desc">
-                <label>Full name</label>
+                <label htmlFor="fullName">Full name</label>
               </div>
               <input
                 type="text"
+                id="fullName"
                 name="fullName"
                 placeholder="Enter your full name"
-                value={formData.fullName}
-                onChange={handleChange}
+                value={fullName}
+                onChange={(e) => setFullName(e.target.value)}
+                required
               />
             </div>
             <div className="form-group">
               <div className="label-desc">
-                <label>Email Address</label>
+                <label htmlFor="email">Email Address</label>
               </div>
               <input
                 type="email"
+                id="email"
                 name="email"
                 placeholder="Enter your email address"
-                value={formData.email}
-                onChange={handleChange}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
               />
             </div>
             <button type="submit" className="create-btn">
@@ -129,4 +85,4 @@ function Signup({ onSubmit }) {
   );
 }
 
-export default Signup;
+export default RegistrationForm;

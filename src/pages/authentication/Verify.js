@@ -1,45 +1,29 @@
-import React, { useState } from "react";
-import About from "../../components/About";
+import React, { useState } from 'react';
+import axios from 'axios';
+import About from '../../components/About';
+import { Link } from 'react-router-dom';
 
-function Verify({ onSubmit }) {
-  const [formData, setFormData] = useState({
-    email: "",
-    otp: "",
-  });
-  const [errorMessage, setErrorMessage] = useState("");
-  const [successMessage, setSuccessMessage] = useState("");
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
+function VerifyUserComponent() {
+  const [email, setEmail] = useState('');
+  const [otp, setOtp] = useState('');
+  const [verificationStatus, setVerificationStatus] = useState('');
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleVerify = async () => {
     try {
-      const response = await fetch("http://3.216.182.63:8095/VerifyUser", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
+      const response = await axios.post('http://3.216.182.63:8095/VerifyUser', {
+        email: email,
+        otp: otp
       });
-      const data = await response.json();
-      if (response.ok) {
-        // Call the onSubmit function passed as prop
-        onSubmit(formData);
-        setSuccessMessage("Verification successful!");
+
+      if (response.status === 200) {
+        setVerificationStatus('User verified successfully!');
       } else {
-        // Handle error response
-        setErrorMessage(data.message || "Error verifying user.");
+        setVerificationStatus('Failed to verify user.');
       }
     } catch (error) {
-      // Handle network errors
-      console.error("Error verifying user:", error.message);
-      setErrorMessage("Network error. Please try again later.");
+      console.error('Error verifying user:', error);
+      setVerificationStatus('Failed to verify user.');
     }
   };
 
@@ -49,47 +33,38 @@ function Verify({ onSubmit }) {
         <div className="form-content">
           <div className="form-intro">
             <span className="greeting">
-              <h2>Verify Account</h2>
-              <img src="/img/wave.png" alt="signup" />
+              <h2>Verify User</h2>
+              <img src="/img/verify.png" alt="verify" />
             </span>
-            <p>
-              A one-time password (OTP) has been sent to your email address.
-              Enter the code to verify your account.
-            </p>
+            <p>Enter your email and OTP to verify your account.</p>
           </div>
-          {errorMessage && <div className="error-message">{errorMessage}</div>}
-          {successMessage && (
-            <div className="success-message">{successMessage}</div>
-          )}
-          <form onSubmit={handleSubmit}>
-            <div className="form-group">
-              <div className="label-desc">
-                <label>Email Address</label>
-              </div>
-              <input
-                type="text"
-                name="email"
-                placeholder="Enter your email address"
-                value={formData.email}
-                onChange={handleChange}
-              />
+          <div className="form-group">
+            <div className="label-desc">
+              <label>Email:</label>
             </div>
-            <div className="form-group">
-              <div className="label-desc">
-                <label>One-time Password</label>
-              </div>
-              <input
-                type="text"
-                name="otp"
-                placeholder="Enter OTP"
-                value={formData.otp}
-                onChange={handleChange}
-              />
+            <input
+              type="text"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <div className="label-desc">
+              <label>OTP:</label>
             </div>
-            <button type="submit" className="create-btn">
-              Verify Account
-            </button>
-          </form>
+            <input
+              type="text"
+              value={otp}
+              onChange={(e) => setOtp(e.target.value)}
+              required
+            />
+          </div>
+          <button className="create-btn" onClick={handleVerify}>Verify</button>
+          {verificationStatus && <p>{verificationStatus}</p>}
+          <p>
+            Don't have an account? <Link to="/signup">Signup</Link>
+          </p>
         </div>
       </div>
       <About />
@@ -97,4 +72,4 @@ function Verify({ onSubmit }) {
   );
 }
 
-export default Verify;
+export default VerifyUserComponent;

@@ -1,83 +1,103 @@
 import React, { useState } from 'react';
-import About from '../../components/About';
+import About from '../../components/About'; // Importing the About component
+import axios from 'axios';
+import { Link } from 'react-router-dom';
 
-function Forgot({ onSubmit }) {
-    const [formData, setFormData] = useState({
-        "username": "",
-        "newPassord": "",
-        "repeatPassword": ""
-    });
-  
-    const handleChange = (e) => {
-      const { name, value } = e.target;
-      setFormData({
-        ...formData,
-        [name]: value
+
+function ChangePasswordForm() {
+  const [formData, setFormData] = useState({
+    username: '',
+    newPassword: '',
+    repeatPassword: ''
+  });
+  const [response, setResponse] = useState(null);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch('http://3.216.182.63:8095/ChangePassword', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
       });
-    };
-  
-    const handleSubmit = (e) => {
-      e.preventDefault();
-      onSubmit(formData);
-    };
-  
-    return (
-      <div className="flex">
-        <div className="form-side">
-          <div className="form-content">
+      const data = await response.json();
+      setResponse(data);
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+
+  return (
+    <div className="flex">
+      <div className="form-side">
+        <div className="form-content">
+          <form onSubmit={handleSubmit}>
             <div className="form-intro">
               <span className="greeting">
-                <h2>Forgot Password?</h2>
-                <img src="/img/reset.png" alt="signup" />
+                <h2>Change Password</h2>
+                <img src="/img/reset.png" alt="reset" />
               </span>
-              <p>No worries! Let us send you instructions to help you reset it.</p>
             </div>
-            <form onSubmit={handleSubmit}>
-              <div className="form-group">
-                <div className="label-desc">
-                  <label>Email Address or username</label>
-                </div>
-                <input
-                  type="username"
-                  name="username"
-                  placeholder="Enter your username or email"
-                  value={formData.username}
-                  onChange={handleChange}
-                />
+            <div className="form-group">
+              <div className="label-desc">
+                <label>Username</label>
               </div>
-              <div className="form-group">
-                <div className="label-desc">
-                  <label>New Password</label>
-                </div>
-                <input
-                  type="new password"
-                  name="newPassord"
-                  placeholder="Enter your email address"
-                  value={formData.newPassord}
-                  onChange={handleChange}
-                />
+              <input
+                type="text"
+                name="username"
+                value={formData.username}
+                onChange={handleChange}
+                placeholder="Username"
+                required
+              />
+            </div>
+            <div className="form-group">
+              <div className="label-desc">
+                <label>New Password</label>
               </div>
-              <div className="form-group">
-                <div className="label-desc">
-                  <label>Repeat Password</label>
-                </div>
-                <input
-                  type="repeatPassword"
-                  name="repeatPassword"
-                  placeholder="Enter your password again"
-                  value={formData.repeatPassword}
-                  onChange={handleChange}
-                />
+              <input
+                type="password"
+                name="newPassword"
+                value={formData.newPassword}
+                onChange={handleChange}
+                placeholder="New Password"
+                required
+              />
+            </div>
+            <div className="form-group">
+              <div className="label-desc">
+                <label>Repeat Password</label>
               </div>
-              <button type="submit" className="create-btn">Send Reset Instructions</button>
-            </form>
-          </div>
-          
+              <input
+                type="password"
+                name="repeatPassword"
+                value={formData.repeatPassword}
+                onChange={handleChange}
+                placeholder="Repeat Password"
+                required
+              />
+            </div>
+            <button type="submit" className="create-btn">Change Password</button>
+          </form>
+          {response && (
+            <div>
+              <h3>Response</h3>
+              <p>Status: {response.status}</p>
+              <p>Message: {response.message}</p>
+            </div>
+          )}
         </div>
-        <About />
       </div>
-    );
-
+      <About /> {/* Rendering the About component */}
+    </div>
+  );
 }
 
-export default Forgot;
+export default ChangePasswordForm;
