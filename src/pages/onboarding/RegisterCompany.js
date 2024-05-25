@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 
-const ProfileCompletionForm = () => {
+const RegisterCompany = () => {
   const [formData, setFormData] = useState({
     fullName: "",
     jobTitle: "",
@@ -389,4 +389,4 @@ const ProfileCompletionForm = () => {
   );
 };
 
-export default ProfileCompletionForm;
+export default RegisterCompany;
