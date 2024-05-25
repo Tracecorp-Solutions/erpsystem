@@ -25,6 +25,33 @@ export default function Profile() {
     setFormData({ ...formData, [name]: value });
   };
 
+  // Function to move to the next step
+  const moveToNextStep = () => {
+    const currentStepIndex = steps.findIndex(step => step.status === 'current');
+    if (currentStepIndex !== -1 && currentStepIndex < steps.length - 1) {
+      // Update status of current step to 'complete'
+      steps[currentStepIndex].status = 'complete';
+      // Move to the next step
+      steps[currentStepIndex + 1].status = 'current';
+      // Reset form data
+      setFormData({
+        firstName: '',
+        lastName: '',
+        email: '',
+        companyName: '',
+        companyAddress: '',
+        companyType: '',
+      });
+    }
+  };
+
+  // Function to handle form submission
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Call moveToNextStep function
+    moveToNextStep();
+  };
+
   return (
     <section className="section-one">
       <div className="flex px-4 py-12 sm:px-6 lg:px-8" style={{ border: "2px solid red", }}>
@@ -61,7 +88,7 @@ export default function Profile() {
 
         {/* Profile Form */}
         <div className="flex flex-col justify-center items-center" style={{ border: "2px solid red", width: "100%" }}>
-          <form className="w-full max-w-md">
+          <form className="w-full max-w-md" onSubmit={handleSubmit}>
             <div className="grid grid-cols-1 gap-4">
               {steps.find(step => step.status === 'current').fields.map(field => (
                 <div key={field}>
@@ -79,6 +106,9 @@ export default function Profile() {
                 </div>
               ))}
             </div>
+            <button type="submit" className="mt-4 px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700">
+              Next Step
+            </button>
           </form>
         </div>
       </div>
