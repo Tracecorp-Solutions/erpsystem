@@ -3,7 +3,9 @@ import About from '../../components/About';
 
 function Forgot({ onSubmit }) {
     const [formData, setFormData] = useState({
-      email: ''
+        "username": "",
+        "newPassord": "",
+        "repeatPassword": ""
     });
   
     const handleChange = (e) => {
@@ -33,19 +35,44 @@ function Forgot({ onSubmit }) {
             <form onSubmit={handleSubmit}>
               <div className="form-group">
                 <div className="label-desc">
-                  <label>Email Address</label>
+                  <label>Email Address or username</label>
                 </div>
                 <input
-                  type="email"
-                  name="email"
+                  type="username"
+                  name="username"
+                  placeholder="Enter your username or email"
+                  value={formData.username}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="form-group">
+                <div className="label-desc">
+                  <label>New Password</label>
+                </div>
+                <input
+                  type="new password"
+                  name="newPassord"
                   placeholder="Enter your email address"
-                  value={formData.email}
+                  value={formData.newPassord}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="form-group">
+                <div className="label-desc">
+                  <label>Repeat Password</label>
+                </div>
+                <input
+                  type="repeatPassword"
+                  name="repeatPassword"
+                  placeholder="Enter your password again"
+                  value={formData.repeatPassword}
                   onChange={handleChange}
                 />
               </div>
               <button type="submit" className="create-btn">Send Reset Instructions</button>
             </form>
           </div>
+          
         </div>
         <About />
       </div>
