@@ -291,6 +291,23 @@ const Profile = () => {
               style={{ marginTop: "20px", background: "#D9D9D9" }}
             ></div>
           </div>
+          <div style={{
+            marginTop: "100px"
+          }}>
+            <p style={{
+              color: "#a1a1a1",
+              fontWeight: "400",
+              fontSize: "16px",
+              fontFamily: "outFit, Sans-serif"
+            }}>Upload a profile picture to personalize your account and help others recognize you within the app.</p>
+            <button style={{
+              padding: "7px 15px 7px 15px",
+              background: "#4467a1",
+              borderRadius: "28px",
+              color: "#fff",
+              marginTop: "5px"
+            }}>Upload image</button>
+          </div>
         </div>
       </div>
     </div>
