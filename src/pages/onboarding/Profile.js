@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { CheckCircleIcon } from "@heroicons/react/20/solid";
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const steps = [
   {
@@ -21,7 +21,6 @@ const steps = [
 ];
 
 export default function Profile() {
-  // State to manage form data
   const [formData, setFormData] = useState({
     fullName: "",
     jobTitle: "",
@@ -34,23 +33,18 @@ export default function Profile() {
     companyType: "",
   });
 
-  // Function to handle form input changes
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  // Function to move to the next step
   const moveToNextStep = () => {
     const currentStepIndex = steps.findIndex(
       (step) => step.status === "current"
     );
     if (currentStepIndex !== -1 && currentStepIndex < steps.length - 1) {
-      // Update status of current step to 'complete'
       steps[currentStepIndex].status = "complete";
-      // Move to the next step
       steps[currentStepIndex + 1].status = "current";
-      // Reset form data
       setFormData({
         fullName: "",
         jobTitle: "",
@@ -64,10 +58,8 @@ export default function Profile() {
     }
   };
 
-  // Function to handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Call moveToNextStep function
     moveToNextStep();
   };
 
@@ -75,9 +67,7 @@ export default function Profile() {
     <section className="section-one">
       <div
         className="flex px-4 py-12 sm:px-6 lg:px-8"
-        style={{ border: "2px solid red" }}
       >
-        {/* Progress Tracker */}
         <nav aria-label="Progress" className="mr-8">
           <ol role="list" className="space-y-6">
             {steps.map((step) => (
@@ -111,44 +101,63 @@ export default function Profile() {
                     </span>
                   </a>
                 )}
-                {/* Add handling for other step statuses here */}
               </li>
             ))}
           </ol>
         </nav>
 
-        {/* Profile Form */}
         <div
           className="flex flex-col justify-center items-center"
-          style={{ border: "2px solid red", width: "100%" }}
+          style={{ width: "100%" }}
         >
-          <form className="w-full max-w-md" onSubmit={handleSubmit}>
-            <div className="grid grid-cols-2 gap-4" style={{ border: "2px solid red", width: "50rem" }}>
-              {steps.find(step => step.status === 'current').fields.map(field => (
-                <div key={field}>
-                  <label htmlFor={field} className="block text-sm font-medium text-gray-700">
-                    {field === 'fullName' ? 'Full Name' : field === 'jobTitle' ? 'Job Title' : field === 'email' ? 'Email Address' : field === 'phone' ? 'Phone Number' : field === 'gender' ? 'Gender' : field === 'dateOfBirth' ? 'Date of Birth' : 'Company ' + field.replace(/([A-Z])/g, ' $1').toLowerCase()}
-                  </label>
-                  {field === 'dateOfBirth' ? (
-                    <DatePicker
-                      selected={formData[field]}
-                      onChange={(date) => setFormData({ ...formData, [field]: date })}
-                      dateFormat="dd/MM/yyyy"
-                      className="mt-1 p-2 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                    />
-                  ) : (
-                    <input
-                      type={field === 'email' ? 'email' : 'text'} // Use email type for email field
-                      name={field}
-                      id={field}
-                      className="mt-1 p-2 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                      value={formData[field]}
-                      onChange={handleInputChange}
-                      // style={{ width: '50rem' }}
-                    />
-                  )}
-                </div>
-              ))}
+          <form className="w-full" onSubmit={handleSubmit}>
+            <div
+              className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2"
+            >
+              {steps
+                .find((step) => step.status === "current")
+                .fields.map((field) => (
+                  <div key={field}>
+                    <label
+                      htmlFor={field}
+                      className="block text-sm font-medium text-gray-700"
+                    >
+                      {field === "fullName"
+                        ? "Full Name"
+                        : field === "jobTitle"
+                        ? "Job Title"
+                        : field === "email"
+                        ? "Email Address"
+                        : field === "phone"
+                        ? "Phone Number"
+                        : field === "gender"
+                        ? "Gender"
+                        : field === "dateOfBirth"
+                        ? "Date of Birth"
+                        : "Company " +
+                          field.replace(/([A-Z])/g, " $1").toLowerCase()}
+                    </label>
+                    {field === "dateOfBirth" ? (
+                      <DatePicker
+                        selected={formData[field]}
+                        onChange={(date) =>
+                          setFormData({ ...formData, [field]: date })
+                        }
+                        dateFormat="dd/MM/yyyy"
+                        className="mt-1 p-2 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                      />
+                    ) : (
+                      <input
+                        type={field === "email" ? "email" : "text"}
+                        name={field}
+                        id={field}
+                        className="mt-1 p-2 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                        value={formData[field]}
+                        onChange={handleInputChange}
+                      />
+                    )}
+                  </div>
+                ))}
             </div>
             <button
               type="submit"
