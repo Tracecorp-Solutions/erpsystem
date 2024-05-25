@@ -57,7 +57,7 @@ const ProfileCompletionForm = ({ moveToNextStep }) => {
           className="flex justify-center"
           style={{
             background: "#fff",
-            width: "80%",
+            width: "100%",
             padding: "10px",
             borderRadius: "24px",
           }}

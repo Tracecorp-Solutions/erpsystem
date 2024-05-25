@@ -33,40 +33,33 @@ const RegisterCompany = () => {
   };
 
   return (
-    <div>
-        <div style={{
-            display: "flex",
-            justifyContent: "center"
-        }}>
-        <h1 style={{
-            width: "80%",
-            fontSize: "36px",
-            color: "#505050",
-            fontFamily: "outFit, Sans-serif",
-            fontWeight: "600"
-        }}>
-          Register Company
-        </h1>
-        </div>
-      <div
+    <div
+      style={{
+        marginRight: "15px",
+      }}
+    >
+      <h1
         style={{
-          display: "flex",
-          justifyContent: "center",
-          position: "relative",
-          top: "25px",
+          width: "80%",
+          fontSize: "36px",
+          color: "#505050",
+          fontFamily: "outFit, Sans-serif",
+          fontWeight: "600",
+          textAlign: "start",
         }}
       >
+        Register Company
+      </h1>
+      <div>
         <div
-          className="flex justify-center"
           style={{
             background: "#fff",
-            width: "80%",
             padding: "10px",
             borderRadius: "24px",
-            paddingBottom: "30px"
+            paddingBottom: "30px",
           }}
         >
-          <div className="mx-auto">
+          <div>
             <h2
               className="text-lg font-semibold mb-2"
               style={{
@@ -78,10 +71,10 @@ const RegisterCompany = () => {
             >
               Basic Information
             </h2>
-            <div
-              className="flex flex-col md:flex-row justify-between"
-            >
-              <div className="mt-4" style={{}}>
+            <div className="flex flex-col md:flex-row justify-between">
+              <div className="mt-4" style={{
+                marginRight: "10px"
+              }}>
                 <label
                   className="font-semibold"
                   style={{
@@ -94,15 +87,17 @@ const RegisterCompany = () => {
                   Company Name
                 </label>
                 <br />
+                <p style={{
+                    marginRight: "10px"
+                }}>To personalize your experience and communicate with you</p>
                 <input
                   type="text"
                   name="companyName"
                   placeholder="Company Name"
                   value={formData.companyName}
                   onChange={handleInputChange}
-                  className="border border-gray-300 rounded px-3 py-1 w-full md:w-auto mb-4 md:mb-0 mr-0 md:mr-4"
-                  style={{ width: "300px", padding: "10px" }}
-                />
+                  className="border border-gray-300 rounded px-3 py-1 w-full md:w-300 mb-4 md:mb-0 mr-0 md:mr-4"
+                  />
               </div>
               <div className="mt-4" style={{}}>
                 <label
@@ -117,12 +112,12 @@ const RegisterCompany = () => {
                   Country of Operation
                 </label>
                 <br />
+                <p>Helps us tailor certain aspects of the app according to your preferences</p>
                 <select
                   name="country"
                   value={formData.country}
                   onChange={handleInputChange}
-                  className="border border-gray-300 rounded px-3 py-1 w-full md:w-auto"
-                  style={{ width: "300px", padding: "10px" }}
+                  className="border border-gray-300 rounded px-3 py-1 w-full md:w-300 mb-4 md:mb-0 mr-0 md:mr-4"
                 >
                   <option value="">Select Country</option>
                   <option value="USA">USA</option>
@@ -148,7 +143,6 @@ const RegisterCompany = () => {
             marginTop: "100px",
             display: "flex",
             justifyContent: "start",
-            width: "80%",
             borderRadius: "14px",
             background: "#fff",
             marginBottom: "15px",
