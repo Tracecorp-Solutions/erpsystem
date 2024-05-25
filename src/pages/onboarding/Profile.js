@@ -20,9 +20,13 @@ const Profile = () => {
           <nav className="flex justify-center" aria-label="Progress" style={{
             position: "relative",
             left: "1px",
-            top: "10px"
+            background: "#fff",
+            height: "100vh"
           }}>
-            <ol role="list" className="space-y-6">
+            <ol role="list" className="space-y-6" style={{
+              marginTop: "20px",
+              padding: "10px"
+            }}>
               <li>
                 <span className="flex items-start">
                   <span className="relative flex h-5 w-5 flex-shrink-0 items-center justify-center">

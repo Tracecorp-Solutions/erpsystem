@@ -44,22 +44,23 @@ const ProfileCompletionForm = ({ moveToNextStep }) => {
   };
 
   return (
-    <div>
+    <div style={{
+      marginRight: "10px"
+    }}>
       <div
         style={{
           display: "flex",
           justifyContent: "center",
-          position: "relative",
-          top: "25px",
         }}
       >
         <div
           className="flex justify-center"
           style={{
             background: "#fff",
-            width: "100%",
             padding: "10px",
             borderRadius: "24px",
+            width: "100%"
+            
           }}
         >
           <div className="mx-auto">
@@ -88,16 +89,6 @@ const ProfileCompletionForm = ({ moveToNextStep }) => {
                   >
                     Full Name
                   </label>
-                  <p
-                    style={{
-                      color: "#a1a1a1",
-                      fontFamily: "400",
-                      fontWeight: "outFit, Sans-serif",
-                      fontSize: "14px",
-                    }}
-                  >
-                    To personalize your experience and communicate with you
-                  </p>
                   <input
                     type="text"
                     name="fullName"
@@ -119,17 +110,6 @@ const ProfileCompletionForm = ({ moveToNextStep }) => {
                   >
                     Job Title
                   </label>
-                  <p
-                    style={{
-                      color: "#a1a1a1",
-                      fontFamily: "400",
-                      fontWeight: "outFit, Sans-serif",
-                      fontSize: "14px",
-                    }}
-                  >
-                    Provides context about your professional background and app
-                    usage
-                  </p>
                   <input
                     type="text"
                     name="jobTitle"
@@ -151,17 +131,6 @@ const ProfileCompletionForm = ({ moveToNextStep }) => {
                   >
                     Gender
                   </label>
-                  <p
-                    style={{
-                      color: "#a1a1a1",
-                      fontFamily: "400",
-                      fontWeight: "outFit, Sans-serif",
-                      fontSize: "14px",
-                    }}
-                  >
-                    Helps us tailor certain aspects of the app according to your
-                    preferences
-                  </p>
                   <input
                     type="text"
                     name="gender"
@@ -185,17 +154,6 @@ const ProfileCompletionForm = ({ moveToNextStep }) => {
                   >
                     Email Address
                   </label>
-                  <p
-                    style={{
-                      color: "#a1a1a1",
-                      fontFamily: "400",
-                      fontWeight: "outFit, Sans-serif",
-                      fontSize: "14px",
-                    }}
-                  >
-                    For account verification, app updates, and communication
-                    purposes
-                  </p>
                   <input
                     type="email"
                     name="email"
@@ -217,17 +175,6 @@ const ProfileCompletionForm = ({ moveToNextStep }) => {
                   >
                     Phone Number
                   </label>
-                  <p
-                    style={{
-                      color: "#a1a1a1",
-                      fontFamily: "400",
-                      fontWeight: "outFit, Sans-serif",
-                      fontSize: "14px",
-                    }}
-                  >
-                    To help us reach you for account-related matters or
-                    notifications
-                  </p>
                   <input
                     type="tel"
                     name="phoneNumber"
@@ -249,17 +196,6 @@ const ProfileCompletionForm = ({ moveToNextStep }) => {
                   >
                     Date of Birth
                   </label>
-                  <p
-                    style={{
-                      color: "#a1a1a1",
-                      fontFamily: "400",
-                      fontWeight: "outFit, Sans-serif",
-                      fontSize: "14px",
-                    }}
-                  >
-                    To ensure you're of legal age and to send you special offers
-                    or birthday wishes
-                  </p>
                   <input
                     type="date"
                     name="dateOfBirth"
@@ -279,17 +215,15 @@ const ProfileCompletionForm = ({ moveToNextStep }) => {
           display: "flex",
           justifyContent: "center",
           borderRadius: "14px",
+          marginTop: "20px"
         }}
       >
         <div
           style={{
-            marginTop: "100px",
             display: "flex",
             justifyContent: "start",
-            width: "80%",
             borderRadius: "14px",
             background: "#fff",
-            marginBottom: "15px",
           }}
         >
           <div
@@ -379,7 +313,7 @@ const ProfileCompletionForm = ({ moveToNextStep }) => {
               background: "#4467a1",
               borderRadius: "28px",
               color: "#fff",
-              marginBottom: "10px"
+              marginTop: "10px"
             }}
             onClick={handleSubmit}
           >
