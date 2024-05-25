@@ -34,6 +34,20 @@ const RegisterCompany = () => {
 
   return (
     <div>
+        <div style={{
+            display: "flex",
+            justifyContent: "center"
+        }}>
+        <h1 style={{
+            width: "80%",
+            fontSize: "36px",
+            color: "#505050",
+            fontFamily: "outFit, Sans-serif",
+            fontWeight: "600"
+        }}>
+          Register Company
+        </h1>
+        </div>
       <div
         style={{
           display: "flex",
@@ -49,6 +63,7 @@ const RegisterCompany = () => {
             width: "80%",
             padding: "10px",
             borderRadius: "24px",
+            paddingBottom: "30px"
           }}
         >
           <div className="mx-auto">
@@ -61,38 +76,62 @@ const RegisterCompany = () => {
                 color: "#505050",
               }}
             >
-              Personal Information
+              Basic Information
             </h2>
-            <div className="flex flex-col md:flex-row" style={{
-                width: "100%"
-            }}>
-              <input
-                type="text"
-                name="companyName"
-                placeholder="Company Name"
-                value={formData.companyName}
-                onChange={handleInputChange}
-                className="border border-gray-300 rounded px-3 py-1 w-full md:w-auto mb-4 md:mb-0 mr-0 md:mr-4"
-                style={{
-                    width: "300px"
-                }}
-              />
-              <select
-                name="country"
-                value={formData.country}
-                onChange={handleInputChange}
-                className="border border-gray-300 rounded px-3 py-1 w-full md:w-auto"
-                style={{
-                    width: "300px"
-                }}
-              >
-                <option value="">Select Country</option>
-                <option value="USA">USA</option>
-                <option value="UK">UK</option>
-                <option value="Canada">Canada</option>
-                <option value="Australia">Australia</option>
-                <option value="Germany">Germany</option>
-              </select>
+            <div
+              className="flex flex-col md:flex-row justify-between"
+            >
+              <div className="mt-4" style={{}}>
+                <label
+                  className="font-semibold"
+                  style={{
+                    color: "#505050",
+                    fontFamily: "outFit, Sans-serif",
+                    fontSize: "16px",
+                    fontWeight: "600",
+                  }}
+                >
+                  Company Name
+                </label>
+                <br />
+                <input
+                  type="text"
+                  name="companyName"
+                  placeholder="Company Name"
+                  value={formData.companyName}
+                  onChange={handleInputChange}
+                  className="border border-gray-300 rounded px-3 py-1 w-full md:w-auto mb-4 md:mb-0 mr-0 md:mr-4"
+                  style={{ width: "300px", padding: "10px" }}
+                />
+              </div>
+              <div className="mt-4" style={{}}>
+                <label
+                  className="font-semibold"
+                  style={{
+                    color: "#505050",
+                    fontFamily: "outFit, Sans-serif",
+                    fontSize: "16px",
+                    fontWeight: "600",
+                  }}
+                >
+                  Country of Operation
+                </label>
+                <br />
+                <select
+                  name="country"
+                  value={formData.country}
+                  onChange={handleInputChange}
+                  className="border border-gray-300 rounded px-3 py-1 w-full md:w-auto"
+                  style={{ width: "300px", padding: "10px" }}
+                >
+                  <option value="">Select Country</option>
+                  <option value="USA">USA</option>
+                  <option value="UK">UK</option>
+                  <option value="Canada">Canada</option>
+                  <option value="Australia">Australia</option>
+                  <option value="Germany">Germany</option>
+                </select>
+              </div>
             </div>
           </div>
         </div>
@@ -202,11 +241,11 @@ const RegisterCompany = () => {
               background: "#4467a1",
               borderRadius: "28px",
               color: "#fff",
-              marginBottom: "10px"
+              marginBottom: "10px",
             }}
             onClick={handleSaveProfile}
           >
-            Save Profile
+            Save Company
           </button>
         </div>
       </div>

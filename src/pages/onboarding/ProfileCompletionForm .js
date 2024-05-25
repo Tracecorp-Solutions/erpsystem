@@ -389,4 +389,4 @@ const ProfileCompletionForm = () => {
   );
 };
 
-export default ProfileCompletionForm;
+export default Profile;
