@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 
-const ProfileCompletionForm = () => {
+const ProfileCompletionForm = ({ moveToNextStep }) => {
   const [formData, setFormData] = useState({
     fullName: "",
     jobTitle: "",
@@ -39,6 +39,7 @@ const ProfileCompletionForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    moveToNextStep();
     console.log(formData);
   };
 
@@ -372,7 +373,7 @@ const ProfileCompletionForm = () => {
           }}
         >
           <button
-            type="button"
+            type="submit"
             style={{
               padding: "7px 20px 7px 20px",
               background: "#4467a1",
@@ -380,6 +381,7 @@ const ProfileCompletionForm = () => {
               color: "#fff",
               marginBottom: "10px"
             }}
+            onClick={handleSubmit}
           >
             Save Profile
           </button>
@@ -389,4 +391,4 @@ const ProfileCompletionForm = () => {
   );
 };
 
-export default Profile;
+export default ProfileCompletionForm;
