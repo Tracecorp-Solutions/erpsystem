@@ -136,19 +136,23 @@ namespace Services.Repositories
         {
             var trans = _context.transactionEntries
                 .AsNoTracking()
-                .Include(t=> t.Account)
+                .Include(t => t.Account)
                 .Where(t => t.Id == tranid)
                 .OrderByDescending(t => t.Id)
-                .ToListAsync().Select(t => new TransactionDto 
-                {
-                    AccountFrom = t.Account.Name,
-                    AccountTo = t.Account.Name,
-                    Amount = t.Amount,
-                    TransactionDate = t.TransactionDate,
-                    TransactionType = t.TransactionType,
-                    TransactionReference = t.TransactionReference,
-                    Narration = t.Narration
-                });
+                .ToListAsync();
+                //.Select(t => new TransactionDto 
+                //{
+                //    AccountFrom = t.Account.Name,
+                //    AccountTo = t.Account.Name,
+                //    Amount = t.Amount,
+                //    TransactionDate = t.TransactionDate,
+                //    TransactionType = t.TransactionType,
+                //    TransactionReference = t.TransactionReference,
+                //    Narration = t.Narration
+                //});
+
+            var trandto = new TransactionDto { };
+            return trandto;
         }
 
 

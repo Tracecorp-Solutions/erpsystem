@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Identity;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
 using System.Net.Mail;
+using Core.DTOs;
 
 namespace Services.Repositories
 {
@@ -23,30 +24,31 @@ namespace Services.Repositories
             _passwordHasher = passwordHasher;
         }
 
-        public async Task<bool> CreateUserAsync(UserDTO userdto)
+        public async Task<bool> CreateUserAsync(RegisterDto registerDto)
         {
             var user = new User
             {
-                Username = userdto.Username,
-                FullName = userdto.FullName,
-                OrganizationName = userdto.OrganizationName,
-                Email = userdto.Email
+                FullName = registerDto.FullName,
+                Email = registerDto.Email,
+                Active = false,
+                Verified = false
             };
+
+
             //generate one-time password
             var password = Guid.NewGuid().ToString().Substring(0, 8);
-
             user.PasswordHash = _passwordHasher.HashPassword(user, password);
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
-            await LogActionAsync(user.Username, "User created");
+            await LogActionAsync(user.Email, "User created");
             //send password to user email
-            await SendEmailAsync(user.Email, "Account Created", $"Your account has been created. Your password is {password}");
+            await SendEmailAsync(user.Email, "Account Created", $"Your account has been created. Your OTP is {password}");
             return true;
         }
-        public async Task<string> AuthenticateUserAsync(string username, string password)
+        public async Task<string> AuthenticateUserAsync(LoginDTo loginDTo)
         {
-            var user = _context.Users.FirstOrDefault(u => u.Username == username);
-            if (user == null || _passwordHasher.VerifyHashedPassword(user, user.PasswordHash, password) == PasswordVerificationResult.Failed)
+            var user = _context.Users.FirstOrDefault(u => u.Username == loginDTo.Username);
+            if (user == null || _passwordHasher.VerifyHashedPassword(user, user.PasswordHash, loginDTo.Password) == PasswordVerificationResult.Failed)
                 throw new ArgumentException("Invalid Login Credentials"); 
             
             //generate JWT token
@@ -68,8 +70,6 @@ namespace Services.Repositories
             return tokenHandler.WriteToken(token);
         }
 
-        
-
         public async Task LogActionAsync(string username, string action)
         {
             var audit = new AuditTrail
@@ -89,13 +89,41 @@ namespace Services.Repositories
             mailMessage.Subject = subject;
             mailMessage.Body = message;
             mailMessage.IsBodyHtml = true;
-            using (var client = new SmtpClient("smtp.gmail.com"))
+            mailMessage.From = new MailAddress("traceerp@tracecorpsolutions.com");
+            using (var client = new SmtpClient("mail.@tracecorpsolutions.com"))//("smtp.gmail.com"))
             {
-                client.Port = 587;
-                client.Credentials = new System.Net.NetworkCredential("email", "password");
-                client.EnableSsl = true;
+                client.Port = 465;//587;
+                client.Credentials = new System.Net.NetworkCredential("traceerp@tracecorpsolutions.com", "TraceCorpInnovate");
+                //client.EnableSsl = true;
                 await client.SendMailAsync(mailMessage);
             }
+
+            //using (MimeMessage emailMessage = new MimeMessage())
+            //{
+            //    MailboxAddress emailFrom = new MailboxAddress(_mailSettings.SenderName, _mailSettings.SenderEmail);
+            //    emailMessage.From.Add(emailFrom);
+            //    MailboxAddress emailTo = new MailboxAddress(mailData.EmailToName, mailData.EmailToId);
+            //    emailMessage.To.Add(emailTo);
+
+            //    // you can add the CCs and BCCs here.
+            //    //emailMessage.Cc.Add(new MailboxAddress("Cc Receiver", "cc@example.com"));
+            //    //emailMessage.Bcc.Add(new MailboxAddress("Bcc Receiver", "bcc@example.com"));
+
+            //    emailMessage.Subject = mailData.EmailSubject;
+
+            //    BodyBuilder emailBodyBuilder = new BodyBuilder();
+            //    emailBodyBuilder.TextBody = mailData.EmailBody;
+
+            //    emailMessage.Body = emailBodyBuilder.ToMessageBody();
+            //    //this is the SmtpClient from the Mailkit.Net.Smtp namespace, not the System.Net.Mail one
+            //    using (SmtpClient mailClient = new SmtpClient())
+            //    {
+            //        await mailClient.ConnectAsync(_mailSettings.Server, _mailSettings.Port, MailKit.Security.SecureSocketOptions.StartTls);
+            //        await mailClient.AuthenticateAsync(_mailSettings.UserName, _mailSettings.Password);
+            //        await mailClient.SendAsync(emailMessage);
+            //        await mailClient.DisconnectAsync(true);
+            //    }
+            //}
         }
     }
 }
