@@ -4,7 +4,9 @@ D:\working directory\erpsystem\Trace\obj\Release\net8.0\PubTmp\Out\appsettings.j
 D:\working directory\erpsystem\Trace\obj\Release\net8.0\PubTmp\Out\Trace.dll
 D:\working directory\erpsystem\Trace\obj\Release\net8.0\PubTmp\Out\Trace.runtimeconfig.json
 D:\working directory\erpsystem\Trace\obj\Release\net8.0\PubTmp\Out\Trace.pdb
+D:\working directory\erpsystem\Trace\obj\Release\net8.0\PubTmp\Out\BouncyCastle.Cryptography.dll
 D:\working directory\erpsystem\Trace\obj\Release\net8.0\PubTmp\Out\Castle.Core.dll
+D:\working directory\erpsystem\Trace\obj\Release\net8.0\PubTmp\Out\MailKit.dll
 D:\working directory\erpsystem\Trace\obj\Release\net8.0\PubTmp\Out\Microsoft.AspNet.Identity.Core.dll
 D:\working directory\erpsystem\Trace\obj\Release\net8.0\PubTmp\Out\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 D:\working directory\erpsystem\Trace\obj\Release\net8.0\PubTmp\Out\Microsoft.AspNetCore.Cryptography.Internal.dll
@@ -21,6 +23,7 @@ D:\working directory\erpsystem\Trace\obj\Release\net8.0\PubTmp\Out\Microsoft.Ide
 D:\working directory\erpsystem\Trace\obj\Release\net8.0\PubTmp\Out\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
 D:\working directory\erpsystem\Trace\obj\Release\net8.0\PubTmp\Out\Microsoft.IdentityModel.Tokens.dll
 D:\working directory\erpsystem\Trace\obj\Release\net8.0\PubTmp\Out\Microsoft.OpenApi.dll
+D:\working directory\erpsystem\Trace\obj\Release\net8.0\PubTmp\Out\MimeKit.dll
 D:\working directory\erpsystem\Trace\obj\Release\net8.0\PubTmp\Out\Moq.dll
 D:\working directory\erpsystem\Trace\obj\Release\net8.0\PubTmp\Out\MySqlConnector.dll
 D:\working directory\erpsystem\Trace\obj\Release\net8.0\PubTmp\Out\Pomelo.EntityFrameworkCore.MySql.dll
