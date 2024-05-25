@@ -9,6 +9,7 @@ const Profile = () => {
     gender: "",
     dateOfBirth: "",
   });
+  const [imagePreview, setImagePreview] = useState(null);
 
   const fileInputRef = useRef(null);
 
@@ -22,13 +23,19 @@ const Profile = () => {
 
   const handleButtonClick = () => {
     fileInputRef.current.click();
-  }
+  };
+
+  // const handleFileChange = (e) => {
+  //   const file = e.target.files[0];
+
+  //   console.log("Selected file:", file)
+  // }
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
-
-    console.log("Selected file:", file)
-  }
+    const imageUrl = URL.createObjectURL(file);
+    setImagePreview(imageUrl);
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -281,53 +288,72 @@ const Profile = () => {
             width: "80%",
             borderRadius: "14px",
             background: "#fff",
-            marginBottom: "15px"
+            marginBottom: "15px",
           }}
         >
-          <div style={{
-            marginBottom: "10px"
-          }}>
-            <h2
-            className="text-center"
+          <div
             style={{
-              fontSize: "24px",
-              fontWeight: "600",
-              fontFamily: "outFit, Sans-serif",
-              color: "#505050",
-              marginTop: "10px",
-              marginLeft: "10px"
+              marginBottom: "10px",
             }}
-            >Profile Image</h2>
+          >
+            <h2
+              className="text-center"
+              style={{
+                fontSize: "24px",
+                fontWeight: "600",
+                fontFamily: "outFit, Sans-serif",
+                color: "#505050",
+                marginTop: "10px",
+                marginLeft: "10px",
+              }}
+            >
+              Profile Image
+            </h2>
             <div
-              className="w-32 h-32 rounded-full mx-auto"
-              style={{ marginTop: "20px", background: "#D9D9D9" }}
+              className="w-20 h-20 md:w-32 md:h-32 bg-gray-300 rounded-full mr-4"
+              style={{
+                backgroundImage: `url(${imagePreview || "placeholder.jpg"})`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                marginLeft: "10px"
+              }}
             ></div>
           </div>
-          <div style={{
-            marginTop: "100px"
-          }}>
-            <p style={{
-              color: "#a1a1a1",
-              fontWeight: "400",
-              fontSize: "16px",
-              fontFamily: "outFit, Sans-serif"
-            }}>Upload a profile picture to personalize your account and help others recognize you within the app.</p>
-            <input
-                type="file"
-                accept="image/*"
-                ref={fileInputRef}
-                style={{ display: "none" }}
-                onChange={handleFileChange}
-              />
-            <button style={{
-              padding: "7px 15px 7px 15px",
-              background: "#4467a1",
-              borderRadius: "28px",
-              color: "#fff",
-              marginTop: "5px"
+          <div
+            style={{
+              marginTop: "100px",
             }}
-            onClick={handleButtonClick}
-            >Upload image</button>
+          >
+            <p
+              style={{
+                color: "#a1a1a1",
+                fontWeight: "400",
+                fontSize: "16px",
+                fontFamily: "outFit, Sans-serif",
+              }}
+            >
+              Upload a profile picture to personalize your account and help
+              others recognize you within the app.
+            </p>
+            <input
+              type="file"
+              accept="image/*"
+              ref={fileInputRef}
+              style={{ display: "none" }}
+              onChange={handleFileChange}
+            />
+            <button
+              style={{
+                padding: "7px 15px 7px 15px",
+                background: "#4467a1",
+                borderRadius: "28px",
+                color: "#fff",
+                marginTop: "5px",
+              }}
+              onClick={handleButtonClick}
+            >
+              Upload image
+            </button>
           </div>
         </div>
       </div>
