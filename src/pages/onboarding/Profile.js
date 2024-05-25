@@ -13,11 +13,12 @@ const Profile = () => {
   return (
     <div className="">
       <div style={{
-            display: "flex",
-            justifyContent: "space-between"
-          }}>
+        display: "flex",
+        justifyContent: "space-between"
+      }}>
         <div className="col-span-1">
-          <nav className="flex justify-center" aria-label="Progress" style={{
+          {/* Sidebar with progress indicators */}
+          <nav className="hidden md:flex justify-center" aria-label="Progress" style={{
             position: "relative",
             left: "1px",
             background: "#fff",
@@ -59,6 +60,7 @@ const Profile = () => {
           </nav>
         </div>
         <div className="col-span-1">
+          {/* Profile form or company info */}
           {currentStep === 1 && (
             <ProfileCompletionForm moveToNextStep={moveToNextStep} />
           )}
