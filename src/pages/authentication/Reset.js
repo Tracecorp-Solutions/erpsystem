@@ -1,83 +1,41 @@
-import React, { useState } from 'react';
-import About from '../../components/About';
+import React, { useState } from "react";
+import About from "../../components/About";
 
-function Reset({ onSubmit }) {
-  const [formData, setFormData] = useState({
-    password: '',
-    confirmPassword: ''
-  });
+const ResetPasswordComponent = () => {
+  const [email, setEmail] = useState("");
+  const [response, setResponse] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value
-    });
+    setEmail(e.target.value);
+    // Clear previous error or success messages when user changes input
+    setErrorMessage("");
+    setSuccessMessage("");
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setErrorMessage("");
-    setSuccessMessage("");
-
-    if (!formData.password || !formData.confirmPassword) {
-      setErrorMessage("Please fill in all fields.");
-      return;
-    }
-
-    if (formData.password !== formData.confirmPassword) {
-      setErrorMessage("Passwords do not match.");
-      return;
-    }
-
-    console.log("Form data being submitted:", formData); // Log form data before the request
-
-    // Helper function to create a timeout promise
-    const timeout = (ms, promise) => {
-      return new Promise((resolve, reject) => {
-        const timer = setTimeout(() => {
-          reject(new Error("Request timed out"));
-        }, ms);
-
-        promise
-          .then((res) => {
-            clearTimeout(timer);
-            resolve(res);
-          })
-          .catch((err) => {
-            clearTimeout(timer);
-            reject(err);
-          });
-      });
-    };
-
     try {
-      const response = await timeout(60000, fetch("http://3.216.182.63:8095/ResetPassword", {
+      const response = await fetch("http://3.216.182.63:8095/ResetPassword", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
-      }));
-
-      console.log("Raw response:", response); // Log the raw response
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        console.error("Error response data:", errorData);
-        setErrorMessage(errorData.message || "Error resetting password.");
-        return;
-      }
-
+        body: JSON.stringify({
+          email: email,
+        }),
+      });
       const data = await response.json();
-      console.log("Success response data:", data); // Log the parsed JSON data
-      onSubmit(formData);
-      setSuccessMessage("Your password has been reset successfully.");
+      setResponse(data);
+      if (response.ok) {
+        setSuccessMessage("Password reset successful!");
+      } else {
+        setErrorMessage(data.message || "Error resetting password.");
+      }
     } catch (error) {
-      console.error("Network error:", error);
-      setErrorMessage(error.message || "Network error. Please try again later.");
+      console.error("Error fetching data:", error);
+      setErrorMessage("Network error. Please try again later.");
     }
   };
 
@@ -93,39 +51,35 @@ function Reset({ onSubmit }) {
             <p>Create a new password for your account</p>
           </div>
           <form onSubmit={handleSubmit}>
-            {errorMessage && <div className="error-message">{errorMessage}</div>}
-            {successMessage && <div className="success-message">{successMessage}</div>}
+
             <div className="form-group">
               <div className="label-desc">
-                <label>Password</label>
+                <label htmlFor="email">Email Address</label>
               </div>
               <input
-                type="password"
-                name="password"
-                placeholder="At least 8 characters"
-                value={formData.password}
-                onChange={handleChange}
+                type="email"
+                id="email"
+                name="email"
+                placeholder="Enter your email address"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
               />
             </div>
-            <div className="form-group">
-              <div className="label-desc">
-                <label>Confirm Password</label>
-              </div>
-              <input
-                type="password"
-                name="confirmPassword"
-                placeholder="Enter the same password as above"
-                value={formData.confirmPassword}
-                onChange={handleChange}
-              />
-            </div>
-            <button type="submit" className="create-btn">Reset Password</button>
+            <button type="submit" className="create-btn">
+              Create an Account
+            </button>
           </form>
+          {errorMessage && <div className="error-message">{errorMessage}</div>}
+          {successMessage && (
+            <div className="success-message">{successMessage}</div>
+          )}
+
         </div>
       </div>
       <About />
     </div>
   );
-}
+};
 
-export default Reset;
+export default ResetPasswordComponent;
