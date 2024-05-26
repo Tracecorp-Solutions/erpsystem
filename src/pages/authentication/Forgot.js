@@ -3,14 +3,14 @@ import About from '../../components/About'; // Importing the About component
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
-
 function ChangePasswordForm() {
   const [formData, setFormData] = useState({
     username: '',
-    newPassord: '',
+    newPassword: '',
     repeatPassword: ''
   });
   const [response, setResponse] = useState(null);
+  const [message, setMessage] = useState('');
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -29,8 +29,16 @@ function ChangePasswordForm() {
       });
       const data = await response.json();
       setResponse(data);
+      if (response.status === 200) {
+        setMessage('Password changed successfully!');
+      } else if (response.status === 400) {
+        setMessage('Invalid username or passwords do not match.');
+      } else {
+        setMessage(data.message); // Set error message from server
+      }
     } catch (error) {
       console.error('Error:', error);
+      setMessage('An error occurred. Please try again later.');
     }
   };
 
@@ -64,10 +72,10 @@ function ChangePasswordForm() {
               </div>
               <input
                 type="password"
-                name="newPassord"
-                value={formData.newPassord}
+                name="newPassword"
+                value={formData.newPassword}
                 onChange={handleChange}
-                placeholder="New PassWord"
+                placeholder="New Password"
                 required
               />
             </div>
@@ -86,11 +94,10 @@ function ChangePasswordForm() {
             </div>
             <button type="submit" className="create-btn">Change Password</button>
           </form>
-          {response && (
-            <div>
+          {message && (
+            <div className={response && response.status === 200 ? 'success-message' : 'error-message'}>
               <h3>Response</h3>
-              <p>Status: {response.status}</p>
-              <p>Message: {response.message}</p>
+              <p>{message}</p>
             </div>
           )}
         </div>
