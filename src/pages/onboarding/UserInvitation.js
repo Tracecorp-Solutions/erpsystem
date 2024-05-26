@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 
-const UserGroup = ({ moveToNextStep }) => {
+const UserInvitation = ({ moveToNextStep }) => {
   const [formData, setFormData] = useState({
     fullName: "",
     jobTitle: "",
@@ -9,6 +9,33 @@ const UserGroup = ({ moveToNextStep }) => {
     gender: "",
     dateOfBirth: "",
   });
+  const [imagePreview, setImagePreview] = useState(null);
+
+  const fileInputRef = useRef(null);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const handleButtonClick = () => {
+    fileInputRef.current.click();
+  };
+
+  // const handleFileChange = (e) => {
+  //   const file = e.target.files[0];
+
+  //   console.log("Selected file:", file)
+  // }
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    const imageUrl = URL.createObjectURL(file);
+    setImagePreview(imageUrl);
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -22,89 +49,18 @@ const UserGroup = ({ moveToNextStep }) => {
         marginRight: "10px",
       }}
     >
-      <h2
-        style={{
-          fontSize: "24px",
-          color: "#505050",
-          fontFamily: "outFit, Sans-serif",
-          fontWeight: "600",
-          padding: "5px",
-          marginTop: "10px",
-        }}
-      >
-        User Groups
-      </h2>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-        }}
-      >
-        <div
-          className="flex justify-center"
-          style={{
-            background: "#fff",
-            padding: "15px",
-            borderRadius: "24px",
-            width: "100%",
-            marginTop: "10px",
-          }}
-        >
-          <table style={{ width: "100%", borderCollapse: "collapse" }}>
-            <thead>
-              <tr>
-                <th
-                  style={{
-                    backgroundColor: "#F3F4F6",
-                    padding: "10px",
-                    textAlign: "left",
-                    borderBottom: "2px solid #E5E7EB",
-                  }}
-                >
-                  USER GROUP
-                </th>
-                <th
-                  style={{
-                    backgroundColor: "#F3F4F6",
-                    padding: "10px",
-                    textAlign: "left",
-                    borderBottom: "2px solid #E5E7EB",
-                  }}
-                >
-                  PERMISSION
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {/* Add table rows here */}
-              <tr>
-                <td
-                  style={{ padding: "10px", borderBottom: "1px solid #E5E7EB" }}
-                >
-                  Example Group 1
-                </td>
-                <td
-                  style={{ padding: "10px", borderBottom: "1px solid #E5E7EB" }}
-                >
-                  Example Permission 1
-                </td>
-              </tr>
-              <tr>
-                <td
-                  style={{ padding: "10px", borderBottom: "1px solid #E5E7EB" }}
-                >
-                  Example Group 2
-                </td>
-                <td
-                  style={{ padding: "10px", borderBottom: "1px solid #E5E7EB" }}
-                >
-                  Example Permission 2
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
+         <h2
+              className="text-lg font-semibold mb-2"
+              style={{
+                fontSize: "24px",
+                fontWeight: "600",
+                fontFamily: "outFit, Sans-serif",
+                color: "#505050",
+                marginTop: "15px"
+              }}
+            >
+              Invite Users
+            </h2>
       <div
         style={{
           display: "flex",
@@ -118,7 +74,7 @@ const UserGroup = ({ moveToNextStep }) => {
             borderRadius: "14px",
             background: "#fff",
             width: "100%",
-            padding: "15px",
+            padding: "15px"
           }}
         >
           <div
@@ -136,7 +92,7 @@ const UserGroup = ({ moveToNextStep }) => {
                 padding: "5px",
               }}
             >
-              Create User group
+              Create User
             </h2>
             <div
               className="flex flex-col mb-4 w-full sm:flex-row sm:items-center"
@@ -154,7 +110,7 @@ const UserGroup = ({ moveToNextStep }) => {
                     fontFamily: "outFit, Sans-serif",
                   }}
                 >
-                  User Group Name
+                  Email Address
                 </label>
                 <br />
                 <p
@@ -164,16 +120,15 @@ const UserGroup = ({ moveToNextStep }) => {
                     fontSize: "14px",
                     fontWeight: "400",
                     marginTop: "10px",
-                    marginBottom: "10px",
+                    marginBottom: "10px"
                   }}
                 >
-                  Enter a descriptive name to identify this group within your
-                  organization
+                  Email addresses of the users you want to invite, separated by commas.
                 </p>
                 <input
-                  type="text"
+                  type="email"
                   className="border border-gray-300 px-2 py-1 rounded-md w-full"
-                  placeholder="Enter user group name"
+                  placeholder="Enter email addresses"
                   style={{
                     padding: "10px",
                   }}
@@ -189,7 +144,7 @@ const UserGroup = ({ moveToNextStep }) => {
                     fontFamily: "outFit, Sans-serif",
                   }}
                 >
-                  User Group Permissions
+                  Choose User Group
                 </label>
                 <br />
                 <p
@@ -199,19 +154,18 @@ const UserGroup = ({ moveToNextStep }) => {
                     fontSize: "14px",
                     fontWeight: "400",
                     marginTop: "10px",
-                    marginBottom: "10px",
+                    marginBottom: "10px"
                   }}
                 >
-                  Assign specific permissions to this group to control access
-                  and functionality
-                </p>
+                Select the user group that best fits the role and access level for the invited users
+               </p>
                 <select
                   className="border border-gray-300 px-2 py-1 rounded-md w-full"
                   style={{
                     padding: "10px",
                   }}
                 >
-                  <option value="">Choose Permission</option>
+                  <option value="">Choose User group</option>
                   <option value="permission1">Permission 1</option>
                   <option value="permission2">Permission 2</option>
                   {/* Add more options as needed */}
@@ -254,4 +208,4 @@ const UserGroup = ({ moveToNextStep }) => {
   );
 };
 
-export default UserGroup;
+export default UserInvitation;

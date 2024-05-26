@@ -3,6 +3,7 @@ import RegisterCompany from "./RegisterCompany";
 import { CheckCircleIcon } from "@heroicons/react/20/solid";
 import ProfileCompletionForm from "./ProfileCompletionForm ";
 import UserGroup from "./UserGroup";
+import UserInvitation from "./UserInvitation";
 
 const Profile = () => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -98,6 +99,26 @@ const Profile = () => {
                   </span>
                 </span>
               </li>
+              <li>
+                <span className="flex items-start">
+                  <span className="relative flex h-5 w-5 flex-shrink-0 items-center justify-center">
+                    {currentStep >= 4 ? (
+                      <CheckCircleIcon
+                        className="h-full w-full text-indigo-600"
+                        aria-hidden="true"
+                      />
+                    ) : (
+                      <span
+                        className="h-full w-full bg-gray-300"
+                        aria-hidden="true"
+                      />
+                    )}
+                  </span>
+                  <span className="ml-3 text-sm font-medium text-gray-500">
+                    User Invitation
+                  </span>
+                </span>
+              </li>
             </ol>
           </nav>
         </div>
@@ -112,7 +133,8 @@ const Profile = () => {
             <ProfileCompletionForm moveToNextStep={moveToNextStep} />
           )}
           {currentStep === 2 && <RegisterCompany moveToNextStep={moveToNextStep} />}
-          {currentStep === 3 && <UserGroup />}
+          {currentStep === 3 && <UserGroup moveToNextStep={moveToNextStep} />}
+          {currentStep === 4 && <UserInvitation />}
         </div>
       </div>
     </div>
