@@ -19,5 +19,7 @@ namespace Core.Repositories
         Task ChangePasswordAsync(ChangePwdDto changePwdDto);
 
         Task ResetPasswordAsync(string email);
+
+        Task<UserDTO> GetUserDetailsByEmail(string email);
     }
 }

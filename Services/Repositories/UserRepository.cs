@@ -65,7 +65,7 @@ namespace Services.Repositories
         }
         public async Task<string> AuthenticateUserAsync(LoginDTo loginDTo)
         {
-            var user = _context.Users.FirstOrDefault(u => u.Username == loginDTo.Username);
+            var user = _context.Users.FirstOrDefault(u => u.Email == loginDTo.Username);
             if (user == null || _passwordHasher.VerifyHashedPassword(user, user.PasswordHash, loginDTo.Password) == PasswordVerificationResult.Failed)
                 throw new ArgumentException("Invalid Login Credentials"); 
             
@@ -77,14 +77,14 @@ namespace Services.Repositories
             {
                 Subject = new System.Security.Claims.ClaimsIdentity(new System.Security.Claims.Claim[]
                 {
-                    new System.Security.Claims.Claim(System.Security.Claims.ClaimTypes.Name, user.Username)
+                    new System.Security.Claims.Claim(System.Security.Claims.ClaimTypes.Name, user.Email)
                 }),
                 Expires = DateTime.UtcNow.AddHours(1),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
 
             var token = tokenHandler.CreateToken(tokenDescriptor);  
-            await LogActionAsync(user.Username, "User authenticated");
+            await LogActionAsync(user.Email, "User authenticated");
             return tokenHandler.WriteToken(token);
         }
 
@@ -102,7 +102,7 @@ namespace Services.Repositories
 
         public async Task ChangePasswordAsync(ChangePwdDto changePwdDto) 
         {
-            var user = _context.Users.FirstOrDefault(u => u.Username == changePwdDto.Username);
+            var user = _context.Users.FirstOrDefault(u => u.Email == changePwdDto.Username);
 
             if (user == null || changePwdDto.NewPassord != changePwdDto.RepeatPassword)
                 throw new ArgumentException("Invalid User or password do not match");
@@ -112,7 +112,7 @@ namespace Services.Repositories
 
             user.PasswordHash = _passwordHasher.HashPassword(user, changePwdDto.RepeatPassword);
             await _context.SaveChangesAsync();
-            await LogActionAsync(user.Username, "User Password updated");
+            await LogActionAsync(user.Email, "User Password updated");
         }
 
         public async Task ResetPasswordAsync(string email)
@@ -129,6 +129,21 @@ namespace Services.Repositories
             await _context.SaveChangesAsync();
             await LogActionAsync(user.Email, "User password reset");
             await emailService.SendEmailAsync(user.Email, "Password Reset", $"Your password has been reset. Your new password is {password}");
+        }
+
+        public async Task<UserDTO> GetUserDetailsByEmail(string email)
+        {
+            var user = _context.Users.FirstOrDefault(u => u.Email == email);
+            if (user == null)
+                throw new ArgumentException("Invalid Email Address");
+
+            return new UserDTO
+            {
+                Id = user.Id,
+                Username = user.Email,
+                FullName = user.FullName,
+                Email = user.Email
+            };
         }
 
     }
