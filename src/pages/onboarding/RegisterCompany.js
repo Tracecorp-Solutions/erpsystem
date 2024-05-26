@@ -168,7 +168,7 @@ const RegisterCompany = () => {
       >
         <div
           style={{
-            marginTop: "100px",
+            marginTop: "30px",
             display: "flex",
             justifyContent: "start",
             borderRadius: "14px",
