@@ -59,7 +59,7 @@ const UserGroup = ({ moveToNextStep }) => {
           className="flex justify-center"
           style={{
             background: "#fff",
-            padding: "10px",
+            padding: "15px",
             borderRadius: "24px",
             width: "100%",
             marginTop: "10px",
@@ -133,6 +133,7 @@ const UserGroup = ({ moveToNextStep }) => {
             borderRadius: "14px",
             background: "#fff",
             width: "100%",
+            padding: "15px"
           }}
         >
           <div
@@ -187,7 +188,7 @@ const UserGroup = ({ moveToNextStep }) => {
                   className="border border-gray-300 px-2 py-1 rounded-md w-full"
                   placeholder="Enter user group name"
                   style={{
-                    padding: "10px"
+                    padding: "10px",
                   }}
                 />
               </div>
@@ -215,14 +216,17 @@ const UserGroup = ({ moveToNextStep }) => {
                   Assign specific permissions to this group to control access
                   and functionality
                 </p>
-                <input
-                  type="text"
+                <select
                   className="border border-gray-300 px-2 py-1 rounded-md w-full"
-                  placeholder="Choose Permission"
                   style={{
-                    padding: "10px"
+                    padding: "10px",
                   }}
-                />
+                >
+                  <option value="">Choose Permission</option>
+                  <option value="permission1">Permission 1</option>
+                  <option value="permission2">Permission 2</option>
+                  {/* Add more options as needed */}
+                </select>
               </div>
             </div>
           </div>
@@ -239,6 +243,7 @@ const UserGroup = ({ moveToNextStep }) => {
             width: "100%",
             display: "flex",
             justifyContent: "end",
+            marginTop: "20px",
           }}
         >
           <button
