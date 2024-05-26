@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 
-const RegisterCompany = () => {
+const RegisterCompany = ({moveToNextStep}) => {
   const [imagePreview, setImagePreview] = useState(null);
   const [formData, setFormData] = useState({
     companyName: "",
@@ -29,6 +29,7 @@ const RegisterCompany = () => {
 
   const handleSaveProfile = () => {
     // Here you can perform actions like saving the profile
+    moveToNextStep();
     console.log("Profile saved!");
   };
 
