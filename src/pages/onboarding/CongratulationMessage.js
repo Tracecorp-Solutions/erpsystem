@@ -6,7 +6,7 @@ const CongratulationsCard = () => {
       className="px-4 py-3 rounded relative"
       role="alert"
       style={{
-        width: "50%",
+        maxWidth: "80%",
         margin: "auto",
         position: "fixed",
         top: "50%",
@@ -14,8 +14,9 @@ const CongratulationsCard = () => {
         transform: "translate(-50%, -50%)",
         textAlign: "center",
         background: "#fff",
-        padding: "30px",
-        borderRadius: "24px"
+        padding: "20px",
+        borderRadius: "24px",
+        boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
       }}
     >
       <div>
@@ -28,7 +29,9 @@ const CongratulationsCard = () => {
        style={{
         fontSize: "16px",
         fontWeight: "400",
-        color: "#505050"
+        color: "#505050",
+        fontFamily: "outFit, Sans-serif",
+        marginTop: "15px"
        }}
       >
         You've successfully set up your company on TraceAccounting and invited your team members! 
@@ -36,11 +39,12 @@ const CongratulationsCard = () => {
       <br />
       <button type="button" style={{
         background: "#4467a1",
-        padding: "10px 20px 10px 20px",
+        padding: "10px 20px",
         borderRadius: "28px",
         color: "#fff",
         fontFamily: "outFit, Sans-serif",
-        marginTop: "10px"
+        marginTop: "20px",
+        cursor: "pointer"
       }}>Go to Dashboard</button></div>
     </div>
   );
