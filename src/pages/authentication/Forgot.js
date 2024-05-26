@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 function ChangePasswordForm() {
   const [formData, setFormData] = useState({
     username: '',
-    newPassword: '',
+    newPassord: '',
     repeatPassword: ''
   });
   const [response, setResponse] = useState(null);
@@ -64,10 +64,10 @@ function ChangePasswordForm() {
               </div>
               <input
                 type="password"
-                name="newPassword"
-                value={formData.newPassword}
+                name="newPassord"
+                value={formData.newPassord}
                 onChange={handleChange}
-                placeholder="New Password"
+                placeholder="New PassWord"
                 required
               />
             </div>
