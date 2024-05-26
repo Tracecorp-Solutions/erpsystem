@@ -24,106 +24,108 @@ const Profile = () => {
         }}
       >
         <div className="col-span-1">
-          <nav
-            className="hidden md:flex justify-center"
-            aria-label="Progress"
-            style={{
-              position: "relative",
-              left: "1px",
-              background: "#fff",
-              height: "100vh",
-            }}
-          >
-            <ol
-              role="list"
-              className="space-y-6"
+          {currentStep <= maxSteps && (
+            <nav
+              className="hidden md:flex justify-center"
+              aria-label="Progress"
               style={{
-                marginTop: "20px",
-                padding: "10px",
+                position: "relative",
+                left: "1px",
+                background: "#fff",
+                height: "100vh",
               }}
             >
-              <li>
-                <span className="flex items-start">
-                  <span className="relative flex h-5 w-5 flex-shrink-0 items-center justify-center">
-                    {currentStep >= 1 ? (
-                      <CheckCircleIcon
-                        className="h-full w-full text-indigo-600"
-                        aria-hidden="true"
-                      />
-                    ) : (
-                      <span
-                        className="h-full w-full bg-gray-300"
-                        aria-hidden="true"
-                      />
-                    )}
+              <ol
+                role="list"
+                className="space-y-6"
+                style={{
+                  marginTop: "20px",
+                  padding: "10px",
+                }}
+              >
+                <li>
+                  <span className="flex items-start">
+                    <span className="relative flex h-5 w-5 flex-shrink-0 items-center justify-center">
+                      {currentStep >= 1 ? (
+                        <CheckCircleIcon
+                          className="h-full w-full text-indigo-600"
+                          aria-hidden="true"
+                        />
+                      ) : (
+                        <span
+                          className="h-full w-full bg-gray-300"
+                          aria-hidden="true"
+                        />
+                      )}
+                    </span>
+                    <span className="ml-3 text-sm font-medium text-gray-500">
+                      Personal Information
+                    </span>
                   </span>
-                  <span className="ml-3 text-sm font-medium text-gray-500">
-                    Personal Information
+                </li>
+                <li>
+                  <span className="flex items-start">
+                    <span className="relative flex h-5 w-5 flex-shrink-0 items-center justify-center">
+                      {currentStep >= 2 ? (
+                        <CheckCircleIcon
+                          className="h-full w-full text-indigo-600"
+                          aria-hidden="true"
+                        />
+                      ) : (
+                        <span
+                          className="h-full w-full bg-gray-300"
+                          aria-hidden="true"
+                        />
+                      )}
+                    </span>
+                    <span className="ml-3 text-sm font-medium text-gray-500">
+                      Company Information
+                    </span>
                   </span>
-                </span>
-              </li>
-              <li>
-                <span className="flex items-start">
-                  <span className="relative flex h-5 w-5 flex-shrink-0 items-center justify-center">
-                    {currentStep >= 2 ? (
-                      <CheckCircleIcon
-                        className="h-full w-full text-indigo-600"
-                        aria-hidden="true"
-                      />
-                    ) : (
-                      <span
-                        className="h-full w-full bg-gray-300"
-                        aria-hidden="true"
-                      />
-                    )}
+                </li>
+                <li>
+                  <span className="flex items-start">
+                    <span className="relative flex h-5 w-5 flex-shrink-0 items-center justify-center">
+                      {currentStep >= 3 ? (
+                        <CheckCircleIcon
+                          className="h-full w-full text-indigo-600"
+                          aria-hidden="true"
+                        />
+                      ) : (
+                        <span
+                          className="h-full w-full bg-gray-300"
+                          aria-hidden="true"
+                        />
+                      )}
+                    </span>
+                    <span className="ml-3 text-sm font-medium text-gray-500">
+                      User Groups
+                    </span>
                   </span>
-                  <span className="ml-3 text-sm font-medium text-gray-500">
-                    Company Information
+                </li>
+                <li>
+                  <span className="flex items-start">
+                    <span className="relative flex h-5 w-5 flex-shrink-0 items-center justify-center">
+                      {currentStep >= 4 ? (
+                        <CheckCircleIcon
+                          className="h-full w-full text-indigo-600"
+                          aria-hidden="true"
+                        />
+                      ) : (
+                        <span
+                          className="h-full w-full bg-gray-300"
+                          aria-hidden="true"
+                        />
+                      )}
+                    </span>
+                    <span className="ml-3 text-sm font-medium text-gray-500">
+                      User Invitation
+                    </span>
                   </span>
-                </span>
-              </li>
-              <li>
-                <span className="flex items-start">
-                  <span className="relative flex h-5 w-5 flex-shrink-0 items-center justify-center">
-                    {currentStep >= 3 ? (
-                      <CheckCircleIcon
-                        className="h-full w-full text-indigo-600"
-                        aria-hidden="true"
-                      />
-                    ) : (
-                      <span
-                        className="h-full w-full bg-gray-300"
-                        aria-hidden="true"
-                      />
-                    )}
-                  </span>
-                  <span className="ml-3 text-sm font-medium text-gray-500">
-                    User Groups
-                  </span>
-                </span>
-              </li>
-              <li>
-                <span className="flex items-start">
-                  <span className="relative flex h-5 w-5 flex-shrink-0 items-center justify-center">
-                    {currentStep >= 4 ? (
-                      <CheckCircleIcon
-                        className="h-full w-full text-indigo-600"
-                        aria-hidden="true"
-                      />
-                    ) : (
-                      <span
-                        className="h-full w-full bg-gray-300"
-                        aria-hidden="true"
-                      />
-                    )}
-                  </span>
-                  <span className="ml-3 text-sm font-medium text-gray-500">
-                    User Invitation
-                  </span>
-                </span>
-              </li>
-            </ol>
-          </nav>
+                </li>
+              </ol>
+            </nav>
+          )}
         </div>
 
         <div
