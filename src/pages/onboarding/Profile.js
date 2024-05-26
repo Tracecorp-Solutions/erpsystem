@@ -32,7 +32,6 @@ function Profile({ onSubmit }) {
     onSubmit(formData);
   };
 
-  // Sample list of accounts (Replace with your actual data)
   const genderOptions = [
     { id: '1', name: 'Female' },
     { id: '2', name: 'Male' },

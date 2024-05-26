@@ -10,6 +10,7 @@ import VerifyAccount from './pages/setup/VerifyAccount';
 import ResetPassword from './pages/setup/ResetPassword';
 import ForgotPassword from './pages/setup/ForgotPassword';
 import Profile from './pages/onboarding/Profile';
+import Company from './pages/onboarding/Company';
 
 import "./App.css";
 
@@ -29,6 +30,7 @@ function App() {
           <Route path="/reset" element={<ResetPassword />} />
           <Route path="/forgot" element={<ForgotPassword />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/company" element={<Company />} />
         </Routes>
       </div>
     </BrowserRouter>
