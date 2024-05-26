@@ -128,7 +128,7 @@ const RegisterCompany = () => {
                 <br />
                 <p
                   style={{
-                    marginRight: "10px",
+                    // marginRight: "10px",
                     fontSize: "14px",
                     fontFamily: "outFit, Sans-serif",
                     fontWeight: "400",
