@@ -178,6 +178,8 @@ const UserGroup = ({ moveToNextStep }) => {
                     fontFamily: "outFit, Sans-serif",
                     fontSize: "14px",
                     fontWeight: "400",
+                    marginTop: "10px",
+                    marginBottom: "10px"
                   }}
                 >
                   Enter a descriptive name to identify this group within your
@@ -211,6 +213,8 @@ const UserGroup = ({ moveToNextStep }) => {
                     fontFamily: "outFit, Sans-serif",
                     fontSize: "14px",
                     fontWeight: "400",
+                    marginTop: "10px",
+                    marginBottom: "10px"
                   }}
                 >
                   Assign specific permissions to this group to control access
