@@ -4,9 +4,12 @@ import { CheckCircleIcon } from "@heroicons/react/20/solid";
 import ProfileCompletionForm from "./ProfileCompletionForm ";
 import UserGroup from "./UserGroup";
 import UserInvitation from "./UserInvitation";
+import CongratulationsCard from "./CongratulationMessage";
 
 const Profile = () => {
   const [currentStep, setCurrentStep] = useState(1);
+
+  const maxSteps = 4;
 
   const moveToNextStep = () => {
     setCurrentStep(currentStep + 1);
@@ -134,7 +137,9 @@ const Profile = () => {
           )}
           {currentStep === 2 && <RegisterCompany moveToNextStep={moveToNextStep} />}
           {currentStep === 3 && <UserGroup moveToNextStep={moveToNextStep} />}
-          {currentStep === 4 && <UserInvitation />}
+          {currentStep === 4 && <UserInvitation moveToNextStep={moveToNextStep} />}
+          {currentStep > maxSteps && <CongratulationsCard />}
+
         </div>
       </div>
     </div>
