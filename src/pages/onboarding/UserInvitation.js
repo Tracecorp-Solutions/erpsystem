@@ -47,20 +47,21 @@ const UserInvitation = ({ moveToNextStep }) => {
     <div
       style={{
         marginRight: "10px",
+        marginTop: "15px"
       }}
     >
-         <h2
-              className="text-lg font-semibold mb-2"
-              style={{
-                fontSize: "24px",
-                fontWeight: "600",
-                fontFamily: "outFit, Sans-serif",
-                color: "#505050",
-                marginTop: "15px"
-              }}
-            >
-              Invite Users
-            </h2>
+      <h2
+        className="text-lg font-semibold mb-2"
+        style={{
+          fontSize: "24px",
+          fontWeight: "600",
+          fontFamily: "outFit, Sans-serif",
+          color: "#505050",
+          marginTop: "15px",
+        }}
+      >
+        Invite Users
+      </h2>
       <div
         style={{
           display: "flex",
@@ -74,7 +75,7 @@ const UserInvitation = ({ moveToNextStep }) => {
             borderRadius: "14px",
             background: "#fff",
             width: "100%",
-            padding: "15px"
+            padding: "15px",
           }}
         >
           <div
@@ -120,10 +121,11 @@ const UserInvitation = ({ moveToNextStep }) => {
                     fontSize: "14px",
                     fontWeight: "400",
                     marginTop: "10px",
-                    marginBottom: "10px"
+                    marginBottom: "10px",
                   }}
                 >
-                  Email addresses of the users you want to invite, separated by commas.
+                  Email addresses of the users you want to invite, separated by
+                  commas.
                 </p>
                 <input
                   type="email"
@@ -154,11 +156,12 @@ const UserInvitation = ({ moveToNextStep }) => {
                     fontSize: "14px",
                     fontWeight: "400",
                     marginTop: "10px",
-                    marginBottom: "10px"
+                    marginBottom: "10px",
                   }}
                 >
-                Select the user group that best fits the role and access level for the invited users
-               </p>
+                  Select the user group that best fits the role and access level
+                  for the invited users
+                </p>
                 <select
                   className="border border-gray-300 px-2 py-1 rounded-md w-full"
                   style={{

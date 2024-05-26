@@ -20,6 +20,7 @@ const UserGroup = ({ moveToNextStep }) => {
     <div
       style={{
         marginRight: "10px",
+        marginTop: "15px"
       }}
     >
       <h2

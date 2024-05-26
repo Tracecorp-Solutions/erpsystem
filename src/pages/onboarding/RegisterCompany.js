@@ -37,6 +37,7 @@ const RegisterCompany = ({moveToNextStep}) => {
     <div
       style={{
         marginRight: "15px",
+        marginTop: "15px"
       }}
     >
       <h1

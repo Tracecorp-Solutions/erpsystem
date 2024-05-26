@@ -45,7 +45,8 @@ const ProfileCompletionForm = ({ moveToNextStep }) => {
 
   return (
     <div style={{
-      marginRight: "10px"
+      marginRight: "10px",
+      marginTop: "20px"
     }}>
       <div
         style={{

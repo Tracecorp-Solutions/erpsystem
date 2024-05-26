@@ -5,6 +5,7 @@ import ProfileCompletionForm from "./ProfileCompletionForm ";
 import UserGroup from "./UserGroup";
 import UserInvitation from "./UserInvitation";
 import CongratulationsCard from "./CongratulationMessage";
+import Header from "./Header";
 
 const Profile = () => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -16,7 +17,8 @@ const Profile = () => {
   };
 
   return (
-    <div className="">
+    <div>
+      {currentStep <= maxSteps && <Header />}
       <div
         style={{
           display: "flex",
