@@ -174,6 +174,7 @@ const RegisterCompany = () => {
             borderRadius: "14px",
             background: "#fff",
             marginBottom: "15px",
+            width: "100%"
           }}
         >
           <div

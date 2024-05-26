@@ -17,7 +17,6 @@ const Profile = () => {
         justifyContent: "space-between"
       }}>
         <div className="col-span-1">
-          {/* Sidebar with progress indicators */}
           <nav className="hidden md:flex justify-center" aria-label="Progress" style={{
             position: "relative",
             left: "1px",
@@ -59,8 +58,9 @@ const Profile = () => {
             </ol>
           </nav>
         </div>
-        <div className="col-span-1">
-          {/* Profile form or company info */}
+        <div style={{
+          width: "80%"
+        }}>
           {currentStep === 1 && (
             <ProfileCompletionForm moveToNextStep={moveToNextStep} />
           )}

@@ -215,7 +215,7 @@ const ProfileCompletionForm = ({ moveToNextStep }) => {
           display: "flex",
           justifyContent: "center",
           borderRadius: "14px",
-          marginTop: "20px"
+          marginTop: "20px",
         }}
       >
         <div
@@ -224,6 +224,7 @@ const ProfileCompletionForm = ({ moveToNextStep }) => {
             justifyContent: "start",
             borderRadius: "14px",
             background: "#fff",
+            width: "100%",
           }}
         >
           <div
