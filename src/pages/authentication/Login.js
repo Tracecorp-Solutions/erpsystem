@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import About from '../../components/About'; // Importing the About component
 import axios from 'axios';
-import { Link } from 'react-router-dom';// Importing the About component
+import { Link } from 'react-router-dom'; // Importing the About component
 
 
-const MyComponent = () => {
+const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [response, setResponse] = useState(null);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -30,8 +32,13 @@ const MyComponent = () => {
 
       const data = await response.json();
       setResponse(data);
+      setSuccessMessage('Login successful!');
+      setErrorMessage(''); // Clear any previous error messages
     } catch (error) {
       console.error('Error fetching data:', error);
+      setResponse(null);
+      setSuccessMessage(''); // Clear any previous success messages
+      setErrorMessage('Error: Invalid username or password.'); // Display error message
     }
   };
 
@@ -46,7 +53,7 @@ const MyComponent = () => {
             </span>
             <p>Welcome back, you have been missed!</p>
           </div>
-          
+
           <form onSubmit={handleSubmit}>
             <div className="form-group mt-0">
               <div className="label-desc mt-0">
@@ -78,6 +85,12 @@ const MyComponent = () => {
                 </div>
               )}
             </div>
+            {errorMessage && (
+              <div className="error-message" style={{ color: 'red' }}>{errorMessage}</div>
+            )}
+            {successMessage && (
+              <div className="success-message" style={{ color: 'green' }}>{successMessage}</div>
+            )}
             <p>
               <a href="/forgot">Forgot Password?</a> {/* Replacing Link with anchor tag */}
             </p>
@@ -91,9 +104,9 @@ const MyComponent = () => {
         </div>
       </div>
       <About /> {/* Adding the About component */}
-      
+
     </div>
   );
 };
 
-export default MyComponent;
+export default Login;
