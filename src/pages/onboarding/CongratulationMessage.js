@@ -3,22 +3,45 @@ import React from "react";
 const CongratulationsCard = () => {
   return (
     <div
-      className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative"
+      className="px-4 py-3 rounded relative"
       role="alert"
       style={{
         width: "50%",
-        margin: "auto", // Center horizontally
-        position: "fixed", // Position in the middle of the screen
-        top: "50%", // Move to the vertical center
-        left: "50%", // Move to the horizontal center
-        transform: "translate(-50%, -50%)" // Centering trick
+        margin: "auto",
+        position: "fixed",
+        top: "50%",
+        left: "50%",
+        transform: "translate(-50%, -50%)",
+        textAlign: "center",
+        background: "#fff",
+        padding: "30px",
+        borderRadius: "24px"
       }}
     >
-      <strong className="font-bold">Congratulations!</strong>
+      <div>
+       <strong style={{
+        fontSize: "36px",
+        fontFamily: "outFit, Sans-serif"
+       }}>Congratulations!</strong>
       <br />
-      <span className="block sm:inline">
-        You have successfully completed all steps.
+      <span className="block sm:inline"
+       style={{
+        fontSize: "16px",
+        fontWeight: "400",
+        color: "#505050"
+       }}
+      >
+        You've successfully set up your company on TraceAccounting and invited your team members! 
       </span>
+      <br />
+      <button type="button" style={{
+        background: "#4467a1",
+        padding: "10px 20px 10px 20px",
+        borderRadius: "28px",
+        color: "#fff",
+        fontFamily: "outFit, Sans-serif",
+        marginTop: "10px"
+      }}>Go to Dashboard</button></div>
     </div>
   );
 };
