@@ -17,6 +17,9 @@ namespace Core.DTOs
         public bool Verified { get; set; }
         public bool Active { get; set; }
 
+        public string? Title { get; set; }
+        public string? Gender { get; set; }
+
         public bool IsAdmin { get; set; }
         public string? PhoneNumber { get; set; }
         public DateOnly? DateOfBirth { get; set; }

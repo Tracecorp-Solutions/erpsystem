@@ -124,5 +124,23 @@ namespace Trace.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
             }
         }
+
+        [HttpPost("/UpdateUserDetails")]
+        public async Task<IActionResult> UpdateUserDetails([FromBody] UserDTO userDTO)
+        {
+            try
+            {
+                await _userRepository.UpdateUserDetails(userDTO);
+                return Ok("User details updated successfully");
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
+        }
     }
 }

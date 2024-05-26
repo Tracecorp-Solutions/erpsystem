@@ -146,5 +146,22 @@ namespace Services.Repositories
             };
         }
 
+        public async Task UpdateUserDetails(UserDTO userDTO)
+        {
+            var user = _context.Users.FirstOrDefault(u => u.Email == userDTO.Email);
+            if (user == null)
+                throw new ArgumentException("Invalid Email Address");
+
+            user.FullName = userDTO.FullName;
+            user.Email = userDTO.Email;
+            user.Title = userDTO.Title;
+            user.PhoneNumber = userDTO.PhoneNumber;
+            user.DateOfBirth = userDTO.DateOfBirth;
+            user.ProfilePic = userDTO.ProfilePic;
+            user.Gender = userDTO.Gender;
+            await _context.SaveChangesAsync();
+            await LogActionAsync(user.Email, "User details updated");
+        }
+
     }
 }
