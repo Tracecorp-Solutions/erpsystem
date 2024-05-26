@@ -138,6 +138,7 @@ const UserGroup = ({ moveToNextStep }) => {
           <div
             style={{
               marginBottom: "10px",
+              padding: "5px",
             }}
           >
             <h2
@@ -158,19 +159,69 @@ const UserGroup = ({ moveToNextStep }) => {
               }}
             >
               <div className="mt-4 sm:w-1/2 sm:mr-4">
-                <label className="font-semibold mr-2">Text 1:</label>
+                <label
+                  className="font-semibold mr-2"
+                  style={{
+                    fontSize: "16px",
+                    fontWeight: "600",
+                    color: "#505050",
+                    fontFamily: "outFit, Sans-serif",
+                  }}
+                >
+                  User Group Name
+                </label>
                 <br />
+                <p
+                  style={{
+                    color: "#a1a1a1",
+                    fontFamily: "outFit, Sans-serif",
+                    fontSize: "14px",
+                    fontWeight: "400",
+                  }}
+                >
+                  Enter a descriptive name to identify this group within your
+                  organization
+                </p>
                 <input
                   type="text"
                   className="border border-gray-300 px-2 py-1 rounded-md w-full"
+                  placeholder="Enter user group name"
+                  style={{
+                    padding: "10px"
+                  }}
                 />
               </div>
               <div className="mt-4 sm:w-1/2">
-                <label className="font-semibold mr-2">Text 2:</label>
+                <label
+                  className="font-semibold mr-2"
+                  style={{
+                    fontSize: "16px",
+                    fontWeight: "600",
+                    color: "#505050",
+                    fontFamily: "outFit, Sans-serif",
+                  }}
+                >
+                  User Group Permissions
+                </label>
                 <br />
+                <p
+                  style={{
+                    color: "#a1a1a1",
+                    fontFamily: "outFit, Sans-serif",
+                    fontSize: "14px",
+                    fontWeight: "400",
+                  }}
+                >
+                  Assign specific permissions to this group to control access
+                  and functionality
+                </p>
                 <input
                   type="text"
                   className="border border-gray-300 px-2 py-1 rounded-md w-full"
+                  placeholder="Choose Permission"
+                  style={{
+                    padding: "10px"
+                  }}
                 />
               </div>
             </div>
@@ -185,7 +236,7 @@ const UserGroup = ({ moveToNextStep }) => {
       >
         <div
           style={{
-            width: "80%",
+            width: "100%",
             display: "flex",
             justifyContent: "end",
           }}
