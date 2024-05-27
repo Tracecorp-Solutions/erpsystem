@@ -43,7 +43,9 @@ const ProfileCompletionForm = ({ HandleSubmit, userData, setUserData }) => {
             width: "100%",
           }}
         >
-          <div className="mx-auto">
+          <div className="" style={{
+            width: "100%"
+          }}>
             <h2
               className="text-lg font-semibold mb-2"
               style={{
