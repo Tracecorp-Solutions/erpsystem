@@ -37,24 +37,23 @@ class AuthenticateUser extends React.Component {
         body: JSON.stringify({ username, password })
       });
 
-      const data = await response.json();
-
-      if (response.ok) {
-        // Successful authentication
-        this.setState({
-          successMessage: 'User authenticated successfully',
-          errorMessage: ''
-        });
-
-        // Handle additional actions after successful authentication, if needed
-      } else {
-        // Authentication failed
-        throw new Error(data.message || 'Failed to authenticate user');
+      if (!response.ok) {
+        throw new Error('Failed to authenticate user');
       }
 
+      const data = await response.json();
+
+      this.setState({
+        successMessage: 'User authenticated successfully',
+        errorMessage: '',
+        username: '',
+        password: ''
+      });
+
+      // Handle additional actions after successful authentication, if needed
+
     } catch (error) {
-      // Error during authentication
-      this.setState({ errorMessage: error.message, successMessage: '' });
+      this.setState({ errorMessage: 'Failed to authenticate. Please try again.', successMessage: '' });
     }
   };
 
