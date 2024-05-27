@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import About from '../../components/About';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 function RegistrationForm() {
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
+  const navigate = useNavigate(); // useNavigate hook to programmatically navigate
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -21,6 +22,8 @@ function RegistrationForm() {
 
       if (response.ok) {
         setMessage('Registration successful!');
+        // Navigate to the verify page after successful registration
+        navigate('/verify');
       } else {
         const errorMessage = await response.text();
         setMessage(`Error: ${errorMessage}`);

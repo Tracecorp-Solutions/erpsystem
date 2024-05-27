@@ -1,23 +1,25 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import About from '../../components/About';
-import { Link } from 'react-router-dom';
-
+import { Link, useNavigate } from 'react-router-dom';
 
 function VerifyUserComponent() {
   const [email, setEmail] = useState('');
   const [otp, setOtp] = useState('');
   const [verificationStatus, setVerificationStatus] = useState('');
+  const navigate = useNavigate(); // useNavigate hook to programmatically navigate
 
   const handleVerify = async () => {
     try {
       const response = await axios.post('http://3.216.182.63:8095/VerifyUser', {
-        email: email,
-        otp: otp
+        email,
+        otp,
       });
 
       if (response.status === 200) {
         setVerificationStatus('User verified successfully!');
+        // Navigate to the login page after successful verification
+        navigate('/login');
       } else {
         setVerificationStatus('Failed to verify user.');
       }
@@ -40,10 +42,11 @@ function VerifyUserComponent() {
           </div>
           <div className="form-group">
             <div className="label-desc">
-              <label>Email:</label>
+              <label htmlFor="email">Email:</label>
             </div>
             <input
               type="text"
+              id="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
@@ -51,10 +54,11 @@ function VerifyUserComponent() {
           </div>
           <div className="form-group">
             <div className="label-desc">
-              <label>OTP:</label>
+              <label htmlFor="otp">OTP:</label>
             </div>
             <input
               type="text"
+              id="otp"
               value={otp}
               onChange={(e) => setOtp(e.target.value)}
               required
@@ -73,3 +77,4 @@ function VerifyUserComponent() {
 }
 
 export default VerifyUserComponent;
+
