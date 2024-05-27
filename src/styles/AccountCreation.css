@@ -1,0 +1,26 @@
+.ant-pagination {
+    margin-top: 20px;
+    text-align: center;
+  }
+  
+  .ant-pagination-prev,
+  .ant-pagination-next {
+    background-color: #a1a1a1;
+    border-color: #a1a1a1;
+    color: white;
+    border-radius: 50px;
+  }
+  
+  .ant-pagination-item,
+  .ant-pagination-item-ellipsis {
+    background-color: #f0f2f5;
+    border-color: #fff;
+    border-radius: 20px;
+  }
+
+  .ant-pagination-item-active {
+    background-color: #4467a1;
+    border-color: #fff;
+    color: white;
+  }
+  
