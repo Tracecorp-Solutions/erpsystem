@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import RegisterCompany from "./RegisterCompany";
 import { CheckCircleIcon } from "@heroicons/react/20/solid";
+import axios from "axios";
 import ProfileCompletionForm from "./ProfileCompletionForm ";
 import UserGroup from "./UserGroup";
 import UserInvitation from "./UserInvitation";
@@ -9,12 +10,57 @@ import Header from "./Header";
 
 const Profile = () => {
   const [currentStep, setCurrentStep] = useState(1);
+  const [userData, setUserData] = useState({
+    username: "",
+    fullName: "",
+    organizationName: "",
+    countryOfOperation: "",
+    email: "",
+    verified: false,
+    active: false,
+    title: "",
+    gender: "",
+    isAdmin: false,
+    phoneNumber: "",
+    dateOfBirth: "",
+    profilePic: ""
+  });
+
+  console.log("email addresses test", userData);
 
   const maxSteps = 4;
 
   const moveToNextStep = () => {
     setCurrentStep(currentStep + 1);
   };
+
+  const HandleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const formData = new FormData();
+      formData.append('fullName', userData.fullName);
+      formData.append('email', userData.email);
+      formData.append('phoneNumber', userData.phoneNumber);
+      formData.append('dateOfBirth', userData.dateOfBirth);
+      formData.append('profilePic', userData.profilePic);
+      
+      const response = await axios.post(
+        `${process.env.REACT_APP_API_URL}/UpdateUserDetails`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Accept: "*/*"
+          }
+        }
+      );
+      console.log("User created:", response.data);
+      moveToNextStep();
+    } catch (error) {
+      console.error("Error creating user:", error);
+    }
+  };
+  
 
   return (
     <div>
@@ -137,7 +183,7 @@ const Profile = () => {
           }}
         >
           {currentStep === 1 && (
-            <ProfileCompletionForm moveToNextStep={moveToNextStep} />
+            <ProfileCompletionForm moveToNextStep={moveToNextStep} HandleSubmit={HandleSubmit} userData={userData} setUserData={setUserData} />
           )}
           {currentStep === 2 && <RegisterCompany moveToNextStep={moveToNextStep} />}
           {currentStep === 3 && <UserGroup moveToNextStep={moveToNextStep} />}

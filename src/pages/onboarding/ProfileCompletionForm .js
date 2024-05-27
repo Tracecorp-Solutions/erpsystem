@@ -1,53 +1,34 @@
 import React, { useState, useRef } from "react";
 
-const ProfileCompletionForm = ({ moveToNextStep }) => {
-  const [formData, setFormData] = useState({
-    fullName: "",
-    jobTitle: "",
-    email: "",
-    phoneNumber: "",
-    gender: "",
-    dateOfBirth: "",
-  });
+const ProfileCompletionForm = ({ HandleSubmit, userData, setUserData }) => {
   const [imagePreview, setImagePreview] = useState(null);
-
   const fileInputRef = useRef(null);
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
 
   const handleButtonClick = () => {
     fileInputRef.current.click();
   };
 
-  // const handleFileChange = (e) => {
-  //   const file = e.target.files[0];
-
-  //   console.log("Selected file:", file)
-  // }
-
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     const imageUrl = URL.createObjectURL(file);
+    setUserData({
+      ...userData,
+      profilePic: file,
+    });
     setImagePreview(imageUrl);
   };
+  
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    moveToNextStep();
-    console.log(formData);
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setUserData({
+      ...userData,
+      [name]: value,
+    });
   };
 
   return (
-    <div style={{
-      marginRight: "10px",
-      marginTop: "20px"
-    }}>
+    <div style={{ marginRight: "10px", marginTop: "20px" }}>
       <div
         style={{
           display: "flex",
@@ -60,8 +41,7 @@ const ProfileCompletionForm = ({ moveToNextStep }) => {
             background: "#fff",
             padding: "10px",
             borderRadius: "24px",
-            width: "100%"
-            
+            width: "100%",
           }}
         >
           <div className="mx-auto">
@@ -93,7 +73,7 @@ const ProfileCompletionForm = ({ moveToNextStep }) => {
                   <input
                     type="text"
                     name="fullName"
-                    value={formData.fullName}
+                    value={userData.fullName}
                     onChange={handleChange}
                     className="border border-gray-300 rounded px-3 py-1 w-full"
                     style={{ padding: "10px", borderRadius: "12px" }}
@@ -114,7 +94,7 @@ const ProfileCompletionForm = ({ moveToNextStep }) => {
                   <input
                     type="text"
                     name="jobTitle"
-                    value={formData.jobTitle}
+                    value={userData.jobTitle}
                     onChange={handleChange}
                     className="border border-gray-300 rounded px-3 py-1 w-full"
                     style={{ padding: "10px", borderRadius: "12px" }}
@@ -135,7 +115,7 @@ const ProfileCompletionForm = ({ moveToNextStep }) => {
                   <input
                     type="text"
                     name="gender"
-                    value={formData.gender}
+                    value={userData.gender}
                     onChange={handleChange}
                     className="border border-gray-300 rounded px-3 py-1 w-full"
                     style={{ padding: "10px", borderRadius: "12px" }}
@@ -158,7 +138,7 @@ const ProfileCompletionForm = ({ moveToNextStep }) => {
                   <input
                     type="email"
                     name="email"
-                    value={formData.email}
+                    value={userData.email}
                     onChange={handleChange}
                     className="border border-gray-300 rounded px-3 py-1 w-full"
                     style={{ padding: "10px", borderRadius: "12px" }}
@@ -179,7 +159,7 @@ const ProfileCompletionForm = ({ moveToNextStep }) => {
                   <input
                     type="tel"
                     name="phoneNumber"
-                    value={formData.phoneNumber}
+                    value={userData.phoneNumber}
                     onChange={handleChange}
                     className="border border-gray-300 rounded px-3 py-1 w-full"
                     style={{ padding: "10px", borderRadius: "12px" }}
@@ -200,7 +180,7 @@ const ProfileCompletionForm = ({ moveToNextStep }) => {
                   <input
                     type="date"
                     name="dateOfBirth"
-                    value={formData.dateOfBirth}
+                    value={userData.dateOfBirth}
                     onChange={handleChange}
                     className="border border-gray-300 rounded px-3 py-1 w-full"
                     style={{ padding: "10px", borderRadius: "12px" }}
@@ -317,7 +297,7 @@ const ProfileCompletionForm = ({ moveToNextStep }) => {
               color: "#fff",
               marginTop: "10px"
             }}
-            onClick={handleSubmit}
+            onClick={HandleSubmit}
           >
             Save Profile
           </button>
