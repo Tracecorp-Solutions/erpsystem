@@ -17,7 +17,6 @@ const ProfileCompletionForm = ({ HandleSubmit, userData, setUserData }) => {
     });
     setImagePreview(imageUrl);
   };
-  
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -77,6 +76,7 @@ const ProfileCompletionForm = ({ HandleSubmit, userData, setUserData }) => {
                     onChange={handleChange}
                     className="border border-gray-300 rounded px-3 py-1 w-full"
                     style={{ padding: "10px", borderRadius: "12px" }}
+                    placeholder="Enter your full name"
                   />
                 </div>
                 <div className="mb-4">
@@ -98,6 +98,7 @@ const ProfileCompletionForm = ({ HandleSubmit, userData, setUserData }) => {
                     onChange={handleChange}
                     className="border border-gray-300 rounded px-3 py-1 w-full"
                     style={{ padding: "10px", borderRadius: "12px" }}
+                    placeholder="Enter job title"
                   />
                 </div>
                 <div className="mb-4">
@@ -112,14 +113,18 @@ const ProfileCompletionForm = ({ HandleSubmit, userData, setUserData }) => {
                   >
                     Gender
                   </label>
-                  <input
-                    type="text"
+                  <select
                     name="gender"
                     value={userData.gender}
                     onChange={handleChange}
                     className="border border-gray-300 rounded px-3 py-1 w-full"
                     style={{ padding: "10px", borderRadius: "12px" }}
-                  />
+                  >
+                    <option value="">Select Gender</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                  </select>
                 </div>
               </div>
               <div>
@@ -142,6 +147,7 @@ const ProfileCompletionForm = ({ HandleSubmit, userData, setUserData }) => {
                     onChange={handleChange}
                     className="border border-gray-300 rounded px-3 py-1 w-full"
                     style={{ padding: "10px", borderRadius: "12px" }}
+                    placeholder="Enter your emaill dresses"
                   />
                 </div>
                 <div className="mb-4">
@@ -163,6 +169,7 @@ const ProfileCompletionForm = ({ HandleSubmit, userData, setUserData }) => {
                     onChange={handleChange}
                     className="border border-gray-300 rounded px-3 py-1 w-full"
                     style={{ padding: "10px", borderRadius: "12px" }}
+                    placeholder="Enter your phone number"
                   />
                 </div>
                 <div className="mb-4">
@@ -295,7 +302,7 @@ const ProfileCompletionForm = ({ HandleSubmit, userData, setUserData }) => {
               background: "#4467a1",
               borderRadius: "28px",
               color: "#fff",
-              marginTop: "10px"
+              marginTop: "10px",
             }}
             onClick={HandleSubmit}
           >
