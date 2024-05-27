@@ -71,7 +71,7 @@ namespace Services.Repositories
             
             //generate JWT token
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.UTF8.GetBytes("supersecret");
+            var key = Encoding.UTF8.GetBytes("2387jkasdasd8232knsodjas9d023j23oadasodPASD23O2LASDP2O3KLKASMDPO23E2MASDIOWSDFSDFSDSDLKFSDKLFSDNFNASDIO2");
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {
