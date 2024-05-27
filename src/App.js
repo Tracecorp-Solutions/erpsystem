@@ -21,7 +21,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Dashboard />} />
           <Route path="/groups" element={<Groups />} />
-          <Route path="/subgroups" element={<Subgroups />} />
+          <Route path="/sub-group" element={<Subgroups />} />
           <Route path="/accounts" element={<Accounts />} />
           <Route path="/transactions" element={<Transactions />} />
           <Route path="/signup" element={<Signup />} />

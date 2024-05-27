@@ -44,7 +44,7 @@ function SideNav() {
                     <Minus />
                     <span>Groups</span>
                   </NavLink>
-                  <NavLink to="/subgroups" activeClassName="active">
+                  <NavLink to="/sub-group" activeClassName="active">
                     <Minus />
                     <span>Subgroups</span>
                   </NavLink>
