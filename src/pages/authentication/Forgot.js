@@ -9,12 +9,17 @@ class ChangePassword extends React.Component {
       newPassord: '',
       repeatPassword: '',
       errorMessage: '',
-      successMessage: ''
+      successMessage: '',
+      showPassword: false
     };
   }
 
   handleChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
+  };
+
+  handleTogglePassword = () => {
+    this.setState((prevState) => ({ showPassword: !prevState.showPassword }));
   };
 
   handleSubmit = async (e) => {
@@ -54,7 +59,7 @@ class ChangePassword extends React.Component {
   };
 
   render() {
-    const { username, newPassord, repeatPassword, errorMessage, successMessage } = this.state;
+    const { username, newPassord, repeatPassword, errorMessage, successMessage, showPassword } = this.state;
 
     return (
       <div className="flex">
@@ -85,7 +90,7 @@ class ChangePassword extends React.Component {
                   <label>New Password</label>
                 </div>
                 <input
-                  type="password"
+                  type={showPassword ? 'text' : 'password'}
                   name="newPassord"
                   value={newPassord}
                   onChange={this.handleChange}
@@ -98,13 +103,20 @@ class ChangePassword extends React.Component {
                   <label>Repeat Password</label>
                 </div>
                 <input
-                  type="password"
+                  type={showPassword ? 'text' : 'password'}
                   name="repeatPassword"
                   value={repeatPassword}
                   onChange={this.handleChange}
                   placeholder="Repeat Password"
                   required
                 />
+              </div>
+              <div style={{ marginBottom: '10px' }}>
+                <input
+                  type="checkbox"
+                  checked={showPassword}
+                  onChange={this.handleTogglePassword}
+                /> Show Password
               </div>
               <button type="submit" className="create-btn">Create Password</button>
             </form>

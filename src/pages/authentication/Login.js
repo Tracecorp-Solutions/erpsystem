@@ -1,18 +1,32 @@
 import React, { useState } from 'react';
 import About from '../../components/About'; // Importing the About component
-import axios from 'axios';
-import { Link } from 'react-router-dom'; // Importing the About component
 
+class AuthenticateUser extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      username: '',
+      password: '',
+      errorMessage: '',
+      successMessage: '',
+      showPassword: false // New state for toggling password visibility
+    };
+  }
 
-const Login = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [response, setResponse] = useState(null);
-  const [errorMessage, setErrorMessage] = useState('');
-  const [successMessage, setSuccessMessage] = useState('');
+  handleChange = (e) => {
+    this.setState({ [e.target.name]: e.target.value });
+  };
 
-  const handleSubmit = async (e) => {
+  handleCheckboxChange = () => {
+    this.setState((prevState) => ({
+      showPassword: !prevState.showPassword
+    }));
+  };
+
+  handleSubmit = async (e) => {
     e.preventDefault();
+
+    const { username, password } = this.state;
 
     try {
       const response = await fetch('http://3.216.182.63:8095/AuthenticateUser', {
@@ -20,93 +34,90 @@ const Login = () => {
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({
-          username: username,
-          password: password
-        })
+        body: JSON.stringify({ username, password })
       });
 
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
+      const data = await response.json();
+
+      if (response.ok) {
+        // Successful authentication
+        this.setState({
+          successMessage: 'User authenticated successfully',
+          errorMessage: ''
+        });
+
+        // Handle additional actions after successful authentication, if needed
+      } else {
+        // Authentication failed
+        throw new Error(data.message || 'Failed to authenticate user');
       }
 
-      const data = await response.json();
-      setResponse(data);
-      setSuccessMessage('Login successful!');
-      setErrorMessage(''); // Clear any previous error messages
     } catch (error) {
-      console.error('Error fetching data:', error);
-      setResponse(null);
-      setSuccessMessage(''); // Clear any previous success messages
-      setErrorMessage('Error: Invalid username or password.'); // Display error message
+      // Error during authentication
+      this.setState({ errorMessage: error.message, successMessage: '' });
     }
   };
 
-  return (
-    <div className="flex"> {/* Adding the class 'flex' */}
-      <div className="form-side"> {/* Adding the class 'form-side' */}
-        <div className="form-content"> {/* Adding the class 'form-content' */}
-          <div className="form-intro"> {/* Adding the class 'form-intro' */}
-            <span className="greeting">
-              <h2>Hello!</h2>
-              <img src="/img/wave.png" alt="signup" />
-            </span>
-            <p>Welcome back, you have been missed!</p>
-          </div>
+  render() {
+    const { username, password, errorMessage, successMessage, showPassword } = this.state;
 
-          <form onSubmit={handleSubmit}>
-            <div className="form-group mt-0">
-              <div className="label-desc mt-0">
-                <label> Username</label>
+    return (
+      <div className="flex">
+        <div className="form-side">
+          <div className="form-content">
+            <form onSubmit={this.handleSubmit}>
+              <div className="form-intro">
+                <span className="greeting">
+                  <h2>Hello</h2>
+                  <img src="/img/login.png" alt="login" />
+                </span>
+                <h5>Welcome back! You were missed.</h5>
               </div>
-              <input
-                type="text"
-                name="username"
-                placeholder="Enter your username or email address"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-              />
-            </div>
-            <div className="form-group">
-              <div className="label-desc">
-                <label>Password</label>
+              <div className="form-group">
+                <div className="label-desc">
+                  <label>Username</label>
+                </div>
                 <input
-                  type="password"
-                  name="password"
-                  placeholder="Enter your password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  type="text"
+                  name="username"
+                  value={username}
+                  onChange={this.handleChange}
+                  placeholder="Username"
+                  required
                 />
               </div>
-              {response && (
-                <div>
-                  <h2>Response:</h2>
-                  <p>{JSON.stringify(response)}</p>
+              <div className="form-group">
+                <div className="label-desc">
+                  <label>Password</label>
                 </div>
-              )}
-            </div>
-            {errorMessage && (
-              <div className="error-message" style={{ color: 'red' }}>{errorMessage}</div>
-            )}
-            {successMessage && (
-              <div className="success-message" style={{ color: 'green' }}>{successMessage}</div>
-            )}
-            <p>
-              <a href="/forgot">Forgot Password?</a> {/* Replacing Link with anchor tag */}
-            </p>
-            <button type="submit" className="create-btn"> {/* Adding the class 'create-btn' */}
-              Login
-            </button>
-          </form>
-          <p>
-            Don’t have an account? <a href="/">Register here</a> {/* Replacing Link with anchor tag */}
-          </p>
+                <input
+                  type={showPassword ? "text" : "password"} // Show password if checkbox is checked
+                  name="password"
+                  value={password}
+                  onChange={this.handleChange}
+                  placeholder="Password"
+                  required
+                />
+              </div>
+              <div style={{ marginBottom: '10px' }}>
+                <input
+                  type="checkbox"
+                  id="showPassword"
+                  checked={showPassword}
+                  onChange={this.handleCheckboxChange}
+                />
+                <label htmlFor="showPassword">Show Password</label>
+              </div>
+              <button type="submit" className="create-btn">Login</button>
+            </form>
+            {errorMessage && <div className="error-message"><h3>Error</h3><p>{errorMessage}</p></div>}
+            {successMessage && <div className="success-message"><h3>Success</h3><p>{successMessage}</p></div>}
+          </div>
         </div>
+        <About /> {/* Rendering the About component */}
       </div>
-      <About /> {/* Adding the About component */}
+    );
+  }
+}
 
-    </div>
-  );
-};
-
-export default Login;
+export default AuthenticateUser;
