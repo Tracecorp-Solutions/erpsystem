@@ -11,6 +11,8 @@ import ResetPassword from './pages/setup/ResetPassword';
 import ForgotPassword from './pages/setup/ForgotPassword';
 import Profile from './pages/onboarding/Profile';
 import Company from './pages/onboarding/Company';
+import Vendors from './pages/Vendors';
+import Customer from './pages/Customer';
 
 import "./App.css";
 
@@ -23,6 +25,8 @@ function App() {
           <Route path="/groups" element={<Groups />} />
           <Route path="/sub-group" element={<Subgroups />} />
           <Route path="/accounts" element={<Accounts />} />
+          <Route path="/vendors" element={<Vendors />} />
+          <Route path="/customer" element={<Customer />} />
           <Route path="/transactions" element={<Transactions />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />

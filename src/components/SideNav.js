@@ -73,9 +73,9 @@ function SideNav() {
               </button>
               {openDropdown === 'people' && (
                 <div className="dropdown-menu">
-                  <NavLink to="/customers" activeClassName="active">
+                  <NavLink to="/customer" activeClassName="active">
                     <Minus />
-                    <span>Customers</span>
+                    <span>Customer</span>
                   </NavLink>
                   <NavLink to="/vendors" activeClassName="active">
                     <Minus />
