@@ -7,10 +7,11 @@ const Header = () => {
     }}>
       <div className="container mx-auto">
         <div className="flex justify-between items-center">
-          <h1 className="text-lg font-semibold">Your Logo</h1>
+          <h1 className="text-lg font-semibold">
+            <img src="../images/imagelogo.svg" />
+          </h1>
           <div className="flex items-center">
-            <button className="mr-4">Home</button>
-            <button>Logout</button>
+            <button className="mr-4">Hello, Kinyera Amos!</button>
           </div>
         </div>
       </div>
