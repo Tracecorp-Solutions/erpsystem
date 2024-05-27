@@ -18,8 +18,8 @@ function VerifyUserComponent() {
 
       if (response.status === 200) {
         setVerificationStatus('User verified successfully!');
-        // Navigate to the login page after successful verification
-        navigate('/login');
+        // Navigate to the forgot password page after successful verification
+        navigate('/forgot');
       } else {
         setVerificationStatus('Failed to verify user.');
       }
@@ -77,4 +77,3 @@ function VerifyUserComponent() {
 }
 
 export default VerifyUserComponent;
-

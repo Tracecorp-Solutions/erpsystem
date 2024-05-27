@@ -25,7 +25,7 @@ function App() {
   };
 
   // Function to set reset password status
-  const handleReset = () => {
+  const handleForgot = () => {
     setIsReset(true);
   };
 
@@ -37,7 +37,8 @@ function App() {
           <Routes>
             <Route path="/" element={<Signup onVerify={handleVerify} />} />
             <Route path="/verify" element={<Verify onVerify={handleVerify} />} />
-            <Route path="/reset" element={<Reset onReset={handleReset} />} />
+            <Route path="/forgot" element={<Forgot onForgot={handleForgot} />} />
+
             <Route
               path="/login"
               element={
@@ -48,7 +49,7 @@ function App() {
                 )
               }
             />
-            <Route path="/forgot" element={<Forgot />} />
+            <Route path="/reset" element={<Reset />} />
             <Route
               path="/dashboard"
               element={
