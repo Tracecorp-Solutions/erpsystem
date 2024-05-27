@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
-import "./App.css";
-import Main from "./components/Header";
+// import "./App.css";
+// import Main from "./components/Header";
 import Signup from "./pages/authentication/Signup";
 import Reset from "./pages/authentication/Reset";
 import Verify from "./pages/authentication/Verify";
