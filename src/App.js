@@ -15,6 +15,11 @@ import Profile from './pages/onboarding/Profile';
 import Company from './pages/onboarding/Company';
 import Vendors from './pages/Vendors';
 import Customer from './pages/Customer';
+import Signup from "./pages/authentication/Signup";
+import Reset from "./pages/authentication/Reset";
+import Verify from "./pages/authentication/Verify";
+import Login from "./pages/authentication/Login";
+import Forgot from "./pages/authentication/Forgot";
 
 
 function App() {
@@ -41,8 +46,6 @@ function App() {
           <Route path="/company" element={<Company />} />
           <Route path="/profile" element={<Profile />} />
         </Routes>
-
-
       </div>
     </BrowserRouter>
     </div>
