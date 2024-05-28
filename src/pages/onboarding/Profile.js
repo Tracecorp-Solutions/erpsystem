@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import RegisterCompany from "./RegisterCompany";
-import { CheckCircleIcon } from "@heroicons/react/20/solid";
+import { CheckCircleOutlined } from '@ant-design/icons';
 import axios from "axios";
 import ProfileCompletionForm from "./ProfileCompletionForm ";
 import UserGroup from "./UserGroup";
@@ -96,15 +96,13 @@ const Profile = () => {
                     <span className="flex items-start">
                       <span className="relative flex h-5 w-5 flex-shrink-0 items-center justify-center">
                         {currentStep >= stepNumber ? (
-                          <CheckCircleIcon
-                            className="h-full w-full text-green-500"
-                            style={{ width: "24px", height: "24px" }}
-                            aria-hidden="true"
-                          />
+                          <CheckCircleOutlined className="text-green-500" style={{
+                            fontSize: "30px",
+                          }} />
                         ) : (
                           <span
                             className="h-full w-full bg-gray-300 rounded-full flex items-center justify-center"
-                            style={{ fontSize: "0.75rem" }}
+                            style={{ fontSize: "0.75rem", color: "#fff", padding: "15px" }}
                           >
                             {stepNumber}
                           </span>
