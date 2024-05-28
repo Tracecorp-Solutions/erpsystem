@@ -21,6 +21,7 @@ namespace Core.Models
 
         public Role? Role { get; set; }
 
+        [NotMapped]
         public Organisation? Organisation { get; set; }
     }
 }
