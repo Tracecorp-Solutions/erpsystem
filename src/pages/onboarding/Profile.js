@@ -4,7 +4,7 @@ import { CheckCircleOutlined } from '@ant-design/icons';
 import axios from "axios";
 import ProfileCompletionForm from "./ProfileCompletionForm ";
 import UserGroup from "./UserGroup";
-import UserInvitation from "./UserInvitation";
+// import UserInvitation from "./UserInvitation";
 import CongratulationsCard from "./CongratulationMessage";
 import Header from "./Header";
 
@@ -26,7 +26,7 @@ const Profile = () => {
     file: ""
   });
 
-  const maxSteps = 4;
+  const maxSteps = 3;
 
   const moveToNextStep = () => {
     setCurrentStep(currentStep + 1);
@@ -91,7 +91,7 @@ const Profile = () => {
                   padding: "10px",
                 }}
               >
-                {[1, 2, 3, 4].map(stepNumber => (
+                {[1, 2, 3].map(stepNumber => (
                   <li key={stepNumber}>
                     <span className="flex items-start">
                       <span className="relative flex h-5 w-5 flex-shrink-0 items-center justify-center">
@@ -111,8 +111,7 @@ const Profile = () => {
                       <span className="ml-3 text-sm font-medium text-gray-500">
                         {stepNumber === 1 && "Personal Information"}
                         {stepNumber === 2 && "Company Information"}
-                        {stepNumber === 3 && "User Groups"}
-                        {stepNumber === 4 && "User Invitation"}
+                        {stepNumber === 3 && "Invite Users"}
                       </span>
                     </span>
                   </li>
@@ -133,7 +132,6 @@ const Profile = () => {
           )}
           {currentStep === 2 && <RegisterCompany moveToNextStep={moveToNextStep} HandleSubmit={HandleSubmit} userData={userData} setUserData={setUserData} />}
           {currentStep === 3 && <UserGroup moveToNextStep={moveToNextStep} HandleSubmit={HandleSubmit} userData={userData} setUserData={setUserData} />}
-          {currentStep === 4 && <UserInvitation moveToNextStep={moveToNextStep} HandleSubmit={HandleSubmit} userData={userData} setUserData={setUserData} />}
           {currentStep > maxSteps && <CongratulationsCard />}
 
         </div>
