@@ -1,6 +1,5 @@
-import React, { useState } from "react";
-import { navigate } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import React from "react";
+// import { navigate } from "react-router-dom";
 import About from "../../components/About"; // Importing the About component
 
 class ChangePassword extends React.Component {
@@ -13,6 +12,7 @@ class ChangePassword extends React.Component {
       errorMessage: "",
       successMessage: "",
       showPassword: false,
+
     };
   }
 
@@ -57,8 +57,7 @@ class ChangePassword extends React.Component {
       });
 
       // Redirect to login after changing password
-      // After
-      useNavigate()("/login");
+      // navigate("/login");
     } catch (error) {
       this.setState({ errorMessage: error.message, successMessage: "" });
     }
