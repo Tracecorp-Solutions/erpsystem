@@ -25,7 +25,7 @@ namespace Core.Models
         [ForeignKey("Organisation")]
         public int? OrganisationId { get; set; }
 
-        public string Token { get; set; }   
+        public string? Token { get; set; }   
 
         public Organisation? Organisation { get; set; }
 
