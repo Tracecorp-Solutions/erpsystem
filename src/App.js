@@ -1,7 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
-import Profile from './pages/onboarding/Profile';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Dashboard from './pages/Dashboard';
 import Groups from './pages/Groups';
@@ -47,6 +45,8 @@ function App() {
 
       </div>
     </BrowserRouter>
+    </div>
+    </div>
   );
 }
 
