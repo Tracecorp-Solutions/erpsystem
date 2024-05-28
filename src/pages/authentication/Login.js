@@ -68,12 +68,13 @@ const Login = () => {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-          <div style={{ marginBottom: "2px", marginTop: "2px" }}>
+          <div >
             <input
               type="checkbox"
               id="showPassword"
               checked={showPassword}
               onChange={handleCheckboxChange}
+              style={{ marginBottom: "2px", marginTop: "2px"}}
             />
             <label htmlFor="showPassword" style={{ marginBottom: "2px", marginTop: "2px" }}>Show Password</label>
           </div>
