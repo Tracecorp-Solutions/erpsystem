@@ -161,20 +161,15 @@ namespace Services.Repositories
                 {
                     Directory.CreateDirectory(Path.Combine(Directory.GetCurrentDirectory(), "uploads"));
                 }
+                string filename = Guid.NewGuid() + file.FileName;
+                filepath = Path.Combine(Directory.GetCurrentDirectory(), "uploads", filename);
 
-                filepath = Path.Combine(Directory.GetCurrentDirectory(), "uploads", userDTO.ProfilePic);
-
-                //check if profile pic is uploaded
-                if (userDTO.ProfilePic != null)
+                if (!File.Exists(filepath))
                 {
-
-                    if (!File.Exists(filepath))
+                    //create a new file
+                    using (var stream = new FileStream(filepath, FileMode.Create))
                     {
-                        //create a new file
-                        using (var stream = new FileStream(filepath, FileMode.Create))
-                        {
-                            await file.CopyToAsync(stream);
-                        }
+                        await file.CopyToAsync(stream);
                     }
                 }
             }
