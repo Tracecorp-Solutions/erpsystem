@@ -142,5 +142,41 @@ namespace Trace.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
             }
         }
+
+        [HttpPost("/InviteUsers")]
+        public async Task<IActionResult> InviteUsers([FromBody] IEnumerable<InvitedUsers> invitedUsers)
+        {
+            try
+            {
+                await _userRepository.InviteUsers(invitedUsers);
+                return Ok("Users invited successfully");
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
+        }
+
+        [HttpGet("/GetInvitedUsers/{orginsationid}")]
+        public async Task<IActionResult> GetInvitedUsers(int orginsationid)
+        {
+            try
+            {
+                var invitedUsers = await _userRepository.GetInvitedUsersByOrganisationId(orginsationid);
+                return Ok(invitedUsers);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
+        }
     }
 }

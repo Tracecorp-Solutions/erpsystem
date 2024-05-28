@@ -212,6 +212,32 @@ namespace Infrastructure.Migrations
                     b.ToTable("GroupAccounts");
                 });
 
+            modelBuilder.Entity("Core.Models.InvitedUsers", b =>
+                {
+                    b.Property<int?>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int?>("Id"));
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("OrganisationId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("Registered")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("InvitedUsers");
+                });
+
             modelBuilder.Entity("Core.Models.Organisation", b =>
                 {
                     b.Property<int>("Id")
@@ -232,7 +258,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Organisation");
+                    b.ToTable("Organisations");
                 });
 
             modelBuilder.Entity("Core.Models.Product", b =>
@@ -279,7 +305,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Role");
+                    b.ToTable("Roles");
                 });
 
             modelBuilder.Entity("Core.Models.SubGroupAccount", b =>

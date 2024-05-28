@@ -14,6 +14,9 @@ using Core.DTOs;
 using Microsoft.Extensions.Configuration;
 using System.Net;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
+using System.Diagnostics.Contracts;
+using System.ComponentModel.DataAnnotations;
 
 namespace Services.Repositories
 {
@@ -149,40 +152,110 @@ namespace Services.Repositories
 
         public async Task UpdateUserDetails(IFormFile file, UserDTO userDTO)
         {
-            var user = _context.Users.FirstOrDefault(u => u.Email == userDTO.Email);
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == userDTO.Email);
             if (user == null)
                 throw new ArgumentException("Invalid Email Address");
 
-            string filepath = null;
-            if (file != null) 
+            string uploadsDirectory = Path.Combine(Directory.GetCurrentDirectory(), "uploads");
+            if (file != null)
             {
-                //check whether directory exists
-                if (!Directory.Exists(Path.Combine(Directory.GetCurrentDirectory(), "uploads")))
+                // Check whether directory exists and create if it doesn't
+                if (!Directory.Exists(uploadsDirectory))
                 {
-                    Directory.CreateDirectory(Path.Combine(Directory.GetCurrentDirectory(), "uploads"));
+                    Directory.CreateDirectory(uploadsDirectory);
                 }
-                string filename = Guid.NewGuid() + file.FileName;
-                filepath = Path.Combine(Directory.GetCurrentDirectory(), "uploads", filename);
 
-                if (!File.Exists(filepath))
+                string filename = Guid.NewGuid() + Path.GetExtension(file.FileName);
+                string filepath = Path.Combine(uploadsDirectory, filename);
+
+                using (var stream = new FileStream(filepath, FileMode.Create))
                 {
-                    //create a new file
-                    using (var stream = new FileStream(filepath, FileMode.Create))
-                    {
-                        await file.CopyToAsync(stream);
-                    }
+                    await file.CopyToAsync(stream);
                 }
+
+                user.ProfilePic = filepath;
             }
-            
+
+            if (!string.IsNullOrEmpty(userDTO.OrganizationName))
+            {
+                user.OrganisationId = await SaveAndReturnOrganisationIdAsync(userDTO.OrganizationName, userDTO.CountryOfOperation);
+            }
+
             user.FullName = userDTO.FullName;
             user.Email = userDTO.Email;
             user.Title = userDTO.Title;
             user.PhoneNumber = userDTO.PhoneNumber;
             user.DateOfBirth = userDTO.DateOfBirth;
-            user.ProfilePic = filepath;
             user.Gender = userDTO.Gender;
+
             await _context.SaveChangesAsync();
             await LogActionAsync(user.Email, "User details updated");
+        }
+
+        private async Task<int> SaveAndReturnOrganisationIdAsync(string organisationName, string countryOfOperation)
+        {
+            var organisation = await _context.Organisations
+                .FirstOrDefaultAsync(o => o.Name == organisationName && o.CountryOfOperation == countryOfOperation);
+
+            if (organisation == null)
+            {
+                organisation = new Organisation
+                {
+                    Name = organisationName,
+                    CountryOfOperation = countryOfOperation
+                };
+                _context.Organisations.Add(organisation);
+                await _context.SaveChangesAsync();
+            }
+
+            return organisation.Id;
+        }
+
+        public async Task InviteUsers(IEnumerable<InvitedUsers> invitedUsers)
+        {
+            if (invitedUsers == null || !invitedUsers.Any())
+                throw new ArgumentException("No users to invite");
+
+            // Validate emails
+            var invalidEmails = invitedUsers.Where(user => !new EmailAddressAttribute().IsValid(user.Email)).ToList();
+            if (invalidEmails.Any())
+                throw new ArgumentException($"Invalid Email Addresses: {string.Join(", ", invalidEmails.Select(user => user.Email))}");
+
+            var organisationId = invitedUsers.First().OrganisationId;
+            var roleId = invitedUsers.First().RoleId;
+
+            // Check whether the organisation and role exist
+            var organisationTask = _context.Organisations.FirstOrDefaultAsync(o => o.Id == organisationId);
+            var roleTask = _context.Roles.FirstOrDefaultAsync(r => r.Id == roleId);
+
+            await Task.WhenAll(organisationTask, roleTask);
+            var organisation = organisationTask.Result;
+            var role = roleTask.Result;
+
+            if (organisation == null)
+                throw new ArgumentException("Organisation does not exist");
+
+            if (role == null)
+                throw new ArgumentException("Role does not exist");
+
+            // Send invitation emails and save invited users
+            foreach (var invitedUser in invitedUsers)
+            {
+                await emailService.SendEmailAsync(invitedUser.Email, "Invitation to join",
+                    $"You have been invited to join {organisation.Name} under the role of {role.Name}");
+            }
+
+            _context.InvitedUsers.AddRange(invitedUsers);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<InvitedUsers>> GetInvitedUsersByOrganisationId(int organisationId) 
+        {
+            var invitedUsers = await _context.InvitedUsers
+                .Where(i => i.OrganisationId == organisationId)
+                .ToListAsync();
+
+            return invitedUsers;
         }
 
     }

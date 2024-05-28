@@ -13,10 +13,13 @@ namespace Infrastructure.Data
 
         public DbSet<User> Users { get; set; }
         public DbSet<AuditTrail> AuditTrails { get; set; }  
+        public DbSet<Organisation> Organisations { get; set; }
 
-        //public DbSet<Transaction> Transactions { get; set; }
+        public DbSet<Role> Roles { get; set; }
 
         public DbSet<TransactionEntry> transactionEntries { get; set; }
+
+        public DbSet<InvitedUsers> InvitedUsers { get; set; }
 
         public DbSet<Vendor> Vendors { get; set; }
         public DbSet<Address> Addresses { get; set; }

@@ -24,5 +24,9 @@ namespace Core.Repositories
         Task<UserDTO> GetUserDetailsByEmail(string email);
 
         Task UpdateUserDetails(IFormFile file, UserDTO userDTO);
+
+        Task InviteUsers(IEnumerable<InvitedUsers> invitedUsers);
+
+        Task<IEnumerable<InvitedUsers>> GetInvitedUsersByOrganisationId(int organisationId);
     }
 }
