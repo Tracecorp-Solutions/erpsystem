@@ -274,6 +274,7 @@ const Vendor = () => {
      <SideNav/>
      <div className="content">
       <TopNav/>
+
       <div
         style={{
           display: "flex",

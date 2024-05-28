@@ -8,8 +8,10 @@ import TranAccountComponentSidebar from "../components/TranAccountComponentSideb
 import AccountNavigationFilter from "../components/TranAccountNavigationFilter";
 import "../styles/AccountCreation.css";
 import AccountLoadingMessage from "../components/TranAccountLoadingMessage";
+
 import TopNav from "../components/TopNav";
 import SideNav from "../components/SideNav";
+
 
 
 const Transaction = () => {
@@ -218,6 +220,7 @@ const Transaction = () => {
     <SideNav/>
       <div className="content">
       <TopNav/>
+
       {drawerVisible && (
         <TranAccountComponentSidebar
           subGroupAccounts={subGroupAccounts}
@@ -669,7 +672,7 @@ const Transaction = () => {
       )}
     </div>
     </>
-   
+
   );
 };
 

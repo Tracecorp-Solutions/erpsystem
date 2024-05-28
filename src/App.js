@@ -18,6 +18,7 @@ import "./App.css";
 
 function App() {
   return (
+
     <BrowserRouter>
       <div className="body">
         <Routes>
@@ -36,6 +37,8 @@ function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/company" element={<Company />} />
         </Routes>
+
+
       </div>
     </BrowserRouter>
   );

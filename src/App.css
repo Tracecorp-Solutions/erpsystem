@@ -482,6 +482,10 @@ button[type="submit"] {
   .img-content {
     width: 50%;
   }
+
+.app {
+background: #F6F6F4;
+
 }
 
 @media (max-width: 768px) {
