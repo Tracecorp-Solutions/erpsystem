@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Core.Models
@@ -19,9 +20,10 @@ namespace Core.Models
         public int RoleId { get; set; }
         public bool Registered { get; set; }
 
+        [JsonIgnore]
         public Role? Role { get; set; }
 
-        [NotMapped]
+        [JsonIgnore]
         public Organisation? Organisation { get; set; }
     }
 }
