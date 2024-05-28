@@ -11,19 +11,19 @@ import Header from "./Header";
 const Profile = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [userData, setUserData] = useState({
-    username: "",
-    fullName: "",
-    organizationName: "",
-    countryOfOperation: "",
-    email: "",
-    verified: false,
-    active: false,
-    title: "",
-    gender: "",
-    isAdmin: false,
-    phoneNumber: "",
-    dateOfBirth: "",
-    profilePic: ""
+    Username: "",
+    FullName: "",
+    OrganizationName: "",
+    CountryOfOperation: "",
+    Email: "",
+    Verified: false,
+    Active: false,
+    Title: "",
+    Gender: "",
+    IsAdmin: false,
+    PhoneNumber: "",
+    DateOfBirth: "",
+    file: ""
   });
 
   console.log("email addresses test", userData);
@@ -38,11 +38,11 @@ const Profile = () => {
     e.preventDefault();
     try {
       const formData = new FormData();
-      formData.append('fullName', userData.fullName);
-      formData.append('email', userData.email);
-      formData.append('phoneNumber', userData.phoneNumber);
-      formData.append('dateOfBirth', userData.dateOfBirth);
-      formData.append('profilePic', userData.profilePic);
+      formData.append('FullName', userData.FullName);
+      formData.append('Email', userData.Email);
+      formData.append('PhoneNumber', userData.PhoneNumber);
+      formData.append('DateOfBirth', userData.DateOfBirth);
+      formData.append('file', userData.file);
       
       const response = await axios.post(
         `${process.env.REACT_APP_API_URL}/UpdateUserDetails`,
@@ -103,6 +103,9 @@ const Profile = () => {
                         <span
                           className="h-full w-full bg-gray-300"
                           aria-hidden="true"
+                          style={{
+                            padding: "15px"
+                          }}
                         />
                       )}
                     </span>
@@ -123,6 +126,10 @@ const Profile = () => {
                         <span
                           className="h-full w-full bg-gray-300"
                           aria-hidden="true"
+                          style={{
+                            borderRadius: "50%",
+                            padding: "15px"
+                          }}
                         />
                       )}
                     </span>
@@ -143,6 +150,10 @@ const Profile = () => {
                         <span
                           className="h-full w-full bg-gray-300"
                           aria-hidden="true"
+                          style={{
+                            borderRadius: "50%",
+                            padding: "15px"
+                          }}
                         />
                       )}
                     </span>
@@ -163,6 +174,10 @@ const Profile = () => {
                         <span
                           className="h-full w-full bg-gray-300"
                           aria-hidden="true"
+                          style={{
+                            borderRadius: "50%",
+                            padding: "15px"
+                          }}
                         />
                       )}
                     </span>

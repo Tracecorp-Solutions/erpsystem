@@ -13,7 +13,7 @@ const ProfileCompletionForm = ({ HandleSubmit, userData, setUserData }) => {
     const imageUrl = URL.createObjectURL(file);
     setUserData({
       ...userData,
-      profilePic: file,
+      file: file,
     });
     setImagePreview(imageUrl);
   };
@@ -73,8 +73,8 @@ const ProfileCompletionForm = ({ HandleSubmit, userData, setUserData }) => {
                   </label>
                   <input
                     type="text"
-                    name="fullName"
-                    value={userData.fullName}
+                    name="FullName"
+                    value={userData.FullName}
                     onChange={handleChange}
                     className="border border-gray-300 rounded px-3 py-1 w-full"
                     style={{ padding: "10px", borderRadius: "12px" }}
@@ -96,7 +96,7 @@ const ProfileCompletionForm = ({ HandleSubmit, userData, setUserData }) => {
                   <input
                     type="text"
                     name="jobTitle"
-                    value={userData.jobTitle}
+                    value={userData.JobTitle}
                     onChange={handleChange}
                     className="border border-gray-300 rounded px-3 py-1 w-full"
                     style={{ padding: "10px", borderRadius: "12px" }}
@@ -144,8 +144,8 @@ const ProfileCompletionForm = ({ HandleSubmit, userData, setUserData }) => {
                   </label>
                   <input
                     type="email"
-                    name="email"
-                    value={userData.email}
+                    name="Email"
+                    value={userData.Email}
                     onChange={handleChange}
                     className="border border-gray-300 rounded px-3 py-1 w-full"
                     style={{ padding: "10px", borderRadius: "12px" }}
