@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Drawer, Modal, Card } from "antd";
 import { XMarkIcon } from "@heroicons/react/24/outline";
+import { useNavigate } from 'react-router-dom';
 
 export default function AccountComponentSidebar({
   setDrawerVisible,
@@ -8,9 +9,14 @@ export default function AccountComponentSidebar({
   selectedAccount,
   subGroupAccounts,
 }) {
+  const navigate = useNavigate();
   const [modalVisible, setModalVisible] = useState(false);
   console.log("sub group", subGroupAccounts);
 
+  const handleViewTransactions = () => {
+    navigate(`/view-transactions/${selectedAccount.id}`);
+  };
+  
   const getSubGroupName = () => {
     if (!selectedAccount || !subGroupAccounts) return "N/A";
     const subGroup = subGroupAccounts.find(
@@ -79,7 +85,7 @@ export default function AccountComponentSidebar({
           </div>
           <div className="mt-5">
             <div className="flex justify-between">
-            <Card style={{ width: 360, background: "#f6f6f4", marginRight:"5px" }}>
+              <Card style={{ width: 360, background: "#f6f6f4", marginRight:"5px" }}>
                 <h2
                   style={{
                     textAlign: "start",
@@ -159,8 +165,6 @@ export default function AccountComponentSidebar({
                   {selectedAccount.accountType}
                 </p>
               </Card>
-
-             
             </div>
           </div>
           <div style={{ marginTop: "25px" }}>
@@ -188,7 +192,8 @@ export default function AccountComponentSidebar({
               {selectedAccount.description}
             </p>
           </div>
-          <button type="button"
+          <button 
+            type="button"
             className="w-full mt-5"
             style={{
                 border: "1px solid #4467a1",
@@ -196,8 +201,10 @@ export default function AccountComponentSidebar({
                 borderRadius: "28px",
                 color: "#4467a1",
                 fontFamily: "outFit, Sans-serif"
-                }}>
-                View Transactions
+            }}
+            onClick={handleViewTransactions}
+          >
+            View Transactions
           </button>
         </div>
         <Modal

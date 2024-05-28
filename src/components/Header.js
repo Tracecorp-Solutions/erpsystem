@@ -42,12 +42,10 @@ import LineChart from "./LineGraph";
 import TrialBalance from "../pages/TrialBalance";
 import Transactions from "../pages/Transactions";
 import Customer from "../pages/Customer";
-
 import BillsForm from "./BillsForm";
-
-
 import InvoiceForm from "./InvoiceForm";
 import EditInvoiceForm from "./EditInvoiceForm";
+import ViewTransaction from "../pages/ViewTransaction"
 
 
 const navigation = [
@@ -126,6 +124,7 @@ const navigation = [
     submenu: [
       { name: "Customer", href: "/customer", current: false },
       { name: "Vendors", href: "/vendors", current: false },
+      { name: "ViewTransaction", href: "/view-transaction", current: false },
     ],
   },
   {
@@ -682,6 +681,8 @@ export default function Main() {
                 <Route path="/create-bills" element={<BillsForm/>} />
                 <Route path="/create-invoice" element={<InvoiceForm />} />
                 <Route path="/edit-invoice/:id" element={<EditInvoiceForm />} />
+                <Route path="view-transaction" element={<ViewTransaction />} />
+
 
               </Routes>
             </div>
