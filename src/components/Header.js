@@ -1,5 +1,5 @@
 import { Fragment, useState } from "react";
-import { Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import { Dialog, Menu, Transition } from "@headlessui/react";
 import {
   Bars3Icon,
@@ -154,7 +154,7 @@ export default function Main() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <>
+   <Fragment>
       <div>
         <Transition.Root show={sidebarOpen} as={Fragment}>
           <Dialog
@@ -679,9 +679,7 @@ export default function Main() {
                 <Route path="/grap" element={<LineChart />} />
                 <Route path="/transactions" element={<Transactions />} />
                 <Route path="/customer" element={<Customer />} />
-
                 <Route path="/create-bills" element={<BillsForm/>} />
-
                 <Route path="/create-invoice" element={<InvoiceForm />} />
                 <Route path="/edit-invoice/:id" element={<EditInvoiceForm />} />
                 <Route path="/view-invoice/:id" element={<InvoiceSidebar />} />
@@ -690,6 +688,8 @@ export default function Main() {
           </main>
         </div>
       </div>
-    </>
+   </Fragment>
+     
+  
   );
 }
