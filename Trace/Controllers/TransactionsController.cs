@@ -60,7 +60,7 @@ namespace Trace.Controllers
         {
             try
             {
-                var transactions = _transactionRepository.GetTransactionEntriesByAccountId(accountid);
+                var transactions = await _transactionRepository.GetTransactionEntriesByAccountId(accountid);
                 return Ok(transactions);
             }
             catch (ArgumentException ex)
