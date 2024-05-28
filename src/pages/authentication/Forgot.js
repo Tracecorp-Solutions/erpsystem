@@ -1,16 +1,18 @@
-import React, { useState } from 'react';
-import About from '../../components/About'; // Importing the About component
+import React, { useState } from "react";
+import { navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import About from "../../components/About"; // Importing the About component
 
 class ChangePassword extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: '',
-      newPassord: '',
-      repeatPassword: '',
-      errorMessage: '',
-      successMessage: '',
-      showPassword: false
+      username: "",
+      newPassord: "",
+      repeatPassword: "",
+      errorMessage: "",
+      successMessage: "",
+      showPassword: false,
     };
   }
 
@@ -29,37 +31,48 @@ class ChangePassword extends React.Component {
 
     // Check if passwords match
     if (newPassord !== repeatPassword) {
-      this.setState({ errorMessage: 'Passwords do not match' });
+      this.setState({ errorMessage: "Passwords do not match" });
       return;
     }
 
     try {
-      const response = await fetch('http://3.216.182.63:8095/ChangePassword', {
-        method: 'POST',
+      const response = await fetch("http://3.216.182.63:8095/ChangePassword", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify({ username, newPassord, repeatPassword })
+        body: JSON.stringify({ username, newPassord, repeatPassword }),
       });
 
       if (!response.ok) {
-        throw new Error('Failed to change password');
+        throw new Error("Failed to change password");
       }
 
       this.setState({
-        successMessage: 'Password changed successfully',
-        errorMessage: '',
-        username: '',
-        newPassord: '',
-        repeatPassword: ''
+        successMessage: "Password changed successfully",
+        errorMessage: "",
+        username: "",
+        newPassord: "",
+        repeatPassword: "",
       });
+
+      // Redirect to login after changing password
+      // After
+      useNavigate()("/login");
     } catch (error) {
-      this.setState({ errorMessage: error.message, successMessage: '' });
+      this.setState({ errorMessage: error.message, successMessage: "" });
     }
   };
 
   render() {
-    const { username, newPassord, repeatPassword, errorMessage, successMessage, showPassword } = this.state;
+    const {
+      username,
+      newPassord,
+      repeatPassword,
+      errorMessage,
+      successMessage,
+      showPassword,
+    } = this.state;
 
     return (
       <div className="flex">
@@ -90,7 +103,7 @@ class ChangePassword extends React.Component {
                   <label>New Password</label>
                 </div>
                 <input
-                  type={showPassword ? 'text' : 'password'}
+                  type={showPassword ? "text" : "password"}
                   name="newPassord"
                   value={newPassord}
                   onChange={this.handleChange}
@@ -103,7 +116,7 @@ class ChangePassword extends React.Component {
                   <label>Repeat Password</label>
                 </div>
                 <input
-                  type={showPassword ? 'text' : 'password'}
+                  type={showPassword ? "text" : "password"}
                   name="repeatPassword"
                   value={repeatPassword}
                   onChange={this.handleChange}
@@ -111,17 +124,30 @@ class ChangePassword extends React.Component {
                   required
                 />
               </div>
-              <div style={{ marginBottom: '10px' }}>
+              <div style={{ marginBottom: "10px" }}>
                 <input
                   type="checkbox"
                   checked={showPassword}
                   onChange={this.handleTogglePassword}
-                /> Show Password
+                />{" "}
+                Show Password
               </div>
-              <button type="submit" className="create-btn">Create Password</button>
+              <button type="submit" className="create-btn">
+                Create Password
+              </button>
             </form>
-            {errorMessage && <div className="error-message"><h3>Error</h3><p>{errorMessage}</p></div>}
-            {successMessage && <div className="success-message"><h3>Success</h3><p>{successMessage}</p></div>}
+            {errorMessage && (
+              <div className="error-message">
+                <h3>Error</h3>
+                <p>{errorMessage}</p>
+              </div>
+            )}
+            {successMessage && (
+              <div className="success-message">
+                <h3>Success</h3>
+                <p>{successMessage}</p>
+              </div>
+            )}
           </div>
         </div>
         <About /> {/* Rendering the About component */}

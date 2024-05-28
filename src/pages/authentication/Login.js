@@ -45,12 +45,12 @@ const Login = () => {
       <div className="form-side">
         <div className="form-content">
           <span className="greeting">
-            <h2 style={{ fontFamily: 'sans-serif' }}>Hello</h2>
+            <h2 style={{ fontFamily: 'sans-serif', marginBottom: "0px" }}>Hello</h2>
             <img src="/img/login.png" alt="login" />
           </span>
-          <h5 style={{ fontFamily: 'sans-serif' }} >Welcome back! You were missed.</h5>
+          <h5 style={{ fontFamily: 'sans-serif', marginTop: "0px" }}>Welcome back! You were missed.</h5>
 
-          <div className="form-group">
+          <div className="form-group mb-2">
             <label htmlFor="username">Username:</label>
             <input
               type="text"
@@ -74,14 +74,15 @@ const Login = () => {
               id="showPassword"
               checked={showPassword}
               onChange={handleCheckboxChange}
-              style={{ marginBottom: "2px", marginTop: "2px"}}
+              style={{ marginBottom: "2px", marginTop: "2px" }}
             />
             <label htmlFor="showPassword" style={{ marginBottom: "2px", marginTop: "2px" }}>Show Password</label>
           </div>
+          {feedback && <p>{feedback}</p>}
           <button type="handleLogin" onClick={handleLogin} className="create-btn">
             Login
           </button>
-          {feedback && <p>{feedback}</p>}
+      
         </div>
       </div>
       <About />
