@@ -9,6 +9,8 @@ import SlideInCard from "../components/SlideInCard";
 import ReusableEmptyData from "../components/ReusableEmptyData";
 import VendorForm from "../components/VendorForm";
 import VendorDetails from "../components/VendorDetails";
+import TopNav from "../components/TopNav";
+import SideNav from "../components/SideNav";
 
 const Vendor = () => {
   const [formData, setFormData] = useState({
@@ -268,7 +270,11 @@ const Vendor = () => {
   };
 
   return (
-    <div>
+    <>
+     <SideNav/>
+     <div className="content">
+      <TopNav/>
+
       <div
         style={{
           display: "flex",
@@ -475,6 +481,8 @@ const Vendor = () => {
       />
       </div>
     </div>
+    </>
+    
   );
 };
 

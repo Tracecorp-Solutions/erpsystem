@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import TopNav from "../components/TopNav";
+import SideNav from "../components/SideNav";
 import axios from "axios";
 import { CloseOutlined, EyeOutlined } from "@ant-design/icons";
 import "../styles/GroupCreation.css";
@@ -33,7 +35,10 @@ const EditForm = ({ editedGroupAccount, handleSubmitEdit, closeEditForm }) => {
   };
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 mt-10">
+    <>
+    <SideNav/>
+     <div className="content fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 mt-10">
+      <TopNav/>
       <div
         className="modal-content bg-white rounded-lg shadow-lg p-8"
         style={{
@@ -199,6 +204,8 @@ const EditForm = ({ editedGroupAccount, handleSubmitEdit, closeEditForm }) => {
         </form>
       </div>
     </div>
+    </>
+    
   );
 };
 
@@ -397,7 +404,10 @@ export default function GroupAccount() {
   };
 
   return (
-    <div className="px-4 sm:px-6 lg:px-8 group-container">
+    <>
+    <SideNav/>
+    <div className="content px-4 sm:px-6 lg:px-8 group-container">
+      <TopNav/>
       {selectedAccount && sidebarVisible && (
         <AccountSidebar
           account={selectedAccount}
@@ -776,5 +786,7 @@ export default function GroupAccount() {
         </div>
       )}
     </div>
+    </>
+    
   );
 }
