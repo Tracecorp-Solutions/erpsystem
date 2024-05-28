@@ -88,6 +88,10 @@ namespace Services.Repositories
             };
 
             var token = tokenHandler.CreateToken(tokenDescriptor);  
+            //attach token to user
+            user.Token = tokenHandler.WriteToken(token);
+            await _context.SaveChangesAsync();
+            
             await LogActionAsync(user.Email, "User authenticated");
             return tokenHandler.WriteToken(token);
         }
@@ -249,14 +253,36 @@ namespace Services.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<InvitedUsers>> GetInvitedUsersByOrganisationId(int organisationId) 
+        public async Task<IEnumerable<InvitedUserLists>> GetInvitedUsersByOrganisationId(int organisationId) 
         {
+            // get invited users by organisation id and group them by RoleId
             var invitedUsers = await _context.InvitedUsers
                 .Where(i => i.OrganisationId == organisationId)
+                .Include(i => i.Role)
+                .GroupBy(i => i.RoleId)
                 .ToListAsync();
 
-            return invitedUsers;
+            if (invitedUsers.Count == 0)
+                throw new ArgumentException("No invited users found");
+
+            // map users with group name inform of list
+            return invitedUsers.Select(group => new InvitedUserLists
+            {
+                Role = group.First().Role.Name,
+                Emails = group.Select(i => i.Email).ToList()
+            });
+
         }
+
+        public async Task<User> GetUserByTokenAsync(string token) 
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Token == token);
+            if (user == null)
+                throw new ArgumentException("Invalid Token");
+            return user;
+        }
+
+
 
     }
 }

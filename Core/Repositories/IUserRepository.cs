@@ -27,6 +27,8 @@ namespace Core.Repositories
 
         Task InviteUsers(IEnumerable<InvitedUsers> invitedUsers);
 
-        Task<IEnumerable<InvitedUsers>> GetInvitedUsersByOrganisationId(int organisationId);
+        Task<IEnumerable<InvitedUserLists>> GetInvitedUsersByOrganisationId(int organisationId);
+
+        Task<User> GetUserByTokenAsync(string token);
     }
 }

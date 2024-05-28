@@ -178,5 +178,23 @@ namespace Trace.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
             }
         }
+
+        [HttpGet("/GetUserByToken/{token}")]
+        public async Task<IActionResult> GetUserByToken(string token)
+        {
+            try
+            {
+                var user = await _userRepository.GetUserByTokenAsync(token);
+                return Ok(user);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
+        }
     }
 }
