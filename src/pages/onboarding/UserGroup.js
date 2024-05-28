@@ -4,6 +4,7 @@ const UserGroup = ({ moveToNextStep }) => {
   const [formData, setFormData] = useState({
     fullName: "",
     jobTitle: "",
+    email: "",
     phoneNumber: "",
     gender: "",
     dateOfBirth: "",
