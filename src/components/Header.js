@@ -688,8 +688,8 @@ export default function Main() {
           </main>
         </div>
       </div>
-   </Fragment>
-     
-  
+      
+    </>
+
   );
 }
