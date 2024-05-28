@@ -13,7 +13,7 @@ export default function AccountComponentSidebar({
   const [modalVisible, setModalVisible] = useState(false);
 
   const handleViewTransaction = () => {
-    navigate(`/view-transaction/${selectedAccount.id}`);
+    navigate(`/view-transaction/${selectedAccount.id}`, { state: { accountId: selectedAccount.id } });
   };
 
   const getSubGroupName = () => {
