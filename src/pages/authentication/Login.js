@@ -1,122 +1,91 @@
-import React, { useState } from 'react';
-import About from '../../components/About'; // Importing the About component
+import React, { useState } from "react";
+import About from "../../components/About"; // Importing the About component
 
-class AuthenticateUser extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      username: '',
-      password: '',
-      errorMessage: '',
-      successMessage: '',
-      showPassword: false // New state for toggling password visibility
-    };
-  }
+const Login = () => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [feedback, setFeedback] = useState("");
+  const [showPassword, setShowPassword] = useState(false); // Define showPassword state
 
-  handleChange = (e) => {
-    this.setState({ [e.target.name]: e.target.value });
-  };
-
-  handleCheckboxChange = () => {
-    this.setState((prevState) => ({
-      showPassword: !prevState.showPassword
-    }));
-  };
-
-  handleSubmit = async (e) => {
-    e.preventDefault();
-
-    const { username, password } = this.state;
-
+  const handleLogin = async () => {
     try {
-      const response = await fetch('http://3.216.182.63:8095/AuthenticateUser', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ username, password })
-      });
+      const response = await fetch(
+        "http://3.216.182.63:8095/AuthenticateUser",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            username: username,
+            password: password,
+          }),
+        }
+      );
 
-      if (!response.ok) {
-        throw new Error('Failed to authenticate user');
+      if (response.ok) {
+        setFeedback("Login successful!");
+        // Do something after successful login, like redirecting to another page
+      } else {
+        setFeedback("Invalid username or password");
       }
-
-      const data = await response.json();
-
-      this.setState({
-        successMessage: 'User authenticated successfully',
-        errorMessage: '',
-        username: '',
-        password: ''
-      });
-
-      // Handle additional actions after successful authentication, if needed
-
     } catch (error) {
-      this.setState({ errorMessage: 'Failed to authenticate. Please try again.', successMessage: '' });
+      console.error("Error logging in:", error);
+      setFeedback("An error occurred while logging in");
     }
   };
 
-  render() {
-    const { username, password, errorMessage, successMessage, showPassword } = this.state;
+  const handleCheckboxChange = () => {
+    // Define handleCheckboxChange function
+    setShowPassword((prevState) => !prevState);
+  };
 
-    return (
-      <div className="flex">
-        <div className="form-side">
-          <div className="form-content">
-            <form onSubmit={this.handleSubmit}>
-              <div className="form-intro">
-                <span className="greeting">
-                  <h2>Hello</h2>
-                  <img src="/img/login.png" alt="login" />
-                </span>
-                <h5>Welcome back! You were missed.</h5>
-              </div>
-              <div className="form-group">
-                <div className="label-desc">
-                  <label>Username</label>
-                </div>
-                <input
-                  type="text"
-                  name="username"
-                  value={username}
-                  onChange={this.handleChange}
-                  placeholder="Username"
-                  required
-                />
-              </div>
-              <div className="form-group">
-                <div className="label-desc">
-                  <label>Password</label>
-                </div>
-                <input
-                  type={showPassword ? "text" : "password"} // Show password if checkbox is checked
-                  name="password"
-                  value={password}
-                  onChange={this.handleChange}
-                  placeholder="Password"
-                  required
-                />
-              </div>
-              <div style={{ marginBottom: '10px' }}>
-                <input
-                  type="checkbox"
-                  id="showPassword"
-                  checked={showPassword}
-                  onChange={this.handleCheckboxChange}
-                />
-                <label htmlFor="showPassword">Show Password</label>
-              </div>
-              <button type="submit" className="create-btn">Login</button>
-            </form>
-            {errorMessage && <div className="error-message"><h3>Error</h3><p>{errorMessage}</p></div>}
-            {successMessage && <div className="success-message"><h3>Success</h3><p>{successMessage}</p></div>}
+  return (
+    <div className="flex">
+      <div className="form-side">
+        <div className="form-content">
+          <span className="greeting">
+            <h2 style={{ fontFamily: 'sans-serif' }}>Hello</h2>
+            <img src="/img/login.png" alt="login" />
+          </span>
+          <h5 style={{ fontFamily: 'sans-serif' }} >Welcome back! You were missed.</h5>
+
+          <div className="form-group">
+            <label htmlFor="username">Username:</label>
+            <input
+              type="text"
+              id="username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
           </div>
+          <div className="form-group">
+            <label htmlFor="password">Password:</label>
+            <input
+              type={showPassword ? "text" : "password"} // Show password if checkbox is checked
+              id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
+          <div style={{ marginBottom: "2px", marginTop: "2px" }}>
+            <input
+              type="checkbox"
+              id="showPassword"
+              checked={showPassword}
+              onChange={handleCheckboxChange}
+            />
+            <label htmlFor="showPassword" style={{ marginBottom: "2px", marginTop: "2px" }}>Show Password</label>
+          </div>
+          <button onClick={handleLogin} className="create-btn">
+            Login
+          </button>
+          {feedback && <p>{feedback}</p>}
         </div>
-        <About /> {/* Rendering the About component */}
       </div>
-    );
-  }
-}
+      <About />
+    </div>
+  );
+};
 
-export default AuthenticateUser;
+export default Login;
