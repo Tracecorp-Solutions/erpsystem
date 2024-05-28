@@ -481,7 +481,8 @@ button[type="submit"] {
   .form-content,
   .img-content {
     width: 50%;
-  }
+      }
+}
 
 .app {
 background: #F6F6F4;
