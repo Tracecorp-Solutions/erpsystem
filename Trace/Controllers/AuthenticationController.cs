@@ -144,11 +144,11 @@ namespace Trace.Controllers
         }
 
         [HttpPost("/InviteUsers")]
-        public async Task<IActionResult> InviteUsers([FromBody] IEnumerable<InvitedUsers> invitedUsers)
+        public async Task<IActionResult> InviteUsers([FromBody] InviteUserDto InviteUserDto)
         {
             try
             {
-                await _userRepository.InviteUsers(invitedUsers);
+                await _userRepository.InviteUsers(InviteUserDto);
                 return Ok("Users invited successfully");
             }
             catch (ArgumentException ex)

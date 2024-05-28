@@ -25,7 +25,7 @@ namespace Core.Repositories
 
         Task UpdateUserDetails(IFormFile file, UserDTO userDTO);
 
-        Task InviteUsers(IEnumerable<InvitedUsers> invitedUsers);
+        Task InviteUsers(InviteUserDto invitedUsersdto);
 
         Task<IEnumerable<InvitedUserLists>> GetInvitedUsersByOrganisationId(int organisationId);
 

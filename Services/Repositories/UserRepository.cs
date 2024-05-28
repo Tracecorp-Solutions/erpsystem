@@ -215,18 +215,18 @@ namespace Services.Repositories
             return organisation.Id;
         }
 
-        public async Task InviteUsers(IEnumerable<InvitedUsers> invitedUsers)
+        public async Task InviteUsers(InviteUserDto invitedUsersdto)
         {
-            if (invitedUsers == null || !invitedUsers.Any())
+            if (invitedUsersdto == null || !invitedUsersdto.Emails.Any())
                 throw new ArgumentException("No users to invite");
 
             // Validate emails
-            var invalidEmails = invitedUsers.Where(user => !new EmailAddressAttribute().IsValid(user.Email)).ToList();
+            var invalidEmails = invitedUsersdto.Emails.Where(user => !new EmailAddressAttribute().IsValid(user)).ToList();
             if (invalidEmails.Any())
-                throw new ArgumentException($"Invalid Email Addresses: {string.Join(", ", invalidEmails.Select(user => user.Email))}");
+                throw new ArgumentException($"Invalid Email Addresses: {string.Join(", ", invalidEmails.Select(user => user))}");
 
-            var organisationId = invitedUsers.First().OrganisationId;
-            var roleId = invitedUsers.First().RoleId;
+            var organisationId = invitedUsersdto.OrganisationId;
+            var roleId = invitedUsersdto.RoleId;
 
             // Check whether the organisation and role exist
             var organisationTask = _context.Organisations.FirstOrDefaultAsync(o => o.Id == organisationId);
@@ -243,12 +243,22 @@ namespace Services.Repositories
                 throw new ArgumentException("Role does not exist");
 
             // Send invitation emails and save invited users
-            foreach (var invitedUser in invitedUsers)
+            List<InvitedUsers> invitedUsers = new List<InvitedUsers>(); 
+            foreach (var email in invitedUsersdto.Emails)
             {
-                await emailService.SendEmailAsync(invitedUser.Email, "Invitation to join",
+                await emailService.SendEmailAsync(email, "Invitation to join",
                     $"You have been invited to join {organisation.Name} under the role of {role.Name}");
-            }
+                //map invited users
+                var inviteduser = invitedUsersdto.Emails.Select(email => new InvitedUsers
+                {
+                    Email = email,
+                    OrganisationId = organisationId,
+                    RoleId = roleId,
+                    Registered = false
+                });
 
+                invitedUsers.AddRange(inviteduser);
+            }
             _context.InvitedUsers.AddRange(invitedUsers);
             await _context.SaveChangesAsync();
         }
