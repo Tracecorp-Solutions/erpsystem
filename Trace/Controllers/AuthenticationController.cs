@@ -126,11 +126,11 @@ namespace Trace.Controllers
         }
 
         [HttpPost("/UpdateUserDetails")]
-        public async Task<IActionResult> UpdateUserDetails([FromBody] UserDTO userDTO)
+        public async Task<IActionResult> UpdateUserDetails([FromForm] IFormFile file, [FromForm] UserDTO userDTO)
         {
             try
             {
-                await _userRepository.UpdateUserDetails(userDTO);
+                await _userRepository.UpdateUserDetails(file, userDTO);
                 return Ok("User details updated successfully");
             }
             catch (ArgumentException ex)

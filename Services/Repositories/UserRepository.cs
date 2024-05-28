@@ -13,6 +13,7 @@ using System.Net.Mail;
 using Core.DTOs;
 using Microsoft.Extensions.Configuration;
 using System.Net;
+using Microsoft.AspNetCore.Http;
 
 namespace Services.Repositories
 {
@@ -146,12 +147,38 @@ namespace Services.Repositories
             };
         }
 
-        public async Task UpdateUserDetails(UserDTO userDTO)
+        public async Task UpdateUserDetails(IFormFile file, UserDTO userDTO)
         {
             var user = _context.Users.FirstOrDefault(u => u.Email == userDTO.Email);
             if (user == null)
                 throw new ArgumentException("Invalid Email Address");
 
+
+            if (file != null) 
+            {
+                //check whether directory exists
+                if (!Directory.Exists(Path.Combine(Directory.GetCurrentDirectory(), "uploads")))
+                {
+                    Directory.CreateDirectory(Path.Combine(Directory.GetCurrentDirectory(), "uploads"));
+                }
+
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "uploads", userDTO.ProfilePic);
+
+                //check if profile pic is uploaded
+                if (userDTO.ProfilePic != null)
+                {
+
+                    if (!File.Exists(filePath))
+                    {
+                        //create a new file
+                        using (var stream = new FileStream(filePath, FileMode.Create))
+                        {
+                            await file.CopyToAsync(stream);
+                        }
+                    }
+                }
+            }
+            
             user.FullName = userDTO.FullName;
             user.Email = userDTO.Email;
             user.Title = userDTO.Title;
