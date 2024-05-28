@@ -124,7 +124,7 @@ const navigation = [
     submenu: [
       { name: "Customer", href: "/customer", current: false },
       { name: "Vendors", href: "/vendors", current: false },
-      { name: "ViewTransaction", href: "/view-transaction", current: false },
+      { name: "ViewTransaction", href: "/view-transaction/:accountId", current: false },
     ],
   },
   {
@@ -681,7 +681,7 @@ export default function Main() {
                 <Route path="/create-bills" element={<BillsForm/>} />
                 <Route path="/create-invoice" element={<InvoiceForm />} />
                 <Route path="/edit-invoice/:id" element={<EditInvoiceForm />} />
-                <Route path="view-transaction" element={<ViewTransaction />} />
+                <Route path="view-transaction/:accountId" element={<ViewTransaction />} />
 
 
               </Routes>

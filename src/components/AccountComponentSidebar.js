@@ -11,12 +11,11 @@ export default function AccountComponentSidebar({
 }) {
   const navigate = useNavigate();
   const [modalVisible, setModalVisible] = useState(false);
-  console.log("sub group", subGroupAccounts);
 
-  const handleViewTransactions = () => {
-    navigate(`/view-transactions/${selectedAccount.id}`);
+  const handleViewTransaction = () => {
+    navigate(`/view-transaction/${selectedAccount.id}`);
   };
-  
+
   const getSubGroupName = () => {
     if (!selectedAccount || !subGroupAccounts) return "N/A";
     const subGroup = subGroupAccounts.find(
@@ -24,8 +23,6 @@ export default function AccountComponentSidebar({
     );
     return subGroup ? subGroup.subGroupAccount.name : "N/A";
   };
-
-  console.log("Selected account name:", getSubGroupName());
 
   return (
     <>
@@ -129,7 +126,7 @@ export default function AccountComponentSidebar({
                     fontFamily: "outFit, Sans-serif",
                   }}
                 >
-                  {getSubGroupName(selectedAccount.name)}
+                  {getSubGroupName()}
                 </p>
               </Card>
             </div>
@@ -202,7 +199,7 @@ export default function AccountComponentSidebar({
                 color: "#4467a1",
                 fontFamily: "outFit, Sans-serif"
             }}
-            onClick={handleViewTransactions}
+            onClick={handleViewTransaction}
           >
             View Transactions
           </button>
