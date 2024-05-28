@@ -6,7 +6,6 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import InvoiceCard from "../components/InvoiceCard";
 import InvoiceNavigationbar from "../components/InvoicesNavigationbar";
-import InvoiceSidebar from "../components/InvoiceSidebar";
 
 const Invoice = () => {
   const [invoice, setInvoice] = useState([]);
@@ -25,7 +24,6 @@ const Invoice = () => {
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
   const [selectInvoiceId, setSelectedInvoiceId] = useState(null);
 
-  console.log("mark as paid form data", selectInvoiceId);
 
   const navigate = useNavigate();
 
@@ -43,7 +41,6 @@ const Invoice = () => {
         );
         setTotalAmount(total);
 
-        // Calculate total amount for paid invoices
         const paidTotal = response.data
           .filter((inv) => inv.status === "Paid")
           .reduce(
@@ -84,6 +81,10 @@ const Invoice = () => {
     navigate(`/edit-invoice/${id}`);
   };
 
+  const handleViewInvoice = (id) => {
+    navigate(`/view-invoice/${id}`);
+  };
+
   const handleViewClick = () => {
     setDrawerVisible(true);
   };
@@ -100,7 +101,6 @@ const Invoice = () => {
       console.log("Fetched Invoice Data:", response.data);
     } catch (error) {
       console.error("Error fetching invoice data:", error);
-      // Optionally, you can display an error message to the user
     }
   };
 
@@ -272,7 +272,7 @@ const Invoice = () => {
                           <Dropdown
                             overlay={
                               <Menu style={{ width: "250px" }}>
-                                <Menu.Item key="1" onClick={handleViewClick}>
+                                <Menu.Item key="1" onClick={() => handleViewInvoice(inv.id)}>
                                   <span>View Invoice</span>
                                 </Menu.Item>
                                 <Menu.Item
@@ -310,10 +310,6 @@ const Invoice = () => {
           </div>
         </div>
       </div>
-      <InvoiceSidebar
-        drawerVisible={drawerVisible}
-        setDrawerVisible={setDrawerVisible}
-      />
       <Modal
         title="Mark Invoice as Paid"
         visible={showConfirmationModal}

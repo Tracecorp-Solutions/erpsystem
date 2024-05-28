@@ -1,69 +1,55 @@
-import React, { useState } from "react";
-import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
-import "./App.css";
-// import Main from "./components/Header";
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import './App.css';
+import Profile from './pages/onboarding/Profile';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Dashboard from './pages/Dashboard';
+import Groups from './pages/Groups';
+import Subgroups from './pages/Subgroups';
+import Accounts from './pages/Accounts';
+import Transactions from './pages/Transactions';
+import Signup from './pages/setup/Signup';
+import Login from './pages/setup/Login';
+import VerifyAccount from './pages/setup/VerifyAccount';
+import ResetPassword from './pages/setup/ResetPassword';
+import ForgotPassword from './pages/setup/ForgotPassword';
+import Profile from './pages/onboarding/Profile';
+import Company from './pages/onboarding/Company';
+import Vendors from './pages/Vendors';
+import Customer from './pages/Customer';
 import Signup from "./pages/authentication/Signup";
 import Reset from "./pages/authentication/Reset";
 import Verify from "./pages/authentication/Verify";
 import Login from "./pages/authentication/Login";
 import Forgot from "./pages/authentication/Forgot";
-import Dashboard from "./pages/Dashboard";
+
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // State to track user's login status
-  const [isVerified, setIsVerified] = useState(false); // State to track user's verification status
-  const [isReset, setIsReset] = useState(false); // State to track user's reset password status
-
-  // Function to set login status
-  const handleLogin = () => {
-    setIsLoggedIn(true);
-  };
-
-  // Function to set verification status
-  const handleVerify = () => {
-    setIsVerified(true);
-  };
-
-  // Function to set reset password status
-  const handleForgot = () => {
-    setIsReset(true);
-  };
-
   return (
     <div className="min-h-full">
       <div className="py-">
-        <Router>
-          {/* <Main /> */}
-          <Routes>
-            <Route path="/" element={<Signup onVerify={handleVerify} />} />
-            <Route path="/verify" element={<Verify onVerify={handleVerify} />} />
-            <Route path="/forgot" element={<Forgot onForgot={handleForgot} />} />
 
-            <Route
-              path="/login"
-              element={
-                isLoggedIn ? (
-                  <Navigate to="/dashboard" />
-                ) : (
-                  <Login onLogin={handleLogin} />
-                )
-              }
-            />
-            <Route path="/reset" element={<Reset />} />
-            <Route
-              path="/dashboard"
-              element={
-                isLoggedIn && isVerified ? (
-                  <Dashboard />
-                ) : (
-                  <Navigate to="/login" />
-                )
-              }
-            />
-          </Routes>
-        </Router>
+    <BrowserRouter>
+      <div className="body">
+        <Routes>
+          <Route path="/" element={<Dashboard />} />
+          <Route path="/groups" element={<Groups />} />
+          <Route path="/sub-group" element={<Subgroups />} />
+          <Route path="/accounts" element={<Accounts />} />
+          <Route path="/vendors" element={<Vendors />} />
+          <Route path="/customer" element={<Customer />} />
+          <Route path="/transactions" element={<Transactions />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/verify" element={<VerifyAccount />} />
+          <Route path="/reset" element={<ResetPassword />} />
+          <Route path="/forgot" element={<ForgotPassword />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/company" element={<Company />} />
+          <Route path="/profile" element={<Profile />} />
+        </Routes>
       </div>
-    </div>
+    </BrowserRouter>
   );
 }
 
