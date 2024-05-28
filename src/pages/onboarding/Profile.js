@@ -26,8 +26,6 @@ const Profile = () => {
     file: ""
   });
 
-  console.log("email addresses test", userData);
-
   const maxSteps = 4;
 
   const moveToNextStep = () => {
@@ -93,101 +91,34 @@ const Profile = () => {
                   padding: "10px",
                 }}
               >
-                <li>
-                  <span className="flex items-start">
-                    <span className="relative flex h-5 w-5 flex-shrink-0 items-center justify-center">
-                      {currentStep >= 1 ? (
-                        <CheckCircleIcon
-                          className="h-full w-full text-indigo-600"
-                          aria-hidden="true"
-                        />
-                      ) : (
-                        <span
-                          className="h-full w-full bg-gray-300"
-                          aria-hidden="true"
-                          style={{
-                            padding: "15px"
-                          }}
-                        />
-                      )}
+                {[1, 2, 3, 4].map(stepNumber => (
+                  <li key={stepNumber}>
+                    <span className="flex items-start">
+                      <span className="relative flex h-5 w-5 flex-shrink-0 items-center justify-center">
+                        {currentStep >= stepNumber ? (
+                          <CheckCircleIcon
+                            className="h-full w-full text-green-500"
+                            style={{ width: "24px", height: "24px" }}
+                            aria-hidden="true"
+                          />
+                        ) : (
+                          <span
+                            className="h-full w-full bg-gray-300 rounded-full flex items-center justify-center"
+                            style={{ fontSize: "0.75rem" }}
+                          >
+                            {stepNumber}
+                          </span>
+                        )}
+                      </span>
+                      <span className="ml-3 text-sm font-medium text-gray-500">
+                        {stepNumber === 1 && "Personal Information"}
+                        {stepNumber === 2 && "Company Information"}
+                        {stepNumber === 3 && "User Groups"}
+                        {stepNumber === 4 && "User Invitation"}
+                      </span>
                     </span>
-                    <span className="ml-3 text-sm font-medium text-gray-500">
-                      Personal Information
-                    </span>
-                  </span>
-                </li>
-                <li>
-                  <span className="flex items-start">
-                    <span className="relative flex h-5 w-5 flex-shrink-0 items-center justify-center">
-                      {currentStep >= 2 ? (
-                        <CheckCircleIcon
-                          className="h-full w-full text-indigo-600"
-                          aria-hidden="true"
-                        />
-                      ) : (
-                        <span
-                          className="h-full w-full bg-gray-300"
-                          aria-hidden="true"
-                          style={{
-                            borderRadius: "50%",
-                            padding: "15px"
-                          }}
-                        />
-                      )}
-                    </span>
-                    <span className="ml-3 text-sm font-medium text-gray-500">
-                      Company Information
-                    </span>
-                  </span>
-                </li>
-                <li>
-                  <span className="flex items-start">
-                    <span className="relative flex h-5 w-5 flex-shrink-0 items-center justify-center">
-                      {currentStep >= 3 ? (
-                        <CheckCircleIcon
-                          className="h-full w-full text-indigo-600"
-                          aria-hidden="true"
-                        />
-                      ) : (
-                        <span
-                          className="h-full w-full bg-gray-300"
-                          aria-hidden="true"
-                          style={{
-                            borderRadius: "50%",
-                            padding: "15px"
-                          }}
-                        />
-                      )}
-                    </span>
-                    <span className="ml-3 text-sm font-medium text-gray-500">
-                      User Groups
-                    </span>
-                  </span>
-                </li>
-                <li>
-                  <span className="flex items-start">
-                    <span className="relative flex h-5 w-5 flex-shrink-0 items-center justify-center">
-                      {currentStep >= 4 ? (
-                        <CheckCircleIcon
-                          className="h-full w-full text-indigo-600"
-                          aria-hidden="true"
-                        />
-                      ) : (
-                        <span
-                          className="h-full w-full bg-gray-300"
-                          aria-hidden="true"
-                          style={{
-                            borderRadius: "50%",
-                            padding: "15px"
-                          }}
-                        />
-                      )}
-                    </span>
-                    <span className="ml-3 text-sm font-medium text-gray-500">
-                      User Invitation
-                    </span>
-                  </span>
-                </li>
+                  </li>
+                ))}
               </ol>
             </nav>
           )}
