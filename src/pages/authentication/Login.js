@@ -77,7 +77,7 @@ const Login = () => {
             />
             <label htmlFor="showPassword" style={{ marginBottom: "2px", marginTop: "2px" }}>Show Password</label>
           </div>
-          <button onClick={handleLogin} className="create-btn">
+          <button type="handleLogin" onClick={handleLogin} className="create-btn">
             Login
           </button>
           {feedback && <p>{feedback}</p>}

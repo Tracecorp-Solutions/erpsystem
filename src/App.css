@@ -334,6 +334,12 @@ button[type="submit"] {
   justify-content: center;
 }
 
+button[type= "handleLogin"] {
+  align-items: center;
+  justify-content: center;
+  margin-top: -3px;
+}
+
 .label-desc {
   display: flex;
   flex-direction: column;
