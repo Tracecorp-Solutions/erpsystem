@@ -34,14 +34,19 @@ namespace Services.Repositories
 
         public async Task<bool> CreateUserAsync(RegisterDto registerDto)
         {
+            //check whether user already exists in invitation table
+            var invitedUser = _context.InvitedUsers.FirstOrDefault(i => i.Email == registerDto.Email);
+            // if user exists that means user is not admin
+
             var user = new User
             {
                 FullName = registerDto.FullName,
                 Email = registerDto.Email,
                 Active = false,
-                Verified = false
+                Verified = false,
+                OrganisationId = invitedUser == null ? null : invitedUser.OrganisationId,
+                IsAdmin = invitedUser == null ? true : false
             };
-
 
             //generate one-time password
             var password = Guid.NewGuid().ToString().Substring(0, 8);
