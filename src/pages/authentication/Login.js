@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import About from "../../components/About"; // Importing the About component
+import {Link, useNavigate} from "react-router-dom";
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -7,10 +8,12 @@ const Login = () => {
   const [feedback, setFeedback] = useState("");
   const [showPassword, setShowPassword] = useState(false); // Define showPassword state
 
+  const navigate = useNavigate(); // useNavigate hook to programmatically navigate
+
   const handleLogin = async () => {
     try {
       const response = await fetch(
-        "http://3.216.182.63:8095/AuthenticateUser",
+        `${process.env.REACT_APP_API_URL}/AuthenticateUser`,
         {
           method: "POST",
           headers: {
@@ -26,6 +29,7 @@ const Login = () => {
       if (response.ok) {
         setFeedback("Login successful!");
         // Do something after successful login, like redirecting to another page
+        navigate('/profile');
       } else {
         setFeedback("Invalid username or password");
       }
@@ -82,7 +86,7 @@ const Login = () => {
           <button type="handleLogin" onClick={handleLogin} className="create-btn">
             Login
           </button>
-      
+          <p>Don’t have an account? <Link to="/signup">Register here</Link></p>
         </div>
       </div>
       <About />

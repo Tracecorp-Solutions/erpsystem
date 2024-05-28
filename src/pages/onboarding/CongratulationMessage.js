@@ -1,6 +1,10 @@
 import React from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 const CongratulationsCard = () => {
+
+  const navigate = useNavigate();
+
   return (
     <div
       className="px-4 py-3 rounded relative"
@@ -37,7 +41,7 @@ const CongratulationsCard = () => {
         You've successfully set up your company on TraceAccounting and invited your team members! 
       </span>
       <br />
-      <button type="button" style={{
+      <Link type="button" style={{
         background: "#4467a1",
         padding: "10px 20px",
         borderRadius: "28px",
@@ -45,7 +49,9 @@ const CongratulationsCard = () => {
         fontFamily: "outFit, Sans-serif",
         marginTop: "20px",
         cursor: "pointer"
-      }}>Go to Dashboard</button></div>
+      }}
+      path="/dashboard"
+      >Go to Dashboard</Link></div>
     </div>
   );
 };

@@ -438,6 +438,11 @@ button[type="submit"] {
   height: 400px;
 }
 
+.ProfileContainer {
+  display: flex !important;
+ 
+}
+
 .img-wrapper img {
   width: 100%;
 }
@@ -487,12 +492,6 @@ button[type="submit"] {
 .app {
 
   background: #F6F6F4;
-}
-
-.body {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
 }
 
 .sidenav {
@@ -897,10 +896,10 @@ button[type= "handleLogin"] {
   width: 100%;
 }
 
-.flex {
+/* .flex {
   display: flex;
   width: 100%;
-}
+} */
 
 .img-side {
   background-color: #4467A1;

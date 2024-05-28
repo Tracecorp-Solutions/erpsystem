@@ -119,7 +119,7 @@ const stats = [
   },
 ];
 
-export default function Example() {
+export default function Dashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (

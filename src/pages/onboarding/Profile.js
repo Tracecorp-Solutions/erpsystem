@@ -7,6 +7,7 @@ import UserGroup from "./UserGroup";
 // import UserInvitation from "./UserInvitation";
 import CongratulationsCard from "./CongratulationMessage";
 import Header from "./Header";
+// import "."
 
 const Profile = () => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -67,11 +68,11 @@ const Profile = () => {
       {currentStep <= maxSteps && <Header />}
       <div
         style={{
-          display: "flex",
           justifyContent: "space-between",
+          display: "flex"
         }}
       >
-        <div className="col-span-1">
+        <div className="">
           {currentStep <= maxSteps && (
             <nav
               className="hidden md:flex justify-center"
