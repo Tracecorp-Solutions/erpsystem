@@ -1,12 +1,8 @@
 import React, { useState, useRef } from "react";
 
-const RegisterCompany = ({moveToNextStep}) => {
+const RegisterCompany = ({HandleSubmit, userData, setUserData}) => {
   const [imagePreview, setImagePreview] = useState(null);
-  const [formData, setFormData] = useState({
-    companyName: "",
-    country: "",
-  });
-
+ 
   const fileInputRef = useRef(null);
 
   const handleButtonClick = () => {
@@ -16,21 +12,19 @@ const RegisterCompany = ({moveToNextStep}) => {
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     const imageUrl = URL.createObjectURL(file);
+    setUserData({
+      ...userData,
+      file: file,
+    });
     setImagePreview(imageUrl);
   };
 
-  const handleInputChange = (e) => {
+  const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
+    setUserData({
+      ...userData,
       [name]: value,
     });
-  };
-
-  const handleSaveProfile = () => {
-    // Here you can perform actions like saving the profile
-    moveToNextStep();
-    console.log("Profile saved!");
   };
 
   return (
@@ -105,10 +99,10 @@ const RegisterCompany = ({moveToNextStep}) => {
                 </p>
                 <input
                   type="text"
-                  name="companyName"
+                  name="OrganizationName"
                   placeholder="Company Name"
-                  value={formData.companyName}
-                  onChange={handleInputChange}
+                  value={userData.OrganizationName}
+                  onChange={handleChange}
                   className="border border-gray-300 rounded px-3 py-1 w-full md:w-300 mb-4 md:mb-0 mr-0 md:mr-4"
                   style={{
                     padding: "10px"
@@ -141,9 +135,9 @@ const RegisterCompany = ({moveToNextStep}) => {
                   preferences
                 </p>
                 <select
-                  name="country"
-                  value={formData.country}
-                  onChange={handleInputChange}
+                  name="CountryOfOperation"
+                  value={userData.CountryOfOperation}
+                  onChange={handleChange}
                   className="border border-gray-300 rounded px-3 py-1 w-full md:w-300 mb-4 md:mb-0 mr-0 md:mr-4"
                   style={{
                     padding: "10px"
@@ -268,7 +262,7 @@ const RegisterCompany = ({moveToNextStep}) => {
               color: "#fff",
               marginBottom: "10px",
             }}
-            onClick={handleSaveProfile}
+            onClick={HandleSubmit}
           >
             Save Company
           </button>

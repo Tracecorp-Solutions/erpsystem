@@ -42,6 +42,8 @@ const Profile = () => {
       formData.append('Email', userData.Email);
       formData.append('PhoneNumber', userData.PhoneNumber);
       formData.append('DateOfBirth', userData.DateOfBirth);
+      formData.append('CountryOfOperation', userData.CountryOfOperation);
+      formData.append('OrganizationName', userData.OrganizationName);
       formData.append('file', userData.file);
       
       const response = await axios.post(
@@ -200,9 +202,9 @@ const Profile = () => {
           {currentStep === 1 && (
             <ProfileCompletionForm moveToNextStep={moveToNextStep} HandleSubmit={HandleSubmit} userData={userData} setUserData={setUserData} />
           )}
-          {currentStep === 2 && <RegisterCompany moveToNextStep={moveToNextStep} />}
-          {currentStep === 3 && <UserGroup moveToNextStep={moveToNextStep} />}
-          {currentStep === 4 && <UserInvitation moveToNextStep={moveToNextStep} />}
+          {currentStep === 2 && <RegisterCompany moveToNextStep={moveToNextStep} HandleSubmit={HandleSubmit} userData={userData} setUserData={setUserData} />}
+          {currentStep === 3 && <UserGroup moveToNextStep={moveToNextStep} HandleSubmit={HandleSubmit} userData={userData} setUserData={setUserData} />}
+          {currentStep === 4 && <UserInvitation moveToNextStep={moveToNextStep} HandleSubmit={HandleSubmit} userData={userData} setUserData={setUserData} />}
           {currentStep > maxSteps && <CongratulationsCard />}
 
         </div>
