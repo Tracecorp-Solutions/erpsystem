@@ -301,7 +301,8 @@
               "RelativeToolTip": "Controllers\\TransactionsController.cs",
               "ViewState": "AQIAAAEAAAAAAAAAAAAAABMAAAAeAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-22T10:34:36.437Z"
+              "WhenOpened": "2024-04-22T10:34:36.437Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -325,7 +326,8 @@
               "RelativeToolTip": "Models\\TraceErpContext.cs",
               "ViewState": "AQIAAAkAAAAAAAAAAAAjwBoAAAAjAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-22T08:56:57.549Z"
+              "WhenOpened": "2024-04-22T08:56:57.549Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -397,7 +399,8 @@
               "RelativeToolTip": "Test\\GroupAccountsControllerTests.cs",
               "ViewState": "AQIAABAAAAAAAAAAAAAQwB0AAAAOAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-22T11:32:19.999Z"
+              "WhenOpened": "2024-04-22T11:32:19.999Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
