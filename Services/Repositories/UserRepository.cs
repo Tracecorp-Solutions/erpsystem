@@ -153,7 +153,7 @@ namespace Services.Repositories
             if (user == null)
                 throw new ArgumentException("Invalid Email Address");
 
-
+            string filepath = null;
             if (file != null) 
             {
                 //check whether directory exists
@@ -162,16 +162,16 @@ namespace Services.Repositories
                     Directory.CreateDirectory(Path.Combine(Directory.GetCurrentDirectory(), "uploads"));
                 }
 
-                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "uploads", userDTO.ProfilePic);
+                filepath = Path.Combine(Directory.GetCurrentDirectory(), "uploads", userDTO.ProfilePic);
 
                 //check if profile pic is uploaded
                 if (userDTO.ProfilePic != null)
                 {
 
-                    if (!File.Exists(filePath))
+                    if (!File.Exists(filepath))
                     {
                         //create a new file
-                        using (var stream = new FileStream(filePath, FileMode.Create))
+                        using (var stream = new FileStream(filepath, FileMode.Create))
                         {
                             await file.CopyToAsync(stream);
                         }
@@ -184,7 +184,7 @@ namespace Services.Repositories
             user.Title = userDTO.Title;
             user.PhoneNumber = userDTO.PhoneNumber;
             user.DateOfBirth = userDTO.DateOfBirth;
-            user.ProfilePic = userDTO.ProfilePic;
+            user.ProfilePic = filepath;
             user.Gender = userDTO.Gender;
             await _context.SaveChangesAsync();
             await LogActionAsync(user.Email, "User details updated");
