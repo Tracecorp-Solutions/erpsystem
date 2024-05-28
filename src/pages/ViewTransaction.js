@@ -1,88 +1,63 @@
-import { useState, useEffect } from "react";
-import { Table, Spin, Alert } from "antd";
-import { useParams } from "react-router-dom";
-import axios from "axios";
+import React, { useState, useEffect } from 'react';
+import { Table } from 'antd';
 
-export default function ViewTransaction() {
-  const { accountId } = useParams();
+const ViewTransactions = ({ accountId }) => {
   const [transactions, setTransactions] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [accountName, setAccountName] = useState("");
 
   useEffect(() => {
-   
+    // Fetch transactions data from your backend API
     const fetchTransactions = async () => {
-      setLoading(true);
       try {
-        const response = await axios.get(`http://3.216.182.63:8095/GetTransactionsByAccountId`, {
-          params: {
-            accountFromId: accountId,
-            accountToId: 0,
-            transactionDate: "2024-05-28T07:09:00.688Z", // Example date, adjust as needed
-            amount: 0,
-            narration: "string",
-            tranReference: "string"
-          },
-        });
-        setTransactions(response.data);
-      } catch (error) {
-        setError("Error fetching transactions.");
-        console.error("Error fetching transactions:", error);
-      } finally {
+        const response = await fetch(`http://3.216.182.63:8095/GetTransactionsByAccountId/${accountId}`);
+        const data = await response.json();
+        setTransactions(data);
         setLoading(false);
+      } catch (error) {
+        console.error('Error fetching transactions:', error);
       }
     };
 
-   
     fetchTransactions();
   }, [accountId]);
 
   const columns = [
     {
-      title: 'Transaction Date',
-      dataIndex: 'transactionDate',
-      key: 'transactionDate',
-      render: (text) => new Date(text).toLocaleString(),
-    },
+        title: 'Reference Number',
+        dataIndex: 'transactionReference',
+        key: 'transactionReference',
+      },
+    {
+        title: 'Account',
+        dataIndex: 'tranAccount',
+        key: 'tranAccount',
+      },
     {
       title: 'Amount',
       dataIndex: 'amount',
       key: 'amount',
-      render: (text) => `$${text.toFixed(2)}`,
     },
     {
-      title: 'Narration',
-      dataIndex: 'narration',
-      key: 'narration',
+      title: 'Date',
+      dataIndex: 'transactionDate',
+      key: 'transactionDate',
     },
-    {
-      title: 'Transaction Reference',
-      dataIndex: 'tranReference',
-      key: 'tranReference',
-    },
+    
+    // Add more columns as needed based on your transaction data structure
+    // Example:
+    // {
+    //   title: 'Type',
+    //   dataIndex: 'type',
+    //   key: 'type',
+    // },
   ];
 
-  if (loading) {
-    return <Spin tip="Loading transactions..." />;
-  }
-
-  if (error) {
-    return <Alert message={error} type="error" />;
-  }
-
   return (
-    <div style={{ padding: '20px' }}>
-      <h2>Transactions for Account {accountName || accountId}</h2>
-      {transactions.length === 0 ? (
-        <Alert message="No transactions found for this account." type="info" />
-      ) : (
-        <Table
-          dataSource={transactions}
-          columns={columns}
-          rowKey={(record) => record.tranReference}
-        />
-      )}
+    <div>
+      <h1>Transactions</h1>
+      <Table columns={columns} dataSource={transactions} loading={loading} />
     </div>
   );
-}
+};
+
+export default ViewTransactions;
