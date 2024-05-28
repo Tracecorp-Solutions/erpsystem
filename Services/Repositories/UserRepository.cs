@@ -229,17 +229,17 @@ namespace Services.Repositories
             var roleId = invitedUsersdto.RoleId;
 
             // Check whether the organisation and role exist
-            var organisationTask = _context.Organisations.FirstOrDefaultAsync(o => o.Id == organisationId);
-            var roleTask = _context.Roles.FirstOrDefaultAsync(r => r.Id == roleId);
+            var organisationTask = await _context.Organisations.FirstOrDefaultAsync(o => o.Id == organisationId);
+            var roleTask = await _context.Roles.FirstOrDefaultAsync(r => r.Id == roleId);
 
-            await Task.WhenAll(organisationTask, roleTask);
-            var organisation = organisationTask.Result;
-            var role = roleTask.Result;
+            //await Task.WhenAll(organisationTask, roleTask);
+            //var organisation = organisationTask.Result;
+            //var role = roleTask.Result;
 
-            if (organisation == null)
+            if (organisationTask == null)
                 throw new ArgumentException("Organisation does not exist");
 
-            if (role == null)
+            if (roleTask == null)
                 throw new ArgumentException("Role does not exist");
 
             // Send invitation emails and save invited users
@@ -247,7 +247,7 @@ namespace Services.Repositories
             foreach (var email in invitedUsersdto.Emails)
             {
                 await emailService.SendEmailAsync(email, "Invitation to join",
-                    $"You have been invited to join {organisation.Name} under the role of {role.Name}");
+                    $"You have been invited to join {organisationTask.Name} under the role of {roleTask.Name}");
                 //map invited users
                 var inviteduser = invitedUsersdto.Emails.Select(email => new InvitedUsers
                 {
