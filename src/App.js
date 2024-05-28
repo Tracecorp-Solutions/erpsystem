@@ -1,3 +1,7 @@
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import './App.css';
+import Profile from './pages/onboarding/Profile';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Dashboard from './pages/Dashboard';
 import Groups from './pages/Groups';
@@ -14,10 +18,11 @@ import Company from './pages/onboarding/Company';
 import Vendors from './pages/Vendors';
 import Customer from './pages/Customer';
 
-import "./App.css";
 
 function App() {
   return (
+    <div className="min-h-full">
+      <div className="py-">
 
     <BrowserRouter>
       <div className="body">
@@ -36,6 +41,7 @@ function App() {
           <Route path="/forgot" element={<ForgotPassword />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/company" element={<Company />} />
+          <Route path="/profile" element={<Profile />} />
         </Routes>
 
 

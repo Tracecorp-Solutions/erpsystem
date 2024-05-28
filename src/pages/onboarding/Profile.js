@@ -1,166 +1,143 @@
-import { Link } from 'react-router-dom';
-import React, { useState } from 'react';
-import SideOnboardingNav from '../../components/SideOnboardingNav';
+import React, { useState } from "react";
+import RegisterCompany from "./RegisterCompany";
+import { CheckCircleOutlined } from '@ant-design/icons';
+import axios from "axios";
+import ProfileCompletionForm from "./ProfileCompletionForm ";
+import UserGroup from "./UserGroup";
+// import UserInvitation from "./UserInvitation";
+import CongratulationsCard from "./CongratulationMessage";
+import Header from "./Header";
 
-function Profile({ onSubmit }) {
-  const user = {
-    name: 'Nakitto Catherine',
-    imageUrl: './img/profile-pic.png',
-    imageSize: 40,
-  };
-
-  const [formData, setFormData] = useState({
-    fullName: '',
-    jobTitle: '',
-    phone: '',
-    amount: '',
-    email: '',
-    dob: '',
-    profileImage: ''
+const Profile = () => {
+  const [currentStep, setCurrentStep] = useState(1);
+  const [userData, setUserData] = useState({
+    Username: "",
+    FullName: "",
+    OrganizationName: "",
+    CountryOfOperation: "",
+    Email: "",
+    Verified: false,
+    Active: false,
+    Title: "",
+    Gender: "",
+    IsAdmin: false,
+    PhoneNumber: "",
+    DateOfBirth: "",
+    file: ""
   });
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value
-    });
+  const maxSteps = 3;
+
+  const moveToNextStep = () => {
+    setCurrentStep(currentStep + 1);
   };
 
-  const handleSubmit = (e) => {
+  const HandleSubmit = async (e) => {
     e.preventDefault();
-    onSubmit(formData);
+    try {
+      const formData = new FormData();
+      formData.append('FullName', userData.FullName);
+      formData.append('Email', userData.Email);
+      formData.append('PhoneNumber', userData.PhoneNumber);
+      formData.append('DateOfBirth', userData.DateOfBirth);
+      formData.append('CountryOfOperation', userData.CountryOfOperation);
+      formData.append('OrganizationName', userData.OrganizationName);
+      formData.append('file', userData.file);
+      
+      const response = await axios.post(
+        `${process.env.REACT_APP_API_URL}/UpdateUserDetails`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Accept: "*/*"
+          }
+        }
+      );
+      console.log("User created:", response.data);
+      moveToNextStep();
+    } catch (error) {
+      console.error("Error creating user:", error);
+    }
   };
-
-  const genderOptions = [
-    { id: '1', name: 'Female' },
-    { id: '2', name: 'Male' },
-  ];
+  
 
   return (
-    <>
-      <SideOnboardingNav />
-      <div className="content">
-        <div className="topnav">
-          <ul>
-            <li>
-              <Link to="/" className="profile">
-              <img
-                className="avatar"
-                src={user.imageUrl}
-                alt={'Photo of ' + user.name}
+    <div>
+      {currentStep <= maxSteps && <Header />}
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+        }}
+      >
+        <div className="col-span-1">
+          {currentStep <= maxSteps && (
+            <nav
+              className="hidden md:flex justify-center"
+              aria-label="Progress"
+              style={{
+                position: "relative",
+                left: "1px",
+                background: "#fff",
+                height: "100vh",
+              }}
+            >
+              <ol
+                role="list"
+                className="space-y-6"
                 style={{
-                  width: user.imageSize,
-                  height: user.imageSize
-                }} />
-                <span>Hello, {user.name}!</span>
-              </Link>
-            </li>
-          </ul>
-        </div>
-        <div className="top-content complete-form">
-          <form onSubmit={handleSubmit}>
-            <h2>Complete your profile</h2>
-            <div className="form-group">
-              <div className="label-desc">
-                <label>Full Name</label>
-                <p>To personalize your experience and communicate with you</p>
-              </div>
-              <input
-                type="text"
-                name="fullName"
-                placeholder="Enter your full name"
-                value={formData.fullName}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="form-group">
-              <div className="label-desc">
-                <label>Job Title</label>
-                <p>Provides context about your professional background and app usage</p>
-              </div>
-              <input
-                type="text"
-                name="jobTitle"
-                placeholder="Enter your job title"
-                value={formData.fullName}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="form-group">
-              <div className="label-desc">
-                <label>Email Address</label>
-                <p>For account verification, app updates, and communication purposes</p>
-              </div>
-              <input
-                type="email"
-                name="email"
-                placeholder="Enter your email address"
-                value={formData.email}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="form-group">
-              <div className="label-desc">
-                <label>Phone Number</label>
-                <p>To help us reach you for account-related matters or notifications</p>
-              </div>
-              <input
-                type="phone"
-                name="phone"
-                placeholder="Enter your phone number"
-                value={formData.phone}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="form-group">
-              <div className="label-desc">
-                <label>Gender</label>
-                <p>Helps us tailor certain aspects of the app according to your preferences</p>
-              </div>
-              <select
-                name="gender"
-                value={formData.gender}
-                onChange={handleChange}>
-                <option value="">Select Gender</option>
-                {genderOptions.map(gender => (
-                  <option key={gender.id} value={gender.id}>{gender.name}</option>
+                  marginTop: "20px",
+                  padding: "10px",
+                }}
+              >
+                {[1, 2, 3].map(stepNumber => (
+                  <li key={stepNumber}>
+                    <span className="flex items-start">
+                      <span className="relative flex h-5 w-5 flex-shrink-0 items-center justify-center">
+                        {currentStep >= stepNumber ? (
+                          <CheckCircleOutlined className="text-green-500" style={{
+                            fontSize: "30px",
+                          }} />
+                        ) : (
+                          <span
+                            className="h-full w-full bg-gray-300 rounded-full flex items-center justify-center"
+                            style={{ fontSize: "0.75rem", color: "#fff", padding: "15px" }}
+                          >
+                            {stepNumber}
+                          </span>
+                        )}
+                      </span>
+                      <span className="ml-3 text-sm font-medium text-gray-500">
+                        {stepNumber === 1 && "Personal Information"}
+                        {stepNumber === 2 && "Company Information"}
+                        {stepNumber === 3 && "Invite Users"}
+                      </span>
+                    </span>
+                  </li>
                 ))}
-              </select>
-            </div>
-            <div className="form-group">
-              <div className="label-desc">
-                <label>Date of Birth</label>
-                <p>To ensure you're of legal age and to send you special offers or birthday wishes</p>
-              </div>
-              <input
-                type="date"
-                name="dob"
-                value={formData.dob}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="form-group">
-              <div className="label-desc">
-                <label>Profile Image</label>
-                <p>Upload a profile picture to personalize your account and help others recognize you within the app.</p>
-              </div>
-              <input
-                type="file"
-                name="profileImage"
-                placeholder="Upload your profile image"
-                value={formData.profileImage}
-                onChange={handleChange}
-              />
-            </div>
-            <div className='CTA-btn'>
-              <button type="submit" className="create-btn">Save Profile</button>
-            </div>
-          </form>
+              </ol>
+            </nav>
+          )}
+        </div>
+
+        <div
+          style={{
+            width: "80%",
+            margin: "0 auto",
+          }}
+        >
+          {currentStep === 1 && (
+            <ProfileCompletionForm moveToNextStep={moveToNextStep} HandleSubmit={HandleSubmit} userData={userData} setUserData={setUserData} />
+          )}
+          {currentStep === 2 && <RegisterCompany moveToNextStep={moveToNextStep} HandleSubmit={HandleSubmit} userData={userData} setUserData={setUserData} />}
+          {currentStep === 3 && <UserGroup moveToNextStep={moveToNextStep} HandleSubmit={HandleSubmit} userData={userData} setUserData={setUserData} />}
+          {currentStep > maxSteps && <CongratulationsCard />}
+
         </div>
       </div>
-    </>
-  )
-}
+    </div>
+  );
+};
 
 export default Profile;

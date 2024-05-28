@@ -669,7 +669,7 @@ const CustomerForm = ({
                   }
                   className="w-full px-3 py-2 border rounded-md"
                 >
-                  <option value="">Choose Status</option> {/* Default option */}
+                  <option value="">Choose Status</option>
                   <option value="true">Active</option>
                   <option value="false">Inactive</option>
                 </select>

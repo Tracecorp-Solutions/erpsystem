@@ -44,7 +44,7 @@ import Transactions from "../pages/Transactions";
 import Customer from "../pages/Customer";
 
 import BillsForm from "./BillsForm";
-
+import InvoiceSidebar from './InvoiceSidebar';
 
 import InvoiceForm from "./InvoiceForm";
 import EditInvoiceForm from "./EditInvoiceForm";
@@ -682,7 +682,7 @@ export default function Main() {
                 <Route path="/create-bills" element={<BillsForm/>} />
                 <Route path="/create-invoice" element={<InvoiceForm />} />
                 <Route path="/edit-invoice/:id" element={<EditInvoiceForm />} />
-
+                <Route path="/view-invoice/:id" element={<InvoiceSidebar />} />
               </Routes>
             </div>
           </main>
