@@ -1,158 +1,80 @@
-import React from "react";
-// import { navigate } from "react-router-dom";
-import About from "../../components/About"; // Importing the About component
+import React, { useState } from 'react';
+import axios from 'axios';
+import { Link, useNavigate } from 'react-router-dom';
+import About from '../../components/About'; // Importing the About component
 
-class ChangePassword extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      username: "",
-      newPassord: "",
-      repeatPassword: "",
-      errorMessage: "",
-      successMessage: "",
-      showPassword: false,
+const ForgotPasswordPage = () => {
+  const [formData, setFormData] = useState({
+    username: '',
+    newPassord: '',
+    repeatPassword: '',
+  });
+  const [message, setMessage] = useState('');
+  const [error, setError] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate(); // useNavigate hook to programmatically navigate
 
-    };
-  }
-
-  handleChange = (e) => {
-    this.setState({ [e.target.name]: e.target.value });
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
   };
 
-  handleTogglePassword = () => {
-    this.setState((prevState) => ({ showPassword: !prevState.showPassword }));
-  };
-
-  handleSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
-    const { username, newPassord, repeatPassword } = this.state;
-
-    // Check if passwords match
-    if (newPassord !== repeatPassword) {
-      this.setState({ errorMessage: "Passwords do not match" });
-      return;
-    }
-
     try {
-      const response = await fetch("http://3.216.182.63:8095/ChangePassword", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ username, newPassord, repeatPassword }),
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to change password");
+      const response = await axios.post('http://3.216.182.63:8095/ChangePassword', formData);
+      if (response.status === 200) {
+        setMessage('Password changed successfully.');
+        navigate('/');
+      } else {
+        setError('Something went wrong. Please try again later.');
       }
-
-      this.setState({
-        successMessage: "Password changed successfully",
-        errorMessage: "",
-        username: "",
-        newPassord: "",
-        repeatPassword: "",
-      });
-
-      // Redirect to login after changing password
-      // navigate("/login");
     } catch (error) {
-      this.setState({ errorMessage: error.message, successMessage: "" });
+      setError('Something went wrong. Please try again later.');
     }
   };
 
-  render() {
-    const {
-      username,
-      newPassord,
-      repeatPassword,
-      errorMessage,
-      successMessage,
-      showPassword,
-    } = this.state;
+  const handleTogglePassword = () => {
+    setShowPassword(!showPassword);
+  };
 
-    return (
-      <div className="flex">
-        <div className="form-side">
-          <div className="form-content">
-            <form onSubmit={this.handleSubmit}>
-              <div className="form-intro">
-                <span className="greeting">
-                  <h2>Change Password</h2>
-                  <img src="/img/reset.png" alt="reset" />
-                </span>
+  return (
+    <div className="flex">
+      <div className="form-side">
+        <div className="form-content">
+          <h2>Forgot Password</h2>
+          {message && <p>{message}</p>}
+          {error && <p>{error}</p>}
+          <form onSubmit={handleSubmit}>
+            <div className="form-group">
+              <div className="label-desc">
+                <label>Username:</label>
               </div>
-              <div className="form-group">
-                <div className="label-desc">
-                  <label>User Email</label>
-                </div>
-                <input
-                  type="text"
-                  name="username"
-                  value={username}
-                  onChange={this.handleChange}
-                  placeholder="Username"
-                  required
-                />
+              <input type="text" name="username" value={formData.username} onChange={handleChange} />
+            </div>
+            <div className="form-group">
+              <div className="label-desc">
+                <label>New Password:</label>
               </div>
-              <div className="form-group">
-                <div className="label-desc">
-                  <label>New Password</label>
-                </div>
-                <input
-                  type={showPassword ? "text" : "password"}
-                  name="newPassord"
-                  value={newPassord}
-                  onChange={this.handleChange}
-                  placeholder="New Password"
-                  required
-                />
+              <input type={showPassword ? "text" : "password"} name="newPassord" value={formData.newPassord} onChange={handleChange} />
+            </div>
+            <div className="form-group">
+              <div className="label-desc">
+                <label>Repeat Password:</label>
               </div>
-              <div className="form-group">
-                <div className="label-desc">
-                  <label>Repeat Password</label>
-                </div>
-                <input
-                  type={showPassword ? "text" : "password"}
-                  name="repeatPassword"
-                  value={repeatPassword}
-                  onChange={this.handleChange}
-                  placeholder="Repeat Password"
-                  required
-                />
-              </div>
-              <div style={{ marginBottom: "10px" }}>
-                <input
-                  type="checkbox"
-                  checked={showPassword}
-                  onChange={this.handleTogglePassword}
-                />{" "}
-                Show Password
-              </div>
-              <button type="submit" className="create-btn">
-                Create Password
-              </button>
-            </form>
-            {errorMessage && (
-              <div className="error-message">
-                <h3>Error</h3>
-                <p>{errorMessage}</p>
-              </div>
-            )}
-            {successMessage && (
-              <div className="success-message">
-                <h3>Success</h3>
-                <p>{successMessage}</p>
-              </div>
-            )}
-          </div>
+              <input type={showPassword ? "text" : "password"} name="repeatPassword" value={formData.repeatPassword} onChange={handleChange} />
+            </div>
+            <div style={{ marginBottom: "10px" }}>
+              <input type="checkbox" checked={showPassword} onChange={handleTogglePassword} />
+              Show Password
+            </div>
+            <button type="submit" className="create-btn">Submit</button>
+          </form>
         </div>
-        <About /> {/* Rendering the About component */}
       </div>
-    );
-  }
-}
+      <About /> {/* Rendering the About component */}
+    </div>
+  );
+};
 
-export default ChangePassword;
+export default ForgotPasswordPage;

@@ -54,13 +54,14 @@ const Login = () => {
           </span>
           <h5 style={{ fontFamily: 'sans-serif', marginTop: "0px" }}>Welcome back! You were missed.</h5>
 
-          <div className="form-group mb-2">
+          <div className="form-group">
             <label htmlFor="username">Username:</label>
             <input
               type="text"
               id="username"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
+              style={{ fontFamily: 'sans-serif', marginBottom: "2px" }}
             />
           </div>
           <div className="form-group">
@@ -78,9 +79,9 @@ const Login = () => {
               id="showPassword"
               checked={showPassword}
               onChange={handleCheckboxChange}
-              style={{ marginBottom: "2px", marginTop: "2px" }}
+              style={{ marginBottom: "2px", }}
             />
-            <label htmlFor="showPassword" style={{ marginBottom: "2px", marginTop: "2px" }}>Show Password</label>
+            <label htmlFor="showPassword" style={{ marginBottom: "2px" }}>Show Password</label>
           </div>
           {feedback && <p>{feedback}</p>}
           <button type="handleLogin" onClick={handleLogin} className="create-btn">
