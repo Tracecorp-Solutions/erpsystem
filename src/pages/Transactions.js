@@ -32,7 +32,7 @@ const Transaction = () => {
   const [editedAccount, setEditedAccount] = useState(null);
   const [accountNameFilter, setAccountNameFilter] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(3);
+  const [itemsPerPage] = useState(10);
   const [successMessage, setSuccessMessage] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -224,19 +224,12 @@ const Transaction = () => {
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = (currentPage - 1) * itemsPerPage;
-  const currentItems = filteredAccounts.slice(
-    indexOfFirstItem,
-    indexOfLastItem
-  );
+  const currentItems = transactions.slice(indexOfFirstItem, indexOfLastItem);
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   const rangeStart = (currentPage - 1) * itemsPerPage + 1;
-  const rangeEnd = Math.min(
-    currentPage * itemsPerPage,
-    filteredAccounts.length
-  );
-
+  const rangeEnd = Math.min(currentPage * itemsPerPage, transactions.length);
   return (
     <>
       <SideNav />
@@ -616,7 +609,7 @@ const Transaction = () => {
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
-                  {transactions.map((transaction) => {
+                  {currentItems.map((transaction) => {
                     // Find the account names based on the IDs
                     const accountTo = accounts.find(
                       (acc) => acc.id === transaction.accountToId
@@ -697,7 +690,7 @@ const Transaction = () => {
             </div>
             <Pagination
               current={currentPage}
-              total={filteredAccounts.length}
+              total={transactions.length}
               pageSize={itemsPerPage}
               onChange={paginate}
             />
