@@ -1,5 +1,5 @@
 
-.body {
+.AppContainer {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -397,10 +397,10 @@ button[type="submit"] {
   width: 100%;
 }
 
-.flex {
+/* .flex {
   display: flex;
   width: 100%;
-}
+} */
 
 .img-side {
   background-color: #4467A1;

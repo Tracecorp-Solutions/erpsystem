@@ -27,7 +27,7 @@ const ProfileCompletionForm = ({ HandleSubmit, userData, setUserData }) => {
   };
 
   return (
-    <div style={{ marginRight: "10px", marginTop: "20px" }}>
+    <div style={{ marginRight: "10px", marginTop: "20px", border: "2px solid red" }}>
       <div
         style={{
           display: "flex",

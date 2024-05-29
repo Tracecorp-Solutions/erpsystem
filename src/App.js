@@ -18,21 +18,18 @@ import Forgot from "./pages/authentication/Forgot";
 
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // State to track user's login status
-  const [isVerified, setIsVerified] = useState(false); // State to track user's verification status
-  const [isReset, setIsReset] = useState(false); // State to track user's reset password status
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isVerified, setIsVerified] = useState(false);
+  const [isReset, setIsReset] = useState(false);
 
-  // Function to set login status
   const handleLogin = () => {
     setIsLoggedIn(true);
   };
 
-  // Function to set verification status
   const handleVerify = () => {
     setIsVerified(true);
   };
 
-  // Function to set reset password status
   const handleForgot = () => {
     setIsReset(true);
   };
@@ -41,7 +38,7 @@ function App() {
       <div className="py-">
 
     <BrowserRouter>
-      <div className="body">
+      <div className="AppContainer">
         <Routes>
            <Route path="/signup" element={<Signup onVerify={handleVerify} />} />
             <Route path="/verify" element={<Verify onVerify={handleVerify} />} />
@@ -58,11 +55,13 @@ function App() {
           <Route path="/verify" element={<Verify />} />
           <Route path="/reset" element={<Reset />} />
           <Route path="/forgot" element={<Forgot />} />
-          <Route path="/profile" element={<Profile />} />
           <Route path="/company" element={<Company />} />
           <Route path="/dashboard" element={<Dashboard />} />
         </Routes>
       </div>
+      <Routes>
+        <Route path="/profile" element={<Profile />} />
+      </Routes>
     </BrowserRouter>
     </div>
     </div>
