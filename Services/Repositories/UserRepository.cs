@@ -291,7 +291,10 @@ namespace Services.Repositories
 
         public async Task<User> GetUserByTokenAsync(string token) 
         {
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.Token == token);
+            var user = await _context.Users
+                .Include(u => u.Role)
+                .Include(u => u.Organisation)
+                .FirstOrDefaultAsync(u => u.Token == token);
             if (user == null)
                 throw new ArgumentException("Invalid Token");
             return user;
