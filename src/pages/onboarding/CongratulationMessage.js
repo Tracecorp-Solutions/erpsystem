@@ -41,17 +41,20 @@ const CongratulationsCard = () => {
         You've successfully set up your company on TraceAccounting and invited your team members! 
       </span>
       <br />
+      <div style={{
+        marginTop: "15px"
+      }}>
       <Link type="button" style={{
         background: "#4467a1",
         padding: "10px 20px",
         borderRadius: "28px",
         color: "#fff",
         fontFamily: "outFit, Sans-serif",
-        marginTop: "20px",
         cursor: "pointer"
       }}
-      path="/dashboard"
+      to="/dashboard"
       >Go to Dashboard</Link></div>
+      </div>
     </div>
   );
 };
