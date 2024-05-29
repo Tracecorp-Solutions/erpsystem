@@ -8,12 +8,13 @@ const ViewTransactions = () => {
   const [transactions, setTransactions] = useState([]);
   const [loading, setLoading] = useState(true);
 
+
   useEffect(() => {
     if (accountId) {
       const fetchTransactions = async () => {
         try {
           const response = await fetch(
-            `http://3.216.182.63:8095/GetTransactionsByAccountId/${accountId}`
+            `${process.env.REACT_APP_API_URL}/GetTransactionsByAccountId?accountid=${accountId}`
           );
           if (!response.ok) {
             throw new Error("Failed to fetch transactions");
@@ -27,6 +28,7 @@ const ViewTransactions = () => {
           setLoading(false);
         }
       };
+      
 
       fetchTransactions();
     } else {
@@ -35,6 +37,7 @@ const ViewTransactions = () => {
   }, [accountId]);
 
   const columns = [
+
     {
       title: "Reference Number",
       dataIndex: "transactionReference",
@@ -56,11 +59,7 @@ const ViewTransactions = () => {
       key: "transactionDate",
       render: (text) => new Date(text).toLocaleDateString("en-US"),
     },
-    {
-      title: "Description",
-      dataIndex: "description",
-      key: "description",
-    },
+    
     {
       title: "Running Balance",
       dataIndex: "runningBalance",
@@ -80,7 +79,7 @@ const ViewTransactions = () => {
 
   return (
     <div>
-      <h1>Transactions</h1>
+      <h1  style={{ marginBottom: "10px", marginTop: "10px", fontFamily: "Sans-serif"}}>Transactions</h1>
       <Table columns={columns} dataSource={transactions} loading={loading} rowKey="id" />
     </div>
   );
