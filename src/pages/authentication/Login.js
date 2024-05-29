@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import About from "../../components/About"; // Importing the About component
-import {Link, useNavigate} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -45,35 +45,36 @@ const Login = () => {
   };
 
   return (
-    <div className="flex">
+    <div className="flex" style={{ height: "95vh" }}> {/* Set height of the page */}
       <div className="form-side">
         <div className="form-content">
           <span className="greeting">
-            <h2 style={{ fontFamily: 'sans-serif', marginBottom: "0px" }}>Hello</h2>
-            <img src="/img/login.png" alt="login" />
+            <h2 style={{ fontFamily: 'sans-serif', marginTop: "20px", marginBottom: "0" }}>Hello</h2> {/* Adjust margin */}
+            <img src="/img/wave.png" alt="login" />
           </span>
-          <h5 style={{ fontFamily: 'sans-serif', marginTop: "0px" }}>Welcome back! You were missed.</h5>
+          {/*  */}
 
-          <div className="form-group">
+          <div className="form-group" style={{ marginBottom: "" }}> {/* Adjust margin */}
             <label htmlFor="username">Username:</label>
             <input
               type="text"
               id="username"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              style={{ fontFamily: 'sans-serif', marginBottom: "2px" }}
+              className="input-field" // Apply CSS class for input fields
             />
           </div>
-          <div className="form-group">
+          <div className="form-group" style={{ marginBottom: "" }}> {/* Adjust margin */}
             <label htmlFor="password">Password:</label>
             <input
               type={showPassword ? "text" : "password"} // Show password if checkbox is checked
               id="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              className="input-field" // Apply CSS class for input fields
             />
           </div>
-          <div >
+          <div style={{ marginBottom: "5px" }}>
             <input
               type="checkbox"
               id="showPassword"
@@ -84,7 +85,7 @@ const Login = () => {
             <label htmlFor="showPassword" style={{ marginBottom: "2px" }}>Show Password</label>
           </div>
           {feedback && <p>{feedback}</p>}
-          <button type="handleLogin" onClick={handleLogin} className="create-btn">
+          <button type="button" onClick={handleLogin} className="create-btn">
             Login
           </button>
           <p>Don’t have an account? <Link to="/signup">Register here</Link></p>
