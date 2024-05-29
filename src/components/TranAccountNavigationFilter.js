@@ -72,7 +72,13 @@ const TransactionNavigationFilter = ({
           onClick={toggleDropdown}
         />
         {dropdownVisible && (
-          <div className="absolute bg-white border rounded-md p-4 mt-2 shadow-lg">
+          <div
+            className="absolute bg-white border rounded-md p-4 mt-2 shadow-lg"
+            style={{
+              width: "270px",
+              left: "calc(100% - 270px)",
+            }}
+          >
             <RangePicker
               onChange={(dates) => setDateRange(dates)}
               style={{
@@ -82,7 +88,7 @@ const TransactionNavigationFilter = ({
                 paddingRight: "15px",
                 borderRadius: "24px",
                 paddingTop: "10px",
-                paddingBottom: "10px"
+                paddingBottom: "10px",
               }}
             />
             <button
@@ -94,7 +100,7 @@ const TransactionNavigationFilter = ({
                 color: "#4467a1",
                 padding: "10px",
                 borderRadius: "24px",
-                marginTop: "5px"
+                marginTop: "5px",
               }}
             >
               Apply Filter
