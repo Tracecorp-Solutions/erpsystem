@@ -40,6 +40,8 @@ const Transaction = () => {
   const [dateRange, setDateRange] = useState([]);
   const [noDataFound, setNoDataFound] = useState(false);
 
+  console.log("Date range", selectedAccount);
+
   useEffect(() => {
     fetchAccounts();
     fetchTransactions();
@@ -107,6 +109,10 @@ const Transaction = () => {
     }
   };
 
+  const handleBehaviorChange = (e) => {
+    const { value } = e.target;
+    setEditedAccount({ ...editedAccount, behaviour: value });
+  };
 
   const handleEditSubmit = async (e) => {
     e.preventDefault();
@@ -141,18 +147,17 @@ const Transaction = () => {
     setDropdownVisible({ ...dropdownVisible, [accountId]: visible });
   };
 
-  const handleEdit = async (accountId) => {
-    try {
-      const response = await axios.get(
-        `${process.env.REACT_APP_API_URL}/GetTransactionsByAccountId?accountid=${accountId}`
-      );
-      setSelectedAccount(response.data);
-      setEditedAccount(response.data);
-      setShowEditForm(true);
-    } catch (error) {
-      console.error("Error fetching account details for edit:", error);
-    }
-  };
+  // const handleEdit = async (accountId) => {
+  //   try {
+  //     const response = await axios.get(
+  //       `${process.env.REACT_APP_API_URL}/GetTransactionsByAccountId?accountid=${accountId}`
+  //     );
+  //     setEditedAccount(response.data);
+  //     setShowEditForm(true);
+  //   } catch (error) {
+  //     console.error("Error fetching account details for edit:", error);
+  //   }
+  // };
 
   const CancelEdit = () => {
     setShowEditForm(false);
@@ -190,13 +195,13 @@ const Transaction = () => {
       >
         View
       </Menu.Item>
-      <Menu.Item
+      {/* <Menu.Item
         key="2"
         onClick={() => handleEdit(accountId)}
         icon={<EditOutlined />}
       >
         Reverse
-      </Menu.Item>
+      </Menu.Item> */}
     </Menu>
   );
 

@@ -6,32 +6,14 @@ export default function TranAccountComponentSidebar({
   setDrawerVisible,
   drawerVisible,
   selectedAccount,
-  subGroupAccounts,
-  transactions, // Add transactions as a prop
 }) {
   const [modalVisible, setModalVisible] = useState(false);
-  const [selectedTransaction, setSelectedTransaction] = useState(null);
 
-  console.log("selected account", selectedAccount);
-
-  const getSubGroupName = () => {
-    if (!selectedAccount || !subGroupAccounts) return "N/A";
-    const subGroup = subGroupAccounts.find(
-      (item) => item.groupAccount.id === selectedAccount.id
-    );
-    return subGroup ? subGroup.subGroupAccount.name : "N/A";
-  };
-
-  const handleViewTransactions = (transactionId) => {
-    // Find the transaction with the provided ID
-    const transaction = transactions.find(
-      (transaction) => transaction.id === transactionId
-    );
-    // Set the selected transaction
-    setSelectedTransaction(transaction);
-    // Show the modal
-    setModalVisible(true);
-  };
+  // Calculate total transaction amount
+  const totalTransactionAmount = selectedAccount.reduce(
+    (total, transaction) => total + transaction.amount,
+    0
+  );
 
   return (
     <>
@@ -43,11 +25,13 @@ export default function TranAccountComponentSidebar({
         width={400}
         style={{ height: "100vh", overflow: "auto" }}
       >
-        <div style={{
-          display: "flex",
-          justifyContent: "end"
-        }}>
-        <button
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "end",
+          }}
+        >
+          <button
             type="button"
             onClick={() => setDrawerVisible(false)}
             className="relative rounded-md text-indigo-200 focus:outline-none focus:ring-2 focus:ring-white"
@@ -58,106 +42,115 @@ export default function TranAccountComponentSidebar({
           </button>
         </div>
         <div className="px- text-start">
-
           <div className="mt-5">
             <h3
               className="text-lg font-semibold mb-6 text-left"
               style={{
-                color: "#4467a1",
+                color: "#505050",
                 fontFamily: "outFit, Sans-serif",
-                fontSize: "24",
+                fontSize: "36px",
               }}
             >
-              TRANSACTION DETAILS
+              Transaction Details
             </h3>
-            <div className="px- text-start mb-6">
-              <h2 className="font-medium text-gray-400 text-left">
-                Transaction Amount{" "}
-              </h2>
-              <p className="text-gray-800">
-                {selectedAccount.transactionAmount}
-              </p>
-            </div>
-            <div className="flex justify-between">
-              {/* Displaying transaction reference */}
-              <Card
-                style={{
-                  width: 400,
-                  marginRight: "10px",
-                  background: "#f6f6f4",
-                }}
-              >
-                <h2 className="font-medium text-gray-600 text-left"
-                style={{
-                  fontSize: "12px",
-                  color: "#a1a1a1",
-                  fontFamily: "outFit, Sans-serif",
-                  fontWeight: "500"
-                }}
-                >
-                  Reference Number
-                </h2>
-                <p className="text-gray-800">
-                  {selectedAccount.transactionReference}
-                </p>
-              </Card>
+            <h2 className="font-medium text-gray-400 text-left"
+            style={{
+              fontSize: "12px"
+            }}
+            >
+              Transaction Amount{" "}
+            </h2>
+            {/* Display total transaction amount */}
+            <p className="text-gray-800" style={{
+              color: "#505050",
+              fontWeight: "600",
+              fontFamily: "outFit, Sans-serif"
+            }}>${totalTransactionAmount}</p>
+            {selectedAccount.map((data) => (
+              <div key={data.id}>
+                <div className="px- text-start mb-6">
+                  <p className="text-gray-800">{data.transactionAmount}</p>
+                </div>
+                <div className="flex justify-between">
+                  {/* Displaying transaction reference */}
+                  <Card
+                    style={{
+                      width: 400,
+                      marginRight: "10px",
+                      background: "#f6f6f4",
+                    }}
+                  >
+                    <h2
+                      className="font-medium text-gray-600 text-left"
+                      style={{
+                        fontSize: "12px",
+                        color: "#a1a1a1",
+                        fontFamily: "outFit, Sans-serif",
+                        fontWeight: "500",
+                      }}
+                    >
+                      Reference Number
+                    </h2>
+                    <p className="text-gray-800">{data.transactionReference}</p>
+                  </Card>
 
-              {/* Displaying transaction date */}
-              <Card style={{ width: 400, background: "#f6f6f4" }}>
-                <h2 className="font-medium text-gray-600 text-left"
-                 style={{
-                  fontSize: "12px",
-                  color: "#a1a1a1",
-                  fontFamily: "outFit, Sans-serif",
-                  fontWeight: "500"
-                }}
-                >
-                  Transaction Date
-                </h2>
-                <p className="text-gray-800">
-                  {selectedAccount.transactionDate}
-                </p>
-              </Card>
-            </div>
+                  {/* Displaying transaction date */}
+                  <Card style={{ width: 400, background: "#f6f6f4" }}>
+                    <h2
+                      className="font-medium text-gray-600 text-left"
+                      style={{
+                        fontSize: "12px",
+                        color: "#a1a1a1",
+                        fontFamily: "outFit, Sans-serif",
+                        fontWeight: "500",
+                      }}
+                    >
+                      Transaction Date
+                    </h2>
+                    <p className="text-gray-800">{data.transactionDate}</p>
+                  </Card>
+                </div>
 
-            {/* Displaying account from and account to */}
-            <div className="flex justify-between mt-5">
-              <Card
-                style={{
-                  width: 400,
-                  marginRight: "10px",
-                  background: "#f6f6f4",
-                }}
-              >
-                <h2 className="font-medium text-gray-600 text-left"
-                 style={{
-                  fontSize: "12px",
-                  color: "#a1a1a1",
-                  fontFamily: "outFit, Sans-serif",
-                  fontWeight: "500"
-                }}
-                >
-                  Account From
-                </h2>
-                <p className="text-gray-800">{selectedAccount.tranAccount}</p>
-              </Card>
+                {/* Displaying account from and account to */}
+                <div className="flex justify-between mt-5">
+                  <Card
+                    style={{
+                      width: 400,
+                      marginRight: "10px",
+                      background: "#f6f6f4",
+                    }}
+                  >
+                    <h2
+                      className="font-medium text-gray-600 text-left"
+                      style={{
+                        fontSize: "12px",
+                        color: "#a1a1a1",
+                        fontFamily: "outFit, Sans-serif",
+                        fontWeight: "500",
+                      }}
+                    >
+                      Account From
+                    </h2>
+                    <p className="text-gray-800">{data.tranAccount}</p>
+                  </Card>
 
-              <Card style={{ width: 400, background: "#f6f6f4" }}>
-                <h2 className="font-medium text-gray-600 text-left"
-                 style={{
-                  fontSize: "12px",
-                  color: "#a1a1a1",
-                  fontFamily: "outFit, Sans-serif",
-                  fontWeight: "500"
-                }}
-                >
-                  Account To
-                </h2>
-                <p className="text-gray-800">
-                  {selectedAccount.transactionType}
-                </p>
-              </Card>
-            </div>
+                  <Card style={{ width: 400, background: "#f6f6f4" }}>
+                    <h2
+                      className="font-medium text-gray-600 text-left"
+                      style={{
+                        fontSize: "12px",
+                        color: "#a1a1a1",
+                        fontFamily: "outFit, Sans-serif",
+                        fontWeight: "500",
+                      }}
+                    >
+                      Account To
+                    </h2>
+                    <p className="text-gray-800">{data.transactionType}</p>
+                  </Card>
+                </div>
+              </div>
+            ))}
             <h6
               className=" font-semibold mb-2 mt-8 text-left"
               style={{
@@ -175,20 +168,7 @@ export default function TranAccountComponentSidebar({
           visible={modalVisible}
           onCancel={() => setModalVisible(false)}
           footer={null}
-        >
-          {/* Render details of the selected transaction */}
-          {selectedTransaction && (
-            <div>
-              <h2>Transaction Details</h2>
-              <p>
-                Reference Number: {selectedTransaction.transactionReference}
-              </p>
-              <p>Transaction Date: {selectedTransaction.transactionDate}</p>
-              <p>Account From: {selectedTransaction.tranAccount}</p>
-              {/* Add more details as needed */}
-            </div>
-          )}
-        </Modal>
+        ></Modal>
       </Drawer>
     </>
   );
