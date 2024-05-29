@@ -79,7 +79,7 @@ const ViewTransactions = () => {
 
   return (
     <div>
-      <h1  style={{ marginBottom: "10px", marginTop: "10px", fontFamily: "Sans-serif"}}>Transactions</h1>
+      <h1  style={{ marginBottom: "10px", marginTop: "10px", fontFamily: "Sans-serif", color: "rgb(72, 164, 249)"}}>Transactions Under This Account</h1>
       <Table columns={columns} dataSource={transactions} loading={loading} rowKey="id" />
     </div>
   );
