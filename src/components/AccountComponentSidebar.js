@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Drawer, Modal, Card } from "antd";
 import { XMarkIcon } from "@heroicons/react/24/outline";
+import { useNavigate } from 'react-router-dom';
 
 export default function AccountComponentSidebar({
   setDrawerVisible,
@@ -8,8 +9,12 @@ export default function AccountComponentSidebar({
   selectedAccount,
   subGroupAccounts,
 }) {
+  const navigate = useNavigate();
   const [modalVisible, setModalVisible] = useState(false);
-  console.log("sub group", subGroupAccounts);
+
+  const handleViewTransaction = () => {
+    navigate(`/view-transaction/${selectedAccount.id}`, { state: { accountId: selectedAccount.id } });
+  };
 
   const getSubGroupName = () => {
     if (!selectedAccount || !subGroupAccounts) return "N/A";
@@ -18,8 +23,6 @@ export default function AccountComponentSidebar({
     );
     return subGroup ? subGroup.subGroupAccount.name : "N/A";
   };
-
-  console.log("Selected account name:", getSubGroupName());
 
   return (
     <>
@@ -79,7 +82,7 @@ export default function AccountComponentSidebar({
           </div>
           <div className="mt-5">
             <div className="flex justify-between">
-            <Card style={{ width: 360, background: "#f6f6f4", marginRight:"5px" }}>
+              <Card style={{ width: 360, background: "#f6f6f4", marginRight:"5px" }}>
                 <h2
                   style={{
                     textAlign: "start",
@@ -123,7 +126,7 @@ export default function AccountComponentSidebar({
                     fontFamily: "outFit, Sans-serif",
                   }}
                 >
-                  {getSubGroupName(selectedAccount.name)}
+                  {getSubGroupName()}
                 </p>
               </Card>
             </div>
@@ -159,8 +162,6 @@ export default function AccountComponentSidebar({
                   {selectedAccount.accountType}
                 </p>
               </Card>
-
-             
             </div>
           </div>
           <div style={{ marginTop: "25px" }}>
@@ -188,7 +189,8 @@ export default function AccountComponentSidebar({
               {selectedAccount.description}
             </p>
           </div>
-          <button type="button"
+          <button 
+            type="button"
             className="w-full mt-5"
             style={{
                 border: "1px solid #4467a1",
@@ -196,8 +198,10 @@ export default function AccountComponentSidebar({
                 borderRadius: "28px",
                 color: "#4467a1",
                 fontFamily: "outFit, Sans-serif"
-                }}>
-                View Transactions
+            }}
+            onClick={handleViewTransaction}
+          >
+            View Transactions
           </button>
         </div>
         <Modal

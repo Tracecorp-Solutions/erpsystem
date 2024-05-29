@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
-import About from '../../components/About'; // Importing the About component
+import About from '../../components/About';
 
 const ForgotPasswordPage = () => {
   const [formData, setFormData] = useState({
@@ -12,7 +12,8 @@ const ForgotPasswordPage = () => {
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const navigate = useNavigate(); // useNavigate hook to programmatically navigate
+
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
