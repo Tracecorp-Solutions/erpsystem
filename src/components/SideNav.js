@@ -25,7 +25,7 @@ function SideNav() {
             <p className="caption">Main menu</p>
           </li>
           <li>
-            <NavLink exact to="/" activeClassName="active">
+            <NavLink exact to="/dashboard" activeClassName="active">
               <LayoutDashboard /><span>Dashboard</span>
             </NavLink>
           </li>
