@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { Table } from "antd";
+import TopNav from "../components/TopNav";
+import SideNav from "../components/SideNav";
 
 const ViewTransactions = () => {
   const location = useLocation();
   const accountId = location.state?.accountId;
   const [transactions, setTransactions] = useState([]);
   const [loading, setLoading] = useState(true);
-
 
   useEffect(() => {
     if (accountId) {
@@ -28,7 +29,6 @@ const ViewTransactions = () => {
           setLoading(false);
         }
       };
-      
 
       fetchTransactions();
     } else {
@@ -37,7 +37,6 @@ const ViewTransactions = () => {
   }, [accountId]);
 
   const columns = [
-
     {
       title: "Reference Number",
       dataIndex: "transactionReference",
@@ -59,7 +58,7 @@ const ViewTransactions = () => {
       key: "transactionDate",
       render: (text) => new Date(text).toLocaleDateString("en-US"),
     },
-    
+
     {
       title: "Running Balance",
       dataIndex: "runningBalance",
@@ -78,10 +77,28 @@ const ViewTransactions = () => {
   ];
 
   return (
-    <div>
-      <h1  style={{ marginBottom: "10px", marginTop: "10px", fontFamily: "Sans-serif", color: "rgb(72, 164, 249)"}}>Transactions Under This Account</h1>
-      <Table columns={columns} dataSource={transactions} loading={loading} rowKey="id" />
-    </div>
+    <>
+      <SideNav />
+      <div className="content">
+        <TopNav />
+        <h1
+          style={{
+            marginBottom: "10px",
+            marginTop: "10px",
+            fontFamily: "Sans-serif",
+            color: "rgb(72, 164, 249)",
+          }}
+        >
+          Transactions Under This Account
+        </h1>
+        <Table
+          columns={columns}
+          dataSource={transactions}
+          loading={loading}
+          rowKey="id"
+        />
+      </div>
+    </>
   );
 };
 

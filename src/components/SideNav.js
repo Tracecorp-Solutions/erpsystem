@@ -123,11 +123,11 @@ function SideNav() {
               </button>
               {openDropdown === 'billsInvoices' && (
                 <div className="dropdown-menu">
-                  <NavLink to="/bills" activeClassName="active">
+                  <NavLink to="/billing" activeClassName="active">
                     <Minus />
                     <span>Bills</span>
                   </NavLink>
-                  <NavLink to="/invoices" activeClassName="active">
+                  <NavLink to="/invoice" activeClassName="active">
                     <Minus />
                     <span>Invoices</span>
                   </NavLink>
