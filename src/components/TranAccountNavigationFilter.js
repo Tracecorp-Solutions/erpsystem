@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Switch, Input, Button, DatePicker } from "antd";
-import axios from "axios";
 import { FilterOutlined, SearchOutlined } from "@ant-design/icons";
 import "../styles/components/AccountNavigationFilter.css";
 
@@ -76,11 +75,30 @@ const TransactionNavigationFilter = ({
           <div className="absolute bg-white border rounded-md p-4 mt-2 shadow-lg">
             <RangePicker
               onChange={(dates) => setDateRange(dates)}
-              style={{ marginBottom: "8px", width: "100%" }}
+              style={{
+                marginBottom: "8px",
+                width: "100%",
+                paddingLeft: "15px",
+                paddingRight: "15px",
+                borderRadius: "24px",
+                paddingTop: "10px",
+                paddingBottom: "10px"
+              }}
             />
-            <Button type="primary" onClick={handleFilter}>
+            <button
+              type="button"
+              onClick={handleFilter}
+              style={{
+                border: "1px solid #4467A1",
+                width: "100%",
+                color: "#4467a1",
+                padding: "10px",
+                borderRadius: "24px",
+                marginTop: "5px"
+              }}
+            >
               Apply Filter
-            </Button>
+            </button>
           </div>
         )}
       </div>
