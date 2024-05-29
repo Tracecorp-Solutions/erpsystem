@@ -196,6 +196,7 @@ namespace Services.Repositories
             user.PhoneNumber = userDTO.PhoneNumber;
             user.DateOfBirth = userDTO.DateOfBirth;
             user.Gender = userDTO.Gender;
+            user.Active = true;
 
             await _context.SaveChangesAsync();
             await LogActionAsync(user.Email, "User details updated");
