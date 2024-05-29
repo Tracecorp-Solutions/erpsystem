@@ -1,0 +1,19 @@
+.group-btn {
+    border: 2px solid #4467a1;
+    border-radius: 20px;
+    margin-top: 15px;
+    font-family: out-fit;
+    color: #A1A1A1;
+}
+
+.dots {
+    text-align: center;
+    border-radius: 50%;
+    background: #F6F6F4;
+    height: 48px;
+}
+
+.description {
+    font-family: out-fit;
+    color: #A1A1A1;
+}
