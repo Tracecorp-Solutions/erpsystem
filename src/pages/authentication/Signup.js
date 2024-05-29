@@ -12,7 +12,7 @@ function RegistrationForm() {
     event.preventDefault();
 
     try {
-      const response = await fetch('http://3.216.182.63:8095/RegisterUser', {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/RegisterUser`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

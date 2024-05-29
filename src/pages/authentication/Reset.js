@@ -17,7 +17,7 @@ const ResetPasswordComponent = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://3.216.182.63:8095/ResetPassword", {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/ResetPassword`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -22,7 +22,7 @@ const ForgotPasswordPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://3.216.182.63:8095/ChangePassword', formData);
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/ChangePassword`, formData);
       if (response.status === 200) {
         setMessage('Password changed successfully.');
         navigate('/');

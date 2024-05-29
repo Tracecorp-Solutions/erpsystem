@@ -11,7 +11,7 @@ function VerifyUserComponent() {
 
   const handleVerify = async () => {
     try {
-      const response = await axios.post('http://3.216.182.63:8095/VerifyUser', {
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/VerifyUser`, {
         email,
         otp,
       });
