@@ -1,41 +1,35 @@
 import React, { useState } from "react";
 import About from "../../components/About"; // Importing the About component
 import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [feedback, setFeedback] = useState("");
   const [showPassword, setShowPassword] = useState(false); // Define showPassword state
+  const[loading,setloading] = useState(false);// set loading state
 
   const navigate = useNavigate(); // useNavigate hook to programmatically navigate
 
-  const handleLogin = async () => {
-    try {
-      const response = await fetch(
-        `${process.env.REACT_APP_API_URL}/AuthenticateUser`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            username: username,
-            password: password,
-          }),
-        }
-      );
-
-      if (response.ok) {
-        setFeedback("Login successful!");
-        // Do something after successful login, like redirecting to another page
-        navigate('/profile');
-      } else {
-        setFeedback("Invalid username or password");
-      }
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    //set state to load as you call the api
+    setloading(true);
+    try
+     {
+      //call the authenticate user api
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/AuthenticateUser`,{username,password});
+      const token = response.data;
+      //store token in the session
+      sessionStorage.setItem("token",token);
+      //navigate profile to process user
+      navigate('/profile');
     } catch (error) {
-      console.error("Error logging in:", error);
-      setFeedback("An error occurred while logging in");
+      setFeedback(`Error logging in ${error}`);
+    }finally
+    {
+      setloading(false);
     }
   };
 
@@ -85,8 +79,8 @@ const Login = () => {
             <label htmlFor="showPassword" style={{ marginBottom: "2px" }}>Show Password</label>
           </div>
           {feedback && <p>{feedback}</p>}
-          <button type="button" onClick={handleLogin} className="create-btn">
-            Login
+          <button id="formbutton" type="button" onClick={handleLogin} className="create-btn" disabled={loading}>
+          {loading ? 'Authenticating...' : 'Login'}
           </button>
           <p>Don’t have an account? <Link to="/signup">Register here</Link></p>
         </div>

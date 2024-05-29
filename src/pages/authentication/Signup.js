@@ -7,10 +7,11 @@ function RegistrationForm() {
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
   const navigate = useNavigate(); // useNavigate hook to programmatically navigate
+  const[loading,setloading] = useState(false);// set loading state
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
+    setloading(true);
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/RegisterUser`, {
         method: 'POST',
@@ -30,6 +31,9 @@ function RegistrationForm() {
       }
     } catch (error) {
       setMessage(`Error: ${error.message}`);
+      setloading(false);
+    }finally{
+      setloading(false);
     }
   };
 
@@ -74,8 +78,9 @@ function RegistrationForm() {
                 required
               />
             </div>
-            <button type="submit" className="create-btn">
-              Create an account
+            <button type="submit" className="create-btn" disabled={loading}>
+              
+              {loading ? 'Creating account.......' : 'Create an account'}
             </button>
           </form>
           <p>
