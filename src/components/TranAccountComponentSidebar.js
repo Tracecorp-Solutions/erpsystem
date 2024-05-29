@@ -12,7 +12,7 @@ export default function TranAccountComponentSidebar({
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedTransaction, setSelectedTransaction] = useState(null);
 
-  console.log("sub group", subGroupAccounts);
+  console.log("selected account", selectedAccount);
 
   const getSubGroupName = () => {
     if (!selectedAccount || !subGroupAccounts) return "N/A";
@@ -43,8 +43,11 @@ export default function TranAccountComponentSidebar({
         width={400}
         style={{ height: "100vh", overflow: "auto" }}
       >
-        <div className="px- text-start">
-          <button
+        <div style={{
+          display: "flex",
+          justifyContent: "end"
+        }}>
+        <button
             type="button"
             onClick={() => setDrawerVisible(false)}
             className="relative rounded-md text-indigo-200 focus:outline-none focus:ring-2 focus:ring-white"
@@ -53,6 +56,8 @@ export default function TranAccountComponentSidebar({
             <span className="sr-only">Close panel</span>
             <XMarkIcon className="h-10 w-10" aria-hidden="true" />
           </button>
+        </div>
+        <div className="px- text-start">
 
           <div className="mt-5">
             <h3
@@ -82,7 +87,14 @@ export default function TranAccountComponentSidebar({
                   background: "#f6f6f4",
                 }}
               >
-                <h2 className="font-medium text-gray-600 text-left">
+                <h2 className="font-medium text-gray-600 text-left"
+                style={{
+                  fontSize: "12px",
+                  color: "#a1a1a1",
+                  fontFamily: "outFit, Sans-serif",
+                  fontWeight: "500"
+                }}
+                >
                   Reference Number
                 </h2>
                 <p className="text-gray-800">
@@ -92,7 +104,14 @@ export default function TranAccountComponentSidebar({
 
               {/* Displaying transaction date */}
               <Card style={{ width: 400, background: "#f6f6f4" }}>
-                <h2 className="font-medium text-gray-600 text-left">
+                <h2 className="font-medium text-gray-600 text-left"
+                 style={{
+                  fontSize: "12px",
+                  color: "#a1a1a1",
+                  fontFamily: "outFit, Sans-serif",
+                  fontWeight: "500"
+                }}
+                >
                   Transaction Date
                 </h2>
                 <p className="text-gray-800">
@@ -110,14 +129,28 @@ export default function TranAccountComponentSidebar({
                   background: "#f6f6f4",
                 }}
               >
-                <h2 className="font-medium text-gray-600 text-left">
+                <h2 className="font-medium text-gray-600 text-left"
+                 style={{
+                  fontSize: "12px",
+                  color: "#a1a1a1",
+                  fontFamily: "outFit, Sans-serif",
+                  fontWeight: "500"
+                }}
+                >
                   Account From
                 </h2>
                 <p className="text-gray-800">{selectedAccount.tranAccount}</p>
               </Card>
 
               <Card style={{ width: 400, background: "#f6f6f4" }}>
-                <h2 className="font-medium text-gray-600 text-left">
+                <h2 className="font-medium text-gray-600 text-left"
+                 style={{
+                  fontSize: "12px",
+                  color: "#a1a1a1",
+                  fontFamily: "outFit, Sans-serif",
+                  fontWeight: "500"
+                }}
+                >
                   Account To
                 </h2>
                 <p className="text-gray-800">

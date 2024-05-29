@@ -40,8 +40,6 @@ const Transaction = () => {
   const [dateRange, setDateRange] = useState([]);
   const [noDataFound, setNoDataFound] = useState(false);
 
-  console.log("Date range", dateRange);
-
   useEffect(() => {
     fetchAccounts();
     fetchTransactions();
@@ -109,10 +107,6 @@ const Transaction = () => {
     }
   };
 
-  const handleBehaviorChange = (e) => {
-    const { value } = e.target;
-    setEditedAccount({ ...editedAccount, behaviour: value });
-  };
 
   const handleEditSubmit = async (e) => {
     e.preventDefault();
