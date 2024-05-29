@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import RegisterCompany from "./RegisterCompany";
 import { CheckCircleOutlined } from '@ant-design/icons';
 import axios from "axios";
@@ -7,9 +7,12 @@ import UserGroup from "./UserGroup";
 // import UserInvitation from "./UserInvitation";
 import CongratulationsCard from "./CongratulationMessage";
 import Header from "./Header";
+import { useNavigate } from "react-router-dom";
 // import "."
 
 const Profile = () => {
+  //declare states
+  const [user, setUser] = useState(null);
   const [currentStep, setCurrentStep] = useState(1);
   const [userData, setUserData] = useState({
     Username: "",
@@ -26,9 +29,32 @@ const Profile = () => {
     DateOfBirth: "",
     file: ""
   });
+  //declare state to navigate through pages
+  const navigate = useNavigate();
+  useEffect(() => {
+    const token = sessionStorage.getItem('token');// get token received from the login
+    if (!token) {
+      navigate('/login');
+      return;
+    }
 
+    const fetchUser = async () => {
+      try {
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/GetUserByToken/${token}`);// get all the user details using the token
+        const userData = response.data;
+        setUser(userData);
+        // if (!userData.isAdmin) {
+        //   navigate('/Dashboard');
+        // }
+      } catch (error) {
+        console.error('Failed to fetch user:', error);
+        //navigate('/');
+      }
+    };
+
+    fetchUser();
+  }, [navigate]);
   const maxSteps = 3;
-
   const moveToNextStep = () => {
     setCurrentStep(currentStep + 1);
   };
