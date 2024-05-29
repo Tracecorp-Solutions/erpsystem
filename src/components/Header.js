@@ -43,6 +43,7 @@ import TrialBalance from "../pages/TrialBalance";
 import Transactions from "../pages/Transactions";
 import Customer from "../pages/Customer";
 import BillsForm from "./BillsForm";
+import InvoiceSidebar from './InvoiceSidebar';
 import InvoiceForm from "./InvoiceForm";
 import EditInvoiceForm from "./EditInvoiceForm";
 import ViewTransaction from "../pages/ViewTransaction"
@@ -682,15 +683,15 @@ export default function Main() {
                 <Route path="/create-invoice" element={<InvoiceForm />} />
                 <Route path="/edit-invoice/:id" element={<EditInvoiceForm />} />
                 <Route path="view-transaction/:accountId" element={<ViewTransaction />} />
-
+                <Route path="/view-invoice/:id" element={<InvoiceSidebar />} />
 
               </Routes>
             </div>
           </main>
         </div>
       </div>
-   </Fragment>
-     
-  
+      
+    </>
+
   );
 }

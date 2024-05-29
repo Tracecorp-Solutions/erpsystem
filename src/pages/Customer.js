@@ -9,6 +9,9 @@ import ReusableEmptyData from "../components/ReusableEmptyData";
 import CustomerForm from "../components/CustomerForm";
 import SlideInCard from "../components/SlideInCard ";
 import CustomerSidebar from "../components/CustomerSidebar";
+import TopNav from "../components/TopNav";
+import SideNav from "../components/SideNav";
+
 
 const Customer = () => {
   const [formData, setFormData] = useState({
@@ -189,7 +192,12 @@ const Customer = () => {
   };
 
   return (
-    <div>
+    <>
+    <SideNav/>
+      <div className="content">
+        <TopNav/>
+
+  
       <div
         style={{
           display: "flex",
@@ -388,6 +396,9 @@ const Customer = () => {
         </div>
       </div>
     </div>
+
+    </>   
+
   );
 };
 

@@ -30,6 +30,7 @@ import {
 } from "@heroicons/react/20/solid";
 import LineGraph from "../components/LineGraph";
 import BarGraph from "../components/BarGraph";
+import SideNav from "../components/SideNav";
 
 const cards = [
   { name: "Account balance", href: "#", icon: ScaleIcon, amount: "$30,659.45" },
@@ -118,7 +119,7 @@ const stats = [
   },
 ];
 
-export default function Example() {
+export default function Dashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
@@ -131,7 +132,7 @@ export default function Example() {
         <body class="h-full">
         ```
       */}
-
+      <SideNav/>
       <main className="flex-1 pb-6 bg-gray-200 rounded-md">
         {/* Page header */}
         <div className="bg-gray-200 shadow rounded-xl">
