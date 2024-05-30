@@ -41,11 +41,7 @@ const Profile = () => {
     const fetchUser = async () => {
       try {
         const response = await axios.get(`${process.env.REACT_APP_API_URL}/GetUserByToken/${token}`);// get all the user details using the token
-        const userData = response.data;
-        console.log("************************************************");
-        console.log(userData);
-        console.log("************************************************");
-        setUser(userData);
+        setUserData(response.data);
         if(userData.organisation && userData.verified && userData.active)// navigate to the dashboard if the user is active and verified
         {
           navigate('/Dashboard');
@@ -95,7 +91,7 @@ const Profile = () => {
 
   return (
     <div>
-      {currentStep <= maxSteps && <Header />}
+      {currentStep <= maxSteps && <Header userData={userData} />}
       <div
         style={{
           justifyContent: "space-between",

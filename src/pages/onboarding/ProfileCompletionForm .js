@@ -3,9 +3,6 @@ import React, { useState, useRef } from "react";
 const ProfileCompletionForm = ({ HandleSubmit, userData, setUserData }) => {
   const [imagePreview, setImagePreview] = useState(null);
   const fileInputRef = useRef(null);
-  console.log("Profile completion data ***************************");
-  console.log(userData);
-  console.log("Profile completion data ***************************");
   const handleButtonClick = () => {
     fileInputRef.current.click();
   };
@@ -81,7 +78,7 @@ const ProfileCompletionForm = ({ HandleSubmit, userData, setUserData }) => {
                     className="border border-gray-300 rounded px-3 py-1 w-full"
                     style={{ padding: "10px", borderRadius: "12px" }}
                     placeholder="Enter your full name"
-                  />
+                  disabled/>
                 </div>
                 <div className="mb-4">
                   <label
@@ -147,12 +144,12 @@ const ProfileCompletionForm = ({ HandleSubmit, userData, setUserData }) => {
                   <input
                     type="email"
                     name="Email"
-                    value={userData.Email}
+                    value={userData.email}
                     onChange={handleChange}
                     className="border border-gray-300 rounded px-3 py-1 w-full"
                     style={{ padding: "10px", borderRadius: "12px" }}
                     placeholder="Enter your emaill dresses"
-                  />
+                  disabled/>
                 </div>
                 <div className="mb-4">
                   <label
