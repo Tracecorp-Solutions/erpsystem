@@ -3,7 +3,9 @@ import React, { useState, useRef } from "react";
 const ProfileCompletionForm = ({ HandleSubmit, userData, setUserData }) => {
   const [imagePreview, setImagePreview] = useState(null);
   const fileInputRef = useRef(null);
-
+  console.log("Profile completion data ***************************");
+  console.log(userData);
+  console.log("Profile completion data ***************************");
   const handleButtonClick = () => {
     fileInputRef.current.click();
   };
@@ -74,7 +76,7 @@ const ProfileCompletionForm = ({ HandleSubmit, userData, setUserData }) => {
                   <input
                     type="text"
                     name="FullName"
-                    value={userData.FullName}
+                    value={userData.fullName}
                     onChange={handleChange}
                     className="border border-gray-300 rounded px-3 py-1 w-full"
                     style={{ padding: "10px", borderRadius: "12px" }}
