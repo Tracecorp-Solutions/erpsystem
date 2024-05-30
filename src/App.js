@@ -22,6 +22,7 @@ import InvoiceSidebar from "./components/InvoiceSidebar";
 import InvoiceForm from "./components/InvoiceForm";
 import EditInvoiceForm from "./components/EditInvoiceForm";
 import Invoice from "./pages/Invoice";
+import Layout from "./shared/auth/shared/Layout";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -71,6 +72,7 @@ function App() {
               <Route path="/forgot" element={<Forgot />} />
               <Route path="/company" element={<Company />} />
               <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/layout" element={<Layout/>}/>
               <Route
                 path="view-transaction/:accountId"
                 element={<ViewTransaction />}

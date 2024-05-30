@@ -1,15 +1,19 @@
+//imports
 import React, { useState } from "react";
-import About from "../../components/About"; // Importing the About component
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+//end of imports 
+
 
 const Login = () => {
+  // states section
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [feedback, setFeedback] = useState("");
   const [showPassword, setShowPassword] = useState(false); // Define showPassword state
   const[loading,setloading] = useState(false);// set loading state
-
+  // end of state section
+    
   const navigate = useNavigate(); // useNavigate hook to programmatically navigate
 
   const handleLogin = async (e) => {
@@ -38,9 +42,8 @@ const Login = () => {
     setShowPassword((prevState) => !prevState);
   };
 
-  return (
-    <div className="flex"> {/* Set height of the page */}
-      <div className="form-side">
+    return (
+        <div className="form-side">
         <div className="form-content">
           <span className="greeting">
             <h2 style={{ fontFamily: 'sans-serif', marginTop: "20px", marginBottom: "0" }}>Hello</h2> {/* Adjust margin */}
@@ -84,10 +87,8 @@ const Login = () => {
           </button>
           <p>Don’t have an account? <Link to="/signup">Register here</Link></p>
         </div>
-      </div>
-      <About />
-    </div>
-  );
-};
+      </div> 
+    );
+}
 
 export default Login;

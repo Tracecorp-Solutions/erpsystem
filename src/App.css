@@ -386,11 +386,14 @@ button[type="submit"] {
 
 .img-content {
   width: 70%;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 48px;
+  overflow-y: hidden;
+  padding-top: 24px;
 }
 
 .form-side form {
@@ -404,7 +407,7 @@ button[type="submit"] {
 
 .img-side {
   background-color: #4467A1;
-  height: 100vh;
+  height: 100%;
   color: #FFFFFF;
 }
 
@@ -435,7 +438,7 @@ button[type="submit"] {
 }
 
 .img-wrapper {
-  height: 400px;
+  height: 10%;
 }
 
 .ProfileContainer {
@@ -877,18 +880,9 @@ button[type= "handleLogin"] {
 }
 
 .form-content {
-  width: 70%;
+  width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 48px;
-}
-
-.img-content {
-  width: 70%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
   gap: 48px;
 }
 
@@ -900,12 +894,6 @@ button[type= "handleLogin"] {
   display: flex;
   width: 100%;
 } */
-
-.img-side {
-  background-color: #4467A1;
-  height: 100vh;
-  color: #FFFFFF;
-}
 
 .greeting {
   display: flex;
@@ -948,8 +936,15 @@ button[type= "handleLogin"] {
 }
 
 @media (max-width: 1024px) {
-  .flex {
-    flex-direction: column-reverse
+  .img-content {
+    display: none;
+    border: 2px solid red;
+  }
+
+  .AppContainer {
+    display: block;
+    height: 100%;
+    margin: 10px;
   }
 
   .form-side {
@@ -974,16 +969,34 @@ button[type= "handleLogin"] {
   }
 }
 
-@media (max-width: 768px) {
+@media screen and (max-width: 768px) {
+  .form-content {
+    width: 100%;
+    justify-content: center;
+  }
+
   .img-side {
     display: none;
   }
 
-}
-
-@media (max-width: 480px) {
   .form-content {
-    width: 70%;
+    width: 100%;
+   justify-content: center;
+    display: flex;    
+  }
+  
+  .form-side {
+    width: 100%;
+  }
+
+  .AppContainer {
+    display: block;
+    height: 100%;
+    margin: 10px;
+  }
+
+  .img-content {
+    display: none;
   }
 }
 
@@ -1003,8 +1016,3 @@ button[type= "handleLogin"] {
 
 }
 
-@media (max-width: 480px) {
-  .form-content {
-    width: 70%;
-  }
-}
