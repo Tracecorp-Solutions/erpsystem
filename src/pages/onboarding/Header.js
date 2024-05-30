@@ -1,6 +1,6 @@
 import React from "react";
 
-const Header = () => {
+const Header = ({userData}) => {
   return (
     <nav className="p-4" style={{
         background: "#fff"
@@ -11,7 +11,7 @@ const Header = () => {
             <img src="../images/imagelogo.svg" />
           </h1>
           <div className="flex items-center">
-            <button className="mr-4">Hello, Kinyera Amos!</button>
+            <button className="mr-4">Hello, {userData.fullName}!</button>
           </div>
         </div>
       </div>

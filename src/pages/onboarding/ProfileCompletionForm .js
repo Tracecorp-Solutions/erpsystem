@@ -74,7 +74,7 @@ const ProfileCompletionForm = ({ HandleSubmit, userData, setUserData }) => {
                   <input
                     type="text"
                     name="FullName"
-                    value={userData.FullName}
+                    value={userData.fullName}
                     onChange={handleChange}
                     className="border border-gray-300 rounded px-3 py-1 w-full"
                     style={{ padding: "10px", borderRadius: "12px" }}
@@ -145,7 +145,7 @@ const ProfileCompletionForm = ({ HandleSubmit, userData, setUserData }) => {
                   <input
                     type="email"
                     name="Email"
-                    value={userData.Email}
+                    value={userData.email}
                     onChange={handleChange}
                     className="border border-gray-300 rounded px-3 py-1 w-full"
                     style={{ padding: "10px", borderRadius: "12px" }}
