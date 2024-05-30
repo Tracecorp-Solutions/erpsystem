@@ -3,7 +3,9 @@ import React, { useState, useRef } from "react";
 const ProfileCompletionForm = ({ HandleSubmit, userData, setUserData }) => {
   const [imagePreview, setImagePreview] = useState(null);
   const fileInputRef = useRef(null);
-
+  console.log("Profile completion data ***************************");
+  console.log(userData);
+  console.log("Profile completion data ***************************");
   const handleButtonClick = () => {
     fileInputRef.current.click();
   };
