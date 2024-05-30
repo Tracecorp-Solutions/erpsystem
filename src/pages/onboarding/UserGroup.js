@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-const UserGroup = ({ moveToNextStep }) => {
+const UserGroup = ({ moveToNextStep,loading }) => {
   const [formData, setFormData] = useState({
     emails: [],
     roleId: "",
@@ -215,8 +215,9 @@ const UserGroup = ({ moveToNextStep }) => {
               color: "#fff",
             }}
             onClick={handleSubmit}
-          >
-            Invite Users
+          disabled={loading}>
+            { loading? "Inviting users .." : "Invite Users"}
+            
           </button>
         </div>
       </div>

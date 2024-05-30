@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 
-const RegisterCompany = ({HandleSubmit, userData, setUserData}) => {
+const RegisterCompany = ({HandleSubmit, userData, setUserData, loading}) => {
   const [imagePreview, setImagePreview] = useState(null);
  
   const fileInputRef = useRef(null);
@@ -263,8 +263,8 @@ const RegisterCompany = ({HandleSubmit, userData, setUserData}) => {
               marginBottom: "10px",
             }}
             onClick={HandleSubmit}
-          >
-            Save Company
+          disabled={loading}>
+            {loading ? 'Saving company inforamtion...' : 'Save Company'}
           </button>
         </div>
       </div>
