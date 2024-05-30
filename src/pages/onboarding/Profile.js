@@ -11,24 +11,28 @@ import { useNavigate } from "react-router-dom";
 // import "."
 
 const Profile = () => {
+  const[loading,setloading] = useState(false);// set loading state
   //declare states
   const [user, setUser] = useState(null);
   const [currentStep, setCurrentStep] = useState(1);
   const [userData, setUserData] = useState({
-    Username: "",
-    FullName: "",
-    OrganizationName: "",
-    CountryOfOperation: "",
-    Email: "",
+    username: "",
+    fullName: "",
+    organizationName: "",
+    countryOfOperation: "",
+    email: "",
     verified: false,
     active: false,
-    Title: "",
-    Gender: "",
+    title: "",
+    gender: "",
     isAdmin: false,
-    PhoneNumber: "",
-    DateOfBirth: "",
+    phoneNumber: "",
+    dateOfBirth: "",
     file: ""
   });
+  console.log("State testing ********************************");
+  console.log(userData);
+  console.log("State testing ********************************");
   //declare state to navigate through pages
   const navigate = useNavigate();
   useEffect(() => {
@@ -61,16 +65,16 @@ const Profile = () => {
 
   const HandleSubmit = async (e) => {
     e.preventDefault();
+    setloading(true);
     try {
       const formData = new FormData();
-      formData.append('FullName', userData.FullName);
-      formData.append('Email', userData.Email);
-      formData.append('PhoneNumber', userData.PhoneNumber);
-      formData.append('DateOfBirth', userData.DateOfBirth);
-      formData.append('CountryOfOperation', userData.CountryOfOperation);
-      formData.append('OrganizationName', userData.OrganizationName);
+      formData.append('fullName', userData.fullName);
+      formData.append('email', userData.email);
+      formData.append('phoneNumber', userData.phoneNumber);
+      formData.append('dateOfBirth', userData.dateOfBirth);
+      formData.append('countryOfOperation', userData.countryOfOperation);
+      formData.append('organizationName', userData.organizationName);
       formData.append('file', userData.file);
-      
       const response = await axios.post(
         `${process.env.REACT_APP_API_URL}/UpdateUserDetails`,
         formData,
@@ -81,10 +85,11 @@ const Profile = () => {
           }
         }
       );
-      console.log("User created:", response.data);
+      setloading(false);// reset the state to false
       moveToNextStep();
+      
     } catch (error) {
-      console.error("Error creating user:", error);
+      console.error("Error creating user:", error.data);
     }
   };
   
@@ -155,10 +160,10 @@ const Profile = () => {
           }}
         >
           {currentStep === 1 && (
-            <ProfileCompletionForm moveToNextStep={moveToNextStep} HandleSubmit={HandleSubmit} userData={userData} setUserData={setUserData} />
+            <ProfileCompletionForm moveToNextStep={moveToNextStep} HandleSubmit={HandleSubmit} userData={userData} setUserData={setUserData} loading={loading} />
           )}
-          {currentStep === 2 && <RegisterCompany moveToNextStep={moveToNextStep} HandleSubmit={HandleSubmit} userData={userData} setUserData={setUserData} />}
-          {currentStep === 3 && <UserGroup moveToNextStep={moveToNextStep} HandleSubmit={HandleSubmit} userData={userData} setUserData={setUserData} />}
+          {currentStep === 2 && <RegisterCompany moveToNextStep={moveToNextStep} HandleSubmit={HandleSubmit} userData={userData} setUserData={setUserData} loading={loading} />}
+          {currentStep === 3 && <UserGroup moveToNextStep={moveToNextStep} HandleSubmit={HandleSubmit} userData={userData} setUserData={setUserData} loading={loading} />}
           {currentStep > maxSteps && <CongratulationsCard />}
 
         </div>
