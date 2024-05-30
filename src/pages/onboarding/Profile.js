@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
   //declare states
+  const [user, setUser] = useState(null);
   const [currentStep, setCurrentStep] = useState(1);
   const [userData, setUserData] = useState({
     Username: "",
@@ -19,16 +20,15 @@ const Profile = () => {
     OrganizationName: "",
     CountryOfOperation: "",
     Email: "",
-    Verified: false,
-    Active: false,
+    verified: false,
+    active: false,
     Title: "",
     Gender: "",
-    IsAdmin: false,
+    isAdmin: false,
     PhoneNumber: "",
     DateOfBirth: "",
     file: ""
   });
-
   //declare state to navigate through pages
   const navigate = useNavigate();
   useEffect(() => {
@@ -41,9 +41,8 @@ const Profile = () => {
     const fetchUser = async () => {
       try {
         const response = await axios.get(`${process.env.REACT_APP_API_URL}/GetUserByToken/${token}`);// get all the user details using the token
-        const userData = response.data;
-        setUserData(userData);
-        if(userData.organisation && userData.verified && userData.active)// navigate to the dashboard if the user is active and verified
+        setUserData(response.data);
+        if(userData.organisation && userData.verified && userData.active && userData.isAdmin)// navigate to the dashboard if the user is active and verified
         {
           navigate('/Dashboard');
         }
