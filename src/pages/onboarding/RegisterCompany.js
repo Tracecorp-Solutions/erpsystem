@@ -149,6 +149,7 @@ const RegisterCompany = ({HandleSubmit, userData, setUserData, loading}) => {
                   <option value="Canada">Canada</option>
                   <option value="Australia">Australia</option>
                   <option value="Germany">Germany</option>
+                  <option value="Uganda">Uganda</option>
                 </select>
               </div>
             </div>

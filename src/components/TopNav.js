@@ -9,7 +9,12 @@ function TopNav() {
   };
 
   return (
-    <div className="topnav">
+    <div className="topnav" style={{
+      position: 'sticky',
+      right: 0,
+      width: '100%'
+      
+      }}>
       <ul>
         <li>
           <Link to="/" className="btn">

@@ -6,7 +6,7 @@
 }
 
 .sidenav {
-  height: 100vh;
+  height: 100%;
   width: 20%;
   overflow-y: auto;
 }
