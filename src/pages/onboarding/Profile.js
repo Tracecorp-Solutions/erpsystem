@@ -20,11 +20,11 @@ const Profile = () => {
     OrganizationName: "",
     CountryOfOperation: "",
     Email: "",
-    Verified: false,
-    Active: false,
+    verified: false,
+    active: false,
     Title: "",
     Gender: "",
-    IsAdmin: false,
+    isAdmin: false,
     PhoneNumber: "",
     DateOfBirth: "",
     file: ""
@@ -42,7 +42,7 @@ const Profile = () => {
       try {
         const response = await axios.get(`${process.env.REACT_APP_API_URL}/GetUserByToken/${token}`);// get all the user details using the token
         setUserData(response.data);
-        if(userData.organisation && userData.verified && userData.active)// navigate to the dashboard if the user is active and verified
+        if(userData.organisation && userData.verified && userData.active && userData.isAdmin)// navigate to the dashboard if the user is active and verified
         {
           navigate('/Dashboard');
         }
