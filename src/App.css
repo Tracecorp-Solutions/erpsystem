@@ -947,6 +947,24 @@ button[type= "handleLogin"] {
   color: #505050;
 }
 
+.card-width {
+  width: 49%;
+}
+
+.side-nav {
+  overflow: auto;
+}
+
+.main-content {
+  width: 94%;
+  height: calc(100vh - 72px);
+  overflow: auto;
+}
+
+.bg-active-green {
+  background-color: #C0D67C;
+}
+
 @media (max-width: 1024px) {
   .flex {
     flex-direction: column-reverse
