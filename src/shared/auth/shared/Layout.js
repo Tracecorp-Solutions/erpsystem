@@ -1,19 +1,21 @@
 import { useLocation } from "react-router-dom";
 import Login from "../../auth/Login";
 import Signup from "../../auth/Signup";
+import VerifyUser from "./VerifyUser";
+import SetPassword from "./SetPassword";
 
 function Layout() {
   const location = useLocation();
   const { state } = location;
   const screen = state?.screen || 'login';
-
-  console.log("Current screen:", screen); // Log the current screen
-
   return (
     <div className="flex">
       <div className="form-side">
         <div className="form-content">
-          {screen === 'signup' ? <Signup /> : <Login />}
+          {screen === 'signup' && <Signup />}
+          {screen === 'login' && <Login />}
+          {screen === 'verify' && <VerifyUser />}
+          {screen === 'SetPassword' && <SetPassword/>}
         </div>
       </div>
 

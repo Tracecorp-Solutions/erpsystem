@@ -59,13 +59,13 @@ const Login = () => {
         )}
         <div className="form-group">
           <div className="label-desc">
-            <label htmlFor="username">Username:</label>
+            <label htmlFor="username">Email:</label>
           </div>
           <input
             type="text"
             id="username"
             name="username"
-            placeholder="Enter your username"
+            placeholder="Enter your email"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             className="input-field"
@@ -104,7 +104,10 @@ const Login = () => {
         </button>
       </form>
       <p>
-        Don’t have an account? <Link to={{ pathname: "/layout", state: { screen: "signup" } }}>Register here</Link>
+        Don’t have an account?
+        <button onClick={() => navigate("/layout", { state: { screen: "signup" } })}>
+          Register here
+        </button>
 
       </p>
     </>
