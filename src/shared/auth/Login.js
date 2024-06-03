@@ -23,7 +23,7 @@ const Login = () => {
       sessionStorage.setItem("token", token);
       navigate("/profile");
     } catch (error) {
-      setFeedback(`${error.response.data}`);
+      setFeedback(`Error: ${error.response.data}`);
     } finally {
       setLoading(false);
     }
@@ -108,7 +108,6 @@ const Login = () => {
         <button onClick={() => navigate("/layout", { state: { screen: "signup" } })}>
           Register here
         </button>
-
       </p>
     </>
   );
