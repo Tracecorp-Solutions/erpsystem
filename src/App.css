@@ -6,40 +6,9 @@
 }
 
 .sidenav {
-  height: 100%;
-  width: 20%;
-  overflow-y: auto;
+  overflow: auto;
 }
 
-.sidenav ul {
-  background-color: #F6F6F4;
-  border-radius: 0 24px 0 0;
-  padding: 24px;
-  list-style: none;
-  height: 100%;
-}
-
-.sidenav a,
-.sidenav button {
-  text-decoration: none;
-  color: #A1A1A1;
-  display: block;
-  border-radius: 12px;
-  margin-bottom: 8px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  height: 40px;
-}
-
-.sidenav button {
-  background-color: #F6F6F4;
-  border: none;
-  font-size: 16px;
-  cursor: pointer;
-  width: 100%;
-  justify-content: space-between;
-}
 
 .dp-label {
   display: flex;
@@ -47,14 +16,6 @@
   gap: 8px;
 }
 
-.sidenav a.active,
-.dropdown-menu .active {
-  background-color: #E2ECC3;
-  height: 48px;
-  color: #4467A1;
-  font-weight: 600;
-  padding: 0 16px;
-}
 
 .logo {
   background-color: #FFFFFF;
@@ -112,6 +73,10 @@ hr {
   gap: 8px;
   align-items: center;
   height: 80px;
+}
+
+.bg-dirt-green {
+  background-color: #9EC137;
 }
 
 .btn {
@@ -516,59 +481,14 @@ button[type="submit"] {
   background: #F6F6F4;
 }
 
-.sidenav {
-  height: 100vh;
-  width: 20%;
-  overflow-y: auto;
-}
-
 .label {
   font-family: "Font Outfit", sans-serif; 
-}
-
-.sidenav ul {
-  background-color: #F6F6F4;
-  border-radius: 0 24px 0 0;
-  padding: 24px;
-  list-style: none;
-  height: 100%;
-}
-
-.sidenav a,
-.sidenav button {
-  text-decoration: none;
-  color: #A1A1A1;
-  display: block;
-  border-radius: 12px;
-  margin-bottom: 8px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  height: 40px;
-}
-
-.sidenav button {
-  background-color: #F6F6F4;
-  border: none;
-  font-size: 16px;
-  cursor: pointer;
-  width: 100%;
-  justify-content: space-between;
 }
 
 .dp-label {
   display: flex;
   align-items: center;
   gap: 8px;
-}
-
-.sidenav a.active,
-.dropdown-menu .active {
-  background-color: #E2ECC3;
-  height: 48px;
-  color: #4467A1;
-  font-weight: 600;
-  padding: 0 16px;
 }
 
 .logo {
@@ -952,6 +872,12 @@ button[type= "handleLogin"] {
 .form-content a {
   font-weight: 600;
   color: #505050;
+}
+
+.main-content {
+  width: 94%;
+  height: calc(100vh - 72px);
+  overflow: auto;
 }
 
 @media (max-width: 1024px) {
