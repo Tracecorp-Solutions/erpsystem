@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Dashboard from "./pages/Dashboard";
+import Dashboardlayout from "./pages/shared/layout/DashboardLayout";
 import Groups from "./pages/Groups";
 import Subgroups from "./pages/Subgroups";
 import Accounts from "./pages/Accounts";
@@ -23,6 +23,7 @@ import InvoiceForm from "./components/InvoiceForm";
 import EditInvoiceForm from "./components/EditInvoiceForm";
 import Invoice from "./pages/Invoice";
 import Layout from "./shared/auth/shared/Layout";
+import ProfileLayout from "./shared/onboarding/shared/ProfileLayout";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -71,7 +72,7 @@ function App() {
               <Route path="/reset" element={<Reset />} />
               <Route path="/forgot" element={<Forgot />} />
               <Route path="/company" element={<Company />} />
-              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/dashboardlayout" element={<Dashboardlayout />} />
               <Route path="/layout" element={<Layout/>}/>
               <Route
                 path="view-transaction/:accountId"
@@ -86,7 +87,8 @@ function App() {
             </Routes>
           </div>
           <Routes>
-            <Route path="/profile" element={<Profile />} />
+            {/* <Route path="/profile" element={<Profile />} /> */}
+            <Route path="/profilelayout" element={<ProfileLayout />} />
           </Routes>
         </BrowserRouter>
       </div>

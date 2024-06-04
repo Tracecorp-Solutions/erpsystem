@@ -10,6 +10,7 @@ function Layout() {
   const screen = state?.screen || 'login';
   return (
     <div className="flex">
+      {/* form side */}
       <div className="form-side">
         <div className="form-content">
           {screen === 'signup' && <Signup />}
@@ -18,7 +19,9 @@ function Layout() {
           {screen === 'SetPassword' && <SetPassword/>}
         </div>
       </div>
+      {/* end of form side */}
 
+      {/* image side */}
       <div className="img-side">
         <div className="img-content">
           <div className="img-intro">
@@ -30,6 +33,7 @@ function Layout() {
           </div>
         </div>
       </div>
+      {/* end of image side */}
     </div>
   );
 }

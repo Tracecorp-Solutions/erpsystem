@@ -21,7 +21,7 @@ const Login = () => {
       );
       const token = response.data;
       sessionStorage.setItem("token", token);
-      navigate("/profile");
+      navigate("/profilelayout");
     } catch (error) {
       setFeedback(`Error: ${error.response.data}`);
     } finally {

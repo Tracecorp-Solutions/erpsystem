@@ -15,29 +15,18 @@ function VerifyUser() {
         try {
             setLoading(true);
             const email = sessionStorage.getItem("useremail");
-            console.log("*******************");
-            console.log(email);
-            console.log("*******************");
             const response = await axios.post(`${process.env.REACT_APP_API_URL}/VerifyUser`, {
                 email,
                 otp,
             });
-
-            if (response.status === 200) {
-                setFeedback('User verified successfully!');
-                // call the set password screen
-                navigate("/layout", { state: { screen: "SetPassword" } });
-            } else {
-                setLoading(false);
-                setFeedback('Failed to verify user.');
-            }
+            setFeedback('User verified successfully!');
+            // call the set password screen
+            navigate("/layout", { state: { screen: "SetPassword" } });
         } catch (error) {
             setLoading(false);
-            console.error('Error verifying user:', error);
-            setFeedback('Failed to verify user.');
+            setFeedback(`Failed ${error.response.data}` );
         }
     };
-
 
     return (
         <>
@@ -46,9 +35,11 @@ function VerifyUser() {
                     <h2>Verify your account</h2>
                 </span>
             </div>
-            <div className={`message ${feedback.startsWith("Error") ? "error-message" : "success-message"}`}>
-                {feedback && <p>{feedback}</p>}
-            </div>
+            {feedback && (
+                <div className={`message ${feedback.startsWith("Failed") ? "error-message" : "success-message"}`}>
+                    <p>{feedback}</p>
+                </div>
+            )}
 
             <div className="form-group">
                 <div className="label-desc">
