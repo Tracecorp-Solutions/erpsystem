@@ -11,7 +11,7 @@ function SideNav() {
 
   return (
     <>
-      <nav className="sidenav">
+      <nav className="sidenav side-nav flex flex-col w-3/12 h-screen scroll-auto">
         <div className="logo">
           <img src="./img/logo.png" alt="Logo" />
         </div>
