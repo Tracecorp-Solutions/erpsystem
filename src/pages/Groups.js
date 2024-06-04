@@ -207,7 +207,6 @@ const EditForm = ({ editedGroupAccount, handleSubmitEdit, closeEditForm }) => {
   );
 };
 
-
 export default function GroupAccount() {
   const [showForm, setShowForm] = useState(false);
   const [newAccount, setNewAccount] = useState({

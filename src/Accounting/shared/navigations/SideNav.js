@@ -1,10 +1,11 @@
 import { LayoutDashboard, Files, ArrowRightLeft, Users, CreditCard, ReceiptText, FileText, FolderClosed, Settings, ChevronDown, Minus } from 'lucide-react';
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation,useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 function SideNav() {
   const location = useLocation();
   const [openDropdown, setOpenDropdown] = useState(null);
+  const navigate = useNavigate();
 
   const toggleDropdown = (dropdownName) => {
     setOpenDropdown(openDropdown === dropdownName ? null : dropdownName);
@@ -22,6 +23,7 @@ function SideNav() {
       <div className="flex flex-col justify-center px-6 pt-5 pb-8 w-full text-base leading-6 rounded-none bg-stone-100 text-neutral-400 rounded-tr-3xl">
         <div className="text-xs font-medium tracking-wide uppercase">
           You are managing:
+
         </div>
         <div className="justify-center items-start px-4 py-3 mt-3 font-semibold bg-white txt-color-blue rounded-xl">
           LedgerMate Inc
@@ -35,7 +37,8 @@ function SideNav() {
             }`}
         >
           <LayoutDashboard className="shrink-0 self-start w-6 aspect-square" />
-          <Link to="/dashboard">Dashboard</Link>
+          <button onClick={() => navigate("/Dashboardlayout", { state: { screen: "dashboard" } })}>Dashboard</button>
+          
         </div>
         <div className="mt-3 py-3 w-full">
           <button className="flex justify-between w-full" onClick={() => toggleDropdown('chartOfAccounts')}>
@@ -54,16 +57,16 @@ function SideNav() {
                   }`}
               >
                 <Minus className="shrink-0 self-start w-6 aspect-square" />
-                <Link to="/groups">Groups</Link>
+                <button onClick={() => navigate("/Dashboardlayout", { state: { screen: "groups" } })}>Groups</button>
               </div>
               <div
-                className={`flex gap-2 py-3 mt-2 whitespace-nowrap rounded-xl ${location.pathname === "/subgroups"
+                className={`flex gap-2 py-3 mt-2 whitespace-nowrap rounded-xl ${location.pathname === "/sub-group"
                   ? "bg-active-green txt-color-blue font-semibold px-4 mt-3"
                   : "bg-none"
                   }`}
               >
                 <Minus className="shrink-0 self-start w-6 aspect-square" />
-                <Link to="/subgroups">Subgroups</Link>
+                <button onClick={() => navigate("/Dashboardlayout", { state: { screen: "sub-group" } })}>Subgroups</button>
               </div>
               <div
                 className={`flex gap-2 py-3 mt-2 whitespace-nowrap rounded-xl ${location.pathname === "/accounts"
@@ -72,7 +75,7 @@ function SideNav() {
                   }`}
               >
                 <Minus className="shrink-0 self-start w-6 aspect-square" />
-                <Link to="/accounts">Accounts</Link>
+                <button onClick={() => navigate("/Dashboardlayout", { state: { screen: "accounts" } })}>Accounts</button>
               </div>
             </div>
           )}
@@ -84,7 +87,7 @@ function SideNav() {
             }`}
         >
           <ArrowRightLeft className="shrink-0 self-start w-6 aspect-square" />
-          <Link to="/transactions">Transactions</Link>
+          <button onClick={() => navigate("/Dashboardlayout", { state: { screen: "transactions" } })}>Transactions</button>
         </div>
         <div className="mt-3 py-3 w-full">
           <button className="flex justify-between w-full" onClick={() => toggleDropdown('people')}>
@@ -97,13 +100,13 @@ function SideNav() {
           {openDropdown === 'people' && (
             <div className="pt-3">
               <div
-                className={`flex gap-2 py-3 mt-2 whitespace-nowrap rounded-xl ${location.pathname === "/customers"
+                className={`flex gap-2 py-3 mt-2 whitespace-nowrap rounded-xl ${location.pathname === "/customer"
                   ? "bg-active-green txt-color-blue font-semibold px-4 mt-3"
                   : "bg-none"
                   }`}
               >
                 <Minus className="shrink-0 self-start w-6 aspect-square" />
-                <Link to="/customers">Customers</Link>
+                <button onClick={() => navigate("/Dashboardlayout", { state: { screen: "customer" } })}>Customers</button>
               </div>
               <div
                 className={`flex gap-2 py-3 mt-2 whitespace-nowrap rounded-xl ${location.pathname === "/vendors"
@@ -112,7 +115,7 @@ function SideNav() {
                   }`}
               >
                 <Minus className="shrink-0 self-start w-6 aspect-square" />
-                <Link to="/vendors">Vendors</Link>
+                <button onClick={() => navigate("/Dashboardlayout", { state: { screen: "vendors" } })}>Vendors</button>
               </div>
             </div>
           )}
@@ -134,13 +137,13 @@ function SideNav() {
                   }`}
               >
                 <Minus className="shrink-0 self-start w-6 aspect-square" />
-                <Link to="/bills">Bills</Link>
+                <button onClick={() => navigate("/Dashboardlayout", { state: { screen: "bills" } })}>Bills</button>
               </div>
               <div
                 className={`flex gap-2 py-3 mt-2 whitespace-nowrap rounded-xl ${location.pathname === "/invoices"
                   ? "bg-active-green txt-color-blue font-semibold px-4 mt-3" : "bg-none" }`}>
                 <Minus className="shrink-0 self-start w-6 aspect-square" />
-                <Link to="/invoices">Invoices</Link>
+                <button onClick={() => navigate("/Dashboardlayout", { state: { screen: "invoices" } })}>Invoices</button>
               </div>
             </div>
           )}
@@ -161,4 +164,4 @@ function SideNav() {
   );
 }
 
-export default SideNav;
+export default SideNav
