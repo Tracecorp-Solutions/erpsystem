@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Dashboardlayout from "./pages/shared/layout/DashboardLayout";
+import Dashboardlayout from "./Accounting/Pages/layout/DashboardLayout";
 import Groups from "./pages/Groups";
 import Subgroups from "./pages/Subgroups";
 import Accounts from "./pages/Accounts";
@@ -72,7 +72,7 @@ function App() {
               <Route path="/reset" element={<Reset />} />
               <Route path="/forgot" element={<Forgot />} />
               <Route path="/company" element={<Company />} />
-              <Route path="/dashboardlayout" element={<Dashboardlayout />} />
+              <Route path="/Dashboardlayout" element={<Dashboardlayout />} />
               <Route path="/layout" element={<Layout/>}/>
               <Route
                 path="view-transaction/:accountId"

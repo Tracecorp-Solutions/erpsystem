@@ -28,8 +28,8 @@ import {
     ChevronRightIcon,
     MagnifyingGlassIcon,
 } from "@heroicons/react/20/solid";
-import SideNav from "../../../components/navigations/SideNav";
-import TopNav from "../../../components/navigations/TopNav";
+import SideNav from "../../shared/navigations/SideNav";
+import TopNav from "../../shared/navigations/TopNav";
 
 const cards = [
     { name: "Account balance", href: "#", icon: ScaleIcon, amount: "$30,659.45" },
