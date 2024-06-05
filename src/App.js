@@ -4,7 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Dashboardlayout from "./Accounting/Pages/layout/DashboardLayout";
 import Groups from "./pages/Groups";
 import Subgroups from "./pages/Subgroups";
-import Accounts from "./pages/Accounts";
+import AccountSetup from "./Accounting/Pages/Accounts/AccountSetup";
 import Transactions from "./pages/Transactions";
 import Vendors from "./pages/Vendors";
 import Customer from "./pages/Customer";
@@ -61,7 +61,7 @@ function App() {
               <Route path="/" element={<Login />} />
               <Route path="/groups" element={<Groups />} />
               <Route path="/sub-group" element={<Subgroups />} />
-              <Route path="/accounts" element={<Accounts />} />
+              <Route path="/accounts" element={<AccountSetup />} />
               <Route path="/vendors" element={<Vendors />} />
               <Route path="/customer" element={<Customer />} />
               <Route path="/transactions" element={<Transactions />} />
