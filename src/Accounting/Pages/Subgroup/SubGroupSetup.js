@@ -118,7 +118,7 @@ const SubGroupSetup = () => {
     setDrawerVisible(true);
     try {
       const response = await axios.get(
-        `${process.env.REACT_APP_API_URL}/GetSubGroupById?id=${accountId}`
+        `${process.env.REACT_APP_API_URL}/GetSubGroupById/${accountId}`
       );
       setSelectedAccount(response.data);
       setDrawerVisible(true);
@@ -131,7 +131,7 @@ const SubGroupSetup = () => {
     console.log("correct id", accountId);
     try {
       const response = await axios.get(
-        `${process.env.REACT_APP_API_URL}/GetSubGroupById?id=${accountId}`
+        `${process.env.REACT_APP_API_URL}/GetSubGroupById/${accountId}`
       );
       setSelectedAccount(response.data);
       setEditedAccount(response.data);

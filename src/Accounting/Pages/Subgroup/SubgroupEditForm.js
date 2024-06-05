@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Modal, Button } from "antd";
 import axios from "axios";
+import "../../../styles/AccountCreation.css";
 
 const SubGroupEditForm = ({ visible, subgroup, onEdit, onCancel, group, }) => {
   const [editedSubgroup, setEditedSubgroup] = useState({
