@@ -7,6 +7,7 @@ import AccountSetup from "../Accounts/AccountSetup";
 //hooks
 import { useLocation } from "react-router-dom";
 import SubGroupSetup from "../Subgroup/SubGroupSetup";
+import Transactions from "../Transaction/Transactions";
 
 
 const Dashboardlayout = () => {
@@ -29,6 +30,7 @@ const Dashboardlayout = () => {
                             {screen === 'groups' && <GroupAccountSetUp />}
                             {screen === 'sub-group' && <SubGroupSetup />}
                             {screen === 'accounts' && <AccountSetup />}
+                            {screen === 'transactions' && <Transactions />}
                         </div>
 
                     </div>
