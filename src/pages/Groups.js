@@ -10,7 +10,7 @@ import { Menu, Dropdown, Button } from "antd";
 import { EditOutlined } from "@ant-design/icons";
 import { EllipsisHorizontalIcon } from "@heroicons/react/20/solid";
 import classNames from "classnames";
-import AccountSidebar from "../components/AccountSidebar ";
+import AccountSidebar from "../components/AccountSidebar";
 import GroupAccountDetails from "../components/GroupAccountDetails ";
 import SlideInCard from "../components/SlideInCard ";
 import FailureSlideInCard from "../components/FailureSlideInCard ";

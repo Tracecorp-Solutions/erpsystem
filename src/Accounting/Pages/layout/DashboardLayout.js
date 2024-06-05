@@ -3,6 +3,7 @@ import SideNav from "../../shared/navigations/SideNav";
 import TopNav from "../../shared/navigations/TopNav";
 import Dashboard from "../../components/Dashboard";
 import GroupAccountSetUp from "../Group/GroupAccountSetUp";
+import AccountSetup from "../Accounts/AccountSetup";
 //hooks
 import { useLocation } from "react-router-dom";
 import SubGroupSetup from "../Subgroup/SubGroupSetup";
@@ -27,6 +28,7 @@ const Dashboardlayout = () => {
                             {screen === 'dashboard' && <Dashboard />}
                             {screen === 'groups' && <GroupAccountSetUp />}
                             {screen === 'sub-group' && <SubGroupSetup />}
+                            {screen === 'accounts' && <AccountSetup />}
                         </div>
 
                     </div>
