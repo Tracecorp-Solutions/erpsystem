@@ -6,7 +6,7 @@ import Groups from "./pages/Groups";
 import Subgroups from "./pages/Subgroups";
 import AccountSetup from "./Accounting/Pages/Accounts/AccountSetup";
 import Transactions from "./pages/Transactions";
-import Vendors from "./pages/Vendors";
+import VendorSetup from "./Accounting/Pages/Vendors/VendorSetup";
 import Customer from "./pages/Customer";
 import Signup from "./pages/authentication/Signup";
 import Reset from "./pages/authentication/Reset";
@@ -62,7 +62,7 @@ function App() {
               <Route path="/groups" element={<Groups />} />
               <Route path="/sub-group" element={<Subgroups />} />
               <Route path="/accounts" element={<AccountSetup />} />
-              <Route path="/vendors" element={<Vendors />} />
+              <Route path="/vendors" element={<VendorSetup />} />
               <Route path="/customer" element={<Customer />} />
               <Route path="/transactions" element={<Transactions />} />
               <Route path="/signup" element={<Signup />} />

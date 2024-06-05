@@ -1,7 +1,7 @@
 import React from "react";
 import { Switch, Input } from "antd";
 import { FilterOutlined, SearchOutlined } from "@ant-design/icons";
-import "../styles/components/AccountNavigationFilter.css";
+// import "../styles/components/AccountNavigationFilter.css";
 
 const VendorNavigationbar = ({
   toggleDisabled,
@@ -46,7 +46,7 @@ const VendorNavigationbar = ({
                 fontFamily: "outFit, Sans-serif",
               }}
             >
-              Show None Active Customers
+              Show None Active Vendor
             </p>
           )}
           <Switch

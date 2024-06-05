@@ -3,16 +3,16 @@ import { Dropdown, Menu, Button, Pagination } from "antd";
 import { EyeOutlined, EditOutlined } from "@ant-design/icons";
 import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
 import axios from "axios";
-import VendorNavigationbar from "../components/VendorNavigationbar";
-import FailureSlideInCard from "../components/FailureSlideInCard";
-import SlideInCard from "../components/SlideInCard";
-import ReusableEmptyData from "../components/ReusableEmptyData";
-import VendorForm from "../components/VendorForm";
-import VendorDetails from "../components/VendorDetails";
-import TopNav from "../components/TopNav";
-import SideNav from "../components/SideNav";
+import VendorNavigationbar from "./VendorNavigationbar";
+import EmptyData from "../../components/Shared/EmptyData";
+import VendorForm from "./VendorForm";
+import VendorDetails from "./VendorDetails";
+import ErrorMessageCard from "../../components/Shared/ErrorMessageCard";
+import SuccessMessageCard from "../../components/Shared/SuccessMessageCard";
+// import TopNav from "../components/TopNav";
+// import SideNav from "../components/SideNav";
 
-const Vendor = () => {
+const VendorSetup = () => {
   const [formData, setFormData] = useState({
     title: "",
     fullName: "",
@@ -270,9 +270,9 @@ const Vendor = () => {
 
   return (
     <>
-      <SideNav />
+      {/* <SideNav /> */}
       <div className="content">
-        <TopNav />
+        {/* <TopNav /> */}
 
         <div
           style={{
@@ -282,14 +282,14 @@ const Vendor = () => {
           }}
         >
           {showSuccess && (
-            <SlideInCard
+            <SuccessMessageCard
               title={messageInfo.title}
               message={messageInfo.message}
               onClose={() => setShowSuccess(false)}
             />
           )}
           {showFailure && (
-            <FailureSlideInCard
+            <ErrorMessageCard
               title={messageInfo.title}
               message={messageInfo.message}
               onClose={() => setShowFailure(false)}
@@ -338,14 +338,14 @@ const Vendor = () => {
             handleSearch={handleSearch}
           />
           {showFailure && (
-            <FailureSlideInCard
+            <ErrorMessageCard
               title={messageInfo.title}
               message={messageInfo.message}
               onClose={() => setShowFailure(false)}
             />
           )}
           {currentItems.length === 0 ? (
-            <ReusableEmptyData />
+            <EmptyData />
           ) : (
             <div style={{ overflowY: "auto" }}>
               <table className="table-auto min-w-full divide-gray-200">
@@ -483,4 +483,4 @@ const Vendor = () => {
   );
 };
 
-export default Vendor;
+export default VendorSetup;
