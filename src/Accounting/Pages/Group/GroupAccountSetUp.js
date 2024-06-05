@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { CloseOutlined, EyeOutlined } from "@ant-design/icons";
-import "../Styles/GroupCreation.css";
+import "../../Styles/GroupCreation.css";
 // import GroupCreationShow from "../components/GroupCreationShow";
 import { Fragment } from "react";
 // import { Menu, Transition } from "@headlessui/react";
@@ -10,11 +10,10 @@ import { EditOutlined } from "@ant-design/icons";
 import { EllipsisHorizontalIcon } from "@heroicons/react/20/solid";
 import classNames from "classnames";
 // import GroupAccountDetails from "../components/GroupAccountDetails ";
-import SuccessMessageCard from "../components/Shared/SuccessMessageCard";
-import ErrorMessageCard from "../components/Shared/ErrorMessageCard";
-import Sidebar from "../components/Shared/Sidebar";
-import EmptyData from "../components/Shared/EmptyData";
-import AccountDetailView from "../components/Shared/AccountDetailView";
+import SuccessMessageCard from "../../components/Shared/SuccessMessageCard";
+import ErrorMessageCard from "../../components/Shared/ErrorMessageCard";
+import Sidebar from "../../components/Shared/Sidebar";
+import AccountDetailView from "../../components/Shared/AccountDetailView";
 import EditForm from "./EditForm";
 
 

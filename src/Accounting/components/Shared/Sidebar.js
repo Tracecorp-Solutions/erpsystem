@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Drawer, Modal, Table  } from "antd";
 import { XMarkIcon } from "@heroicons/react/24/outline";
-import SubGroupForm from "../../Pages/SubGroupForm";
+import SubGroupForm from "../../Pages/Subgroup/SubGroupForm";
 
 const Card = ({
   title,

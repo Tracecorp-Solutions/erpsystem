@@ -5,15 +5,11 @@ import { EyeOutlined, EditOutlined } from "@ant-design/icons";
 import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
 // import "../styles/AccountCreation.css";
 // import AccountLoadingMessage from "../components/AccountLoadingMessage";
-// import SubComponentSidebar from "../components/SubGroupSidebar";
-// import AccountNavigationFilter from "../components/SubGroupNavigationFilter";
-// import SubGroupEditForm from "../components/SubGroupEditForm";
-// import SideNav from "../components/SideNav";
-import SuccessMessageCard from "../components/Shared/SuccessMessageCard";
-import EmptyData from "../components/Shared/EmptyData";
+import SubComponentSidebar from "./SubGroupSidebar";
+import SuccessMessageCard from "../../components/Shared/SuccessMessageCard";
+import EmptyData from "../../components/Shared/EmptyData";
 import AccountNavigationFilter from "./AccountNavigationFilter";
-
-
+import SubGroupEditForm from "./SubgroupEditForm";
 
 const SubGroupSetup = () => {
   const [showModal, setShowModal] = useState(false);
@@ -219,7 +215,7 @@ const SubGroupSetup = () => {
     <>
        
 
-      {/* {drawerVisible && (
+      {drawerVisible && (
         <SubComponentSidebar
           subGroupAccounts={selectedAccount}
           setDrawerVisible={setDrawerVisible}
@@ -233,9 +229,9 @@ const SubGroupSetup = () => {
           fetchSubGroupAccounts={fetchSubGroupAccounts}
           handleCancel={handleCancel}
         />
-      )} */}
+      )}
 
-      {/* {showEditForm && (
+      {showEditForm && (
         <SubGroupEditForm
           visible={showEditForm}
           subgroup={selectedAccount}
@@ -246,7 +242,7 @@ const SubGroupSetup = () => {
           }}
           onCancel={CancelEdit}
         />
-      )} */}
+      )}
 
       {showSuccess && <SuccessMessageCard title={messageInfo.title} message={messageInfo.message} onClose={handleCloseSuccess}/>}
 

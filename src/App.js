@@ -6,8 +6,6 @@ import Groups from "./pages/Groups";
 import Subgroups from "./pages/Subgroups";
 import Accounts from "./pages/Accounts";
 import Transactions from "./pages/Transactions";
-import Profile from "./pages/onboarding/Profile";
-import Company from "./pages/onboarding/Company";
 import Vendors from "./pages/Vendors";
 import Customer from "./pages/Customer";
 import Signup from "./pages/authentication/Signup";
@@ -71,7 +69,6 @@ function App() {
               <Route path="/verify" element={<Verify />} />
               <Route path="/reset" element={<Reset />} />
               <Route path="/forgot" element={<Forgot />} />
-              <Route path="/company" element={<Company />} />
               <Route path="/Dashboardlayout" element={<Dashboardlayout />} />
               <Route path="/layout" element={<Layout/>}/>
               <Route

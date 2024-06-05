@@ -4,7 +4,7 @@ import {
   FilterOutlined,
   SearchOutlined,
 } from "@ant-design/icons";
-import "../../styles/components/AccountNavigationFilter.css";
+import "../../../styles/components/AccountNavigationFilter.css";
 
 const { Option } = Select;
 

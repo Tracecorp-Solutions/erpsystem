@@ -2,10 +2,10 @@ import { useState } from "react";
 import SideNav from "../../shared/navigations/SideNav";
 import TopNav from "../../shared/navigations/TopNav";
 import Dashboard from "../../components/Dashboard";
-import GroupAccountSetUp from "../GroupAccountSetUp";
+import GroupAccountSetUp from "../Group/GroupAccountSetUp";
 //hooks
 import { useLocation } from "react-router-dom";
-import SubGroupSetup from "../SubGroupSetup";
+import SubGroupSetup from "../Subgroup/SubGroupSetup";
 
 
 const Dashboardlayout = () => {

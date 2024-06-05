@@ -52,7 +52,7 @@ const CongratulationsCard = () => {
         fontFamily: "outFit, Sans-serif",
         cursor: "pointer"
       }}
-      to="/dashboard"
+      to="/Dashboardlayout"
       >Go to Dashboard</Link></div>
       </div>
     </div>

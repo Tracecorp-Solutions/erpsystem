@@ -1,7 +1,7 @@
 import React, { useState,useEffect } from "react";
 import axios from "axios";
 import ProfileCompletionForm from "../../../components/onboarding/ProfileForm";
-import Header from "../../../pages/onboarding/Header";
+import Header from "./Header";
 import { useNavigate } from "react-router-dom";
 import ProfileSidebar from "../../../components/onboarding/ProfileSidebar";
 import RegisterCompany from "../../../components/onboarding/RegisterCompany";
