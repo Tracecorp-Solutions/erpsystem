@@ -7,7 +7,7 @@ import Subgroups from "./pages/Subgroups";
 import AccountSetup from "./Accounting/Pages/Accounts/AccountSetup";
 import Transactions from "./pages/Transactions";
 import VendorSetup from "./Accounting/Pages/Vendors/VendorSetup";
-import Customer from "./pages/Customer";
+import Customer from "./Accounting/Pages/Customers/Customer";
 import Signup from "./pages/authentication/Signup";
 import Reset from "./pages/authentication/Reset";
 import Verify from "./pages/authentication/Verify";
@@ -19,7 +19,7 @@ import BillsForm from "./components/BillsForm";
 import InvoiceSidebar from "./components/InvoiceSidebar";
 import InvoiceForm from "./components/InvoiceForm";
 import EditInvoiceForm from "./components/EditInvoiceForm";
-import Invoice from "./pages/Invoice";
+import Invoice from "./Accounting/Pages/Invoices/Invoice";
 import Layout from "./shared/auth/shared/Layout";
 import ProfileLayout from "./shared/onboarding/shared/ProfileLayout";
 

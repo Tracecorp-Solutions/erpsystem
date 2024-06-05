@@ -10,6 +10,8 @@ import SubGroupSetup from "../Subgroup/SubGroupSetup";
 import Transactions from "../Transaction/Transactions";
 import ViewTransactions from "../Transaction/ViewTransactions";
 import VendorSetup from "../Vendors/VendorSetup";
+import Customer from "../Customers/Customer";
+import Invoice from "../Invoices/Invoice";
 
 const Dashboardlayout = () => {
   const location = useLocation();
@@ -36,6 +38,8 @@ const Dashboardlayout = () => {
                 <ViewTransactions />
               )}
               {screen === 'vendors' && <VendorSetup />}
+              {screen === 'customer' && <Customer />}
+              {screen === 'invoice' && <Invoice />}
             </div>
           </div>
         </div>
