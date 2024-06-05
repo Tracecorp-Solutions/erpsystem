@@ -13,7 +13,7 @@ import Reset from "./pages/authentication/Reset";
 import Verify from "./pages/authentication/Verify";
 import Login from "./pages/authentication/Login";
 import Forgot from "./pages/authentication/Forgot";
-import ViewTransaction from "./pages/ViewTransaction";
+import ViewTransactions from "./Accounting/Pages/Transaction/ViewTransactions";
 import Billing from "./pages/Billing";
 import BillsForm from "./components/BillsForm";
 import InvoiceSidebar from "./components/InvoiceSidebar";
@@ -72,8 +72,8 @@ function App() {
               <Route path="/Dashboardlayout" element={<Dashboardlayout />} />
               <Route path="/layout" element={<Layout/>}/>
               <Route
-                path="view-transaction/:accountId"
-                element={<ViewTransaction />}
+                path="view-transactions/:accountId"
+                element={<ViewTransactions />}
               />
               <Route path="/customer" element={<Customer />} />
               <Route path="/create-bills" element={<BillsForm />} />

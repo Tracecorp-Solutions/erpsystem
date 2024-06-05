@@ -8,6 +8,7 @@ import AccountSetup from "../Accounts/AccountSetup";
 import { useLocation } from "react-router-dom";
 import SubGroupSetup from "../Subgroup/SubGroupSetup";
 import Transactions from "../Transaction/Transactions";
+import ViewTransactions from "../Transaction/ViewTransactions";
 
 
 const Dashboardlayout = () => {
@@ -31,6 +32,7 @@ const Dashboardlayout = () => {
                             {screen === 'sub-group' && <SubGroupSetup />}
                             {screen === 'accounts' && <AccountSetup />}
                             {screen === 'transactions' && <Transactions />}
+                            {screen === 'view-transactions/:accountId' && <ViewTransactions />}
                         </div>
 
                     </div>
