@@ -23,6 +23,7 @@ import Invoice from "./Accounting/Pages/Invoices/Invoice";
 import Layout from "./shared/auth/shared/Layout";
 import ProfileLayout from "./shared/onboarding/shared/ProfileLayout";
 import Report from "./Accounting/Pages/Reports/Report";
+import Statement from "./Accounting/Pages/Reports/Statement";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -85,6 +86,7 @@ function App() {
               <Route path="/billsForm" element={<BillsForm />} />
               <Route path="/invoiceform" element={<InvoiceForm />} />
               <Route path="/report" element={<Report />} />
+              <Route path="/statement" element={<Statement />} />
             </Routes>
           </div>
           <Routes>

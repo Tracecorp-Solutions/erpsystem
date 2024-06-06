@@ -1,10 +1,12 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
-const Cards = () => {
+const Cards = ({onAccountStatementClick}) => {
+
+  const navigate = useNavigate();
   return (
     <div className="flex flex-wrap justify-start p-2">
-      <Link to="/report" className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 mb-4 px-2">
+      <button  onClick={onAccountStatementClick} className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 mb-4 px-2">
         <div
           className="bg-white rounded p-4 text-center"
           style={{
@@ -15,8 +17,8 @@ const Cards = () => {
         >
           Account Statements
         </div>
-      </Link>
-      <Link to="/balance-sheets" className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 mb-4 px-2">
+      </button>
+      <button onClick={() => navigate("/Dashboardlayout", { state: { screen: "statement" } })} className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 mb-4 px-2">
         <div
           className="bg-white rounded p-4 text-center"
           style={{
@@ -27,8 +29,8 @@ const Cards = () => {
         >
           Balance Sheets
         </div>
-      </Link>
-      <Link to="/trial-balance" className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 mb-4 px-2">
+      </button>
+      <button onClick={() => navigate("/Dashboardlayout", { state: { screen: "customer" } })} className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 mb-4 px-2">
         <div
           className="bg-white rounded p-4 text-center"
           style={{
@@ -39,8 +41,8 @@ const Cards = () => {
         >
           Trial Balance
         </div>
-      </Link>
-      <Link to="/user-activity" className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 mb-4 px-2">
+      </button>
+      <button onClick={() => navigate("/Dashboardlayout", { state: { screen: "customer" } })} className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 mb-4 px-2">
         <div
           className="bg-white rounded p-4 text-center"
           style={{
@@ -51,7 +53,7 @@ const Cards = () => {
         >
           User Activity
         </div>
-      </Link>
+      </button>
     </div>
   );
 };
