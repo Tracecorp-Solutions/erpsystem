@@ -149,11 +149,11 @@ function SideNav() {
           )}
         </div>
         <div
-          className={`flex gap-2 py-3 mt-2 whitespace-nowrap rounded-xl ${location.pathname === "/reports"
+          className={`flex gap-2 py-3 mt-2 whitespace-nowrap rounded-xl ${location.pathname === "/report"
             ? "bg-active-green txt-color-blue font-semibold px-4" : "bg-none" }`}>
           <FolderClosed className="shrink-0 self-start w-6 aspect-square" />
-          <Link to="/reports">Reports</Link>
-        </div>
+          <button onClick={() => navigate("/Dashboardlayout", { state: { screen: "report" } })}>Report</button>
+          </div>
         <div className={`flex gap-2 px-4 py-3 mt-2 whitespace-nowrap rounded-xl ${location.pathname === "/settings"
           ? "bg-active-green txt-color-blue font-semibold" : "bg-white"}`}>
           <Settings className="shrink-0 self-start w-6 aspect-square" />
