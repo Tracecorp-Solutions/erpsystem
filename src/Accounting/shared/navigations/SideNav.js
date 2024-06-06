@@ -1,5 +1,5 @@
-import { LayoutDashboard, Files, ArrowRightLeft, Users, CreditCard, ReceiptText, FileText, FolderClosed, Settings, ChevronDown, Minus } from 'lucide-react';
-import { Link, useLocation,useNavigate } from "react-router-dom";
+import { LayoutDashboard, Files, ArrowRightLeft, Users, CreditCard, Menu, ReceiptText, FileText, FolderClosed, Settings, ChevronDown, Minus } from 'lucide-react';
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 function SideNav() {
@@ -7,9 +7,22 @@ function SideNav() {
   const [openDropdown, setOpenDropdown] = useState(null);
   const navigate = useNavigate();
 
+  const moduleScreens = ["/Dashboardlayout", "/groups", "/sub-group", "/accounts", "/transactions", "/customer", "/vendors", "/billing", "/invoice", "/reports", "/settings"];
+  const isModuleScreen = moduleScreens.includes(location.pathname);
+  const isMobile = window.innerWidth <= 768;
+
   const toggleDropdown = (dropdownName) => {
     setOpenDropdown(openDropdown === dropdownName ? null : dropdownName);
   };
+
+  if (isModuleScreen && isMobile) {
+    return (
+      <div className="fixed top-0 left-0 z-50 p-4">
+        <Menu size={24} />
+      </div>
+    );
+  }
+
 
   return (
     <div className="sidenav flex flex-col w-3/12 h-screen scroll-auto">

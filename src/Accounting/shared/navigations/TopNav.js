@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { Plus, BellDot, ChevronDown } from 'lucide-react';
+import { Plus, BellDot, ChevronDown, Menu } from 'lucide-react';
 
 function TopNav() {
   const user = {
@@ -10,19 +10,23 @@ function TopNav() {
   };
 
   const [isOpen, setIsOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  const [isMobileNavVisible, setIsMobileNavVisible] = useState(false);
   const dropdownRef = useRef(null);
 
+  const toggleNav = () => {
+    setIsMobileNavVisible(!isMobileNavVisible);
+  };
+
   useEffect(() => {
-    const handleOutsideClick = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setIsOpen(false);
-      }
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
     };
 
-    document.addEventListener('click', handleOutsideClick);
+    window.addEventListener('resize', handleResize);
 
     return () => {
-      document.removeEventListener('click', handleOutsideClick);
+      window.removeEventListener('resize', handleResize);
     };
   }, []);
 
@@ -36,32 +40,46 @@ function TopNav() {
       right: 0,
       width: '100%',
       zIndex: 1000,
+      alignContent: 'flex-end'
     }}>
       <ul>
         <li>
-          <div className="dropdown" ref={dropdownRef} style={{ position: 'relative' }}>
+          <div className="button-container" style={{ display: 'flex', alignItems: 'center', marginRight: '10px' }}>
+            {isMobile && (
+              <button className="btn" onClick={toggleNav}>
+                <Menu />
+              </button>
+            )}
+
             <button className="btn" onClick={toggleDropdown}>
               <Plus /><span>New Entry</span>
               <ChevronDown />
             </button>
-            {isOpen && (
-              <div className="dropdown-content" style={{
-                position: 'absolute',
-                backgroundColor: '#f9f9f9',
-                minWidth: '160px',
-                boxShadow: '0px 8px 16px 0px rgba(0,0,0,0.2)',
-                zIndex: 1001,
-                top: 'calc(100% + 5px)',
-                left: 0,
-              }}>
-                <Link to="/vendors" style={{ color: '#007bff', padding: '10px', display: 'block' }}>Vendors</Link>
-                <Link to="/customer" style={{ color: '#007bff', padding: '10px', display: 'block' }}>Customers</Link>
-                <Link to="/account" style={{ color: '#007bff', padding: '10px', display: 'block' }}>New Account</Link>
-                <Link to="/billing" style={{ color: '#007bff', padding: '10px', display: 'block' }}>Billing</Link>
-                <Link to="/invoice" style={{ color: '#007bff', padding: '10px', display: 'block' }}>Invoice</Link>
-              </div>
-            )}
           </div>
+
+          {isOpen && (
+            <div className="dropdown-content" style={{
+              position: 'absolute',
+              backgroundColor: '#f9f9f9',
+              minWidth: '160px',
+              boxShadow: '0px 8px 16px 0px rgba(0,0,0,0.2)',
+              zIndex: 1001,
+              top: 'calc(100% + 5px)',
+              left: 0,
+            }}>
+              <Link to="/vendors" style={{ color: '#007bff', padding: '10px', display: 'block' }}>Vendors</Link>
+              <Link to="/customer" style={{ color: '#007bff', padding: '10px', display: 'block' }}>Customers</Link>
+              <Link to="/account" style={{ color: '#007bff', padding: '10px', display: 'block' }}>New Account</Link>
+              <Link to="/billing" style={{ color: '#007bff', padding: '10px', display: 'block' }}>Billing</Link>
+              <Link to="/invoice" style={{ color: '#007bff', padding: '10px', display: 'block' }}>Invoice</Link>
+            </div>
+          )}
+
+          {isMobileNavVisible && (
+            <div className="mobile-nav" style={{ backgroundColor: '#f9f9f9', padding: '10px', boxShadow: '0px 8px 16px 0px rgba(0,0,0,0.2)', zIndex: 1001 }}>
+              {/* Your mobile navigation links here */}
+            </div>
+          )}
         </li>
         <li>
           <Link to="/" className="notif">
