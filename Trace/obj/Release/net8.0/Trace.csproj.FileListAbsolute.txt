@@ -131,3 +131,4 @@ D:\working directory\erpsystem\Trace\bin\Release\net8.0\System.Security.Permissi
 D:\working directory\erpsystem\Trace\bin\Release\net8.0\BouncyCastle.Cryptography.dll
 D:\working directory\erpsystem\Trace\bin\Release\net8.0\MailKit.dll
 D:\working directory\erpsystem\Trace\bin\Release\net8.0\MimeKit.dll
+D:\working directory\erpsystem\Trace\obj\Release\net8.0\Trace.MvcApplicationPartsAssemblyInfo.cs
