@@ -24,6 +24,8 @@ import Layout from "./shared/auth/shared/Layout";
 import ProfileLayout from "./shared/onboarding/shared/ProfileLayout";
 import Report from "./Accounting/Pages/Reports/Report";
 import Statement from "./Accounting/Pages/Reports/Statement";
+import BalanceSheets from "./Accounting/Pages/Reports/BalanceSheets";
+import TrialBalance from "./Accounting/Pages/Reports/TrialBalance ";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -87,6 +89,8 @@ function App() {
               <Route path="/invoiceform" element={<InvoiceForm />} />
               <Route path="/report" element={<Report />} />
               <Route path="/statement" element={<Statement />} />
+              <Route path="/balance-sheet" element={<BalanceSheets />} />
+              <Route path="/trial-balance" element={<TrialBalance />} />
             </Routes>
           </div>
           <Routes>
