@@ -74,7 +74,7 @@ namespace Trace.Controllers
         }
 
         [HttpGet("/GetTransactionsByDateRange/{startDate}&{endDate}")]
-        public async Task<IActionResult> GetTransactionsByDateRange(DateTime startDate, DateTime endDate)
+        public async Task<IActionResult> GetTransactionsByDateRange(DateOnly startDate, DateOnly endDate)
         {
             try
             {

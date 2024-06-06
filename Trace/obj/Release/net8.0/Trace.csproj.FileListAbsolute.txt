@@ -98,7 +98,6 @@ D:\working directory\erpsystem\Trace\obj\Release\net8.0\Trace.GeneratedMSBuildEd
 D:\working directory\erpsystem\Trace\obj\Release\net8.0\Trace.AssemblyInfoInputs.cache
 D:\working directory\erpsystem\Trace\obj\Release\net8.0\Trace.AssemblyInfo.cs
 D:\working directory\erpsystem\Trace\obj\Release\net8.0\Trace.csproj.CoreCompileInputs.cache
-D:\working directory\erpsystem\Trace\obj\Release\net8.0\Trace.MvcApplicationPartsAssemblyInfo.cs
 D:\working directory\erpsystem\Trace\obj\Release\net8.0\Trace.MvcApplicationPartsAssemblyInfo.cache
 D:\working directory\erpsystem\Trace\obj\Release\net8.0\Trace.sourcelink.json
 D:\working directory\erpsystem\Trace\obj\Release\net8.0\staticwebassets.build.json

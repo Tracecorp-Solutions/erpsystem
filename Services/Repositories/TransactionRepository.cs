@@ -1,4 +1,5 @@
 ﻿using Core;
+using Core.DTOs;
 using Core.Models;
 using Core.Repositories;
 using Infrastructure.Data;
@@ -52,12 +53,12 @@ namespace Services.Repositories
             }
         }
 
-        public async Task<IEnumerable<TransactionsViewModel>> GetTransactionsByDateRange(DateTime startDate, DateTime endDate)
+        public async Task<IEnumerable<TransactionsViewModel>> GetTransactionsByDateRange(DateOnly startDate, DateOnly endDate)
         {
             return await _context.transactionEntries
                 .AsNoTracking()
                 .Include(t => t.Account)
-                .Where(t => t.TransactionDate >= startDate && t.TransactionDate <= endDate)
+                .Where(t => DateOnly.FromDateTime(t.TransactionDate) >= startDate && DateOnly.FromDateTime(t.TransactionDate) <= endDate)
                 .OrderByDescending(t => t.Id)
                 .Select(t => new TransactionsViewModel
                 {
@@ -191,6 +192,19 @@ namespace Services.Repositories
                 .Sum(t => t.Amount);
 
             return (creditTotal - debitTotal).ToString("C");
+        }
+
+        public async Task<decimal> GetAccountBalanceAsOfThatDate(int accountId, DateOnly date)
+        {
+            // get some of debits and credits for the account as of the date
+            var debitTotal = await _context.transactionEntries
+                .Where(t => t.TranAccount == accountId && t.TransactionType == "Debit" && DateOnly.FromDateTime(t.TransactionDate)<= date)
+                .SumAsync(t => t.Amount);
+            var creditTotal = await _context.transactionEntries
+                .Where(t => t.TranAccount == accountId && t.TransactionType == "Credit" && DateOnly.FromDateTime(t.TransactionDate) <= date)
+                .SumAsync(t => t.Amount);
+
+            return creditTotal - debitTotal;
         }
     }
 }
