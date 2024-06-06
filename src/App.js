@@ -17,7 +17,7 @@ import ViewTransactions from "./Accounting/Pages/Transaction/ViewTransactions";
 import Billing from "./pages/Billing";
 import BillsForm from "./Accounting/Pages/Billing/BillsForm";
 import InvoiceSidebar from "./components/InvoiceSidebar";
-import InvoiceForm from "./components/InvoiceForm";
+import InvoiceForm from "./Accounting/Pages/Invoices/InvoiceForm";
 import EditInvoiceForm from "./components/EditInvoiceForm";
 import Invoice from "./Accounting/Pages/Invoices/Invoice";
 import Layout from "./shared/auth/shared/Layout";
@@ -82,6 +82,7 @@ function App() {
               <Route path="/invoice" element={<Invoice />} />
               <Route path="/billing" element={<Billing />} />
               <Route path="/billsForm" element={<BillsForm />} />
+              <Route path="/invoiceform" element={<InvoiceForm />} />
             </Routes>
           </div>
           <Routes>
