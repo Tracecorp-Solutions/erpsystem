@@ -29,6 +29,13 @@ const Report = () => {
 
   return (
     <div>
+      <h1 style={{
+        fontSize: "36px",
+        color: "#505050",
+        fontWeight: "600",
+        fontFamily: "outFit, Sans-serif",
+        marginLeft: "10px"
+      }}>Reports</h1>
       <Cards
         onAccountStatementClick={handleAccountStatementClick}
         onBalanceSheetsClick={handleBalanceSheetsClick}
