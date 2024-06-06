@@ -12,6 +12,8 @@ import ViewTransactions from "../Transaction/ViewTransactions";
 import VendorSetup from "../Vendors/VendorSetup";
 import Customer from "../Customers/Customer";
 import Invoice from "../Invoices/Invoice";
+import Billing from "../Billing/Billing";
+import BillsForm from "../Billing/BillsForm";
 
 const Dashboardlayout = () => {
   const location = useLocation();
@@ -40,6 +42,8 @@ const Dashboardlayout = () => {
               {screen === 'vendors' && <VendorSetup />}
               {screen === 'customer' && <Customer />}
               {screen === 'invoice' && <Invoice />}
+              {screen === 'billing' && <Billing />}
+              {screen === 'billsform' && <BillsForm />}
             </div>
           </div>
         </div>

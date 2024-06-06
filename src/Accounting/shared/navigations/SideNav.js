@@ -131,13 +131,13 @@ function SideNav() {
           {openDropdown === 'bills' && (
             <div className="pt-3">
               <div
-                className={`flex gap-2 py-3 mt-2 whitespace-nowrap rounded-xl ${location.pathname === "/bills"
+                className={`flex gap-2 py-3 mt-2 whitespace-nowrap rounded-xl ${location.pathname === "/billing"
                   ? "bg-active-green txt-color-blue font-semibold px-4 mt-3"
                   : "bg-none"
                   }`}
               >
                 <Minus className="shrink-0 self-start w-6 aspect-square" />
-                <button onClick={() => navigate("/Dashboardlayout", { state: { screen: "bills" } })}>Bills</button>
+                <button onClick={() => navigate("/Dashboardlayout", { state: { screen: "billing" } })}>Bills</button>
               </div>
               <div
                 className={`flex gap-2 py-3 mt-2 whitespace-nowrap rounded-xl ${location.pathname === "/invoices"

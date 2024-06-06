@@ -15,7 +15,7 @@ import Login from "./pages/authentication/Login";
 import Forgot from "./pages/authentication/Forgot";
 import ViewTransactions from "./Accounting/Pages/Transaction/ViewTransactions";
 import Billing from "./pages/Billing";
-import BillsForm from "./components/BillsForm";
+import BillsForm from "./Accounting/Pages/Billing/BillsForm";
 import InvoiceSidebar from "./components/InvoiceSidebar";
 import InvoiceForm from "./components/InvoiceForm";
 import EditInvoiceForm from "./components/EditInvoiceForm";
@@ -81,6 +81,7 @@ function App() {
               <Route path="/edit-invoice/:id" element={<EditInvoiceForm />} />
               <Route path="/invoice" element={<Invoice />} />
               <Route path="/billing" element={<Billing />} />
+              <Route path="/billsForm" element={<BillsForm />} />
             </Routes>
           </div>
           <Routes>
