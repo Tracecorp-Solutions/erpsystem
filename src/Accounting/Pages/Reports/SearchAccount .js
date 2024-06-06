@@ -15,7 +15,7 @@ const SearchAccount = () => {
   return (
     <div className="flex flex-col sm:flex-row items-center">
       <select
-        style={{ width: 200, marginRight: "10px", borderRadius: "24px", padding: "10px", border: "1px solid gray" }}
+        style={{ width: 200, marginRight: "10px", borderRadius: "24px", padding: "10px", border: "0.5px solid gray" }}
         placeholder="Search accounts"
         onChange={handleSearch}
         value={searchValue}

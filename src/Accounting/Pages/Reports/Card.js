@@ -1,9 +1,10 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Cards = () => {
   return (
     <div className="flex flex-wrap justify-start p-2">
-      <div className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 mb-4 px-2">
+      <Link to="/report" className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 mb-4 px-2">
         <div
           className="bg-white rounded p-4 text-center"
           style={{
@@ -14,8 +15,8 @@ const Cards = () => {
         >
           Account Statements
         </div>
-      </div>
-      <div className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 mb-4 px-2">
+      </Link>
+      <Link to="/balance-sheets" className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 mb-4 px-2">
         <div
           className="bg-white rounded p-4 text-center"
           style={{
@@ -26,8 +27,8 @@ const Cards = () => {
         >
           Balance Sheets
         </div>
-      </div>
-      <div className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 mb-4 px-2">
+      </Link>
+      <Link to="/trial-balance" className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 mb-4 px-2">
         <div
           className="bg-white rounded p-4 text-center"
           style={{
@@ -38,8 +39,8 @@ const Cards = () => {
         >
           Trial Balance
         </div>
-      </div>
-      <div className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 mb-4 px-2">
+      </Link>
+      <Link to="/user-activity" className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 mb-4 px-2">
         <div
           className="bg-white rounded p-4 text-center"
           style={{
@@ -50,7 +51,7 @@ const Cards = () => {
         >
           User Activity
         </div>
-      </div>
+      </Link>
     </div>
   );
 };
