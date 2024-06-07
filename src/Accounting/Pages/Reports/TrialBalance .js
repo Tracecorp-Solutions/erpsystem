@@ -1,33 +1,43 @@
 import React from "react";
+import { Table } from "antd";
+import TrialBalanceFilter from "./TrialBalanceFilter";
 
 const TrialBalance = () => {
+  // Sample data for the table
+  const data = [
+    { key: "1", account: "Account 1", description: "Description 1", credit: 1000, debit: 500 },
+    { key: "2", account: "Account 2", description: "Description 2", credit: 1500, debit: 2000 },
+    { key: "3", account: "Account 3", description: "Description 3", credit: 2000, debit: 1000 },
+  ];
+
+  // Columns configuration for the table
+  const columns = [
+    {
+      title: "Account",
+      dataIndex: "account",
+      key: "account",
+    },
+    {
+      title: "Description",
+      dataIndex: "description",
+      key: "description",
+    },
+    {
+      title: "Credit",
+      dataIndex: "credit",
+      key: "credit",
+    },
+    {
+      title: "Debit",
+      dataIndex: "debit",
+      key: "debit",
+    },
+  ];
+
   return (
     <div className="container mx-auto mt-6">
-      <h2 className="text-xl font-bold mb-4">Trial Balance</h2>
-      {/* Your trial balance content here */}
-      <table className="border-collapse border border-gray-400 w-full">
-        <thead>
-          <tr>
-            <th className="border border-gray-400 px-4 py-2">Account</th>
-            <th className="border border-gray-400 px-4 py-2">Debit</th>
-            <th className="border border-gray-400 px-4 py-2">Credit</th>
-          </tr>
-        </thead>
-        <tbody>
-          {/* Sample trial balance data */}
-          <tr>
-            <td className="border border-gray-400 px-4 py-2">Account 1</td>
-            <td className="border border-gray-400 px-4 py-2">1000</td>
-            <td className="border border-gray-400 px-4 py-2">500</td>
-          </tr>
-          <tr>
-            <td className="border border-gray-400 px-4 py-2">Account 2</td>
-            <td className="border border-gray-400 px-4 py-2">700</td>
-            <td className="border border-gray-400 px-4 py-2">900</td>
-          </tr>
-          {/* More rows */}
-        </tbody>
-      </table>
+      <TrialBalanceFilter />
+      <Table dataSource={data} columns={columns} />
     </div>
   );
 };

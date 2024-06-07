@@ -36,7 +36,7 @@ const SearchAccount = ({ handleExport }) => {
           style={{
             background: "#4467a1",
             borderRadius: "24px",
-            width: "20%"
+            width: "150px"
           }}
           onClick={handleExport} // Call handleExport when button is clicked
         >

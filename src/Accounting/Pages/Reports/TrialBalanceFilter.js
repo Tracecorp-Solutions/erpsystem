@@ -4,11 +4,12 @@ import { DownloadOutlined } from "@ant-design/icons";
 
 const { RangePicker } = DatePicker;
 
-const BalanceSheetFilterDate = () => {
+const TrialBalanceFilter = () => {
   return (
     <div className="" style={{
       display: "flex",
-      justifyContent: "space-between"
+      justifyContent: "space-between",
+      marginBottom: "10px"
     }}>
       <div>
         <RangePicker
@@ -35,4 +36,4 @@ const BalanceSheetFilterDate = () => {
   );
 };
 
-export default BalanceSheetFilterDate;
+export default TrialBalanceFilter;
