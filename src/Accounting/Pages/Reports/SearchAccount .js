@@ -4,7 +4,7 @@ import { DownloadOutlined } from "@ant-design/icons";
 
 const { RangePicker } = DatePicker;
 
-const SearchAccount = () => {
+const SearchAccount = ({ handleExport }) => {
   const [searchValue, setSearchValue] = useState("");
 
   const handleSearch = (event) => {
@@ -38,7 +38,7 @@ const SearchAccount = () => {
             borderRadius: "24px",
             width: "20%"
           }}
-  
+          onClick={handleExport} // Call handleExport when button is clicked
         >
           <DownloadOutlined className="mr-2" />
           Export

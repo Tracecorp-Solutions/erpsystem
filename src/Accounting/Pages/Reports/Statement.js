@@ -1,17 +1,37 @@
 import React, { useState, useEffect } from "react";
 import SearchAccount from "./SearchAccount ";
+import jsPDF from "jspdf";
 
 const Statement = () => {
   const [statementEntries, setStatementEntries] = useState([]);
 
   useEffect(() => {
-    fetch("http://3.216.182.63:8095/api/Report/AccountStatement")
+    fetch(`${process.env.REACT_APP_API_URL}/api/Report/AccountStatement`)
       .then((response) => response.json())
       .then((data) => {
         setStatementEntries(data.accountStatementEntries);
       })
       .catch((error) => console.error("Error fetching data:", error));
   }, []);
+
+  const handleExport = () => {
+    // Create a new instance of jsPDF
+    const doc = new jsPDF();
+
+    // Iterate over statement entries and add them to the PDF
+    statementEntries.forEach((entry, index) => {
+      doc.text(entry.transactionDate, 10, 10 + index * 10); // Adjust position as needed
+      entry.transactionsFortheDay.forEach((transaction, idx) => {
+        const y = 20 + (index * 10) + (idx * 10); // Adjust position as needed
+        doc.text(`Description: ${transaction.description}`, 10, y);
+        doc.text(`Amount: ${transaction.amount.toFixed(2)}`, 10, y + 5);
+        doc.text(`Running Balance: ${transaction.runningBalance}`, 10, y + 10);
+      });
+    });
+
+    // Save the PDF
+    doc.save("statement.pdf");
+  };
 
   return (
     <div
@@ -21,7 +41,7 @@ const Statement = () => {
         padding: "10px",
       }}
     >
-      <SearchAccount />
+      <SearchAccount handleExport={handleExport} />
       {statementEntries.map((entry, index) => (
         <div key={index}>
           <h3
