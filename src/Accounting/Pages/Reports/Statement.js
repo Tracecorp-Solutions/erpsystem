@@ -15,23 +15,26 @@ const Statement = () => {
   }, []);
 
   const handleExport = () => {
-    // Create a new instance of jsPDF
     const doc = new jsPDF();
-
-    // Iterate over statement entries and add them to the PDF
+  
     statementEntries.forEach((entry, index) => {
-      doc.text(entry.transactionDate, 10, 10 + index * 10); // Adjust position as needed
+      doc.text(entry.transactionDate, 10, 10 + index * 60);
+      doc.setLineWidth(0.5);
+      doc.line(10, 15 + index * 60, 200, 15 + index * 60);
+  
       entry.transactionsFortheDay.forEach((transaction, idx) => {
-        const y = 20 + (index * 10) + (idx * 10); // Adjust position as needed
+        const y = 25 + (index * 60) + (idx * 20);
         doc.text(`Description: ${transaction.description}`, 10, y);
-        doc.text(`Amount: ${transaction.amount.toFixed(2)}`, 10, y + 5);
-        doc.text(`Running Balance: ${transaction.runningBalance}`, 10, y + 10);
+        doc.text(`Amount: ${transaction.amount.toFixed(2)}`, 60, y);
+        doc.text(`Running Balance: ${transaction.runningBalance}`, 110, y);
       });
     });
-
+  
     // Save the PDF
     doc.save("statement.pdf");
   };
+  
+  
 
   return (
     <div
@@ -62,7 +65,7 @@ const Statement = () => {
             {entry.transactionsFortheDay.map((transaction, idx) => (
               <div key={idx} className="bg-white rounded p-4" style={{
                 display: "flex",
-                justifyContent: "space-around",
+                justifyContent: "space-between",
                 width: "100%"
               }}>
                 <p>Description: {transaction.description}</p>
