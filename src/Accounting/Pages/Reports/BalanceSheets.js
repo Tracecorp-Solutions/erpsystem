@@ -1,8 +1,8 @@
 import React from "react";
 import { Table } from "antd";
+import BalanceSheetFilterDate from "./BalanceSheetFilterDate";
 
 const BalanceSheet = () => {
-  // Dummy data for demonstration
   const tablesData = [
     {
       title: "Assets",
@@ -19,7 +19,6 @@ const BalanceSheet = () => {
           debit: 700,
           credit: 900,
         },
-        // Add more asset data as needed
       ],
     },
     {
@@ -37,24 +36,20 @@ const BalanceSheet = () => {
           debit: 900,
           credit: 700,
         },
-        // Add more liability data as needed
       ],
     },
-    // Add more arrays of data as needed
   ];
 
-  // Calculate the total amount for each row
   const renderTotalAmount = (text, record) => record.debit - record.credit;
 
-  // Define the columns
   const columns = [
     {
-      title: "Account", // Change this title to a dynamic value
+      title: "Account",
       dataIndex: "account",
       key: "account",
     },
     {
-      title: "Total Amount", // Change this title to a dynamic value
+      title: "Total Amount",
       dataIndex: "totalAmount",
       key: "totalAmount",
       render: renderTotalAmount,
@@ -63,6 +58,7 @@ const BalanceSheet = () => {
 
   return (
     <div className="container mx-auto mt-6">
+      <BalanceSheetFilterDate />
       {tablesData.map((table, index) => (
         <div key={index} className="mb-6">
           <Table

@@ -12,48 +12,38 @@ const SearchAccount = () => {
   };
 
   return (
-    <div className="" style={{
-      display: "flex",
-      justifyContent: "space-between"
-    }}>
-      <div>
-        <select
-          style={{
-            width: 200,
-            marginRight: "10px",
-            borderRadius: "24px",
-            padding: "10px",
-            border: "0.5px solid gray",
-          }}
-          placeholder="Search accounts"
-          onChange={handleSearch}
-          value={searchValue}
-        >
-          <option value="">Search accounts</option>
-          <option value="1">Account 1</option>
-          <option value="2">Account 2</option>
-          <option value="3">Account 3</option>
-        </select>
-        <RangePicker
-          style={{ width: "40%", padding: "10px", borderRadius: "24px" }}
-        />
-      </div>
-      <button
-        type="button"
-        style={{
-          background: "#4467A1",
-          padding: "10px",
-          width: "13%",
-          borderRadius: "24px",
-          color: "#fff",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
+    <div className="flex flex-col lg:flex-row gap-4 p-4">
+      <select
+        className="w-full lg:w-auto max-w-md rounded-lg p-2 border-gray-500 border"
+        placeholder="Search accounts"
+        onChange={handleSearch}
+        value={searchValue}
       >
-        <DownloadOutlined style={{ marginRight: "5px" }} />
-        Export
-      </button>
+        <option value="">Search accounts</option>
+        <option value="1">Account 1</option>
+        <option value="2">Account 2</option>
+        <option value="3">Account 3</option>
+      </select>
+      <RangePicker
+        className="w-full lg:w-auto rounded-lg p-2 border-gray-500 border"
+      />
+      <div className="flex justify-end w-full lg:w-auto" style={{
+        width: "100%"
+      }}>
+        <button
+          type="button"
+          className="text-white p-2 flex items-center justify-center"
+          style={{
+            background: "#4467a1",
+            borderRadius: "24px",
+            width: "20%"
+          }}
+  
+        >
+          <DownloadOutlined className="mr-2" />
+          Export
+        </button>
+      </div>
     </div>
   );
 };
