@@ -5,7 +5,7 @@ import BalanceSheets from "./BalanceSheets";
 import TrialBalance from "./TrialBalance ";
 
 const Report = () => {
-  const [showStatement, setShowStatement] = useState(false);
+  const [showStatement, setShowStatement] = useState(true);
   const [showBalanceSheets, setShowBalanceSheets] = useState(false);
   const [showTrialBalance, setShowTrialBalance] = useState(false);
 
