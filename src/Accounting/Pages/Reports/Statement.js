@@ -40,7 +40,7 @@ const Statement = () => {
     <div
       className="bg-white"
       style={{
-        borderRadius: "54px",
+        borderRadius: "24px",
         padding: "10px",
       }}
     >
