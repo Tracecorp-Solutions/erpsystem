@@ -49,6 +49,7 @@ const UserActivityHeader = () => {
           style={{
             width: "150px",
             borderRadius: "24px",
+            background: "#4467a1",
           }}
         >
           Export
