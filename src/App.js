@@ -26,6 +26,7 @@ import Report from "./Accounting/Pages/Reports/Report";
 import Statement from "./Accounting/Pages/Reports/Statement";
 import BalanceSheets from "./Accounting/Pages/Reports/BalanceSheets";
 import TrialBalance from "./Accounting/Pages/Reports/TrialBalance ";
+import UserActivity from "./Accounting/Pages/Reports/UserActivity";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -91,6 +92,7 @@ function App() {
               <Route path="/statement" element={<Statement />} />
               <Route path="/balance-sheet" element={<BalanceSheets />} />
               <Route path="/trial-balance" element={<TrialBalance />} />
+              <Route path="/user-activity" element={<UserActivity />} />
             </Routes>
           </div>
           <Routes>

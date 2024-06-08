@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-const Cards = ({onAccountStatementClick, onBalanceSheetsClick, onTrialBalanceClick }) => {
+const Cards = ({onAccountStatementClick, onBalanceSheetsClick, onTrialBalanceClick, onUserActivityClick }) => {
 
   const navigate = useNavigate();
   return (
@@ -42,7 +42,7 @@ const Cards = ({onAccountStatementClick, onBalanceSheetsClick, onTrialBalanceCli
           Trial Balance
         </div>
       </button>
-      <button onClick={() => navigate("/Dashboardlayout", { state: { screen: "customer" } })} className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 mb-4 px-2">
+      <button onClick={onUserActivityClick} className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 mb-4 px-2">
         <div
           className="bg-white rounded p-4 text-center"
           style={{
