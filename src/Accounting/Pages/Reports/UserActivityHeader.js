@@ -1,11 +1,24 @@
 import React from "react";
-import { DatePicker, Button, Select } from "antd";
+import { DatePicker, Button, Select, Dropdown, Menu } from "antd";
 import { DownloadOutlined } from "@ant-design/icons";
 
 const { RangePicker } = DatePicker;
 const { Option } = Select;
 
 const UserActivityHeader = () => {
+  const handleDownload = (format) => {
+    // Logic for downloading data in the selected format
+    console.log("Downloading in", format, "format...");
+  };
+
+  const menu = (
+    <Menu onClick={({ key }) => handleDownload(key)}>
+      <Menu.Item key="pdf">Download as PDF</Menu.Item>
+      <Menu.Item key="csv">Download as CSV</Menu.Item>
+      <Menu.Item key="excel">Download as Excel</Menu.Item>
+    </Menu>
+  );
+
   return (
     <div className="flex flex-col sm:flex-row items-center justify-between mb-4">
       <div className="mb-4 sm:mb-0 flex items-center">
@@ -28,18 +41,19 @@ const UserActivityHeader = () => {
           }}
         />
       </div>
-      <Button
-        type="primary"
-        className="mb-4 sm:mb-0"
-        icon={<DownloadOutlined />}
-        style={{
-          width: "150px",
-          borderRadius: "24px",
-        }}
-      >
-        Export
-      </Button>
-      {/* Adding more buttons/icons here if needed */}
+      <Dropdown overlay={menu} trigger={["click"]}>
+        <Button
+          type="primary"
+          className="mb-4 sm:mb-0"
+          icon={<DownloadOutlined />}
+          style={{
+            width: "150px",
+            borderRadius: "24px",
+          }}
+        >
+          Export
+        </Button>
+      </Dropdown>
     </div>
   );
 };

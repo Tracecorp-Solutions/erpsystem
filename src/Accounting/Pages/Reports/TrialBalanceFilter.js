@@ -1,10 +1,23 @@
 import React from "react";
-import { DatePicker } from "antd";
+import { DatePicker, Button, Dropdown, Menu } from "antd";
 import { DownloadOutlined } from "@ant-design/icons";
 
 const { RangePicker } = DatePicker;
 
 const TrialBalanceFilter = () => {
+  const handleDownload = (format) => {
+    // Logic for downloading data in the selected format
+    console.log("Downloading in", format, "format...");
+  };
+
+  const menu = (
+    <Menu onClick={({ key }) => handleDownload(key)}>
+      <Menu.Item key="pdf">Download as PDF</Menu.Item>
+      <Menu.Item key="csv">Download as CSV</Menu.Item>
+      <Menu.Item key="excel">Download as Excel</Menu.Item>
+    </Menu>
+  );
+
   return (
     <div className="flex flex-col sm:flex-row items-center justify-between mb-4">
       <div className="mb-4 sm:mb-0">
@@ -12,19 +25,20 @@ const TrialBalanceFilter = () => {
           style={{ width: "100%", maxWidth: "320px", borderRadius: "24px", padding: "10px" }}
         />
       </div>
-      <button
-        type="button"
-        className="text-white font-bold py-2 px-4 rounded-lg"
-        style={{
-            background: "#4467a1",
-            borderRadius: "24px",
+      <Dropdown overlay={menu} trigger={["click"]}>
+        <Button
+          type="primary"
+          className="mb-4 sm:mb-0"
+          icon={<DownloadOutlined />}
+          style={{
             width: "150px",
-            marginBottom: "5px"
+            borderRadius: "24px",
+            background: "#4467a1",
           }}
-      >
-        <DownloadOutlined style={{ marginRight: "5px" }} />
-        Export
-      </button>
+        >
+          Export
+        </Button>
+      </Dropdown>
     </div>
   );
 };
