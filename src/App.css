@@ -980,7 +980,7 @@ button[type= "handleLogin"] {
   }
 
   .mobile-nav {
-    width: 64%; /* Reduce width to 2/3 */
+    width: 60%; /* Reduce width to 2/3 */
   }
 
   .mobile-nav .flex {
