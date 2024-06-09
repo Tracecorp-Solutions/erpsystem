@@ -107,7 +107,7 @@ function SideNav() {
                 </div>
                 <div className={`flex gap-2 py-3 mt-2 whitespace-nowrap rounded-xl ${location.pathname === "/sub-group" ? "bg-active-green txt-color-blue font-semibold px-4 mt-3" : "bg-none"}`}>
                   <Minus className="shrink-0 self-start w-6 aspect-square" />
-                  <button onClick={() => navigate("/Dashboardlayout", { state: { screen: "sub-group" } })}>
+                  <button onClick={() => navigate("/layout", { state: { screen: "sub-group" } })}>
                     Subgroups
                   </button>
                 </div>
