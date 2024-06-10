@@ -5,10 +5,15 @@ import { DownloadOutlined } from "@ant-design/icons";
 const { RangePicker } = DatePicker;
 const { Option } = Select;
 
-const UserActivityHeader = () => {
+const UserActivityHeader = ({ onFilterChange }) => {
   const handleDownload = (format) => {
     // Logic for downloading data in the selected format
     console.log("Downloading in", format, "format...");
+  };
+
+  const handleDateRangeChange = (dates) => {
+    // Call the parent component's filter change handler with the selected date range
+    onFilterChange({ startDate: dates[0], endDate: dates[1] });
   };
 
   const menu = (
@@ -39,6 +44,7 @@ const UserActivityHeader = () => {
             borderRadius: "24px",
             padding: "10px",
           }}
+          onChange={handleDateRangeChange}
         />
       </div>
       <Dropdown overlay={menu} trigger={["click"]}>

@@ -1,16 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Table, Pagination } from 'antd';
 import UserActivityHeader from './UserActivityHeader';
 
-const UserActivity = () => {
-  const activities = [
-    { user: 'User A', activityName: 'Login', activityDate: '2024-06-01' },
-    { user: 'User B', activityName: 'Comment', activityDate: '2024-06-02' },
-    { user: 'User A', activityName: 'Update Profile', activityDate: '2024-06-03' },
-  ];
-
+const UserActivity = ({ filters, exportOptions }) => {
+  const [activities, setActivities] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(10); // You can set the number of items per page here
+  const [itemsPerPage] = useState(10);
+  const [totalItems, setTotalItems] = useState(0);
+
+  useEffect(() => {
+    fetchActivities();
+  }, [currentPage, filters]);
+
+  const fetchActivities = async () => {
+    const startDate = filters && filters.startDate ? filters.startDate.format('YYYY-MM-DD') : '2024-01-01';
+    const endDate = filters && filters.endDate ? filters.endDate.format('YYYY-MM-DD') : '2024-07-01';
+    const response = await fetch(`http://3.216.182.63:8095/api/Report/AuditTrails?startDate=${startDate}&endDate=${endDate}`);
+    const data = await response.json();
+    setActivities(data);
+    setTotalItems(data.length); // Update totalItems for pagination
+  };
+  
+
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const filteredData = activities.slice(indexOfFirstItem, indexOfLastItem);
@@ -18,18 +29,18 @@ const UserActivity = () => {
   const columns = [
     {
       title: 'User',
-      dataIndex: 'user',
-      key: 'user',
+      dataIndex: 'username',
+      key: 'username',
     },
     {
-      title: 'Activity Name',
-      dataIndex: 'activityName',
-      key: 'activityName',
+      title: 'Activity',
+      dataIndex: 'action',
+      key: 'action',
     },
     {
-      title: 'Activity Date',
-      dataIndex: 'activityDate',
-      key: 'activityDate',
+      title: 'Date',
+      dataIndex: 'timestamp',
+      key: 'timestamp',
     },
   ];
 
@@ -39,15 +50,15 @@ const UserActivity = () => {
 
   return (
     <div>
-      <UserActivityHeader />
+      <UserActivityHeader onFilterChange={fetchActivities} />
       <Table dataSource={filteredData} columns={columns} pagination={false} />
       <div style={{ display: "flex", justifyContent: "space-between", marginTop: "10px" }}>
         <div style={{ fontSize: "12px", color: "#a1a1a1" }}>
-          Showing {indexOfFirstItem + 1} - {Math.min(indexOfLastItem, activities.length)} of {activities.length} results
+          Showing {indexOfFirstItem + 1} - {Math.min(indexOfLastItem, totalItems)} of {totalItems} results
         </div>
         <Pagination
           current={currentPage}
-          total={activities.length}
+          total={totalItems}
           pageSize={itemsPerPage}
           onChange={paginate}
         />
