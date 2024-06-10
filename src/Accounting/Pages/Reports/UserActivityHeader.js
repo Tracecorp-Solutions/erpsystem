@@ -1,20 +1,25 @@
-import React from "react";
-import { DatePicker, Button, Select, Dropdown, Menu } from "antd";
-import { DownloadOutlined } from "@ant-design/icons";
+import React, { useState } from 'react';
+import { DatePicker, Button, Select, Dropdown, Menu } from 'antd';
+import { DownloadOutlined } from '@ant-design/icons';
 
 const { RangePicker } = DatePicker;
 const { Option } = Select;
 
 const UserActivityHeader = ({ onFilterChange }) => {
+  const [dateRange, setDateRange] = useState([]);
+
   const handleDownload = (format) => {
-    // Logic for downloading data in the selected format
-    console.log("Downloading in", format, "format...");
+    console.log('Downloading in', format, 'format...');
   };
 
   const handleDateRangeChange = (dates) => {
-    // Call the parent component's filter change handler with the selected date range
-    onFilterChange({ startDate: dates[0], endDate: dates[1] });
+    setDateRange(dates);
   };
+
+  const handleFilterClick = () => {
+    onFilterChange({ startDate: dateRange[0], endDate: dateRange[1] });
+  };
+  
 
   const menu = (
     <Menu onClick={({ key }) => handleDownload(key)}>
@@ -39,23 +44,34 @@ const UserActivityHeader = ({ onFilterChange }) => {
         </Select>
         <RangePicker
           style={{
-            width: "100%",
-            maxWidth: "320px",
-            borderRadius: "24px",
-            padding: "10px",
+            width: '100%',
+            maxWidth: '320px',
+            borderRadius: '24px',
+            padding: '10px',
           }}
           onChange={handleDateRangeChange}
         />
+        <Button
+          type="primary"
+          onClick={handleFilterClick}
+          style={{
+            marginLeft: '10px',
+            borderRadius: '24px',
+            background: '#4467a1',
+          }}
+        >
+          Filter
+        </Button>
       </div>
-      <Dropdown overlay={menu} trigger={["click"]}>
+      <Dropdown overlay={menu} trigger={['click']}>
         <Button
           type="primary"
           className="mb-4 sm:mb-0"
           icon={<DownloadOutlined />}
           style={{
-            width: "150px",
-            borderRadius: "24px",
-            background: "#4467a1",
+            width: '150px',
+            borderRadius: '24px',
+            background: '#4467a1',
           }}
         >
           Export
