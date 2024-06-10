@@ -9,6 +9,7 @@ function TopNav() {
     imageSize: 40,
   };
 
+
   const [isOpen, setIsOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [isMobileNavVisible, setIsMobileNavVisible] = useState(false);
@@ -47,7 +48,7 @@ function TopNav() {
       }}
     >
       <ul>
-        {isMobile ? null : ( // Hide on screens under 768px
+        {isMobile ? null : ( 
           <li>
             <div
               className="button-container"

@@ -56,7 +56,7 @@ function MobileNav({ links, closeMenu }) {
             <button className="flex justify-between w-full" onClick={() => toggleDropdown("chartOfAccounts")}>
               <span className="flex gap-2 items-center">
                 <Files className="shrink-0 w-5 aspect-square" />
-                <span>Chart of Accounts</span>
+                <span>Connections</span>
               </span>
               <ChevronDown className="shrink-0 w-5 aspect-square" />
             </button>
@@ -65,19 +65,19 @@ function MobileNav({ links, closeMenu }) {
                 <div className={`flex items-center gap-2 py-2 mt-2 whitespace-nowrap rounded-xl ${location.pathname === "/groups" ? "bg-active-green txt-color-blue font-semibold px-4" : "bg-none"}`}>
                   <Minus className="shrink-0 w-5 aspect-square" />
                   <button onClick={() => closeAndNavigate("/Dashboardlayout", { screen: "groups" })}>
-                    Groups
+                    New connections
                   </button>
                 </div>
                 <div className={`flex items-center gap-2 py-2 mt-2 whitespace-nowrap rounded-xl ${location.pathname === "/sub-group" ? "bg-active-green txt-color-blue font-semibold px-4" : "bg-none"}`}>
                   <Minus className="shrink-0 w-5 aspect-square" />
                   <button onClick={() => closeAndNavigate("/Dashboardlayout", { screen: "sub-group" })}>
-                    Subgroups
+                    View Applications
                   </button>
                 </div>
                 <div className={`flex items-center gap-2 py-2 mt-2 whitespace-nowrap rounded-xl ${location.pathname === "/accounts" ? "bg-active-green txt-color-blue font-semibold px-4" : "bg-none"}`}>
                   <Minus className="shrink-0 w-5 aspect-square" />
                   <button onClick={() => closeAndNavigate("/Dashboardlayout", { screen: "accounts" })}>
-                    Accounts
+                    Customer Profile
                   </button>
                 </div>
               </div>
@@ -86,26 +86,26 @@ function MobileNav({ links, closeMenu }) {
           <div className={`flex items-center gap-2 py-2 mt-2 whitespace-nowrap rounded-xl ${location.pathname === "/transactions" ? "bg-active-green txt-color-blue font-semibold px-4" : "bg-none"}`}>
             <ArrowRightLeft className="shrink-0 self-center w-5 aspect-square" />
             <button onClick={() => closeAndNavigate("/Dashboardlayout", { screen: "transactions" })}>
-              Transactions
+             Billing & Invoice
             </button>
           </div>
           <div className={`flex items-center gap-2 py-2 mt-2 whitespace-nowrap rounded-xl ${location.pathname === "/customer" ? "bg-active-green txt-color-blue font-semibold px-4" : "bg-none"}`}>
             <Users className="shrink-0 self-center w-5 aspect-square" />
             <button onClick={() => closeAndNavigate("/Dashboardlayout", { screen: "customer" })}>
-              Customers
+              Payments
             </button>
           </div>
           <div className={`flex items-center gap-2 py-2 mt-2 whitespace-nowrap rounded-xl ${location.pathname === "/vendors" ? "bg-active-green txt-color-blue font-semibold px-4" : "bg-none"}`}>
             <Users className="shrink-0 self-center w-5 aspect-square" />
             <button onClick={() => closeAndNavigate("/Dashboardlayout", { screen: "vendors" })}>
-              Vendors
+              Meter Readings
             </button>
           </div>
           <div className="mt-2 py-2 w-full">
             <button className="flex justify-between w-full" onClick={() => toggleDropdown("documents")}>
               <span className="flex gap-2 items-center">
                 <FolderClosed className="shrink-0 w-5 aspect-square" />
-                <span>Documents</span>
+                <span>Reporting</span>
               </span>
               <ChevronDown className="shrink-0 w-5 aspect-square" />
             </button>
@@ -129,7 +129,7 @@ function MobileNav({ links, closeMenu }) {
           <div className={`flex items-center gap-2 py-2 mt-2 whitespace-nowrap rounded-xl ${location.pathname === "/reports" ? "bg-active-green txt-color-blue font-semibold px-4" : "bg-none"}`}>
             <Files className="shrink-0 self-center w-5 aspect-square" />
             <button onClick={() => closeAndNavigate("/Dashboardlayout", { screen: "reports" })}>
-              Reports
+              User management
             </button>
           </div>
           <div className={`flex items-center gap-2 py-2 mt-2 whitespace-nowrap rounded-xl ${location.pathname === "/settings" ? "bg-active-green txt-color-blue font-semibold px-4" : "bg-none"}`}>

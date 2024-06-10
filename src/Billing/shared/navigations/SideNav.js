@@ -93,7 +93,7 @@ function SideNav() {
             <button className="flex justify-between w-full" onClick={() => toggleDropdown("chartOfAccounts")}>
               <span className="flex gap-2">
                 <Files className="shrink-0 self-start w-6 aspect-square" />
-                <span>Chart of Accounts</span>
+                <span>Connections</span>
               </span>
               <ChevronDown className="shrink-0 self-start w-6 aspect-square" />
             </button>
@@ -102,19 +102,19 @@ function SideNav() {
                 <div className={`flex gap-2 py-3 mt-2 whitespace-nowrap rounded-xl ${location.pathname === "/groups" ? "bg-active-green txt-color-blue font-semibold px-4 mt-3" : "bg-none"}`}>
                   <Minus className="shrink-0 self-start w-6 aspect-square" />
                   <button onClick={() => navigate("/Dashboardlayout", { state: { screen: "groups" } })}>
-                    Groups
+                    New Connections
                   </button>
                 </div>
                 <div className={`flex gap-2 py-3 mt-2 whitespace-nowrap rounded-xl ${location.pathname === "/sub-group" ? "bg-active-green txt-color-blue font-semibold px-4 mt-3" : "bg-none"}`}>
                   <Minus className="shrink-0 self-start w-6 aspect-square" />
                   <button onClick={() => navigate("/Dashboardlayout", { state: { screen: "sub-group" } })}>
-                    Subgroups
+                    View Applications
                   </button>
                 </div>
                 <div className={`flex gap-2 py-3 mt-2 whitespace-nowrap rounded-xl ${location.pathname === "/accounts" ? "bg-active-green txt-color-blue font-semibold px-4 mt-3" : "bg-none"}`}>
                   <Minus className="shrink-0 self-start w-6 aspect-square" />
                   <button onClick={() => navigate("/Dashboardlayout", { state: { screen: "accounts" } })}>
-                    Accounts
+                    Customer Profile
                   </button>
                 </div>
               </div>
@@ -123,26 +123,21 @@ function SideNav() {
           <div className={`flex gap-2 py-3 mt-2 whitespace-nowrap rounded-xl ${location.pathname === "/transactions" ? "bg-active-green txt-color-blue font-semibold px-4" : "bg-none"}`}>
             <ArrowRightLeft className="shrink-0 self-start w-6 aspect-square" />
             <button onClick={() => navigate("/Dashboardlayout", { state: { screen: "transactions" } })}>
-              Transactions
+              Payments
             </button>
           </div>
           <div className={`flex gap-2 py-3 mt-2 whitespace-nowrap rounded-xl ${location.pathname === "/customer" ? "bg-active-green txt-color-blue font-semibold px-4" : "bg-none"}`}>
             <Users className="shrink-0 self-start w-6 aspect-square" />
             <button onClick={() => navigate("/Dashboardlayout", { state: { screen: "customer" } })}>
-              Customers
+              Billing & Invoice
             </button>
           </div>
-          <div className={`flex gap-2 py-3 mt-2 whitespace-nowrap rounded-xl ${location.pathname === "/vendors" ? "bg-active-green txt-color-blue font-semibold px-4" : "bg-none"}`}>
-            <Users className="shrink-0 self-start w-6 aspect-square" />
-            <button onClick={() => navigate("/Dashboardlayout", { state: { screen: "vendors" } })}>
-              Vendors
-            </button>
-          </div>
+          
           <div className="mt-3 py-3 w-full">
             <button className="flex justify-between w-full" onClick={() => toggleDropdown("documents")}>
               <span className="flex gap-2">
                 <FolderClosed className="shrink-0 self-start w-6 aspect-square" />
-                <span>Documents</span>
+                <span>Meter Readings</span>
               </span>
               <ChevronDown className="shrink-0 self-start w-6 aspect-square" />
             </button>
@@ -167,6 +162,12 @@ function SideNav() {
             <Files className="shrink-0 self-start w-6 aspect-square" />
             <button onClick={() => navigate("/Dashboardlayout", { state: { screen: "reports" } })}>
               Reports
+            </button>
+          </div>
+          <div className={`flex gap-2 py-3 mt-2 whitespace-nowrap rounded-xl ${location.pathname === "/vendors" ? "bg-active-green txt-color-blue font-semibold px-4" : "bg-none"}`}>
+            <Users className="shrink-0 self-start w-6 aspect-square" />
+            <button onClick={() => navigate("/Dashboardlayout", { state: { screen: "vendors" } })}>
+              User management
             </button>
           </div>
           <div className={`flex gap-2 py-3 mt-2 whitespace-nowrap rounded-xl ${location.pathname === "/settings" ? "bg-active-green txt-color-blue font-semibold px-4" : "bg-none"}`}>
