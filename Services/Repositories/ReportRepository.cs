@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Core.Repositories;
 using Core.DTOs;
 using Microsoft.EntityFrameworkCore;
+using Core.Models;
 
 namespace Services.Repositories
 {
@@ -49,6 +50,16 @@ namespace Services.Repositories
             };
 
             return accountStatement == null ? throw new ArgumentException("No account Statement for that Date Range"): accountStatement;
+        }
+
+        public async Task<IEnumerable<AuditTrail>> GetAuditTrails(DateOnly startDate, DateOnly endDate)
+        {
+            // get all audit trails between the startDate and endDate
+            var auditTrails = await _context.AuditTrails
+                .Where(a => DateOnly.FromDateTime(a.Timestamp) >= startDate && DateOnly.FromDateTime(a.Timestamp) <= endDate)
+                .ToListAsync();
+
+            return auditTrails == null ? throw new ArgumentException("No Audit trail found") : auditTrails;
         }
     }
 }

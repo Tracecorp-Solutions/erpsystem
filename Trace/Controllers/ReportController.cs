@@ -29,5 +29,22 @@ namespace Trace.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
             }
         }   
+
+        [HttpGet("AuditTrails")]
+        public async Task<IActionResult> GetAuditTrails(DateOnly startDate, DateOnly endDate)
+        {
+            try
+            {
+                var auditTrails = await _reportRepository.GetAuditTrails(startDate, endDate);
+                return Ok(auditTrails);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
+        }
     }
 }
