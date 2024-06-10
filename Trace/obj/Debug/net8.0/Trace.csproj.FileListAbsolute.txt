@@ -3,7 +3,6 @@ D:\working directory\erpsystem\Trace\obj\Debug\net8.0\Trace.GeneratedMSBuildEdit
 D:\working directory\erpsystem\Trace\obj\Debug\net8.0\Trace.AssemblyInfoInputs.cache
 D:\working directory\erpsystem\Trace\obj\Debug\net8.0\Trace.AssemblyInfo.cs
 D:\working directory\erpsystem\Trace\obj\Debug\net8.0\Trace.csproj.CoreCompileInputs.cache
-D:\working directory\erpsystem\Trace\obj\Debug\net8.0\Trace.MvcApplicationPartsAssemblyInfo.cs
 D:\working directory\erpsystem\Trace\obj\Debug\net8.0\Trace.MvcApplicationPartsAssemblyInfo.cache
 D:\working directory\erpsystem\Trace\obj\Debug\net8.0\Trace.sourcelink.json
 D:\working directory\erpsystem\Trace\bin\Debug\net8.0\appsettings.Development.json
@@ -132,3 +131,4 @@ D:\working directory\erpsystem\Trace\bin\Debug\net8.0\Microsoft.Extensions.Optio
 D:\working directory\erpsystem\Trace\bin\Debug\net8.0\BouncyCastle.Cryptography.dll
 D:\working directory\erpsystem\Trace\bin\Debug\net8.0\MailKit.dll
 D:\working directory\erpsystem\Trace\bin\Debug\net8.0\MimeKit.dll
+D:\working directory\erpsystem\Trace\obj\Debug\net8.0\Trace.MvcApplicationPartsAssemblyInfo.cs

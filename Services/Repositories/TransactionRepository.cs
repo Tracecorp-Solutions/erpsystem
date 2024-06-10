@@ -4,8 +4,10 @@ using Core.Models;
 using Core.Repositories;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,11 +19,13 @@ namespace Services.Repositories
 
         private readonly ApplicationDbContext _context;
         private readonly IAccountRepository _accountRepository;
+        private readonly IConfiguration _configuration;
 
-        public TransactionRepository(ApplicationDbContext context, IAccountRepository accountRepository)
+        public TransactionRepository(ApplicationDbContext context, IAccountRepository accountRepository, IConfiguration configuration)
         {
             _context = context;
             _accountRepository = accountRepository;
+            _configuration = configuration;
         }
 
 
@@ -68,7 +72,8 @@ namespace Services.Repositories
                     TransactionType = t.TransactionType,
                     TranAccount = t.Account.Name,
                     TransactionReference = t.TransactionReference,
-                    Narration = t.Narration
+                    Narration = t.Narration,
+                    RunningBalance = GetRunningBalanceAsync(t.TranAccount, t.Id, t.RecordDate, _configuration).Result
                 })
                 .ToListAsync();
         }
@@ -192,6 +197,27 @@ namespace Services.Repositories
                 .Sum(t => t.Amount);
 
             return (creditTotal - debitTotal).ToString("C");
+        }
+
+        private async static Task<string> GetRunningBalanceAsync(int tranAccount, int id, DateTime dateTime,IConfiguration configuration)
+        {
+            string connectionstring = configuration.GetConnectionString("DefaultConnection");
+            var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
+            optionsBuilder.UseMySql(connectionstring, ServerVersion.AutoDetect(connectionstring));
+
+            await using var context = new ApplicationDbContext(optionsBuilder.Options);
+
+            var debitTotal = await context.transactionEntries
+                .Where(t => t.TranAccount == tranAccount && t.TransactionType == "Debit" && t.Id <= id && t.TransactionDate <= dateTime)
+                .SumAsync(t => (decimal?)t.Amount) ?? 0;
+
+            var creditTotal = await context.transactionEntries
+                .Where(t => t.TranAccount == tranAccount && t.TransactionType == "Credit" && t.Id <= id && t.TransactionDate <= dateTime)
+                .SumAsync(t => (decimal?)t.Amount) ?? 0;
+
+            var runningBalance = creditTotal - debitTotal;
+
+            return runningBalance.ToString("C", CultureInfo.CurrentCulture);
         }
 
         public async Task<decimal> GetAccountBalanceAsOfThatDate(int accountId, DateOnly date)

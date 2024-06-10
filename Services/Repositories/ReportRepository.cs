@@ -42,7 +42,7 @@ namespace Services.Repositories
                         TransactionDate = DateOnly.FromDateTime(g.Key),
                         TransactionsFortheDay = g.Select(t => new TransactionsFortheDay
                         {
-                            Description = t.Description,
+                            Description = t.TransactionReference,
                             Amount = t.Amount,
                             RunningBalance = t.RunningBalance
                         })
