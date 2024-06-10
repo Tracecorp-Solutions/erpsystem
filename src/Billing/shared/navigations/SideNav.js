@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Dashboard, Files, ArrowRightLeft, Users, ReceiptText, FolderClosed, Settings, ChevronDown, Minus, Menu } from "lucide-react";
+import { LayoutDashboard, Files, ArrowRightLeft, Users, ReceiptText, FolderClosed, Settings, ChevronDown, Minus, Menu } from "lucide-react";
 import MobileNav from "./MobileNav";
 
 function SideNav() {
@@ -65,7 +65,7 @@ function SideNav() {
           >
             <Menu size={24} />
           </button>
-          {isMenuOpen && <MobileNav links={moduleScreens} closeMenu={toggleMenu} />}
+          {/* {isMenuOpen && <MobileNav links={moduleScreens} closeMenu={toggleMenu} />} */}
         </div>
       )}
       <div className={`sidenav flex flex-col w-3/12 h-screen scroll-auto relative ${isSmallScreen ? "hidden" : "block"}`}>
@@ -84,8 +84,8 @@ function SideNav() {
             main menu
           </div>
           <div className={`flex gap-2 py-3 mt-3 whitespace-nowrap rounded-xl ${location.pathname === "/dashboard" ? "bg-active-green txt-color-blue font-semibold px-4" : "bg-none"}`}>
-            <Dashboard className="shrink-0 self-start w-6 aspect-square" />
-            <button onClick={() => navigate("/Dashboard", { state: { screen: "dashboard" } })}>
+            <LayoutDashboard className="shrink-0 self-start w-6 aspect-square" />
+            <button onClick={() => navigate("/Dashboardlayout", { state: { screen: "dashboard" } })}>
               Dashboard
             </button>
           </div>
@@ -107,7 +107,7 @@ function SideNav() {
                 </div>
                 <div className={`flex gap-2 py-3 mt-2 whitespace-nowrap rounded-xl ${location.pathname === "/sub-group" ? "bg-active-green txt-color-blue font-semibold px-4 mt-3" : "bg-none"}`}>
                   <Minus className="shrink-0 self-start w-6 aspect-square" />
-                  <button onClick={() => navigate("/layout", { state: { screen: "sub-group" } })}>
+                  <button onClick={() => navigate("/Dashboardlayout", { state: { screen: "sub-group" } })}>
                     Subgroups
                   </button>
                 </div>
@@ -177,7 +177,6 @@ function SideNav() {
           </div>
         </div>
       </div>
-      
     </>
   );
 }
