@@ -78,7 +78,8 @@ const UserActivity = () => {
 
   return (
     <div>
-      <UserActivityHeader onFilterChange={setFilter} />
+      <UserActivityHeader onFilterChange={setFilter}  filter={filter}
+        activities={activities} /> {/* Pass filter to UserActivityHeader */}
       <Table dataSource={filteredData} columns={columns} pagination={false} />
       <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '10px' }}>
         <div style={{ fontSize: '12px', color: '#a1a1a1' }}>

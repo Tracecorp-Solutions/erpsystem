@@ -1,15 +1,23 @@
 import React, { useState } from 'react';
 import { DatePicker, Button, Select, Dropdown, Menu } from 'antd';
 import { DownloadOutlined } from '@ant-design/icons';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
 
 const { RangePicker } = DatePicker;
 const { Option } = Select;
 
-const UserActivityHeader = ({ onFilterChange }) => {
+const UserActivityHeader = ({ onFilterChange, activities }) => {
   const [dateRange, setDateRange] = useState([]);
 
-  const handleDownload = (format) => {
-    console.log('Downloading in', format, 'format...');
+  const handleDownloadPDF = () => {
+    const pdf = new jsPDF();
+    const columns = ['User', 'Activity', 'Date'];
+    const rows = activities.map(activity => [activity.username, activity.action, activity.timestamp]);
+
+    pdf.text('User Activity Report', 10, 10);
+    pdf.autoTable({ head: [columns], body: rows });
+    pdf.save('user_activity.pdf');
   };
 
   const handleDateRangeChange = (dates) => {
@@ -19,13 +27,10 @@ const UserActivityHeader = ({ onFilterChange }) => {
   const handleFilterClick = () => {
     onFilterChange({ startDate: dateRange[0], endDate: dateRange[1] });
   };
-  
 
   const menu = (
-    <Menu onClick={({ key }) => handleDownload(key)}>
+    <Menu onClick={({ key }) => handleDownloadPDF(key)}>
       <Menu.Item key="pdf">Download as PDF</Menu.Item>
-      <Menu.Item key="csv">Download as CSV</Menu.Item>
-      <Menu.Item key="excel">Download as Excel</Menu.Item>
     </Menu>
   );
 
@@ -38,9 +43,6 @@ const UserActivityHeader = ({ onFilterChange }) => {
           dropdownClassName="rounded-md"
         >
           <Option value="all">All Users</Option>
-          <Option value="userA">User A</Option>
-          <Option value="userB">User B</Option>
-          <Option value="userC">User C</Option>
         </Select>
         <RangePicker
           style={{
