@@ -64,6 +64,10 @@ const UserActivity = () => {
       title: 'Date',
       dataIndex: 'timestamp',
       key: 'timestamp',
+      render: (text) => {
+        const date = new Date(text);
+        return date.toLocaleDateString();
+      },
     },
   ];
 
