@@ -4,6 +4,7 @@ import { DownloadOutlined } from '@ant-design/icons';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import { saveAs } from 'file-saver';
+import * as XLSX from 'xlsx';
 
 const { RangePicker } = DatePicker;
 const { Option } = Select;
@@ -34,6 +35,13 @@ const UserActivityHeader = ({ onFilterChange, activities }) => {
     return csvRows.join('\n');
   };
 
+  const handleDownloadExcel = () => {
+    const worksheet = XLSX.utils.json_to_sheet(activities);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'User Activity');
+    XLSX.writeFile(workbook, 'user_activity.xlsx');
+  };
+
   const handleDateRangeChange = (dates) => {
     setDateRange(dates);
   };
@@ -46,6 +54,7 @@ const UserActivityHeader = ({ onFilterChange, activities }) => {
     <Menu onClick={({ key }) => handleDownloadPDF(key)}>
       <Menu.Item key="pdf">Download as PDF</Menu.Item>
       <Menu.Item key="csv" onClick={handleDownloadCSV}>Download as CSV</Menu.Item>
+      <Menu.Item key="excel" onClick={handleDownloadExcel}>Download as Excel</Menu.Item>
     </Menu>
   );
 
