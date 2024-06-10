@@ -6,9 +6,10 @@ import {
     UsersIcon,
 } from "@heroicons/react/24/outline";
 import { BanknotesIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
-import SideNav from "../shared/navigations/SideNav"; // Import the SideNav component
+import SideNav from "../../Shared/navigations/SideNav";
 
 const stats = [
+
     {
         id: 1,
         name: "Total Transactions",
