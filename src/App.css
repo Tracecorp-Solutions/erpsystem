@@ -1,7 +1,7 @@
 .AppContainer {
   display: flex;
   flex-direction: row;
-  /* justify-content: space-between; */
+  justify-content: flex-start;
 }
 
 .sidenav {
@@ -311,13 +311,6 @@ td {
   cursor: pointer;
 }
 
-/* form {
-  width: 80%;
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-  margin-bottom: 32px;
-} */
 
 .form-group {
   display: flex;
@@ -476,7 +469,7 @@ button[type="submit"] {
 
 @media (max-width: 1024px) {
   .flex {
-    flex-direction: row;
+    flex-direction: column;
   }
 
   .form-side {

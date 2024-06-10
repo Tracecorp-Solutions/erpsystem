@@ -41,10 +41,11 @@ function TopNav() {
       style={{
         position: "sticky",
         right: 0,
-        width: "80%",
+        width: "85%",
         marginLeft: "278px",
         zIndex: 1000,
         alignContent: "flex-end",
+        marginTop: "-4px",
       }}
     >
       <ul>
