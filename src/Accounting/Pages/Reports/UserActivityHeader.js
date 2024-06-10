@@ -3,6 +3,7 @@ import { DatePicker, Button, Select, Dropdown, Menu } from 'antd';
 import { DownloadOutlined } from '@ant-design/icons';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
+import { saveAs } from 'file-saver';
 
 const { RangePicker } = DatePicker;
 const { Option } = Select;
@@ -20,6 +21,19 @@ const UserActivityHeader = ({ onFilterChange, activities }) => {
     pdf.save('user_activity.pdf');
   };
 
+  const handleDownloadCSV = () => {
+    const csvContent = generateCSV();
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8' });
+    saveAs(blob, 'user_activity.csv');
+  };
+
+  const generateCSV = () => {
+    const headers = ['User', 'Activity', 'Date'];
+    const rows = activities.map(activity => [activity.username, activity.action, activity.timestamp]);
+    const csvRows = [headers.join(','), ...rows.map(row => row.join(','))];
+    return csvRows.join('\n');
+  };
+
   const handleDateRangeChange = (dates) => {
     setDateRange(dates);
   };
@@ -31,6 +45,7 @@ const UserActivityHeader = ({ onFilterChange, activities }) => {
   const menu = (
     <Menu onClick={({ key }) => handleDownloadPDF(key)}>
       <Menu.Item key="pdf">Download as PDF</Menu.Item>
+      <Menu.Item key="csv" onClick={handleDownloadCSV}>Download as CSV</Menu.Item>
     </Menu>
   );
 
