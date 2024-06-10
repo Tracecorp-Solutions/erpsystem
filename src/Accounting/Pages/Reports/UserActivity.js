@@ -29,7 +29,7 @@ const UserActivity = () => {
     console.log("Fetching activities for date range:", startDate, endDate);
   
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/TestApi/api/Report/AuditTrails?startDate=${startDate}&endDate=${endDate}`);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/Report/AuditTrails?startDate=${startDate}&endDate=${endDate}`);
       const data = await response.json();
   
       if (data && data.length > 0) {
