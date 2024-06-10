@@ -9,7 +9,6 @@ function TopNav() {
     imageSize: 40,
   };
 
-
   const [isOpen, setIsOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [isMobileNavVisible, setIsMobileNavVisible] = useState(false);
@@ -42,14 +41,13 @@ function TopNav() {
         position: "sticky",
         right: 0,
         width: "85%",
-        marginLeft: "278px",
         zIndex: 1000,
         alignContent: "flex-end",
         marginTop: "-4px",
       }}
     >
       <ul>
-        {isMobile ? null : ( 
+        {isMobile ? null : (
           <li>
             <div
               className="button-container"
@@ -128,7 +126,7 @@ function TopNav() {
                 height: user.imageSize,
               }}
             />
-            <span>{user.name}</span>
+            <span className="user-name">{user.name}</span>
             <ChevronDown />
           </Link>
         </li>
