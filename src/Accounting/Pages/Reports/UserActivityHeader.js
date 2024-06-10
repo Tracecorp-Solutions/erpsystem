@@ -37,7 +37,7 @@ const UserActivityHeader = ({ onFilterChange, activities }) => {
     const rows = activities.map((activity) => [
       activity.username,
       activity.action,
-      activity.timestamp,
+      new Date(activity.timestamp).toLocaleDateString(),
     ]);
     const csvRows = [headers.join(","), ...rows.map((row) => row.join(","))];
     return csvRows.join("\n");
