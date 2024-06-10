@@ -12,7 +12,7 @@ function SideNav() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const moduleScreens = [
-    { to: "/Dashboardlayout", label: "Dashboard" },
+    { to: "/Dashboard", label: "Dashboard" },
     { to: "/groups", label: "Groups" },
     { to: "/sub-group", label: "Subgroups" },
     { to: "/accounts", label: "Accounts" },
