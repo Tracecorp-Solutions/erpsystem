@@ -11,19 +11,19 @@ function SideNav() {
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth <= 1080);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const moduleScreens = [
-    { to: "/Dashboardlayout", label: "Dashboard" },
-    { to: "/groups", label: "Groups" },
-    { to: "/sub-group", label: "Subgroups" },
-    { to: "/accounts", label: "Accounts" },
-    { to: "/transactions", label: "Transactions" },
-    { to: "/customer", label: "Customers" },
-    { to: "/vendors", label: "Vendors" },
-    { to: "/billing", label: "Bills" },
-    { to: "/invoice", label: "Invoices" },
-    { to: "/reports", label: "Reports" },
-    { to: "/settings", label: "Settings" },
-  ];
+  // const moduleScreens = [
+  //   { to: "/Dashboardlayout", label: "Dashboard" },
+  //   { to: "/groups", label: "Groups" },
+  //   { to: "/sub-group", label: "Subgroups" },
+  //   { to: "/accounts", label: "Accounts" },
+  //   { to: "/transactions", label: "Transactions" },
+  //   { to: "/customer", label: "Customers" },
+  //   { to: "/vendors", label: "Vendors" },
+  //   { to: "/billing", label: "Bills" },
+  //   { to: "/invoice", label: "Invoices" },
+  //   { to: "/reports", label: "Reports" },
+  //   { to: "/settings", label: "Settings" },
+  // ];
 
   useEffect(() => {
     const handleResize = () => {
@@ -65,7 +65,7 @@ function SideNav() {
           >
             <Menu size={24} />
           </button>
-          {isMenuOpen && <MobileNav links={moduleScreens} closeMenu={toggleMenu} />}
+          {/* {isMenuOpen && <MobileNav links={moduleScreens} closeMenu={toggleMenu} />} */}
         </div>
       )}
       <div className={`sidenav flex flex-col w-3/12 h-screen scroll-auto relative ${isSmallScreen ? "hidden" : "block"}`}>
