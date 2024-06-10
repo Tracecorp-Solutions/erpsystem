@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import About from '../../components/About';
+// import About from '../../components/About';
 import { Link, useNavigate } from 'react-router-dom';
 
 function Signup() {
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
-  const navigate = useNavigate(); // useNavigate hook to programmatically navigate
-  const [loading, setloading] = useState(false);// set loading state
+  const navigate = useNavigate(); 
+  const [loading, setloading] = useState(false);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -22,7 +22,7 @@ function Signup() {
       });
 
       if (response.ok) {
-        // Navigate to the verify page after successful registration
+        
         sessionStorage.setItem("useremail", email);
         navigate("/layout", { state: { screen: "verify" } });
       } else {

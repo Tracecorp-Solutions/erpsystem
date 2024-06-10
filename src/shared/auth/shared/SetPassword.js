@@ -10,6 +10,7 @@ function SetPassword() {
         repeatPassword: '',
     });
     const [feedback, setFeedback] = useState("");
+    
     const [showPassword, setShowPassword] = useState(false);
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();

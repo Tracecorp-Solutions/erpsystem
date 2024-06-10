@@ -12,6 +12,7 @@ function VerifyUser() {
     //end of state declaration
 
     const handleVerify = async () => {
+    
         try {
             setLoading(true);
             const email = sessionStorage.getItem("useremail");
