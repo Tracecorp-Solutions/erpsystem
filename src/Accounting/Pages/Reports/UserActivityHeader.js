@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import { DatePicker, Button, Select, Dropdown, Menu } from 'antd';
-import { DownloadOutlined } from '@ant-design/icons';
-import jsPDF from 'jspdf';
-import 'jspdf-autotable';
-import { saveAs } from 'file-saver';
-import * as XLSX from 'xlsx';
+import React, { useState } from "react";
+import { DatePicker, Button, Select, Dropdown, Menu } from "antd";
+import { DownloadOutlined } from "@ant-design/icons";
+import jsPDF from "jspdf";
+import "jspdf-autotable";
+import { saveAs } from "file-saver";
+import * as XLSX from "xlsx";
 
 const { RangePicker } = DatePicker;
 const { Option } = Select;
@@ -14,32 +14,40 @@ const UserActivityHeader = ({ onFilterChange, activities }) => {
 
   const handleDownloadPDF = () => {
     const pdf = new jsPDF();
-    const columns = ['User', 'Activity', 'Date'];
-    const rows = activities.map(activity => [activity.username, activity.action, activity.timestamp]);
+    const columns = ["User", "Activity", "Date"];
+    const rows = activities.map((activity) => [
+      activity.username,
+      activity.action,
+      new Date(activity.timestamp).toLocaleDateString(),
+    ]);
 
-    pdf.text('User Activity Report', 10, 10);
+    pdf.text("User Activity Report", 10, 10);
     pdf.autoTable({ head: [columns], body: rows });
-    pdf.save('user_activity.pdf');
+    pdf.save("user_activity.pdf");
   };
 
   const handleDownloadCSV = () => {
     const csvContent = generateCSV();
-    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8' });
-    saveAs(blob, 'user_activity.csv');
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8" });
+    saveAs(blob, "user_activity.csv");
   };
 
   const generateCSV = () => {
-    const headers = ['User', 'Activity', 'Date'];
-    const rows = activities.map(activity => [activity.username, activity.action, activity.timestamp]);
-    const csvRows = [headers.join(','), ...rows.map(row => row.join(','))];
-    return csvRows.join('\n');
+    const headers = ["User", "Activity", "Date"];
+    const rows = activities.map((activity) => [
+      activity.username,
+      activity.action,
+      activity.timestamp,
+    ]);
+    const csvRows = [headers.join(","), ...rows.map((row) => row.join(","))];
+    return csvRows.join("\n");
   };
 
   const handleDownloadExcel = () => {
     const worksheet = XLSX.utils.json_to_sheet(activities);
     const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, 'User Activity');
-    XLSX.writeFile(workbook, 'user_activity.xlsx');
+    XLSX.utils.book_append_sheet(workbook, worksheet, "User Activity");
+    XLSX.writeFile(workbook, "user_activity.xlsx");
   };
 
   const handleDateRangeChange = (dates) => {
@@ -53,8 +61,12 @@ const UserActivityHeader = ({ onFilterChange, activities }) => {
   const menu = (
     <Menu onClick={({ key }) => handleDownloadPDF(key)}>
       <Menu.Item key="pdf">Download as PDF</Menu.Item>
-      <Menu.Item key="csv" onClick={handleDownloadCSV}>Download as CSV</Menu.Item>
-      <Menu.Item key="excel" onClick={handleDownloadExcel}>Download as Excel</Menu.Item>
+      <Menu.Item key="csv" onClick={handleDownloadCSV}>
+        Download as CSV
+      </Menu.Item>
+      <Menu.Item key="excel" onClick={handleDownloadExcel}>
+        Download as Excel
+      </Menu.Item>
     </Menu>
   );
 
@@ -70,10 +82,10 @@ const UserActivityHeader = ({ onFilterChange, activities }) => {
         </Select>
         <RangePicker
           style={{
-            width: '100%',
-            maxWidth: '320px',
-            borderRadius: '24px',
-            padding: '10px',
+            width: "100%",
+            maxWidth: "320px",
+            borderRadius: "24px",
+            padding: "10px",
           }}
           onChange={handleDateRangeChange}
         />
@@ -81,23 +93,23 @@ const UserActivityHeader = ({ onFilterChange, activities }) => {
           type="primary"
           onClick={handleFilterClick}
           style={{
-            marginLeft: '10px',
-            borderRadius: '24px',
-            background: '#4467a1',
+            marginLeft: "10px",
+            borderRadius: "24px",
+            background: "#4467a1",
           }}
         >
           Filter
         </Button>
       </div>
-      <Dropdown overlay={menu} trigger={['click']}>
+      <Dropdown overlay={menu} trigger={["click"]}>
         <Button
           type="primary"
           className="mb-4 sm:mb-0"
           icon={<DownloadOutlined />}
           style={{
-            width: '150px',
-            borderRadius: '24px',
-            background: '#4467a1',
+            width: "150px",
+            borderRadius: "24px",
+            background: "#4467a1",
           }}
         >
           Export
