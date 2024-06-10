@@ -42,7 +42,7 @@ function TopNav() {
         position: "sticky",
         right: 0,
         width: "80%",
-        marginLeft: "134px",
+        marginLeft: "278px",
         zIndex: 1000,
         alignContent: "flex-end",
       }}

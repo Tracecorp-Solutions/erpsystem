@@ -65,7 +65,7 @@ function SideNav() {
           >
             <Menu size={24} />
           </button>
-          {/* {isMenuOpen && <MobileNav links={moduleScreens} closeMenu={toggleMenu} />} */}
+          {isMenuOpen && <MobileNav links={moduleScreens} closeMenu={toggleMenu} />}
         </div>
       )}
       <div className={`sidenav flex flex-col w-3/12 h-screen scroll-auto relative ${isSmallScreen ? "hidden" : "block"}`}>
