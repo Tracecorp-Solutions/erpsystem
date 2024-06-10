@@ -8,11 +8,11 @@ import Dashboard from "./Billing/Components/shared/Dashboard";
 // import Transactions from "./pages/Transactions";
 // import VendorSetup from "./Accounting/Pages/Vendors/VendorSetup";
 // import Customer from "./Accounting/Pages/Customers/Customer";
-import Signup from "./pages/authentication/Signup";
-import Reset from "./pages/authentication/Reset";
-import Verify from "./pages/authentication/Verify";
-import Login from "./pages/authentication/Login";
-import Forgot from "./pages/authentication/Forgot";
+
+import Signup from "./shared/auth/Signup";
+import VerifyUser from "./shared/auth/shared/VerifyUser";
+import Login from "./shared/auth/Login";
+import SetPassword from "./shared/auth/shared/SetPassword";
 // import ViewTransactions from "./Accounting/Pages/Transaction/ViewTransactions";
 // import Billing from "./pages/Billing";
 // import BillsForm from "./Accounting/Pages/Billing/BillsForm";
@@ -20,7 +20,7 @@ import Forgot from "./pages/authentication/Forgot";
 // import InvoiceForm from "./Accounting/Pages/Invoices/InvoiceForm";
 // import EditInvoiceForm from "./components/EditInvoiceForm";
 // import Invoice from "./Accounting/Pages/Invoices/Invoice";
-// import Layout from "./shared/auth/shared/Layout";
+import Layout from "./shared/auth/shared/Layout";
 // import ProfileLayout from "./shared/onboarding/shared/ProfileLayout";
 
 function App() {
@@ -50,12 +50,12 @@ function App() {
                 element={<Signup onVerify={handleVerify} />}
               />
               <Route
-                path="/verify"
-                element={<Verify onVerify={handleVerify} />}
+                path="/verifyuser"
+                element={<VerifyUser onVerify={handleVerify} />}
               />
               <Route
                 path="/forgot"
-                element={<Forgot onForgot={handleForgot} />}
+                element={<SetPassword onForgot={handleForgot} />}
               />
               <Route path="/" element={<Login onLogin={handleLogin} />} />
               <Route path="/" element={<Login />} />
@@ -64,14 +64,14 @@ function App() {
               <Route path="/accounts" element={<AccountSetup />} />
               <Route path="/vendors" element={<VendorSetup />} />
               <Route path="/customer" element={<Customer />} />
-              <Route path="/transactions" element={<Transactions />} />
+              <Route path="/transactions" element={<Transactions />} /> */}
               <Route path="/signup" element={<Signup />} />
-              <Route path="/verify" element={<Verify />} />
-              <Route path="/reset" element={<Reset />} />
-              <Route path="/forgot" element={<Forgot />} />
-              <Route path="/Dashboardlayout" element={<Dashboardlayout />} />
+              <Route path="/verify" element={<VerifyUser />} />
+              {/* <Route path="/reset" element={<Reset />} /> */}
+              <Route path="/setpassword" element={<SetPassword />} />
+              <Route path="/Dashboard" element={<Dashboard />} />
               <Route path="/layout" element={<Layout/>}/>
-              <Route
+              {/* <Route
                 path="view-transactions/:accountId"
                 element={<ViewTransactions />}
               /> */}
