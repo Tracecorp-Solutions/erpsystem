@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { DatePicker, Button, Menu } from "antd";
+import { DatePicker, Button, Menu, Dropdown } from "antd";
+import { DownloadOutlined } from "@ant-design/icons";
 import jsPDF from "jspdf";
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
@@ -10,6 +11,8 @@ const SearchAccount = ({ handleFilter, options, filteredEntries }) => {
   const [selectedOption, setSelectedOption] = useState("");
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
+
+  console.log("Filter entries entries entries", filteredEntries);
 
   const handleOptionSelection = (value) => {
     setSelectedOption(value);
@@ -22,7 +25,6 @@ const SearchAccount = ({ handleFilter, options, filteredEntries }) => {
 
   const handleFilterButtonClick = () => {
     if (selectedOption && startDate && endDate) {
-      // Pass selectedOption (accountId), startDate, and endDate to handleFilter
       handleFilter(selectedOption, startDate, endDate);
     } else {
       console.log("Please select an option and date range.");
@@ -32,41 +34,53 @@ const SearchAccount = ({ handleFilter, options, filteredEntries }) => {
   const handleDownloadPDF = () => {
     const pdf = new jsPDF();
     const columns = ["Description", "Amount", "Running Balance"];
-    const rows = filteredEntries.map((activity) => [
-      activity.description,
-      activity.amount,
-      activity.runningBalance,
-    ]);
-
+    const rows = filteredEntries.flatMap((entry) =>
+      entry.transactionsFortheDay.map((transaction) => [
+        transaction.description,
+        transaction.amount,
+        transaction.runningBalance,
+      ])
+    );
+  
     pdf.text("Account Statement Report", 10, 10);
     pdf.autoTable({ head: [columns], body: rows });
     pdf.save("user_activity.pdf");
   };
-
+  
   const handleDownloadCSV = () => {
     const csvContent = generateCSV();
     const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8" });
     saveAs(blob, "user_activity.csv");
   };
+  
 
   const generateCSV = () => {
     const headers = ["Description", "Amount", "Running Balance"];
-    const rows = filteredEntries.map((activity) => [
-      activity.description,
-      activity.amount,
-      activity.runningBalance,
-    ]);
+    const rows = filteredEntries.flatMap((entry) =>
+      entry.transactionsFortheDay.map((transaction) => [
+        transaction.description,
+        transaction.amount,
+        transaction.runningBalance,
+      ])
+    );
     const csvRows = [headers.join(","), ...rows.map((row) => row.join(","))];
     return csvRows.join("\n");
   };
-
+  
   const handleDownloadExcel = () => {
-    const worksheet = XLSX.utils.json_to_sheet(filteredEntries);
+    const flattenEntries = filteredEntries.flatMap((entry) =>
+      entry.transactionsFortheDay.map((transaction) => ({
+        Description: transaction.description,
+        Amount: transaction.amount,
+        "Running Balance": transaction.runningBalance,
+      }))
+    );
+    const worksheet = XLSX.utils.json_to_sheet(flattenEntries);
     const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, "User Activity");
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Account Statement");
     XLSX.writeFile(workbook, "user_activity.xlsx");
   };
-
+  
   const menu = (
     <Menu onClick={({ key }) => handleDownloadPDF(key)}>
       <Menu.Item key="pdf">Download as PDF</Menu.Item>
@@ -110,6 +124,20 @@ const SearchAccount = ({ handleFilter, options, filteredEntries }) => {
           Filter
         </Button>
       </div>
+      <Dropdown overlay={menu} trigger={["click"]}>
+        <Button
+          type="primary"
+          className="mb-4 sm:mb-0"
+          icon={<DownloadOutlined />}
+          style={{
+            width: "150px",
+            borderRadius: "24px",
+            background: "#4467a1",
+          }}
+        >
+          Export
+        </Button>
+      </Dropdown>
     </div>
   );
 };
