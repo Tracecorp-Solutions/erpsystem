@@ -903,7 +903,9 @@ button[type= "handleLogin"] {
 
   .topnav {
     background-color: #FFFFFF;
-    margin-left: 75px;
+    margin-left: 85px;
+    overflow: visible;
+    margin-top: -24px;
   }
 
   .side-nav {

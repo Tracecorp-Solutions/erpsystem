@@ -43,7 +43,6 @@ function TopNav() {
         width: "85%",
         zIndex: 1000,
         alignContent: "flex-end",
-        marginTop: "-4px",
       }}
     >
       <ul>
