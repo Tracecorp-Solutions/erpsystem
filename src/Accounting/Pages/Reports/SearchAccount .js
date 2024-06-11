@@ -110,7 +110,6 @@ const SearchAccount = ({ handleFilter, options, filteredEntries }) => {
         className="w-full lg:w-auto rounded-lg p-2 border-gray-500 border"
         onChange={handleDateRangeChange}
       />
-      <div className="flex justify-end w-full lg:w-auto" style={{ width: "100%" }}>
         <Button
           type="primary"
           className="text-white p-2 flex items-center justify-center"
@@ -123,7 +122,6 @@ const SearchAccount = ({ handleFilter, options, filteredEntries }) => {
         >
           Filter
         </Button>
-      </div>
       <Dropdown overlay={menu} trigger={["click"]}>
         <Button
           type="primary"
