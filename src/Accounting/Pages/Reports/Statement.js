@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { DatePicker, Button } from "antd";
 import SearchAccount from "./SearchAccount ";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
+import html2canvas from "html2canvas";
 
 const { RangePicker } = DatePicker;
 
@@ -17,6 +18,7 @@ const Statement = () => {
   const [statementEntries, setStatementEntries] = useState([]);
   const [filteredEntries, setFilteredEntries] = useState([]);
   const [options, setOptions] = useState([]);
+  const tableRef = useRef(null);
 
   useEffect(() => {
     fetchOptions();
@@ -78,6 +80,21 @@ const Statement = () => {
     }
   };
 
+  const handleDownloadPDF = () => {
+    const pdf = new jsPDF();
+
+    html2canvas(tableRef.current).then((canvas) => {
+      const imgData = canvas.toDataURL("image/png");
+
+      const imgWidth = 210;
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+      pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
+
+      pdf.save("account_statement.pdf");
+    });
+  };
+
+
   return (
     <div className="bg-white p-4 rounded-lg">
       <SearchAccount
@@ -85,8 +102,9 @@ const Statement = () => {
         handleFilter={handleFilter}
         options={options}
         filteredEntries={filteredEntries}
+        handleDownloadPDF={handleDownloadPDF}
       />
-      <table className="w-full">
+      <table className="w-full" ref={tableRef}>
         <thead>
           <tr>
             <th className="px-6 py-3 text-gray-800 font-semibold">

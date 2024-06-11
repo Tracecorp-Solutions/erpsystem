@@ -7,7 +7,7 @@ import { saveAs } from "file-saver";
 
 const { RangePicker } = DatePicker;
 
-const SearchAccount = ({ handleFilter, options, filteredEntries }) => {
+const SearchAccount = ({ handleFilter, options, filteredEntries, handleDownloadPDF }) => {
   const [selectedOption, setSelectedOption] = useState("");
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
@@ -28,24 +28,7 @@ const SearchAccount = ({ handleFilter, options, filteredEntries }) => {
       console.log("Please select an option and date range.");
     }
   };
-
-  const handleDownloadPDF = () => {
-    const pdf = new jsPDF();
-    const columns = ["Date", "Description", "Amount", "Running Balance"];
-    const rows = filteredEntries.flatMap((entry) =>
-      entry.transactionsFortheDay.map((transaction) => [
-        entry.transactionDate,
-        transaction.description,
-        transaction.amount,
-        transaction.runningBalance,
-      ])
-    );
-  
-    pdf.text("Account Statement Report", 10, 10);
-    pdf.autoTable({ head: [columns], body: rows });
-    pdf.save("account_statement.pdf");
-  };
-  
+    
   const handleDownloadCSV = () => {
     const csvContent = generateCSV();
     const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8" });
@@ -80,9 +63,12 @@ const SearchAccount = ({ handleFilter, options, filteredEntries }) => {
     XLSX.utils.book_append_sheet(workbook, worksheet, "Account Statement");
     XLSX.writeFile(workbook, "account_statement.xlsx");
   };
+
   const menu = (
-    <Menu onClick={({ key }) => handleDownloadPDF(key)}>
-      <Menu.Item key="pdf">Download as PDF</Menu.Item>
+    <Menu>
+      <Menu.Item key="pdf" onClick={() => handleDownloadPDF("pdf")}>
+        Download as PDF
+      </Menu.Item>
       <Menu.Item key="csv" onClick={handleDownloadCSV}>
         Download as CSV
       </Menu.Item>
