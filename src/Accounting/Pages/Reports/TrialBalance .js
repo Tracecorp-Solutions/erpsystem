@@ -140,7 +140,7 @@ const TrialBalance = () => {
 
   return (
     <div>
-      <div style={{ marginBottom: "10px" }}>
+      {/* <div style={{ marginBottom: "10px" }}>
         <TrialBalanceFilter handleSearch={handleSearch} handleDownload={handleDownload} />
       </div>
       {showFailure && (
@@ -171,7 +171,8 @@ const TrialBalance = () => {
           pageSize={itemsPerPage}
           onChange={paginate}
         />
-      </div>
+      </div> */}
+      <h1 className="text-center text-xl">Coming Soon!</h1>
     </div>
   );
 };
