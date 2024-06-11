@@ -40,7 +40,7 @@ function TopNav() {
       style={{
         position: "sticky",
         right: 0,
-        width: "85%",
+        width: "80%",
         zIndex: 1000,
         alignContent: "flex-end",
       }}
