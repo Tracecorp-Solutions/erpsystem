@@ -77,6 +77,7 @@ const Statement = () => {
         handleExport={handleExport}
         handleFilter={handleFilter}
         options={options}
+        filteredEntries={filteredEntries}
       />
       {filteredEntries.length > 0 ? (
         filteredEntries.map((entry, index) => (
