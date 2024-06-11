@@ -1,15 +1,10 @@
 import React from "react";
-import { DatePicker, Button, Dropdown, Menu } from "antd";
+import { Dropdown, Menu, DatePicker, Button } from "antd";
 import { DownloadOutlined } from "@ant-design/icons";
 
 const { RangePicker } = DatePicker;
 
-const TrialBalanceFilter = () => {
-  const handleDownload = (format) => {
-    // Logic for downloading data in the selected format
-    console.log("Downloading in", format, "format...");
-  };
-
+const TrialBalanceFilter = ({ handleDownload }) => {
   const menu = (
     <Menu onClick={({ key }) => handleDownload(key)}>
       <Menu.Item key="pdf">Download as PDF</Menu.Item>
