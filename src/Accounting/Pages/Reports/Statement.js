@@ -94,7 +94,6 @@ const Statement = () => {
     });
   };
 
-
   return (
     <div className="bg-white p-4 rounded-lg">
       <SearchAccount
@@ -104,91 +103,93 @@ const Statement = () => {
         filteredEntries={filteredEntries}
         handleDownloadPDF={handleDownloadPDF}
       />
-      <table className="w-full mt-3" ref={tableRef}>
-        <thead>
-          <tr>
-            <th className="px-6 py-3 text-gray-800 font-semibold">
-              Description
-            </th>
-            <th className="px-4 py-3 text-gray-800 font-semibold">Amount</th>
-            <th className="px-4 py-3 text-gray-800 font-semibold">
-              Running Balance
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {filteredEntries.length > 0 ? (
-            filteredEntries.map((entry, index) => (
-              <React.Fragment key={index}>
-                <tr>
-                  <th
-                    colSpan="3"
-                    className="px-4 py-2"
-                    style={{
-                      color: "#A1A1A1",
-                      fontWeight: "600",
-                      fontSize: "16px",
-                      fontFamily: "outFit, Sans-serif",
-                    }}
-                  >
-                    {entry.transactionDate}
-                  </th>
-                </tr>
-                {entry.transactionsFortheDay.map((transaction, idx) => (
-                  <tr
-                    key={`${index}-${idx}`}
-                    className={idx % 2 === 0 ? "bg-white-100" : ""}
-                  >
-                    <td
-                      className="px-6 py-4"
-                      style={{
-                        color: "#505050",
-                        fontWeight: "400",
-                        fontSize: "16px",
-                        fontFamily: "outFit, Sans-serif",
-                        width: "65%"
-                      }}
-                    >
-                      {transaction.description}
-                    </td>
-                    <td
-                      className="px-4 py-4"
-                      style={{
-                        color: "#F06C3E",
-                        fontWeight: "400",
-                        fontSize: "16px",
-                        fontFamily: "outFit, Sans-serif",
-                      }}
-                    >
-                      ${transaction.amount.toFixed(2)}
-                    </td>
-                    <td
-                      className="px-4 py-4"
-                      style={{
-                        color: "#505050",
-                        fontWeight: "400",
-                        fontSize: "16px",
-                        fontFamily: "outFit, Sans-serif",
-                      }}
-                    >
-                      {transaction.runningBalance}
-                    </td>
-                  </tr>
-                ))}
-              </React.Fragment>
-            ))
-          ) : (
+      <div className="overflow-x-auto">
+        <table className="w-full mt-3" ref={tableRef}>
+          <thead>
             <tr>
-              <td
-                colSpan="3"
-                className="px-4 py-2 text-center text-gray-600 font-semibold"
-              >
-                No Filtered Data
-              </td>
+              <th className="px-6 py-3 text-gray-800 font-semibold">
+                Description
+              </th>
+              <th className="px-4 py-3 text-gray-800 font-semibold">Amount</th>
+              <th className="px-4 py-3 text-gray-800 font-semibold">
+                Running Balance
+              </th>
             </tr>
-          )}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {filteredEntries.length > 0 ? (
+              filteredEntries.map((entry, index) => (
+                <React.Fragment key={index}>
+                  <tr>
+                    <th
+                      colSpan="3"
+                      className="px-4 py-2"
+                      style={{
+                        color: "#A1A1A1",
+                        fontWeight: "600",
+                        fontSize: "16px",
+                        fontFamily: "outFit, Sans-serif",
+                      }}
+                    >
+                      {entry.transactionDate}
+                    </th>
+                  </tr>
+                  {entry.transactionsFortheDay.map((transaction, idx) => (
+                    <tr
+                      key={`${index}-${idx}`}
+                      className={idx % 2 === 0 ? "bg-white-100" : ""}
+                    >
+                      <td
+                        className="px-6 py-4"
+                        style={{
+                          color: "#505050",
+                          fontWeight: "400",
+                          fontSize: "16px",
+                          fontFamily: "outFit, Sans-serif",
+                          width: "65%",
+                        }}
+                      >
+                        {transaction.description}
+                      </td>
+                      <td
+                        className="px-4 py-4"
+                        style={{
+                          color: "#F06C3E",
+                          fontWeight: "400",
+                          fontSize: "16px",
+                          fontFamily: "outFit, Sans-serif",
+                        }}
+                      >
+                        ${transaction.amount.toFixed(2)}
+                      </td>
+                      <td
+                        className="px-4 py-4"
+                        style={{
+                          color: "#505050",
+                          fontWeight: "400",
+                          fontSize: "16px",
+                          fontFamily: "outFit, Sans-serif",
+                        }}
+                      >
+                        {transaction.runningBalance}
+                      </td>
+                    </tr>
+                  ))}
+                </React.Fragment>
+              ))
+            ) : (
+              <tr>
+                <td
+                  colSpan="3"
+                  className="px-4 py-2 text-center text-gray-600 font-semibold"
+                >
+                  No Filtered Data
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };
