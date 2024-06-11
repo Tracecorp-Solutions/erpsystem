@@ -104,7 +104,7 @@ const Statement = () => {
         filteredEntries={filteredEntries}
         handleDownloadPDF={handleDownloadPDF}
       />
-      <table className="w-full" ref={tableRef}>
+      <table className="w-full mt-3" ref={tableRef}>
         <thead>
           <tr>
             <th className="px-6 py-3 text-gray-800 font-semibold">
@@ -146,6 +146,7 @@ const Statement = () => {
                         fontWeight: "400",
                         fontSize: "16px",
                         fontFamily: "outFit, Sans-serif",
+                        width: "65%"
                       }}
                     >
                       {transaction.description}
