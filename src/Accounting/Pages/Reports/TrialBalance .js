@@ -81,13 +81,35 @@ const TrialBalance = () => {
   
       pdf.save("trial_balance_report.pdf");
     } else if (format === "csv") {
-      // Logic for downloading as CSV
+      const csvContent = generateCSV();
+      const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8" });
+      saveAs(blob, "trial_balance_report.csv");
     } else if (format === "excel") {
-      // Logic for downloading as Excel
+      const workbook = XLSX.utils.book_new();
+      const worksheet = XLSX.utils.json_to_sheet(filteredData);
+      XLSX.utils.book_append_sheet(workbook, worksheet, "Trial Balance");
+      XLSX.writeFile(workbook, "trial_balance_report.xlsx");
     }
   };
-  
 
+  const generateCSV = () => {
+    const headers = [
+      "Description",
+      "Debit Account",
+      "Credit Account",
+      "Debit Amount",
+      "Credit Amount",
+    ];
+    const csvRows = [
+      headers.join(","),
+      ...filteredData.map(
+        (item) =>
+          `${item.description},${item.debitAccount},${item.creditAccount},${item.debitAmount},${item.creditAmount}`
+      ),
+    ];
+    return csvRows.join("\n");
+  };
+  
   const columns = [
     {
       title: "Description",
