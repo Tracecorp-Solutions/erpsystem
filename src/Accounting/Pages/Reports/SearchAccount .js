@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { DatePicker, Button, Menu, Dropdown } from "antd";
+import { DatePicker, Button, Menu, Dropdown, Row, Col } from "antd";
 import { DownloadOutlined } from "@ant-design/icons";
 import jsPDF from "jspdf";
 import * as XLSX from "xlsx";
@@ -11,8 +11,6 @@ const SearchAccount = ({ handleFilter, options, filteredEntries }) => {
   const [selectedOption, setSelectedOption] = useState("");
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
-
-  console.log("Filter entries entries entries", filteredEntries);
 
   const handleOptionSelection = (value) => {
     setSelectedOption(value);
@@ -33,9 +31,10 @@ const SearchAccount = ({ handleFilter, options, filteredEntries }) => {
 
   const handleDownloadPDF = () => {
     const pdf = new jsPDF();
-    const columns = ["Description", "Amount", "Running Balance"];
+    const columns = ["Date", "Description", "Amount", "Running Balance"];
     const rows = filteredEntries.flatMap((entry) =>
       entry.transactionsFortheDay.map((transaction) => [
+        entry.transactionDate,
         transaction.description,
         transaction.amount,
         transaction.runningBalance,
@@ -44,20 +43,20 @@ const SearchAccount = ({ handleFilter, options, filteredEntries }) => {
   
     pdf.text("Account Statement Report", 10, 10);
     pdf.autoTable({ head: [columns], body: rows });
-    pdf.save("user_activity.pdf");
+    pdf.save("account_statement.pdf");
   };
   
   const handleDownloadCSV = () => {
     const csvContent = generateCSV();
     const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8" });
-    saveAs(blob, "user_activity.csv");
+    saveAs(blob, "account_statement.csv");
   };
   
-
   const generateCSV = () => {
-    const headers = ["Description", "Amount", "Running Balance"];
+    const headers = ["Date", "Description", "Amount", "Running Balance"];
     const rows = filteredEntries.flatMap((entry) =>
       entry.transactionsFortheDay.map((transaction) => [
+        entry.transactionDate,
         transaction.description,
         transaction.amount,
         transaction.runningBalance,
@@ -70,6 +69,7 @@ const SearchAccount = ({ handleFilter, options, filteredEntries }) => {
   const handleDownloadExcel = () => {
     const flattenEntries = filteredEntries.flatMap((entry) =>
       entry.transactionsFortheDay.map((transaction) => ({
+        Date: entry.transactionDate,
         Description: transaction.description,
         Amount: transaction.amount,
         "Running Balance": transaction.runningBalance,
@@ -78,9 +78,8 @@ const SearchAccount = ({ handleFilter, options, filteredEntries }) => {
     const worksheet = XLSX.utils.json_to_sheet(flattenEntries);
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, "Account Statement");
-    XLSX.writeFile(workbook, "user_activity.xlsx");
+    XLSX.writeFile(workbook, "account_statement.xlsx");
   };
-  
   const menu = (
     <Menu onClick={({ key }) => handleDownloadPDF(key)}>
       <Menu.Item key="pdf">Download as PDF</Menu.Item>
@@ -94,49 +93,58 @@ const SearchAccount = ({ handleFilter, options, filteredEntries }) => {
   );
 
   return (
-    <div className="flex flex-col lg:flex-row gap-4 p-4">
-      <select
-        className="w-full lg:w-auto max-w-md rounded-lg p-2 border-gray-500 border"
-        placeholder="Select an option"
-        onChange={(e) => handleOptionSelection(e.target.value)}
-        value={selectedOption}
-      >
-        <option value="">Select an option</option>
-        {options.map(option => (
-          <option key={option.id} value={option.id}>{option.name}</option>
-        ))}
-      </select>
-      <RangePicker
-        className="w-full lg:w-auto rounded-lg p-2 border-gray-500 border"
-        onChange={handleDateRangeChange}
-      />
+    <Row gutter={[16, 16]}>
+      <Col xs={24} sm={12} lg={6}>
+        <select
+          className="w-full max-w-md rounded-lg p-2 border-gray-500 border"
+          placeholder="Select an option"
+          onChange={(e) => handleOptionSelection(e.target.value)}
+          value={selectedOption}
+        >
+          <option value="">Select an option</option>
+          {options.map((option) => (
+            <option key={option.id} value={option.id}>
+              {option.name}
+            </option>
+          ))}
+        </select>
+      </Col>
+      <Col xs={24} sm={12} lg={6}>
+        <RangePicker
+          className="w-full rounded-lg p-2 border-gray-500 border"
+          onChange={handleDateRangeChange}
+        />
+      </Col>
+      <Col xs={24} sm={12} lg={6}>
         <Button
           type="primary"
           className="text-white p-2 flex items-center justify-center"
           style={{
             background: "#4467a1",
             borderRadius: "24px",
-            width: "150px"
+            width: "100%",
           }}
           onClick={handleFilterButtonClick}
         >
           Filter
         </Button>
-      <Dropdown overlay={menu} trigger={["click"]}>
-        <Button
-          type="primary"
-          className="mb-4 sm:mb-0"
-          icon={<DownloadOutlined />}
-          style={{
-            width: "150px",
-            borderRadius: "24px",
-            background: "#4467a1",
-          }}
-        >
-          Export
-        </Button>
-      </Dropdown>
-    </div>
+      </Col>
+      <Col xs={24} sm={12} lg={6}>
+        <Dropdown overlay={menu} trigger={["click"]}>
+          <Button
+            type="primary"
+            icon={<DownloadOutlined />}
+            style={{
+              width: "100%",
+              borderRadius: "24px",
+              background: "#4467a1",
+            }}
+          >
+            Export
+          </Button>
+        </Dropdown>
+      </Col>
+    </Row>
   );
 };
 
