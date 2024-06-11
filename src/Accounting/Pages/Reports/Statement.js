@@ -89,11 +89,11 @@ const Statement = () => {
       <table className="w-full">
         <thead>
           <tr>
-            <th className="px-4 py-2 text-gray-800 font-semibold">
+            <th className="px-6 py-3 text-gray-800 font-semibold">
               Description
             </th>
-            <th className="px-4 py-2 text-gray-800 font-semibold">Amount</th>
-            <th className="px-4 py-2 text-gray-800 font-semibold">
+            <th className="px-4 py-3 text-gray-800 font-semibold">Amount</th>
+            <th className="px-4 py-3 text-gray-800 font-semibold">
               Running Balance
             </th>
           </tr>
@@ -122,7 +122,7 @@ const Statement = () => {
                     className={idx % 2 === 0 ? "bg-white-100" : ""}
                   >
                     <td
-                      className="px-4 py-2"
+                      className="px-6 py-4"
                       style={{
                         color: "#505050",
                         fontWeight: "400",
@@ -133,7 +133,7 @@ const Statement = () => {
                       {transaction.description}
                     </td>
                     <td
-                      className="px-4 py-2"
+                      className="px-4 py-4"
                       style={{
                         color: "#F06C3E",
                         fontWeight: "400",
@@ -144,7 +144,7 @@ const Statement = () => {
                       ${transaction.amount.toFixed(2)}
                     </td>
                     <td
-                      className="px-4 py-2"
+                      className="px-4 py-4"
                       style={{
                         color: "#505050",
                         fontWeight: "400",
