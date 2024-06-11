@@ -86,23 +86,8 @@ const Statement = () => {
         options={options}
         filteredEntries={filteredEntries}
       />
-      {filteredEntries.length > 0 ? (
-        filteredEntries.map((entry, index) => (
-          <div key={index}>
-            <h3
-              className="mt-4 mb-2"
-              style={{
-                color: "#A1A1A1",
-                fontWeight: "600",
-                fontSize: "16px",
-                fontFamily: "outFit, Sans-serif",
-              }}
-            >
-              {entry.transactionDate}
-            </h3>
-            <div className="overflow-x-auto">
-              <table className="table-auto w-full">
-                <thead>
+      <table>
+      <thead>
                   <tr>
                     <th
                       className="px-4 py-2"
@@ -140,6 +125,21 @@ const Statement = () => {
                   </tr>
                 </thead>
                 <tbody>
+                {filteredEntries.length > 0 ? (
+        filteredEntries.map((entry, index) => (
+          <div key={index}>
+            <h3
+              className="mt-4 mb-2"
+              style={{
+                color: "#A1A1A1",
+                fontWeight: "600",
+                fontSize: "16px",
+                fontFamily: "outFit, Sans-serif",
+              }}
+            >
+              {entry.transactionDate}
+            </h3>
+            <div className="overflow-x-auto">
                   {entry.transactionsFortheDay.map((transaction, idx) => (
                     <tr
                       key={idx}
@@ -180,8 +180,6 @@ const Statement = () => {
                       </td>
                     </tr>
                   ))}
-                </tbody>
-              </table>
             </div>
           </div>
         ))
@@ -191,6 +189,9 @@ const Statement = () => {
           fontFamily: "outFit, Sans-serif",
         }}>No Filtered Data</p>
       )}
+                </tbody>
+      </table>
+     
     </div>
   );
 };
