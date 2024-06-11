@@ -15,6 +15,7 @@ import Invoice from "../Invoices/Invoice";
 import Billing from "../Billing/Billing";
 import BillsForm from "../Billing/BillsForm";
 import InvoiceForm from "../Invoices/InvoiceForm";
+import Report from "../Reports/Report";
 
 const Dashboardlayout = () => {
   const location = useLocation();
@@ -46,6 +47,7 @@ const Dashboardlayout = () => {
               {screen === 'billing' && <Billing />}
               {screen === 'billsform' && <BillsForm />}
               {screen === 'invoiceform' && <InvoiceForm />}
+              {screen === 'report' && <Report />}
             </div>
           </div>
         </div>

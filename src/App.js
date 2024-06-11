@@ -22,6 +22,11 @@ import EditInvoiceForm from "./components/EditInvoiceForm";
 import Invoice from "./Accounting/Pages/Invoices/Invoice";
 import Layout from "./shared/auth/shared/Layout";
 import ProfileLayout from "./shared/onboarding/shared/ProfileLayout";
+import Report from "./Accounting/Pages/Reports/Report";
+import Statement from "./Accounting/Pages/Reports/Statement";
+import BalanceSheets from "./Accounting/Pages/Reports/BalanceSheets";
+import TrialBalance from "./Accounting/Pages/Reports/TrialBalance ";
+import UserActivity from "./Accounting/Pages/Reports/UserActivity";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -83,6 +88,11 @@ function App() {
               <Route path="/billing" element={<Billing />} />
               <Route path="/billsForm" element={<BillsForm />} />
               <Route path="/invoiceform" element={<InvoiceForm />} />
+              <Route path="/report" element={<Report />} />
+              <Route path="/statement" element={<Statement />} />
+              <Route path="/balance-sheet" element={<BalanceSheets />} />
+              <Route path="/trial-balance" element={<TrialBalance />} />
+              <Route path="/user-activity" element={<UserActivity />} />
             </Routes>
           </div>
           <Routes>

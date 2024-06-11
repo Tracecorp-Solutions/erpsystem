@@ -21,9 +21,11 @@ const Login = () => {
         { username, password }
       );
       const token = response.data;
+      console.log("tooookennnnn", token);
       sessionStorage.setItem("token", token);
       navigate("/profilelayout");
     } catch (error) {
+      console.log("Backend error", error.response);
       setFeedback(`Error: ${error.response.data}`);
     } finally {
       setLoading(false);
