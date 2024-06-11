@@ -86,112 +86,90 @@ const Statement = () => {
         options={options}
         filteredEntries={filteredEntries}
       />
-      <table>
-      <thead>
-                  <tr>
-                    <th
+      <table className="w-full">
+        <thead>
+          <tr>
+            <th className="px-4 py-2 text-gray-800 font-semibold">
+              Description
+            </th>
+            <th className="px-4 py-2 text-gray-800 font-semibold">Amount</th>
+            <th className="px-4 py-2 text-gray-800 font-semibold">
+              Running Balance
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {filteredEntries.length > 0 ? (
+            filteredEntries.map((entry, index) => (
+              <React.Fragment key={index}>
+                <tr>
+                  <th
+                    colSpan="3"
+                    className="px-4 py-2"
+                    style={{
+                      color: "#A1A1A1",
+                      fontWeight: "600",
+                      fontSize: "16px",
+                      fontFamily: "outFit, Sans-serif",
+                    }}
+                  >
+                    {entry.transactionDate}
+                  </th>
+                </tr>
+                {entry.transactionsFortheDay.map((transaction, idx) => (
+                  <tr
+                    key={`${index}-${idx}`}
+                    className={idx % 2 === 0 ? "bg-white-100" : ""}
+                  >
+                    <td
                       className="px-4 py-2"
                       style={{
                         color: "#505050",
-                        fontWeight: "600",
-                        fontSize: "18px",
+                        fontWeight: "400",
+                        fontSize: "16px",
                         fontFamily: "outFit, Sans-serif",
                       }}
                     >
-                      Description
-                    </th>
-                    <th
+                      {transaction.description}
+                    </td>
+                    <td
+                      className="px-4 py-2"
+                      style={{
+                        color: "#F06C3E",
+                        fontWeight: "400",
+                        fontSize: "16px",
+                        fontFamily: "outFit, Sans-serif",
+                      }}
+                    >
+                      ${transaction.amount.toFixed(2)}
+                    </td>
+                    <td
                       className="px-4 py-2"
                       style={{
                         color: "#505050",
-                        fontWeight: "600",
-                        fontSize: "18px",
+                        fontWeight: "400",
+                        fontSize: "16px",
                         fontFamily: "outFit, Sans-serif",
                       }}
                     >
-                      Amount
-                    </th>
-                    <th
-                      className="px-4 py-2"
-                      style={{
-                        color: "#505050",
-                        fontWeight: "600",
-                        fontSize: "18px",
-                        fontFamily: "outFit, Sans-serif",
-                      }}
-                    >
-                      Running Balance
-                    </th>
+                      {transaction.runningBalance}
+                    </td>
                   </tr>
-                </thead>
-                <tbody>
-                {filteredEntries.length > 0 ? (
-        filteredEntries.map((entry, index) => (
-          <div key={index}>
-            <h3
-              className="mt-4 mb-2"
-              style={{
-                color: "#A1A1A1",
-                fontWeight: "600",
-                fontSize: "16px",
-                fontFamily: "outFit, Sans-serif",
-              }}
-            >
-              {entry.transactionDate}
-            </h3>
-            <div className="overflow-x-auto">
-                  {entry.transactionsFortheDay.map((transaction, idx) => (
-                    <tr
-                      key={idx}
-                      className={idx % 2 === 0 ? "bg-white-100" : ""}
-                    >
-                      <td
-                        className=" px-4 py-2 w-1/2"
-                        style={{
-                          color: "#505050",
-                          fontWeight: "400",
-                          fontSize: "16px",
-                          fontFamily: "outFit, Sans-serif",
-                        }}
-                      >
-                        {transaction.description}
-                      </td>
-                      <td
-                        className="px-4 py-2"
-                        style={{
-                          color: "#F06C3E",
-                          fontWeight: "400",
-                          fontSize: "16px",
-                          fontFamily: "outFit, Sans-serif",
-                        }}
-                      >
-                        ${transaction.amount.toFixed(2)}
-                      </td>
-                      <td
-                        className="px-4 py-2"
-                        style={{
-                          color: "#505050",
-                          fontWeight: "400",
-                          fontSize: "16px",
-                          fontFamily: "outFit, Sans-serif",
-                        }}
-                      >
-                        {transaction.runningBalance}
-                      </td>
-                    </tr>
-                  ))}
-            </div>
-          </div>
-        ))
-      ) : (
-        <p className="text-center mt-5" style={{
-          color: "#505050",
-          fontFamily: "outFit, Sans-serif",
-        }}>No Filtered Data</p>
-      )}
-                </tbody>
+                ))}
+              </React.Fragment>
+            ))
+          ) : (
+            <tr>
+              <td
+                colSpan="3"
+                className="px-4 py-2 text-center text-gray-600 font-semibold"
+              >
+                No Filtered Data
+              </td>
+            </tr>
+          )}
+        </tbody>
       </table>
-     
     </div>
   );
 };
