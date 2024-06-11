@@ -21,7 +21,7 @@ namespace Trace.Controllers
             try
             {
                 var trialBalance = await _taxBalanceRepository.GenerateTrialBalance();
-                return NotFound("No Transactions Found for trial balance to be populated");
+                return Ok(trialBalance);
             }catch(ArgumentException ex)
             {
                 return BadRequest(ex.Message);

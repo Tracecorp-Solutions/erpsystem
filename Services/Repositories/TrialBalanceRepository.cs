@@ -27,31 +27,47 @@ namespace Services.Repositories
 
         public async Task<IEnumerable<TrialBalanceEntry>> GenerateTrialBalance()
         {
-
-            // Fetch all transactions entries and group them by transaction date and description
+            //Fetch all transaction entries. group them by the description and transaction type and generate trial balance including account names that where affected
             var trialBalance = await _context.transactionEntries
+                .Include(entry => entry.Account)
                 .Where(entry => entry.TransactionReference != "Balance B/f") // Filter out opening balance transactions
-                .GroupBy(entry => new { entry.TransactionDate, Description = entry.Account != null ? entry.Account.Description : null })
+                .GroupBy(entry => new { Description = entry.Account != null ? entry.Account.Description : null, entry.TransactionType, entry.Account.Name})
                 .Select(group => new TrialBalanceEntry
                 {
-                    TranDate = group.Key.TransactionDate,
                     Description = group.Key.Description,
-                    DebitAccount = group.Where(entry => entry.TransactionType == "Debit").Sum(entry => entry.Amount),
-                    CreditAccount = group.Where(entry => entry.TransactionType == "Credit").Sum(entry => entry.Amount)
+                    DebitAccount = group.Key.TransactionType == "Debit" ? group.Key.Name : null,
+                    CreditAccount = group.Key.TransactionType == "Credit" ? group.Key.Name : null,
+                    DebitAmount = group.Key.TransactionType == "Debit" ? group.Sum(entry => entry.Amount) : 0,
+                    CreditAmount = group.Key.TransactionType == "Credit" ? group.Sum(entry => entry.Amount) : 0
                 })
                 .ToListAsync();
 
-            // Calculate total debits and credits
-            decimal totalDebits = trialBalance.Sum(entry => entry.DebitAccount);
-            decimal totalCredits = trialBalance.Sum(entry => entry.CreditAccount);
 
-            // Add a total entry to the trial balance   
-            trialBalance.Add(new TrialBalanceEntry
-            {
-                Description = "Total",
-                DebitAccount = totalDebits,
-                CreditAccount = totalCredits
-            });
+            // Fetch all transactions entries and group them by transaction date and description
+            //var trialBalance = await _context.transactionEntries
+            //    .Include(entry => entry.Account)
+            //    .Where(entry => entry.TransactionReference != "Balance B/f") // Filter out opening balance transactions
+            //    .GroupBy(entry => new { entry.TransactionDate, Description = entry.Account != null ? entry.Account.Description : null })
+            //    .Select(group => new TrialBalanceEntry
+            //    {
+            //        TranDate = group.Key.TransactionDate,
+            //        Description = group.Key.Description,
+            //        DebitAmount = group.Where(entry => entry.TransactionType == "Debit").Sum(entry => entry.Amount),
+            //        CreditAmount = group.Where(entry => entry.TransactionType == "Credit").Sum(entry => entry.Amount)
+            //    })
+            //    .ToListAsync();
+
+            //// Calculate total debits and credits
+            //decimal totalDebits = trialBalance.Sum(entry => entry.DebitAmount);
+            //decimal totalCredits = trialBalance.Sum(entry => entry.CreditAmount);
+
+            //// Add a total entry to the trial balance   
+            //trialBalance.Add(new TrialBalanceEntry
+            //{
+            //    Description = "Total",
+            //    DebitAmount = totalDebits,
+            //    CreditAmount = totalCredits
+            //});
 
             return trialBalance== null? throw new ArgumentException("No Transactions Found for a trial balance to be generated"): trialBalance;
         }
