@@ -562,6 +562,7 @@ hr {
 
 .topnav {
   background-color: #FFFFFF;
+  margin-left: 206px;
 }
 
 .topnav ul {
@@ -905,6 +906,15 @@ button[type= "handleLogin"] {
   .form-content {
     width: 100%;
     justify-content: center;
+  }
+
+  .user-name {
+    display: none;
+  }
+
+  .topnav {
+    background-color: #FFFFFF;
+    margin-left: 56px;
   }
 
   .side-nav {

@@ -41,7 +41,6 @@ function TopNav() {
         position: "sticky",
         right: 0,
         width: "80%",
-        marginLeft: "134px",
         zIndex: 1000,
         alignContent: "flex-end",
       }}
@@ -126,7 +125,7 @@ function TopNav() {
                 height: user.imageSize,
               }}
             />
-            <span>{user.name}</span>
+             <span className="user-name">{user.name}</span>
             <ChevronDown />
           </Link>
         </li>
