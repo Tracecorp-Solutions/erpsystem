@@ -102,9 +102,9 @@ const Statement = () => {
                     width: "100%",
                   }}
                 >
-                  <p>Description: {transaction.description}</p>
+                  <p>{transaction.description}</p>
                   <p>${transaction.amount.toFixed(2)}</p>
-                  <p>${transaction.runningBalance}</p>
+                  <p>{transaction.runningBalance}</p>
                 </div>
               ))}
             </div>
