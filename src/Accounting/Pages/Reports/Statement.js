@@ -1,40 +1,59 @@
 import React, { useState, useEffect } from "react";
 import SearchAccount from "./SearchAccount ";
 import jsPDF from "jspdf";
+import "jspdf-autotable";
+import { saveAs } from "file-saver";
+import * as XLSX from "xlsx";
 
 const Statement = () => {
   const [statementEntries, setStatementEntries] = useState([]);
+  const [filteredEntries, setFilteredEntries] = useState([]);
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_URL}/api/Report/AccountStatement`)
       .then((response) => response.json())
       .then((data) => {
         setStatementEntries(data.accountStatementEntries);
+        setFilteredEntries(data.accountStatementEntries);
       })
       .catch((error) => console.error("Error fetching data:", error));
   }, []);
 
   const handleExport = () => {
     const doc = new jsPDF();
-  
-    statementEntries.forEach((entry, index) => {
-      doc.text(entry.transactionDate, 10, 10 + index * 60);
-      doc.setLineWidth(0.5);
-      doc.line(10, 15 + index * 60, 200, 15 + index * 60);
-  
-      entry.transactionsFortheDay.forEach((transaction, idx) => {
-        const y = 25 + (index * 60) + (idx * 20);
-        doc.text(`Description: ${transaction.description}`, 10, y);
-        doc.text(`Amount: ${transaction.amount.toFixed(2)}`, 60, y);
-        doc.text(`Running Balance: ${transaction.runningBalance}`, 110, y);
+
+    // Define columns for the table
+    const columns = ["Description", "Amount", "Running Balance"];
+
+    // Define rows for the table
+    const rows = [];
+    filteredEntries.forEach((entry) => {
+      entry.transactionsFortheDay.forEach((transaction) => {
+        rows.push([
+          transaction.description,
+          `$${transaction.amount.toFixed(2)}`,
+          `$${transaction.runningBalance}`,
+        ]);
       });
     });
-  
+
+    // Add autoTable to the document
+    doc.autoTable({
+      head: [columns],
+      body: rows,
+    });
+
     // Save the PDF
     doc.save("statement.pdf");
   };
-  
-  
+
+  const handleFilter = (startDate, endDate) => {
+    const filtered = statementEntries.filter((entry) => {
+      const entryDate = new Date(entry.transactionDate);
+      return entryDate >= startDate && entryDate <= endDate;
+    });
+    setFilteredEntries(filtered);
+  };
 
   return (
     <div
@@ -44,8 +63,8 @@ const Statement = () => {
         padding: "10px",
       }}
     >
-      <SearchAccount handleExport={handleExport} />
-      {statementEntries.map((entry, index) => (
+      <SearchAccount handleExport={handleExport} handleFilter={handleFilter} />
+      {filteredEntries.map((entry, index) => (
         <div key={index}>
           <h3
             style={{
@@ -63,11 +82,15 @@ const Statement = () => {
             }}
           >
             {entry.transactionsFortheDay.map((transaction, idx) => (
-              <div key={idx} className="bg-white rounded p-4" style={{
-                display: "flex",
-                justifyContent: "space-between",
-                width: "100%"
-              }}>
+              <div
+                key={idx}
+                className="bg-white rounded p-4"
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  width: "100%",
+                }}
+              >
                 <p>Description: {transaction.description}</p>
                 <p>${transaction.amount.toFixed(2)}</p>
                 <p>${transaction.runningBalance}</p>

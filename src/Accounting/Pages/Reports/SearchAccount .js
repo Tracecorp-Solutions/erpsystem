@@ -1,14 +1,31 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { DatePicker, Button, Dropdown, Menu } from "antd";
 import { DownloadOutlined } from "@ant-design/icons";
 
 const { RangePicker } = DatePicker;
 
 const SearchAccount = ({ handleExport }) => {
-  const [searchValue, setSearchValue] = useState("");
+  const [selectedOption, setSelectedOption] = useState("");
+  const [options, setOptions] = useState([]);
 
-  const handleSearch = (event) => {
-    setSearchValue(event.target.value);
+  useEffect(() => {
+    fetchOptions();
+  }, []);
+
+  const fetchOptions = async () => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/GetAccounts`);
+      const data = await response.json();
+
+      console.log(data);
+      setOptions(data);
+    } catch (error) {
+      console.error("Error fetching options:", error);
+    }
+  };
+
+  const handleOptionSelection = (event) => {
+    setSelectedOption(event.target.value);
   };
 
   const handleDownload = (format) => {
@@ -30,14 +47,14 @@ const SearchAccount = ({ handleExport }) => {
     <div className="flex flex-col lg:flex-row gap-4 p-4">
       <select
         className="w-full lg:w-auto max-w-md rounded-lg p-2 border-gray-500 border"
-        placeholder="Search accounts"
-        onChange={handleSearch}
-        value={searchValue}
+        placeholder="Select an option"
+        onChange={handleOptionSelection}
+        value={selectedOption}
       >
-        <option value="">Search accounts</option>
-        <option value="1">Account 1</option>
-        <option value="2">Account 2</option>
-        <option value="3">Account 3</option>
+        <option value="">Select an option</option>
+        {options.map(option => (
+          <option key={option.id} value={option.name}>{option.name}</option>
+        ))}
       </select>
       <RangePicker
         className="w-full lg:w-auto rounded-lg p-2 border-gray-500 border"
