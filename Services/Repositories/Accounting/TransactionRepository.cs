@@ -1,7 +1,6 @@
-﻿using Core;
-using Core.DTOs;
+﻿using Core.DTOs;
 using Core.Models;
-using Core.Repositories;
+using Core.Repositories.Accounting;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -12,7 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Services.Repositories
+namespace Services.Repositories.Accounting
 {
     public class TransactionRepository : ITransactionRepository
     {
@@ -114,7 +113,7 @@ namespace Services.Repositories
             };
         }
 
-        public async Task<IEnumerable<TransactionsViewModel>> GetAllTransactions() 
+        public async Task<IEnumerable<TransactionsViewModel>> GetAllTransactions()
         {
             //get all transactions with the corresponding accounts  and order the, by transaction id in descending order
 
@@ -124,7 +123,7 @@ namespace Services.Repositories
                 .ToListAsync();
 
             // map the transactions to the transaction view model
-            var transactions =  tan.Select(t => new TransactionsViewModel
+            var transactions = tan.Select(t => new TransactionsViewModel
             {
                 Id = t.Id,
                 TransactionDate = t.TransactionDate,
@@ -135,10 +134,10 @@ namespace Services.Repositories
                 Narration = t.Narration
             });
 
-            return transactions == null? throw new ArgumentException("No Transactions Found") : transactions;
+            return transactions == null ? throw new ArgumentException("No Transactions Found") : transactions;
         }
 
-        public async Task<TransactionDto> GetTransactionDetails(int tranid) 
+        public async Task<TransactionDto> GetTransactionDetails(int tranid)
         {
             var trans = _context.transactionEntries
                 .AsNoTracking()
@@ -146,23 +145,23 @@ namespace Services.Repositories
                 .Where(t => t.Id == tranid)
                 .OrderByDescending(t => t.Id)
                 .ToListAsync();
-                //.Select(t => new TransactionDto 
-                //{
-                //    AccountFrom = t.Account.Name,
-                //    AccountTo = t.Account.Name,
-                //    Amount = t.Amount,
-                //    TransactionDate = t.TransactionDate,
-                //    TransactionType = t.TransactionType,
-                //    TransactionReference = t.TransactionReference,
-                //    Narration = t.Narration
-                //});
+            //.Select(t => new TransactionDto 
+            //{
+            //    AccountFrom = t.Account.Name,
+            //    AccountTo = t.Account.Name,
+            //    Amount = t.Amount,
+            //    TransactionDate = t.TransactionDate,
+            //    TransactionType = t.TransactionType,
+            //    TransactionReference = t.TransactionReference,
+            //    Narration = t.Narration
+            //});
 
             var trandto = new TransactionDto { };
             return trandto;
         }
 
 
-        public async Task<IEnumerable<TransactionsViewModel>> GetTransactionEntriesByAccountId(int accountId) 
+        public async Task<IEnumerable<TransactionsViewModel>> GetTransactionEntriesByAccountId(int accountId)
         {
             var trans = await _context.transactionEntries
                 .AsNoTracking()
@@ -171,7 +170,7 @@ namespace Services.Repositories
                 .OrderByDescending(t => t.Id).ToListAsync();
 
             //map trans to TransactionsViewModel with running balance
-            var transaction = trans.Select(t => new TransactionsViewModel 
+            var transaction = trans.Select(t => new TransactionsViewModel
             {
                 Id = t.Id,
                 TransactionDate = t.TransactionDate,
@@ -183,13 +182,13 @@ namespace Services.Repositories
                 RunningBalance = GetRunningBalance(t.TranAccount, t.Id, t.RecordDate)
             });
 
-            return transaction == null? throw new ArgumentException("No transaction found for that particular account"): transaction; 
+            return transaction == null ? throw new ArgumentException("No transaction found for that particular account") : transaction;
         }
 
         private string GetRunningBalance(int tranAccount, int id, DateTime dateTime)
         {
             var debitTotal = _context.transactionEntries
-                .Where(t => t.TranAccount == tranAccount && t.TransactionType == "Debit" && t.Id <= id && t.TransactionDate<= dateTime)
+                .Where(t => t.TranAccount == tranAccount && t.TransactionType == "Debit" && t.Id <= id && t.TransactionDate <= dateTime)
                 .Sum(t => t.Amount);
 
             var creditTotal = _context.transactionEntries
@@ -199,7 +198,7 @@ namespace Services.Repositories
             return (creditTotal - debitTotal).ToString("C");
         }
 
-        private async static Task<string> GetRunningBalanceAsync(int tranAccount, int id, DateTime dateTime,IConfiguration configuration)
+        private async static Task<string> GetRunningBalanceAsync(int tranAccount, int id, DateTime dateTime, IConfiguration configuration)
         {
             string connectionstring = configuration.GetConnectionString("DefaultConnection");
             var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
@@ -224,7 +223,7 @@ namespace Services.Repositories
         {
             // get some of debits and credits for the account as of the date
             var debitTotal = await _context.transactionEntries
-                .Where(t => t.TranAccount == accountId && t.TransactionType == "Debit" && DateOnly.FromDateTime(t.TransactionDate)<= date)
+                .Where(t => t.TranAccount == accountId && t.TransactionType == "Debit" && DateOnly.FromDateTime(t.TransactionDate) <= date)
                 .SumAsync(t => t.Amount);
             var creditTotal = await _context.transactionEntries
                 .Where(t => t.TranAccount == accountId && t.TransactionType == "Credit" && DateOnly.FromDateTime(t.TransactionDate) <= date)

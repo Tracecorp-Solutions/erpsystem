@@ -1,12 +1,16 @@
 using Core.DTOs;
 using Core.Models;
-using Core.Repositories;
+using Core.Repositories.Accounting;
+using Core.Repositories.Billing;
+using Core.Repositories.UserManagement;
 using Infrastructure.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using Services.Repositories;
+using Services.Repositories.Accounting;
+using Services.Repositories.Billing;
+using Services.Repositories.UserManagement;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -27,6 +31,8 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddSingleton<IPasswordHasher<User>, PasswordHasher<User>>();
 builder.Services.AddScoped<IRoleRepository, RoleRepository>();
 builder.Services.AddScoped<IReportRepository, ReportRepository>();
+builder.Services.AddScoped<INewConnectionRepository, NewConnectionRepository>();
+builder.Services.AddScoped<IBillingConfigurationRepository, BillingConfigurationRepository>();
 builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
 builder.Services.AddSingleton<EmailService>();
 

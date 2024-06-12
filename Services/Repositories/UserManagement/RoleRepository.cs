@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Core.Repositories;
 using Infrastructure.Data;
 using Core.Models;
+using Core.Repositories.UserManagement;
 
-namespace Services.Repositories
+namespace Services.Repositories.UserManagement
 {
     public class RoleRepository : IRoleRepository
     {

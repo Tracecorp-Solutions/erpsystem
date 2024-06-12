@@ -4,14 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Core
+namespace Core.Repositories.Accounting
 {
     public class TransactionViewModel
     {
-        public int AccountFromId {  get; set; }
-        public int AccountToId { get; set;}
+        public int AccountFromId { get; set; }
+        public int AccountToId { get; set; }
 
-        public DateTime TransactionDate {  get; set; }
+        public DateTime TransactionDate { get; set; }
 
         public decimal Amount { get; set; }
         public string Narration { get; set; }

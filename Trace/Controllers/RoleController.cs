@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Core.Repositories;
+using Core.Repositories.UserManagement;
 
 namespace Trace.Controllers
 {

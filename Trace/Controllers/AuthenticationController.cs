@@ -1,6 +1,6 @@
 ﻿using Core.DTOs;
 using Core.Models;
-using Core.Repositories;
+using Core.Repositories.UserManagement;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 

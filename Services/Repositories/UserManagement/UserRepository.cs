@@ -1,5 +1,4 @@
 ﻿using Core.Models;
-using Core.Repositories;
 using Infrastructure.Data;
 using System;
 using System.Collections.Generic;
@@ -17,8 +16,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics.Contracts;
 using System.ComponentModel.DataAnnotations;
+using Core.Repositories.UserManagement;
 
-namespace Services.Repositories
+namespace Services.Repositories.UserManagement
 {
     public class UserRepository : IUserRepository
     {
@@ -76,8 +76,8 @@ namespace Services.Repositories
         {
             var user = _context.Users.FirstOrDefault(u => u.Email == loginDTo.Username);
             if (user == null || _passwordHasher.VerifyHashedPassword(user, user.PasswordHash, loginDTo.Password) == PasswordVerificationResult.Failed)
-                throw new ArgumentException("Invalid Login Credentials"); 
-            
+                throw new ArgumentException("Invalid Login Credentials");
+
             //generate JWT token
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.UTF8.GetBytes("2387jkasdasd8232knsodjas9d023j23oadasodPASD23O2LASDP2O3KLKASMDPO23E2MASDIOWSDFSDFSDSDLKFSDKLFSDNFNASDIO2");
@@ -92,11 +92,11 @@ namespace Services.Repositories
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
 
-            var token = tokenHandler.CreateToken(tokenDescriptor);  
+            var token = tokenHandler.CreateToken(tokenDescriptor);
             //attach token to user
             user.Token = tokenHandler.WriteToken(token);
             await _context.SaveChangesAsync();
-            
+
             await LogActionAsync(user.Email, "User authenticated");
             return tokenHandler.WriteToken(token);
         }
@@ -109,11 +109,11 @@ namespace Services.Repositories
                 Username = username,
                 Timestamp = DateTime.Now
             };
-           _context.AuditTrails.Add(audit);
+            _context.AuditTrails.Add(audit);
             await _context.SaveChangesAsync();
         }
 
-        public async Task ChangePasswordAsync(ChangePwdDto changePwdDto) 
+        public async Task ChangePasswordAsync(ChangePwdDto changePwdDto)
         {
             var user = _context.Users.FirstOrDefault(u => u.Email == changePwdDto.Username);
 
@@ -249,7 +249,7 @@ namespace Services.Repositories
                 throw new ArgumentException("Role does not exist");
 
             // Send invitation emails and save invited users
-            List<InvitedUsers> invitedUsers = new List<InvitedUsers>(); 
+            List<InvitedUsers> invitedUsers = new List<InvitedUsers>();
             foreach (var email in invitedUsersdto.Emails)
             {
                 await emailService.SendEmailAsync(email, "Invitation to join",
@@ -269,7 +269,7 @@ namespace Services.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<InvitedUserLists>> GetInvitedUsersByOrganisationId(int organisationId) 
+        public async Task<IEnumerable<InvitedUserLists>> GetInvitedUsersByOrganisationId(int organisationId)
         {
             // get invited users by organisation id and group them by RoleId
             var invitedUsers = await _context.InvitedUsers
@@ -290,7 +290,7 @@ namespace Services.Repositories
 
         }
 
-        public async Task<User> GetUserByTokenAsync(string token) 
+        public async Task<User> GetUserByTokenAsync(string token)
         {
             var user = await _context.Users
                 .Include(u => u.Role)

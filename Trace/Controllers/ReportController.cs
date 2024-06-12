@@ -1,4 +1,4 @@
-﻿using Core.Repositories;
+﻿using Core.Repositories.Accounting;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Trace.Controllers

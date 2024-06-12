@@ -7,7 +7,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Services.Repositories
+namespace Services.Repositories.UserManagement
 {
     public class EmailService
     {

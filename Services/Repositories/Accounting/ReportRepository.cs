@@ -4,12 +4,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Core.Repositories;
 using Core.DTOs;
 using Microsoft.EntityFrameworkCore;
 using Core.Models;
+using Core.Repositories.Accounting;
 
-namespace Services.Repositories
+namespace Services.Repositories.Accounting
 {
     public class ReportRepository : IReportRepository
     {
@@ -25,7 +25,7 @@ namespace Services.Repositories
         public async Task<AccountStatement> GetAccountStatement(int accountId, DateOnly startDate, DateOnly endDate)
         {
             // closing balance of the account as of the endDate and get all transactions grouped by the date using the account id and populate the AccountStatement object
-            
+
             // get the closing balance of the account as of the endDate
             var closingBalance = await _transactionRepository.GetAccountBalanceAsOfThatDate(accountId, endDate);
 
@@ -49,7 +49,7 @@ namespace Services.Repositories
                     })
             };
 
-            return accountStatement == null ? throw new ArgumentException("No account Statement for that Date Range"): accountStatement;
+            return accountStatement == null ? throw new ArgumentException("No account Statement for that Date Range") : accountStatement;
         }
 
         public async Task<IEnumerable<AuditTrail>> GetAuditTrails(DateOnly startDate, DateOnly endDate)

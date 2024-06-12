@@ -1,5 +1,4 @@
-﻿using Core.Repositories;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,8 +7,9 @@ using Core.Models;
 using Microsoft.EntityFrameworkCore;
 using Infrastructure.Data;
 using System.Reflection.Metadata.Ecma335;
+using Core.Repositories.Accounting;
 
-namespace Services.Repositories
+namespace Services.Repositories.Accounting
 {
     public class GroupAccountRepository : IGroupAccountRepository
     {
@@ -51,14 +51,14 @@ namespace Services.Repositories
             return viewMode;
         }
 
-        public async Task<SubGroupAccount> AddSubGroupAccount(SubGroupAccount subGroupAccount) 
+        public async Task<SubGroupAccount> AddSubGroupAccount(SubGroupAccount subGroupAccount)
         {
             var groupaccountexists = await _context.GroupAccounts.FindAsync(subGroupAccount.GroupId);
             if (groupaccountexists == null)
             {
                 throw new ArgumentException("Invalid group account id.");
             }
-            else 
+            else
             {
                 subGroupAccount.DateCreated = DateTime.Now;
                 // Inspect the state of the DbContext
@@ -74,7 +74,7 @@ namespace Services.Repositories
                 await _context.SaveChangesAsync();
                 return subGroupAccount;
             }
-            
+
         }
 
         public async Task<IEnumerable<GroupAccount>> GetAllGroupAccounts()
@@ -100,9 +100,9 @@ namespace Services.Repositories
             return subGroupAccounts;
         }
 
-        public async Task<GroupAccount> GetGroupById(int id) 
+        public async Task<GroupAccount> GetGroupById(int id)
         {
-            var groupaccount = await _context.GroupAccounts.FirstOrDefaultAsync(a => a.Id==id);
+            var groupaccount = await _context.GroupAccounts.FirstOrDefaultAsync(a => a.Id == id);
             return groupaccount == null ? throw new ArgumentException("No group account with this id found") : groupaccount;
         }
 
@@ -118,17 +118,17 @@ namespace Services.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task<SubGroupAccount> GetSubGroupById(int id) 
+        public async Task<SubGroupAccount> GetSubGroupById(int id)
         {
             //get subgroup with the corresponding group account details
             var subgroup = await _context.SubGroupAccounts
                 .Include(sg => sg.GroupAccount)
                 .FirstOrDefaultAsync(sg => sg.Id == id);
 
-            return subgroup == null? throw new ArgumentException("No Sub group account with that id found"): subgroup;
+            return subgroup == null ? throw new ArgumentException("No Sub group account with that id found") : subgroup;
         }
 
-        public async Task UpdateSubGroupAccount(SubGroupAccount subGroupAccount) 
+        public async Task UpdateSubGroupAccount(SubGroupAccount subGroupAccount)
         {
             //get existing subgroup account
             var existingSubGroup = await _context.SubGroupAccounts
@@ -140,7 +140,7 @@ namespace Services.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<SubGroupAccount>> GetSubGroupByGroupId(int groupId) 
+        public async Task<IEnumerable<SubGroupAccount>> GetSubGroupByGroupId(int groupId)
         {
             var subgroups = await _context.SubGroupAccounts
                                    .Where(sg => sg.GroupId == groupId)

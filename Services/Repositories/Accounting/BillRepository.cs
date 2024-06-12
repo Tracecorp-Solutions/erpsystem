@@ -1,6 +1,5 @@
-﻿using Core;
-using Core.Models;
-using Core.Repositories;
+﻿using Core.Models;
+using Core.Repositories.Accounting;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -9,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Services.Repositories
+namespace Services.Repositories.Accounting
 {
     public class BillRepository : IBillRepository
     {
@@ -53,11 +52,11 @@ namespace Services.Repositories
 
             bill.Status = "Paid";
 
-            
+
             var transactions = new List<TransactionViewModel>();
             foreach (var item in bill.BillTranItems)
             {
-                
+
                 var transaction = new TransactionViewModel
                 {
                     AccountFromId = bill.Type == "Income" ? bill.Vendor.AccountId ?? 0 : bill.Vendor.PaymentAccount,
@@ -75,7 +74,7 @@ namespace Services.Repositories
 
             await _context.SaveChangesAsync();
 
-            return bill.Type == "Income" ? "Invoice": "Bill";
+            return bill.Type == "Income" ? "Invoice" : "Bill";
         }
 
 
@@ -83,7 +82,7 @@ namespace Services.Repositories
         {
             if (type != "Expense" && type != "Income")
                 throw new ArgumentException("Bill type must be either 'Expense' or 'Income'");
-        }   
+        }
 
         private void ValidateBillStatus(string status)
         {
@@ -135,7 +134,7 @@ namespace Services.Repositories
             return billviewmodels;
         }
 
-        public async Task<BillViewModel> GetBillById(int id) 
+        public async Task<BillViewModel> GetBillById(int id)
         {
             //get bill by id
             var bills = await _context.Bills

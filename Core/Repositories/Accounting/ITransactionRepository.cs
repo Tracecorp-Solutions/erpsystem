@@ -6,13 +6,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Core.Repositories
+namespace Core.Repositories.Accounting
 {
     public interface ITransactionRepository
     {
         Task RecordTransactionAsync(TransactionViewModel transaction);
 
-        Task<IEnumerable<TransactionsViewModel>> GetAllTransactions(); 
+        Task<IEnumerable<TransactionsViewModel>> GetAllTransactions();
 
         Task<IEnumerable<TransactionsViewModel>> GetTransactionEntriesByAccountId(int accountId);
 

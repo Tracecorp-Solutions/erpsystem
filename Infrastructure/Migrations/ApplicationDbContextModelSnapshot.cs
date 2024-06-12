@@ -93,6 +93,100 @@ namespace Infrastructure.Migrations
                     b.ToTable("Addresses");
                 });
 
+            modelBuilder.Entity("Core.Models.Application", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ApplicationNumber")
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("BillDeliveryMethod")
+                        .HasColumnType("int");
+
+                    b.Property<int>("BranchId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CustomerCategory")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CustomerType")
+                        .HasColumnType("int");
+
+                    b.Property<DateOnly>("DateOfBirth")
+                        .HasColumnType("date");
+
+                    b.Property<string>("EmailAddress")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Gender")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("IdNumber")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("LocalAuthorizationDocument")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("NearestLandMark")
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("OperationAreaId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("PlotNumber")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("ProofOfIdentity")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("ProofOfInstallationSite")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("ProofOfOwnerShip")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("StateId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("StreetAddress")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("SubTerritoryId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TerritoryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Applications");
+                });
+
             modelBuilder.Entity("Core.Models.AuditTrail", b =>
                 {
                     b.Property<int>("Id")
@@ -187,6 +281,28 @@ namespace Infrastructure.Migrations
                     b.ToTable("billTranItems");
                 });
 
+            modelBuilder.Entity("Core.Models.Branch", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("OperationAreaId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OperationAreaId");
+
+                    b.ToTable("Branches");
+                });
+
             modelBuilder.Entity("Core.Models.GroupAccount", b =>
                 {
                     b.Property<int>("Id")
@@ -240,6 +356,28 @@ namespace Infrastructure.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("InvitedUsers");
+                });
+
+            modelBuilder.Entity("Core.Models.OperationArea", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("StateId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StateId");
+
+                    b.ToTable("OperationAreas");
                 });
 
             modelBuilder.Entity("Core.Models.Organisation", b =>
@@ -312,6 +450,23 @@ namespace Infrastructure.Migrations
                     b.ToTable("Roles");
                 });
 
+            modelBuilder.Entity("Core.Models.State", b =>
+                {
+                    b.Property<int?>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int?>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("States");
+                });
+
             modelBuilder.Entity("Core.Models.SubGroupAccount", b =>
                 {
                     b.Property<int>("Id")
@@ -339,6 +494,46 @@ namespace Infrastructure.Migrations
                     b.HasIndex("GroupId");
 
                     b.ToTable("SubGroupAccounts");
+                });
+
+            modelBuilder.Entity("Core.Models.SubTerritory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("TerritoryId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SubTerritories");
+                });
+
+            modelBuilder.Entity("Core.Models.Territory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("BranchId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Territories");
                 });
 
             modelBuilder.Entity("Core.Models.TransactionEntry", b =>
@@ -551,6 +746,17 @@ namespace Infrastructure.Migrations
                         .HasForeignKey("BillId");
                 });
 
+            modelBuilder.Entity("Core.Models.Branch", b =>
+                {
+                    b.HasOne("Core.Models.OperationArea", "OperationArea")
+                        .WithMany()
+                        .HasForeignKey("OperationAreaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("OperationArea");
+                });
+
             modelBuilder.Entity("Core.Models.InvitedUsers", b =>
                 {
                     b.HasOne("Core.Models.Organisation", "Organisation")
@@ -568,6 +774,17 @@ namespace Infrastructure.Migrations
                     b.Navigation("Organisation");
 
                     b.Navigation("Role");
+                });
+
+            modelBuilder.Entity("Core.Models.OperationArea", b =>
+                {
+                    b.HasOne("Core.Models.State", "State")
+                        .WithMany()
+                        .HasForeignKey("StateId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("State");
                 });
 
             modelBuilder.Entity("Core.Models.SubGroupAccount", b =>

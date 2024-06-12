@@ -1,5 +1,5 @@
 ﻿using Core.Models;
-using Core.Repositories;
+using Core.Repositories.Accounting;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Services.Repositories
+namespace Services.Repositories.Accounting
 {
     public class TrialBalanceRepository : ITrialBalanceRepository
     {
@@ -20,7 +20,7 @@ namespace Services.Repositories
             _context = context;
         }
 
-        public TrialBalanceRepository(AccountRepository accountRepository) 
+        public TrialBalanceRepository(AccountRepository accountRepository)
         {
             _accountRepository = accountRepository;
         }
@@ -31,7 +31,7 @@ namespace Services.Repositories
             var trialBalance = await _context.transactionEntries
                 .Include(entry => entry.Account)
                 .Where(entry => entry.TransactionReference != "Balance B/f") // Filter out opening balance transactions
-                .GroupBy(entry => new { Description = entry.Account != null ? entry.Account.Description : null, entry.TransactionType, entry.Account.Name})
+                .GroupBy(entry => new { Description = entry.Account != null ? entry.Account.Description : null, entry.TransactionType, entry.Account.Name })
                 .Select(group => new TrialBalanceEntry
                 {
                     Description = group.Key.Description,
@@ -69,7 +69,7 @@ namespace Services.Repositories
             //    CreditAmount = totalCredits
             //});
 
-            return trialBalance== null? throw new ArgumentException("No Transactions Found for a trial balance to be generated"): trialBalance;
+            return trialBalance == null ? throw new ArgumentException("No Transactions Found for a trial balance to be generated") : trialBalance;
         }
 
         public async Task<Dictionary<string, decimal>> GetTrialBalance()

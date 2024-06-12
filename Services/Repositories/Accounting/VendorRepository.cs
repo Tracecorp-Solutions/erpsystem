@@ -1,5 +1,5 @@
 ﻿using Core.Models;
-using Core.Repositories;
+using Core.Repositories.Accounting;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
@@ -10,14 +10,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Services.Repositories
+namespace Services.Repositories.Accounting
 {
     public class VendorRepository : IVendorRepository
     {
         private readonly ApplicationDbContext _context;
         private readonly IAccountRepository _accountService;
 
-        
+
 
         public VendorRepository(ApplicationDbContext context, IAccountRepository accountService)
         {
@@ -60,7 +60,7 @@ namespace Services.Repositories
 
 
 
-        public async Task<IEnumerable<Vendor>> GetAllVendors() 
+        public async Task<IEnumerable<Vendor>> GetAllVendors()
         {
             IEnumerable<Vendor> vendors = await _context.Vendors
                 .Include(e => e.Addres)
@@ -68,7 +68,7 @@ namespace Services.Repositories
             return vendors;
         }
 
-        
+
 
         public async Task<IEnumerable<Vendor>> GetVendorByIdAsync(VendorSearchView view)
         {
@@ -89,7 +89,7 @@ namespace Services.Repositories
             return vendors;
         }
 
-        public async Task<IEnumerable<Vendor>> GetVendorsByTypeAsync(string type) 
+        public async Task<IEnumerable<Vendor>> GetVendorsByTypeAsync(string type)
         {
             // Get vendors by type
             var vendors = await _context.Vendors
@@ -104,7 +104,7 @@ namespace Services.Repositories
         }
 
 
-        public async Task<string> UpdateVendor(Vendor vendor) 
+        public async Task<string> UpdateVendor(Vendor vendor)
         {
             //get vendor to edit
             var existingvendor = await _context.Vendors

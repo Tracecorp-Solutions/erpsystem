@@ -17,12 +17,29 @@ namespace Trace.Controllers
         }
 
         [HttpPost("/NewApplication")]
-        public IActionResult NewApplication([FromBody] Application application) 
+        public async Task<IActionResult> NewApplication([FromBody] Application application) 
         {
             try
             {
-                _newconnectionRepository.RegisterNewCustomer(application);
+                await _newconnectionRepository.RegisterNewCustomer(application);
                 return Ok("ApplicationRegisteredSuccessfully");
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
+        }
+
+        [HttpGet("/GetApplications")]
+        public async Task<IActionResult> GetApplications() 
+        {
+            try
+            {
+                var applications = await _newconnectionRepository.GetApplications();
+                return Ok(applications);
+            }catch(ArgumentException ex) 
+            {
+                return BadRequest(ex.Message);
             }
             catch (Exception)
             {

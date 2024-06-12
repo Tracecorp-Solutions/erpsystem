@@ -1,5 +1,5 @@
 ﻿using Core.Models;
-using Core.Repositories;
+using Core.Repositories.Accounting;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Services.Repositories
+namespace Services.Repositories.Accounting
 {
     public class AccountRepository : IAccountRepository
     {
@@ -26,30 +26,30 @@ namespace Services.Repositories
                 throw new ArgumentException("Invalid subgroup account id.");
 
             // Check if the AccountType is provided is valid
-            if (account.AccountType !="Cash at hand" && account.AccountType !="Bank")
+            if (account.AccountType != "Cash at hand" && account.AccountType != "Bank")
                 throw new ArgumentException("Please Account type should be Cash at hand or Bank");
 
             _context.Accounts.Add(account);
             await _context.SaveChangesAsync();
-            await CreditAccountWithBalance(account.Id,account.Balance,account.OpeningBalanceDate);
+            await CreditAccountWithBalance(account.Id, account.Balance, account.OpeningBalanceDate);
             return account;
         }
         public async Task<IEnumerable<Account>> GetAccounts()
         {
             // Only retrieve the accounts if they exist
-            var accounts =  await _context.Accounts.ToListAsync();
-            
+            var accounts = await _context.Accounts.ToListAsync();
+
             //calculate account balance and update the account balance
             foreach (var account in accounts)
             {
                 account.Balance = await GetAccountBalance(account.Id);
             }
-            
 
-            return accounts == null ? throw new ArgumentException("No Account found"): accounts;
+
+            return accounts == null ? throw new ArgumentException("No Account found") : accounts;
         }
 
-        public async Task<decimal> GetAccountBalance(int accountId) 
+        public async Task<decimal> GetAccountBalance(int accountId)
         {
             var debitTotal = await _context.transactionEntries
             .Where(t => t.TranAccount == accountId && t.TransactionType == "Debit")
@@ -62,7 +62,7 @@ namespace Services.Repositories
             return creditTotal - debitTotal;
         }
 
-        public async Task<Account> GetAccountById(int accountId) 
+        public async Task<Account> GetAccountById(int accountId)
         {
             var account = await _context.Accounts
                 .Include(ac => ac.SubGroupAccount)
@@ -71,7 +71,7 @@ namespace Services.Repositories
             return account == null ? throw new ArgumentException("No Account Found with that id") : account;
         }
 
-        public async Task<string> UpdateAccount(Account account) 
+        public async Task<string> UpdateAccount(Account account)
         {
             //get existing account
             var exisitingac = await _context.Accounts
@@ -84,27 +84,28 @@ namespace Services.Repositories
             return "Account Updated successfully";
         }
 
-        public async Task<IEnumerable<Account>> GetAccountsBySubGroupId(int subGroupId) 
+        public async Task<IEnumerable<Account>> GetAccountsBySubGroupId(int subGroupId)
         {
             var accounts = await _context.Accounts
                 .Where(ac => ac.SubGroupAccountId == subGroupId).ToListAsync();
             return accounts == null ? throw new ArgumentException("No Account found in that subgroup") : accounts;
         }
 
-        private async Task CreditAccountWithBalance(int accountId,decimal Amount, DateTime TransactionDate)
+        private async Task CreditAccountWithBalance(int accountId, decimal Amount, DateTime TransactionDate)
         {
-            var creditEntry = new TransactionEntry 
+            var creditEntry = new TransactionEntry
             {
                 TranAccount = accountId,
-                TransactionType ="Credit",
+                TransactionType = "Credit",
                 Amount = Amount,
                 TransactionDate = TransactionDate,
                 TransactionReference = "Balance B/f",
-                Narration= "Balance B/f"
+                Narration = "Balance B/f"
 
             };
             _context.transactionEntries.Add(creditEntry);
-            await _context.SaveChangesAsync(); }
+            await _context.SaveChangesAsync();
+        }
 
     }
 }

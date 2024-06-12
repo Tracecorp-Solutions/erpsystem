@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Core.Models;
 
-namespace Core.Repositories
+namespace Core.Repositories.Accounting
 {
     public interface IGroupAccountRepository
     {

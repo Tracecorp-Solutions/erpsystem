@@ -1,11 +1,11 @@
 ﻿using Xunit;
 using Moq;
 using Trace.Controllers;
-using Core.Repositories;
 using Core.Models;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Services.Repositories;
+using Core.Repositories.Accounting;
+using Services.Repositories.Accounting;
 
 namespace Trace.Test
 {
