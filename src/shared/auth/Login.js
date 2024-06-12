@@ -28,7 +28,7 @@ const Login = () => {
         sessionStorage.setItem("userid",userData.data.Id);
         sessionStorage.setItem("fullname",userData.data.fullName);
         sessionStorage.setItem("organisationname",userData.data.organisation.name);
-        sessionStorage.setItem("profilepic",userData.data.profilePic);
+        sessionStorage.setItem("profilepic",userData.data.profilePic);;
         navigate('/Dashboardlayout');
       }else{
         navigate("/profilelayout");
