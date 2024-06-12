@@ -1,27 +1,32 @@
 import React, { useState } from "react";
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Dashboard from "./pages/Dashboard";
+import Dashboardlayout from "./Accounting/Pages/layout/DashboardLayout";
 import Groups from "./pages/Groups";
 import Subgroups from "./pages/Subgroups";
-import Accounts from "./pages/Accounts";
+import AccountSetup from "./Accounting/Pages/Accounts/AccountSetup";
 import Transactions from "./pages/Transactions";
-import Profile from "./pages/onboarding/Profile";
-import Company from "./pages/onboarding/Company";
-import Vendors from "./pages/Vendors";
-import Customer from "./pages/Customer";
+import VendorSetup from "./Accounting/Pages/Vendors/VendorSetup";
+import Customer from "./Accounting/Pages/Customers/Customer";
 import Signup from "./pages/authentication/Signup";
 import Reset from "./pages/authentication/Reset";
 import Verify from "./pages/authentication/Verify";
 import Login from "./pages/authentication/Login";
 import Forgot from "./pages/authentication/Forgot";
-import ViewTransaction from "./pages/ViewTransaction";
+import ViewTransactions from "./Accounting/Pages/Transaction/ViewTransactions";
 import Billing from "./pages/Billing";
-import BillsForm from "./components/BillsForm";
+import BillsForm from "./Accounting/Pages/Billing/BillsForm";
 import InvoiceSidebar from "./components/InvoiceSidebar";
-import InvoiceForm from "./components/InvoiceForm";
+import InvoiceForm from "./Accounting/Pages/Invoices/InvoiceForm";
 import EditInvoiceForm from "./components/EditInvoiceForm";
-import Invoice from "./pages/Invoice";
+import Invoice from "./Accounting/Pages/Invoices/Invoice";
+import Layout from "./shared/auth/shared/Layout";
+import ProfileLayout from "./shared/onboarding/shared/ProfileLayout";
+import Report from "./Accounting/Pages/Reports/Report";
+import Statement from "./Accounting/Pages/Reports/Statement";
+import BalanceSheets from "./Accounting/Pages/Reports/BalanceSheets";
+import TrialBalance from "./Accounting/Pages/Reports/TrialBalance ";
+import UserActivity from "./Accounting/Pages/Reports/UserActivity";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -61,19 +66,19 @@ function App() {
               <Route path="/" element={<Login />} />
               <Route path="/groups" element={<Groups />} />
               <Route path="/sub-group" element={<Subgroups />} />
-              <Route path="/accounts" element={<Accounts />} />
-              <Route path="/vendors" element={<Vendors />} />
+              <Route path="/accounts" element={<AccountSetup />} />
+              <Route path="/vendors" element={<VendorSetup />} />
               <Route path="/customer" element={<Customer />} />
               <Route path="/transactions" element={<Transactions />} />
               <Route path="/signup" element={<Signup />} />
               <Route path="/verify" element={<Verify />} />
               <Route path="/reset" element={<Reset />} />
               <Route path="/forgot" element={<Forgot />} />
-              <Route path="/company" element={<Company />} />
-              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/Dashboardlayout" element={<Dashboardlayout />} />
+              <Route path="/layout" element={<Layout/>}/>
               <Route
-                path="view-transaction/:accountId"
-                element={<ViewTransaction />}
+                path="view-transactions/:accountId"
+                element={<ViewTransactions />}
               />
               <Route path="/customer" element={<Customer />} />
               <Route path="/create-bills" element={<BillsForm />} />
@@ -81,10 +86,18 @@ function App() {
               <Route path="/edit-invoice/:id" element={<EditInvoiceForm />} />
               <Route path="/invoice" element={<Invoice />} />
               <Route path="/billing" element={<Billing />} />
+              <Route path="/billsForm" element={<BillsForm />} />
+              <Route path="/invoiceform" element={<InvoiceForm />} />
+              <Route path="/report" element={<Report />} />
+              <Route path="/statement" element={<Statement />} />
+              <Route path="/balance-sheet" element={<BalanceSheets />} />
+              <Route path="/trial-balance" element={<TrialBalance />} />
+              <Route path="/user-activity" element={<UserActivity />} />
             </Routes>
           </div>
           <Routes>
-            <Route path="/profile" element={<Profile />} />
+            {/* <Route path="/profile" element={<Profile />} /> */}
+            <Route path="/profilelayout" element={<ProfileLayout />} />
           </Routes>
         </BrowserRouter>
       </div>

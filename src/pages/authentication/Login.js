@@ -39,7 +39,7 @@ const Login = () => {
   };
 
   return (
-    <div className="flex" style={{ height: "95vh" }}> {/* Set height of the page */}
+    <div className="flex"> {/* Set height of the page */}
       <div className="form-side">
         <div className="form-content">
           <span className="greeting">
