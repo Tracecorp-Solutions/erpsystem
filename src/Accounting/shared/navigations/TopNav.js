@@ -118,7 +118,7 @@ function TopNav() {
           <Link to="/" className="profile">
             <img
               className="avatar"
-              src={sessionStorage.getItem("profilepic")}
+              src="file:///C:/inetpub/wwwroot/ErpApi/uploads/f93d2e94-7390-42c5-9719-aba361ed8a3f.ico"//{sessionStorage.getItem("profilepic")}
               alt={"Photo of " + user.name}
               style={{
                 width: user.imageSize,
