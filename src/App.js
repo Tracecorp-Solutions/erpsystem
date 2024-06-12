@@ -62,8 +62,7 @@ function App() {
                 path="/forgot"
                 element={<Forgot onForgot={handleForgot} />}
               />
-              <Route path="/" element={<Login onLogin={handleLogin} />} />
-              <Route path="/" element={<Login />} />
+              <Route path="/layout" element={<Login onLogin={handleLogin} />} />
               <Route path="/groups" element={<Groups />} />
               <Route path="/sub-group" element={<Subgroups />} />
               <Route path="/accounts" element={<AccountSetup />} />
@@ -75,7 +74,7 @@ function App() {
               <Route path="/reset" element={<Reset />} />
               <Route path="/forgot" element={<Forgot />} />
               <Route path="/Dashboardlayout" element={<Dashboardlayout />} />
-              <Route path="/layout" element={<Layout/>}/>
+              <Route path="/" element={<Layout/>}/>
               <Route
                 path="view-transactions/:accountId"
                 element={<ViewTransactions />}
