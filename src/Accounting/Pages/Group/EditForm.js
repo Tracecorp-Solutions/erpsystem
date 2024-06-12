@@ -21,10 +21,9 @@ const EditForm = ({ editedGroupAccount, handleSubmitEdit, closeEditForm }) => {
       <>
         <div className="content fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 mt-10">
           <div
-            className="modal-content bg-white rounded-lg shadow-lg p-8"
+            className="modal-content bg-white rounded-lg shadow-lg"
             style={{
               width: "80%",
-              height: "90%",
               maxWidth: "600px ",
               maxHeight: "600px",
               borderRadius: "25px",
@@ -38,13 +37,6 @@ const EditForm = ({ editedGroupAccount, handleSubmitEdit, closeEditForm }) => {
                 bottom: "25px",
               }}
             >
-              <span
-                className="close cursor-pointer text-gray-600"
-                style={{ fontSize: "40px" }}
-                onClick={closeEditForm}
-              >
-                &times;
-              </span>
             </div>
             <h2 className="text-xl font-semibold mb-4">Edit {editedAccount.name}</h2>
             <form onSubmit={handleSubmit} className="space-y-4">
