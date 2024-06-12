@@ -25,6 +25,10 @@ const Login = () => {
       const userData = await axios.get(`${process.env.REACT_APP_API_URL}/GetUserByToken/${token}`);// get all the user details using the token
       if (userData.data.organisation && userData.data.verified && userData.data.active)// navigate to the dashboard if the user is active and verified
       {
+        sessionStorage.setItem("userid",userData.data.Id);
+        sessionStorage.setItem("fullname",userData.data.fullName);
+        sessionStorage.setItem("organisationname",userData.data.organisation.name);
+        sessionStorage.setItem("profilepic",userData.data.profilePic);
         navigate('/Dashboardlayout');
       }else{
         navigate("/profilelayout");

@@ -72,7 +72,7 @@ function SideNav() {
             You are managing:
           </div>
           <div className="justify-center items-start px-4 py-3 mt-3 font-semibold bg-white txt-color-blue rounded-xl">
-            LedgerMate Inc
+          {sessionStorage.getItem("organisationname")}
           </div>
           <div className="shrink-0 mt-6 h-px border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-opacity-10" />
           <div className="mt-7 text-xs font-medium tracking-wide uppercase">

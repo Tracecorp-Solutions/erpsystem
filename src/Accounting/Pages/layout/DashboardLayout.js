@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import SideNav from "../../shared/navigations/SideNav";
 import TopNav from "../../shared/navigations/TopNav";
 import Dashboard from "../../components/Dashboard";
@@ -16,13 +16,22 @@ import Billing from "../Billing/Billing";
 import BillsForm from "../Billing/BillsForm";
 import InvoiceForm from "../Invoices/InvoiceForm";
 import Report from "../Reports/Report";
+import { useNavigate } from "react-router-dom";
 
 const Dashboardlayout = () => {
   const location = useLocation();
   const { state } = location;
   const screen = state?.screen || "dashboard";
-
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const navigate = useNavigate();
+  const [sidebarOpen, setSidebarOpen] = useState(false);  
+console.log(sessionStorage.getItem("userdata").toString());
+  useEffect(() => {
+    if (sessionStorage.getItem("userid") == null) {
+      navigate('/');
+      return ;
+    }
+  },[navigate]);
+  
   return (
     <div className="flex flex-col md:flex-row w-full">
       <SideNav />

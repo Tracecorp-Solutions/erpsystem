@@ -118,14 +118,14 @@ function TopNav() {
           <Link to="/" className="profile">
             <img
               className="avatar"
-              src={user.imageUrl}
+              src={sessionStorage.getItem("profilepic")}
               alt={"Photo of " + user.name}
               style={{
                 width: user.imageSize,
                 height: user.imageSize,
               }}
             />
-             <span className="user-name">{user.name}</span>
+             <span className="user-name">{sessionStorage.getItem("fullname")}</span>
             <ChevronDown />
           </Link>
         </li>
