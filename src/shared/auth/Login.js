@@ -21,7 +21,6 @@ const Login = () => {
         { username, password }
       );
       const token = response.data;
-      console.log("tooookennnnn", token);
       sessionStorage.setItem("token", token);
       navigate("/profilelayout");
     } catch (error) {
@@ -108,7 +107,7 @@ const Login = () => {
       </form>
       <p>
         Don’t have an account?
-        <button onClick={() => navigate("/layout", { state: { screen: "signup" } })}>
+        <button onClick={() => navigate("/", { state: { screen: "signup" } })}>
           Register here
         </button>
       </p>

@@ -2,19 +2,18 @@ import React, { useState } from "react";
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Dashboardlayout from "./Accounting/Pages/layout/DashboardLayout";
-import Groups from "./pages/Groups";
-import Subgroups from "./pages/Subgroups";
+// import Groups from "./pages/Groups";
+import GroupAccountSetUp from "./Accounting/Pages/Group/GroupAccountSetUp";
+import SubGroupSetup from "./Accounting/Pages/Subgroup/SubGroupSetup";
 import AccountSetup from "./Accounting/Pages/Accounts/AccountSetup";
-import Transactions from "./pages/Transactions";
+import Transactions from "./Accounting/Pages/Transaction/Transactions";
 import VendorSetup from "./Accounting/Pages/Vendors/VendorSetup";
 import Customer from "./Accounting/Pages/Customers/Customer";
-import Signup from "./pages/authentication/Signup";
-import Reset from "./pages/authentication/Reset";
-import Verify from "./pages/authentication/Verify";
-import Login from "./pages/authentication/Login";
-import Forgot from "./pages/authentication/Forgot";
+import Signup from "./shared/auth/Signup";
+import Login from "./shared/auth/Login";
+import SetPassword from "./shared/auth/shared/SetPassword";
+import VerifyUser from "./shared/auth/shared/VerifyUser";
 import ViewTransactions from "./Accounting/Pages/Transaction/ViewTransactions";
-import Billing from "./pages/Billing";
 import BillsForm from "./Accounting/Pages/Billing/BillsForm";
 import InvoiceSidebar from "./components/InvoiceSidebar";
 import InvoiceForm from "./Accounting/Pages/Invoices/InvoiceForm";
@@ -27,6 +26,7 @@ import Statement from "./Accounting/Pages/Reports/Statement";
 import BalanceSheets from "./Accounting/Pages/Reports/BalanceSheets";
 import TrialBalance from "./Accounting/Pages/Reports/TrialBalance ";
 import UserActivity from "./Accounting/Pages/Reports/UserActivity";
+import Billing from "./Accounting/Pages/Billing/Billing";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -56,23 +56,23 @@ function App() {
               />
               <Route
                 path="/verify"
-                element={<Verify onVerify={handleVerify} />}
+                element={<VerifyUser onVerify={handleVerify} />}
               />
-              <Route
+              {/* <Route
                 path="/forgot"
                 element={<Forgot onForgot={handleForgot} />}
-              />
-              <Route path="/layout" element={<Login onLogin={handleLogin} />} />
-              <Route path="/groups" element={<Groups />} />
-              <Route path="/sub-group" element={<Subgroups />} />
+              /> */}
+              {/* <Route path="/layout" element={<Login onLogin={handleLogin} />} /> */}
+              <Route path="/groups" element={<GroupAccountSetUp />} />
+              <Route path="/sub-group" element={<SubGroupSetup />} />
               <Route path="/accounts" element={<AccountSetup />} />
               <Route path="/vendors" element={<VendorSetup />} />
               <Route path="/customer" element={<Customer />} />
               <Route path="/transactions" element={<Transactions />} />
               <Route path="/signup" element={<Signup />} />
-              <Route path="/verify" element={<Verify />} />
-              <Route path="/reset" element={<Reset />} />
-              <Route path="/forgot" element={<Forgot />} />
+              <Route path="/verify" element={<VerifyUser />} />
+              <Route path="/reset" element={<SetPassword />} />
+              {/* <Route path="/forgot" element={<Forgot />} /> */}
               <Route path="/Dashboardlayout" element={<Dashboardlayout />} />
               <Route path="/" element={<Layout/>}/>
               <Route

@@ -24,7 +24,7 @@ function Signup() {
       if (response.ok) {
         // Navigate to the verify page after successful registration
         sessionStorage.setItem("useremail", email);
-        navigate("/layout", { state: { screen: "verify" } });
+        navigate("/", { state: { screen: "verify" } });
       } else {
         const errorMessage = await response.text();
         setMessage(`Error: ${errorMessage}`);
@@ -83,7 +83,7 @@ function Signup() {
       </form>
       <p>
 
-        Already have an account?<button onClick={() => navigate("/layout", { state: { screen: "login" } })}>
+        Already have an account?<button onClick={() => navigate("/", { state: { screen: "login" } })}>
           Login here
         </button>
 

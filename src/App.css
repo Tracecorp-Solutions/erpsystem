@@ -898,6 +898,9 @@ button[type= "handleLogin"] {
 }
 
 @media screen and (max-width: 768px) {
+  .flex {
+    flex-direction: column;
+}
   .form-content {
     width: 100%;
     justify-content: center;
