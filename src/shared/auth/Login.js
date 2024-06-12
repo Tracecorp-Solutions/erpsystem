@@ -22,7 +22,14 @@ const Login = () => {
       );
       const token = response.data;
       sessionStorage.setItem("token", token);
-      navigate("/profilelayout");
+      const userData = await axios.get(`${process.env.REACT_APP_API_URL}/GetUserByToken/${token}`);// get all the user details using the token
+      if (userData.data.organisation && userData.data.verified && userData.data.active)// navigate to the dashboard if the user is active and verified
+      {
+        navigate('/Dashboardlayout');
+      }else{
+        navigate("/profilelayout");
+      }
+      
     } catch (error) {
       console.log("Backend error", error.response);
       setFeedback(`Error: ${error.response.data}`);
