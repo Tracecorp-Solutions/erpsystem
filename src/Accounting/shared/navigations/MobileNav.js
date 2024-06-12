@@ -126,7 +126,7 @@ function MobileNav({ links, closeMenu }) {
               </div>
             )}
           </div>
-          <div className={`flex items-center gap-2 py-2 mt-2 whitespace-nowrap rounded-xl ${location.pathname === "/report" ? "bg-active-green txt-color-blue font-semibold px-4" : "bg-none"}`}>
+          <div className={`flex items-center gap-2 py-2 mt-2 whitespace-nowrap rounded-xl ${location.pathname === "/reportxx" ? "bg-active-green txt-color-blue font-semibold px-4" : "bg-none"}`}>
             <Files className="shrink-0 self-center w-5 aspect-square" />
             <button onClick={() => closeAndNavigate("/Dashboardlayout", { screen: "report" })}>
               Reports
