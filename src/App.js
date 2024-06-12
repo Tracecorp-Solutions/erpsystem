@@ -27,6 +27,7 @@ import BalanceSheets from "./Accounting/Pages/Reports/BalanceSheets";
 import TrialBalance from "./Accounting/Pages/Reports/TrialBalance ";
 import UserActivity from "./Accounting/Pages/Reports/UserActivity";
 import Billing from "./Accounting/Pages/Billing/Billing";
+import Landing from "./shared/Landing";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -97,6 +98,7 @@ function App() {
           <Routes>
             {/* <Route path="/profile" element={<Profile />} /> */}
             <Route path="/profilelayout" element={<ProfileLayout />} />
+            <Route path="/landing" element={<Landing />} />
           </Routes>
         </BrowserRouter>
       </div>

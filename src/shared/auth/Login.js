@@ -31,7 +31,7 @@ const Login = () => {
         sessionStorage.setItem("profilepic",userData.data.profilePic);
         
         console.log("Profile pic **********",userData.data.profilePic);
-        navigate('/Dashboardlayout');
+        navigate('/landing');
       }else{
         navigate("/profilelayout");
       }
