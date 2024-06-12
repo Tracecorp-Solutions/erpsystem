@@ -4,16 +4,16 @@ import axios from "axios";
 
 const Card = ({ title, description, isLoading, isComingSoon }) => {
   const [buttonClicked, setButtonClicked] = useState(false);
+  const navigate = useNavigate();
 
   const handleClick = async () => {
     setButtonClicked(true);
     // Perform routing logic here
     try {
       // Simulate loading delay
-      await new Promise((resolve) => setTimeout(resolve, 2000));
       // Redirect to Dashboardlayout
       // Replace the following line with your actual route
-      window.location.href = '/Dashboardlayout';
+      navigate("/Dashboardlayout");
     } catch (error) {
       console.error("Error loading system:", error);
       setButtonClicked(false);
@@ -92,13 +92,13 @@ const Landing = () => {
             className="shrink-0 aspect-[1.25] w-[87px]"
           />
           <div className="justify-center px-4 py-2 my-auto rounded-3xl bg-stone-100">
-            Welcome, Nakitto Catherine!
+            Welcome, {sessionStorage.getItem("fullname")}
           </div>
         </div>
       </header>
       <main>
         <section className="self-center ml-10 mt-8 text-4xl font-semibold leading-[57.6px] text-neutral-600 max-md:max-w-full">
-          Welcome to the ERP System
+          Welcome to the TRACE ERP
         </section>
         <section className="self-center px-5 mt-8 w-full max-w-[1300px] max-md:max-w-full">
           <div className="grid grid-cols-3 gap-5 max-md:flex max-md:flex-col max-md:gap-0">
@@ -130,7 +130,7 @@ const Landing = () => {
       <footer className="flex justify-center items-center px-16 mt-12 w-full text-base leading-6 bg-stone-100 max-md:px-5 max-md:mt-10 max-md:max-w-full">
         <div className="flex gap-2.5 justify-between py-6 w-full max-w-[1200px] max-md:flex-wrap max-md:max-w-full">
           <div className="flex gap-5 justify-between">
-            <div className="text-neutral-600">@2024 ERP System</div>
+            <div className="text-neutral-600">@2024 TRACE ERP System</div>
             <div className="text-neutral-400">All rights reserved</div>
           </div>
           <nav className="flex gap-5 justify-between text-neutral-400">
