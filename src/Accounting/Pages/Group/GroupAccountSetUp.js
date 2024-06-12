@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { CloseOutlined, EyeOutlined } from "@ant-design/icons";
+import { Modal } from "antd";
 import "../../Styles/GroupCreation.css";
 // import GroupCreationShow from "../components/GroupCreationShow";
 import { Fragment } from "react";
@@ -15,8 +16,6 @@ import ErrorMessageCard from "../../components/Shared/ErrorMessageCard";
 import Sidebar from "../../components/Shared/Sidebar";
 import AccountDetailView from "../../components/Shared/AccountDetailView";
 import EditForm from "./EditForm";
-
-
 
 const GroupAccountSetUp = () => {
   const [showForm, setShowForm] = useState(false);
@@ -39,6 +38,7 @@ const GroupAccountSetUp = () => {
   const [showDetails, setShowDetails] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const [showFailure, setShowFailure] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     fetchGroupAccounts();
@@ -76,6 +76,10 @@ const GroupAccountSetUp = () => {
     } catch (error) {
       console.error("Error fetching group accounts:", error);
     }
+  };
+
+  const toggleModal = () => {
+    setShowModal(!showModal);
   };
 
   const toggleForm = () => {
@@ -139,7 +143,7 @@ const GroupAccountSetUp = () => {
 
         setShowSuccess(true);
         setNewAccount({ name: "", behaviour: "" });
-        toggleForm();
+        toggleModal();
         fetchGroupAccounts();
       } catch (error) {
         setShowFailure(true);
@@ -164,7 +168,8 @@ const GroupAccountSetUp = () => {
 
   const handleSubmitEdit = async (editedAccount) => {
     try {
-      const response = await axios.post(process.env.REACT_APP_API_URL + '/EditGroupAccount',
+      const response = await axios.post(
+        process.env.REACT_APP_API_URL + "/EditGroupAccount",
         // "http://54.226.71.2/EditGroupAccount",
         {
           id: editedAccount.id,
@@ -182,10 +187,12 @@ const GroupAccountSetUp = () => {
       setEditedGroupAccount(null);
       setShowEditForm(false);
       fetchGroupAccounts();
-      setShowSuccess(true)
+      setShowSuccess(true);
     } catch (error) {
-      setShowFailure(true)
-      setSuccessMessage("An error occurred while Editing the group account. Please try again later.")
+      setShowFailure(true);
+      setSuccessMessage(
+        "An error occurred while Editing the group account. Please try again later."
+      );
       console.error("Error editing group account:", error);
     }
   };
@@ -199,7 +206,6 @@ const GroupAccountSetUp = () => {
     setSelectedAccount(null);
     setSidebarVisible(false);
   };
-
 
   const handleCloseDetails = () => {
     setSelectedAccount(null);
@@ -223,26 +229,26 @@ const GroupAccountSetUp = () => {
           />
         )}
         {showSuccess && (
-        <SuccessMessageCard
-          title="Group Created!"
-          message="You'v successfully created a new group. You are on your way to categorize and track your financial transactions."
-          onClose={handleCloseSuccess}
-        />
-      )}
-       {showFailure && (
-        <ErrorMessageCard
-        title="Creation Error!"
-          message="An error occurred while creating the group account. Please try again later."
-          onClose={() => setShowFailure(false)}
-        />
-      )} 
+          <SuccessMessageCard
+            title="Group Created!"
+            message="You'v successfully created a new group. You are on your way to categorize and track your financial transactions."
+            onClose={handleCloseSuccess}
+          />
+        )}
+        {showFailure && (
+          <ErrorMessageCard
+            title="Creation Error!"
+            message="An error occurred while creating the group account. Please try again later."
+            onClose={() => setShowFailure(false)}
+          />
+        )}
 
-      {showFailure && (
-        <ErrorMessageCard
-          message="An error occurred while creating the group account. Please try again later."
-          onClose={() => setShowFailure(false)}
-        />
-      )}
+        {showFailure && (
+          <ErrorMessageCard
+            message="An error occurred while creating the group account. Please try again later."
+            onClose={() => setShowFailure(false)}
+          />
+        )}
         <div className="sm:flex sm:items-center">
           <div className="sm:flex-auto">
             <h1 className="text-4xl font-semibold leading-[57.6px] text-neutral-600">
@@ -252,7 +258,7 @@ const GroupAccountSetUp = () => {
           <div className="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
             <button
               type="button"
-              onClick={toggleForm}
+              onClick={toggleModal}
               className="
             block
             rounded-md
@@ -277,23 +283,17 @@ const GroupAccountSetUp = () => {
             </button>
           </div>
         </div>
-        {showForm && (
-          <div className="absolute mt-8 inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center">
-            <div className="bg-white p-8 rounded-lg max-w-xl w-full mx-4 relative">
-              <div className="absolute top-0 right-0 mt-10 mr-10">
-                <CloseOutlined
-                  style={{ cursor: "pointer" }}
-                  onClick={toggleForm}
-                />
-              </div>{" "}
-              <div className="bg-white p-8 rounded-lg max-w-xl w-full mx-4">
+        <Modal visible={showModal} onCancel={toggleModal} footer={null} centered>
+          <div className="flex items-center justify-center h-full">
+            <div className="bg-white rounded-lg max-w-xl w-full">
+              <div className="bg-white p-8 rounded-lg max-w-xl w-full">
                 <h2 className="text-lg font-semibold mb-4 group-title">
                   Group Creation
                 </h2>
-                <p className="description">
+                {/* <p className="description">
                   Choose a unique name for your group that reflects its purpose
                   (e.g., Assets, Liabilities, Equity, Revenue, or Expenses)
-                </p>
+                </p> */}
                 <div className="mb-4">
                   <label
                     htmlFor="name"
@@ -330,7 +330,9 @@ const GroupAccountSetUp = () => {
                     placeholder="Group name"
                   />
                   {formErrors.name && (
-                    <p className="mt-2 text-sm text-red-500">{formErrors.name}</p>
+                    <p className="mt-2 text-sm text-red-500">
+                      {formErrors.name}
+                    </p>
                   )}
                 </div>
                 <div className="mb-4">
@@ -349,7 +351,10 @@ const GroupAccountSetUp = () => {
                   <select
                     value={newAccount.behaviour}
                     onChange={(e) => {
-                      setNewAccount({ ...newAccount, behaviour: e.target.value });
+                      setNewAccount({
+                        ...newAccount,
+                        behaviour: e.target.value,
+                      });
                       setFormError({ ...formErrors, behaviour: "" });
                     }}
                     className="
@@ -387,9 +392,9 @@ const GroupAccountSetUp = () => {
                   >
                     Description
                   </label>
-                  <span className="description">
+                  {/* <span className="description">
                     Add a brief description to help identify this group's purpose
-                  </span>
+                  </span> */}
                   <textarea
                     className="
               mt-1
@@ -420,7 +425,7 @@ const GroupAccountSetUp = () => {
                 <div className="flex justify-around mt-12">
                   <button
                     type="button"
-                    onClick={toggleForm}
+                    onClick={toggleModal}
                     className="px-4
                 py-2
                 text-white
@@ -462,7 +467,7 @@ const GroupAccountSetUp = () => {
               </div>
             </div>
           </div>
-        )}
+        </Modal>
         {loading && (
           <div
             style={{
@@ -472,7 +477,10 @@ const GroupAccountSetUp = () => {
               height: "50vh",
             }}
           >
-            <div className="spinner-grow bg-gray-900 animate-spin" role="status">
+            <div
+              className="spinner-grow bg-gray-900 animate-spin"
+              role="status"
+            >
               <img
                 className="h-20 w-20"
                 src="https://www.tracecorpsolutions.com/wp-content/uploads/2019/05/Tracecorp-logo.png"
@@ -528,15 +536,24 @@ const GroupAccountSetUp = () => {
                                   <Dropdown
                                     overlay={
                                       <Menu>
-                                        <Menu.Item key="1" onClick={() => handleSeeGroup(account)}>
-                                          <EyeOutlined style={{ marginRight: "5px" }} />
+                                        <Menu.Item
+                                          key="1"
+                                          onClick={() =>
+                                            handleSeeGroup(account)
+                                          }
+                                        >
+                                          <EyeOutlined
+                                            style={{ marginRight: "5px" }}
+                                          />
                                           <span>View</span>
                                         </Menu.Item>
                                         <Menu.Item
                                           key="2"
                                           onClick={() => handleEdit(account)}
                                         >
-                                          <EditOutlined style={{ marginRight: "5px" }} />
+                                          <EditOutlined
+                                            style={{ marginRight: "5px" }}
+                                          />
                                           <span>Edit</span>
                                         </Menu.Item>
                                       </Menu>
@@ -544,11 +561,13 @@ const GroupAccountSetUp = () => {
                                     placement="bottomRight"
                                     overlayStyle={{ width: "200px" }}
                                   >
-                                    <div style={{
-                                      borderRadius: "50px",
-                                      padding: "3px",
-                                      background: "#f6f6f4"
-                                    }}>
+                                    <div
+                                      style={{
+                                        borderRadius: "50px",
+                                        padding: "3px",
+                                        background: "#f6f6f4",
+                                      }}
+                                    >
                                       <span className="sr-only">
                                         Open options
                                       </span>
@@ -592,8 +611,7 @@ const GroupAccountSetUp = () => {
         )}
       </div>
     </>
-
   );
-}
+};
 
 export default GroupAccountSetUp;
