@@ -24,7 +24,6 @@ const Dashboardlayout = () => {
   const screen = state?.screen || "dashboard";
   const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(false);  
-console.log(sessionStorage.getItem("userdata").toString());
   useEffect(() => {
     if (sessionStorage.getItem("userid") == null) {
       navigate('/');
