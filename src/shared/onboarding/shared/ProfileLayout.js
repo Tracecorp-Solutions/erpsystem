@@ -45,7 +45,7 @@ const ProfileLayout = () => {
         setUserData(response.data);
         if(response.data.organisation && response.data.verified && response.data.active)// navigate to the dashboard if the user is active and verified
         {
-          navigate('/Dashboardlayout');
+          navigate('/landing');
         }
       } catch (error) {
         console.error('Failed to fetch user:', error);
