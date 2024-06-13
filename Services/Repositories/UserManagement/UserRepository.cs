@@ -253,7 +253,7 @@ namespace Services.Repositories.UserManagement
             foreach (var email in invitedUsersdto.Emails)
             {
                 await emailService.SendEmailAsync(email, "Invitation to join",
-                    $"You have been invited to join {organisationTask.Name} under the role of {roleTask.Name}");
+                    $"You have been invited to join {organisationTask.Name} under the role of {roleTask.Name}. Click register and enter your FirstName and email Use link to access the system http://3.216.182.63:3000/");
                 //map invited users
                 var inviteduser = invitedUsersdto.Emails.Select(email => new InvitedUsers
                 {
