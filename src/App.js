@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Dashboard from "./Billing/Components/shared/Dashboard";
 import Dashboardlayout from "./Accounting/Pages/layout/DashboardLayout";
-// import Groups from "./pages/Groups";
 import GroupAccountSetUp from "./Accounting/Pages/Group/GroupAccountSetUp";
 import SubGroupSetup from "./Accounting/Pages/Subgroup/SubGroupSetup";
 import AccountSetup from "./Accounting/Pages/Accounts/AccountSetup";
@@ -41,7 +41,6 @@ function App() {
   const handleVerify = () => {
     setIsVerified(true);
   };
-
   const handleForgot = () => {
     setIsReset(true);
   };
@@ -56,14 +55,11 @@ function App() {
                 element={<Signup onVerify={handleVerify} />}
               />
               <Route
+
+ <Route path="/Dashboard" element={<Dashboard />} />
                 path="/verify"
                 element={<VerifyUser onVerify={handleVerify} />}
               />
-              {/* <Route
-                path="/forgot"
-                element={<Forgot onForgot={handleForgot} />}
-              /> */}
-              {/* <Route path="/layout" element={<Login onLogin={handleLogin} />} /> */}
               <Route path="/groups" element={<GroupAccountSetUp />} />
               <Route path="/sub-group" element={<SubGroupSetup />} />
               <Route path="/accounts" element={<AccountSetup />} />
@@ -97,6 +93,7 @@ function App() {
           </div>
           <Routes>
             {/* <Route path="/profile" element={<Profile />} /> */}
+
             <Route path="/profilelayout" element={<ProfileLayout />} />
             <Route path="/landing" element={<Landing />} />
           </Routes>

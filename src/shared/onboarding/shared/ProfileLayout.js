@@ -33,7 +33,6 @@ const ProfileLayout = () => {
   const navigate = useNavigate();
   useEffect(() => {
     const token = sessionStorage.getItem('token');// get token received from the login
-    console.log("Profile token", token);
     if (!token) {
       navigate('/');
       return;

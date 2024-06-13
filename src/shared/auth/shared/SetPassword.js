@@ -26,7 +26,6 @@ function SetPassword() {
         try {
             const response = await axios.post(`${process.env.REACT_APP_API_URL}/ChangePassword`, formData);
             if (response.status === 200) {
-
                 navigate("/", { state: { screen: "login" } });
             } else {
                 setLoading(false);

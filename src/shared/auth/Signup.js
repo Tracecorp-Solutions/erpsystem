@@ -9,6 +9,7 @@ function Signup() {
   const navigate = useNavigate(); // useNavigate hook to programmatically navigate
   const [loading, setloading] = useState(false);// set loading state
 
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     setloading(true);
@@ -82,7 +83,6 @@ function Signup() {
         </button>
       </form>
       <p>
-
         Already have an account?<button onClick={() => navigate("/", { state: { screen: "login" } })}>
           Login here
         </button>
