@@ -525,9 +525,9 @@ button[type="submit"] {
 }
 
 @media (max-width: 1024px) {
-  .flex {
+  /* .flex {
     flex-direction: row;
-  }
+  } */
 
   .form-side {
     width: 100%;
@@ -952,9 +952,9 @@ button[type= "handleLogin"] {
 }
 
 @media screen and (max-width: 768px) {
-  .flex {
+  /* .flex {
     flex-direction: column;
-}
+} */
   .form-content {
     width: 100%;
     justify-content: center;
