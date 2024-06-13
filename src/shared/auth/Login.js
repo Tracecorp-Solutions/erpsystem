@@ -64,7 +64,13 @@ const Login = () => {
           <img src="/img/wave.png" alt="login" />
         </span>
       </div>
-      <form onSubmit={handleLogin}>
+      <form onSubmit={handleLogin} style={{
+         width: "80%",
+         display: "flex",
+         flexDirection: "column",
+         gap: "18px",
+         marginBottom: "18px"
+      }}>
         {feedback && (
           <div
             className={`message ${feedback.startsWith("Error") ? "error-message" : "success-message"}`}
