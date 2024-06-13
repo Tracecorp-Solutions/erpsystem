@@ -1,6 +1,15 @@
-import * as React from "react";
+import React, { useState } from "react";
+import { Dropdown, Menu } from "antd";
 
 function ApplicationPage() {
+  const menu = (
+    <Menu>
+      <Menu.Item key="1">Option 1</Menu.Item>
+      <Menu.Item key="2">Option 2</Menu.Item>
+      <Menu.Item key="3">Option 3</Menu.Item>
+    </Menu>
+  );
+
   return (
     <section className="flex-wrap justify-center content-start pb-0.5 mx-auto rounded-3xl bg-stone-100 max-md:mr-2.5 w-full">
       <h1 className="text-4xl font-semibold leading-[57.6px] text-neutral-600 max-md:max-w-full">
@@ -66,14 +75,20 @@ function ApplicationPage() {
                   pending survey
                 </span>
               </div>
-              <button className="flex justify-center items-center self-stretch px-1.5 w-8 h-8 rounded-3xl bg-stone-100">
-                <img
-                  loading="lazy"
-                  src="https://cdn.builder.io/api/v1/image/assets/TEMP/0ba5735fbf119d2ce1739ba512a932141ff0d2c39f18ebd814b74c9afd86d7c7?apiKey=27ec22b9382040ef8580a5e340d3a921&"
-                  className="w-5 aspect-square"
-                  alt="More options icon"
-                />
-              </button>
+              <Dropdown
+                overlay={menu}
+                trigger={["click"]}
+                placement="bottomRight"
+              >
+                <button className="flex justify-center items-center self-stretch px-1.5 w-8 h-8 rounded-3xl bg-stone-100">
+                  <img
+                    loading="lazy"
+                    src="https://cdn.builder.io/api/v1/image/assets/TEMP/0ba5735fbf119d2ce1739ba512a932141ff0d2c39f18ebd814b74c9afd86d7c7?apiKey=27ec22b9382040ef8580a5e340d3a921&"
+                    className="w-5 aspect-square"
+                    alt="More options icon"
+                  />
+                </button>
+              </Dropdown>
             </div>
             {index < 9 && (
               <hr className="shrink-0 mt-2 h-px border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-opacity-10 max-md:max-w-full" />
@@ -93,13 +108,13 @@ function ApplicationPage() {
                 alt="Previous page icon"
               />
             </button>
-            <span className="justify-center items-center px-4 w-12 h-12 text-base font-semibold leading-6 text-white whitespace-nowrap rounded-3xl bg-slate-500 max-md:px-5">
+            <button className="justify-center items-center px-4 w-12 h-12 text-base font-semibold leading-6 text-white whitespace-nowrap rounded-3xl bg-slate-500 max-md:px-5">
               1
-            </span>
-            <button className="justify-center items-start px-4 py-3 text-base font-semibold leading-6 whitespace-nowrap rounded-3xl border border-solid border-neutral-500 border-opacity-10 text-neutral-400">
+            </button>
+            <button className="justify-center items-center px-4 w-12 h-12 text-base font-semibold leading-6 text-white whitespace-nowrap rounded-3xl bg-slate-500 max-md:px-5">
               2
             </button>
-            <button className="flex justify-center items-center px-4 py-3 rounded-3xl border border-solid border-neutral-500 border-opacity-10">
+            <button className="justify-center items-center px-4 w-12 h-12 text-base font-semibold leading-6 text-white whitespace-nowrap rounded-3xl bg-slate-500 max-md:px-5">
               <img
                 loading="lazy"
                 src="https://cdn.builder.io/api/v1/image/assets/TEMP/c19c09b34073900dfacfc3a10ceab301e637c63c0b80eb00f201bc01a698a5ef?apiKey=27ec22b9382040ef8580a5e340d3a921&"
@@ -107,9 +122,9 @@ function ApplicationPage() {
                 alt="Next page icon"
               />
             </button>
-            <span className="justify-center px-4 py-3 text-base font-semibold leading-6 whitespace-nowrap rounded-3xl border border-solid border-neutral-500 border-opacity-10 text-neutral-400">
+            <button className="justify-center items-center px-4 w-12 h-12 text-base font-semibold leading-6 text-white whitespace-nowrap rounded-3xl bg-slate-500 max-md:px-5">
               9
-            </span>
+            </button>
             <button className="flex justify-center items-center px-4 w-12 h-12 rounded-3xl bg-stone-100">
               <img
                 loading="lazy"
