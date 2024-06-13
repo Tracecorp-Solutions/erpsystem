@@ -28,6 +28,8 @@ import TrialBalance from "./Accounting/Pages/Reports/TrialBalance ";
 import UserActivity from "./Accounting/Pages/Reports/UserActivity";
 import Billing from "./Accounting/Pages/Billing/Billing";
 import Landing from "./shared/Landing";
+import ApplicationPage from "./Billing/Pages/Application/ApplicationPage";
+import BillingDashboard from "./Billing/Pages/Layout/BillingDashboard";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -70,6 +72,7 @@ function App() {
               <Route path="/reset" element={<SetPassword />} />
               {/* <Route path="/forgot" element={<Forgot />} /> */}
               <Route path="/Dashboardlayout" element={<Dashboardlayout />} />
+              <Route path="/billingdashboard" element={<BillingDashboard />} />
               <Route path="/" element={<Layout/>}/>
               <Route
                 path="view-transactions/:accountId"
@@ -88,6 +91,7 @@ function App() {
               <Route path="/balance-sheet" element={<BalanceSheets />} />
               <Route path="/trial-balance" element={<TrialBalance />} />
               <Route path="/user-activity" element={<UserActivity />} />
+              <Route path="/application" element={<ApplicationPage />} />
             </Routes>
           </div>
           <Routes>
