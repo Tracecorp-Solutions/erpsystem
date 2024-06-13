@@ -21,7 +21,7 @@ const Card = ({ title, description, isLoading, isComingSoon }) => {
   };
 
   return (
-    <article className="relative flex flex-col grow ml-10 p-8 pb-8 w-full font-semibold bg-white rounded-3xl max-md:px-5 max-md:mt-5">
+    <article className="relative flex flex-col grow p-8 pb-8 w-full font-semibold bg-white rounded-3xl max-md:px-5 max-md:mt-5">
       {isComingSoon && (
         <div className="absolute top-0 right-0 px-4 py-2 bg-lime-200 text-slate-500 mb-5 rounded-md">Coming soon</div>
       )}
