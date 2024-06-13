@@ -54,9 +54,8 @@ function App() {
                 path="/signup"
                 element={<Signup onVerify={handleVerify} />}
               />
+              <Route path="/Dashboard" element={<Dashboard />} />
               <Route
-
- <Route path="/Dashboard" element={<Dashboard />} />
                 path="/verify"
                 element={<VerifyUser onVerify={handleVerify} />}
               />
