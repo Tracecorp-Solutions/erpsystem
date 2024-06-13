@@ -3,10 +3,16 @@ import { Dropdown, Menu } from "antd";
 
 function ApplicationPage() {
   const menu = (
-    <Menu>
-      <Menu.Item key="1">Option 1</Menu.Item>
-      <Menu.Item key="2">Option 2</Menu.Item>
-      <Menu.Item key="3">Option 3</Menu.Item>
+    <Menu style={{
+        width: "200px",
+        textAlign: "center"
+    }}>
+      <Menu.Item key="1">View Details</Menu.Item>
+      <Menu.Item key="2">Generate job card</Menu.Item>
+      <Menu.Item key="3">Print Application</Menu.Item>
+      <Menu.Item key="4">Contact Applicant</Menu.Item>
+      <Menu.Item key="5">Approve Application</Menu.Item>
+      <Menu.Item key="6">Assign Surveyor</Menu.Item>
     </Menu>
   );
 
@@ -78,7 +84,7 @@ function ApplicationPage() {
               <Dropdown
                 overlay={menu}
                 trigger={["click"]}
-                placement="bottomRight"
+                placement="topLeft"
               >
                 <button className="flex justify-center items-center self-stretch px-1.5 w-8 h-8 rounded-3xl bg-stone-100">
                   <img
