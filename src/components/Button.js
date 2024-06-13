@@ -1,20 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
-const tabs = [
-  { name: 'Group Account', href: '/account-creation', current: false },
-  { name: 'Sub Group', href: '/sub-group', current: false },
-  { name: 'Account List', href: '/account', current: false },
-  { name: 'Vendors', href: '/dashboard/vendors', current: false },
-  { name: 'Billing', href: '/billing', current: false },
-  { name: 'Petty Cash', href: '/petty', current: true },
-  { name: 'Offer', href: '#', current: false },
-  { name: 'Sales', href: '#', current: false },
-];
+// const tabs = [
+//   { name: 'Group Account', href: '/account-creation', current: false },
+//   { name: 'Sub Group', href: '/sub-group', current: false },
+//   { name: 'Account List', href: '/account', current: false },
+//   { name: 'Vendors', href: '/dashboard/vendors', current: false },
+//   { name: 'Billing', href: '/billing', current: false },
+//   { name: 'Petty Cash', href: '/petty', current: true },
+//   // { name: 'Offer', href: '#', current: false },
+//   // { name: 'Sales', href: '#', current: false },
+// ];
 
-function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
-}
-
+// function classNames(...classes) {
+//   return classes.filter(Boolean).join(" ");
+// }
 
 export default function NavigationHeader() {
   const [isOpen, setIsOpen] = useState(false);
@@ -23,17 +22,17 @@ export default function NavigationHeader() {
     setIsOpen(!isOpen);
   };
 
-  const handleSelectChange = (e) => {
-    const selectedTab = tabs.find((tab) => tab.name === e.target.value);
-    if (selectedTab) {
-      window.location.href = selectedTab.href;
-    }
-  };
-
+  // const handleSelectChange = (e) => {
+  //   const selectedTab = tabs.find((tab) => tab.name === e.target.value);
+  //   if (selectedTab) {
+  //     window.location.href = selectedTab.href;
+  //   }
+  // };
+  //
   return (
-    <div className="relative border-b border-gray-200 pb-5 ml-8 sm:pb-0">
+    <div className="relative border-b border-gray-200 pb-5 mb-6 ml-8 sm:pb-0 ">
       <div className="md:flex md:items-center md:justify-between">
-        <div className="mt-3 flex md:absolute md:right-0 md:top-3 md:mt-0">
+        <div className="mt-3 flex md:absolute md:right-0 mb-4 md:top-0 md:mt-0">
           {/* <button
             type="button"
             className="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
@@ -46,117 +45,228 @@ export default function NavigationHeader() {
           >
             + New Entry
           </button> */}
-          <div className="relative inline-block text-left mr-6 ">
-      <div>
-        <button
-          type="button"
-          className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-          id="menu-button"
-          aria-expanded={isOpen ? 'true' : 'false'}
-          aria-haspopup="true"
-          onClick={toggleDropdown}
-        >
-          + New Entry
-          <svg
-            className={`-mr-1 h-5 w-5 text-gray-400 transform ${isOpen ? 'rotate-180' : 'rotate-0'}`}
-            viewBox="0 0 20 20"
-            fill="currentColor"
-            aria-hidden="true"
-          >
-            <path
-              fillRule="evenodd"
-              d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
-              clipRule="evenodd"
-            />
-          </svg>
-        </button>
-      </div>
+          <div className="flex items-center gap-x-4 lg:gap-x-6 relative">
+            <div>
+              <button
+                type="button"
+                className="inline-flex items-center rounded-xl bg-green-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-cyan-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-600"
+                id="menu-button"
+                style={{
+                  fontFamily: "outfit, sans-serif",
+                  height: "40px",
+                  width: "120px",
+                  marginTop: "-4px",
+                }}
+                aria-expanded={isOpen ? "true" : "false"}
+                aria-haspopup="true"
+                onClick={toggleDropdown}
+              >
+                + New Entry
+                <path
+                  fillRule="evenodd"
+                  d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                  clipRule="evenodd"
+                />
+              </button>
+            </div>
 
-      {isOpen && (
-        <div
-          className="absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
-          role="menu"
-          aria-orientation="vertical"
-          aria-labelledby="menu-button"
-          tabIndex="-1"
-        >
-          <div className="py-1" role="none">
-            <a
-              href="/petty"
-              className="text-gray-700 block px-4 py-2 text-sm"
-              role="menuitem"
-              tabIndex="-1"
-              id="menu-item-0"
-            >
-            Petty cash
-            </a>
-            <a
-              href="#"
-              className="text-gray-700 block px-4 py-2 text-sm hover:green"
-              role="menuitem"
-              tabIndex="-1"
-              id="menu-item-1"
-            >
-              Group Account
-            </a>
+            {isOpen && (
+              <div
+                className="absolute left-0 z-10 mt-2 w-38 origin-top-left divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                role="menu"
+                aria-orientation="vertical"
+                aria-labelledby="menu-button"
+                tabIndex="-1"
+                style={{ top: "calc(100% + 0.5rem)" }}
+              >
+                <div className="py-1" role="none">
+                  <div
+                    style={{
+                      width: "180px",
+                      height: "35px",
+                      backgroundColor: "white",
+                      borderRadius: "10px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      PaddingLeft: "3px",
+                    }}
+                  >
+                    <a
+                      href="/products"
+                      style={{
+                        width: "100%",
+                        textDecoration: "none",
+                        color: "blue",
+                        textAlign: "left",
+                        fontSize: "14px",
+                        marginLeft: "20px",
+                      }}
+                      role="menuitem"
+                      tabIndex="-1"
+                      id="menu-item-1"
+                    >
+                      Products
+                    </a>
+                  </div>
+                  <div
+                    style={{
+                      width: "180px",
+                      height: "35px",
+                      backgroundColor: "white",
+                      borderRadius: "10px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                   
+                  >
+                    <a
+                      href="/account-creation"
+                      style={{
+                        width: "100%",
+                        textDecoration: "none",
+                        color: "blue",
+                        textAlign: "left",
+                        fontSize: "14px",
+                        marginLeft: "20px",
+                      }}
+                      role="menuitem"
+                      tabIndex="-1"
+                      id="menu-item-1"
+                    >
+                      Groups
+                    </a>
+                  </div>
+                  <div
+                    style={{
+                      width: "180px",
+                      height: "35px",
+                      backgroundColor: "white",
+                      borderRadius: "10px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                    
+                  >
+                    <a
+                      href="/vendors"
+                      style={{
+                        width: "100%",
+                        textDecoration: "none",
+                        color: "blue",
+                        textAlign: "left",
+                        fontSize: "14px",
+                        marginLeft: "20px",
+                      }}
+
+                      role="menuitem"
+                      tabIndex="-1"
+                      id="menu-item-1"
+                    >
+                      Vendors
+                    </a>
+                  </div>
+                  <div
+                    style={{
+                      width: "180px",
+                      height: "35px",
+                      backgroundColor: "white",
+                      borderRadius: "10px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                   
+                  >
+                    <a
+                      href="/sub-groups"
+                      style={{
+                        width: "100%",
+                        textDecoration: "none",
+                        color: "blue",
+                        textAlign: "left",
+                        fontSize: "14px",
+                        marginLeft: "20px",
+                      }}
+                      role="menuitem"
+                      tabIndex="-1"
+                      id="menu-item-1"
+                    >
+                      SubGroups
+                    </a>
+                  </div>
+                  <div
+                    style={{
+                      width: "180px",
+                      height: "35px",
+                      backgroundColor: "white",
+                      borderRadius: "10px",
+                      display: "flex",
+                      alignItems: "left",
+                      justifyContent: "center",
+                      marginBottom: "-5px",
+                    }}
+                   
+                  >
+                    <a
+                      href="/transactions"
+                      style={{
+                        width: "100%",
+                        textDecoration: "none",
+                        color: "blue",
+                        textAlign: "left",
+                        fontSize: "14px",
+                        marginLeft: "20px",
+                      }}
+
+                    
+                      role="menuitem"
+                      tabIndex="-1"
+                      id="menu-item-1"
+                    >
+                      Transactions
+                    </a>
+                  </div>
+
+                  <div
+                    style={{
+                      width: "180px",
+                      height: "32px",
+                      backgroundColor: "white",
+                      borderRadius: "10px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                    
+                  >
+                    <a
+                      href="/account"
+                      style={{
+                        width: "100%",
+                        textDecoration: "none",
+                        color: "blue",
+                        textAlign: "left",
+                        fontSize: "14px",
+                        marginLeft: "20px",
+                      }}
+                      role="menuitem"
+                      tabIndex="-1"
+                      id="menu-item-1"
+                    >
+                      Accounts
+                    </a>
+                  </div>
+                </div>
+                {/* Remaining menu items */}
+              </div>
+            )}
           </div>
-          <div className="py-1" role="none">
-            <a
-              href="#"
-              className="text-gray-700 block px-4 py-2 text-sm"
-              role="menuitem"
-              tabIndex="-1"
-              id="menu-item-2"
-            >
-              Products
-            </a>
-            <a
-              href="#"
-              className="text-gray-700 block px-4 py-2 text-sm"
-              role="menuitem"
-              tabIndex="-1"
-              id="menu-item-3"
-            >
-              Services
-            </a>
-          </div>
-          <div className="py-1" role="none">
-            <a
-              href="#"
-              className="text-gray-700 block px-4 py-2 text-sm"
-              role="menuitem"
-              tabIndex="-1"
-              id="menu-item-4"
-            >
-              Employees
-            </a>
-            <a
-              href="#"
-              className="text-gray-700 block px-4 py-2 text-sm"
-              role="menuitem"
-              tabIndex="-1"
-              id="menu-item-5"
-            >
-              Add to favorites
-            </a>
-          </div>
-          <div className="py-1" role="none">
-            <a
-              href="#"
-              className="text-gray-700 block px-4 py-2 text-sm"
-              role="menuitem"
-              tabIndex="-1"
-              id="menu-item-6"
-            >
-              Add account
-            </a>
-          </div>
-        </div>
-      )}
-    </div>
         </div>
       </div>
-      <div className="mt-4">
+      {/* <div className="mt-4">
         <div className="sm:hidden">
           <label htmlFor="current-tab" className="sr-only">
             Select a tab
@@ -194,7 +304,7 @@ export default function NavigationHeader() {
             ))}
           </nav>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }

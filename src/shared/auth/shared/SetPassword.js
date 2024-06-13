@@ -10,7 +10,6 @@ function SetPassword() {
         repeatPassword: '',
     });
     const [feedback, setFeedback] = useState("");
-    
     const [showPassword, setShowPassword] = useState(false);
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
@@ -27,8 +26,7 @@ function SetPassword() {
         try {
             const response = await axios.post(`${process.env.REACT_APP_API_URL}/ChangePassword`, formData);
             if (response.status === 200) {
-
-                navigate("/layout", { state: { screen: "login" } });
+                navigate("/", { state: { screen: "login" } });
             } else {
                 setLoading(false);
                 setFeedback(response.data);

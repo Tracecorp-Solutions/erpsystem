@@ -2,26 +2,32 @@ import React, { useState } from "react";
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Dashboard from "./Billing/Components/shared/Dashboard";
-// import Groups from "./pages/Groups";
-// import Subgroups from "./pages/Subgroups";
-// import AccountSetup from "./Accounting/Pages/Accounts/AccountSetup";
-// import Transactions from "./pages/Transactions";
-// import VendorSetup from "./Accounting/Pages/Vendors/VendorSetup";
-// import Customer from "./Accounting/Pages/Customers/Customer";
-
+import Dashboardlayout from "./Accounting/Pages/layout/DashboardLayout";
+import GroupAccountSetUp from "./Accounting/Pages/Group/GroupAccountSetUp";
+import SubGroupSetup from "./Accounting/Pages/Subgroup/SubGroupSetup";
+import AccountSetup from "./Accounting/Pages/Accounts/AccountSetup";
+import Transactions from "./Accounting/Pages/Transaction/Transactions";
+import VendorSetup from "./Accounting/Pages/Vendors/VendorSetup";
+import Customer from "./Accounting/Pages/Customers/Customer";
 import Signup from "./shared/auth/Signup";
-import VerifyUser from "./shared/auth/shared/VerifyUser";
 import Login from "./shared/auth/Login";
 import SetPassword from "./shared/auth/shared/SetPassword";
-// import ViewTransactions from "./Accounting/Pages/Transaction/ViewTransactions";
-// import Billing from "./pages/Billing";
-// import BillsForm from "./Accounting/Pages/Billing/BillsForm";
-// import InvoiceSidebar from "./components/InvoiceSidebar";
-// import InvoiceForm from "./Accounting/Pages/Invoices/InvoiceForm";
-// import EditInvoiceForm from "./components/EditInvoiceForm";
-// import Invoice from "./Accounting/Pages/Invoices/Invoice";
+import VerifyUser from "./shared/auth/shared/VerifyUser";
+import ViewTransactions from "./Accounting/Pages/Transaction/ViewTransactions";
+import BillsForm from "./Accounting/Pages/Billing/BillsForm";
+import InvoiceSidebar from "./components/InvoiceSidebar";
+import InvoiceForm from "./Accounting/Pages/Invoices/InvoiceForm";
+import EditInvoiceForm from "./components/EditInvoiceForm";
+import Invoice from "./Accounting/Pages/Invoices/Invoice";
 import Layout from "./shared/auth/shared/Layout";
-// import ProfileLayout from "./shared/onboarding/shared/ProfileLayout";
+import ProfileLayout from "./shared/onboarding/shared/ProfileLayout";
+import Report from "./Accounting/Pages/Reports/Report";
+import Statement from "./Accounting/Pages/Reports/Statement";
+import BalanceSheets from "./Accounting/Pages/Reports/BalanceSheets";
+import TrialBalance from "./Accounting/Pages/Reports/TrialBalance ";
+import UserActivity from "./Accounting/Pages/Reports/UserActivity";
+import Billing from "./Accounting/Pages/Billing/Billing";
+import Landing from "./shared/Landing";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -35,7 +41,6 @@ function App() {
   const handleVerify = () => {
     setIsVerified(true);
   };
-
   const handleForgot = () => {
     setIsReset(true);
   };
@@ -50,44 +55,47 @@ function App() {
                 element={<Signup onVerify={handleVerify} />}
               />
               <Route
-                path="/verifyuser"
+
+ <Route path="/Dashboard" element={<Dashboard />} />
+                path="/verify"
                 element={<VerifyUser onVerify={handleVerify} />}
               />
-              <Route
-                path="/forgot"
-                element={<SetPassword onForgot={handleForgot} />}
-              />
-              <Route path="/" element={<Login onLogin={handleLogin} />} />
-              <Route path="/" element={<Login />} />
-              {/* <Route path="/groups" element={<Groups />} />
-              <Route path="/sub-group" element={<Subgroups />} />
+              <Route path="/groups" element={<GroupAccountSetUp />} />
+              <Route path="/sub-group" element={<SubGroupSetup />} />
               <Route path="/accounts" element={<AccountSetup />} />
               <Route path="/vendors" element={<VendorSetup />} />
               <Route path="/customer" element={<Customer />} />
-              <Route path="/transactions" element={<Transactions />} /> */}
+              <Route path="/transactions" element={<Transactions />} />
               <Route path="/signup" element={<Signup />} />
               <Route path="/verify" element={<VerifyUser />} />
-              {/* <Route path="/reset" element={<Reset />} /> */}
-              <Route path="/setpassword" element={<SetPassword />} />
-              <Route path="/Dashboard" element={<Dashboard />} />
-              <Route path="/layout" element={<Layout/>}/>
-              {/* <Route
+              <Route path="/reset" element={<SetPassword />} />
+              {/* <Route path="/forgot" element={<Forgot />} /> */}
+              <Route path="/Dashboardlayout" element={<Dashboardlayout />} />
+              <Route path="/" element={<Layout/>}/>
+              <Route
                 path="view-transactions/:accountId"
                 element={<ViewTransactions />}
-              /> */}
-              {/* <Route path="/customer" element={<Customer />} />
+              />
+              <Route path="/customer" element={<Customer />} />
               <Route path="/create-bills" element={<BillsForm />} />
               <Route path="/create-invoice" element={<InvoiceForm />} />
               <Route path="/edit-invoice/:id" element={<EditInvoiceForm />} />
               <Route path="/invoice" element={<Invoice />} />
               <Route path="/billing" element={<Billing />} />
               <Route path="/billsForm" element={<BillsForm />} />
-              <Route path="/invoiceform" element={<InvoiceForm />} /> */}
+              <Route path="/invoiceform" element={<InvoiceForm />} />
+              <Route path="/report" element={<Report />} />
+              <Route path="/statement" element={<Statement />} />
+              <Route path="/balance-sheet" element={<BalanceSheets />} />
+              <Route path="/trial-balance" element={<TrialBalance />} />
+              <Route path="/user-activity" element={<UserActivity />} />
             </Routes>
           </div>
           <Routes>
             {/* <Route path="/profile" element={<Profile />} /> */}
-            {/* <Route path="/profilelayout" element={<ProfileLayout />} /> */}
+
+            <Route path="/profilelayout" element={<ProfileLayout />} />
+            <Route path="/landing" element={<Landing />} />
           </Routes>
         </BrowserRouter>
       </div>

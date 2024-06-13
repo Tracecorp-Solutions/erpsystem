@@ -8,7 +8,6 @@ function Layout() {
   const location = useLocation();
   const { state } = location;
   const screen = state?.screen || 'login';
-
   return (
     <div className="flex">
       {/* form side */}

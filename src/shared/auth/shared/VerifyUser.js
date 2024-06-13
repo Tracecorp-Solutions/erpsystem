@@ -12,7 +12,6 @@ function VerifyUser() {
     //end of state declaration
 
     const handleVerify = async () => {
-    
         try {
             setLoading(true);
             const email = sessionStorage.getItem("useremail");
@@ -22,7 +21,7 @@ function VerifyUser() {
             });
             setFeedback('User verified successfully!');
             // call the set password screen
-            navigate("/layout", { state: { screen: "SetPassword" } });
+            navigate("/", { state: { screen: "SetPassword" } });
         } catch (error) {
             setLoading(false);
             setFeedback(`Failed ${error.response.data}` );
@@ -61,7 +60,7 @@ function VerifyUser() {
             </button>
 
             <p>
-                Don't have an account? <button onClick={() => navigate("/layout", { state: { screen: "signup" } })}> Signup</button>
+                Don't have an account? <button onClick={() => navigate("/", { state: { screen: "signup" } })}> Signup</button>
             </p>
         </>
     );

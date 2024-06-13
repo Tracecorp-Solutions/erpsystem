@@ -22,8 +22,22 @@ const Login = () => {
       );
       const token = response.data;
       sessionStorage.setItem("token", token);
-      navigate("/profilelayout");
+      const userData = await axios.get(`${process.env.REACT_APP_API_URL}/GetUserByToken/${token}`);// get all the user details using the token
+      if (userData.data.organisation && userData.data.verified && userData.data.active)// navigate to the dashboard if the user is active and verified
+      {
+        sessionStorage.setItem("userid",userData.data.Id);
+        sessionStorage.setItem("fullname",userData.data.fullName);
+        sessionStorage.setItem("organisationname",userData.data.organisation.name);
+        sessionStorage.setItem("profilepic",userData.data.profilePic);
+        
+        console.log("Profile pic **********",userData.data.profilePic);
+        navigate('/landing');
+      }else{
+        navigate("/profilelayout");
+      }
+      
     } catch (error) {
+      console.log("Backend error", error.response);
       setFeedback(`Error: ${error.response.data}`);
     } finally {
       setLoading(false);
@@ -105,9 +119,8 @@ const Login = () => {
         </button>
       </form>
       <p>
-
         Don’t have an account?
-        <button onClick={() => navigate("/layout", { state: { screen: "signup" } })}>
+        <button onClick={() => navigate("/", { state: { screen: "signup" } })}>
           Register here
         </button>
       </p>

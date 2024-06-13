@@ -1,0 +1,59 @@
+.groupbtn {
+    border-radius: 20px;
+    font-family: out-fit, sans-serif;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: #4467a1;
+}
+
+.group-title {
+    color: #505050;
+    font-size: 35px;
+    font-weight: 600px;
+}
+
+.description {
+ color: #505050;
+ margin: 5px;
+ font-weight: 400px;
+ font-size: 14px;
+ font-family: out-fit, sans-serif;
+}
+
+.cancel-btn {
+    background: #F6F6F4;
+    color: #505050;
+    width: 40%;
+    border-radius: 25px;
+    font-family: out-fit, sans-serif;
+}
+
+.save-group {
+  color: #fff;
+  width: 40%;
+  border-radius: 25px;
+  font-family: out-fit, sans-serif;
+}
+
+.text-input {
+  border: 1px solid #7a7a7a;
+  border-radius: 10px;
+}
+
+.text-input :focus {
+    border: 1px solid #7a7a7a;
+    border-radius: 20px;
+  }
+
+.label-text {
+ font-family: out-fit, sans-serif;
+ font-weight: 600;
+}
+
+.group-container {
+  background: #F6F6F4;
+  padding: 15px;
+  border-radius: 10px;
+}
