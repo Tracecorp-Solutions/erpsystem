@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 
 const Card = ({ title, description, isLoading, isComingSoon }) => {
   const [buttonClicked, setButtonClicked] = useState(false);
@@ -8,12 +7,12 @@ const Card = ({ title, description, isLoading, isComingSoon }) => {
 
   const handleClick = async () => {
     setButtonClicked(true);
-    // Perform routing logic here
     try {
-      // Simulate loading delay
-      // Redirect to Dashboardlayout
-      // Replace the following line with your actual route
-      navigate("/Dashboardlayout");
+      if (title === "Water Billing System") {
+        navigate("/Dashboard");
+      } else {
+        navigate("/Dashboardlayout");
+      }
     } catch (error) {
       console.error("Error loading system:", error);
       setButtonClicked(false);
@@ -53,7 +52,7 @@ const Landing = () => {
       title: "Water Billing System",
       description: "Manage customer connections, billing, and payments efficiently.",
       isLoading: false,
-      isComingSoon: true,
+      isComingSoon: false,
     },
     {
       title: "Customer Relationship System (CRM)",
