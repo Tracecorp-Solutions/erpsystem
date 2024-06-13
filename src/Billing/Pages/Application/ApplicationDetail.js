@@ -29,14 +29,14 @@ function Document({ src, name, description }) {
 
 function ApplicationDetail() {
   return (
-    <div className="flex flex-col flex-wrap justify-center content-start items-center py-6 rounded-3xl bg-stone-100">
+    <div className="flex flex-wrap justify-center content-start items-center py-6 rounded-3xl bg-stone-100">
       <header className="flex gap-2 items-center self-stretch px-6 text-base font-semibold leading-6 whitespace-nowrap text-neutral-600 max-md:flex-wrap max-md:px-5">
         <h1 className="self-stretch my-auto">Applications</h1>
         <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/d86f4adfe62571b3a93bdc441d8816afef791164dcc95e442522025a86a279bf?apiKey=27ec22b9382040ef8580a5e340d3a921&" alt="" className="shrink-0 self-stretch my-auto w-6 aspect-square" />
         <div className="justify-center self-stretch px-4 py-1 bg-white rounded-2xl">APP567890</div>
       </header>
 
-      <section className="flex gap-4 justify-between items-center px-5 mt-6 w-full max-w-[1088px] max-md:flex-wrap max-md:max-w-full">
+      <section className="flex gap-4 justify-between items-center px-5 mt-6 w-full  max-md:flex-wrap max-md:max-w-full">
         <div className="flex gap-4 self-stretch font-semibold">
           <div className="justify-center items-center px-3.5 text-2xl text-white capitalize whitespace-nowrap bg-lime-400 h-[60px] rounded-[50px] w-[60px]">GE</div>
           <div className="text-4xl leading-[57.6px] text-neutral-600">Grace Eze</div>
@@ -51,7 +51,7 @@ function ApplicationDetail() {
         </div>
       </section>
 
-      <article className="flex flex-col px-6 pt-4 pb-5 mt-6 w-full bg-white rounded-3xl max-w-[1088px] max-md:px-5 max-md:max-w-full">
+      <article className="flex flex-col px-6 pt-4 pb-5 mt-6 w-full bg-white rounded-3xl max-md:px-5 max-md:max-w-full">
         <header className="flex gap-4 justify-between text-2xl font-semibold capitalize text-neutral-600 max-md:flex-wrap max-md:max-w-full">
           <h2>Applicant Details</h2>
           <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/c7749e10a4cb727e5ce0c7fd48d44fb683bf93b2fa7c59643148748496b286b0?apiKey=27ec22b9382040ef8580a5e340d3a921&" alt="" className="shrink-0 my-auto w-6 aspect-square" />
@@ -139,7 +139,7 @@ function ApplicationDetail() {
         </ApplicantSection>
       </article>
 
-      <section className="flex flex-col px-6 pt-4 pb-5 mt-6 w-full bg-white rounded-3xl max-w-[1088px] max-md:px-5 max-md:max-w-full">
+      <section className="flex flex-col px-6 pt-4 pb-5 mt-6 w-full bg-white rounded-3xl max-md:px-5 max-md:max-w-full">
         <header className="flex gap-4 justify-between text-2xl font-semibold capitalize whitespace-nowrap text-neutral-600 max-md:flex-wrap max-md:max-w-full">
           <h2>Documents</h2>
           <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/c7749e10a4cb727e5ce0c7fd48d44fb683bf93b2fa7c59643148748496b286b0?apiKey=27ec22b9382040ef8580a5e340d3a921&" alt="" className="shrink-0 my-auto w-6 aspect-square" />
