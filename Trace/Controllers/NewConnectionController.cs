@@ -1,4 +1,5 @@
-﻿using Core.Models;
+﻿using Core.DTOs;
+using Core.Models;
 using Core.Repositories.Billing;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -17,12 +18,15 @@ namespace Trace.Controllers
         }
 
         [HttpPost("/NewApplication")]
-        public async Task<IActionResult> NewApplication([FromBody] Application application) 
+        public async Task<IActionResult> NewApplication([FromBody] IFormFile file, NewApplicationDto application) 
         {
             try
             {
-                await _newconnectionRepository.RegisterNewCustomer(application);
-                return Ok("ApplicationRegisteredSuccessfully");
+                string appnumber = await _newconnectionRepository.RegisterNewCustomer(file, application);
+                return Ok($"Application Registered Successfully Reference Number is {appnumber}");
+            }catch(ArgumentException ex) 
+            {
+                return BadRequest(ex.Message);
             }
             catch (Exception)
             {

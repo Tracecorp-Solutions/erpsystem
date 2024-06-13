@@ -1,4 +1,6 @@
-﻿using Core.Models;
+﻿using Core.DTOs;
+using Core.Models;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +11,7 @@ namespace Core.Repositories.Billing
 {
     public interface INewConnectionRepository
     {
-        Task RegisterNewCustomer(Application application);
+        Task<string> RegisterNewCustomer(IFormFile file,NewApplicationDto application);
 
         Task<IEnumerable<Application>> GetApplications();
     }
