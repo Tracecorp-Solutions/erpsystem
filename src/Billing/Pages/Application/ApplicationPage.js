@@ -2,7 +2,7 @@ import * as React from "react";
 
 function ApplicationPage() {
   return (
-    <section className="flex flex-col flex-wrap justify-center content-start pb-0.5 mx-8 rounded-3xl bg-stone-100 max-md:mr-2.5 max-md:max-w-full">
+    <section className="flex-wrap justify-center content-start pb-0.5 mx-auto rounded-3xl bg-stone-100 max-md:mr-2.5 w-full">
       <h1 className="text-4xl font-semibold leading-[57.6px] text-neutral-600 max-md:max-w-full">
         Applications
       </h1>
