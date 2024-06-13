@@ -1,11 +1,10 @@
 import { useState,useEffect } from "react";
 import SideNav from "../../shared/navigations/SideNav";
 import TopNav from "../../shared/navigations/TopNav";
-
 import { useLocation } from "react-router-dom";
-
 import { useNavigate } from "react-router-dom";
 import ApplicationPage from "../Application/ApplicationPage";
+import ApplicationDetail from "../Application/ApplicationDetail";
 
 const BillingDashboard = () => {
   const location = useLocation();
@@ -31,6 +30,7 @@ const BillingDashboard = () => {
           <div className="main-content bg-stone-100 pb-6 rounded-t-3xl">
             <div className="content px-4 sm:px-6 lg:px-8 group-container">
               {screen === "application" && <ApplicationPage />}
+              {screen === "view-detail" && <ApplicationDetail />}
             </div>
           </div>
         </div>

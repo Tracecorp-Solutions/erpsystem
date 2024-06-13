@@ -1,12 +1,27 @@
 import React, { useState } from "react";
 import { Dropdown, Menu } from "antd";
+import { useNavigate } from "react-router-dom";
+
 
 function ApplicationPage() {
+
+    const history = useNavigate();
+
+    const handleMenuClick = (e) => {
+      if (e.key === "1") {
+        history("/view-detail");
+      } else {
+        // Handle other menu options
+        console.log("Menu item clicked:", e);
+      }
+    };
   const menu = (
     <Menu style={{
         width: "200px",
         textAlign: "center"
-    }}>
+    }}
+    onClick={handleMenuClick}
+    >
       <Menu.Item key="1">View Details</Menu.Item>
       <Menu.Item key="2">Generate job card</Menu.Item>
       <Menu.Item key="3">Print Application</Menu.Item>

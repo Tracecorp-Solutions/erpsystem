@@ -99,7 +99,7 @@ const Landing = () => {
         <section className="self-center ml-10 mt-8 text-4xl font-semibold leading-[57.6px] text-neutral-600 max-md:max-w-full">
           Welcome to the TRACE ERP
         </section>
-        <section className="self-center px-5 mt-8 w-full max-w-[1300px] max-md:max-w-full">
+        <section className="self-center px-5 mt-8 w-full max-md:max-w-full">
           <div className="grid grid-cols-3 gap-5 max-md:flex max-md:flex-col max-md:gap-0">
             {systems.slice(0, 3).map((system, index) => (
               <Card
@@ -112,7 +112,7 @@ const Landing = () => {
             ))}
           </div>
         </section>
-        <section className="self-center px-5 mt-8 w-full max-w-[1300px] max-md:max-w-full">
+        <section className="self-center px-5 mt-8 w-full max-md:max-w-full">
           <div className="grid grid-cols-3 gap-5 max-md:flex max-md:flex-col max-md:gap-0">
             {systems.slice(3).map((system, index) => (
               <Card
