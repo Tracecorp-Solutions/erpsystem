@@ -18,14 +18,27 @@ function ApplicationPage() {
         </div>
       </div>
       <div className="p-6 mt-6 bg-white">
-      <form className="flex gap-2 justify-between w-full text-base leading-6 text-neutral-400 max-md:flex-wrap max-md:max-w-full">
-                <label for="search" className="sr-only">Search</label>
-                <input type="text" id="search" className="flex gap-2 py-3 pr-6 pl-4 rounded-3xl border border-solid border-neutral-500 border-opacity-10" placeholder="Search Applicant, Application NO." aria-label="Search Applicant, Application NO." />
-                <button className="flex gap-2 px-6 py-3 whitespace-nowrap rounded-3xl border border-solid border-neutral-500 border-opacity-30 max-md:px-5">
-                  <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/3f02b79592faed7d699dd0b3b194f3c1ae722683f5fba56d39d1ae55c28f9d41?apiKey=27ec22b9382040ef8580a5e340d3a921&" className="shrink-0 self-start w-6 aspect-square" alt="Filter icon" />
-                  <span>Filter</span>
-                </button>
-              </form>
+        <form className="flex gap-2 justify-between w-full text-base leading-6 text-neutral-400 max-md:flex-wrap max-md:max-w-full">
+          <label for="search" className="sr-only">
+            Search
+          </label>
+          <input
+            type="text"
+            id="search"
+            className="flex gap-2 py-3 pr-6 pl-4 rounded-3xl border border-solid border-neutral-500 border-opacity-10"
+            placeholder="Search Applicant, Application NO."
+            aria-label="Search Applicant, Application NO."
+          />
+          <button className="flex gap-2 px-6 py-3 whitespace-nowrap rounded-3xl border border-solid border-neutral-500 border-opacity-30 max-md:px-5">
+            <img
+              loading="lazy"
+              src="https://cdn.builder.io/api/v1/image/assets/TEMP/3f02b79592faed7d699dd0b3b194f3c1ae722683f5fba56d39d1ae55c28f9d41?apiKey=27ec22b9382040ef8580a5e340d3a921&"
+              className="shrink-0 self-start w-6 aspect-square"
+              alt="Filter icon"
+            />
+            <span>Filter</span>
+          </button>
+        </form>
         <div className="flex gap-5 justify-between items-center px-6 py-3.5 mt-4 w-full text-xs font-medium tracking-wide uppercase rounded-3xl bg-stone-100 text-neutral-400 max-md:flex-wrap max-md:px-5 max-md:max-w-full">
           <div className="flex gap-4 self-stretch">
             <div className="shrink-0 w-5 h-5 bg-white rounded border-2 border-solid border-neutral-500 border-opacity-10" />
