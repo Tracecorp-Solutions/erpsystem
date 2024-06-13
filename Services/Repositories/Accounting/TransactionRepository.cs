@@ -93,10 +93,10 @@ namespace Services.Repositories.Accounting
             }
 
             //get account balance of the source account
-            if (_accountRepository.GetAccountBalance(accountFrom.Id).Result < amount)
-            {
-                throw new InvalidOperationException("Insufficient funds in the source account.");
-            }
+            //if (_accountRepository.GetAccountBalance(accountFrom.Id).Result < amount)
+            //{
+            //    throw new InvalidOperationException("Insufficient funds in the source account.");
+            //}
         }
 
         private TransactionEntry CreateTransactionEntry(TransactionViewModel transView, int accountId, string transactionType)
