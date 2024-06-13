@@ -37,7 +37,7 @@
               "RelativeDocumentMoniker": "Controllers\\NewConnectionController.cs",
               "ToolTip": "D:\\working directory\\erpsystem\\Trace\\Controllers\\NewConnectionController.cs",
               "RelativeToolTip": "Controllers\\NewConnectionController.cs",
-              "ViewState": "AQIAABAAAAAAAAAAAAAQwBwAAAAuAAAA",
+              "ViewState": "AQIAABsAAAAAAAAAAAAYwBwAAAAuAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-06-13T08:12:16.724Z",
               "EditorCaption": ""
@@ -52,8 +52,7 @@
               "RelativeToolTip": "..\\Core\\Repositories\\Billing\\INewConnectionRepository.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAA0AAAATAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-13T08:08:32.493Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-06-13T08:08:32.493Z"
             },
             {
               "$type": "Document",
@@ -65,8 +64,7 @@
               "RelativeToolTip": "Controllers\\AuthenticationController.cs",
               "ViewState": "AQIAAHsAAAAAAAAAAAAtwIQAAAAQAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-13T07:57:08.767Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-06-13T07:57:08.767Z"
             },
             {
               "$type": "Document",
@@ -78,8 +76,7 @@
               "RelativeToolTip": "..\\Services\\Repositories\\Billing\\NewConnectionRepository.cs",
               "ViewState": "AQIAABAAAAAAAAAAAAA0wBkAAAAiAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-13T07:52:10.868Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-06-13T07:52:10.868Z"
             },
             {
               "$type": "Document",
@@ -91,8 +88,7 @@
               "RelativeToolTip": "..\\Core\\Models\\Application.cs",
               "ViewState": "AQIAAC4AAAAAAAAAAAAzwDUAAAAlAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-13T07:53:45.833Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-06-13T07:53:45.833Z"
             }
           ]
         }
