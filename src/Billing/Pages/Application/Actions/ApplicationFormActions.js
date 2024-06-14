@@ -1,129 +1,159 @@
-import { Modal, DatePicker } from "antd";
+import React, { useState } from "react";
+import { Modal, Input, Button, Steps } from "antd";
 
-function ProgressBar() {
-  return (
-    <img
-      loading="lazy"
-      src="https://cdn.builder.io/api/v1/image/assets/TEMP/3ce26cf99f680bc6768ed0f3f287bfe1f4a90ebbf0e31da6841fca7eb641fd43?apiKey=27ec22b9382040ef8580a5e340d3a921&"
-      alt=""
-      className="shrink-0 self-start mt-6 border-solid aspect-[16.67] border-[3px] border-neutral-500 border-opacity-30 stroke-[3px] stroke-neutral-500 stroke-opacity-30 w-[53px]"
-    />
-  );
-}
+const { Step } = Steps;
 
-function Step({ stepNumber, label, active, completed }) {
+const NotificationOption = ({ children }) => {
   return (
-    <div
-      className={`flex flex-col ${
-        !active && !completed ? "text-neutral-400" : "font-semibold"
-      }`}
-    >
-      <div
-        className={`flex justify-center items-center self-center w-12 h-12 text-base leading-6 rounded-3xl ${
-          active
-            ? "text-white bg-slate-500"
-            : completed
-            ? "bg-lime-400"
-            : "bg-stone-100"
-        }`}
-      >
-        {stepNumber}
-      </div>
-      <div className="mt-2 text-sm text-center text-neutral-600">{label}</div>
+    <div className="flex items-center mt-3">
+      <input type="checkbox" id={children} name={children.toLowerCase()} />
+      <label htmlFor={children} className="ml-2">
+        {children}
+      </label>
     </div>
   );
-}
+};
 
 const ApplicationFormActions = ({
   isModalVisible,
   handleApproveApplication,
   setIsModalVisible,
 }) => {
+  const [currentStep, setCurrentStep] = useState(0);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const nextStep = () => {
+    setCurrentStep(currentStep + 1);
+  };
+
+  const prevStep = () => {
+    setCurrentStep(currentStep - 1);
+  };
+
+  const handleSubmit = () => {
+    // Handle form submission
+    if (currentStep === 2) {
+      handleApproveApplication(formData);
+      setIsModalVisible(false);
+    } else {
+      nextStep();
+    }
+  };
+
+  const steps = [
+    {
+      title: "Approval Confirmation",
+      content: (
+        <section className="flex flex-col justify-center self-center px-12 pt-8 pb-14 mt-4 max-w-full text-base leading-6 rounded-3xl bg-stone-100 text-neutral-600 w-[500px] max-md:px-5">
+          <p>Are you sure you want to approve this application?</p>
+          <div className="mt-6 font-semibold">Approval Date</div>
+          <form className="flex gap-2 justify-between px-4 py-4 mt-2 whitespace-nowrap bg-white rounded-xl border border-solid border-neutral-500 border-opacity-30">
+            <label htmlFor="approval_date" className="sr-only">
+              Approval Date
+            </label>
+            <time id="approval_date" dateTime="2024-06-08">
+              2024-06-08
+            </time>
+            <img
+              loading="lazy"
+              src="https://cdn.builder.io/api/v1/image/assets/TEMP/8c7515d0e48a8702b0a75494e4c7e35f39776b5b1f5e110f501c8205396c6041?apiKey=27ec22b9382040ef8580a5e340d3a921&"
+              alt="Calendar Icon"
+              className="shrink-0 self-start w-6 aspect-square"
+            />
+          </form>
+        </section>
+      ),
+    },
+    {
+      title: "Schedule Installation",
+      content: (
+        <section className="flex flex-col justify-center self-center px-12 pt-8 pb-14 mt-4 max-w-full text-base leading-6 rounded-3xl bg-stone-100 text-neutral-600 w-[500px] max-md:px-5">
+          <p className="leading-7">
+            Would you like to notify the applicant about the approval?
+          </p>
+          <h2 className="mt-6 font-semibold">Notification Options</h2>
+          <NotificationOption>Email</NotificationOption>
+          <NotificationOption>SMS</NotificationOption>
+          <NotificationOption>Both (Send both Email + SMS)</NotificationOption>
+        </section>
+      ),
+    },
+    {
+      title: "Password",
+      content: (
+        <form className="flex flex-col justify-center self-center px-12 pt-8 pb-14 mt-4 max-w-full text-base leading-6 rounded-3xl bg-stone-100 text-neutral-600 w-[500px] max-md:px-5">
+          <div>Would you like to schedule the installation now?</div>
+          <div className="mt-6 font-semibold">Preferred Installation Date</div>
+          <div className="flex gap-2 justify-between px-4 py-4 mt-2 bg-white rounded-xl border border-solid border-neutral-500 border-opacity-30 text-neutral-400">
+            <label htmlFor="installationDate" className="sr-only">
+              Preferred Installation Date
+            </label>
+            <input
+              type="text"
+              id="installationDate"
+              placeholder="-- / -- / ----"
+              aria-label="Preferred Installation Date"
+              className="w-full border-none"
+            />
+            <img
+              loading="lazy"
+              src="https://cdn.builder.io/api/v1/image/assets/TEMP/8c7515d0e48a8702b0a75494e4c7e35f39776b5b1f5e110f501c8205396c6041?apiKey=27ec22b9382040ef8580a5e340d3a921&"
+              alt="Calendar Icon"
+              className="shrink-0 self-start w-6 aspect-square"
+            />
+          </div>
+        </form>
+      ),
+    },
+  ];
+
   return (
-    <div className="flex flex-wrap justify-center content-start items-center py-6 rounded-3xl bg-stone-100">
-      <Modal
-        visible={isModalVisible}
-        onOk={handleApproveApplication}
-        footer={null}
-        closeIcon={null}
-      >
-        <div className="flex flex-col justify-center bg-white rounded-3xl max-w-[820px]">
-          <header className="flex flex-col pt-6 w-full text-4xl font-semibold leading-[57.6px] text-neutral-600 max-md:max-w-full">
-            <div className="flex gap-5 justify-between self-center px-5 w-full max-w-screen-sm max-md:max-w-full">
-              <h1>Approve Application</h1>
-              <button
-                className="shrink-0 my-auto p-2 rounded-full bg-gray-200 hover:bg-gray-300"
-                onClick={() => setIsModalVisible(false)}
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-6 w-6 text-gray-500"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-              </button>
-            </div>
-            <div className="mt-6 w-full border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-opacity-10 min-h-[1px] max-md:max-w-full" />
-          </header>
-
-          <nav className="flex gap-0.5 justify-between self-center px-5 pt-4 pb-5 mt-4 max-w-full w-[500px] max-md:flex-wrap">
-            <Step stepNumber="1" isActive={true} stepLabel="Approval Date" />
-            <ProgressBar />
-            <Step
-              stepNumber="2"
-              isActive={false}
-              stepLabel="Notify Applicant"
-            />
-            <ProgressBar />
-            <Step
-              stepNumber="3"
-              isActive={false}
-              stepLabel="Schedule Installation"
-            />
-          </nav>
-
-          <section className="flex flex-col justify-center self-center px-12 pt-8 pb-14 mt-4 max-w-full text-base leading-6 rounded-3xl bg-stone-100 text-neutral-600 w-[500px] max-md:px-5">
-            <p>Are you sure you want to approve this application?</p>
-            <div className="mt-6 font-semibold">Approval Date</div>
-            <form className="">
-              <label htmlFor="approval_date" className="sr-only">
-                Approval Date
-              </label>
-              <DatePicker className="flex gap-2 justify-between px-4 py-4 mt-2 whitespace-nowrap bg-white rounded-xl border border-solid border-neutral-500 border-opacity-30" />
-            </form>
-          </section>
-
-          <footer className="mt-10">
-            <div
-              className="flex justify-between w-full">
-              <div className="flex justify-between gap-20 max-w-full w-[496px] max-md:flex-wrap">
-                <button
-                  type="button"
-                  className="flex-1 justify-center items-center px-8 py-4 rounded-3xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30"
-                  onClick={() => setIsModalVisible(false)}
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  className="flex-1 justify-center px-8 py-4 font-semibold text-white rounded-3xl bg-slate-500"
-                >
-                  Save Approval Date
-                </button>
-              </div>
-            </div>
-          </footer>
-        </div>
-      </Modal>
-    </div>
+    <Modal
+      title="Approve Application"
+      visible={isModalVisible}
+      onCancel={() => setIsModalVisible(false)}
+      footer={[
+        <button
+          type="button"
+          className="justify-center items-center px-8 py-4 whitespace-nowrap rounded-3xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 max-md:px-5"
+          onClick={() => setIsModalVisible(false)}
+        >
+          Cancel
+        </button>,
+        currentStep === steps.length - 1 ? (
+          <Button key="submit" type="primary" onClick={handleSubmit}>
+            Approve
+          </Button>
+        ) : (
+          <button
+            type="submit"
+            className="justify-center px-8 py-4 font-semibold text-white rounded-3xl bg-slate-500 max-md:px-5"
+            onClick={handleSubmit}
+          >
+            Save Approval Date
+          </button>
+        ),
+      ]}
+    >
+      <Steps current={currentStep}>
+        {steps.map((item) => (
+          <Step key={item.title} title={item.title} />
+        ))}
+      </Steps>
+      <div className="steps-content">{steps[currentStep].content}</div>
+    </Modal>
   );
 };
 
