@@ -109,21 +109,24 @@ const ApplicationFormActions = ({
             </form>
           </section>
 
-          <footer className="flex justify-center items-center px-16 py-6 mt-32 w-full text-base leading-6 bg-stone-100 max-md:px-5 max-md:mt-10 max-md:max-w-full">
-            <div className="flex gap-4 max-w-full w-[496px] max-md:flex-wrap">
-              <button
-                type="button"
-                className="justify-center items-center px-8 py-4 whitespace-nowrap rounded-3xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 max-md:px-5"
-                onClick={() => setIsModalVisible(false)}
-              >
-                Cancel
-              </button>
-              <button
-                type="submit"
-                className="justify-center px-8 py-4 font-semibold text-white rounded-3xl bg-slate-500 max-md:px-5"
-              >
-                Save Approval Date
-              </button>
+          <footer className="mt-10">
+            <div
+              className="flex justify-between w-full">
+              <div className="flex justify-between gap-20 max-w-full w-[496px] max-md:flex-wrap">
+                <button
+                  type="button"
+                  className="flex-1 justify-center items-center px-8 py-4 rounded-3xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30"
+                  onClick={() => setIsModalVisible(false)}
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="flex-1 justify-center px-8 py-4 font-semibold text-white rounded-3xl bg-slate-500"
+                >
+                  Save Approval Date
+                </button>
+              </div>
             </div>
           </footer>
         </div>
