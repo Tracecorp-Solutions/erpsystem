@@ -1,4 +1,4 @@
-import { Modal } from "antd";
+import { Modal, DatePicker } from "antd";
 
 function ProgressBar() {
   return (
@@ -93,19 +93,11 @@ const ApplicationFormActions = ({
           <section className="flex flex-col justify-center self-center px-12 pt-8 pb-14 mt-4 max-w-full text-base leading-6 rounded-3xl bg-stone-100 text-neutral-600 w-[500px] max-md:px-5">
             <p>Are you sure you want to approve this application?</p>
             <div className="mt-6 font-semibold">Approval Date</div>
-            <form className="flex gap-2 justify-between px-4 py-4 mt-2 whitespace-nowrap bg-white rounded-xl border border-solid border-neutral-500 border-opacity-30">
+            <form className="">
               <label htmlFor="approval_date" className="sr-only">
                 Approval Date
               </label>
-              <time id="approval_date" dateTime="2024-06-08">
-                2024-06-08
-              </time>
-              <img
-                loading="lazy"
-                src="https://cdn.builder.io/api/v1/image/assets/TEMP/8c7515d0e48a8702b0a75494e4c7e35f39776b5b1f5e110f501c8205396c6041?apiKey=27ec22b9382040ef8580a5e340d3a921&"
-                alt="Calendar Icon"
-                className="shrink-0 self-start w-6 aspect-square"
-              />
+              <DatePicker className="flex gap-2 justify-between px-4 py-4 mt-2 whitespace-nowrap bg-white rounded-xl border border-solid border-neutral-500 border-opacity-30" />
             </form>
           </section>
 
