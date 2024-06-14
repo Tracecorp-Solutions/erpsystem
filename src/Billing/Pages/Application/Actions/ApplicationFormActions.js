@@ -149,15 +149,15 @@ const ApplicationFormActions = ({
         </Button>,
       ]}
     >
-      <Steps current={currentStep}>
-        {steps.map((item, index) => (
-          <Step
-            key={item.title}
-            title={item.title}
-            onClick={() => setCurrentStep(index)}
-          />
-        ))}
-      </Steps>
+       <Steps current={currentStep}>
+    {steps.slice(0, -1).map((item, index) => (
+      <Step
+        key={item.title}
+        title={item.title}
+        onClick={() => setCurrentStep(index)}
+      />
+    ))}
+  </Steps>
       <div className="steps-content">{steps[currentStep].content}</div>
     </Modal>
   );
