@@ -49,7 +49,7 @@ const ApplicationFormActions = ({
       >
         <div className="flex flex-col justify-center bg-white rounded-3xl max-w-[820px]">
           <header className="flex flex-col pt-6 w-full text-4xl font-semibold leading-[57.6px] text-neutral-600 max-md:max-w-full">
-            <div className="flex gap-5 justify-between self-center px-5 w-full max-w-screen-sm max-md:flex-wrap max-md:max-w-full">
+            <div className="flex gap-5 justify-between self-center px-5 w-full max-w-screen-sm max-md:max-w-full">
               <h1>Approve Application</h1>
               <button
                 className="shrink-0 my-auto p-2 rounded-full bg-gray-200 hover:bg-gray-300"
