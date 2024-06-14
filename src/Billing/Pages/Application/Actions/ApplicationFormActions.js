@@ -64,13 +64,19 @@ const ApplicationFormActions = ({
             </label>
             <DatePicker className="flex gap-2 justify-between px-4 py-4 mt-2 whitespace-nowrap bg-white rounded-xl border border-solid border-neutral-500 border-opacity-30" />
           </form>
+          <div className="mt-4">
+            <Button type="primary" onClick={nextStep}>
+              Next
+            </Button>
+          </div>
         </section>
       ),
     },
     {
-      title: "Schedule Installation",
+      title: "Notify Applicant",
       content: (
-        <section className="flex flex-col justify-center self-center px-12 pt-8 pb-14 mt-4 max-w-full text-base leading-6 rounded-3xl bg-stone-100 text-neutral-600 w-[500px] max-md:px-5">
+        <div>
+          <section className="flex flex-col justify-center self-center px-12 pt-8 pb-14 mt-4 max-w-full text-base leading-6 rounded-3xl bg-stone-100 text-neutral-600 w-[500px] max-md:px-5">
           <p className="leading-7">
             Would you like to notify the applicant about the approval?
           </p>
@@ -84,6 +90,7 @@ const ApplicationFormActions = ({
             </Button>
           </div>
         </section>
+        </div>
       ),
     },
     {
@@ -110,23 +117,12 @@ const ApplicationFormActions = ({
       title: "Approval Complete",
       content: (
         <section className="flex flex-col justify-center items-center px-12 pt-12 pb-14 mt-4 max-w-full text-base font-semibold rounded-3xl bg-stone-100 text-neutral-600 w-[500px] max-md:px-5">
-          <h2 className="text-2xl capitalize">Approval Complete</h2>
-          <div className="self-stretch mt-6 leading-7 text-center">
-            <p>
-              The application has been approved successfully. Notification and
-              installation scheduling details (if any) have been updated.
-            </p>
-            {/* Display approved application data here */}
-            <div>
-              <p>Name: {formData.name}</p>
-              <p>Email: {formData.email}</p>
-              {/* Add more fields as needed */}
-            </div>
-          </div>
-          <button className="justify-center items-center px-8 py-4 mt-6 w-60 max-w-full text-white whitespace-nowrap rounded-3xl bg-slate-500 leading-[160%] max-md:px-5">
-            Finish
-          </button>
-        </section>
+        <h2 className="text-2xl capitalize">Approval Complete</h2>
+        <p className="self-stretch mt-6 leading-7 text-center">
+          The application has been approved successfully. Notification and installation scheduling details (if any) have been updated.
+        </p>
+        <button className="justify-center items-center px-8 py-4 mt-6 w-60 max-w-full text-white whitespace-nowrap rounded-3xl bg-slate-500 leading-[160%] max-md:px-5">Finish</button>
+      </section>
       ),
     },
   ];
@@ -137,18 +133,25 @@ const ApplicationFormActions = ({
       visible={isModalVisible}
       onCancel={() => setIsModalVisible(false)}
       footer={null}
-      width={700}
+      width={800}
     >
-      <Steps current={currentStep}>
+      <Steps current={currentStep} className="w-full">
         {steps.slice(0, -1).map((item, index) => (
           <Step
             key={item.title}
-            title={item.title}
+            title={
+              <div className="flex flex-col items-center">
+                <span>{item.title}</span>
+              </div>
+            }
             onClick={() => setCurrentStep(index)}
           />
         ))}
       </Steps>
-      <div className="steps-content flex justify-center">{steps[currentStep].content}</div>
+
+      <div className="steps-content flex justify-center">
+        {steps[currentStep].content}
+      </div>
     </Modal>
   );
 };
