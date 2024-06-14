@@ -138,7 +138,7 @@ const ApplicationFormActions = ({
           />
         ))}
       </Steps>
-
+  
       <div className="steps-content flex justify-center">
         {steps[currentStep].content}
       </div>
@@ -162,33 +162,40 @@ const ApplicationFormActions = ({
               </Button>
             </div>
           )}
-
-          {currentStep > 0 && currentStep < steps.length - 1 && (
+  
+          {currentStep === 1 && (
             <div className="flex justify-between w-3/4">
-              {(currentStep === 1 || currentStep === 2) && (
-                <button
-                  type="button"
-                  className="border w-1/3 rounded-full border"
-                  onClick={prevStep}
-                >
-                  Skip
-                </button>
-              )}
-              {currentStep === 1 && (
-                <Button
-                  type="primary"
-                  onClick={handleSubmit}
-                  className="rounded-full"
-                >
-                  Send Notification
-                </Button>
-              )}
+              <button
+                type="button"
+                className="border w-1/3 rounded-full border"
+                onClick={prevStep}
+              >
+                Skip
+              </button>
+              <Button
+                type="primary"
+                onClick={handleSubmit}
+                className="rounded-full"
+              >
+                Send Notification
+              </Button>
             </div>
           )}
-
-          {currentStep === steps.length - 2 && (
-            <div className="flex justify-center w-full">
-              <Button type="primary" onClick={handleSubmit} className="rounded-full">
+  
+          {currentStep === 2 && (
+            <div className="flex justify-between w-3/4">
+              <button
+                type="button"
+                className="border w-1/3 rounded-full border"
+                onClick={prevStep}
+              >
+                Skip
+              </button>
+              <Button
+                type="primary"
+                onClick={handleSubmit}
+                className="rounded-full"
+              >
                 Schedule Installation
               </Button>
             </div>
@@ -197,6 +204,7 @@ const ApplicationFormActions = ({
       </div>
     </Modal>
   );
+  
 };
 
 export default ApplicationFormActions;
