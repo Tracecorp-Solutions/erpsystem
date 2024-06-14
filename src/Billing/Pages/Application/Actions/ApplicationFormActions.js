@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Modal, DatePicker , Button, Steps } from "antd";
+import { Modal, DatePicker, Button, Steps } from "antd";
 
 const { Step } = Steps;
 
@@ -43,8 +43,7 @@ const ApplicationFormActions = ({
   };
 
   const handleSubmit = () => {
-    // Handle form submission
-    if (currentStep === 2) {
+    if (currentStep === steps.length - 1) {
       handleApproveApplication(formData);
       setIsModalVisible(false);
     } else {
@@ -79,11 +78,16 @@ const ApplicationFormActions = ({
           <NotificationOption>Email</NotificationOption>
           <NotificationOption>SMS</NotificationOption>
           <NotificationOption>Both (Send both Email + SMS)</NotificationOption>
+          <div className="mt-4">
+            <Button type="primary" onClick={nextStep}>
+              Next
+            </Button>
+          </div>
         </section>
       ),
     },
     {
-      title: "Password",
+      title: "Schedule Installation",
       content: (
         <form className="flex flex-col justify-center self-center px-12 pt-8 pb-14 mt-4 max-w-full text-base leading-6 rounded-3xl bg-stone-100 text-neutral-600 w-[500px] max-md:px-5">
           <div>Would you like to schedule the installation now?</div>
@@ -94,7 +98,35 @@ const ApplicationFormActions = ({
             </label>
             <DatePicker className="flex gap-2 justify-between px-4 py-4 mt-2 whitespace-nowrap bg-white rounded-xl border border-solid border-neutral-500 border-opacity-30" />
           </div>
+          <div className="mt-4">
+            <Button type="primary" onClick={handleSubmit}>
+              Approve
+            </Button>
+          </div>
         </form>
+      ),
+    },
+    {
+      title: "Approval Complete",
+      content: (
+        <section className="flex flex-col justify-center items-center px-12 pt-12 pb-14 mt-4 max-w-full text-base font-semibold rounded-3xl bg-stone-100 text-neutral-600 w-[500px] max-md:px-5">
+          <h2 className="text-2xl capitalize">Approval Complete</h2>
+          <div className="self-stretch mt-6 leading-7 text-center">
+            <p>
+              The application has been approved successfully. Notification and
+              installation scheduling details (if any) have been updated.
+            </p>
+            {/* Display approved application data here */}
+            <div>
+              <p>Name: {formData.name}</p>
+              <p>Email: {formData.email}</p>
+              {/* Add more fields as needed */}
+            </div>
+          </div>
+          <button className="justify-center items-center px-8 py-4 mt-6 w-60 max-w-full text-white whitespace-nowrap rounded-3xl bg-slate-500 leading-[160%] max-md:px-5">
+            Finish
+          </button>
+        </section>
       ),
     },
   ];
@@ -112,24 +144,18 @@ const ApplicationFormActions = ({
         >
           Cancel
         </button>,
-        currentStep === steps.length - 1 ? (
-          <Button key="submit" type="primary" onClick={handleSubmit}>
-            Approve
-          </Button>
-        ) : (
-          <button
-            type="submit"
-            className="justify-center px-8 py-4 font-semibold text-white rounded-3xl bg-slate-500 max-md:px-5"
-            onClick={handleSubmit}
-          >
-            Save Approval Date
-          </button>
-        ),
+        <Button key="submit" type="primary" onClick={handleSubmit}>
+          Save Approval Date
+        </Button>,
       ]}
     >
       <Steps current={currentStep}>
-        {steps.map((item) => (
-          <Step key={item.title} title={item.title} />
+        {steps.map((item, index) => (
+          <Step
+            key={item.title}
+            title={item.title}
+            onClick={() => setCurrentStep(index)}
+          />
         ))}
       </Steps>
       <div className="steps-content">{steps[currentStep].content}</div>
