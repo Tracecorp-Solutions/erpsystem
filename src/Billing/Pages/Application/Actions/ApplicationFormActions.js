@@ -145,11 +145,22 @@ const ApplicationFormActions = ({
       <div className="flex justify-center mt-4">
         <>
           {currentStep === 0 && (
-            <>
-              <Button type="primary" onClick={handleSubmit}>
+            <div className="w-full flex justify-around">
+              <button
+                type="button"
+                onClick={() => setIsModalVisible(false)}
+                className="rounded-full border w-1/4"
+              >
+                Cancel
+              </button>
+              <Button
+                type="primary"
+                onClick={handleSubmit}
+                className="rounded-full"
+              >
                 Save Approval Date
               </Button>
-            </>
+            </div>
           )}
 
           {currentStep > 0 && currentStep < steps.length - 1 && (
@@ -157,14 +168,18 @@ const ApplicationFormActions = ({
               {(currentStep === 1 || currentStep === 2) && (
                 <button
                   type="button"
-                  className="border w-1/2"
+                  className="border w-1/3 rounded-full border"
                   onClick={prevStep}
                 >
                   Skip
                 </button>
               )}
               {currentStep === 1 && (
-                <Button type="primary" onClick={handleSubmit}>
+                <Button
+                  type="primary"
+                  onClick={handleSubmit}
+                  className="rounded-full"
+                >
                   Send Notification
                 </Button>
               )}
@@ -173,7 +188,7 @@ const ApplicationFormActions = ({
 
           {currentStep === steps.length - 2 && (
             <div className="flex justify-center w-full">
-              <Button type="primary" onClick={handleSubmit}>
+              <Button type="primary" onClick={handleSubmit} className="rounded-full">
                 Schedule Installation
               </Button>
             </div>
