@@ -136,29 +136,19 @@ const ApplicationFormActions = ({
       title="Approve Application"
       visible={isModalVisible}
       onCancel={() => setIsModalVisible(false)}
-      footer={[
-        <button
-          type="button"
-          className="justify-center items-center px-8 py-4 whitespace-nowrap rounded-3xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 max-md:px-5"
-          onClick={() => setIsModalVisible(false)}
-        >
-          Cancel
-        </button>,
-        <Button key="submit" type="primary" onClick={handleSubmit}>
-          Save Approval Date
-        </Button>,
-      ]}
+      footer={null}
+      width={700}
     >
-       <Steps current={currentStep}>
-    {steps.slice(0, -1).map((item, index) => (
-      <Step
-        key={item.title}
-        title={item.title}
-        onClick={() => setCurrentStep(index)}
-      />
-    ))}
-  </Steps>
-      <div className="steps-content">{steps[currentStep].content}</div>
+      <Steps current={currentStep}>
+        {steps.slice(0, -1).map((item, index) => (
+          <Step
+            key={item.title}
+            title={item.title}
+            onClick={() => setCurrentStep(index)}
+          />
+        ))}
+      </Steps>
+      <div className="steps-content flex justify-center">{steps[currentStep].content}</div>
     </Modal>
   );
 };
