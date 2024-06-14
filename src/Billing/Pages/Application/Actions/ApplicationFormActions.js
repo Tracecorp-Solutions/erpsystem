@@ -39,7 +39,7 @@ const ApplicationFormActions = ({
   };
 
   const prevStep = () => {
-    setCurrentStep(currentStep - 1);
+    setCurrentStep(currentStep + 1);
   };
 
   const handleSubmit = () => {
