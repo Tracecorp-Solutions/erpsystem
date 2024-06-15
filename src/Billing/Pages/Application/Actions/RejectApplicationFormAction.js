@@ -14,10 +14,21 @@ const NotificationOption = ({ children }) => {
   );
 };
 
-const ApplicationFormActions = ({
-  isModalVisible,
+const CheckboxOption = ({ label }) => {
+    return (
+      <div className="flex items-center mt-3">
+        <input type="checkbox" id={label} name={label.toLowerCase()} />
+        <label htmlFor={label} className="ml-2">
+          {label}
+        </label>
+      </div>
+    );
+  };
+
+const RejectApplicationFormAction = ({
+  rejectApplication,
   handleApproveApplication,
-  setIsModalVisible,
+  setRejectApplication,
 }) => {
   const [currentStep, setCurrentStep] = useState(0);
   const [formData, setFormData] = useState({
@@ -45,7 +56,7 @@ const ApplicationFormActions = ({
   const handleSubmit = () => {
     if (currentStep === steps.length - 1) {
       handleApproveApplication(formData);
-      setIsModalVisible(false);
+      setRejectApplication(false);
     } else {
       nextStep();
     }
@@ -53,18 +64,21 @@ const ApplicationFormActions = ({
 
   const steps = [
     {
-      title: "Approval Confirmation",
+      title: "Reject Reason",
       content: (
-        <section className="flex flex-col justify-center self-center px-12 pt-8 pb-14 mt-4 max-w-full text-base leading-6 rounded-3xl bg-stone-100 text-neutral-600 w-[500px] max-md:px-5">
-          <p>Are you sure you want to approve this application?</p>
-          <div className="mt-6 font-semibold">Approval Date</div>
-          <form>
-            <label htmlFor="approval_date" className="sr-only">
-              Approval Date
-            </label>
-            <DatePicker className="flex gap-2 justify-between px-4 py-4 mt-2 whitespace-nowrap bg-white rounded-xl border border-solid border-neutral-500 border-opacity-30" />
-          </form>
-        </section>
+        <div className="flex flex-col justify-center self-center px-12 pt-8 pb-10 mt-4 max-w-full text-base leading-6 rounded-3xl bg-stone-100 text-neutral-600 w-[500px] max-md:px-5">
+        <p>Are you sure you want to reject this application?</p>
+        <div className="mt-6 font-semibold">Rejection Reason</div>
+        <form>
+          <CheckboxOption label="Incomplete Documentation" />
+          <CheckboxOption label="Failed Site Survey" />
+          <CheckboxOption label="Invalid Information" />
+          <CheckboxOption label="Others" />
+          <div className="mt-6 font-semibold">Additional Comments</div>
+          <label className="sr-only" htmlFor="additionalComments">Add comment</label>
+          <textarea id="additionalComments" className="items-start px-4 pt-3 pb-12 mt-2 bg-white rounded-xl border border-solid border-neutral-500 border-opacity-30 text-neutral-400 max-md:pr-5 w-full" aria-label="Add comment"/>
+        </form>
+      </div>
       ),
     },
     {
@@ -73,7 +87,7 @@ const ApplicationFormActions = ({
         <div>
           <section className="flex flex-col justify-center self-center px-12 pt-8 pb-14 mt-4 max-w-full text-base leading-6 rounded-3xl bg-stone-100 text-neutral-600 w-[500px] max-md:px-5">
             <p className="leading-7">
-              Would you like to notify the applicant about the approval?
+              Would you like to notify the applicant about the rejection?
             </p>
             <h2 className="mt-6 font-semibold">Notification Options</h2>
             <NotificationOption>Email</NotificationOption>
@@ -86,42 +100,26 @@ const ApplicationFormActions = ({
       ),
     },
     {
-      title: "Schedule Installation",
-      content: (
-        <form className="flex flex-col justify-center self-center px-12 pt-8 pb-14 mt-4 max-w-full text-base leading-6 rounded-3xl bg-stone-100 text-neutral-600 w-[500px] max-md:px-5">
-          <div>Would you like to schedule the installation now?</div>
-          <div className="mt-6 font-semibold">Preferred Installation Date</div>
-          <div>
-            <label htmlFor="installationDate" className="sr-only">
-              Preferred Installation Date
-            </label>
-            <DatePicker className="flex gap-2 justify-between px-4 py-4 mt-2 whitespace-nowrap bg-white rounded-xl border border-solid border-neutral-500 border-opacity-30" />
-          </div>
-        </form>
-      ),
-    },
-    {
       title: "Approval Complete",
       content: (
-        <section className="flex flex-col justify-center items-center px-12 pt-12 pb-14 mt-4 max-w-full text-base font-semibold rounded-3xl bg-stone-100 text-neutral-600 w-[500px] max-md:px-5">
-          <h2 className="text-2xl capitalize">Approval Complete</h2>
-          <p className="self-stretch mt-6 leading-7 text-center">
-            The application has been approved successfully. Notification and
-            installation scheduling details (if any) have been updated.
-          </p>
-          <button className="justify-center items-center px-8 py-4 mt-6 w-60 max-w-full text-white whitespace-nowrap rounded-3xl  bg-customBlue text-white leading-[160%] max-md:px-5">
-            Finish
-          </button>
-        </section>
+        <article className="flex flex-col justify-center items-center px-12 pt-12 pb-14 mt-4 max-w-full text-base font-semibold rounded-3xl bg-stone-100 text-neutral-600 w-[500px] max-md:px-5">
+        <h2 className="text-2xl capitalize">Rejection Complete</h2>
+        <p className="self-stretch mt-6 leading-7 text-center">
+          The application has been rejected successfully. Notification details (if any) have been updated.
+        </p>
+        <button className="justify-center items-center px-8 py-4 mt-6 w-60 max-w-full text-white whitespace-nowrap rounded-3xl bg-customBlue font-custom leading-[160%] max-md:px-5">
+          Finish
+        </button>
+      </article>
       ),
     },
   ];
 
   return (
     <Modal
-      title="Approve Application"
-      visible={isModalVisible}
-      onCancel={() => setIsModalVisible(false)}
+      title="Reject Application"
+      visible={rejectApplication}
+      onCancel={() => setRejectApplication(false)}
       footer={null}
       width={800}
     >
@@ -148,7 +146,7 @@ const ApplicationFormActions = ({
             <div className="w-full flex justify-around">
               <button
                 type="button"
-                onClick={() => setIsModalVisible(false)}
+                onClick={() => setRejectApplication(false)}
                 className="rounded-full border w-1/4"
               >
                 Cancel
@@ -156,9 +154,9 @@ const ApplicationFormActions = ({
               <Button
                 type="button"
                 onClick={handleSubmit}
-                className="rounded-full  bg-customBlue text-white"
+                className="rounded-full bg-customBlue text-white"
               >
-                Save Approval Date
+                Submit Reason
               </Button>
             </div>
           )}
@@ -181,25 +179,6 @@ const ApplicationFormActions = ({
               </Button>
             </div>
           )}
-  
-          {currentStep === 2 && (
-            <div className="flex justify-between w-3/4">
-              <button
-                type="button"
-                className="border w-1/3 rounded-full border"
-                onClick={prevStep}
-              >
-                Skip
-              </button>
-              <Button
-                type="button"
-                onClick={handleSubmit}
-                className="rounded-full  bg-customBlue text-white"
-              >
-                Schedule Installation
-              </Button>
-            </div>
-          )}
         </>
       </div>
     </Modal>
@@ -207,4 +186,4 @@ const ApplicationFormActions = ({
   
 };
 
-export default ApplicationFormActions;
+export default RejectApplicationFormAction;
