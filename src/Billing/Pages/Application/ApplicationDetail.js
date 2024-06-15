@@ -6,12 +6,14 @@ import Document from "./Document";
 import ApplicationFormActions from "./Actions/ApplicationFormActions";
 import RejectApplicationFormAction from "./Actions/RejectApplicationFormAction";
 import ContactApplicantFormAction from "./Actions/ContactApplicantForm";
+import AssignSurveyor from "./Actions/AssignSurveyor";
 
 const ApplicationDetail = () => {
 
   const [isModalVisible, setIsModalVisible] = React.useState(false);
   const [rejectApplication, setRejectApplication] = React.useState(false);
   const [contactApplicantForm, setContactApplicantForm] = React.useState(false);
+  const [assignSurveyorAction, setAssignSurveyorAction] = React.useState(false);
 
   const handleApproveApplication = () => {
     setIsModalVisible(false);
@@ -24,7 +26,7 @@ const ApplicationDetail = () => {
       <Menu.Item key="3" onClick={() => setContactApplicantForm(true)}>Contact Applicant</Menu.Item>
       <Menu.Item key="4" onClick={() => setIsModalVisible(true)}>Approve Application</Menu.Item>
       <Menu.Item key="5">Generate Job card</Menu.Item>
-      <Menu.Item key="6">Assign Surveyor</Menu.Item>
+      <Menu.Item key="6" onClick={() => setAssignSurveyorAction(true)}>Assign Surveyor</Menu.Item>
     </Menu>
   );
 
@@ -347,6 +349,7 @@ const ApplicationDetail = () => {
         />
         <RejectApplicationFormAction rejectApplication={rejectApplication} setRejectApplication={setRejectApplication} />
         <ContactApplicantFormAction ContactApplicantForm={contactApplicantForm} setContactApplicantForm={setContactApplicantForm}  />
+        <AssignSurveyor assignSurveyorAction={assignSurveyorAction} setAssignSurveyorAction={setAssignSurveyorAction}  />
     </div>
   );
 };
