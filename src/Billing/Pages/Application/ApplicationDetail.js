@@ -5,11 +5,13 @@ import ApplicantSection from "./ApplicantSection";
 import Document from "./Document";
 import ApplicationFormActions from "./Actions/ApplicationFormActions";
 import RejectApplicationFormAction from "./Actions/RejectApplicationFormAction";
+import ContactApplicantFormAction from "./Actions/ContactApplicantForm";
 
 const ApplicationDetail = () => {
 
   const [isModalVisible, setIsModalVisible] = React.useState(false);
   const [rejectApplication, setRejectApplication] = React.useState(false);
+  const [contactApplicantForm, setContactApplicantForm] = React.useState(false);
 
   const handleApproveApplication = () => {
     setIsModalVisible(false);
@@ -19,7 +21,7 @@ const ApplicationDetail = () => {
     <Menu>
       <Menu.Item key="1">Print Application</Menu.Item>
       <Menu.Item key="2" onClick={() => setRejectApplication(true)}>Reject Application</Menu.Item>
-      <Menu.Item key="3">Contact Applicant</Menu.Item>
+      <Menu.Item key="3" onClick={() => setContactApplicantForm(true)}>Contact Applicant</Menu.Item>
       <Menu.Item key="4" onClick={() => setIsModalVisible(true)}>Approve Application</Menu.Item>
       <Menu.Item key="5">Generate Job card</Menu.Item>
       <Menu.Item key="6">Assign Surveyor</Menu.Item>
@@ -344,6 +346,7 @@ const ApplicationDetail = () => {
         setIsModalVisible={setIsModalVisible} 
         />
         <RejectApplicationFormAction rejectApplication={rejectApplication} setRejectApplication={setRejectApplication} />
+        <ContactApplicantFormAction ContactApplicantForm={contactApplicantForm} setContactApplicantForm={setContactApplicantForm}  />
     </div>
   );
 };

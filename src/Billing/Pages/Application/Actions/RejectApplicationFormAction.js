@@ -6,7 +6,7 @@ const { Step } = Steps;
 const NotificationOption = ({ children }) => {
   return (
     <div className="flex items-center mt-3">
-      <input type="checkbox" id={children} name={children.toLowerCase()} />
+      <input type="radio" id={children} name={children.toLowerCase()} />
       <label htmlFor={children} className="ml-2">
         {children}
       </label>
