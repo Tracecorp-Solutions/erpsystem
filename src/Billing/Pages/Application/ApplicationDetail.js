@@ -32,7 +32,7 @@ const ApplicationDetail = () => {
 
   return (
     <div className="flex flex-wrap justify-center content-start items-center py-6 rounded-3xl bg-stone-100">
-      <header className="flex gap-2 items-center self-stretch px-6 text-base font-semibold leading-6 whitespace-nowrap text-neutral-600 max-md:flex-wrap max-md:px-5">
+      <header className="flex gap-2 items-center self-stretch px-6 text-base font-semibold leading-6 whitespace-nowrap text-neutral-600 max-md:flex-wrap max-md:px-5 w-full">
         <h1 className="self-stretch my-auto">Applications</h1>
         <img
           loading="lazy"
@@ -308,7 +308,7 @@ const ApplicationDetail = () => {
                 No surveyor assigned yet
               </div>
             </div>
-            <button className="justify-center self-start px-6 py-3 mt-2.5 text-sm font-semibold text-white rounded-3xl bg-slate-500 max-md:px-5">
+            <button className="justify-center self-start px-6 py-3 mt-2.5 text-sm font-semibold text-white rounded-3xl bg-slate-500 max-md:px-5" onClick={() => setAssignSurveyorAction(true)}>
               Assign Surveyor
             </button>
           </div>

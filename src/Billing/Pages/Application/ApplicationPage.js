@@ -9,7 +9,8 @@ function ApplicationPage() {
 
     const handleMenuClick = (e) => {
       if (e.key === "1") {
-        history("/view-detail");
+        
+        history("/billingdashboard",{state :{screen: 'view-detail'}});
       } else {
         // Handle other menu options
         console.log("Menu item clicked:", e);
