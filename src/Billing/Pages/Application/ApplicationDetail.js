@@ -7,6 +7,7 @@ import ApplicationFormActions from "./Actions/ApplicationFormActions";
 import RejectApplicationFormAction from "./Actions/RejectApplicationFormAction";
 import ContactApplicantFormAction from "./Actions/ContactApplicantForm";
 import AssignSurveyor from "./Actions/AssignSurveyor";
+import SurveyorReport from "./Actions/SurveyorReport";
 
 const ApplicationDetail = () => {
 
@@ -14,6 +15,7 @@ const ApplicationDetail = () => {
   const [rejectApplication, setRejectApplication] = React.useState(false);
   const [contactApplicantForm, setContactApplicantForm] = React.useState(false);
   const [assignSurveyorAction, setAssignSurveyorAction] = React.useState(false);
+  const [surveyorReport, setSurveyorReport] = React.useState(false);
 
   const handleApproveApplication = () => {
     setIsModalVisible(false);
@@ -337,7 +339,7 @@ const ApplicationDetail = () => {
               Application is pending survey
             </div>
           </div>
-          <button className="justify-center self-start px-6 py-3 mt-2.5 text-sm font-semibold text-white rounded-3xl bg-slate-500 max-md:px-5">
+          <button className="justify-center self-start px-6 py-3 mt-2.5 text-sm font-semibold text-white rounded-3xl bg-slate-500 max-md:px-5" onClick={() => setSurveyorReport(true)}>
             Update Findings
           </button>
         </div>
@@ -350,6 +352,7 @@ const ApplicationDetail = () => {
         <RejectApplicationFormAction rejectApplication={rejectApplication} setRejectApplication={setRejectApplication} />
         <ContactApplicantFormAction ContactApplicantForm={contactApplicantForm} setContactApplicantForm={setContactApplicantForm}  />
         <AssignSurveyor assignSurveyorAction={assignSurveyorAction} setAssignSurveyorAction={setAssignSurveyorAction}  />
+        <SurveyorReport surveyorReport={surveyorReport} setSurveyorReport={setSurveyorReport}  />
     </div>
   );
 };
