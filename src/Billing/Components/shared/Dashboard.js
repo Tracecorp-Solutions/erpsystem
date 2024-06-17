@@ -1,10 +1,22 @@
 import SideNav from "../../shared/navigations/SideNav";
 import TopNav from "../../shared/navigations/TopNav";
 import { useNavigate } from "react-router-dom";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import {
+  addOperationalArea,
+  getOperationalAreas,
+} from "../../Apis/operationalAreaApi";
+import { getStates, addState } from "../../Apis/stateApi";
+import { addBranch, getBranches } from "../../Apis/branchApi";
+import { addTerritory, getTerritories } from "../../Apis/territoryApi";
+import { addSubTerritory, getSubTerritories } from "../../Apis/subTerritoryApi";
+import {
+  getApplications,
+  getApplicationById,
+} from "../../Apis/getApplicationApi";
 
 const UploadSection = ({ title, description }) => (
   <div className="flex gap-5 max-md:flex-col max-md:gap-0">
@@ -122,6 +134,11 @@ function NewConnection() {
 
   const [selectedGender, setSelectedGender] = useState("Choose Gender");
   const [dropdownVisible, setDropdownVisible] = useState(false);
+  const [operationalAreas, setOperationalAreas] = useState([]);
+  const [branches, setBranches] = useState([]);
+  const [territories, setTerritories] = useState([]);
+  const [subTerritories, setSubTerritories] = useState([]);
+  const [states, setStates] = useState([]); // added missing state for states
 
   const handleGenderSelect = (gender) => {
     setSelectedGender(gender);
@@ -135,6 +152,48 @@ function NewConnection() {
     setStartDate(date);
     setCalendarVisible(false);
   };
+
+  useEffect(() => {
+    // Fetch initial data
+    const fetchInitialData = async () => {
+      try {
+        const fetchedStates = await getStates();
+        setStates(fetchedStates);
+      } catch (error) {
+        console.error("Error fetching states:", error);
+      }
+
+      try {
+        const fetchedOperationalAreas = await getOperationalAreas();
+        setOperationalAreas(fetchedOperationalAreas);
+      } catch (error) {
+        console.error("Error fetching operational areas:", error);
+      }
+
+      try {
+        const fetchedBranches = await getBranches();
+        setBranches(fetchedBranches);
+      } catch (error) {
+        console.error("Error fetching branches:", error);
+      }
+
+      try {
+        const fetchedTerritories = await getTerritories();
+        setTerritories(fetchedTerritories);
+      } catch (error) {
+        console.error("Error fetching territories:", error);
+      }
+
+      try {
+        const fetchedSubTerritories = await getSubTerritories();
+        setSubTerritories(fetchedSubTerritories);
+      } catch (error) {
+        console.error("Error fetching sub-territories:", error);
+      }
+    };
+
+    fetchInitialData();
+  }, []);
 
   const [formData, setFormData] = useState({
     id: 0,
@@ -174,11 +233,35 @@ function NewConnection() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      console.log("Form data being submitted:", formData);
+
       const response = await axios.post(
         "http://3.216.182.63:8095/TestApi/NewApplication",
         formData
       );
       console.log("Response:", response.data);
+
+      await addState({ id: 0, name: formData.stateName });
+      await addOperationalArea({
+        id: 0,
+        name: formData.operationalAreaName,
+        stateId: formData.stateId,
+      });
+      await addBranch({
+        id: 0,
+        name: formData.branchName,
+        operationAreaId: formData.operationAreaId,
+      });
+      await addTerritory({
+        id: 0,
+        name: formData.territoryName,
+        branchId: formData.branchId,
+      });
+      await addSubTerritory({
+        id: 0,
+        name: formData.subTerritoryName,
+        territoryId: formData.territoryId,
+      });
     } catch (error) {
       console.error("Error submitting form:", error);
     }
@@ -186,10 +269,8 @@ function NewConnection() {
 
   const handleFetch = async (id) => {
     try {
-      const response = await axios.get(
-        `http://3.216.182.63:8095/TestApi/GetApplications/${id}`
-      );
-      setFormData(response.data);
+      const applicationData = await getApplicationById(id);
+      setFormData(applicationData);
     } catch (error) {
       console.error("Error fetching application:", error);
     }
@@ -257,185 +338,90 @@ function NewConnection() {
                         />
                       </div>
                       <div className="shrink-0 mt-8 h-px border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-opacity-10 max-md:max-w-full"></div>
-                      <div>
-                        <form onSubmit={handleSubmit}>
-                          <div className="mt-4 max-md:max-w-full">
-                            <div className="flex gap-5 max-md:flex-col max-md:gap-0">
-                              <FormInput
-                                label="ID"
-                                description="The unique ID for the application"
-                                placeholder="Enter ID"
-                                type="number"
-                                name="id"
-                                value={formData.id}
-                                onChange={handleChange}
-                              />
-                              <FormInput
-                                label="Application Number"
-                                description="The application number"
-                                placeholder="Enter application number"
-                                type="text"
-                                name="applicationNumber"
-                                value={formData.applicationNumber}
-                                onChange={handleChange}
-                              />
-                            </div>
-                          </div>
-                          <div className="mt-4 max-md:max-w-full">
-                            <div className="flex gap-5 max-md:flex-col max-md:gap-0">
-                              <FormInput
-                                label="Title"
-                                description="The title of the application"
-                                placeholder="Enter title"
-                                type="text"
-                                name="title"
-                                value={formData.title}
-                                onChange={handleChange}
-                              />
-                              <FormInput
-                                label="Full Name"
-                                description="The applicant's full legal name"
-                                placeholder="Enter your full name"
-                                type="text"
-                                name="fullName"
-                                value={formData.fullName}
-                                onChange={handleChange}
-                              />
-                            </div>
-                          </div>
-                          <div className="mt-4 max-md:max-w-full">
-                            <div className="flex gap-5 max-md:flex-col max-md:gap-0">
-                              <InfoSection
-                                label="Date of Birth"
-                                description="The applicant's date of birth for identity verification"
-                              >
-                                <div
-                                  className="flex gap-2 justify-between px-4 py-4 mt-2 bg-white rounded-xl border border-solid border-neutral-500 border-opacity-30 cursor-pointer max-md:flex-wrap max-md:max-w-full"
-                                  onClick={() =>
-                                    setCalendarVisible(!calendarVisible)
-                                  }
-                                >
-                                  <div>
-                                    {startDate
-                                      ? startDate.toLocaleDateString()
-                                      : "-- / -- / ----"}
-                                  </div>
-                                  <img
-                                    loading="lazy"
-                                    src="https://cdn.builder.io/api/v1/image/assets/TEMP/8c7515d0e48a8702b0a75494e4c7e35f39776b5b1f5e110f501c8205396c6041?apiKey=27ec22b9382040ef8580a5e340d3a921&"
-                                    alt="Calendar icon"
-                                    className="w-6 h-6"
-                                  />
-                                </div>
-                                {calendarVisible && (
-                                  <DatePicker
-                                    selected={startDate}
-                                    onChange={handleDateChange}
-                                    inline
-                                  />
-                                )}
-                              </InfoSection>
-                              <InfoSection
-                                label="Gender"
-                                description="The applicant's gender identity"
-                              >
-                                <div
-                                  className="relative"
-                                  onClick={() =>
-                                    setDropdownVisible(!dropdownVisible)
-                                  }
-                                >
-                                  <div className="flex gap-2 justify-between px-4 py-4 mt-2 bg-white rounded-xl border border-solid border-neutral-500 border-opacity-30 cursor-pointer">
-                                    <div>
-                                      {selectedGender || "Select gender"}
-                                    </div>
-                                    <img
-                                      loading="lazy"
-                                      src="https://cdn.builder.io/api/v1/image/assets/TEMP/d4ed265a29e27e6f4e2bcf78f195fb23ba16a388a1e5b9b8cdb07f252241bc18?apiKey=27ec22b9382040ef8580a5e340d3a921&"
-                                      alt="Dropdown icon"
-                                      className="w-6 h-6"
-                                    />
-                                  </div>
-                                  {dropdownVisible && (
-                                    <div className="absolute mt-2 bg-white rounded-xl shadow-md w-full z-10">
-                                      <div
-                                        className="px-4 py-2 cursor-pointer hover:bg-gray-200"
-                                        onClick={() =>
-                                          handleGenderSelect("Male")
-                                        }
-                                      >
-                                        Male
-                                      </div>
-                                      <div
-                                        className="px-4 py-2 cursor-pointer hover:bg-gray-200"
-                                        onClick={() =>
-                                          handleGenderSelect("Female")
-                                        }
-                                      >
-                                        Female
-                                      </div>
-                                      <div
-                                        className="px-4 py-2 cursor-pointer hover:bg-gray-200"
-                                        onClick={() =>
-                                          handleGenderSelect("Other")
-                                        }
-                                      >
-                                        Other
-                                      </div>
-                                    </div>
-                                  )}
-                                </div>
-                              </InfoSection>
-                            </div>
-                          </div>
-                          <div className="mt-4 max-md:max-w-full">
-                            <div className="flex gap-5 max-md:flex-col max-md:gap-0">
-                              <FormInput
-                                label="Email Address"
-                                description="The applicant's email address for contact"
-                                placeholder="Enter your email address"
-                                type="email"
-                                name="emailAddress"
-                                value={formData.emailAddress}
-                                onChange={handleChange}
-                              />
-                              <FormInput
-                                label="Phone Number"
-                                description="The applicant's phone number for contact"
-                                placeholder="Enter your phone number"
-                                type="tel"
-                                name="phoneNumber"
-                                value={formData.phoneNumber}
-                                onChange={handleChange}
-                              />
-                            </div>
-                          </div>
-
-                          <FormInput
-                            label="ID Number"
-                            description="The applicant's national ID number"
-                            placeholder="Enter your ID number"
-                            type="text"
-                            name="idNumber"
-                            value={formData.idNumber}
-                            onChange={handleChange}
-                          />
-                        </form>
-
-                        <section className="flex flex-col justify-center items-end px-16 py-5 text-base font-semibold leading-6 whitespace-nowrap bg-white max-md:pl-5 max-md:max-w-full">
-                          <div className="flex gap-4 px-8 max-w-full w-[562px] max-md:flex-wrap max-md:px-5">
-                            <button className="justify-center items-center px-8 py-4 rounded-3xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 max-md:px-5">
-                              Cancel
-                            </button>
-                            <button
-                              className="justify-center items-center px-8 py-4 text-white rounded-3xl bg-slate-500 max-md:px-5"
-                              onClick={nextStep}
-                            >
-                              Next
-                            </button>
-                          </div>
-                        </section>
+                      <div className="flex flex-wrap gap-16 max-md:flex-col max-md:gap-0">
+                        <FormInput
+                          label="ID"
+                          description="The unique ID for the application"
+                          placeholder="Enter ID"
+                          type="number"
+                          name="id"
+                          value={formData.id}
+                          onChange={handleChange}
+                        />
+                        <FormInput
+                          label="Application Number"
+                          description="The application number"
+                          placeholder="Enter application number"
+                          type="text"
+                          name="applicationNumber"
+                          value={formData.applicationNumber}
+                          onChange={handleChange}
+                        />
                       </div>
+                      <div className="flex flex-wrap gap-16 max-md:flex-col max-md:gap-0 w-full">
+                        <FormInput
+                          label="Title"
+                          description="The title of the application"
+                          placeholder="Enter title"
+                          type="text"
+                          name="title"
+                          value={formData.title}
+                          onChange={handleChange}
+                        />
+                        <FormInput
+                          label="Full Name"
+                          description="The applicant's full legal name"
+                          placeholder="Enter your full name"
+                          type="text"
+                          name="fullName"
+                          value={formData.fullName}
+                          onChange={handleChange}
+                        />
+                      </div>
+                      <div className="flex flex-wrap gap-16 max-md:flex-col max-md:gap-0">
+                        <FormInput
+                          label="Email Address"
+                          description="The applicant's email address for contact"
+                          placeholder="Enter your email address"
+                          type="email"
+                          name="emailAddress"
+                          value={formData.emailAddress}
+                          onChange={handleChange}
+                        />
+                        
+                        <FormInput
+                          label="Phone Number"
+                          description="The applicant's phone number for contact"
+                          placeholder="Enter your phone number"
+                          type="tel"
+                          name="phoneNumber"
+                          value={formData.phoneNumber}
+                          onChange={handleChange}
+                        />
+                      </div>
+                      <FormInput
+                        label="ID Number"
+                        description="The applicant's national ID number"
+                        placeholder="Enter your ID number"
+                        type="text"
+                        name="idNumber"
+                        value={formData.idNumber}
+                        onChange={handleChange}
+                      />
+
+                      <section className="flex flex-col justify-center items-end px-16 py-5 text-base font-semibold leading-6 whitespace-nowrap bg-white max-md:pl-5 max-md:max-w-full">
+                        <div className="flex gap-4 px-8 max-w-full w-[562px] max-md:flex-wrap max-md:px-5">
+                          <button className="justify-center items-center px-8 py-4 rounded-3xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 max-md:px-5">
+                            Cancel
+                          </button>
+                          <button
+                            className="justify-center items-center px-8 py-4 text-white rounded-3xl bg-slate-500 max-md:px-5"
+                            onClick={nextStep}
+                          >
+                            Next
+                          </button>
+                        </div>
+                      </section>
                     </section>
                   </main>
                 </div>
@@ -502,75 +488,162 @@ function NewConnection() {
 
                       <div className="mt-4 max-md:max-w-full">
                         <div className="flex gap-5 max-md:flex-col max-md:gap-0">
-                          <FormInput
-                            label="State ID"
-                            description="The ID of the state where the applicant resides"
-                            placeholder="Enter state ID"
-                            type="number"
-                            name="stateId"
-                            value={formData.stateId}
-                            onChange={handleChange}
-                          />
-
-                          <div className="flex flex-col ml-5 w-6/12 max-md:ml-0 max-md:w-full">
-                            <FormInput
-                              label="Operation Area ID"
-                              description="The ID of the operation area"
-                              placeholder="Enter operation area ID"
-                              type="number"
-                              name="operationAreaId"
-                              value={formData.operationAreaId}
-                              onChange={handleChange}
-                            />
+                          <div className="flex flex-col w-6/12 max-md:w-full">
+                            <label
+                              htmlFor="stateId"
+                              className="font-semibold text-gray-700 mb-2"
+                            >
+                              State Name
+                            </label>
+                            <select
+                              name="stateId"
+                              value={formData.stateId}
+                              onChange={(e) =>
+                                setFormData({
+                                  ...formData,
+                                  stateId: e.target.value,
+                                })
+                              }
+                              className="border border-gray-300 rounded-md px-3 py-2"
+                            >
+                              <option value="">Select State</option>
+                              {states.map((state) => (
+                                <option key={state.id} value={state.id}>
+                                  {state.name}
+                                </option>
+                              ))}
+                            </select>
+                          </div>
+                          <div className="flex flex-col w-6/12 max-md:w-full">
+                            <label
+                              htmlFor="operationalAreaId"
+                              className="font-semibold text-gray-700 mb-2"
+                            >
+                              Operational Area Name
+                            </label>
+                            <select
+                              name="operationalAreaId"
+                              value={formData.operationalAreaId}
+                              onChange={(e) =>
+                                setFormData({
+                                  ...formData,
+                                  operationalAreaId: e.target.value,
+                                })
+                              }
+                              className="border border-gray-300 rounded-md px-3 py-2"
+                            >
+                              <option value="">Select Operational Area</option>
+                              {operationalAreas.map((area) => (
+                                <option key={area.id} value={area.id}>
+                                  {area.name}
+                                </option>
+                              ))}
+                            </select>
                           </div>
                         </div>
                       </div>
+
                       <div className="mt-4 max-md:max-w-full">
                         <div className="flex gap-5 max-md:flex-col max-md:gap-0">
-                          <FormInput
-                            label="Branch ID"
-                            description="The ID of the branch"
-                            placeholder="Enter branch ID"
-                            type="number"
-                            name="branchId"
-                            value={formData.branchId}
-                            onChange={handleChange}
-                          />
-
-                          <div className="flex flex-col ml-5 w-6/12 max-md:ml-0 max-md:w-full">
-                            <FormInput
-                              label="Territory ID"
-                              description="The ID of the territory"
-                              placeholder="Enter territory ID"
-                              type="number"
+                          <div className="flex flex-col w-6/12 max-md:w-full">
+                            <label
+                              htmlFor="branchId"
+                              className="font-semibold text-gray-700 mb-2"
+                            >
+                              Branch Name
+                            </label>
+                            <select
+                              name="branchId"
+                              value={formData.branchId}
+                              onChange={(e) =>
+                                setFormData({
+                                  ...formData,
+                                  branchId: e.target.value,
+                                })
+                              }
+                              className="border border-gray-300 rounded-md px-3 py-2"
+                            >
+                              <option value="">Select Branch</option>
+                              {branches.map((branch) => (
+                                <option key={branch.id} value={branch.id}>
+                                  {branch.name}
+                                </option>
+                              ))}
+                            </select>
+                          </div>
+                          <div className="flex flex-col w-6/12 max-md:w-full">
+                            <label
+                              htmlFor="territoryId"
+                              className="font-semibold text-gray-700 mb-2"
+                            >
+                              Territory Name
+                            </label>
+                            <select
                               name="territoryId"
                               value={formData.territoryId}
-                              onChange={handleChange}
-                            />
+                              onChange={(e) =>
+                                setFormData({
+                                  ...formData,
+                                  territoryId: e.target.value,
+                                })
+                              }
+                              className="border border-gray-300 rounded-md px-3 py-2"
+                            >
+                              <option value="">Select Territory</option>
+                              {territories.map((territory) => (
+                                <option key={territory.id} value={territory.id}>
+                                  {territory.name}
+                                </option>
+                              ))}
+                            </select>
                           </div>
                         </div>
                       </div>
+
                       <div className="mt-4 max-md:max-w-full">
                         <div className="flex gap-5 max-md:flex-col max-md:gap-0">
-                          <FormInput
-                            label="Sub Territory ID"
-                            description="The ID of the sub territory"
-                            placeholder="Enter sub territory ID"
-                            type="number"
-                            name="subTerritoryId"
-                            value={formData.subTerritoryId}
-                            onChange={handleChange}
-                          />
-
-                          <div className="flex flex-col ml-5 w-6/12 max-md:ml-0 max-md:w-full">
-                            <FormInput
-                              label="Street Address"
-                              description="The applicant's street address"
-                              placeholder="Enter your street address"
+                          <div className="flex flex-col w-6/12 max-md:w-full">
+                            <label
+                              htmlFor="subTerritoryId"
+                              className="font-semibold text-gray-700 mb-2"
+                            >
+                              SubTerritory
+                            </label>
+                            <select
+                              name="subTerritoryId"
+                              value={formData.subTerritoryId}
+                              onChange={(e) =>
+                                setFormData({
+                                  ...formData,
+                                  subTerritoryId: e.target.value,
+                                })
+                              }
+                              className="border border-gray-300 rounded-md px-3 py-2"
+                            >
+                              <option value="">Select SubTerritory</option>
+                              {subTerritories.map((subTerritory) => (
+                                <option
+                                  key={subTerritory.id}
+                                  value={subTerritory.id}
+                                >
+                                  {subTerritory.name}
+                                </option>
+                              ))}
+                            </select>
+                          </div>
+                          <div className="flex flex-col w-6/12 max-md:w-full">
+                            <label
+                              htmlFor="plotNumber"
+                              className="font-semibold text-gray-700 mb-2"
+                            >
+                              Street Address
+                            </label>
+                            <input
                               type="text"
                               name="streetAddress"
                               value={formData.streetAddress}
                               onChange={handleChange}
+                              className="border border-gray-300 rounded-md px-3 py-2"
                             />
                           </div>
                         </div>
@@ -578,25 +651,39 @@ function NewConnection() {
 
                       <div className="mt-4 max-md:max-w-full">
                         <div className="flex gap-5 max-md:flex-col max-md:gap-0">
-                          <FormInput
-                            label="Plot Number"
-                            description="The plot number of the applicant's residence"
-                            placeholder="Enter your plot number"
-                            type="text"
-                            name="plotNumber"
-                            value={formData.plotNumber}
-                            onChange={handleChange}
-                          />
-
-                          <div className="flex flex-col ml-5 w-6/12 max-md:ml-0 max-md:w-full">
-                            <FormInput
-                              label="Nearest Landmark"
-                              description="A nearby landmark for easier identification"
-                              placeholder="Enter nearest landmark"
+                          <div className="flex flex-col w-6/12 max-md:w-full">
+                            <label
+                              htmlFor="plotNumber"
+                              className="font-semibold text-gray-700 mb-2"
+                            >
+                              Plot Number
+                            </label>
+                            <input
                               type="text"
-                              name="nearestLandMark"
+                              name="plotNumber"
+                              value={formData.plotNumber}
+                              onChange={(e) =>
+                                setFormData({
+                                  ...formData,
+                                  plotNumber: e.target.value,
+                                })
+                              }
+                              className="border border-gray-300 rounded-md px-3 py-2"
+                            />
+                          </div>
+                          <div className="flex flex-col w-6/12 max-md:w-full">
+                            <label
+                              htmlFor="nearestLandmark"
+                              className="font-semibold text-gray-700 mb-2"
+                            >
+                              Nearest Landmark
+                            </label>
+                            <input
+                              type="text"
+                              name="nearestLandmark"
                               value={formData.nearestLandMark}
                               onChange={handleChange}
+                              className="border border-gray-300 rounded-md px-3 py-2"
                             />
                           </div>
                         </div>
