@@ -109,8 +109,10 @@ function InfoSection({ label, description, children }) {
 
 function FormInput({ label, description, placeholder, type }) {
   return (
-    <section className="self-start mt-4 text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">
-      {label}
+    <section className="flex flex-col grow text-base leading-6 text-neutral-400 max-md:mt-4 max-md:max-w-full">
+      <div className="font-semibold text-neutral-600 max-md:max-w-full">
+        {label}
+      </div>
       <div className="self-start mt-1 text-sm text-neutral-400 max-md:max-w-full">
         {description}
       </div>
@@ -380,17 +382,17 @@ function NewConnection() {
                           onChange={handleChange}
                         />
                       </div>
-                      <div className="flex flex-wrap gap-16 max-md:flex-col max-md:gap-0">
-                      <FormInput
-                        label="ID Number"
-                        description="The applicant's national ID number"
-                        placeholder="Enter your ID number"
-                        type="text"
-                        name="idNumber"
-                        value={formData.idNumber}
-                        onChange={handleChange}
-                      />
-                        
+                      <div className="flex flex-wrap gap-10 max-md:flex-col max-md:gap-0">
+                        <FormInput
+                          label="ID Number"
+                          description="The applicant's national ID number"
+                          placeholder="Enter your ID number"
+                          type="text"
+                          name="idNumber"
+                          value={formData.idNumber}
+                          onChange={handleChange}
+                        />
+
                         <InfoSection
                           label="Gender"
                           description="The applicant's gender identity"
@@ -401,7 +403,6 @@ function NewConnection() {
                           >
                             <div className="flex gap-2 justify-between px-4 py-4 mt-2 bg-white rounded-xl border border-solid border-neutral-500 border-opacity-30 cursor-pointer">
                               <div>{selectedGender || "Select gender"}</div>
-                              
                             </div>
                             {dropdownVisible && (
                               <div className="absolute mt-2 bg-white rounded-xl shadow-md w-full z-10">
@@ -429,33 +430,33 @@ function NewConnection() {
                         </InfoSection>
                       </div>
                       <InfoSection
-                          label="Date of Birth"
-                          description="The applicant's date of birth for identity verification"
+                        label="Date of Birth"
+                        description="The applicant's date of birth for identity verification"
+                      >
+                        <div
+                          className="flex gap-2 justify-between px-2 py-4 mt-2 bg-white rounded-xl border border-solid border-neutral-500 border-opacity-30 cursor-pointer "
+                          onClick={() => setCalendarVisible(!calendarVisible)}
                         >
-                          <div
-                            className="flex gap-2 justify-between px-2 py-4 mt-2 bg-white rounded-xl border border-solid border-neutral-500 border-opacity-30 cursor-pointer "
-                            onClick={() => setCalendarVisible(!calendarVisible)}
-                          >
-                            <div>
-                              {startDate
-                                ? startDate.toLocaleDateString()
-                                : "-- / -- / ----"}
-                            </div>
-                            <img
-                              loading="lazy"
-                              src="https://cdn.builder.io/api/v1/image/assets/TEMP/8c7515d0e48a8702b0a75494e4c7e35f39776b5b1f5e110f501c8205396c6041?apiKey=27ec22b9382040ef8580a5e340d3a921&"
-                              alt="Calendar icon"
-                              className="w-6 h-6"
-                            />
+                          <div>
+                            {startDate
+                              ? startDate.toLocaleDateString()
+                              : "-- / -- / ----"}
                           </div>
-                          {calendarVisible && (
-                            <DatePicker
-                              selected={startDate}
-                              onChange={handleDateChange}
-                              inline
-                            />
-                          )}
-                        </InfoSection>
+                          <img
+                            loading="lazy"
+                            src="https://cdn.builder.io/api/v1/image/assets/TEMP/8c7515d0e48a8702b0a75494e4c7e35f39776b5b1f5e110f501c8205396c6041?apiKey=27ec22b9382040ef8580a5e340d3a921&"
+                            alt="Calendar icon"
+                            className="w-6 h-6"
+                          />
+                        </div>
+                        {calendarVisible && (
+                          <DatePicker
+                            selected={startDate}
+                            onChange={handleDateChange}
+                            inline
+                          />
+                        )}
+                      </InfoSection>
 
                       <section className="flex flex-col justify-center items-end px-16 py-5 text-base font-semibold leading-6 whitespace-nowrap bg-white max-md:pl-5 max-md:max-w-full">
                         <div className="flex gap-4 px-8 max-w-full w-[562px] max-md:flex-wrap max-md:px-5">
