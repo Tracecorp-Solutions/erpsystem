@@ -19,13 +19,15 @@ function LabelInput({ label, id, value }) {
   
   function SurveyQuestion({ title, description }) {
     return (
-      <>
-        <h3 className="mt-4 text-base font-semibold leading-6 text-neutral-600">
+      <div className="mt-4">
+        <h3 className="text-base font-semibold leading-6 text-neutral-600">
           {title}
         </h3>
         <p className="mt-1 text-sm text-neutral-400">{description}</p>
-        <div className="shrink-0 mt-2 max-w-full h-14 bg-white rounded-xl border border-solid border-neutral-500 border-opacity-30"></div>
-      </>
+        <input
+          placeholder={`Enter ${title}`}
+          className="flex gap-2 justify-between px-4 py-4 mt-2 max-w-full text-base leading-6 bg-white rounded-xl border border-solid border-neutral-500 border-opacity-30 text-neutral-600 w-[500px] max-md:flex-wrap"        />
+      </div>
     );
   }
 
