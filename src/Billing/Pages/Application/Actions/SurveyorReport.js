@@ -56,21 +56,24 @@ const SurveyorReport = ({
     setDateOfSurvey(date);
   };
 
-  // Function to handle file upload
   const handleFileUpload = (info) => {
-    if (info.file.status !== "uploading") {
-      console.log(info.file, info.fileList);
-      // You can handle file upload progress or success here
-    }
-    if (info.file.status === "done") {
-      message.success(`${info.file.name} file uploaded successfully`);
-      // Update textFields with file name or other relevant metadata
-      setTextFields((prevFields) => ({
-        ...prevFields,
-        field2: info.file.name, // Example: Update field2 with file name
-      }));
-    } else if (info.file.status === "error") {
-      message.error(`${info.file.name} file upload failed.`);
+    if (info && info.file && info.file.status) {
+      if (info.file.status !== "uploading") {
+        console.log(info.file, info.fileList);
+        // You can handle file upload progress or success here
+      }
+      if (info.file.status === "done") {
+        message.success(`${info.file.name} file uploaded successfully`);
+        // Update textFields with file name or other relevant metadata
+        setTextFields((prevFields) => ({
+          ...prevFields,
+          field2: info.file.name, // Example: Update field2 with file name
+        }));
+      } else if (info.file.status === "error") {
+        message.error(`${info.file.name} file upload failed.`);
+      }
+    } else {
+      console.warn("Invalid file upload info:", info);
     }
   };
 
@@ -200,7 +203,12 @@ const SurveyorReport = ({
           <div className="mt-4 text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">
             Upload Job card
           </div>
-          <div className="flex justify-center items-center px-16 py-10 mt-2 max-w-full text-sm rounded-xl border border-dashed bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 w-[500px] max-md:px-5">
+          <Upload
+            onChange={handleFileUpload}
+            beforeUpload={() => false} // To prevent automatic file upload
+            maxCount={1} // Allow only one file to be uploaded
+            className="flex justify-center items-center px-16 py-10 mt-2 max-w-full text-sm rounded-xl border border-dashed bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 w-[500px] max-md:px-5"
+          >
             <div className="flex gap-2">
               <img
                 loading="lazy"
@@ -213,7 +221,7 @@ const SurveyorReport = ({
                 <span className="underline text-neutral-600">Choose file</span>
               </p>
             </div>
-          </div>
+          </Upload>
         </section>
 
         <div className="shrink-0 mt-10 max-w-full h-px border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-opacity-10 w-[500px]"></div>
