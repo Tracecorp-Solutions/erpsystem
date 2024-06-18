@@ -341,7 +341,7 @@ function NewConnection() {
                       </div>
                       <div className="shrink-0 mt-8 h-px border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-opacity-10 max-md:max-w-full"></div>
 
-                      <div className="flex flex-wrap gap-16 max-md:flex-col max-md:gap-0 w-full">
+                      <div className="flex flex-wrap gap-16 max-md:flex-col mt-6 max-md:gap-0 w-full">
                         <FormInput
                           label="Title"
                           description="The title of the application"
@@ -382,7 +382,7 @@ function NewConnection() {
                           onChange={handleChange}
                         />
                       </div>
-                      <div className="flex flex-wrap gap-10 max-md:flex-col max-md:gap-0">
+                      <div className="flex flex-wrap gap-8 max-md:flex-col max-md:gap-0">
                         <FormInput
                           label="ID Number"
                           description="The applicant's national ID number"
@@ -401,7 +401,7 @@ function NewConnection() {
                             className="relative"
                             onClick={() => setDropdownVisible(!dropdownVisible)}
                           >
-                            <div className="flex gap-2 justify-between px-4 py-4 mt-2 bg-white rounded-xl border border-solid border-neutral-500 border-opacity-30 cursor-pointer">
+                            <div className="flex gap-4 justify-between px-4 py-4 mt-2 bg-white rounded-xl border border-solid border-neutral-500 border-opacity-30 cursor-pointer">
                               <div>{selectedGender || "Select gender"}</div>
                             </div>
                             {dropdownVisible && (
@@ -459,7 +459,7 @@ function NewConnection() {
                       </InfoSection>
 
                       <section className="flex flex-col justify-center items-end px-16 py-5 text-base font-semibold leading-6 whitespace-nowrap bg-white max-md:pl-5 max-md:max-w-full">
-                        <div className="flex gap-4 px-8 max-w-full w-[562px] max-md:flex-wrap max-md:px-5">
+                        <div className="flex gap-4 px-8 max-w-full w-[232px] max-md:flex-wrap max-md:px-5">
                           <button className="justify-center items-center px-8 py-4 rounded-3xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 max-md:px-5">
                             Cancel
                           </button>
@@ -742,7 +742,7 @@ function NewConnection() {
                           </div>
                         </div>
                         <section className="flex flex-col justify-center items-end px-16 py-5 text-base font-semibold leading-6 whitespace-nowrap bg-white max-md:pl-5 max-md:max-w-full">
-                          <div className="flex gap-4 px-8 max-w-full w-[562px] max-md:flex-wrap max-md:px-5">
+                          <div className="flex gap-4 px-8 max-w-full w-[232px] max-md:flex-wrap max-md:px-5">
                             <button
                               className="justify-center items-center px-8 py-4 rounded-3xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 max-md:px-5"
                               onClick={prevStep}
@@ -824,26 +824,52 @@ function NewConnection() {
 
                       <div className="mt-4 max-md:max-w-full">
                         <div className="flex gap-5 max-md:flex-col max-md:gap-0">
-                          <FormInput
-                            label="Customer Type"
-                            description="The type of customer"
-                            placeholder="Enter customer type"
-                            type="number"
-                            name="customerType"
-                            value={formData.customerType}
-                            onChange={handleChange}
-                          />
+                          <div className="flex flex-col w-6/12 max-md:w-full">
+                            <label
+                              htmlFor="customerType"
+                              className="text-sm font-medium text-gray-700 mb-1"
+                            >
+                              Customer Type
+                            </label>
+                            <p className="text-xs text-gray-500 mb-2">
+                              The category of the customer
+                            </p>
+                            <select
+                              id="customerType"
+                              name="customerType"
+                              value={formData.customerType}
+                              onChange={handleChange}
+                              className="block w-full px-5 py-4 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                            >
+                              <option value="">Select customer type</option>
+                              <option value="Flat">Flat</option>
+                              <option value="Post-paid">Post-paid</option>
+                              <option value="Pre-paid">Pre-paid</option>
+                            </select>
+                          </div>
 
-                          <div className="flex flex-col ml-5 w-6/12 max-md:ml-0 max-md:w-full">
-                            <FormInput
-                              label="Bill Delivery Method"
-                              description="The preferred bill delivery method"
-                              placeholder="Enter bill delivery method"
-                              type="number"
+                          <div className="flex flex-col w-6/12 max-md:w-full">
+                            <label
+                              htmlFor="billDeliveryMethod"
+                              className="text-sm font-medium text-gray-700 mb-1"
+                            >
+                              Bill Delivery Method
+                            </label>
+                            <p className="text-xs text-gray-500 mb-2">
+                            The preferred bill delivery method
+                            </p>
+                            <select
+                              id="billDeliveryMethod"
                               name="billDeliveryMethod"
                               value={formData.billDeliveryMethod}
                               onChange={handleChange}
-                            />
+                              className="block w-full px-5 py-4 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                            >
+                              <option value="">Select bill delivery method</option>
+                              <option value="Flat">SMS</option>
+                              <option value="Post-paid">Email</option>
+                              <option value="Pre-paid">Hand Delivery</option>
+                            </select>
                           </div>
                         </div>
                       </div>
@@ -860,8 +886,8 @@ function NewConnection() {
                             onChange={handleChange}
                           />
                         </div>
-                        <section className="flex flex-col justify-center items-end px-16 py-5 text-base font-semibold leading-6 whitespace-nowrap bg-white max-md:pl-5 max-md:max-w-full">
-                          <div className="flex gap-4 px-8 max-w-full w-[562px] max-md:flex-wrap max-md:px-5">
+                        <section className="flex flex-col justify-end items-end px-16 py-5 text-base font-semibold leading-6 whitespace-nowrap bg-white max-md:pl-5 max-md:max-w-full">
+                          <div className="flex gap-4 px-8 max-w-full w-[232px] max-md:flex-wrap max-md:px-5">
                             <button
                               className="justify-center items-center px-8 py-4 rounded-3xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 max-md:px-5"
                               onClick={prevStep}
@@ -983,7 +1009,7 @@ function NewConnection() {
                     </form>
                   </section>
                   <footer className="flex flex-col justify-center items-end px-12 py-5 text-base font-semibold leading-6 bg-white max-md:pl-5 max-md:max-w-full">
-                    <div className="flex gap-4 px-8 max-w-full w-[562px] max-md:flex-wrap max-md:px-5">
+                    <div className="flex gap-4 px-8 max-w-full w-[582px] max-md:flex-wrap max-md:px-5">
                       <button
                         className="justify-center items-center px-8 py-4 whitespace-nowrap rounded-3xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 max-md:px-5"
                         onClick={prevStep}
