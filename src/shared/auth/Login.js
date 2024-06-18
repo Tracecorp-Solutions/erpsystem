@@ -16,10 +16,12 @@ const Login = () => {
     e.preventDefault();
     setLoading(true);
     try {
+      
       const response = await axios.post(
         `${process.env.REACT_APP_API_URL}/AuthenticateUser`,
         { username, password }
       );
+      
       const token = response.data;
       sessionStorage.setItem("token", token);
       const userData = await axios.get(`${process.env.REACT_APP_API_URL}/GetUserByToken/${token}`);// get all the user details using the token
