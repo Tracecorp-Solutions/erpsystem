@@ -18,7 +18,7 @@ namespace Trace.Controllers
         }
 
         [HttpPost("/NewApplication")]
-        public async Task<IActionResult> NewApplication([FromBody] IFormFile file, NewApplicationDto application) 
+        public async Task<IActionResult> NewApplication( IFormFile file, [FromBody] NewApplicationDto application) 
         {
             try
             {

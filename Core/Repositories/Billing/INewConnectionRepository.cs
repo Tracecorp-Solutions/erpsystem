@@ -14,5 +14,7 @@ namespace Core.Repositories.Billing
         Task<string> RegisterNewCustomer(IFormFile file,NewApplicationDto application);
 
         Task<IEnumerable<Application>> GetApplications();
+
+      
     }
 }

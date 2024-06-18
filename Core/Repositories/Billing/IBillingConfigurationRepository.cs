@@ -20,5 +20,8 @@ namespace Core.Repositories.Billing
         Task<IEnumerable<OperationArea>> GetOperationAreas();
         Task<IEnumerable<Territory>> GetTerritories();
         Task<IEnumerable<SubTerritory>> GetSubTerritories();
+
+        Task AddCustomerCategory(CustomerCategory customerCategory);
+        Task<IEnumerable<CustomerCategory>> GetCustomerCategories();
     }
 }

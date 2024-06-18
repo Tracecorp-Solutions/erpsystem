@@ -76,5 +76,17 @@ namespace Services.Repositories.Billing
             var subterritories = await _context.SubTerritories.ToListAsync();
             return subterritories.Any() ? subterritories : throw new ArgumentException("No Sub Territories Found");
         }
+
+        public async Task AddCustomerCategory(CustomerCategory customerCategory)
+        {
+             _context.CustomerCategories.Add(customerCategory);
+            await _context.SaveChangesAsync();
+        }
+        public async Task<IEnumerable<CustomerCategory>> GetCustomerCategories() 
+        {
+            var custcategories = await _context.CustomerCategories.ToListAsync();
+
+            return custcategories == null ? throw new ArgumentException("No Customer Categories Found") : custcategories;
+        }
     }
 }
