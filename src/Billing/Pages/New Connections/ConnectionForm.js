@@ -195,7 +195,7 @@ function NewConnection() {
                             <InfoSection
                               label="Email Address"
                               description="For electronic communication and billing purposes"
-                            >
+                            >{/*  */}
                               <input
                                 aria-label="Enter your email address"
                                 type="email"
