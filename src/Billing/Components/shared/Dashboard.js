@@ -8,7 +8,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import {
   addOperationalArea,
   getOperationalAreas,
-} from "../../Apis/operationalAreaApi";
+} from "../../Apis/operationAreaApi";
 import { getStates, addState } from "../../Apis/stateApi";
 import { addBranch, getBranches } from "../../Apis/branchApi";
 import { addTerritory, getTerritories } from "../../Apis/territoryApi";
@@ -17,26 +17,32 @@ import {
   getApplications,
   getApplicationById,
 } from "../../Apis/getApplicationApi";
+import {
+  addCustomerCategories,
+  getCustomerCategories,
+} from "../../Apis/customerCategory";
 
 const UploadSection = ({ title, description }) => (
-  <div className="flex gap-5 max-md:flex-col max-md:gap-0">
-    <div className="flex flex-col w-6/12 max-md:ml-0 max-md:w-full">
-      <div className="grow max-md:mt-4 max-md:max-w-full">
-        <div className="flex gap-5 max-md:flex-col max-md:gap-0">
-          <div className="flex flex-col w-[44%] max-md:ml-0 max-md:w-full">
-            <div className="grow justify-center px-3.5 py-11 w-full text-sm text-center underline rounded-xl border border-dashed bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 max-md:mt-6">
-              Drag and Drop file here or{" "}
-              <span className="underline text-neutral-600">Choose file</span>
-            </div>
-          </div>
-          <div className="flex flex-col ml-5 w-[56%] max-md:ml-0 max-md:w-full">
-            <div className="flex flex-col self-stretch my-auto max-md:mt-10">
-              <div className="text-base font-semibold leading-6 text-neutral-600">
-                {title}
+  <div className="mt-4 max-md:max-w-full">
+    <div className="flex gap-5 max-md:flex-col max-md:gap-0">
+      <div className="flex flex-col w-6/12 max-md:w-full">
+        <div className="grow max-md:mt-4 max-md:max-w-full">
+          <div className="flex gap-5 max-md:flex-col max-md:gap-0">
+            <div className="flex flex-col w-full max-md:w-full">
+              <div className="grow justify-center px-3.5 py-11 w-full text-sm text-center underline rounded-xl border border-dashed bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 max-md:mt-6">
+                Drag and Drop file here or{" "}
+                <span className="underline text-neutral-600">Choose file</span>
               </div>
-              <div className="mt-1 text-sm text-neutral-400">{description}</div>
             </div>
           </div>
+        </div>
+      </div>
+      <div className="flex flex-col w-6/12 max-md:w-full">
+        <div className="flex flex-col self-stretch my-auto max-md:mt-10">
+          <div className="text-base font-semibold leading-6 text-neutral-600">
+            {title}
+          </div>
+          <div className="mt-1 text-sm text-neutral-400">{description}</div>
         </div>
       </div>
     </div>
@@ -139,6 +145,7 @@ function NewConnection() {
   const [operationalAreas, setOperationalAreas] = useState([]);
   const [branches, setBranches] = useState([]);
   const [territories, setTerritories] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [subTerritories, setSubTerritories] = useState([]);
   const [states, setStates] = useState([]); // added missing state for states
 
@@ -187,10 +194,17 @@ function NewConnection() {
       }
 
       try {
-        const fetchedSubTerritories = await getSubTerritories();
-        setSubTerritories(fetchedSubTerritories);
+        const categories = await getCustomerCategories();
+        setCategories(categories);
       } catch (error) {
-        console.error("Error fetching sub-territories:", error);
+        console.error("Error fetching customer categories:", error);
+      }
+
+      try {
+        const subTerritories = await getSubTerritories();
+        setSubTerritories(subTerritories);
+      } catch (error) {
+        console.error('Error fetching sub-territories:', error);
       }
     };
 
@@ -661,12 +675,7 @@ function NewConnection() {
                             <select
                               name="subTerritoryId"
                               value={formData.subTerritoryId}
-                              onChange={(e) =>
-                                setFormData({
-                                  ...formData,
-                                  subTerritoryId: e.target.value,
-                                })
-                              }
+                              onChange={handleChange}
                               className="border border-gray-300 rounded-md px-3 py-2"
                             >
                               <option value="">Select SubTerritory</option>
@@ -856,7 +865,7 @@ function NewConnection() {
                               Bill Delivery Method
                             </label>
                             <p className="text-xs text-gray-500 mb-2">
-                            The preferred bill delivery method
+                              The preferred bill delivery method
                             </p>
                             <select
                               id="billDeliveryMethod"
@@ -865,7 +874,9 @@ function NewConnection() {
                               onChange={handleChange}
                               className="block w-full px-5 py-4 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                             >
-                              <option value="">Select bill delivery method</option>
+                              <option value="">
+                                Select bill delivery method
+                              </option>
                               <option value="Flat">SMS</option>
                               <option value="Post-paid">Email</option>
                               <option value="Pre-paid">Hand Delivery</option>
@@ -875,16 +886,30 @@ function NewConnection() {
                       </div>
 
                       <div className="mt-4 max-md:max-w-full">
-                        <div className="flex gap-5 max-md:flex-col max-md:gap-0">
-                          <FormInput
-                            label="Customer Category"
-                            description="The category of the customer"
-                            placeholder="Enter customer category"
-                            type="number"
+                        <div className="flex flex-col w-6/12 max-md:w-full">
+                          <label
+                            htmlFor="customerCategory"
+                            className="font-semibold text-gray-700 mb-2"
+                          >
+                            Customer Category
+                          </label>
+                          <p className="text-xs text-gray-500">
+                            The category of the customer
+                          </p>
+                          <select
+                            id="customerCategory"
                             name="customerCategory"
                             value={formData.customerCategory}
                             onChange={handleChange}
-                          />
+                            className="border border-gray-300 rounded-md px-3 py-2"
+                          >
+                            <option value="">Select customer category</option>
+                            {categories.map((category) => (
+                              <option key={category.id} value={category.id}>
+                                {category.name}
+                              </option>
+                            ))}
+                          </select>
                         </div>
                         <section className="flex flex-col justify-end items-end px-16 py-5 text-base font-semibold leading-6 whitespace-nowrap bg-white max-md:pl-5 max-md:max-w-full">
                           <div className="flex gap-4 px-8 max-w-full w-[232px] max-md:flex-wrap max-md:px-5">
