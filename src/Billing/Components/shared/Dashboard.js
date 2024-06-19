@@ -113,7 +113,7 @@ function InfoSection({ label, description, children }) {
   );
 }
 
-function FormInput({ label, description, placeholder, type }) {
+function Input({ label, description, placeholder, type }) {
   return (
     <section className="flex flex-col grow text-base leading-6 text-neutral-400 max-md:mt-4 max-md:max-w-full">
       <div className="font-semibold text-neutral-600 max-md:max-w-full">
@@ -204,7 +204,7 @@ function NewConnection() {
         const subTerritories = await getSubTerritories();
         setSubTerritories(subTerritories);
       } catch (error) {
-        console.error('Error fetching sub-territories:', error);
+        console.error("Error fetching sub-territories:", error);
       }
     };
 
@@ -238,13 +238,31 @@ function NewConnection() {
     localAuthorizationDocument: "",
   });
 
+  // const handleChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setFormData((prevFormData) => ({
+  //     ...prevFormData,
+  //     [name]: value,
+  //   }));
+  // };
+
+  const [files, setFiles] = useState({
+    proofOfIdentity: null,
+    proofOfOwnerShip: null,
+    proofOfInstallationSite: null,
+    localAuthorizationDocument: null,
+  });
+
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [name]: value,
-    }));
+    setFormData({ ...formData, [name]: value });
   };
+
+  const handleFileChange = (e) => {
+    const { name, files } = e.target;
+    setFiles({ ...files, [name]: files[0] });
+  };
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -256,6 +274,26 @@ function NewConnection() {
         formData
       );
       console.log("Response:", response.data);
+      // Append file inputs separately
+      const formDataObj = new FormData();
+
+      // Append all form fields to the FormData object
+      for (const key in formData) {
+        if (formData.hasOwnProperty(key)) {
+          formDataObj.append(key, formData[key]);
+        }
+      }
+
+      formDataObj.append("proofOfIdentity", files.proofOfIdentity);
+      formDataObj.append("proofOfOwnerShip", files.proofOfOwnerShip);
+      formDataObj.append(
+        "proofOfInstallationSite",
+        files.proofOfInstallationSite
+      );
+      formDataObj.append(
+        "localAuthorizationDocument",
+        files.localAuthorizationDocument
+      );
 
       await addState({ id: 0, name: formData.stateName });
       await addOperationalArea({
@@ -301,7 +339,7 @@ function NewConnection() {
       case 1:
         return (
           <>
-            <div className="flex flex-row">
+            <div className="AppContainer">
               <SideNav />
               <div className="flex flex-col h-screen">
                 <TopNav />
@@ -355,62 +393,142 @@ function NewConnection() {
                       </div>
                       <div className="shrink-0 mt-8 h-px border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-opacity-10 max-md:max-w-full"></div>
 
-                      <div className="flex flex-wrap gap-16 max-md:flex-col mt-6 max-md:gap-0 w-full">
-                        <FormInput
-                          label="Title"
-                          description="The title of the application"
-                          placeholder="Enter title"
-                          type="text"
-                          name="title"
-                          value={formData.title}
-                          onChange={handleChange}
-                        />
-                        <FormInput
-                          label="Full Name"
-                          description="The applicant's full legal name"
-                          placeholder="Enter your full name"
-                          type="text"
-                          name="fullName"
-                          value={formData.fullName}
-                          onChange={handleChange}
-                        />
+                      {/* <div className="flex flex-wrap gap-16 max-md:flex-col mt-6 max-md:gap-0 w-full"> */}
+                      <div className="flex gap-5 max-md:flex-col mt-4 max-md:gap-0">
+                        <div className="flex flex-col w-6/12 max-md:w-full">
+                          <label
+                            htmlFor="nearestLandmark"
+                            className="font-semibold text-gray-700 mb-2"
+                          >
+                            Title
+                          </label>
+                          <p className="text-gray-500 text-sm mt-1">
+                            Add your title for example Mr, Mrs, Dr
+                          </p>
+                          <input
+                            type="text"
+                            name="title"
+                            value={formData.title}
+                            onChange={(e) =>
+                              setFormData({
+                                ...formData,
+                                title: e.target.value,
+                              })
+                            }
+                            className="border border-gray-300 rounded-md px-3 py-2"
+                          />
+                        </div>
+                        <div className="flex flex-col w-6/12 max-md:w-full">
+                          <label
+                            htmlFor="fullName"
+                            className="font-semibold text-gray-700 mb-2"
+                          >
+                            Full Name
+                          </label>
+                          <p className="text-gray-500 text-sm mt-1">
+                            Please input your full names
+                          </p>
+                          <input
+                            type="text"
+                            name="fullName"
+                            value={formData.fullName}
+                            onChange={(e) =>
+                              setFormData({
+                                ...formData,
+                                fullName: e.target.value,
+                              })
+                            }
+                            className="border border-gray-300 rounded-md px-3 py-2"
+                          />
+                        </div>
                       </div>
-                      <div className="flex flex-wrap gap-16 max-md:flex-col max-md:gap-0">
-                        <FormInput
-                          label="Email Address"
-                          description="The applicant's email address for contact"
-                          placeholder="Enter your email address"
-                          type="email"
-                          name="emailAddress"
-                          value={formData.emailAddress}
-                          onChange={handleChange}
-                        />
 
-                        <FormInput
-                          label="Phone Number"
-                          description="The applicant's phone number for contact"
-                          placeholder="Enter your phone number"
-                          type="tel"
-                          name="phoneNumber"
-                          value={formData.phoneNumber}
-                          onChange={handleChange}
-                        />
+                      {/* <div className="flex flex-wrap gap-8 max-md:flex-col mt-6 max-md:gap-0 w-full"> */}
+                      <div className="flex gap-5 max-md:flex-col mt-5 max-md:gap-0">
+                        <div className="flex flex-col mr-5 w-6/12 max-md:w-full">
+                          <label
+                            htmlFor="emailAddress"
+                            className="font-semibold text-gray-700 mb-2"
+                          >
+                            Email Address
+                          </label>
+                          <p className="text-gray-500 text-sm mt-1">
+                            Please input your personal email
+                          </p>
+                          <input
+                            type="text"
+                            name="emailAddress"
+                            value={formData.emailAddress}
+                            onChange={(e) =>
+                              setFormData({
+                                ...formData,
+                                emailAddress: e.target.value,
+                              })
+                            }
+                            className="border border-gray-300 rounded-md px-3 py-2"
+                          />
+                        </div>
+                        <div className="flex flex-col w-6/12 max-md:w-full">
+                          <label
+                            htmlFor="phoneNumber"
+                            className="font-semibold text-gray-700 mb-2"
+                          >
+                            Phone Number
+                          </label>
+                          <p className="text-gray-500 text-sm mt-1">
+                            Please input your personal phone number
+                          </p>
+                          <input
+                            type="text"
+                            name="phoneNumber"
+                            value={formData.phoneNumber}
+                            onChange={(e) =>
+                              setFormData({
+                                ...formData,
+                                phoneNumber: e.target.value,
+                              })
+                            }
+                            className="border border-gray-300 rounded-md px-3 py-2"
+                          />
+                        </div>
                       </div>
-                      <div className="flex flex-wrap gap-8 max-md:flex-col max-md:gap-0">
-                        <FormInput
-                          label="ID Number"
-                          description="The applicant's national ID number"
-                          placeholder="Enter your ID number"
-                          type="text"
-                          name="idNumber"
-                          value={formData.idNumber}
-                          onChange={handleChange}
-                        />
+                      <div className="flex flex-wrap gap-8 mt-2 max-md:flex-col max-md:gap-0">
+                        <div className="flex flex-col w-6/12 max-md:w-full">
+                          <label
+                            htmlFor="idNumber"
+                            className="font-semibold text-gray-700 mb-2"
+                          >
+                            ID number
+                          </label>
+                          <p className="text-gray-500 text-sm mt-1">
+                            Please input your national ID or passport number
+                            number.
+                          </p>
+                          <input
+                            type="text"
+                            description="National Id or passport number"
+                            name="idNumber"
+                            value={formData.idNumber}
+                            onChange={(e) =>
+                              setFormData({
+                                ...formData,
+                                idNumber: e.target.value,
+                              })
+                            }
+                            className="border border-gray-300 rounded-md px-3 py-2"
+                          />
+                        </div>
 
-                        <InfoSection
-                          label="Gender"
-                          description="The applicant's gender identity"
-                        >
+                        <section description="The applicant's gender identity">
+                          <label
+                            htmlFor="gender"
+                            className="font-semibold text-gray-700 mb-2"
+                          >
+                            Gender
+                          </label>
+                          <p className="text-gray-500 text-sm mt-1">
+                            Please select a gender that best describes you.
+                          </p>
                           <div
                             className="relative"
                             onClick={() => setDropdownVisible(!dropdownVisible)}
@@ -441,12 +559,20 @@ function NewConnection() {
                               </div>
                             )}
                           </div>
-                        </InfoSection>
+                        </section>
                       </div>
-                      <InfoSection
-                        label="Date of Birth"
-                        description="The applicant's date of birth for identity verification"
-                      >
+
+                      <section>
+                        <label
+                          htmlFor="Date"
+                          className="font-semibold text-gray-700 mb-2"
+                          description="The applicant's date of birth for identity verification"
+                        >
+                          Date
+                        </label>
+                        <p className="text-gray-500 text-sm mt-1">
+                          Please select the date of creation.
+                        </p>
                         <div
                           className="flex gap-2 justify-between px-2 py-4 mt-2 bg-white rounded-xl border border-solid border-neutral-500 border-opacity-30 cursor-pointer "
                           onClick={() => setCalendarVisible(!calendarVisible)}
@@ -470,7 +596,7 @@ function NewConnection() {
                             inline
                           />
                         )}
-                      </InfoSection>
+                      </section>
 
                       <section className="flex flex-col justify-center items-end px-16 py-5 text-base font-semibold leading-6 whitespace-nowrap bg-white max-md:pl-5 max-md:max-w-full">
                         <div className="flex gap-4 px-8 max-w-full w-[232px] max-md:flex-wrap max-md:px-5">
@@ -940,7 +1066,7 @@ function NewConnection() {
         return (
           <div className="flex flex-row">
             <SideNav />
-            <div className="flex flex-col h-screen">
+            <div className="flex flex-col h-screen w-full">
               <TopNav />
               <div className="flex-1 overflow-auto px-6 py-5 bg-stone-100 ml-5 rounded-3xl max-md:px-5">
                 <header className="text-4xl font-semibold leading-[57.6px] text-neutral-600 max-md:max-w-full">
@@ -976,62 +1102,82 @@ function NewConnection() {
                       <StepItem
                         stepNumber="3"
                         stepTitle="Connection Details"
-                        imgSrc="https://cdn.builder.io/api/v1/image/assets/TEMP/282ab0917add290fc858a899d72a7723cd2b1edaa74b87f6224bde750a75c890?apiKey=27ec22b9382040ef8580a5e340d3a921&"
+                        imgSrc="https://cdn.builder.io/api/v1/image/assets/TEMP/0b0b7159a0f61d422ff56dbcb32e5eecb7b99995bb6d508381cd689eb8d6a1d6?apiKey=27ec22b9382040ef8580a5e340d3a921&"
                         isComplete
                       />
                       <img
                         loading="lazy"
-                        src="https://cdn.builder.io/api/v1/image/assets/TEMP/0b54045018ad575579a22acd36a3ab79789b2d22bda7c14c51157473741f6225?apiKey=27ec22b9382040ef8580a5e340d3a921&"
+                        src="https://cdn.builder.io/api/v1/image/assets/TEMP/29e775b8417bcbfed9697896a5b81879c830b3fdb9810856fcd8fe58283c0d10?apiKey=27ec22b9382040ef8580a5e340d3a921&"
                         alt=""
-                        className="shrink-0 self-start mt-6 border-solid aspect-[20] border-[5px] border-neutral-500 border-opacity-30 stroke-[5px] stroke-neutral-500 stroke-opacity-30 w-[95px]"
+                        className="shrink-0 self-start mt-6 border-lime-400 border-solid aspect-[20] border-[5px] stroke-[5px] stroke-lime-400 w-[95px]"
                       />
                       <StepItem
                         stepNumber="4"
                         stepTitle="Supporting Documents"
-                        imgSrc="https://cdn.builder.io/api/v1/image/assets/TEMP/0618cda44dc55270c347b99023da949dd92e2e0f2510b60ba7f7e800d3824181?apiKey=27ec22b9382040ef8580a5e340d3a921&"
+                        imgSrc="https://cdn.builder.io/api/v1/image/assets/TEMP/dfc58e5687c0ddcaba8cf8f5e2db12dbfdd52044e4566ce96f4b20c4b2e0d362?apiKey=27ec22b9382040ef8580a5e340d3a921&"
+                        isComplete={false}
                       />
                     </div>
-                    <div className="shrink-0 mt-8 h-px border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-opacity-10 max-md:max-w-full" />
-                    <form
-                      onSubmit={handleSubmit}
-                      className="mt-8 max-md:max-w-full"
-                    >
-                      <FormInput
-                        label="Proof of Identity"
-                        description="Upload proof of identity"
-                        placeholder="Upload proof of identity"
-                        type="file"
-                        name="proofOfIdentity"
-                        value={formData.proofOfIdentity}
-                        onChange={handleChange}
-                      />
-                      <FormInput
-                        label="Proof of Ownership"
-                        description="Upload proof of ownership"
-                        placeholder="Upload proof of ownership"
-                        type="file"
-                        name="proofOfOwnerShip"
-                        value={formData.proofOfOwnerShip}
-                        onChange={handleChange}
-                      />
-                      <FormInput
-                        label="Proof of Installation Site"
-                        description="Upload proof of installation site"
-                        placeholder="Upload proof of installation site"
-                        type="file"
-                        name="proofOfInstallationSite"
-                        value={formData.proofOfInstallationSite}
-                        onChange={handleChange}
-                      />
-                      <FormInput
-                        label="Local Authorization Document"
-                        description="Upload local authorization document"
-                        placeholder="Upload local authorization document"
-                        type="file"
-                        name="localAuthorizationDocument"
-                        onChange={handleChange}
-                      />
-                    </form>
+                    <div className="flex flex-wrap gap-8 mt-16 max-md:gap-4">
+                      <div className="w-full md:w-1/2">
+                        <label className="block text-neutral-600 font-medium mb-2">
+                          Proof of Identity
+                        </label>
+                        <input
+                          type="file"
+                          name="proofOfIdentity"
+                          onChange={handleFileChange}
+                          className="border border-gray-300 rounded-md px-3 py-2"
+                        />
+                        <p className="text-sm text-gray-500 mt-1">
+                          Attach a scanned copy of your identity document.
+                        </p>
+                      </div>
+                      <div className="w-full md:w-1/2">
+                        <label className="block text-neutral-600 font-medium mb-2">
+                          Proof of Ownership
+                        </label>
+                        <input
+                          type="file"
+                          name="proofOfOwnerShip"
+                          onChange={handleFileChange}
+                          className="border border-gray-300 rounded-md px-3 py-2"
+                        />
+                        <p className="text-sm text-gray-500 mt-1">
+                          Attach a scanned copy of the ownership document.
+                        </p>
+                      </div>
+                      <div className="w-full md:w-1/2">
+                        <label className="block text-neutral-600 font-medium mb-2">
+                          Proof of Installation Site
+                        </label>
+                        <input
+                          type="file"
+                          name="proofOfInstallationSite"
+                          onChange={handleFileChange}
+                          className="border border-gray-300 rounded-md px-3 py-2"
+                        />
+                        <p className="text-sm text-gray-500 mt-1">
+                          Attach a scanned copy of the installation site
+                          document.
+                        </p>
+                      </div>
+                      <div className="w-full md:w-1/2">
+                        <label className="block text-neutral-600 font-medium mb-2">
+                          Local Authorization Document
+                        </label>
+                        <input
+                          type="file"
+                          name="localAuthorizationDocument"
+                          onChange={handleFileChange}
+                          className="border border-gray-300 rounded-md px-3 py-2"
+                        />
+                        <p className="text-sm text-gray-500 mt-1">
+                          Attach a scanned copy of the local authorization
+                          document.
+                        </p>
+                      </div>
+                    </div>
                   </section>
                   <footer className="flex flex-col justify-center items-end px-12 py-5 text-base font-semibold leading-6 bg-white max-md:pl-5 max-md:max-w-full">
                     <div className="flex gap-4 px-8 max-w-full w-[582px] max-md:flex-wrap max-md:px-5">
@@ -1041,7 +1187,10 @@ function NewConnection() {
                       >
                         Previous
                       </button>
-                      <button className="justify-center px-8 py-4 text-white rounded-3xl bg-slate-500 max-md:px-5">
+                      <button
+                        className="justify-center px-8 py-4 text-white rounded-3xl bg-slate-500 max-md:px-5"
+                        onClick={handleSubmit}
+                      >
                         Submit Application
                       </button>
                     </div>
@@ -1059,16 +1208,14 @@ function NewConnection() {
 
   return (
     <div>
-    <Step
-      stepNumber={currentStep}
-      stepTitle={`Step ${currentStep}`}
-      imgSrc="image.jpg"
-      isActive={true}
-    />
-    <form onSubmit={handleSubmit}>
-      {renderStep()}
-    </form>
-  </div>
+      <Step
+        stepNumber={currentStep}
+        stepTitle={`Step ${currentStep}`}
+        imgSrc="image.jpg"
+        isActive={true}
+      />
+      <form onSubmit={handleSubmit}>{renderStep()}</form>
+    </div>
   );
 }
 
