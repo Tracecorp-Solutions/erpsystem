@@ -38,5 +38,10 @@ namespace Core.DTOs
 
         #endregion
 
+        public string ProofOfIdentity { get; set; }
+        public string ProofOfOwnerShip { get; set; }
+        public string ProofOfInstallationSite { get; set; }
+        public string LocalAuthorizationDocument { get; set; }
+
     }
 }
