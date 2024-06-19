@@ -76,8 +76,7 @@
               "RelativeToolTip": "..\\Core\\DTOs\\SurveyDto.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAAAoAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-19T05:10:12.631Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-06-19T05:10:12.631Z"
             },
             {
               "$type": "Document",
@@ -89,8 +88,7 @@
               "RelativeToolTip": "appsettings.json",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAA8AAABgAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2024-06-18T07:27:34.139Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-06-18T07:27:34.139Z"
             },
             {
               "$type": "Document",
@@ -150,8 +148,7 @@
               "RelativeToolTip": "Controllers\\BillingConfigurationController.cs",
               "ViewState": "AQIAAEIAAAAAAAAAAAAowMsAAAAIAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-18T05:53:41.393Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-06-18T05:53:41.393Z"
             },
             {
               "$type": "Document",
@@ -163,8 +160,7 @@
               "RelativeToolTip": "..\\Services\\Repositories\\Billing\\BillingConfigurationRepository.cs",
               "ViewState": "AQIAAAwAAAAAAAAAAAAAADQAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-18T05:52:50.047Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-06-18T05:52:50.047Z"
             },
             {
               "$type": "Document",
@@ -200,8 +196,7 @@
               "RelativeToolTip": "Controllers\\BillController.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-18T05:47:34.645Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-06-18T05:47:34.645Z"
             },
             {
               "$type": "Document",
@@ -226,8 +221,7 @@
               "RelativeToolTip": "..\\Core\\Repositories\\Billing\\INewConnectionRepository.cs",
               "ViewState": "AQIAAAgAAAAAAAAAAADwvxEAAAAIAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-13T08:08:32.493Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-06-13T08:08:32.493Z"
             },
             {
               "$type": "Document",
@@ -251,8 +245,7 @@
               "RelativeToolTip": "..\\Services\\Repositories\\Billing\\NewConnectionRepository.cs",
               "ViewState": "AQIAAEYAAAAAAAAAAAAAAE8AAAASAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-13T07:52:10.868Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-06-13T07:52:10.868Z"
             },
             {
               "$type": "Document",
