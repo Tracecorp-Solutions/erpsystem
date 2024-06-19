@@ -30,5 +30,7 @@ namespace Core.Repositories.UserManagement
         Task<IEnumerable<InvitedUserLists>> GetInvitedUsersByOrganisationId(int organisationId);
 
         Task<User> GetUserByTokenAsync(string token);
+
+        Task<IEnumerable<User>> GetUsersByRoleName(string rolename);
     }
 }

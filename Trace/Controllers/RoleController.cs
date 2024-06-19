@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Core.Repositories.UserManagement;
+using Core.Models;
 
 namespace Trace.Controllers
 {
@@ -30,5 +31,20 @@ namespace Trace.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
             }
         }
+
+        [HttpPost("/AddRole")]
+        public async Task<IActionResult> AddRole([FromBody] Role role)
+        {
+            try
+            {
+                await _roleRepository.AddRole(role);
+                return Ok("Role added successfully");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
+        }
+
     }
 }

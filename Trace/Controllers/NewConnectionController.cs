@@ -50,5 +50,22 @@ namespace Trace.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
             }
         }
+
+        [HttpGet("/GetSurveyors")]
+        public async Task<IActionResult> GetSurveyors() 
+        {
+            try
+            {
+                var surveyors = await _newconnectionRepository.GetSurveyor();
+                return Ok(surveyors);
+            }catch(ArgumentException ex) 
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
+        }
     }
 }

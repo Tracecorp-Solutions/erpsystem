@@ -1,6 +1,7 @@
 ﻿using Core.DTOs;
 using Core.Models;
 using Core.Repositories.Billing;
+using Core.Repositories.UserManagement;
 using Infrastructure.Data;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
@@ -18,9 +19,12 @@ namespace Services.Repositories.Billing
     {
         private readonly ApplicationDbContext _context;
 
-        public NewConnectionRepository(ApplicationDbContext context) 
+        private readonly IUserRepository _userRepository;
+
+        public NewConnectionRepository(ApplicationDbContext context,IUserRepository userRepository) 
         {
             _context = context;
+            _userRepository = userRepository;
         }
 
         public async Task<string> RegisterNewCustomer(IFormFile file,NewApplicationDto application) 
@@ -67,5 +71,17 @@ namespace Services.Repositories.Billing
             var applications = await _context.Applications.ToListAsync();
             return applications == null ? throw new ArgumentException("No applications found") : applications;  
         }
+
+        public async Task<IEnumerable<SurveyDto>> GetSurveyor()
+        {
+            var surveyors = await _userRepository.GetUsersByRoleName("Surveyor");
+
+            return surveyors == null ? throw new ArgumentException("No Surveyors found") : surveyors.Select(s => new SurveyDto
+            {
+                Id = s.Id,
+                Name = s.FullName
+            });
+        }
+
     }
 }

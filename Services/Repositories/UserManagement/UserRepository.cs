@@ -301,6 +301,15 @@ namespace Services.Repositories.UserManagement
             return user;
         }
 
+        public async Task<IEnumerable<User>> GetUsersByRoleName(string rolename)
+        {
+            var users = await _context.Users
+                .Include(u => u.Role)
+                .Where(u => u.Role.Name == rolename)
+                .ToListAsync();
+            return users.Any() ? users : throw new ArgumentException("No Users Found");
+        }
+
 
 
     }

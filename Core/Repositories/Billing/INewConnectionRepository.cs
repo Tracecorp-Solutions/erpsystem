@@ -15,6 +15,8 @@ namespace Core.Repositories.Billing
 
         Task<IEnumerable<Application>> GetApplications();
 
+        Task<IEnumerable<SurveyDto>> GetSurveyor();
+
       
     }
 }

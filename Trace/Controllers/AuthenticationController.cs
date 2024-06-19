@@ -196,5 +196,23 @@ namespace Trace.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
             }
         }
+
+        [HttpGet("/GetUsersByRole/{rolename}")]
+        public async Task<IActionResult> GetUsersByRole(string rolename)
+        {
+            try
+            {
+                var users = await _userRepository.GetUsersByRoleName(rolename);
+                return Ok(users);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
+        }
     }
 }

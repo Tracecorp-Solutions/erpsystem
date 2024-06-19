@@ -10,5 +10,7 @@ namespace Core.Repositories.UserManagement
     public interface IRoleRepository
     {
         Task<IEnumerable<Role>> GetRolesAsync();
+
+        Task AddRole(Role role);
     }
 }

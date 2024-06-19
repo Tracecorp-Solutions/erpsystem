@@ -23,5 +23,11 @@ namespace Services.Repositories.UserManagement
             return await Task.FromResult(_context.Roles);
         }
 
+        public async Task AddRole(Role role)
+        {
+            _context.Roles.Add(role);
+            await _context.SaveChangesAsync();
+        }
+
     }
 }
