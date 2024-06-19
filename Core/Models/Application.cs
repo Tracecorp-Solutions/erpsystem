@@ -56,11 +56,11 @@ namespace Core.Models
         public string ProofOfInstallationSite { get; set; }
         public string LocalAuthorizationDocument { get; set; }
         #endregion
-        private State? State { get; set; }
+        public State? State { get; set; }
 
-        private OperationArea? OperationArea { get; set; }
-        private Branch? Branch { get; set; }
-        private Territory? Territory { get; set; }
-        private SubTerritory? SubTerritory { get; set; }
+        public OperationArea? OperationArea { get; set; }
+        public Branch? Branch { get; set; }
+        public Territory? Territory { get; set; }
+        public SubTerritory? SubTerritory { get; set; }
     }
 }

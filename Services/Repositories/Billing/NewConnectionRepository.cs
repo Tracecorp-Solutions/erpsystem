@@ -68,7 +68,16 @@ namespace Services.Repositories.Billing
 
         public async Task<IEnumerable<Application>> GetApplications() 
         {
-            var applications = await _context.Applications.ToListAsync();
+            var applications = await _context.Applications
+                .Include(a => a.State)
+                .Include(a => a.OperationArea)
+                .Include(a => a.Branch)
+                .Include(a => a.Territory)
+                .Include(a => a.SubTerritory)
+                .Include(a => a.CustomerCategory)
+                .Include(a => a.BillDeliveryMethod)
+                .Include(a => a.CustomerType)
+                .ToListAsync();
             return applications == null ? throw new ArgumentException("No applications found") : applications;  
         }
 
