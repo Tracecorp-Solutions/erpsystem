@@ -3,7 +3,7 @@ import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Dashboard from "./Billing/Components/shared/Dashboard";
 import Dashboardlayout from "./Accounting/Pages/layout/DashboardLayout";
-import GroupAccountSetUp from "./Accounting/Pages/Group/GroupAccountSetUp";
+import NewConnection from "./Billing/Pages/New Connections/ConnectionForm";
 import SubGroupSetup from "./Accounting/Pages/Subgroup/SubGroupSetup";
 import AccountSetup from "./Accounting/Pages/Accounts/AccountSetup";
 import Transactions from "./Accounting/Pages/Transaction/Transactions";
@@ -59,7 +59,7 @@ function App() {
                 path="/verify"
                 element={<VerifyUser onVerify={handleVerify} />}
               />
-              <Route path="/groups" element={<GroupAccountSetUp />} />
+              <Route path="/connection" element={<NewConnection />} />
               <Route path="/sub-group" element={<SubGroupSetup />} />
               <Route path="/accounts" element={<AccountSetup />} />
               <Route path="/vendors" element={<VendorSetup />} />
