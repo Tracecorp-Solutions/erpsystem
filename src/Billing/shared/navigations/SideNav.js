@@ -85,7 +85,7 @@ function SideNav() {
           </div>
           <div className={`flex gap-2 py-3 mt-3 whitespace-nowrap rounded-xl ${location.pathname === "/dashboard" ? "bg-active-green txt-color-blue font-semibold px-4" : "bg-none"}`}>
             <LayoutDashboard className="shrink-0 self-start w-6 aspect-square" />
-            <button onClick={() => navigate("/Dashboardlayout", { state: { screen: "dashboard" } })}>
+            <button onClick={() => navigate("/Dashboard", { state: { screen: "dashboard" } })}>
               Dashboard
             </button>
           </div>

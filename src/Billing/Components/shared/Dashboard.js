@@ -628,7 +628,7 @@ function NewConnection() {
                 <TopNav />
                 <div className="flex-1 overflow-auto px-6 py-5 bg-stone-100 ml-5 rounded-3xl max-md:px-5">
                   <header className="text-4xl font-semibold leading-[57.6px] text-neutral-600 max-md:max-w-full">
-                    Application Form
+                    Application 
                   </header>
                   <main className="flex flex-col mt-6 bg-white rounded-3xl max-md:max-w-full overflow-auto">
                     <section className="flex flex-col px-8 pt-8 pb-3 max-md:px-5 max-md:max-w-full">
