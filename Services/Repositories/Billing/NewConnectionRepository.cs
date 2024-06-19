@@ -75,8 +75,6 @@ namespace Services.Repositories.Billing
                 .Include(a => a.Territory)
                 .Include(a => a.SubTerritory)
                 .Include(a => a.CustomerCategory)
-                .Include(a => a.BillDeliveryMethod)
-                .Include(a => a.CustomerType)
                 .ToListAsync();
             return applications == null ? throw new ArgumentException("No applications found") : applications;  
         }
