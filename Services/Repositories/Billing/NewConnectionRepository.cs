@@ -56,7 +56,7 @@ namespace Services.Repositories.Billing
                 NearestLandMark = application.NearestLandMark,
                 CustomerType = application.CustomerType,
                 BillDeliveryMethod = application.BillDeliveryMethod,
-                CustomerCategory = application.CustomerCategory
+                CustomerCategoryId = application.CustomerCategory
             };
 
 

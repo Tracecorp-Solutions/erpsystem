@@ -46,7 +46,9 @@ namespace Core.Models
         #region connection details
         public string CustomerType { get; set; }
         public string BillDeliveryMethod { get; set; }
-        public int CustomerCategory {  get; set; }
+
+        [ForeignKey("CustomerCategory")]
+        public int CustomerCategoryId {  get; set; }
 
         #endregion
 
@@ -62,5 +64,7 @@ namespace Core.Models
         public Branch? Branch { get; set; }
         public Territory? Territory { get; set; }
         public SubTerritory? SubTerritory { get; set; }
+
+        public CustomerCategory? CustomerCategory { get; set; }
     }
 }
