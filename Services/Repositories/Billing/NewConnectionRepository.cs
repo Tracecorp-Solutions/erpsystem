@@ -90,5 +90,24 @@ namespace Services.Repositories.Billing
             });
         }
 
+        async Task<Application> GetApplicationByApplicationId(string applicationId)
+        {
+            // Get application by application Id
+            var application = await _context.Applications
+                .Include(a => a.State)
+                .Include(a => a.OperationArea)
+                .Include(a => a.Branch)
+                .Include(a => a.Territory)
+                .Include(a => a.SubTerritory)
+                .Include(a => a.CustomerCategory)
+                .FirstOrDefaultAsync(a => a.ApplicationNumber == applicationId);
+
+            if (application == null)
+                throw new ArgumentException("No applications found");
+
+            return application;
+        }
+
+
     }
 }

@@ -67,5 +67,22 @@ namespace Trace.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
             }
         }
+
+        [HttpGet("/GetApplicationByApplicationNumnber")]
+        public async Task<IActionResult> GetApplicationByApplicationNumnber(string applicationId) 
+        {
+            try
+            {
+                var application = await _newconnectionRepository.GetApplicationByApplicationId(applicationId);
+                return Ok(application);
+            }catch(ArgumentException ex) 
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
+        }
     }
 }
