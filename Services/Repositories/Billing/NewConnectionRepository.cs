@@ -90,7 +90,7 @@ namespace Services.Repositories.Billing
             });
         }
 
-        async Task<Application> GetApplicationByApplicationId(string applicationId)
+        public async Task<Application> GetApplicationByApplicationId(string applicationId)
         {
             // Get application by application Id
             var application = await _context.Applications
