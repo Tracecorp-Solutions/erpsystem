@@ -1059,14 +1059,16 @@ function NewConnection() {
 
   return (
     <div>
-      <Step
-        stepNumber={currentStep}
-        stepTitle={`Step ${currentStep}`}
-        imgSrc="image.jpg"
-        isActive={true}
-      />
+    <Step
+      stepNumber={currentStep}
+      stepTitle={`Step ${currentStep}`}
+      imgSrc="image.jpg"
+      isActive={true}
+    />
+    <form onSubmit={handleSubmit}>
       {renderStep()}
-    </div>
+    </form>
+  </div>
   );
 }
 
