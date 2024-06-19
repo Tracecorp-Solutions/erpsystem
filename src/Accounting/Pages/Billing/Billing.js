@@ -9,7 +9,6 @@ import VendorForm from "./VendorForm";
 import BillsCard from "./BillsCard";
 import BillsForm from "./BillsForm";
 
-
 const Billing = () => {
   const [bills, setBills] = useState([]);
   const [showFailure, setShowFailure] = useState(false);
@@ -26,8 +25,6 @@ const Billing = () => {
   const [paidTotalAmount, setPaidTotalAmount] = useState(0);
   const [unpaidTotalAmount, setUnpaidTotalAmount] = useState(0);
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
-
-  console.log("mark as paid form data", selectBillId);
 
   const navigate = useNavigate();
 
@@ -104,6 +101,14 @@ const Billing = () => {
     }
   };
 
+  const filteredBills = bills.filter((bill) => {
+    const matchesSearchQuery = bill.billNo.includes(searchQuery);
+    if (toggleDisabled) {
+      return bill.status !== "Paid" && matchesSearchQuery;
+    }
+    return matchesSearchQuery;
+  });
+
   const handleConfirmation = async () => {
     const id = selectBillId;
 
@@ -122,6 +127,7 @@ const Billing = () => {
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentBills = filteredBills.slice(indexOfFirstItem, indexOfLastItem);
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
@@ -131,10 +137,7 @@ const Billing = () => {
 
   return (
     <>
-    
       <div className="content">
-        {/* <TopNav /> */}
-
         <div
           style={{
             display: "flex",
@@ -181,7 +184,12 @@ const Billing = () => {
             marginTop: "14px",
           }}
         >
-          <BillsNavigationBar />
+          <BillsNavigationBar
+            toggleDisabled={toggleDisabled}
+            setToggleDisabled={setToggleDisabled}
+            searchQuery={searchQuery}
+            handleSearch={handleSearch}
+          />
 
           <div
             style={{
@@ -232,85 +240,82 @@ const Billing = () => {
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
-                  {bills
-                    .filter((bill) => bill.type === "Expense")
-                    .map((bill, index) => (
-                      <tr
-                        key={index}
-                        className="px-3 py-4 whitespace-nowrap mt-3 text-sm text-gray-800"
-                      >
-                        <td className="px-3 py-4 whitespace-nowrap mt-3 text-sm text-gray-800">
-                          <input type="checkbox" />
-                        </td>
-                        <td className="px-3 py-4 whitespace-nowrap mt-3 text-sm text-gray-800">
-                          {bill.status}
-                        </td>
-                        <td className="px-3 py-4 whitespace-nowrap mt-3 text-sm text-gray-800">
-                          {bill.vendor.fullName}
-                        </td>
-                        <td className="px-3 py-4 whitespace-nowrap mt-3 text-sm text-gray-800">
-                          {bill.billDate}
-                        </td>
-                        <td className="px-3 py-4 whitespace-nowrap mt-3 text-sm text-gray-800">
-                          {bill.billNo}
-                        </td>
-                        <td className="px-3 py-4 whitespace-nowrap mt-3 text-sm text-gray-800">
-                          {bill.billTranItems.reduce(
-                            (total, item) => total + item.amount,
-                            0
-                          )}
-                        </td>
+                  {currentBills.map((bill, index) => (
+                    <tr
+                      key={index}
+                      className="px-3 py-4 whitespace-nowrap mt-3 text-sm text-gray-800"
+                    >
+                      <td className="px-3 py-4 whitespace-nowrap mt-3 text-sm text-gray-800">
+                        <input type="checkbox" />
+                      </td>
+                      <td className="px-3 py-4 whitespace-nowrap mt-3 text-sm text-gray-800">
+                        {bill.status}
+                      </td>
+                      <td className="px-3 py-4 whitespace-nowrap mt-3 text-sm text-gray-800">
+                        {bill.vendor.fullName}
+                      </td>
+                      <td className="px-3 py-4 whitespace-nowrap mt-3 text-sm text-gray-800">
+                        {bill.billDate}
+                      </td>
+                      <td className="px-3 py-4 whitespace-nowrap mt-3 text-sm text-gray-800">
+                        {bill.billNo}
+                      </td>
+                      <td className="px-3 py-4 whitespace-nowrap mt-3 text-sm text-gray-800">
+                        {bill.billTranItems.reduce(
+                          (total, item) => total + item.amount,
+                          0
+                        )}
+                      </td>
 
-                        <td className="px-3 py-4 whitespace-nowrap mt-3 text-sm text-gray-800">
-                          <div
-                            style={{
-                              width: "100px",
-                              display: "flex",
-                              justifyContent: "center",
-                              marginTop: "10px",
-                            }}
+                      <td className="px-3 py-4 whitespace-nowrap mt-3 text-sm text-gray-800">
+                        <div
+                          style={{
+                            width: "100px",
+                            display: "flex",
+                            justifyContent: "center",
+                            marginTop: "10px",
+                          }}
+                        >
+                          <Dropdown
+                            overlay={
+                              <Menu style={{ width: "250px" }}>
+                                <Menu.Item key="1" onClick={handleViewClick}>
+                                  <span>View Bill</span>
+                                </Menu.Item>
+                                <Menu.Item
+                                  key="2"
+                                  onClick={() => handleMarkAsPaid(bill.id)}
+                                >
+                                  Mark as Paid
+                                </Menu.Item>
+                              </Menu>
+                            }
+                            trigger={["click"]}
                           >
-                            <Dropdown
-                              overlay={
-                                <Menu style={{ width: "250px" }}>
-                                  <Menu.Item key="1" onClick={handleViewClick}>
-                                    <span>View Bill</span>
-                                  </Menu.Item>
-                                  <Menu.Item
-                                    key="2"
-                                    // onClick={() => handleEditInvoice(bill.id)}
-                                  >
-                                    Edit View
-                                  </Menu.Item>
-                                  {bill.status !== "Paid" && (
-                                    <Menu.Item
-                                      key="3"
-                                      onClick={() => handleMarkAsPaid(bill.id)}
-                                    >
-                                      Mark as Paid
-                                    </Menu.Item>
-                                  )}
-                                  <Menu.Item key="4">
-                                    Send payment reminder
-                                  </Menu.Item>
-                                </Menu>
-                              }
-                              trigger={["click"]}
-                            >
-                              <EllipsisVerticalIcon
-                                className="h-5 w-5 mt-3"
-                                aria-hidden="true"
-                              />
-                            </Dropdown>
-                          </div>
-                        </td>
-                      </tr>
-                    ))}
+                            <EllipsisVerticalIcon
+                              className="h-5 w-5 mt-3"
+                              aria-hidden="true"
+                            />
+                          </Dropdown>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
                 </tbody>
               </table>
+              <div style={{ marginTop: "20px", display: "flex" }}>
+                <Pagination
+                  current={currentPage}
+                  total={filteredBills.length}
+                  pageSize={itemsPerPage}
+                  onChange={paginate}
+                />
+              </div>
             </div>
           </div>
         </div>
+      </div>
+      {showConfirmationModal && (
         <Modal
           title="Mark Bill as Paid"
           visible={showConfirmationModal}
@@ -337,7 +342,7 @@ const Billing = () => {
         >
           <p>Are you sure you want to mark this bill as paid?</p>
         </Modal>
-      </div>
+      )}
     </>
   );
 };
