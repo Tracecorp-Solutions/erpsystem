@@ -335,6 +335,17 @@ namespace Services.Repositories.UserManagement
             return users.Any() ? users : throw new ArgumentException("No Users Found");
         }
 
+        public async Task<User> GetUserById(int userId)
+        {
+            var user = await _context.Users
+                .Include(u => u.Role)
+                .Include(u => u.Organisation)
+                .FirstOrDefaultAsync(u => u.Id == userId);
+            if (user == null)
+                throw new ArgumentException("No User Found");
+            return user;
+        }
+
 
 
     }

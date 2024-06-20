@@ -37,5 +37,7 @@ namespace Core.Repositories.UserManagement
 
         // get all users
         Task<IEnumerable<User>> GetAllUsers();
+
+        Task<User> GetUserById(int userId);
     }
 }

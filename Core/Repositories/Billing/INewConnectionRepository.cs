@@ -19,6 +19,8 @@ namespace Core.Repositories.Billing
 
         Task<IEnumerable<SurveyDto>> GetSurveyor();
 
+        Task<string> AssignSurveyor(string applicationId, int surveyorId,DateOnly ScheduledDate);
+
       
     }
 }

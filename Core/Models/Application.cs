@@ -59,6 +59,11 @@ namespace Core.Models
         public string LocalAuthorizationDocument { get; set; }
         #endregion
 
+        public DateOnly ApplicationDate { get; set; }
+
+        [ForeignKey("User")]
+        public int? AssignedTo { get; set; }
+        public DateOnly? SurveyDate { get; set; }
         public string Status { get; set; }  
         public State? State { get; set; }
 
@@ -68,6 +73,8 @@ namespace Core.Models
         public SubTerritory? SubTerritory { get; set; }
 
         public CustomerCategory? CustomerCategory { get; set; }
+
+        public User? User { get; set; }
 
     }
 }

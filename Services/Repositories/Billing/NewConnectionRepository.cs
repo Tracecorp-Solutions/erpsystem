@@ -58,6 +58,7 @@ namespace Services.Repositories.Billing
                 BillDeliveryMethod = application.BillDeliveryMethod,
                 CustomerCategoryId = application.CustomerCategory,
                 Status = "PENDING SURVEY",
+                ApplicationDate = DateOnly.FromDateTime(DateTime.Now)
             };
 
 
@@ -107,6 +108,29 @@ namespace Services.Repositories.Billing
                 throw new ArgumentException("No applications found");
 
             return application;
+        }
+
+        public async Task<string> AssignSurveyor(string applicationId, int surveyorId,DateOnly ScheduledDate)
+        {
+            // Get application by application Id
+            var application = await _context.Applications
+                .FirstOrDefaultAsync(a => a.ApplicationNumber == applicationId);
+
+            if (application == null)
+                throw new ArgumentException("No applications found");
+
+            // Get surveyor by surveyor Id
+            var surveyor = await _userRepository.GetUserById(surveyorId);
+
+            if (surveyor == null)
+                throw new ArgumentException("No Surveyor found");
+
+            
+            application.AssignedTo = surveyorId;
+            application.Status = "ASSIGNED TO SURVEYOR";
+            await _context.SaveChangesAsync();
+
+            return "Surveyor assigned successfully";
         }
 
 
