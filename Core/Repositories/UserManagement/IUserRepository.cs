@@ -32,5 +32,10 @@ namespace Core.Repositories.UserManagement
         Task<User> GetUserByTokenAsync(string token);
 
         Task<IEnumerable<User>> GetUsersByRoleName(string rolename);
+
+        Task AssignUserRole(AssignUserRoleDto assignUser);
+
+        // get all users
+        Task<IEnumerable<User>> GetAllUsers();
     }
 }

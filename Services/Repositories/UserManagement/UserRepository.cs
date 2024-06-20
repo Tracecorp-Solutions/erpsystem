@@ -310,6 +310,31 @@ namespace Services.Repositories.UserManagement
             return users.Any() ? users : throw new ArgumentException("No Users Found");
         }
 
+        public async Task AssignUserRole(AssignUserRoleDto assignUser)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == assignUser.Email);
+            if (user == null)
+                throw new ArgumentException("Invalid Email Address");
+
+            var role = await _context.Roles.FirstOrDefaultAsync(r => r.Id == assignUser.RoleId);
+            if (role == null)
+                throw new ArgumentException("Invalid Role Name");
+
+
+            user.RoleId = role.Id;
+            await _context.SaveChangesAsync();
+            await LogActionAsync(user.Email, "User role assigned");
+        }
+
+        public async Task<IEnumerable<User>> GetAllUsers()
+        {
+            var users = await _context.Users
+                .Include(u => u.Role)
+                .Include(u => u.Organisation)
+                .ToListAsync();
+            return users.Any() ? users : throw new ArgumentException("No Users Found");
+        }
+
 
 
     }

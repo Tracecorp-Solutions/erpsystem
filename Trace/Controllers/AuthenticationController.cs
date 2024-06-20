@@ -214,5 +214,43 @@ namespace Trace.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
             }
         }
+
+        [HttpPost("/AssignUserRole")]
+        public async Task<IActionResult> AssignUserRole([FromBody] AssignUserRoleDto assignUserRoleDto)
+        {
+            try
+            {
+                await _userRepository.AssignUserRole(assignUserRoleDto);
+                return Ok("User role assigned successfully");
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
+        }
+
+        [HttpGet("/GetAllUsers")]
+        public async Task<IActionResult> GetAllUsers()
+        {
+            try
+            {
+                var users = await _userRepository.GetAllUsers();
+                return Ok(users);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
+        }
+
+
     }
 }

@@ -58,6 +58,8 @@ namespace Core.Models
         public string ProofOfInstallationSite { get; set; }
         public string LocalAuthorizationDocument { get; set; }
         #endregion
+
+        public string Status { get; set; }  
         public State? State { get; set; }
 
         public OperationArea? OperationArea { get; set; }
@@ -66,5 +68,6 @@ namespace Core.Models
         public SubTerritory? SubTerritory { get; set; }
 
         public CustomerCategory? CustomerCategory { get; set; }
+
     }
 }

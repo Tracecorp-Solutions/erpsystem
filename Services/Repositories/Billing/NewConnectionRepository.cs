@@ -56,7 +56,8 @@ namespace Services.Repositories.Billing
                 NearestLandMark = application.NearestLandMark,
                 CustomerType = application.CustomerType,
                 BillDeliveryMethod = application.BillDeliveryMethod,
-                CustomerCategoryId = application.CustomerCategory
+                CustomerCategoryId = application.CustomerCategory,
+                Status = "PENDING SURVEY",
             };
 
 

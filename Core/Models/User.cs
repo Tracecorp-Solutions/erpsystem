@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Core.Models
@@ -17,6 +18,8 @@ namespace Core.Models
         public string? Gender { get; set; }
         public DateOnly? DateOfBirth { get; set; }
         public string? ProfilePic { get; set; }
+
+        [JsonIgnore]
         public string? PasswordHash { get; set; }
         public bool Verified { get; set; }
         public bool Active { get; set; }
