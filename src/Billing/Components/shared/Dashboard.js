@@ -140,6 +140,10 @@ function NewConnection() {
     setCurrentStep((prevStep) => prevStep + 1);
   };
 
+  const prevStep = () => {
+    setCurrentStep((prevStep) => prevStep - 1);
+  };
+
   const [selectedGender, setSelectedGender] = useState("Choose Gender");
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const [operationalAreas, setOperationalAreas] = useState([]);
@@ -147,7 +151,7 @@ function NewConnection() {
   const [territories, setTerritories] = useState([]);
   const [categories, setCategories] = useState([]);
   const [subTerritories, setSubTerritories] = useState([]);
-  const [states, setStates] = useState([]); // added missing state for states
+  const [states, setStates] = useState([]);
 
   const handleGenderSelect = (gender) => {
     setSelectedGender(gender);
@@ -163,7 +167,6 @@ function NewConnection() {
   };
 
   useEffect(() => {
-    // Fetch initial data
     const fetchInitialData = async () => {
       try {
         const fetchedStates = await getStates();
@@ -232,21 +235,6 @@ function NewConnection() {
     customerType: 0,
     billDeliveryMethod: 0,
     customerCategory: 0,
-    proofOfIdentity: "",
-    proofOfOwnerShip: "",
-    proofOfInstallationSite: "",
-    localAuthorizationDocument: "",
-  });
-
-  // const handleChange = (e) => {
-  //   const { name, value } = e.target;
-  //   setFormData((prevFormData) => ({
-  //     ...prevFormData,
-  //     [name]: value,
-  //   }));
-  // };
-
-  const [files, setFiles] = useState({
     proofOfIdentity: null,
     proofOfOwnerShip: null,
     proofOfInstallationSite: null,
@@ -255,45 +243,39 @@ function NewConnection() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value,
+    }));
   };
 
   const handleFileChange = (e) => {
     const { name, files } = e.target;
-    setFiles({ ...files, [name]: files[0] });
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: files[0],
+    }));
   };
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       console.log("Form data being submitted:", formData);
 
-      const response = await axios.post(
-        "http://3.216.182.63:8095/TestApi/NewApplication",
-        formData
-      );
-      console.log("Response:", response.data);
-      // Append file inputs separately
-      const formDataObj = new FormData();
+      const formDataToSend = new FormData();
 
       // Append all form fields to the FormData object
       for (const key in formData) {
         if (formData.hasOwnProperty(key)) {
-          formDataObj.append(key, formData[key]);
+          formDataToSend.append(key, formData[key]);
         }
       }
 
-      formDataObj.append("proofOfIdentity", files.proofOfIdentity);
-      formDataObj.append("proofOfOwnerShip", files.proofOfOwnerShip);
-      formDataObj.append(
-        "proofOfInstallationSite",
-        files.proofOfInstallationSite
+      const response = await axios.post(
+        "http://3.216.182.63:8095/TestApi/NewApplication",
+        formDataToSend
       );
-      formDataObj.append(
-        "localAuthorizationDocument",
-        files.localAuthorizationDocument
-      );
+      console.log("Response:", response.data);
 
       await addState({ id: 0, name: formData.stateName });
       await addOperationalArea({
@@ -316,8 +298,11 @@ function NewConnection() {
         name: formData.subTerritoryName,
         territoryId: formData.territoryId,
       });
+
+      alert("Application submitted successfully");
     } catch (error) {
       console.error("Error submitting form:", error);
+      alert("Error submitting form");
     }
   };
 
@@ -328,11 +313,11 @@ function NewConnection() {
     } catch (error) {
       console.error("Error fetching application:", error);
     }
-  };
 
   const prevStep = () => {
     setCurrentStep((prevStep) => prevStep - 1);
-  };
+  }}
+
 
   const renderStep = () => {
     switch (currentStep) {
@@ -628,7 +613,7 @@ function NewConnection() {
                 <TopNav />
                 <div className="flex-1 overflow-auto px-6 py-5 bg-stone-100 ml-5 rounded-3xl max-md:px-5">
                   <header className="text-4xl font-semibold leading-[57.6px] text-neutral-600 max-md:max-w-full">
-                    Application 
+                    Application
                   </header>
                   <main className="flex flex-col mt-6 bg-white rounded-3xl max-md:max-w-full overflow-auto">
                     <section className="flex flex-col px-8 pt-8 pb-3 max-md:px-5 max-md:max-w-full">
@@ -1123,12 +1108,7 @@ function NewConnection() {
                         <label className="block text-neutral-600 font-medium mb-2">
                           Proof of Identity
                         </label>
-                        <input
-                          type="file"
-                          name="proofOfIdentity"
-                          onChange={handleFileChange}
-                          className="border border-gray-300 rounded-md px-3 py-2"
-                        />
+                        <input type="file" onChange={handleFileChange}  className="border border-gray-300 rounded-md px-3 py-2"/>
                         <p className="text-sm text-gray-500 mt-1">
                           Attach a scanned copy of your identity document.
                         </p>
@@ -1137,12 +1117,7 @@ function NewConnection() {
                         <label className="block text-neutral-600 font-medium mb-2">
                           Proof of Ownership
                         </label>
-                        <input
-                          type="file"
-                          name="proofOfOwnerShip"
-                          onChange={handleFileChange}
-                          className="border border-gray-300 rounded-md px-3 py-2"
-                        />
+                        <input type="file" onChange={handleFileChange} className="border border-gray-300 rounded-md px-3 py-2"/>
                         <p className="text-sm text-gray-500 mt-1">
                           Attach a scanned copy of the ownership document.
                         </p>
@@ -1151,12 +1126,7 @@ function NewConnection() {
                         <label className="block text-neutral-600 font-medium mb-2">
                           Proof of Installation Site
                         </label>
-                        <input
-                          type="file"
-                          name="proofOfInstallationSite"
-                          onChange={handleFileChange}
-                          className="border border-gray-300 rounded-md px-3 py-2"
-                        />
+                        <input type="file" onChange={handleFileChange} className="border border-gray-300 rounded-md px-3 py-2"/>
                         <p className="text-sm text-gray-500 mt-1">
                           Attach a scanned copy of the installation site
                           document.
@@ -1166,12 +1136,7 @@ function NewConnection() {
                         <label className="block text-neutral-600 font-medium mb-2">
                           Local Authorization Document
                         </label>
-                        <input
-                          type="file"
-                          name="localAuthorizationDocument"
-                          onChange={handleFileChange}
-                          className="border border-gray-300 rounded-md px-3 py-2"
-                        />
+                        <input type="file" onChange={handleFileChange} className="border border-gray-300 rounded-md px-3 py-2"/>
                         <p className="text-sm text-gray-500 mt-1">
                           Attach a scanned copy of the local authorization
                           document.
