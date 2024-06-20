@@ -81,11 +81,11 @@ namespace Services.Repositories.Billing
             return applications == null ? throw new ArgumentException("No applications found") : applications;  
         }
 
-        public async Task<IEnumerable<SurveyDto>> GetSurveyor()
+        public async Task<IEnumerable<SurveyorDto>> GetSurveyor()
         {
             var surveyors = await _userRepository.GetUsersByRoleName("Surveyor");
 
-            return surveyors == null ? throw new ArgumentException("No Surveyors found") : surveyors.Select(s => new SurveyDto
+            return surveyors == null ? throw new ArgumentException("No Surveyors found") : surveyors.Select(s => new SurveyorDto
             {
                 Id = s.Id,
                 Name = s.FullName
@@ -133,6 +133,55 @@ namespace Services.Repositories.Billing
             return "Surveyor assigned successfully";
         }
 
+        public async Task<string> SubmitSurveyReport(SurveyReportDto report)
+        {
+            // Get application by application Id
+            var application = await _context.Applications
+                .FirstOrDefaultAsync(a => a.ApplicationNumber == report.ApplicationNumber);
+
+            if (application == null)
+                throw new ArgumentException("No applications found");
+
+            // Get surveyor by surveyor Id
+            var surveyor = await _userRepository.GetUserById(report.SurveyorId);
+
+            if (surveyor == null)
+                throw new ArgumentException("No Surveyor found");
+
+            //map SurveyReportDto to survey report
+            var surveyReport = new SurveyReport
+            {
+                SurveyorId = report.SurveyorId,
+                ApplicationId = application.Id,
+                DistanceFromMain = report.DistanceFromMain,
+                LandType = report.LandType,
+                Obstractions = report.Obstractions,
+                MainLineDetails = report.MainLineDetails,
+                ServicePipeSize = report.ServicePipeSize,
+                ServicePipeLength = report.ServicePipeLength,
+                IdealConnectionType = report.IdealConnectionType,
+                ServicePipeMaterial = report.ServicePipeMaterial,
+                ExistingMainSize = report.ExistingMainSize,
+                ServicePipeDepth = report.ServicePipeDepth,
+                ConnectionFromExistingServicePipe = report.ConnectionFromExistingServicePipe,
+                ExistingConnections = report.ExistingConnections,
+                BlocMapNumber = report.BlocMapNumber,
+                NearByCustomer = report.NearByCustomer,
+                DistanceToConnectionPoint = report.DistanceToConnectionPoint,
+                ConnectionMainDetails = report.ConnectionMainDetails,
+                RoadInformation = report.RoadInformation,
+                Recommendation = report.Recommendation,
+                DateCreated = DateTime.Now
+            };
+
+            _context.surveyReports.Add(surveyReport);
+            await _context.SaveChangesAsync();
+
+            application.Status = "SURVEY REPORT SUBMITTED";
+            await _context.SaveChangesAsync();
+
+            return "Survey report submitted successfully";
+        }
 
     }
 }

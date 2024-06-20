@@ -41,7 +41,9 @@ namespace Infrastructure.Data
         public DbSet<Application> Applications { get; set; }
 
         public DbSet<CustomerCategory> CustomerCategories { get; set; }
-        
+
+        public DbSet<SurveyReport> surveyReports { get; set; }
+
         #endregion
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

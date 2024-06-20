@@ -101,5 +101,22 @@ namespace Trace.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
             }
         }
+
+        [HttpPost("/SubmitSurveyReport")]
+        public async Task<IActionResult> SubmitSurveyReport([FromBody] SurveyReportDto report) 
+        {
+            try
+            {
+                string message = await _newconnectionRepository.SubmitSurveyReport(report);
+                return Ok(message);
+            }catch(ArgumentException ex) 
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
+        }
     }
 }
