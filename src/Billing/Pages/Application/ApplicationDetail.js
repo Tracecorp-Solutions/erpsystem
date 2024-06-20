@@ -130,7 +130,7 @@ const ApplicationDetail = () => {
         </header>
 
         <ApplicantSection title="Applicant Information">
-          <div className="flex flex-wrap gap-4 content-center mt-4">
+          <div className="flex flex-wrap justify-between gap-4 content-center mt-4">
             <div className="flex flex-col justify-center">
               <div className="text-xs font-medium tracking-wide uppercase text-neutral-400">
                 full name
@@ -167,7 +167,7 @@ const ApplicationDetail = () => {
         </ApplicantSection>
 
         <ApplicantSection title="Residential Information">
-          <div className="flex gap-2 mt-4 max-md:flex-wrap">
+          <div className="flex gap-2 justify-between mt-4 max-md:flex-wrap">
             <div className="flex flex-col justify-center">
               <div className="text-xs font-medium tracking-wide uppercase text-neutral-400">
                 Street Address
@@ -201,7 +201,7 @@ const ApplicationDetail = () => {
               </div>
             </div>
           </div>
-          <div className="flex gap-2 mt-6 max-md:flex-wrap">
+          <div className="flex gap-2 mt-6 justify-between max-md:flex-wrap">
             <div className="flex flex-col justify-center">
               <div className="text-xs font-medium tracking-wide uppercase text-neutral-400">
                 state
@@ -238,7 +238,7 @@ const ApplicationDetail = () => {
         </ApplicantSection>
 
         <ApplicantSection title="Connection Details">
-          <div className="flex flex-wrap gap-2 content-center mt-4">
+          <div className="flex flex-wrap gap-2 justify-between content-center mt-4">
             <div className="flex flex-col justify-center">
               <div className="text-xs font-medium tracking-wide uppercase text-neutral-400">
                 Application Number
@@ -338,6 +338,61 @@ const ApplicationDetail = () => {
       <section className="flex flex-col px-6 pt-4 pb-5 mt-6 w-full bg-white rounded-3xl max-md:px-5 max-md:max-w-full">
         <header className="flex gap-4 justify-between text-2xl font-semibold capitalize text-neutral-600 max-md:flex-wrap max-md:max-w-full">
           <h2>Surveyor Report</h2>
+          <img
+            loading="lazy"
+            src="https://cdn.builder.io/api/v1/image/assets/TEMP/c7749e10a4cb727e5ce0c7fd48d44fb683bf93b2fa7c59643148748496b286b0?apiKey=27ec22b9382040ef8580a5e340d3a921&"
+            alt=""
+            className="shrink-0 my-auto w-6 aspect-square"
+          />
+        </header>
+        <div className="shrink-0 mt-4 h-px border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-opacity-10 max-md:max-w-full" />
+        <div className="flex gap-5 justify-between mt-4 max-md:flex-wrap">
+          <div className="flex gap-2 justify-between px-6 py-4 rounded-xl bg-stone-100 max-md:flex-wrap max-md:px-5 max-md:max-w-full">
+            <div className="flex flex-col justify-center text-center">
+              <div className="text-xs font-medium tracking-wide uppercase text-neutral-400">
+                Surveyor Assigned
+              </div>
+              <div className="mt-2 text-base leading-6 text-neutral-600">
+                No surveyor assigned yet
+              </div>
+            </div>
+            <button className="justify-center self-start px-6 py-3 mt-2.5 text-sm font-semibold text-white rounded-3xl bg-slate-500 max-md:px-5" onClick={() => setAssignSurveyorAction(true)}>
+              Assign Surveyor
+            </button>
+          </div>
+
+          <div className="flex gap-2 justify-between px-6 py-4 rounded-xl bg-stone-100 max-md:flex-wrap max-md:px-5 max-md:max-w-full">
+            <div className="flex flex-col justify-center text-center">
+              <div className="text-xs font-medium tracking-wide uppercase text-neutral-400">
+                JOB CARD
+              </div>
+              <div className="mt-2 text-base leading-6 text-neutral-600">
+                No Job card generated yet
+              </div>
+            </div>
+            <button className="justify-center self-start px-6 py-3 mt-2.5 text-sm font-semibold text-white whitespace-nowrap rounded-3xl bg-slate-500 max-md:px-5">
+              Generate
+            </button>
+          </div>
+        </div>
+
+        <div className="flex gap-2 justify-between px-6 py-4 mt-4 max-w-full rounded-xl bg-stone-100 w-[508px] max-md:flex-wrap max-md:px-5">
+          <div className="flex flex-col justify-center text-center">
+            <div className="text-xs font-medium tracking-wide uppercase text-neutral-400">
+              Surveyor report
+            </div>
+            <div className="mt-2 text-base leading-6 text-neutral-600">
+              Application is pending survey
+            </div>
+          </div>
+          <button className="justify-center self-start px-6 py-3 mt-2.5 text-sm font-semibold text-white rounded-3xl bg-slate-500 max-md:px-5" onClick={() => setSurveyorReport(true)}>
+            Update Findings
+          </button>
+        </div>
+      </section>
+      <section className="flex flex-col px-6 pt-4 pb-5 mt-6 w-full bg-white rounded-3xl max-md:px-5 max-md:max-w-full">
+        <header className="flex gap-4 justify-between text-2xl font-semibold capitalize text-neutral-600 max-md:flex-wrap max-md:max-w-full">
+          <h2>Connection Invoice</h2>
           <img
             loading="lazy"
             src="https://cdn.builder.io/api/v1/image/assets/TEMP/c7749e10a4cb727e5ce0c7fd48d44fb683bf93b2fa7c59643148748496b286b0?apiKey=27ec22b9382040ef8580a5e340d3a921&"

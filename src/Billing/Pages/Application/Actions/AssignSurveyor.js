@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Modal, DatePicker, Button } from "antd";
-import moment from 'moment';
+import moment from "moment";
+import axios from "axios";
 
 const AssignSurveyor = ({
   setAssignSurveyorAction,
@@ -9,9 +10,25 @@ const AssignSurveyor = ({
 }) => {
   const [currentStep, setCurrentStep] = useState(0);
   const [formData, setFormData] = useState({
-    surveyor: "", // Add surveyor field if not already present
-    scheduleDate: null, // Initialize scheduleDate to null
+    surveyor: "",
+    scheduleDate: null,
   });
+  const [surveyors, setSurveyors] = useState([]);
+
+  useEffect(() => {
+    fetchSurveyors();
+  }, []);
+
+  const fetchSurveyors = async () => {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}/GetSurveyors`
+      );
+      setSurveyors(response.data);
+    } catch (error) {
+      console.error("Error fetching surveyors:", error);
+    }
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -33,7 +50,7 @@ const AssignSurveyor = ({
   };
 
   const prevStep = () => {
-    setCurrentStep(currentStep - 1); 
+    setCurrentStep(currentStep - 1);
   };
 
   const handleSubmit = () => {
@@ -62,9 +79,11 @@ const AssignSurveyor = ({
                 className="ml-2 border rounded-lg border-neutral-500 w-full p-2"
               >
                 <option value="">Select Surveyor...</option>
-                <option value="surveyor1">Surveyor 1</option>
-                <option value="surveyor2">Surveyor 2</option>
-                <option value="surveyor3">Surveyor 3</option>
+                {surveyors.map((surveyor) => (
+                  <option key={surveyor.id} value={surveyor.name}>
+                    {surveyor.name}
+                  </option>
+                ))}
               </select>
             </div>
             <div className="flex flex-col">
@@ -75,7 +94,11 @@ const AssignSurveyor = ({
                 id="scheduleDate"
                 name="scheduleDate"
                 onChange={handleDateChange}
-                value={formData.scheduleDate ? moment(formData.scheduleDate) : null} // Ensure valid moment object or null
+                value={
+                  formData.scheduleDate
+                    ? moment(formData.scheduleDate)
+                    : null
+                } // Ensure valid moment object or null
                 className="ml-2 border rounded-lg border-neutral-500 w-full p-2"
               />
             </div>
@@ -91,9 +114,12 @@ const AssignSurveyor = ({
             The surveyor has been assigned successfully. They will be notified
             of the schedule.
           </p>
-          <button className="justify-center items-center px-2 py-2 mt-6 w-60 max-w-full text-white whitespace-nowrap rounded-3xl bg-customBlue text-white leading-[160%] max-md:px-5">
+          <Button
+            onClick={() => setAssignSurveyorAction(false)}
+            className="mt-6 w-60 max-w-full text-white whitespace-nowrap rounded-3xl bg-customBlue"
+          >
             Close
-          </button>
+          </Button>
         </section>
       ),
     },
@@ -124,7 +150,7 @@ const AssignSurveyor = ({
               <Button
                 type="button"
                 onClick={handleSubmit}
-                className="rounded-full  bg-customBlue text-white"
+                className="rounded-full bg-customBlue text-white"
               >
                 Assign Surveyor
               </Button>
