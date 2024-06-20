@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Modal, DatePicker, Button } from "antd";
+import { Modal, DatePicker, Button, message } from "antd";
+
 import moment from "moment";
 import axios from "axios";
 
@@ -7,10 +8,11 @@ const AssignSurveyor = ({
   setAssignSurveyorAction,
   handleApproveApplication,
   assignSurveyorAction,
+  applicationId,
 }) => {
   const [currentStep, setCurrentStep] = useState(0);
   const [formData, setFormData] = useState({
-    surveyor: "",
+    surveyorId: "",
     scheduleDate: null,
   });
   const [surveyors, setSurveyors] = useState([]);
@@ -49,16 +51,38 @@ const AssignSurveyor = ({
     setCurrentStep(currentStep + 1);
   };
 
-  const prevStep = () => {
-    setCurrentStep(currentStep - 1);
-  };
-
-  const handleSubmit = () => {
-    if (currentStep === steps.length - 1) {
-      handleApproveApplication(formData);
-      setAssignSurveyorAction(false);
-    } else {
-      nextStep();
+  const handleSubmit = async () => {
+    try {
+      const requestData = {
+        applicationId: applicationId,
+        surveyorId: formData.surveyorId,
+        ScheduledDate: formData.scheduleDate,
+      };
+  
+      const url = `${process.env.REACT_APP_API_URL}/AssignSurveyor`;
+      const params = {
+        applicationId: requestData.applicationId,
+        surveyorId: requestData.surveyorId,
+        ScheduledDate: requestData.ScheduledDate,
+      };
+  
+      const response = await axios.post(url, null, { params });
+  
+      if (response.status === 200) {
+        message.success("Surveyor assigned successfully!");
+  
+        if (currentStep === steps.length - 1) {
+          handleApproveApplication(formData);
+          setAssignSurveyorAction(false);
+        } else {
+          nextStep();
+        }
+      } else {
+        message.error("Failed to assign surveyor. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error assigning surveyor:", error);
+      message.error("Failed to assign surveyor. Please try again.");
     }
   };
 
@@ -73,14 +97,14 @@ const AssignSurveyor = ({
               </label>
               <select
                 id="surveyor"
-                name="surveyor"
+                name="surveyorId"
                 onChange={handleChange}
-                value={formData.surveyor}
+                value={formData.surveyorId}
                 className="ml-2 border rounded-lg border-neutral-500 w-full p-2"
               >
                 <option value="">Select Surveyor...</option>
                 {surveyors.map((surveyor) => (
-                  <option key={surveyor.id} value={surveyor.name}>
+                  <option key={surveyor.id} value={surveyor.id}>
                     {surveyor.name}
                   </option>
                 ))}
@@ -94,11 +118,7 @@ const AssignSurveyor = ({
                 id="scheduleDate"
                 name="scheduleDate"
                 onChange={handleDateChange}
-                value={
-                  formData.scheduleDate
-                    ? moment(formData.scheduleDate)
-                    : null
-                } // Ensure valid moment object or null
+                value={formData.scheduleDate ? moment(formData.scheduleDate) : null}
                 className="ml-2 border rounded-lg border-neutral-500 w-full p-2"
               />
             </div>

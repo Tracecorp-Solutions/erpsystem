@@ -452,7 +452,7 @@ const ApplicationDetail = () => {
         />
         <RejectApplicationFormAction rejectApplication={rejectApplication} setRejectApplication={setRejectApplication} />
         <ContactApplicantFormAction ContactApplicantForm={contactApplicantForm} setContactApplicantForm={setContactApplicantForm}  />
-        <AssignSurveyor assignSurveyorAction={assignSurveyorAction} setAssignSurveyorAction={setAssignSurveyorAction}  />
+        <AssignSurveyor applicationId={applicationNumber} assignSurveyorAction={assignSurveyorAction} setAssignSurveyorAction={setAssignSurveyorAction}  />
         <SurveyorReport surveyorReport={surveyorReport} setSurveyorReport={setSurveyorReport}  />
     </div>
   );
