@@ -1,6 +1,7 @@
-import * as React from "react";
+import React, {useState, useEffect} from "react";
 import { Dropdown, Menu } from "antd";
 import { DownOutlined } from "@ant-design/icons";
+import { useLocation  } from "react-router-dom";
 import ApplicantSection from "./ApplicantSection";
 import Document from "./Document";
 import ApplicationFormActions from "./Actions/ApplicationFormActions";
@@ -11,11 +12,41 @@ import SurveyorReport from "./Actions/SurveyorReport";
 
 const ApplicationDetail = () => {
 
-  const [isModalVisible, setIsModalVisible] = React.useState(false);
-  const [rejectApplication, setRejectApplication] = React.useState(false);
-  const [contactApplicantForm, setContactApplicantForm] = React.useState(false);
-  const [assignSurveyorAction, setAssignSurveyorAction] = React.useState(false);
-  const [surveyorReport, setSurveyorReport] = React.useState(false);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [rejectApplication, setRejectApplication] = useState(false);
+  const [contactApplicantForm, setContactApplicantForm] = useState(false);
+  const [assignSurveyorAction, setAssignSurveyorAction] = useState(false);
+  const [surveyorReport, setSurveyorReport] = useState(false);
+  const [applicationData, setApplicationData] = useState(null);
+
+  console.log("Application Data:", applicationData);
+
+  const location = useLocation();
+  const { state } = location;
+  const applicationNumber = state?.applicationNumber;
+
+  useEffect(() => {
+    if (applicationNumber) {
+      fetchApplicationById(applicationNumber);
+    }
+  }, [applicationNumber]);
+
+  const fetchApplicationById = (applicationNumber) => {
+    fetch(`${process.env.REACT_APP_API_URL}/GetApplicationByApplicationNumnber?applicationId=${applicationNumber}`)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to fetch application details");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log("Fetched application data:", data);
+        setApplicationData(data);
+      })
+      .catch((error) => {
+        console.error("Error fetching application details:", error.message);
+      });
+  };
 
   const handleApproveApplication = () => {
     setIsModalVisible(false);
@@ -32,6 +63,21 @@ const ApplicationDetail = () => {
     </Menu>
   );
 
+  // Safely accessing applicationData properties
+  const applicationNumberDisplay = applicationData?.applicationNumber || "Not Available";
+  const fullName = applicationData?.fullName || "Not Available";
+  const dateOfBirth = applicationData?.dateOfBirth || "Not Available";
+  const emailAddress = applicationData?.emailAddress || "Not Available";
+  const phoneNumber = applicationData?.phoneNumber || "Not Available";
+  const streetAddress = applicationData?.streetAddress || "Not Available";
+  const nearestLandMark = applicationData?.nearestLandMark || "Not Available";
+  const plotNumber = applicationData?.plotNumber || "Not Available";
+  const operationArea = applicationData?.operationArea?.name || "Not Available";
+  const operationState = applicationData?.state?.name || "Not Available";
+  const branch = applicationData?.branch?.name || "Not Available";
+  const territory = applicationData?.territory?.name || "Not Available";
+  const subTerritory = applicationData?.subTerritory?.name || "Not Available";
+
   return (
     <div className="flex flex-wrap justify-center content-start items-center py-6 rounded-3xl bg-stone-100">
       <header className="flex gap-2 items-center self-stretch px-6 text-base font-semibold leading-6 whitespace-nowrap text-neutral-600 max-md:flex-wrap max-md:px-5 w-full">
@@ -43,7 +89,7 @@ const ApplicationDetail = () => {
           className="shrink-0 self-stretch my-auto w-6 aspect-square"
         />
         <div className="justify-center self-stretch px-4 py-1 bg-white rounded-2xl">
-          APP567890
+          {applicationNumberDisplay}
         </div>
       </header>
 
@@ -53,7 +99,7 @@ const ApplicationDetail = () => {
             GE
           </div>
           <div className="text-4xl leading-[57.6px] text-neutral-600">
-            Grace Eze
+            {fullName}
           </div>
         </div>
         <div className="flex flex-col justify-center self-stretch my-auto">
@@ -84,21 +130,21 @@ const ApplicationDetail = () => {
         </header>
 
         <ApplicantSection title="Applicant Information">
-          <div className="flex flex-wrap gap-2 content-center mt-4">
+          <div className="flex flex-wrap gap-4 content-center mt-4">
             <div className="flex flex-col justify-center">
               <div className="text-xs font-medium tracking-wide uppercase text-neutral-400">
                 full name
               </div>
               <div className="mt-2 text-base leading-6 text-neutral-600">
-                Ms. Grace Eze
+                {fullName}
               </div>
             </div>
             <div className="flex flex-col justify-center">
               <div className="text-xs font-medium tracking-wide uppercase text-neutral-400">
-                Date of birth
+                Date of Birth
               </div>
               <div className="mt-2 text-base leading-6 text-neutral-600">
-                15th March, 1985
+              {dateOfBirth}
               </div>
             </div>
             <div className="flex flex-col justify-center whitespace-nowrap">
@@ -106,7 +152,7 @@ const ApplicationDetail = () => {
                 EMAIL
               </div>
               <div className="mt-2 text-base leading-6 text-neutral-600">
-                janecooper@email.com
+                {emailAddress}
               </div>
             </div>
             <div className="flex flex-col justify-center whitespace-nowrap">
@@ -114,7 +160,7 @@ const ApplicationDetail = () => {
                 PHONE
               </div>
               <div className="mt-2 text-base leading-6 text-neutral-600">
-                08087654321
+                {phoneNumber}
               </div>
             </div>
           </div>
@@ -127,7 +173,7 @@ const ApplicationDetail = () => {
                 Street Address
               </div>
               <div className="mt-2 text-base leading-6 text-neutral-600">
-                Unity Street
+                {streetAddress}
               </div>
             </div>
             <div className="flex flex-col justify-center">
@@ -135,7 +181,7 @@ const ApplicationDetail = () => {
                 nearest Landmark
               </div>
               <div className="mt-2 text-base leading-6 text-neutral-600">
-                Unity Primary School
+                {nearestLandMark}
               </div>
             </div>
             <div className="flex flex-col justify-center">
@@ -143,7 +189,7 @@ const ApplicationDetail = () => {
                 Plot Number
               </div>
               <div className="mt-2 text-base leading-6 text-neutral-600">
-                12
+                {plotNumber}
               </div>
             </div>
             <div className="flex flex-col justify-center">
@@ -151,7 +197,7 @@ const ApplicationDetail = () => {
                 Operation Area
               </div>
               <div className="mt-2 text-base leading-6 text-neutral-600">
-                Abeokuta South
+                {operationArea}
               </div>
             </div>
           </div>
@@ -161,23 +207,23 @@ const ApplicationDetail = () => {
                 state
               </div>
               <div className="mt-2 text-base leading-6 text-neutral-600">
-                Ogun State
+                {operationState}
               </div>
             </div>
-            <div className="flex flex-col justify-center">
+            <div className="flex flex-col justify-center md:ml-10">
               <div className="text-xs font-medium tracking-wide uppercase text-neutral-400">
                 branch
               </div>
               <div className="mt-2 text-base leading-6 text-neutral-600">
-                Abeokuta Main
+                {branch}
               </div>
             </div>
-            <div className="flex flex-col justify-center">
+            <div className="flex flex-col justify-center md:ml-10">
               <div className="text-xs font-medium tracking-wide uppercase text-neutral-400">
                 territory
               </div>
               <div className="mt-2 text-base leading-6 text-neutral-600">
-                Oke Ilewo
+                {territory}
               </div>
             </div>
             <div className="flex flex-col justify-center">
@@ -185,7 +231,7 @@ const ApplicationDetail = () => {
                 sub territory
               </div>
               <div className="mt-2 text-base leading-6 text-neutral-600">
-                Unity Estate
+                {subTerritory}
               </div>
             </div>
           </div>
@@ -198,7 +244,7 @@ const ApplicationDetail = () => {
                 Application Number
               </div>
               <div className="mt-2 text-base leading-6 text-neutral-600">
-                APP567890
+                {applicationNumberDisplay}
               </div>
             </div>
             <div className="flex flex-col justify-center">
@@ -289,7 +335,7 @@ const ApplicationDetail = () => {
         </div>
       </section>
 
-      <section className="flex flex-col px-6 pt-4 pb-5 mt-6 w-full bg-white rounded-3xl max-w-[1088px] max-md:px-5 max-md:max-w-full">
+      <section className="flex flex-col px-6 pt-4 pb-5 mt-6 w-full bg-white rounded-3xl max-md:px-5 max-md:max-w-full">
         <header className="flex gap-4 justify-between text-2xl font-semibold capitalize text-neutral-600 max-md:flex-wrap max-md:max-w-full">
           <h2>Surveyor Report</h2>
           <img

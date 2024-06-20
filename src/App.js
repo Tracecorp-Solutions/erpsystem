@@ -93,7 +93,7 @@ function App() {
               <Route path="/trial-balance" element={<TrialBalance />} />
               <Route path="/user-activity" element={<UserActivity />} />
               <Route path="/application" element={<ApplicationPage />} />
-              <Route path="/view-detail" element={<ApplicationDetail />} />
+              {/* <Route path="/view-detail" element={<ApplicationDetail />} /> */}
             </Routes>
           </div>
           <Routes>
