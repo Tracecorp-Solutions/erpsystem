@@ -22,7 +22,7 @@ const SurveyorReport = ({
   const [formData, setFormData] = useState({
     surveyorId: 2,
     applicationNumber: applicationNumberDisplay,
-    jobCard: "",
+    JobCard: "asdsa",
     distanceFromMain: "",
     landType: "",
     obstructions: "",
@@ -40,14 +40,17 @@ const SurveyorReport = ({
     distanceToConnectionPoint: "",
     connectionMainDetails: "",
     roadInformation: "",
-    recommendation: "",
+    recommendation: ""
   });
+
+  const [formfile, setFormFile] = useState(null);
 
   const [dateOfSurvey, setDateOfSurvey] = useState(null);
   const [installationOption, setInstallationOption] = useState("proceed");
 
   const handleFileChange = (e) => {
     const file = e.target.files[0]; // Get the first selected file
+    setFormFile(file);
     if (file) {
       setFormData({ ...formData, jobCard: file.name }); // Store the file name
     }
@@ -67,7 +70,10 @@ const SurveyorReport = ({
 
     const formDataToSubmit = new FormData();
     formDataToSubmit.append("jsonData", JSON.stringify(jsonData));
-    formDataToSubmit.append("jobCard", formData.jobCard);
+    formDataToSubmit.append("formFile", formfile);
+    formDataToSubmit.append("JobCard",jsonData.JobCard);
+    formDataToSubmit.append("ApplicationNumber",jsonData.applicationNumber);
+    formDataToSubmit.append("SurveyorId",jsonData.surveyorId);
 
     try {
       const response = await axios.post(
