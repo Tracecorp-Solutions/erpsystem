@@ -11,3 +11,16 @@ D:\working directory\erpsystem\Core\obj\Release\net8.0\refint\Core.dll
 D:\working directory\erpsystem\Core\obj\Release\net8.0\Core.pdb
 D:\working directory\erpsystem\Core\obj\Release\net8.0\ref\Core.dll
 D:\working directory\erpsystem\Core\obj\Release\net8.0\Core.csproj.AssemblyReference.cache
+D:\erpsystem\Core\bin\Release\net8.0\Core.deps.json
+D:\erpsystem\Core\bin\Release\net8.0\Core.dll
+D:\erpsystem\Core\bin\Release\net8.0\Core.pdb
+D:\erpsystem\Core\obj\Release\net8.0\Core.csproj.AssemblyReference.cache
+D:\erpsystem\Core\obj\Release\net8.0\Core.GeneratedMSBuildEditorConfig.editorconfig
+D:\erpsystem\Core\obj\Release\net8.0\Core.AssemblyInfoInputs.cache
+D:\erpsystem\Core\obj\Release\net8.0\Core.AssemblyInfo.cs
+D:\erpsystem\Core\obj\Release\net8.0\Core.csproj.CoreCompileInputs.cache
+D:\erpsystem\Core\obj\Release\net8.0\Core.sourcelink.json
+D:\erpsystem\Core\obj\Release\net8.0\Core.dll
+D:\erpsystem\Core\obj\Release\net8.0\refint\Core.dll
+D:\erpsystem\Core\obj\Release\net8.0\Core.pdb
+D:\erpsystem\Core\obj\Release\net8.0\ref\Core.dll
