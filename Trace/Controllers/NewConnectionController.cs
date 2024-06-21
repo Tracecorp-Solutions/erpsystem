@@ -103,7 +103,7 @@ namespace Trace.Controllers
         }
 
         [HttpPost("/SubmitSurveyReport")]
-        public async Task<IActionResult> SubmitSurveyReport(IFormFile formFile, [FromBody] SurveyReportDto report) 
+        public async Task<IActionResult> SubmitSurveyReport([FromForm]IFormFile formFile, [FromForm] SurveyReportDto report) 
         {
             try
             {

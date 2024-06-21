@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\erpsystem\\Infrastructure\\Infrastructure.csproj": {}
+    "D:\\working directory\\erpsystem\\Infrastructure\\Infrastructure.csproj": {}
   },
   "projects": {
-    "D:\\erpsystem\\Core\\Core.csproj": {
+    "D:\\working directory\\erpsystem\\Core\\Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\erpsystem\\Core\\Core.csproj",
+        "projectUniqueName": "D:\\working directory\\erpsystem\\Core\\Core.csproj",
         "projectName": "Core",
-        "projectPath": "D:\\erpsystem\\Core\\Core.csproj",
+        "projectPath": "D:\\working directory\\erpsystem\\Core\\Core.csproj",
         "packagesPath": "C:\\Users\\ngobi\\.nuget\\packages\\",
-        "outputPath": "D:\\erpsystem\\Core\\obj\\",
+        "outputPath": "D:\\working directory\\erpsystem\\Core\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\ngobi\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -71,14 +71,14 @@
         }
       }
     },
-    "D:\\erpsystem\\Infrastructure\\Infrastructure.csproj": {
+    "D:\\working directory\\erpsystem\\Infrastructure\\Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\erpsystem\\Infrastructure\\Infrastructure.csproj",
+        "projectUniqueName": "D:\\working directory\\erpsystem\\Infrastructure\\Infrastructure.csproj",
         "projectName": "Infrastructure",
-        "projectPath": "D:\\erpsystem\\Infrastructure\\Infrastructure.csproj",
+        "projectPath": "D:\\working directory\\erpsystem\\Infrastructure\\Infrastructure.csproj",
         "packagesPath": "C:\\Users\\ngobi\\.nuget\\packages\\",
-        "outputPath": "D:\\erpsystem\\Infrastructure\\obj\\",
+        "outputPath": "D:\\working directory\\erpsystem\\Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\ngobi\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -96,8 +96,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "D:\\erpsystem\\Core\\Core.csproj": {
-                "projectPath": "D:\\erpsystem\\Core\\Core.csproj"
+              "D:\\working directory\\erpsystem\\Core\\Core.csproj": {
+                "projectPath": "D:\\working directory\\erpsystem\\Core\\Core.csproj"
               }
             }
           }
