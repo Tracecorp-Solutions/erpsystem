@@ -118,5 +118,22 @@ namespace Trace.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
             }
         }
+
+        [HttpPost("/ApproveOrRejectApplication")]
+        public async Task<IActionResult> ApproveOrRejectApplication(ApplicationApprovalDto approvalDto) 
+        {
+            try
+            {
+                await _newconnectionRepository.ApproveOrRejectApplication(approvalDto);
+                return Ok("Application Approved/Rejected Successfully");
+            }catch(ArgumentException ex) 
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
+        }
     }
 }

@@ -6,6 +6,7 @@ using Core.Repositories.UserManagement;
 using Infrastructure.Data;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -209,6 +210,41 @@ namespace Services.Repositories.Billing
                 .ToListAsync();
 
             return surveyReports == null ? throw new ArgumentException("No survey reports found") : surveyReports;
+        }
+
+        public async Task ApproveOrRejectApplication(ApplicationApprovalDto approvalDto)
+        {
+
+            // Get application by application Id
+            var application = await _context.Applications
+                .FirstOrDefaultAsync(a => a.ApplicationNumber == approvalDto.ApplicationNumber);
+
+            if (application == null)
+                throw new ArgumentException("No applications found");
+
+            var applicationLog = new ApplicationLog
+            {
+                ApplicationNumber = application.ApplicationNumber,
+                Status = approvalDto.Rejected ? "REJECTED" : "APPROVED",
+                Message = approvalDto.Reason,
+                Date = DateTime.Now
+            };
+
+            _context.ApplicationLogs.Add(applicationLog);
+
+            if (application == null)
+                throw new ArgumentException("No applications found");
+
+            if (approvalDto.Rejected)
+            {
+                application.Status = "REJECTED";
+            }
+            else
+            {
+                application.Status = "APPROVED";
+            }
+
+            await _context.SaveChangesAsync();
         }
 
     }

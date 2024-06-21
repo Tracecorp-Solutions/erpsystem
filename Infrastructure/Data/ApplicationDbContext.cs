@@ -44,6 +44,8 @@ namespace Infrastructure.Data
 
         public DbSet<SurveyReport> surveyReports { get; set; }
 
+        public DbSet<ApplicationLog> ApplicationLogs { get; set; }
+
         #endregion
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

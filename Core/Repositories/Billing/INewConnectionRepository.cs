@@ -23,6 +23,8 @@ namespace Core.Repositories.Billing
 
         Task<string> SubmitSurveyReport(IFormFile formFile,SurveyReportDto report);
 
+        Task ApproveOrRejectApplication(ApplicationApprovalDto approvalDto);
+
       
     }
 }
