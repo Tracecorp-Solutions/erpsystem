@@ -307,16 +307,15 @@ const Transactions = () => {
             Transact
           </h2>
           <Dropdown overlay={menu} trigger={["click"]}>
-            <Button
+          <Button
               type="primary"
               icon={<DownloadOutlined />}
               style={{
                 background: "#9ec137",
                 borderRadius: "28px",
                 fontFamily: "outFit, Sans-serif",
-                padding: "15px",
-                marginLeft: "68px",
-
+                marginLeft: "auto", // Pushes the button to the right
+                display: "block", // Ensures the button is a block element
               }}
             >
               Download
@@ -329,6 +328,7 @@ const Transactions = () => {
               background: "#4467a1",
               borderRadius: "28px",
               fontFamily: "outFit, Sans-serif",
+              marginLeft: "12px",
             }}
           >
             + Start Transaction
