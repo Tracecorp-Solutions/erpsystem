@@ -4,7 +4,7 @@ import { Plus } from 'lucide-react';
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Modal, Button, Dropdown, Menu, Pagination } from "antd";
-import { EyeOutlined, EditOutlined } from "@ant-design/icons";
+import { EyeOutlined, EditOutlined, DownloadOutlined } from "@ant-design/icons";
 import AccountForm from "./EditAccountForm";
 import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
 import AccountComponentSidebar from "./AccountComponentSidebar";
@@ -12,6 +12,9 @@ import AccountNavigationFilter from "./AccountNavigationFilter";
 // import "../styles/AccountCreation.css";
 import EmptyData from "../../components/Shared/EmptyData";
 import SuccessMessageCard from "../../components/Shared/SuccessMessageCard";
+import html2pdf from "html2pdf.js";
+import * as XLSX from "xlsx";
+import { saveAs } from "file-saver";
 
 const AccountSetup = () => {
   const [showModal, setShowModal] = useState(false);
@@ -178,6 +181,43 @@ const AccountSetup = () => {
     setShowEditForm(false);
   };
 
+  const generatePDF = () => {
+    const htmlContent = document.getElementById("accountsContent").innerHTML;
+    html2pdf().from(htmlContent).save(`accounts.pdf`);
+  };
+
+  const generateExcel = () => {
+    const worksheet = XLSX.utils.json_to_sheet(accounts); // replace billData with your actual data
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+    const excelBuffer = XLSX.write(workbook, {
+      bookType: "xlsx",
+      type: "array",
+    });
+    const file = new Blob([excelBuffer], { type: "application/octet-stream" });
+    saveAs(file, `Data.xlsx`);
+  };
+
+  const handleDownload = ({ key }) => {
+    switch (key) {
+      case "pdf":
+        generatePDF();
+        break;
+      case "excel":
+        generateExcel();
+        break;
+      default:
+        break;
+    }
+  };
+
+  const menu = (
+    <Menu onClick={handleDownload}>
+      {/* <Menu.Item key="pdf">Download PDF</Menu.Item> */}
+      <Menu.Item key="excel">Download Excel</Menu.Item>
+    </Menu>
+  );
+
   const renderMenu = (accountId) => (
     <Menu style={{ width: "200px" }}>
       <Menu.Item
@@ -279,6 +319,22 @@ const AccountSetup = () => {
         >
           Accounts
         </h2>
+        <Dropdown overlay={menu} trigger={["click"]}>
+            <Button
+              type="primary"
+              icon={<DownloadOutlined />}
+              style={{
+                background: "#9ec137",
+                borderRadius: "28px",
+                fontFamily: "outFit, Sans-serif",
+                padding: "15px",
+                marginLeft: "68px",
+
+              }}
+            >
+              Download
+            </Button>
+            </Dropdown>
         <Button
           type="primary"
           onClick={() => setShowModal(true)}
