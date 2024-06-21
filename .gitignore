@@ -5,6 +5,8 @@
 /.pnp
 .pnp.js
 /.vs
+.vs/
+Trace/.vs
 
 # testing
 /coverage
