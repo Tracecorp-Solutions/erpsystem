@@ -41,7 +41,6 @@ function ApplicationPage() {
   };
 
   const handleMenuClick = (applicationNumber, action) => {
-    console.log("mmmmmmmmmmmmmmmmmmm", applicationNumber)
     switch (action) {
       case "view":
         navigate(`/billingdashboard`, { state: { screen: 'view-detail', applicationNumber } });

@@ -77,6 +77,7 @@ const ApplicationDetail = () => {
   const branch = applicationData?.branch?.name || "Not Available";
   const territory = applicationData?.territory?.name || "Not Available";
   const subTerritory = applicationData?.subTerritory?.name || "Not Available";
+  const status = applicationData?.status || "Not Available";
 
   return (
     <div className="flex flex-wrap justify-center content-start items-center py-6 rounded-3xl bg-stone-100">
@@ -106,8 +107,8 @@ const ApplicationDetail = () => {
           <div className="text-xs font-medium tracking-wide uppercase text-neutral-400">
             current status
           </div>
-          <div className="justify-center px-4 py-1 mt-2 text-base leading-6 bg-white rounded-2xl text-neutral-600">
-            Pending Survey
+          <div className="justify-center px-4 py-1 mt-2 text-white leading-6 bg-green-600 rounded-2xl text-neutral-600">
+            {status}
           </div>
         </div>
         <Dropdown overlay={menu} trigger={["click"]}>
@@ -453,7 +454,7 @@ const ApplicationDetail = () => {
         <RejectApplicationFormAction rejectApplication={rejectApplication} setRejectApplication={setRejectApplication} />
         <ContactApplicantFormAction ContactApplicantForm={contactApplicantForm} setContactApplicantForm={setContactApplicantForm}  />
         <AssignSurveyor applicationId={applicationNumber} assignSurveyorAction={assignSurveyorAction} setAssignSurveyorAction={setAssignSurveyorAction}  />
-        <SurveyorReport surveyorReport={surveyorReport} setSurveyorReport={setSurveyorReport}  />
+        <SurveyorReport surveyorReport={surveyorReport} setSurveyorReport={setSurveyorReport} applicationNumberDisplay={applicationNumberDisplay}  />
     </div>
   );
 };
