@@ -36,6 +36,8 @@ namespace Core.DTOs
         public string BillDeliveryMethod { get; set; }
         public int CustomerCategory { get; set; }
 
+        public string JobCard { get; set; }
+
         #endregion
 
         public string ProofOfIdentity { get; set; }
