@@ -16,6 +16,13 @@ Trace/.vs/Trace/
 
 Trace/.vs
 
+Infrastructure/bin/Release
+Infrastructure/obj/Release
+Services/obj/Release
+Services/bin/Release
+Trace/bin/Release
+Trace/obj/Release
+
 # production
 
 # misc
