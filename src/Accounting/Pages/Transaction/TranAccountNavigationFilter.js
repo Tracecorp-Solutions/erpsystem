@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import { Switch, Input, Button, DatePicker } from "antd";
-import { FilterOutlined, SearchOutlined } from "@ant-design/icons";
-// import "../styles/components/AccountNavigationFilter.css";
+import { Input, Button, DatePicker, Dropdown, Menu } from "antd";
+import { FilterOutlined, SearchOutlined, DownloadOutlined } from "@ant-design/icons";
 
 const { RangePicker } = DatePicker;
 
@@ -10,8 +9,8 @@ const TransactionNavigationFilter = ({
   setAccountNameFilter,
   setDateRange,
   handleFilter,
+  billData, // assuming bill data for download functionalities
 }) => {
-  const [disabled, setDisabled] = useState(false);
   const [dropdownVisible, setDropdownVisible] = useState(false);
 
   const toggleDropdown = () => {
@@ -57,24 +56,21 @@ const TransactionNavigationFilter = ({
                 paddingBottom: "10px",
               }}
             />
-            <button
-              type="button"
+            <Button
+              type="primary"
               onClick={handleFilter}
               style={{
-                border: "1px solid #4467A1",
                 width: "100%",
-                color: "#4467a1",
-                padding: "10px",
                 borderRadius: "24px",
                 marginTop: "5px",
-                alignContent: "flex-end",
               }}
             >
               Apply Filter
-            </button>
+            </Button>
           </div>
         )}
       </div>
+
     </div>
   );
 };
