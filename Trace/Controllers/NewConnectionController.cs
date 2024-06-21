@@ -18,11 +18,11 @@ namespace Trace.Controllers
         }
 
         [HttpPost("/NewApplication")]
-        public async Task<IActionResult> NewApplication( IFormFile file, [FromBody] NewApplicationDto application) 
+        public async Task<IActionResult> NewApplication([FromForm] List<IFormFile> file, [FromForm] NewApplicationDto application) 
         {
             try
             {
-                string appnumber = await _newconnectionRepository.RegisterNewCustomer(file, application);
+                string appnumber = await _newconnectionRepository.RegisterNewCustomer(file[0], application);
                 return Ok($"Application Registered Successfully Reference Number is {appnumber}");
             }catch(ArgumentException ex) 
             {
