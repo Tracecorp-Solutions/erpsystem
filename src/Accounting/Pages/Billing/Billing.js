@@ -1,23 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Dropdown, Menu, Button, Pagination, Modal } from "antd";
-import { EyeOutlined, EditOutlined } from "@ant-design/icons";
-import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
+import { Dropdown, Menu, Button, Pagination, Drawer, Modal } from "antd"; // Import Modal from antd
+import { EllipsisOutlined } from "@ant-design/icons";
 import axios from "axios";
 import BillsNavigationBar from "./BillsNavigationBar";
-import VendorForm from "./VendorForm";
 import BillsCard from "./BillsCard";
-import BillsForm from "./BillsForm";
+import ViewBill from "./ViewBill";
 
 const Billing = () => {
   const [bills, setBills] = useState([]);
   const [showFailure, setShowFailure] = useState(false);
-  const [showModal, setShowModal] = useState(false);
   const [messageInfo, setMessageInfo] = useState({ title: "", message: "" });
   const [toggleDisabled, setToggleDisabled] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(5);
-  const [selectBillId, setSelectedBillId] = useState(null);
+  const [selectedBillId, setSelectedBillId] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [showSuccess, setShowSuccess] = useState(false);
   const [drawerVisible, setDrawerVisible] = useState(false);
@@ -25,6 +22,7 @@ const Billing = () => {
   const [paidTotalAmount, setPaidTotalAmount] = useState(0);
   const [unpaidTotalAmount, setUnpaidTotalAmount] = useState(0);
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
+  const [showBillDetailsModal, setShowBillDetailsModal] = useState(false);
 
   const navigate = useNavigate();
 
@@ -43,7 +41,6 @@ const Billing = () => {
         );
         setTotalAmount(total);
 
-        // Calculate total amount for paid invoices
         const paidTotal = response.data
           .filter((bill) => bill.status === "Paid")
           .reduce(
@@ -80,13 +77,12 @@ const Billing = () => {
     navigate("/create-bills");
   };
 
-  const handleViewClick = () => {
-    // Open the sidebar drawer when "View" is clicked
+  const handleViewBill = (id) => {
+    setSelectedBillId(id);
     setDrawerVisible(true);
   };
 
   const handleMarkAsPaid = async (id) => {
-    console.log(id);
     setSelectedBillId(id);
     setShowConfirmationModal(true);
 
@@ -97,8 +93,15 @@ const Billing = () => {
       console.log("Fetched Invoice Data:", response.data);
     } catch (error) {
       console.error("Error fetching invoice data:", error);
-      // Optionally, you can display an error message to the user
     }
+  };
+
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = date.toLocaleString('default', { month: 'short' });
+    const year = date.getFullYear();
+    return `${day} ${month} ${year}`;
   };
 
   const filteredBills = bills.filter((bill) => {
@@ -109,9 +112,23 @@ const Billing = () => {
     return matchesSearchQuery;
   });
 
-  const handleConfirmation = async () => {
-    const id = selectBillId;
+  const handleSearch = (e) => {
+    setSearchQuery(e.target.value);
+  };
 
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentBills = filteredBills.slice(indexOfFirstItem, indexOfLastItem);
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  const onCloseDrawer = () => {
+    setDrawerVisible(false);
+    setSelectedBillId(null);
+  };
+
+  const handleConfirmation = async () => {
+    const id = selectedBillId;
     setShowConfirmationModal(false);
 
     try {
@@ -123,16 +140,6 @@ const Billing = () => {
     } catch (error) {
       console.error("Error marking bill as paid:", error);
     }
-  };
-
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentBills = filteredBills.slice(indexOfFirstItem, indexOfLastItem);
-
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
-
-  const handleSearch = (e) => {
-    setSearchQuery(e.target.value);
   };
 
   return (
@@ -162,7 +169,6 @@ const Billing = () => {
               background: "#4467a1",
               fontFamily: "outFit, Sans-serif",
               color: "#fff",
-              padding: "",
               borderRadius: "24px",
               marginTop: "15px",
             }}
@@ -237,112 +243,110 @@ const Billing = () => {
                     >
                       Amount Due
                     </th>
+                    <th
+                      scope="col"
+                      className="relative px-6 py-3"
+                      style={{
+                        marginRight: "50px",
+                        marginLeft: "20px",
+                        marginTop: "15px",
+                      }}
+                    >
+                      <span className="sr-only">Edit</span>
+                    </th>
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
-                  {currentBills.map((bill, index) => (
-                    <tr
-                      key={index}
-                      className="px-3 py-4 whitespace-nowrap mt-3 text-sm text-gray-800"
-                    >
-                      <td className="px-3 py-4 whitespace-nowrap mt-3 text-sm text-gray-800">
-                        <input type="checkbox" />
-                      </td>
-                      <td className="px-3 py-4 whitespace-nowrap mt-3 text-sm text-gray-800">
+                  {currentBills.map((bill) => (
+                    <tr key={bill.id} className="hover:bg-gray-100">
+                      <input
+                        type="checkbox"
+                        style={{ marginLeft: "10px" }}
+                      />
+                      <td className="px-3 py-4 whitespace-nowrap">
                         {bill.status}
                       </td>
-                      <td className="px-3 py-4 whitespace-nowrap mt-3 text-sm text-gray-800">
+                      <td className="px-3 py-4 whitespace-nowrap">
                         {bill.vendor.fullName}
                       </td>
-                      <td className="px-3 py-4 whitespace-nowrap mt-3 text-sm text-gray-800">
-                        {bill.billDate}
+                      <td className="px-3 py-4 whitespace-nowrap">
+                        {formatDate(bill.billDate)}
                       </td>
-                      <td className="px-3 py-4 whitespace-nowrap mt-3 text-sm text-gray-800">
+                      <td className="px-3 py-4 whitespace-nowrap">
                         {bill.billNo}
                       </td>
-                      <td className="px-3 py-4 whitespace-nowrap mt-3 text-sm text-gray-800">
+                      <td className="px-3 py-4 whitespace-nowrap">
                         {bill.billTranItems.reduce(
                           (total, item) => total + item.amount,
                           0
                         )}
                       </td>
-
-                      <td className="px-3 py-4 whitespace-nowrap mt-3 text-sm text-gray-800">
-                        <div
-                          style={{
-                            width: "100px",
-                            display: "flex",
-                            justifyContent: "center",
-                            marginTop: "10px",
-                          }}
+                      <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                        <Dropdown
+                          overlay={
+                            <Menu>
+                              <Menu.Item
+                                key="1"
+                                onClick={() => handleViewBill(bill.id)}
+                              >
+                                View
+                              </Menu.Item>
+                              <Menu.Item
+                                key="2"
+                                onClick={() => handleMarkAsPaid(bill.id)}
+                              >
+                                Mark as Paid
+                              </Menu.Item>
+                            </Menu>
+                          }
+                          trigger={["click"]}
                         >
-                          <Dropdown
-                            overlay={
-                              <Menu style={{ width: "250px" }}>
-                                <Menu.Item key="1" onClick={handleViewClick}>
-                                  <span>View Bill</span>
-                                </Menu.Item>
-                                <Menu.Item
-                                  key="2"
-                                  onClick={() => handleMarkAsPaid(bill.id)}
-                                >
-                                  Mark as Paid
-                                </Menu.Item>
-                              </Menu>
-                            }
-                            trigger={["click"]}
-                          >
-                            <EllipsisVerticalIcon
-                              className="h-5 w-5 mt-3"
-                              aria-hidden="true"
-                            />
-                          </Dropdown>
-                        </div>
+                          <EllipsisOutlined
+                            className="text-gray-500 cursor-pointer"
+                            style={{ fontSize: "24px" }}
+                          />
+                        </Dropdown>
                       </td>
                     </tr>
                   ))}
                 </tbody>
               </table>
-              <div style={{ marginTop: "20px", display: "flex" }}>
-                <Pagination
-                  current={currentPage}
-                  total={filteredBills.length}
-                  pageSize={itemsPerPage}
-                  onChange={paginate}
-                />
-              </div>
             </div>
           </div>
+          <Pagination
+            current={currentPage}
+            total={filteredBills.length}
+            pageSize={itemsPerPage}
+            onChange={paginate}
+          />
         </div>
       </div>
-      {showConfirmationModal && (
-        <Modal
-          title="Mark Bill as Paid"
-          visible={showConfirmationModal}
-          onOk={handleConfirmation}
-          onCancel={() => setShowConfirmationModal(false)}
-          okButtonProps={{
-            // Style props for OK button
-            style: {
-              backgroundColor: "#4467a1",
-              color: "#fff",
-              borderRadius: "4px",
-              borderColor: "#4467a1",
-              marginRight: "8px",
-            },
-          }}
-          cancelButtonProps={{
-            style: {
-              backgroundColor: "#fff",
-              color: "#4467a1",
-              borderRadius: "4px",
-              borderColor: "#4467a1",
-            },
-          }}
-        >
-          <p>Are you sure you want to mark this bill as paid?</p>
-        </Modal>
-      )}
+
+      <Drawer
+        title="View Bill"
+        placement="right"
+        closable={true}
+        onClose={onCloseDrawer}
+        visible={drawerVisible}
+        width={0}
+        destroyOnClose={true}
+      >
+        {selectedBillId && (
+          <ViewBill
+            billId={selectedBillId}
+            onClose={() => setDrawerVisible(false)}
+          />
+        )}
+      </Drawer>
+
+      <Modal
+        title="Mark Bill as Paid"
+        visible={showConfirmationModal}
+        onCancel={() => setShowConfirmationModal(false)}
+        onOk={handleConfirmation}
+      >
+        <p>Are you sure you want to mark this bill as paid?</p>
+      </Modal>
     </>
   );
 };
