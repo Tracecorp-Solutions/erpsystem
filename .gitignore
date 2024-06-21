@@ -14,6 +14,8 @@ Trace/.vs/Trace/
 # testing
 /coverage
 
+Trace/.vs
+
 # production
 
 # misc
