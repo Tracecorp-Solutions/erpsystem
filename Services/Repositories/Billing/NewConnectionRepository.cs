@@ -72,9 +72,18 @@ namespace Services.Repositories.Billing
                 LocalAuthorizationDocument = LocalAuthorizationDocument
             };
 
+            var applicationlog = new ApplicationLog
+            {
+                ApplicationNumber = newapplication.ApplicationNumber,
+                Status = "PENDING SURVEY",
+                Message = "Application has been submitted successfully",
+                Date = DateTime.Now
+            };
+
 
             newapplication.ApplicationNumber = Guid.NewGuid().ToString("N").Substring(0, 8);
             _context.Applications.Add(newapplication);
+            _context.ApplicationLogs.Add(applicationlog);
             await _context.SaveChangesAsync();
             return newapplication.ApplicationNumber;
         }
@@ -246,6 +255,14 @@ namespace Services.Repositories.Billing
 
             await _context.SaveChangesAsync();
         }
+
+        public async Task<IEnumerable<ApplicationLog>> GetApplicationLogs(string applicationNumber) { 
+            var applicationLogs = await _context.ApplicationLogs
+                .Where(a => a.ApplicationNumber == applicationNumber)
+                .ToListAsync();
+
+            return applicationLogs == null ? throw new ArgumentException("No application logs found") : applicationLogs;}
+
 
     }
 }

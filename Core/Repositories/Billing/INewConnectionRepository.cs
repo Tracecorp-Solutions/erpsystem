@@ -25,6 +25,8 @@ namespace Core.Repositories.Billing
 
         Task ApproveOrRejectApplication(ApplicationApprovalDto approvalDto);
 
+        Task<IEnumerable<ApplicationLog>> GetApplicationLogs(string applicationNumber);
+
       
     }
 }
