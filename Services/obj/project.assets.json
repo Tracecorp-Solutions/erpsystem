@@ -1164,11 +1164,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\working directory\\erpsystem\\Services\\Services.csproj",
+      "projectUniqueName": "D:\\erpsystem\\Services\\Services.csproj",
       "projectName": "Services",
-      "projectPath": "D:\\working directory\\erpsystem\\Services\\Services.csproj",
+      "projectPath": "D:\\erpsystem\\Services\\Services.csproj",
       "packagesPath": "C:\\Users\\ngobi\\.nuget\\packages\\",
-      "outputPath": "D:\\working directory\\erpsystem\\Services\\obj\\",
+      "outputPath": "D:\\erpsystem\\Services\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\ngobi\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -1186,11 +1186,11 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "D:\\working directory\\erpsystem\\Core\\Core.csproj": {
-              "projectPath": "D:\\working directory\\erpsystem\\Core\\Core.csproj"
+            "D:\\erpsystem\\Core\\Core.csproj": {
+              "projectPath": "D:\\erpsystem\\Core\\Core.csproj"
             },
-            "D:\\working directory\\erpsystem\\Infrastructure\\Infrastructure.csproj": {
-              "projectPath": "D:\\working directory\\erpsystem\\Infrastructure\\Infrastructure.csproj"
+            "D:\\erpsystem\\Infrastructure\\Infrastructure.csproj": {
+              "projectPath": "D:\\erpsystem\\Infrastructure\\Infrastructure.csproj"
             }
           }
         }

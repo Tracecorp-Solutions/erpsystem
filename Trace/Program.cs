@@ -2,6 +2,7 @@ using Core.DTOs;
 using Core.Models;
 using Core.Repositories.Accounting;
 using Core.Repositories.Billing;
+using Core.Repositories.Settings;
 using Core.Repositories.UserManagement;
 using Infrastructure.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -10,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Services.Repositories.Accounting;
 using Services.Repositories.Billing;
+using Services.Repositories.Settings;
 using Services.Repositories.UserManagement;
 using System.Text;
 
@@ -33,6 +35,7 @@ builder.Services.AddScoped<IRoleRepository, RoleRepository>();
 builder.Services.AddScoped<IReportRepository, ReportRepository>();
 builder.Services.AddScoped<INewConnectionRepository, NewConnectionRepository>();
 builder.Services.AddScoped<IBillingConfigurationRepository, BillingConfigurationRepository>();
+builder.Services.AddScoped<ISettings, Settings>();
 builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
 builder.Services.AddSingleton<EmailService>();
 

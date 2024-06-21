@@ -14,6 +14,8 @@ namespace Core.Models
         [ForeignKey("Surveyor")]
         public int SurveyorId { get; set; }
 
+        public string SurveryReportFile { get; set; }
+
         public User Surveyor { get; set; }
 
         [ForeignKey("Application")]

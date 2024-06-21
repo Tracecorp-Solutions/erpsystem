@@ -1,6 +1,7 @@
 ﻿using Core.DTOs;
 using Core.Models;
 using Core.Repositories.Billing;
+using Core.Repositories.Settings;
 using Core.Repositories.UserManagement;
 using Infrastructure.Data;
 using Microsoft.AspNetCore.Http;
@@ -18,24 +19,29 @@ namespace Services.Repositories.Billing
     public class NewConnectionRepository : INewConnectionRepository
     {
         private readonly ApplicationDbContext _context;
+        private readonly ISettings _settings;
 
         private readonly IUserRepository _userRepository;
 
-        public NewConnectionRepository(ApplicationDbContext context,IUserRepository userRepository) 
+        public NewConnectionRepository(ApplicationDbContext context,IUserRepository userRepository, ISettings settings) 
         {
             _context = context;
             _userRepository = userRepository;
+            _settings = settings;
         }
 
-        public async Task<string> RegisterNewCustomer(IFormFile file,NewApplicationDto application) 
+        public async Task<string> RegisterNewCustomer(List<IFormFile> file,NewApplicationDto application) 
         {
             // generate random application number and assign it to application number
 
             //check whether files have been uploaded
-            if (file == null)
-                throw new ArgumentNullException("Please attach the files");
+            if (file.Count != 4)
+                throw new ArgumentNullException("All files should be uploaded {ProofOfIdentity,ProofOfOwnerShip,ProofOfInstallationSite,LocalAuthorizationDocument}");
 
-
+            var ProofOfIdentity = await _settings.SaveFileAndReturnPathAsync(file[0]);
+            var ProofOfOwnerShip = await _settings.SaveFileAndReturnPathAsync(file[1]);
+            var ProofOfInstallationSite = await _settings.SaveFileAndReturnPathAsync(file[2]);
+            var LocalAuthorizationDocument = await _settings.SaveFileAndReturnPathAsync(file[3]);
             //map NewApplicationDto to new application
             var newapplication = new Application
             {
@@ -58,7 +64,11 @@ namespace Services.Repositories.Billing
                 BillDeliveryMethod = application.BillDeliveryMethod,
                 CustomerCategoryId = application.CustomerCategory,
                 Status = "PENDING SURVEY",
-                ApplicationDate = DateOnly.FromDateTime(DateTime.Now)
+                ApplicationDate = DateOnly.FromDateTime(DateTime.Now),
+                ProofOfIdentity = ProofOfIdentity,
+                ProofOfOwnerShip = ProofOfOwnerShip,
+                ProofOfInstallationSite = ProofOfInstallationSite,
+                LocalAuthorizationDocument = LocalAuthorizationDocument
             };
 
 
@@ -139,6 +149,10 @@ namespace Services.Repositories.Billing
             var application = await _context.Applications
                 .FirstOrDefaultAsync(a => a.ApplicationNumber == report.ApplicationNumber);
 
+            //check whether files have been uploaded
+            if (formFile == null)
+                throw new ArgumentNullException("Survey report file should be uploaded");
+
             if (application == null)
                 throw new ArgumentException("No applications found");
 
@@ -147,6 +161,9 @@ namespace Services.Repositories.Billing
 
             if (surveyor == null)
                 throw new ArgumentException("No Surveyor found");
+
+            // Save survey report file
+            var surveyReportFile = await _settings.SaveFileAndReturnPathAsync(formFile);
 
             //map SurveyReportDto to survey report
             var surveyReport = new SurveyReport
@@ -171,7 +188,8 @@ namespace Services.Repositories.Billing
                 ConnectionMainDetails = report.ConnectionMainDetails,
                 RoadInformation = report.RoadInformation,
                 Recommendation = report.Recommendation,
-                DateCreated = DateTime.Now
+                DateCreated = DateTime.Now,
+                SurveryReportFile = surveyReportFile,
             };
 
             _context.surveyReports.Add(surveyReport);

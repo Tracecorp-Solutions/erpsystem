@@ -11,7 +11,7 @@ namespace Core.Repositories.Billing
 {
     public interface INewConnectionRepository
     {
-        Task<string> RegisterNewCustomer(IFormFile file,NewApplicationDto application);
+        Task<string> RegisterNewCustomer(List<IFormFile> file,NewApplicationDto application);
 
         Task<IEnumerable<Application>> GetApplications();
 

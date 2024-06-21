@@ -17,6 +17,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Diagnostics.Contracts;
 using System.ComponentModel.DataAnnotations;
 using Core.Repositories.UserManagement;
+using Core.Repositories.Settings;
 
 namespace Services.Repositories.UserManagement
 {
@@ -25,11 +26,13 @@ namespace Services.Repositories.UserManagement
         private readonly ApplicationDbContext _context;
         private readonly IPasswordHasher<User> _passwordHasher;
         private readonly EmailService emailService;
-        public UserRepository(ApplicationDbContext context, IPasswordHasher<User> passwordHasher, EmailService emailService)
+        private readonly ISettings _settings; 
+        public UserRepository(ApplicationDbContext context, IPasswordHasher<User> passwordHasher, EmailService emailService, ISettings settings)
         {
             _context = context;
             _passwordHasher = passwordHasher;
             this.emailService = emailService;
+            _settings = settings;
         }
 
         public async Task<bool> CreateUserAsync(RegisterDto registerDto)
@@ -165,26 +168,8 @@ namespace Services.Repositories.UserManagement
             if (user == null)
                 throw new ArgumentException("Invalid Email Address");
 
-            string uploadsDirectory = Path.Combine(Directory.GetCurrentDirectory(), "uploads");
-            if (file != null)
-            {
-                // Check whether directory exists and create if it doesn't
-                if (!Directory.Exists(uploadsDirectory))
-                {
-                    Directory.CreateDirectory(uploadsDirectory);
-                }
-
-                string filename = Guid.NewGuid() + Path.GetExtension(file.FileName);
-                string filepath = Path.Combine(uploadsDirectory, filename);
-
-                using (var stream = new FileStream(filepath, FileMode.Create))
-                {
-                    await file.CopyToAsync(stream);
-                }
-
-                user.ProfilePic = filepath;
-            }
-
+            
+            user.ProfilePic = file != null ? await _settings.SaveFileAndReturnPathAsync(file) : user.ProfilePic;
             if (!string.IsNullOrEmpty(userDTO.OrganizationName))
             {
                 user.OrganisationId = await SaveAndReturnOrganisationIdAsync(userDTO.OrganizationName, userDTO.CountryOfOperation);
