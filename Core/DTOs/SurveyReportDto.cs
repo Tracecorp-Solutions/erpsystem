@@ -14,6 +14,8 @@ namespace Core.DTOs
         public int SurveyorId { get; set; }
         public string ApplicationNumber { get; set; }
 
+        public string JobCard { get; set; }
+
         #region survey questions
         public string? DistanceFromMain { get; set; }
         public string? LandType { get; set; }
