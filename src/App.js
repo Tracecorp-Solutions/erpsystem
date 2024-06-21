@@ -14,6 +14,7 @@ import Login from "./shared/auth/Login";
 import SetPassword from "./shared/auth/shared/SetPassword";
 import VerifyUser from "./shared/auth/shared/VerifyUser";
 import ViewTransactions from "./Accounting/Pages/Transaction/ViewTransactions";
+import ViewBill from "./Accounting/Pages/Billing/ViewBill";
 import BillsForm from "./Accounting/Pages/Billing/BillsForm";
 import InvoiceSidebar from "./components/InvoiceSidebar";
 import InvoiceForm from "./Accounting/Pages/Invoices/InvoiceForm";
@@ -74,6 +75,10 @@ function App() {
               <Route
                 path="view-transactions/:accountId"
                 element={<ViewTransactions />}
+              />
+              <Route
+                path="view-bill/:billId"
+                element={<ViewBill />}
               />
               <Route path="/customer" element={<Customer />} />
               <Route path="/create-bills" element={<BillsForm />} />
