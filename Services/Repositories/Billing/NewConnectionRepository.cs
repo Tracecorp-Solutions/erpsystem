@@ -133,7 +133,7 @@ namespace Services.Repositories.Billing
             return "Surveyor assigned successfully";
         }
 
-        public async Task<string> SubmitSurveyReport(SurveyReportDto report)
+        public async Task<string> SubmitSurveyReport(IFormFile formFile,SurveyReportDto report)
         {
             // Get application by application Id
             var application = await _context.Applications
