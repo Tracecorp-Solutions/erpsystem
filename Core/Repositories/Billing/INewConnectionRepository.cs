@@ -21,7 +21,7 @@ namespace Core.Repositories.Billing
 
         Task<string> AssignSurveyor(string applicationId, int surveyorId,DateOnly ScheduledDate);
 
-        Task<string> SubmitSurveyReport(SurveyReportDto report);
+        Task<string> SubmitSurveyReport(IFormFile formFile,SurveyReportDto report);
 
       
     }

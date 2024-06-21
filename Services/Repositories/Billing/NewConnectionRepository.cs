@@ -183,5 +183,15 @@ namespace Services.Repositories.Billing
             return "Survey report submitted successfully";
         }
 
+        public async Task<IEnumerable<SurveyReport>> GetSurveyReports()
+        {
+            var surveyReports = await _context.surveyReports
+                .Include(s => s.Application)
+                .Include(s => s.Surveyor)
+                .ToListAsync();
+
+            return surveyReports == null ? throw new ArgumentException("No survey reports found") : surveyReports;
+        }
+
     }
 }

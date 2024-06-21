@@ -103,11 +103,11 @@ namespace Trace.Controllers
         }
 
         [HttpPost("/SubmitSurveyReport")]
-        public async Task<IActionResult> SubmitSurveyReport([FromBody] SurveyReportDto report) 
+        public async Task<IActionResult> SubmitSurveyReport(IFormFile formFile, [FromBody] SurveyReportDto report) 
         {
             try
             {
-                string message = await _newconnectionRepository.SubmitSurveyReport(report);
+                string message = await _newconnectionRepository.SubmitSurveyReport(formFile, report);
                 return Ok(message);
             }catch(ArgumentException ex) 
             {
