@@ -18,11 +18,12 @@ const SurveyorReport = ({
   surveyorReport,
   setSurveyorReport,
   applicationNumberDisplay,
+  fullName
 }) => {
   const [formData, setFormData] = useState({
     surveyorId: 2,
     applicationNumber: applicationNumberDisplay,
-    JobCard: "asdsa",
+    JobCard: "", // Initialize with empty string
     distanceFromMain: "",
     landType: "",
     obstructions: "",
@@ -49,10 +50,10 @@ const SurveyorReport = ({
   const [installationOption, setInstallationOption] = useState("proceed");
 
   const handleFileChange = (e) => {
-    const file = e.target.files[0]; // Get the first selected file
+    const file = e.target.files[0];
     setFormFile(file);
     if (file) {
-      setFormData({ ...formData, jobCard: file.name }); // Store the file name
+      setFormData({ ...formData, JobCard: file.name });
     }
   };
 
@@ -71,16 +72,18 @@ const SurveyorReport = ({
     const formDataToSubmit = new FormData();
     formDataToSubmit.append("jsonData", JSON.stringify(jsonData));
     formDataToSubmit.append("formFile", formfile);
-    formDataToSubmit.append("JobCard",jsonData.JobCard);
-    formDataToSubmit.append("ApplicationNumber",jsonData.applicationNumber);
-    formDataToSubmit.append("SurveyorId",jsonData.surveyorId);
+    formDataToSubmit.append("JobCard", formData.JobCard);
+    formDataToSubmit.append("ApplicationNumber", applicationNumberDisplay);
+    formDataToSubmit.append("SurveyorId", formData.surveyorId);
 
     try {
       const response = await axios.post(
         `${process.env.REACT_APP_API_URL}/SubmitSurveyReport`,
         formDataToSubmit,
         {
-          "Content-Type": "multipart/form-data"
+          headers: {
+            "Content-Type": "multipart/form-data"
+          }
         }
       );
 
@@ -100,31 +103,17 @@ const SurveyorReport = ({
       onCancel={() => setSurveyorReport(false)}
       footer={null}
     >
-      <div className="p-6">
-        <div className="flex gap-4">
+      <div className="p-6 w-full">
+        <div className="flex justify-between">
           <LabelInput
             label="Application Number"
-            value={formData.applicationNumber}
+            value={applicationNumberDisplay}
           />
-          <LabelInput label="Surveyor’s ID" value={formData.surveyorId} />
-        </div>
-        <div className="flex gap-4 mt-4">
-          <LabelInput
-            label="Date Created"
-            value={
-              formData.dateCreated
-                ? moment(formData.dateCreated).format("YYYY-MM-DD HH:mm:ss")
-                : ""
-            }
-          />
-          <LabelInput
-            label="Date Updated"
-            value={
-              formData.dateUpdated
-                ? moment(formData.dateUpdated).format("YYYY-MM-DD HH:mm:ss")
-                : ""
-            }
-          />
+          <div>
+            <h3 className="font-semibold">Applicant Name</h3>
+            <p>{fullName}</p>
+          </div>
+          <LabelInput label="Surveyor’s Name" value={formData.surveyorId} />
         </div>
 
         <div className="mt-6">
@@ -140,10 +129,7 @@ const SurveyorReport = ({
         </div>
 
         <div className="mt-6">
-          <label className="block text-base font-semibold text-gray-700">
-            Upload Job Card
-          </label>
-          <div className="mt-6">
+          <div className="mt-6  border border-dotted border-gray-500 p-4 rounded-xl">
             <label className="block text-base font-semibold text-gray-700">
               Upload Job Card
             </label>
@@ -160,114 +146,111 @@ const SurveyorReport = ({
             <label className="block text-base font-semibold text-gray-700 mb-2">
               Distance from Main Line
             </label>
-            <p className="text-sm text-gray-500 mt-1">
-              What is the distance (in meters) from the main line to the
-              premises to be connected?
-            </p>
             <input
               type="text"
               value={formData.distanceFromMain}
               onChange={(e) =>
                 setFormData({ ...formData, distanceFromMain: e.target.value })
               }
-              className="w-full border p-4 rounded-xl mt-2"
+              className="w-full border p-4 rounded-xl"
             />
+            <p className="text-sm text-gray-500 mt-1">
+              What is the distance (in meters) from the main line to the
+              premises to be connected?
+            </p>
           </div>
 
           <div className="mt-4">
             <label className="block text-base font-semibold text-gray-700 mb-2">
               Land Type
             </label>
-            <p className="text-sm text-gray-500 mt-1">
-              What is the type of land between the main line and the premises?
-            </p>
             <input
               type="text"
               value={formData.landType}
               onChange={(e) =>
                 setFormData({ ...formData, landType: e.target.value })
               }
-              className="w-full border p-4 rounded-xl mt-2"
+              className="w-full border p-4 rounded-xl"
             />
+            <p className="text-sm text-gray-500 mt-1">
+              What is the type of land between the main line and the premises?
+            </p>
           </div>
 
           <div className="mt-4">
             <label className="block text-base font-semibold text-gray-700 mb-2">
               Obstructions
             </label>
-            <p className="text-sm text-gray-500 mt-1">
-              Are there any obstructions between the main line and the premises?
-              If yes, please list them.
-            </p>
             <input
               type="text"
               value={formData.obstructions}
               onChange={(e) =>
                 setFormData({ ...formData, obstructions: e.target.value })
               }
-              className="w-full border p-4 rounded-xl mt-2"
+              className="w-full border p-4 rounded-xl"
             />
+            <p className="text-sm text-gray-500 mt-1">
+              Are there any obstructions between the main line and the premises?
+              If yes, please list them.
+            </p>
           </div>
 
           <div className="mt-4">
             <label className="block text-base font-semibold text-gray-700 mb-2">
               Main Line Details
             </label>
-            <p className="text-sm text-gray-500 mt-1">
-              What is the type and size (in inches) of the main line to be
-              tapped?
-            </p>
             <input
               type="text"
               value={formData.mainLineDetails}
               onChange={(e) =>
                 setFormData({ ...formData, mainLineDetails: e.target.value })
               }
-              className="w-full border p-4 rounded-xl mt-2"
+              className="w-full border p-4 rounded-xl"
             />
+            <p className="text-sm text-gray-500 mt-1">
+              What is the type and size (in inches) of the main line to be
+              tapped?
+            </p>
           </div>
 
           <div className="mt-4">
             <label className="block text-base font-semibold text-gray-700 mb-2">
               Service Pipe Size
             </label>
-            <p className="text-sm text-gray-500 mt-1">
-              What is the size (in inches) of the service pipe to be laid?
-            </p>
             <input
               type="text"
               value={formData.servicePipeSize}
               onChange={(e) =>
                 setFormData({ ...formData, servicePipeSize: e.target.value })
               }
-              className="w-full border p-4 rounded-xl mt-2"
+              className="w-full border p-4 rounded-xl"
             />
+            <p className="text-sm text-gray-500 mt-1">
+              What is the size (in inches) of the service pipe to be laid?
+            </p>
           </div>
 
           <div className="mt-4">
             <label className="block text-base font-semibold text-gray-700 mb-2">
               Service Pipe Length
             </label>
-            <p className="text-sm text-gray-500 mt-1">
-              What is the length (in meters) of the service pipe to be laid?
-            </p>
             <input
               type="text"
               value={formData.servicePipeLength}
               onChange={(e) =>
                 setFormData({ ...formData, servicePipeLength: e.target.value })
               }
-              className="w-full border p-4 rounded-xl mt-2"
+              className="w-full border p-4 rounded-xl"
             />
+            <p className="text-sm text-gray-500 mt-1">
+              What is the length (in meters) of the service pipe to be laid?
+            </p>
           </div>
 
           <div className="mt-4">
             <label className="block text-base font-semibold text-gray-700 mb-2">
               Ideal Connection Type
             </label>
-            <p className="text-sm text-gray-500 mt-1">
-              What type of connection is ideal for the customer?
-            </p>
             <input
               type="text"
               value={formData.idealConnectionType}
@@ -277,17 +260,17 @@ const SurveyorReport = ({
                   idealConnectionType: e.target.value,
                 })
               }
-              className="w-full border  p-4 rounded-xl mt-2"
+              className="w-full border p-4 rounded-xl"
             />
+            <p className="text-sm text-gray-500 mt-1">
+              What type of connection is ideal for the customer?
+            </p>
           </div>
 
           <div className="mt-4">
             <label className="block text-base font-semibold text-gray-700 mb-2">
               Service Pipe Material
             </label>
-            <p className="text-sm text-gray-500 mt-1">
-              What material should the service pipe be made of?
-            </p>
             <input
               type="text"
               value={formData.servicePipeMaterial}
@@ -297,53 +280,52 @@ const SurveyorReport = ({
                   servicePipeMaterial: e.target.value,
                 })
               }
-              className="w-full border  p-4 rounded-xl mt-2"
+              className="w-full border p-4 rounded-xl"
             />
+            <p className="text-sm text-gray-500 mt-1">
+              What material should the service pipe be made of?
+            </p>
           </div>
 
           <div className="mt-4">
             <label className="block text-base font-semibold text-gray-700 mb-2">
               Existing Main Size
             </label>
-            <p className="text-sm text-gray-500 mt-1">
-              What is the size (in inches) of the existing main line?
-            </p>
             <input
               type="text"
               value={formData.existingMainSize}
               onChange={(e) =>
                 setFormData({ ...formData, existingMainSize: e.target.value })
               }
-              className="w-full border  p-4 rounded-xl mt-2"
+              className="w-full border p-4 rounded-xl"
             />
+            <p className="text-sm text-gray-500 mt-1">
+              What is the size (in inches) of the existing main line?
+            </p>
           </div>
 
           <div className="mt-4">
             <label className="block text-base font-semibold text-gray-700 mb-2">
               Service Pipe Depth
             </label>
-            <p className="text-sm text-gray-500 mt-1">
-              What is the depth (in meters) at which the service pipe should be
-              laid?
-            </p>
             <input
               type="text"
               value={formData.servicePipeDepth}
               onChange={(e) =>
                 setFormData({ ...formData, servicePipeDepth: e.target.value })
               }
-              className="w-full border  p-4 rounded-xl mt-2"
+              className="w-full border p-4 rounded-xl"
             />
+            <p className="text-sm text-gray-500 mt-1">
+              What is the depth (in meters) at which the service pipe should be
+              laid?
+            </p>
           </div>
 
           <div className="mt-4">
             <label className="block text-base font-semibold text-gray-700 mb-2">
               Connection from Existing Service Pipe
             </label>
-            <p className="text-sm text-gray-500 mt-1">
-              Should the connection be made from an existing service pipe?
-              Please specify.
-            </p>
             <input
               type="text"
               value={formData.connectionFromExistingServicePipe}
@@ -353,17 +335,18 @@ const SurveyorReport = ({
                   connectionFromExistingServicePipe: e.target.value,
                 })
               }
-              className="w-full border  p-4 rounded-xl mt-2"
+              className="w-full border p-4 rounded-xl"
             />
+            <p className="text-sm text-gray-500 mt-1">
+              Should the connection be made from an existing service pipe?
+              Please specify.
+            </p>
           </div>
 
           <div className="mt-4">
             <label className="block text-base font-semibold text-gray-700 mb-2">
               Existing Connections
             </label>
-            <p className="text-sm text-gray-500 mt-1">
-              Are there any existing connections nearby? If yes, please specify.
-            </p>
             <input
               type="text"
               value={formData.existingConnections}
@@ -373,52 +356,52 @@ const SurveyorReport = ({
                   existingConnections: e.target.value,
                 })
               }
-              className="w-full border  p-4 rounded-xl mt-2"
+              className="w-full border p-4 rounded-xl"
             />
+            <p className="text-sm text-gray-500 mt-1">
+              Are there any existing connections nearby? If yes, please specify.
+            </p>
           </div>
 
           <div className="mt-4">
             <label className="block text-base font-semibold text-gray-700 mb-2">
               Bloc Map Number
             </label>
-            <p className="text-sm text-gray-500 mt-1">
-              What is the bloc map number of the area?
-            </p>
             <input
               type="text"
               value={formData.blocMapNumber}
               onChange={(e) =>
                 setFormData({ ...formData, blocMapNumber: e.target.value })
               }
-              className="w- border  p-4 rounded-xl mt-2 w-full"
+              className="w- border p-4 w-full rounded-xl"
             />
+            <p className="text-sm text-gray-500 mt-1">
+              What is the bloc map number of the area?
+            </p>
           </div>
 
           <div className="mt-4">
             <label className="block text-base font-semibold text-gray-700 mb-2">
               Near By Customer
             </label>
-            <p className="text-sm text-gray-500 mt-1">
-              Are there any nearby customers who could benefit from this
-              connection?
-            </p>
             <input
               type="text"
               value={formData.nearByCustomer}
               onChange={(e) =>
                 setFormData({ ...formData, nearByCustomer: e.target.value })
               }
-              className="w-full border  p-4 rounded-xl mt-2"
+              className="w-full border p-4 rounded-xl"
             />
+            <p className="text-sm text-gray-500 mt-1">
+              Are there any nearby customers who could benefit from this
+              connection?
+            </p>
           </div>
 
           <div className="mt-4">
             <label className="block text-base font-semibold text-gray-700 mb-2">
               Distance to Connection Point
             </label>
-            <p className="text-sm text-gray-500 mt-1">
-              What is the distance (in meters) to the connection point?
-            </p>
             <input
               type="text"
               value={formData.distanceToConnectionPoint}
@@ -428,17 +411,17 @@ const SurveyorReport = ({
                   distanceToConnectionPoint: e.target.value,
                 })
               }
-              className="w-full border  p-4 rounded-xl mt-2"
+              className="w-full border p-4 rounded-xl"
             />
+            <p className="text-sm text-gray-500 mt-1">
+              What is the distance (in meters) to the connection point?
+            </p>
           </div>
 
           <div className="mt-4">
             <label className="block text-base font-semibold text-gray-700 mb-2">
               Connection Main Details
             </label>
-            <p className="text-sm text-gray-500 mt-1">
-              Provide details about the connection to the main line.
-            </p>
             <input
               type="text"
               value={formData.connectionMainDetails}
@@ -448,42 +431,45 @@ const SurveyorReport = ({
                   connectionMainDetails: e.target.value,
                 })
               }
-              className="w-full border p-4 rounded-xl mt-2"
+              className="w-full border p-4 rounded-xl"
             />
+            <p className="text-sm text-gray-500 mt-1">
+              Provide details about the connection to the main line.
+            </p>
           </div>
 
           <div className="mt-4">
             <label className="block text-base font-semibold text-gray-700 mb-2">
               Road Information
             </label>
-            <p className="text-sm text-gray-500 mt-1">
-              What are the road conditions that might affect the installation?
-            </p>
             <input
               type="text"
               value={formData.roadInformation}
               onChange={(e) =>
                 setFormData({ ...formData, roadInformation: e.target.value })
               }
-              className="w-full border p-4 rounded-xl mt-2"
+              className="w-full border p-4 rounded-xl"
             />
+            <p className="text-sm text-gray-500 mt-1">
+              What are the road conditions that might affect the installation?
+            </p>
           </div>
 
           <div className="mt-4">
             <label className="block text-base font-semibold text-gray-700 mb-2">
               Recommendation
             </label>
-            <p className="text-sm text-gray-500 mt-1">
-              Any recommendations for the installation or connection process?
-            </p>
             <input
               type="text"
               value={formData.recommendation}
               onChange={(e) =>
                 setFormData({ ...formData, recommendation: e.target.value })
               }
-              className="w-full border  p-4 rounded-xl mt-2"
+              className="w-full border p-4 rounded-xl"
             />
+            <p className="text-sm text-gray-500 mt-1">
+              Any recommendations for the installation or connection process?
+            </p>
           </div>
         </div>
 
@@ -495,17 +481,17 @@ const SurveyorReport = ({
             value={installationOption}
             onChange={handleInstallationChange}
             style={{ width: "100%", marginTop: "8px" }}
-            className="border h-14 rounded-xl"
+            className="h-14"
           >
-            <Option value="proceed">Proceed</Option>
+            <Option value="proceed">Proceed with Installation</Option>
             <Option value="not-proceed">Do Not Proceed</Option>
           </Select>
         </div>
 
         <div className="mt-6 flex justify-center w-full">
-          <button type="submit" onClick={handleSubmit} className="w-full h-14 text-xl bg-blue-700 text-white"  style={{borderRadius: "24px"}}>
+          <Button type="primary" onClick={handleSubmit} className="w-full h-14 text-xl bg-blue-800 rounded-full">
             Submit
-          </button>
+          </Button>
         </div>
       </div>
     </Modal>
