@@ -182,7 +182,7 @@ const AccountSetup = () => {
   };
 
   const generatePDF = () => {
-    const htmlContent = document.getElementById("accountsContent").innerHTML;
+    const htmlContent = document.getElementById("accounts").innerHTML;
     html2pdf().from(htmlContent).save(`accounts.pdf`);
   };
 
