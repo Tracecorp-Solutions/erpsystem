@@ -33,7 +33,7 @@ const AccountSetup = () => {
   const [editedAccount, setEditedAccount] = useState(null);
   const [accountNameFilter, setAccountNameFilter] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(3);
+  const [itemsPerPage] = useState(15);
   const [successMessage, setSuccessMessage] = useState("");
   const [loading, setLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
