@@ -68,7 +68,7 @@ const RejectApplicationFormAction = ({
         });
 
         const response = await axios.post(
-          "http://3.216.182.63:8095/TestApi/ApproveOrRejectApplication",
+          `${process.env.REACT_APP_API_URL}/ApproveOrRejectApplication`,
           {
             applicationNumber: applicationNumber,
             reason: reasonText,
