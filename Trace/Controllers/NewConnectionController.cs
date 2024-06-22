@@ -173,13 +173,14 @@ namespace Trace.Controllers
         }
 
         [HttpPost("/GenerateJobCard")]
-        public async Task<IActionResult> GenerateJobCard(string applicationNumber, int userid, string jobtype) 
+        public async Task<IActionResult> GenerateJobCard(string applicationNumber, int userid, string jobtype)
         {
             try
             {
                 string message = await _newconnectionRepository.GenerateJobCard(applicationNumber, userid, jobtype);
                 return Ok(message);
-            }catch(ArgumentException ex) 
+            }
+            catch (ArgumentException ex)
             {
                 return BadRequest(ex.Message);
             }
@@ -187,5 +188,6 @@ namespace Trace.Controllers
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
             }
+        }
     }
 }
