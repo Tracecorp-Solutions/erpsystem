@@ -31,8 +31,6 @@ const Login = () => {
         sessionStorage.setItem("fullname",userData.data.fullName);
         sessionStorage.setItem("organisationname",userData.data.organisation.name);
         sessionStorage.setItem("profilepic",userData.data.profilePic);
-        
-        console.log("Profile pic **********",userData.data.profilePic);
         navigate('/landing');
       }else{
         navigate("/profilelayout");
@@ -66,7 +64,13 @@ const Login = () => {
           <img src="/img/wave.png" alt="login" />
         </span>
       </div>
-      <form onSubmit={handleLogin}>
+      <form onSubmit={handleLogin} style={{
+         width: "80%",
+         display: "flex",
+         flexDirection: "column",
+         gap: "18px",
+         marginBottom: "18px"
+      }}>
         {feedback && (
           <div
             className={`message ${feedback.startsWith("Error") ? "error-message" : "success-message"}`}
