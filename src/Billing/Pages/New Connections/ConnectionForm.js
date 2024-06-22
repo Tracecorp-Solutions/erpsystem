@@ -318,47 +318,7 @@ function NewConnection() {
 
                   <main className="flex flex-col mt-6 bg-white rounded-3xl max-md:max-w-full overflow-auto">
                     <section className="flex flex-col px-8 pt-8 pb-3 max-md:px-5 max-md:max-w-full">
-                      <div className="flex gap-4 justify-between px-0.5 max-md:flex-wrap">
-                        <Step
-                          stepNumber="1"
-                          stepTitle="Personal Information"
-                          imgSrc="https://cdn.builder.io/api/v1/image/assets/TEMP/199c93b6c6f6722d44a5034345d6f2fe17ea88a437145380dc5f98b5469fa385?apiKey=27ec22b9382040ef8580a5e340d3a921&"
-                          isActive
-                        />
-                        <img
-                          loading="lazy"
-                          src="https://cdn.builder.io/api/v1/image/assets/TEMP/0b54045018ad575579a22acd36a3ab79789b2d22bda7c14c51157473741f6225?apiKey=27ec22b9382040ef8580a5e340d3a921&"
-                          alt=""
-                          className="shrink-0 self-start mt-6 border-solid aspect-[20] border-[5px] border-neutral-500 border-opacity-30 stroke-[5px] stroke-neutral-500 stroke-opacity-30 w-[95px]"
-                        />
-                        <Step
-                          stepNumber="2"
-                          stepTitle="Residential Information"
-                          imgSrc="https://cdn.builder.io/api/v1/image/assets/TEMP/862b2af2f85bf4edd9fd3f7941052c1aa2536819b5b2e767f16c1bc6550cc70b?apiKey=27ec22b9382040ef8580a5e340d3a921&"
-                        />
-                        <img
-                          loading="lazy"
-                          src="https://cdn.builder.io/api/v1/image/assets/TEMP/0b54045018ad575579a22acd36a3ab79789b2d22bda7c14c51157473741f6225?apiKey=27ec22b9382040ef8580a5e340d3a921&"
-                          alt=""
-                          className="shrink-0 self-start mt-6 border-solid aspect-[20] border-[5px] border-neutral-500 border-opacity-30 stroke-[5px] stroke-neutral-500 stroke-opacity-30 w-[95px]"
-                        />
-                        <Step
-                          stepNumber="3"
-                          stepTitle="Connection Details"
-                          imgSrc="https://cdn.builder.io/api/v1/image/assets/TEMP/83274c9c51ec56a522950907f75568e73c7b12ee0f3761bc68e72c153fee5091?apiKey=27ec22b9382040ef8580a5e340d3a921&"
-                        />
-                        <img
-                          loading="lazy"
-                          src="https://cdn.builder.io/api/v1/image/assets/TEMP/0b54045018ad575579a22acd36a3ab79789b2d22bda7c14c51157473741f6225?apiKey=27ec22b9382040ef8580a5e340d3a921&"
-                          alt=""
-                          className="shrink-0 self-start mt-6 border-solid aspect-[20] border-[5px] border-neutral-500 border-opacity-30 stroke-[5px] stroke-neutral-500 stroke-opacity-30 w-[95px]"
-                        />
-                        <Step
-                          stepNumber="4"
-                          stepTitle="Supporting Documents"
-                          imgSrc="https://cdn.builder.io/api/v1/image/assets/TEMP/700b08a5ca31bc1a0e4f23e30dfcf37c6bac8fd9279bc171b2668f0266d9b6a5?apiKey=27ec22b9382040ef8580a5e340d3a921&"
-                        />
-                      </div>
+                     
                       <div className="shrink-0 mt-8 h-px border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-opacity-10 max-md:max-w-full"></div>
 
                       {/* <div className="flex flex-wrap gap-16 max-md:flex-col mt-6 max-md:gap-0 w-full"> */}
@@ -600,47 +560,7 @@ function NewConnection() {
                   </header>
                   <main className="flex flex-col mt-6 bg-white rounded-3xl max-md:max-w-full overflow-auto">
                     <section className="flex flex-col px-8 pt-8 pb-3 max-md:px-5 max-md:max-w-full">
-                      <div className="flex gap-4 justify-between px-0.5 max-md:flex-wrap">
-                        <Step
-                          stepNumber="1"
-                          stepTitle="Personal Information"
-                          imgSrc="https://cdn.builder.io/api/v1/image/assets/TEMP/199c93b6c6f6722d44a5034345d6f2fe17ea88a437145380dc5f98b5469fa385?apiKey=27ec22b9382040ef8580a5e340d3a921&"
-                          isActive
-                        />
-                        <img
-                          loading="lazy"
-                          src="https://cdn.builder.io/api/v1/image/assets/TEMP/0b54045018ad575579a22acd36a3ab79789b2d22bda7c14c51157473741f6225?apiKey=27ec22b9382040ef8580a5e340d3a921&"
-                          alt=""
-                          className="shrink-0 self-start mt-6 border-solid aspect-[20] border-[5px] border-neutral-500 border-opacity-30 stroke-[5px] stroke-neutral-500 stroke-opacity-30 w-[95px]"
-                        />
-                        <Step
-                          stepNumber="2"
-                          stepTitle="Residential Information"
-                          imgSrc="https://cdn.builder.io/api/v1/image/assets/TEMP/862b2af2f85bf4edd9fd3f7941052c1aa2536819b5b2e767f16c1bc6550cc70b?apiKey=27ec22b9382040ef8580a5e340d3a921&"
-                        />
-                        <img
-                          loading="lazy"
-                          src="https://cdn.builder.io/api/v1/image/assets/TEMP/0b54045018ad575579a22acd36a3ab79789b2d22bda7c14c51157473741f6225?apiKey=27ec22b9382040ef8580a5e340d3a921&"
-                          alt=""
-                          className="shrink-0 self-start mt-6 border-solid aspect-[20] border-[5px] border-neutral-500 border-opacity-30 stroke-[5px] stroke-neutral-500 stroke-opacity-30 w-[95px]"
-                        />
-                        <Step
-                          stepNumber="3"
-                          stepTitle="Connection Details"
-                          imgSrc="https://cdn.builder.io/api/v1/image/assets/TEMP/83274c9c51ec56a522950907f75568e73c7b12ee0f3761bc68e72c153fee5091?apiKey=27ec22b9382040ef8580a5e340d3a921&"
-                        />
-                        <img
-                          loading="lazy"
-                          src="https://cdn.builder.io/api/v1/image/assets/TEMP/0b54045018ad575579a22acd36a3ab79789b2d22bda7c14c51157473741f6225?apiKey=27ec22b9382040ef8580a5e340d3a921&"
-                          alt=""
-                          className="shrink-0 self-start mt-6 border-solid aspect-[20] border-[5px] border-neutral-500 border-opacity-30 stroke-[5px] stroke-neutral-500 stroke-opacity-30 w-[95px]"
-                        />
-                        <Step
-                          stepNumber="4"
-                          stepTitle="Supporting Documents"
-                          imgSrc="https://cdn.builder.io/api/v1/image/assets/TEMP/700b08a5ca31bc1a0e4f23e30dfcf37c6bac8fd9279bc171b2668f0266d9b6a5?apiKey=27ec22b9382040ef8580a5e340d3a921&"
-                        />
-                      </div>
+                      
                       <div className="shrink-0 mt-8 h-px border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-opacity-10 max-md:max-w-full"></div>
 
                       <div className="mt-4 max-md:max-w-full">
@@ -882,47 +802,8 @@ function NewConnection() {
                   </header>
                   <main className="flex flex-col mt-6 bg-white rounded-3xl max-md:max-w-full overflow-auto">
                     <section className="flex flex-col px-8 pt-8 pb-3 max-md:px-5 max-md:max-w-full">
-                      <div className="flex gap-4 justify-between px-0.5 max-md:flex-wrap">
-                        <Step
-                          stepNumber="1"
-                          stepTitle="Personal Information"
-                          imgSrc="https://cdn.builder.io/api/v1/image/assets/TEMP/199c93b6c6f6722d44a5034345d6f2fe17ea88a437145380dc5f98b5469fa385?apiKey=27ec22b9382040ef8580a5e340d3a921&"
-                          isActive
-                        />
-                        <img
-                          loading="lazy"
-                          src="https://cdn.builder.io/api/v1/image/assets/TEMP/0b54045018ad575579a22acd36a3ab79789b2d22bda7c14c51157473741f6225?apiKey=27ec22b9382040ef8580a5e340d3a921&"
-                          alt=""
-                          className="shrink-0 self-start mt-6 border-solid aspect-[20] border-[5px] border-neutral-500 border-opacity-30 stroke-[5px] stroke-neutral-500 stroke-opacity-30 w-[95px]"
-                        />
-                        <Step
-                          stepNumber="2"
-                          stepTitle="Residential Information"
-                          imgSrc="https://cdn.builder.io/api/v1/image/assets/TEMP/862b2af2f85bf4edd9fd3f7941052c1aa2536819b5b2e767f16c1bc6550cc70b?apiKey=27ec22b9382040ef8580a5e340d3a921&"
-                        />
-                        <img
-                          loading="lazy"
-                          src="https://cdn.builder.io/api/v1/image/assets/TEMP/0b54045018ad575579a22acd36a3ab79789b2d22bda7c14c51157473741f6225?apiKey=27ec22b9382040ef8580a5e340d3a921&"
-                          alt=""
-                          className="shrink-0 self-start mt-6 border-solid aspect-[20] border-[5px] border-neutral-500 border-opacity-30 stroke-[5px] stroke-neutral-500 stroke-opacity-30 w-[95px]"
-                        />
-                        <Step
-                          stepNumber="3"
-                          stepTitle="Connection Details"
-                          imgSrc="https://cdn.builder.io/api/v1/image/assets/TEMP/83274c9c51ec56a522950907f75568e73c7b12ee0f3761bc68e72c153fee5091?apiKey=27ec22b9382040ef8580a5e340d3a921&"
-                        />
-                        <img
-                          loading="lazy"
-                          src="https://cdn.builder.io/api/v1/image/assets/TEMP/0b54045018ad575579a22acd36a3ab79789b2d22bda7c14c51157473741f6225?apiKey=27ec22b9382040ef8580a5e340d3a921&"
-                          alt=""
-                          className="shrink-0 self-start mt-6 border-solid aspect-[20] border-[5px] border-neutral-500 border-opacity-30 stroke-[5px] stroke-neutral-500 stroke-opacity-30 w-[95px]"
-                        />
-                        <Step
-                          stepNumber="4"
-                          stepTitle="Supporting Documents"
-                          imgSrc="https://cdn.builder.io/api/v1/image/assets/TEMP/700b08a5ca31bc1a0e4f23e30dfcf37c6bac8fd9279bc171b2668f0266d9b6a5?apiKey=27ec22b9382040ef8580a5e340d3a921&"
-                        />
-                      </div>
+                     
+            
                       <div className="shrink-0 mt-8 h-px border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-opacity-10 max-md:max-w-full"></div>
 
                       <div className="mt-4 max-md:max-w-full">
@@ -1042,50 +923,7 @@ function NewConnection() {
                 </header>
                 <div className="flex flex-col mt-6 bg-white rounded-3xl max-md:max-w-full">
                   <section className="flex flex-col px-8 pt-8 pb-20 max-md:px-5 max-md:max-w-full">
-                    <div className="flex flex-row gap-4 justify-between px-0.5 max-md:flex-wrap">
-                      <StepItem
-                        stepNumber="1"
-                        stepTitle="Personal Information"
-                        imgSrc="https://cdn.builder.io/api/v1/image/assets/TEMP/ff8638ff9fab467bad1cb0313acaf5a3ce156fc9accd2302209d4e76b24f0549?apiKey=27ec22b9382040ef8580a5e340d3a921&"
-                        isComplete
-                      />
-                      <img
-                        loading="lazy"
-                        src="https://cdn.builder.io/api/v1/image/assets/TEMP/29e775b8417bcbfed9697896a5b81879c830b3fdb9810856fcd8fe58283c0d10?apiKey=27ec22b9382040ef8580a5e340d3a921&"
-                        alt=""
-                        className="shrink-0 self-start mt-6 border-lime-400 border-solid aspect-[20] border-[5px] stroke-[5px] stroke-lime-400 w-[95px]"
-                      />
-                      <StepItem
-                        stepNumber="2"
-                        stepTitle="Residential Information"
-                        imgSrc="https://cdn.builder.io/api/v1/image/assets/TEMP/896d7c72c5db9f415b855cd888fa335bfb8fdc56b4d44efa441eadd83ce334a8?apiKey=27ec22b9382040ef8580a5e340d3a921&"
-                        isComplete
-                      />
-                      <img
-                        loading="lazy"
-                        src="https://cdn.builder.io/api/v1/image/assets/TEMP/29e775b8417bcbfed9697896a5b81879c830b3fdb9810856fcd8fe58283c0d10?apiKey=27ec22b9382040ef8580a5e340d3a921&"
-                        alt=""
-                        className="shrink-0 self-start mt-6 border-lime-400 border-solid aspect-[20] border-[5px] stroke-[5px] stroke-lime-400 w-[95px]"
-                      />
-                      <StepItem
-                        stepNumber="3"
-                        stepTitle="Connection Details"
-                        imgSrc="https://cdn.builder.io/api/v1/image/assets/TEMP/0b0b7159a0f61d422ff56dbcb32e5eecb7b99995bb6d508381cd689eb8d6a1d6?apiKey=27ec22b9382040ef8580a5e340d3a921&"
-                        isComplete
-                      />
-                      <img
-                        loading="lazy"
-                        src="https://cdn.builder.io/api/v1/image/assets/TEMP/29e775b8417bcbfed9697896a5b81879c830b3fdb9810856fcd8fe58283c0d10?apiKey=27ec22b9382040ef8580a5e340d3a921&"
-                        alt=""
-                        className="shrink-0 self-start mt-6 border-lime-400 border-solid aspect-[20] border-[5px] stroke-[5px] stroke-lime-400 w-[95px]"
-                      />
-                      <StepItem
-                        stepNumber="4"
-                        stepTitle="Supporting Documents"
-                        imgSrc="https://cdn.builder.io/api/v1/image/assets/TEMP/dfc58e5687c0ddcaba8cf8f5e2db12dbfdd52044e4566ce96f4b20c4b2e0d362?apiKey=27ec22b9382040ef8580a5e340d3a921&"
-                        isComplete={false}
-                      />
-                    </div>
+                    
                     <div className="flex flex-wrap gap-8 mt-16 max-md:gap-4">
                       <div className="w-full md:w-1/2">
                         <label className="block text-neutral-600 font-medium mb-2">
