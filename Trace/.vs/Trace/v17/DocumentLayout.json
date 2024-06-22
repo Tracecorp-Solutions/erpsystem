@@ -3,6 +3,9 @@
   "WorkspaceRootPath": "D:\\working directory\\erpsystem\\Trace\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\working directory\\erpsystem\\Infrastructure\\Migrations\\20240622173445_AdditionOfJobCard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{97CA6EF6-720A-4545-8A15-EBF2D4F20DA0}|Trace.csproj|d:\\working directory\\erpsystem\\trace\\controllers\\newconnectioncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{97CA6EF6-720A-4545-8A15-EBF2D4F20DA0}|Trace.csproj|solutionrelative:controllers\\newconnectioncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -47,7 +50,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 11,
+          "SelectedChildIndex": 6,
           "Children": [
             {
               "$type": "Bookmark",
@@ -75,7 +78,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 0,
+              "Title": "20240622173445_AdditionOfJobCard.cs",
+              "DocumentMoniker": "D:\\working directory\\erpsystem\\Infrastructure\\Migrations\\20240622173445_AdditionOfJobCard.cs",
+              "RelativeDocumentMoniker": "..\\Infrastructure\\Migrations\\20240622173445_AdditionOfJobCard.cs",
+              "ToolTip": "D:\\working directory\\erpsystem\\Infrastructure\\Migrations\\20240622173445_AdditionOfJobCard.cs",
+              "RelativeToolTip": "..\\Infrastructure\\Migrations\\20240622173445_AdditionOfJobCard.cs",
+              "ViewState": "AQIAAAMAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-22T17:34:45.729Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
               "Title": "JobCard.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Core\\Models\\JobCard.cs",
               "RelativeDocumentMoniker": "..\\Core\\Models\\JobCard.cs",
@@ -88,7 +104,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 11,
               "Title": "ApplicationApprovalDto.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Core\\DTOs\\ApplicationApprovalDto.cs",
               "RelativeDocumentMoniker": "..\\Core\\DTOs\\ApplicationApprovalDto.cs",
@@ -100,7 +116,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "ApplicationDbContext.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Infrastructure\\Data\\ApplicationDbContext.cs",
               "RelativeDocumentMoniker": "..\\Infrastructure\\Data\\ApplicationDbContext.cs",
@@ -113,7 +129,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "NewConnectionRepository.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Services\\Repositories\\Billing\\NewConnectionRepository.cs",
               "RelativeDocumentMoniker": "..\\Services\\Repositories\\Billing\\NewConnectionRepository.cs",
@@ -126,7 +142,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 12,
               "Title": "ApplicationLog.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Core\\Models\\ApplicationLog.cs",
               "RelativeDocumentMoniker": "..\\Core\\Models\\ApplicationLog.cs",
@@ -138,7 +154,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "NewConnectionController.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Trace\\Controllers\\NewConnectionController.cs",
               "RelativeDocumentMoniker": "Controllers\\NewConnectionController.cs",
@@ -151,7 +167,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "INewConnectionRepository.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Core\\Repositories\\Billing\\INewConnectionRepository.cs",
               "RelativeDocumentMoniker": "..\\Core\\Repositories\\Billing\\INewConnectionRepository.cs",
@@ -164,7 +180,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 10,
               "Title": "20240621162342_AdditionOfApplicationLogs.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Infrastructure\\Migrations\\20240621162342_AdditionOfApplicationLogs.cs",
               "RelativeDocumentMoniker": "..\\Infrastructure\\Migrations\\20240621162342_AdditionOfApplicationLogs.cs",
@@ -176,7 +192,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "20240622155208_Addition.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Infrastructure\\Migrations\\20240622155208_Addition.cs",
               "RelativeDocumentMoniker": "..\\Infrastructure\\Migrations\\20240622155208_Addition.cs",
@@ -188,7 +204,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 8,
               "Title": "NewApplicationDto.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Core\\DTOs\\NewApplicationDto.cs",
               "RelativeDocumentMoniker": "..\\Core\\DTOs\\NewApplicationDto.cs",
@@ -200,7 +216,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "Application.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Core\\Models\\Application.cs",
               "RelativeDocumentMoniker": "..\\Core\\Models\\Application.cs",
@@ -212,7 +228,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 9,
               "Title": "AuthorizeConnectionDto.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Core\\DTOs\\AuthorizeConnectionDto.cs",
               "RelativeDocumentMoniker": "..\\Core\\DTOs\\AuthorizeConnectionDto.cs",
