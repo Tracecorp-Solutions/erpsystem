@@ -27,6 +27,8 @@ namespace Core.Repositories.Billing
 
         Task<IEnumerable<ApplicationLog>> GetApplicationLogs(string applicationNumber);
 
+        Task AuthorizeConnection(AuthorizeConnectionDto connectionDto);
+
       
     }
 }

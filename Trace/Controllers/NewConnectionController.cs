@@ -152,5 +152,24 @@ namespace Trace.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
             }
         }
+
+
+        [HttpPost("/AuthorizeConnection")]
+        public async Task<IActionResult> AuthorizeConnection(AuthorizeConnectionDto ApprovalDto) 
+        {
+            try
+            {
+                await _newconnectionRepository.AuthorizeConnection(ApprovalDto);
+                return Ok("Connection Authorized Successfully");
+            }
+            catch(ArgumentException ex) 
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
+        }
     }
 }

@@ -32,7 +32,7 @@ namespace Core.DTOs
         #endregion endof residential address
 
         #region connection details
-        public string? CustomerType { get; set; }
+        public int CustomerType { get; set; }
         public string? BillDeliveryMethod { get; set; }
         public int CustomerCategory { get; set; }
 

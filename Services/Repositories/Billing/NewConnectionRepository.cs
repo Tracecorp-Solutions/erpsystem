@@ -239,7 +239,7 @@ namespace Services.Repositories.Billing
                 Date = DateTime.Now
             };
 
-            _context.ApplicationLogs.Add(applicationLog);
+            await SaveApplicationLog(applicationLog);
 
             if (application == null)
                 throw new ArgumentException("No applications found");
@@ -256,12 +256,44 @@ namespace Services.Repositories.Billing
             await _context.SaveChangesAsync();
         }
 
+        private async Task SaveApplicationLog(ApplicationLog applicationLog) 
+        {
+            _context.ApplicationLogs.Add(applicationLog);
+            await _context.SaveChangesAsync();
+        } 
+
         public async Task<IEnumerable<ApplicationLog>> GetApplicationLogs(string applicationNumber) { 
             var applicationLogs = await _context.ApplicationLogs
                 .Where(a => a.ApplicationNumber == applicationNumber)
                 .ToListAsync();
 
             return applicationLogs == null ? throw new ArgumentException("No application logs found") : applicationLogs;}
+
+        public async Task AuthorizeConnection(AuthorizeConnectionDto connectionDto) 
+        {
+            //check if application exists
+            var application = await _context.Applications
+                .FirstOrDefaultAsync(a => a.ApplicationNumber == connectionDto.ApplicationNumber);
+
+            if (application == null) throw new ArgumentException("No application found with that application ID");
+
+            //update application status to authorised for connection 
+            application.CustomerCategoryId = connectionDto.ConnectionCategory;
+            application.CustomerType = connectionDto.ConnectionType;
+            application.Status = "APPROVED FOR CONNECTION";
+
+            //save application log
+            var applicationLog = new ApplicationLog
+            {
+                ApplicationNumber = application.ApplicationNumber,
+                Status = "APPROVED FOR CONNECTION",
+                Message = "CONNECTION AUTHORIZATION",
+                Date = DateTime.Now
+            };
+
+            await SaveApplicationLog(applicationLog);
+            await _context.SaveChangesAsync();
+        }
 
 
     }
