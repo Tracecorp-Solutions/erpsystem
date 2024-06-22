@@ -46,6 +46,7 @@ namespace Services.Repositories.Billing
             //map NewApplicationDto to new application
             var newapplication = new Application
             {
+                ApplicationNumber = Guid.NewGuid().ToString("N").Substring(0, 8),
                 Title = application.Title,
                 FullName = application.FullName,
                 DateOfBirth = application.DateOfBirth,

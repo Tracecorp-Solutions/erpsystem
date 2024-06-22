@@ -6,10 +6,14 @@
       "AbsoluteMoniker": "D:0:0:{D0C5D151-D98C-46B1-A85E-DFAA22B5EE2F}|..\\Services\\Services.csproj|d:\\working directory\\erpsystem\\services\\repositories\\billing\\newconnectionrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A176F11F-4BEC-4DAC-9205-CF64F57D23C0}|..\\Core\\Core.csproj|d:\\working directory\\erpsystem\\core\\models\\application.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{97CA6EF6-720A-4545-8A15-EBF2D4F20DA0}|Trace.csproj|d:\\working directory\\erpsystem\\trace\\controllers\\newconnectioncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{97CA6EF6-720A-4545-8A15-EBF2D4F20DA0}|Trace.csproj|solutionrelative:controllers\\newconnectioncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A176F11F-4BEC-4DAC-9205-CF64F57D23C0}|..\\Core\\Core.csproj|d:\\working directory\\erpsystem\\core\\dtos\\newapplicationdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A176F11F-4BEC-4DAC-9205-CF64F57D23C0}|..\\Core\\Core.csproj|d:\\working directory\\erpsystem\\core\\models\\application.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A176F11F-4BEC-4DAC-9205-CF64F57D23C0}|..\\Core\\Core.csproj|d:\\working directory\\erpsystem\\core\\dtos\\authorizeconnectiondto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
@@ -19,10 +23,6 @@
     },
     {
       "AbsoluteMoniker": "D:0:0:{A176F11F-4BEC-4DAC-9205-CF64F57D23C0}|..\\Core\\Core.csproj|d:\\working directory\\erpsystem\\core\\repositories\\billing\\inewconnectionrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{97CA6EF6-720A-4545-8A15-EBF2D4F20DA0}|Trace.csproj|d:\\working directory\\erpsystem\\trace\\controllers\\newconnectioncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{97CA6EF6-720A-4545-8A15-EBF2D4F20DA0}|Trace.csproj|solutionrelative:controllers\\newconnectioncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{7735A439-FAA5-47B0-AAB7-17DB1C05A2D8}|..\\Infrastructure\\Infrastructure.csproj|d:\\working directory\\erpsystem\\infrastructure\\migrations\\20240621162342_additionofapplicationlogs.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
@@ -41,34 +41,8 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 12,
+          "SelectedChildIndex": 9,
           "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "NewApplicationDto.cs",
-              "DocumentMoniker": "D:\\working directory\\erpsystem\\Core\\DTOs\\NewApplicationDto.cs",
-              "RelativeDocumentMoniker": "..\\Core\\DTOs\\NewApplicationDto.cs",
-              "ToolTip": "D:\\working directory\\erpsystem\\Core\\DTOs\\NewApplicationDto.cs",
-              "RelativeToolTip": "..\\Core\\DTOs\\NewApplicationDto.cs",
-              "ViewState": "AQIAAAgAAAAAAAAAAAAuwCIAAAASAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-22T12:58:03.147Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Application.cs",
-              "DocumentMoniker": "D:\\working directory\\erpsystem\\Core\\Models\\Application.cs",
-              "RelativeDocumentMoniker": "..\\Core\\Models\\Application.cs",
-              "ToolTip": "D:\\working directory\\erpsystem\\Core\\Models\\Application.cs",
-              "RelativeToolTip": "..\\Core\\Models\\Application.cs",
-              "ViewState": "AQIAAAsAAAAAAAAAAAAqwC4AAAATAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-22T12:56:02.087Z",
-              "EditorCaption": ""
-            },
             {
               "$type": "Bookmark",
               "Name": "ST:129:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
@@ -95,19 +69,6 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "AuthorizeConnectionDto.cs",
-              "DocumentMoniker": "D:\\working directory\\erpsystem\\Core\\DTOs\\AuthorizeConnectionDto.cs",
-              "RelativeDocumentMoniker": "..\\Core\\DTOs\\AuthorizeConnectionDto.cs",
-              "ToolTip": "D:\\working directory\\erpsystem\\Core\\DTOs\\AuthorizeConnectionDto.cs",
-              "RelativeToolTip": "..\\Core\\DTOs\\AuthorizeConnectionDto.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAuwAgAAAARAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-22T12:35:15.346Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 7,
               "Title": "20240621162342_AdditionOfApplicationLogs.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Infrastructure\\Migrations\\20240621162342_AdditionOfApplicationLogs.cs",
@@ -116,8 +77,7 @@
               "RelativeToolTip": "..\\Infrastructure\\Migrations\\20240621162342_AdditionOfApplicationLogs.cs",
               "ViewState": "AQIAAB8AAAAAAAAAAAAQwAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-21T16:23:42.293Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-06-21T16:23:42.293Z"
             },
             {
               "$type": "Document",
@@ -133,7 +93,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "ApplicationDbContext.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Infrastructure\\Data\\ApplicationDbContext.cs",
               "RelativeDocumentMoniker": "..\\Infrastructure\\Data\\ApplicationDbContext.cs",
@@ -141,8 +101,7 @@
               "RelativeToolTip": "..\\Infrastructure\\Data\\ApplicationDbContext.cs",
               "ViewState": "AQIAACMAAAAAAAAAAAAQwCgAAAAZAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-21T15:55:19.145Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-06-21T15:55:19.145Z"
             },
             {
               "$type": "Document",
@@ -152,7 +111,7 @@
               "RelativeDocumentMoniker": "..\\Services\\Repositories\\Billing\\NewConnectionRepository.cs",
               "ToolTip": "D:\\working directory\\erpsystem\\Services\\Repositories\\Billing\\NewConnectionRepository.cs",
               "RelativeToolTip": "..\\Services\\Repositories\\Billing\\NewConnectionRepository.cs",
-              "ViewState": "AQIAABoBAAAAAAAAAAAnwCEAAABqAAAA",
+              "ViewState": "AQIAACYAAAAAAAAAAAAiwDAAAABRAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-06-21T15:53:10.667Z",
               "EditorCaption": ""
@@ -171,7 +130,57 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 1,
+              "Title": "NewConnectionController.cs",
+              "DocumentMoniker": "D:\\working directory\\erpsystem\\Trace\\Controllers\\NewConnectionController.cs",
+              "RelativeDocumentMoniker": "Controllers\\NewConnectionController.cs",
+              "ToolTip": "D:\\working directory\\erpsystem\\Trace\\Controllers\\NewConnectionController.cs",
+              "RelativeToolTip": "Controllers\\NewConnectionController.cs",
+              "ViewState": "AQIAAA4AAAAAAAAAAAAnwBgAAABHAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-21T15:48:08.47Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "NewApplicationDto.cs",
+              "DocumentMoniker": "D:\\working directory\\erpsystem\\Core\\DTOs\\NewApplicationDto.cs",
+              "RelativeDocumentMoniker": "..\\Core\\DTOs\\NewApplicationDto.cs",
+              "ToolTip": "D:\\working directory\\erpsystem\\Core\\DTOs\\NewApplicationDto.cs",
+              "RelativeToolTip": "..\\Core\\DTOs\\NewApplicationDto.cs",
+              "ViewState": "AQIAAAgAAAAAAAAAAAAuwA0AAAAfAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-22T12:58:03.147Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "AuthorizeConnectionDto.cs",
+              "DocumentMoniker": "D:\\working directory\\erpsystem\\Core\\DTOs\\AuthorizeConnectionDto.cs",
+              "RelativeDocumentMoniker": "..\\Core\\DTOs\\AuthorizeConnectionDto.cs",
+              "ToolTip": "D:\\working directory\\erpsystem\\Core\\DTOs\\AuthorizeConnectionDto.cs",
+              "RelativeToolTip": "..\\Core\\DTOs\\AuthorizeConnectionDto.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAuwAgAAAARAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-22T12:35:15.346Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Application.cs",
+              "DocumentMoniker": "D:\\working directory\\erpsystem\\Core\\Models\\Application.cs",
+              "RelativeDocumentMoniker": "..\\Core\\Models\\Application.cs",
+              "ToolTip": "D:\\working directory\\erpsystem\\Core\\Models\\Application.cs",
+              "RelativeToolTip": "..\\Core\\Models\\Application.cs",
+              "ViewState": "AQIAAAsAAAAAAAAAAAAqwC4AAAATAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-22T12:56:02.087Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
               "Title": "INewConnectionRepository.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Core\\Repositories\\Billing\\INewConnectionRepository.cs",
               "RelativeDocumentMoniker": "..\\Core\\Repositories\\Billing\\INewConnectionRepository.cs",
@@ -179,21 +188,7 @@
               "RelativeToolTip": "..\\Core\\Repositories\\Billing\\INewConnectionRepository.cs",
               "ViewState": "AQIAAAcAAAAAAAAAAAAAwAsAAAAVAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-21T15:48:26.682Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "NewConnectionController.cs",
-              "DocumentMoniker": "D:\\working directory\\erpsystem\\Trace\\Controllers\\NewConnectionController.cs",
-              "RelativeDocumentMoniker": "Controllers\\NewConnectionController.cs",
-              "ToolTip": "D:\\working directory\\erpsystem\\Trace\\Controllers\\NewConnectionController.cs",
-              "RelativeToolTip": "Controllers\\NewConnectionController.cs",
-              "ViewState": "AQIAAHcAAAAAAAAAAAAhwH4AAAA8AAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-21T15:48:08.47Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-06-21T15:48:26.682Z"
             }
           ]
         }
