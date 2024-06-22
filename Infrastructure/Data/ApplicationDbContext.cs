@@ -46,6 +46,8 @@ namespace Infrastructure.Data
 
         public DbSet<ApplicationLog> ApplicationLogs { get; set; }
 
+        public DbSet<JobCard> JobCards { get; set; }
+
         #endregion
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -296,6 +296,39 @@ namespace Services.Repositories.Billing
             await _context.SaveChangesAsync();
         }
 
+        public async Task<string> GenerateJobCard(string applicationNumber,int userid,string jobtype)
+        {
+            //check if application exists
+            var application = await _context.Applications
+                .FirstOrDefaultAsync(a => a.ApplicationNumber == applicationNumber);
+
+            if (application == null) throw new ArgumentException("No application found with that application ID");
+
+            //check whether job card type is valid
+            if (jobtype != "CONNECTION" || jobtype != "DISCONNECTION" || jobtype != "SURVEY")
+                throw new ArgumentException("Invalid job card type, Jobtype should be {CONNECTION, DISCONNECTION, SURVEY}");
+
+            //generate job card number
+            var jobCardNumber = Guid.NewGuid().ToString("N").Substring(0, 8);
+
+            //save job card
+            var jobCard = new JobCard
+            {
+                applicationId = application.Id,
+                JobCardNumber = jobCardNumber,
+                AssignedUserId = userid,
+                JobCardType = jobtype,
+                Status = "PENDING",
+                CreationDate = DateTime.Now,
+                DateUpdated = DateTime.Now
+            };
+
+            _context.JobCards.Add(jobCard);
+            await _context.SaveChangesAsync();
+
+            return jobCardNumber;
+        }
+
 
     }
 }
