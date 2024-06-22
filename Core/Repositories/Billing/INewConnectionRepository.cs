@@ -29,7 +29,7 @@ namespace Core.Repositories.Billing
 
         Task AuthorizeConnection(AuthorizeConnectionDto connectionDto);
 
-        Task<string> GenerateJobCard(string applicationNumber, int userid, string jobtype);
+        Task<string> GenerateJobCard(string applicationNumber, int userid);
 
       
     }

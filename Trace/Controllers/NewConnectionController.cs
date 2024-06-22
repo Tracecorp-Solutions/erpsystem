@@ -173,11 +173,11 @@ namespace Trace.Controllers
         }
 
         [HttpPost("/GenerateJobCard")]
-        public async Task<IActionResult> GenerateJobCard(string applicationNumber, int userid, string jobtype)
+        public async Task<IActionResult> GenerateJobCard(string applicationNumber, int userid)
         {
             try
             {
-                string message = await _newconnectionRepository.GenerateJobCard(applicationNumber, userid, jobtype);
+                string message = await _newconnectionRepository.GenerateJobCard(applicationNumber, userid);
                 return Ok(message);
             }
             catch (ArgumentException ex)

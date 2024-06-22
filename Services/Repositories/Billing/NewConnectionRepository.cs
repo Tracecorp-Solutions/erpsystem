@@ -296,7 +296,7 @@ namespace Services.Repositories.Billing
             await _context.SaveChangesAsync();
         }
 
-        public async Task<string> GenerateJobCard(string applicationNumber,int userid,string jobtype)
+        public async Task<string> GenerateJobCard(string applicationNumber,int userid)
         {
             //check if application exists
             var application = await _context.Applications
@@ -304,12 +304,24 @@ namespace Services.Repositories.Billing
 
             if (application == null) throw new ArgumentException("No application found with that application ID");
 
-            //check whether job card type is valid
-            if (jobtype != "CONNECTION" || jobtype != "DISCONNECTION" || jobtype != "SURVEY")
-                throw new ArgumentException("Invalid job card type, Jobtype should be {CONNECTION, DISCONNECTION, SURVEY}");
+            //check application status to see whether the jobcard can be generated
+            if (application.Status != "PENDING SURVEY" 
+                || application.Status !="PENDING CONNECTION" 
+                || application.Status !="CONNECTED"
+                || application.Status != "DISCONNECTED") throw new ArgumentException("Application status should be {PENDING SURVEY, PENDING CONNECTION,CONNECTED}");
 
             //generate job card number
             var jobCardNumber = Guid.NewGuid().ToString("N").Substring(0, 8);
+
+            // set job type based on application status
+            string jobtype = application.Status switch
+            {
+                "PENDING SURVEY" => "SURVEY",
+                "PENDING CONNECTION" => "CONNECTION",
+                "CONNECTED" => "DISCONNECTION",
+                "DISCONNECTED" => "RECONNECTION",
+                _ => "SURVEY"
+            };
 
             //save job card
             var jobCard = new JobCard
