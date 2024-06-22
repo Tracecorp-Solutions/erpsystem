@@ -214,6 +214,10 @@ function NewConnection() {
     fetchInitialData();
   }, []);
 
+  const [ProofOfIdentity, setProofOfIdentity] = useState(null);
+  const [ProofOfOwnerShip, setProofOfOwnerShip] = useState(null);
+  const [ProofOfInstallationSite, setProofOfInstallationSite] = useState(null);
+  const [LocalAuthorizationDocument, setLocalAuthorizationDocument] = useState(null);
   const [formData, setFormData] = useState({
     id: 0,
     applicationNumber: "",
@@ -243,10 +247,7 @@ function NewConnection() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [name]: value,
-    }));
+    setFormData({ ...formData, [name]: value });
   };
 
   const handleFileChange = (e) => {
@@ -271,33 +272,17 @@ function NewConnection() {
         }
       }
 
+      // Append file fields to the FormData object
+      formDataToSend.append('proofOfIdentity', ProofOfIdentity);
+      formDataToSend.append('proofOfOwnerShip', ProofOfOwnerShip);
+      formDataToSend.append('proofOfInstallationSite', ProofOfInstallationSite);
+      formDataToSend.append('localAuthorizationDocument', LocalAuthorizationDocument);
+
       const response = await axios.post(
         "http://3.216.182.63:8095/TestApi/NewApplication",
         formDataToSend
       );
       console.log("Response:", response.data);
-
-      await addState({ id: 0, name: formData.stateName });
-      await addOperationalArea({
-        id: 0,
-        name: formData.operationalAreaName,
-        stateId: formData.stateId,
-      });
-      await addBranch({
-        id: 0,
-        name: formData.branchName,
-        operationAreaId: formData.operationAreaId,
-      });
-      await addTerritory({
-        id: 0,
-        name: formData.territoryName,
-        branchId: formData.branchId,
-      });
-      await addSubTerritory({
-        id: 0,
-        name: formData.subTerritoryName,
-        territoryId: formData.territoryId,
-      });
 
       alert("Application submitted successfully");
     } catch (error) {
@@ -313,10 +298,8 @@ function NewConnection() {
     } catch (error) {
       console.error("Error fetching application:", error);
     }
+  };
 
-  const prevStep = () => {
-    setCurrentStep((prevStep) => prevStep - 1);
-  }}
 
 
   const renderStep = () => {
