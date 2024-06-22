@@ -143,7 +143,7 @@ const InvoiceForm = () => {
       <form onSubmit={handleSubmit} className="content">
         <TopNav />
         <div>
-          <div className="sm:flex justify-between items-center mb-8">
+          <div className="sm:flex justify-between items-center mb-6">
             <h2
               className="text-2xl font-semibold mb-4"
               style={{ display: "flex", cursor: "pointer" }}
@@ -155,13 +155,14 @@ const InvoiceForm = () => {
                 style={{
                   fontSize: "24px",
                   marginRight: "8px",
-                  marginBottom: "15px",
+                  marginBottom: "6px",
+                  marginLeft: "15px",
                 }}
                 
               />
               <h2 className="text-2xl font-semibold mb-4">Invoice Creation</h2>
             </h2>
-            <strong className="text-2xl font-semibold">
+            <strong className="text-2xl font-semibold mr-8">
               ${calculateTotalAmount()}
             </strong>
           </div>
@@ -257,7 +258,7 @@ const InvoiceForm = () => {
                   borderRadius: "28px",
                   fontFamily: "outFit, Sans-serif",
                   width: "150px",
-                  paddingBottom: "30px",
+                  paddingBottom: "10px",
                 }}
               >
                 + Add Invoice Item
@@ -421,7 +422,7 @@ const InvoiceForm = () => {
                   borderRadius: "28px",
                   fontFamily: "outFit, Sans-serif",
                   width: "150px",
-                  paddingBottom: "30px",
+                  paddingBottom: "10px",
                   color: "#505050",
                   marginRight: "15px",
                 }}
@@ -437,7 +438,7 @@ const InvoiceForm = () => {
                   borderRadius: "28px",
                   fontFamily: "outFit, Sans-serif",
                   width: "150px",
-                  paddingBottom: "30px",
+                  paddingBottom: "10px",
                 }}
               >
                 Add Item
@@ -465,7 +466,7 @@ const InvoiceForm = () => {
                 borderRadius: "28px",
                 fontFamily: "outFit, Sans-serif",
                 width: "150px",
-                paddingBottom: "30px",
+                paddingBottom: "10px",
                 color: "#505050",
                 marginRight: "15px",
               }}
@@ -481,7 +482,7 @@ const InvoiceForm = () => {
                 borderRadius: "28px",
                 fontFamily: "outFit, Sans-serif",
                 width: "150px",
-                paddingBottom: "30px",
+                paddingBottom: "10px",
               }}
               disabled={isSaving}
             >
