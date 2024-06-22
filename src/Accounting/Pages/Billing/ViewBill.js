@@ -22,6 +22,7 @@ const ViewBill = ({ billId, onClose }) => {
       }
     };
 
+    
     fetchBillDetails();
   }, [billId]);
 
