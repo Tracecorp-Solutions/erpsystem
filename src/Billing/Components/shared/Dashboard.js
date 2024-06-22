@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import SideNav from "../../shared/navigations/SideNav";
+import TopNav from "../../shared/navigations/TopNav";
 
 const NewApplicationForm = () => {
   const [step, setStep] = useState(1);
@@ -27,6 +29,7 @@ const NewApplicationForm = () => {
     BillDeliveryMethod: '',
     CustomerCategory: ''
   });
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -61,7 +64,7 @@ const NewApplicationForm = () => {
 
     for (const field of requiredFields) {
       if (!application[field]) {
-        alert(`Please fill in the ${field} field.`);
+        setErrorMessage(`Please fill in the ${field} field.`);
         return;
       }
     }
@@ -98,7 +101,7 @@ const NewApplicationForm = () => {
       });
       alert(response.data); // Show success message
     } catch (error) {
-      alert('Error submitting application'); // Show error message
+      setErrorMessage('Error submitting application'); // Set error message
       console.error(error);
     }
   };
@@ -115,15 +118,19 @@ const NewApplicationForm = () => {
     switch (step) {
       case 1:
         return (
+          
           <div className="flex flex-row">
+            <SideNav/>
             {/* Step 1: SideNav (if any) goes here */}
-            <div className="flex-1 overflow-auto px-6 py-5 bg-stone-100 ml-5 rounded-3xl max-md:px-5">
-              <header className="text-4xl font-semibold leading-[57.6px] text-neutral-600 max-md:max-w-full">
+             
+            <div className="flex-1 overflow-auto px-6 py-5 bg-stone-100 ml-5 rounded-3xl">
+            <TopNav/>
+              <header className="text-4xl font-semibold leading-[57.6px] text-neutral-600">
                 Step 1: Basic Information
               </header>
-              <form className="flex flex-col mt-6 bg-white rounded-3xl max-md:max-w-full" onSubmit={handleSubmit}>
-                <div className="flex flex-col px-8 pt-8 pb-20 max-md:px-5 max-md:max-w-full">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-16 max-md:gap-4">
+              <form className="flex flex-col mt-6 bg-white rounded-3xl" onSubmit={handleSubmit}>
+                <div className="flex flex-col px-8 pt-8 pb-20">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-16">
                     <div>
                       <label className="block text-neutral-600 font-medium mb-2">Title</label>
                       <input type="text" name="Title" value={application.Title} onChange={handleChange} className="border border-gray-300 rounded-md px-3 py-2" />
@@ -157,7 +164,7 @@ const NewApplicationForm = () => {
                       <input type="text" name="StateId" value={application.StateId} onChange={handleChange} className="border border-gray-300 rounded-md px-3 py-2" />
                     </div>
                   </div>
-                  <button type="button" onClick={nextStep} className="mt-8 px-8 py-4 text-white rounded-3xl bg-slate-500 max-md:px-5">Next</button>
+                  <button type="button" onClick={nextStep} className="mt-8 px-8 py-4 text-white rounded-3xl bg-slate-500">Next</button>
                 </div>
               </form>
             </div>
@@ -167,14 +174,16 @@ const NewApplicationForm = () => {
       case 2:
         return (
           <div className="flex flex-row">
+            <SideNav/>
             {/* Step 2: SideNav (if any) goes here */}
-            <div className="flex-1 overflow-auto px-6 py-5 bg-stone-100 ml-5 rounded-3xl max-md:px-5">
-              <header className="text-4xl font-semibold leading-[57.6px] text-neutral-600 max-md:max-w-full">
+            <div className="flex-1 overflow-auto px-6 py-5 bg-stone-100 ml-5 rounded-3xl">
+              <TopNav/>
+              <header className="text-4xl font-semibold leading-[57.6px] text-neutral-600">
                 Step 2: Additional Information
               </header>
-              <form className="flex flex-col mt-6 bg-white rounded-3xl max-md:max-w-full" onSubmit={handleSubmit}>
-                <div className="flex flex-col px-8 pt-8 pb-20 max-md:px-5 max-md:max-w-full">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-16 max-md:gap-4">
+              <form className="flex flex-col mt-6 bg-white rounded-3xl" onSubmit={handleSubmit}>
+                <div className="flex flex-col px-8 pt-8 pb-20">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-16">
                     <div>
                       <label className="block text-neutral-600 font-medium mb-2">Operation Area ID</label>
                       <input type="text" name="OperationAreaId" value={application.OperationAreaId} onChange={handleChange} className="border border-gray-300 rounded-md px-3 py-2" />
@@ -193,8 +202,8 @@ const NewApplicationForm = () => {
                     </div>
                   </div>
                   <div className="flex justify-between">
-                    <button type="button" onClick={prevStep} className="mt-8 px-8 py-4 text-neutral-600 rounded-3xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 max-md:px-5">Previous</button>
-                    <button type="button" onClick={nextStep} className="mt-8 px-8 py-4 text-white rounded-3xl bg-slate-500 max-md:px-5">Next</button>
+                    <button type="button" onClick={prevStep} className="mt-8 px-8 py-4 text-neutral-600 rounded-3xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30">Previous</button>
+                    <button type="button" onClick={nextStep} className="mt-8 px-8 py-4 text-white rounded-3xl bg-slate-500">Next</button>
                   </div>
                 </div>
               </form>
@@ -205,14 +214,16 @@ const NewApplicationForm = () => {
       case 3:
         return (
           <div className="flex flex-row">
+            <SideNav/>
             {/* Step 3: SideNav (if any) goes here */}
-            <div className="flex-1 overflow-auto px-6 py-5 bg-stone-100 ml-5 rounded-3xl max-md:px-5">
-              <header className="text-4xl font-semibold leading-[57.6px] text-neutral-600 max-md:max-w-full">
+            <div className="flex-1 overflow-auto px-6 py-5 bg-stone-100 ml-5 rounded-3xl">
+              <TopNav/>
+              <header className="text-4xl font-semibold leading-[57.6px] text-neutral-600">
                 Step 3: Customer Details
               </header>
-              <form className="flex flex-col mt-6 bg-white rounded-3xl max-md:max-w-full" onSubmit={handleSubmit}>
-                <div className="flex flex-col px-8 pt-8 pb-20 max-md:px-5 max-md:max-w-full">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-16 max-md:gap-4">
+              <form className="flex flex-col mt-6 bg-white rounded-3xl" onSubmit={handleSubmit}>
+                <div className="flex flex-col px-8 pt-8 pb-20">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-16">
                     <div>
                       <label className="block text-neutral-600 font-medium mb-2">Street Address</label>
                       <input type="text" name="StreetAddress" value={application.StreetAddress} onChange={handleChange} className="border border-gray-300 rounded-md px-3 py-2" />
@@ -239,8 +250,8 @@ const NewApplicationForm = () => {
                     </div>
                   </div>
                   <div className="flex justify-between">
-                    <button type="button" onClick={prevStep} className="mt-8 px-8 py-4 text-neutral-600 rounded-3xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 max-md:px-5">Previous</button>
-                    <button type="button" onClick={nextStep} className="mt-8 px-8 py-4 text-white rounded-3xl bg-slate-500 max-md:px-5">Next</button>
+                    <button type="button" onClick={prevStep} className="mt-8 px-8 py-4 text-neutral-600 rounded-3xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30">Previous</button>
+                    <button type="button" onClick={nextStep} className="mt-8 px-8 py-4 text-white rounded-3xl bg-slate-500">Next</button>
                   </div>
                 </div>
               </form>
@@ -252,14 +263,17 @@ const NewApplicationForm = () => {
       case 4:
         return (
           <div className="flex flex-row">
+            <SideNav/>
             {/* Step 4: SideNav (if any) goes here */}
-            <div className="flex-1 overflow-auto px-6 py-5 bg-stone-100 ml-5 rounded-3xl max-md:px-5">
-              <header className="text-4xl font-semibold leading-[57.6px] text-neutral-600 max-md:max-w-full">
+            <div className="flex-1 overflow-auto px-6 py-5 bg-stone-100 ml-5 rounded-3xl">
+              <TopNav/>
+              <header className="text-4xl font-semibold leading-[57.6px] text-neutral-600">
                 Step 4: Attachments
               </header>
-              <form className="flex flex-col mt-6 bg-white rounded-3xl max-md:max-w-full" onSubmit={handleSubmit}>
-                <div className="flex flex-col px-8 pt-8 pb-20 max-md:px-5 max-md:max-w-full">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-16 max-md:gap-4">
+              <form className="flex flex-col mt-6 bg-white rounded-3xl" onSubmit={handleSubmit}>
+                <div className="flex flex-col px-8 pt-8 pb-20">
+                  {errorMessage && <div className="text-red-500 mb-4">{errorMessage}</div>}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-16">
                     <div>
                       <label className="block text-neutral-600 font-medium mb-2">Proof of Identity</label>
                       <input type="file" name="proofOfIdentity" onChange={handleFile1Change} className="border border-gray-300 rounded-md px-3 py-2" />
@@ -278,8 +292,8 @@ const NewApplicationForm = () => {
                     </div>
                   </div>
                   <div className="flex justify-between">
-                    <button type="button" onClick={prevStep} className="mt-8 px-8 py-4 text-neutral-600 rounded-3xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 max-md:px-5">Previous</button>
-                    <button type="submit" className="mt-8 px-8 py-4 text-white rounded-3xl bg-slate-500 max-md:px-5">Submit Application</button>
+                    <button type="button" onClick={prevStep} className="mt-8 px-8 py-4 text-neutral-600 rounded-3xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30">Previous</button>
+                    <button type="submit" className="mt-8 px-8 py-4 text-white rounded-3xl bg-slate-500">Submit Application</button>
                   </div>
                 </div>
               </form>
@@ -294,14 +308,14 @@ const NewApplicationForm = () => {
 
 
   return (
-    <div>
+    <div className="w-full">
       {/* Progress bar or steps indicator (if desired) */}
-      <div className="mb-4 bg-white rounded-md shadow-md p-4">
+      {/* <div className="mb-4 bg-white rounded-md shadow-md p-4">
         <span className={`text-lg font-semibold ${step >= 1 ? 'text-slate-500' : 'text-gray-400'}`}>Step 1</span>
         <span className={`text-lg font-semibold mx-4 ${step >= 2 ? 'text-slate-500' : 'text-gray-400'}`}>Step 2</span>
         <span className={`text-lg font-semibold mx-4 ${step >= 3 ? 'text-slate-500' : 'text-gray-400'}`}>Step 3</span>
         <span className={`text-lg font-semibold ${step === 4 ? 'text-slate-500' : 'text-gray-400'}`}>Step 4</span>
-      </div>
+      </div> */}
 
       {/* Render the current step */}
       {renderStep()}
