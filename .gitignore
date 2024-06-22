@@ -10,7 +10,6 @@ Trace/.vs/Trace/
 /node_modules
 /.pnp
 .pnp.js
-/Trace
 # testing
 /coverage
 
