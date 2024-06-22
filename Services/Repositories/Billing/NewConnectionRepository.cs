@@ -306,9 +306,9 @@ namespace Services.Repositories.Billing
 
             //check application status to see whether the jobcard can be generated
             if (application.Status != "PENDING SURVEY" 
-                || application.Status !="PENDING CONNECTION" 
-                || application.Status !="CONNECTED"
-                || application.Status != "DISCONNECTED") throw new ArgumentException("Application status should be {PENDING SURVEY, PENDING CONNECTION,CONNECTED}");
+                && application.Status !="PENDING CONNECTION" 
+                && application.Status !="CONNECTED"
+                && application.Status != "DISCONNECTED") throw new ArgumentException("Application status should be {PENDING SURVEY, PENDING CONNECTION,CONNECTED}");
 
             //generate job card number
             var jobCardNumber = Guid.NewGuid().ToString("N").Substring(0, 8);
