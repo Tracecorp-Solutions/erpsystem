@@ -1,7 +1,8 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { Dropdown, Menu } from "antd";
 import { DownOutlined } from "@ant-design/icons";
-import { useLocation  } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import axios from "axios";
 import ApplicantSection from "./ApplicantSection";
 import Document from "./Document";
 import ApplicationFormActions from "./Actions/ApplicationFormActions";
@@ -11,7 +12,6 @@ import AssignSurveyor from "./Actions/AssignSurveyor";
 import SurveyorReport from "./Actions/SurveyorReport";
 
 const ApplicationDetail = () => {
-
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [rejectApplication, setRejectApplication] = useState(false);
   const [contactApplicantForm, setContactApplicantForm] = useState(false);
@@ -25,6 +25,8 @@ const ApplicationDetail = () => {
   const { state } = location;
   const applicationNumber = state?.applicationNumber;
 
+  const userid = sessionStorage.getItem("userid");
+
   useEffect(() => {
     if (applicationNumber) {
       fetchApplicationById(applicationNumber);
@@ -32,7 +34,9 @@ const ApplicationDetail = () => {
   }, [applicationNumber]);
 
   const fetchApplicationById = (applicationNumber) => {
-    fetch(`${process.env.REACT_APP_API_URL}/GetApplicationByApplicationNumnber?applicationId=${applicationNumber}`)
+    fetch(
+      `${process.env.REACT_APP_API_URL}/GetApplicationByApplicationNumnber?applicationId=${applicationNumber}`
+    )
       .then((response) => {
         if (!response.ok) {
           throw new Error("Failed to fetch application details");
@@ -48,6 +52,30 @@ const ApplicationDetail = () => {
       });
   };
 
+  const handleGenerateJobCard = () => {
+    if (!applicationNumber || !userid) {
+      console.error("Application number or userId is missing");
+      return;
+    }
+  
+    const apiUrl = `${process.env.REACT_APP_API_URL}/GenerateJobCard?applicationNumber=${encodeURIComponent(applicationNumber)}&userid=${encodeURIComponent(userid)}`;
+  
+    axios
+      .post(apiUrl, {
+        applicationNumber: applicationNumber,
+        userid: userid,
+      })
+      .then((response) => {
+        console.log("Job card generated successfully:", response.data);
+        // Optionally update state or perform other actions after successful API call
+      })
+      .catch((error) => {
+        console.error("Error generating job card:", error.message);
+      });
+  };
+  
+
+
   const handleApproveApplication = () => {
     setIsModalVisible(false);
   };
@@ -55,16 +83,25 @@ const ApplicationDetail = () => {
   const menu = (
     <Menu>
       <Menu.Item key="1">Print Application</Menu.Item>
-      <Menu.Item key="2" onClick={() => setRejectApplication(true)}>Reject Application</Menu.Item>
-      <Menu.Item key="3" onClick={() => setContactApplicantForm(true)}>Contact Applicant</Menu.Item>
-      <Menu.Item key="4" onClick={() => setIsModalVisible(true)}>Approve Application</Menu.Item>
+      <Menu.Item key="2" onClick={() => setRejectApplication(true)}>
+        Reject Application
+      </Menu.Item>
+      <Menu.Item key="3" onClick={() => setContactApplicantForm(true)}>
+        Contact Applicant
+      </Menu.Item>
+      <Menu.Item key="4" onClick={() => setIsModalVisible(true)}>
+        Approve Application
+      </Menu.Item>
       <Menu.Item key="5">Generate Job card</Menu.Item>
-      <Menu.Item key="6" onClick={() => setAssignSurveyorAction(true)}>Assign Surveyor</Menu.Item>
+      <Menu.Item key="6" onClick={() => setAssignSurveyorAction(true)}>
+        Assign Surveyor
+      </Menu.Item>
     </Menu>
   );
 
   // Safely accessing applicationData properties
-  const applicationNumberDisplay = applicationData?.applicationNumber || "Not Available";
+  const applicationNumberDisplay =
+    applicationData?.applicationNumber || "Not Available";
   const fullName = applicationData?.fullName || "Not Available";
   const dateOfBirth = applicationData?.dateOfBirth || "Not Available";
   const emailAddress = applicationData?.emailAddress || "Not Available";
@@ -145,7 +182,7 @@ const ApplicationDetail = () => {
                 Date of Birth
               </div>
               <div className="mt-2 text-base leading-6 text-neutral-600">
-              {dateOfBirth}
+                {dateOfBirth}
               </div>
             </div>
             <div className="flex flex-col justify-center whitespace-nowrap">
@@ -357,7 +394,10 @@ const ApplicationDetail = () => {
                 No surveyor assigned yet
               </div>
             </div>
-            <button className="justify-center self-start px-6 py-3 mt-2.5 text-sm font-semibold text-white rounded-3xl bg-slate-500 max-md:px-5" onClick={() => setAssignSurveyorAction(true)}>
+            <button
+              className="justify-center self-start px-6 py-3 mt-2.5 text-sm font-semibold text-white rounded-3xl bg-slate-500 max-md:px-5"
+              onClick={() => setAssignSurveyorAction(true)}
+            >
               Assign Surveyor
             </button>
           </div>
@@ -371,7 +411,10 @@ const ApplicationDetail = () => {
                 No Job card generated yet
               </div>
             </div>
-            <button className="justify-center self-start px-6 py-3 mt-2.5 text-sm font-semibold text-white whitespace-nowrap rounded-3xl bg-slate-500 max-md:px-5">
+            <button
+              className="justify-center self-start px-6 py-3 mt-2.5 text-sm font-semibold text-white whitespace-nowrap rounded-3xl bg-slate-500 max-md:px-5"
+              onClick={handleGenerateJobCard}
+            >
               Generate
             </button>
           </div>
@@ -386,7 +429,10 @@ const ApplicationDetail = () => {
               Application is pending survey
             </div>
           </div>
-          <button className="justify-center self-start px-6 py-3 mt-2.5 text-sm font-semibold text-white rounded-3xl bg-slate-500 max-md:px-5" onClick={() => setSurveyorReport(true)}>
+          <button
+            className="justify-center self-start px-6 py-3 mt-2.5 text-sm font-semibold text-white rounded-3xl bg-slate-500 max-md:px-5"
+            onClick={() => setSurveyorReport(true)}
+          >
             Update Findings
           </button>
         </div>
@@ -412,7 +458,10 @@ const ApplicationDetail = () => {
                 No surveyor assigned yet
               </div>
             </div>
-            <button className="justify-center self-start px-6 py-3 mt-2.5 text-sm font-semibold text-white rounded-3xl bg-slate-500 max-md:px-5" onClick={() => setAssignSurveyorAction(true)}>
+            <button
+              className="justify-center self-start px-6 py-3 mt-2.5 text-sm font-semibold text-white rounded-3xl bg-slate-500 max-md:px-5"
+              onClick={() => setAssignSurveyorAction(true)}
+            >
               Assign Surveyor
             </button>
           </div>
@@ -426,7 +475,9 @@ const ApplicationDetail = () => {
                 No Job card generated yet
               </div>
             </div>
-            <button className="justify-center self-start px-6 py-3 mt-2.5 text-sm font-semibold text-white whitespace-nowrap rounded-3xl bg-slate-500 max-md:px-5">
+            <button className="justify-center self-start px-6 py-3 mt-2.5 text-sm font-semibold text-white whitespace-nowrap rounded-3xl bg-slate-500 max-md:px-5"
+            onClick={handleGenerateJobCard}
+            >
               Generate
             </button>
           </div>
@@ -441,20 +492,38 @@ const ApplicationDetail = () => {
               Application is pending survey
             </div>
           </div>
-          <button className="justify-center self-start px-6 py-3 mt-2.5 text-sm font-semibold text-white rounded-3xl bg-slate-500 max-md:px-5" onClick={() => setSurveyorReport(true)}>
+          <button
+            className="justify-center self-start px-6 py-3 mt-2.5 text-sm font-semibold text-white rounded-3xl bg-slate-500 max-md:px-5"
+            onClick={() => setSurveyorReport(true)}
+          >
             Update Findings
           </button>
         </div>
       </section>
       <ApplicationFormActions
-       isModalVisible={isModalVisible}
+        isModalVisible={isModalVisible}
         handleApproveApplication={handleApproveApplication}
-        setIsModalVisible={setIsModalVisible} 
-        />
-        <RejectApplicationFormAction rejectApplication={rejectApplication} setRejectApplication={setRejectApplication} />
-        <ContactApplicantFormAction ContactApplicantForm={contactApplicantForm} setContactApplicantForm={setContactApplicantForm}  />
-        <AssignSurveyor applicationId={applicationNumber} assignSurveyorAction={assignSurveyorAction} setAssignSurveyorAction={setAssignSurveyorAction}  />
-        <SurveyorReport surveyorReport={surveyorReport} fullName={fullName} setSurveyorReport={setSurveyorReport} applicationNumberDisplay={applicationNumberDisplay}  />
+        setIsModalVisible={setIsModalVisible}
+      />
+      <RejectApplicationFormAction
+        rejectApplication={rejectApplication}
+        setRejectApplication={setRejectApplication}
+      />
+      <ContactApplicantFormAction
+        ContactApplicantForm={contactApplicantForm}
+        setContactApplicantForm={setContactApplicantForm}
+      />
+      <AssignSurveyor
+        applicationId={applicationNumber}
+        assignSurveyorAction={assignSurveyorAction}
+        setAssignSurveyorAction={setAssignSurveyorAction}
+      />
+      <SurveyorReport
+        surveyorReport={surveyorReport}
+        fullName={fullName}
+        setSurveyorReport={setSurveyorReport}
+        applicationNumberDisplay={applicationNumberDisplay}
+      />
     </div>
   );
 };

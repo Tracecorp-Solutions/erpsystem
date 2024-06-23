@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Table, Menu, Dropdown } from "antd";
 import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 function ApplicationPage() {
   const [applications, setApplications] = useState([]);
-
-  console.log("application data application data", applications)
 
   const navigate = useNavigate();
 
