@@ -26,6 +26,7 @@ D:\working directory\erpsystem\Trace\obj\Release\net8.0\PubTmp\Out\Microsoft.Ope
 D:\working directory\erpsystem\Trace\obj\Release\net8.0\PubTmp\Out\MimeKit.dll
 D:\working directory\erpsystem\Trace\obj\Release\net8.0\PubTmp\Out\Moq.dll
 D:\working directory\erpsystem\Trace\obj\Release\net8.0\PubTmp\Out\MySqlConnector.dll
+D:\working directory\erpsystem\Trace\obj\Release\net8.0\PubTmp\Out\Newtonsoft.Json.dll
 D:\working directory\erpsystem\Trace\obj\Release\net8.0\PubTmp\Out\Pomelo.EntityFrameworkCore.MySql.dll
 D:\working directory\erpsystem\Trace\obj\Release\net8.0\PubTmp\Out\Swashbuckle.AspNetCore.Swagger.dll
 D:\working directory\erpsystem\Trace\obj\Release\net8.0\PubTmp\Out\Swashbuckle.AspNetCore.SwaggerGen.dll
