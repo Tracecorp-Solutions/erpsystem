@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Core.DTOs
+namespace Core.DTOs.Billing
 {
     public class NewApplicationDto
     {

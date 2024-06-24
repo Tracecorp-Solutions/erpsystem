@@ -1,4 +1,4 @@
-﻿using Core.DTOs;
+﻿using Core.DTOs.Accounting;
 using Core.Models.Accounting;
 using System;
 using System.Collections.Generic;

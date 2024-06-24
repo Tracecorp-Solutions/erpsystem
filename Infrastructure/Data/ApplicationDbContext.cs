@@ -54,6 +54,10 @@ namespace Infrastructure.Data
 
         public DbSet<BillDeliveryMethod> BillDeliveryMethods { get; set; }
 
+        public DbSet<NewConnectionInvoice> NewConnectionInvoices { get; set; }
+
+        public DbSet<NewConnectionInvoiceMaterials> NewConnectionInvoiceMaterials { get; set; }
+
         #endregion
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

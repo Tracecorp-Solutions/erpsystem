@@ -1,4 +1,4 @@
-﻿using Core.DTOs;
+﻿using Core.DTOs.UserManagement;
 using Core.Models;
 using Core.Repositories.UserManagement;
 using Microsoft.AspNetCore.Http;

@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Identity;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
 using System.Net.Mail;
-using Core.DTOs;
 using Microsoft.Extensions.Configuration;
 using System.Net;
 using Microsoft.AspNetCore.Http;
@@ -18,6 +17,7 @@ using System.ComponentModel.DataAnnotations;
 using Core.Repositories.UserManagement;
 using Core.Repositories.Settings;
 using Core.Models.UserManagement;
+using Core.DTOs.UserManagement;
 
 namespace Services.Repositories.UserManagement
 {

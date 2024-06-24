@@ -4,11 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Core.DTOs
+namespace Core.DTOs.UserManagement
 {
-    public class LoginDTo
+    public class ChangePwdDto
     {
         public string Username { get; set; }
-        public string Password { get; set; }
+        public string NewPassord { get; set; }
+        public string RepeatPassword { get; set; }
+
     }
 }

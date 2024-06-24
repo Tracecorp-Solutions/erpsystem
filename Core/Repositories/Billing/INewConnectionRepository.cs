@@ -1,4 +1,5 @@
-﻿using Core.DTOs;
+﻿using Core.DTOs.Billing;
+using Core.DTOs.UserManagement;
 using Core.Models.Billing;
 using Microsoft.AspNetCore.Http;
 using System;
@@ -30,6 +31,8 @@ namespace Core.Repositories.Billing
         Task AuthorizeConnection(AuthorizeConnectionDto connectionDto);
 
         Task<string> GenerateJobCard(string applicationNumber, int userid);
+
+        Task<string> AddConnectionInvoice(NewConnectionInvoiceDto invoiceDto);
 
       
     }

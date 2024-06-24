@@ -1,4 +1,5 @@
-﻿using Core.DTOs;
+﻿using Core.DTOs.Billing;
+using Core.DTOs.UserManagement;
 using Core.Models;
 using Core.Repositories.Billing;
 using Microsoft.AspNetCore.Http;
@@ -178,6 +179,24 @@ namespace Trace.Controllers
             try
             {
                 string message = await _newconnectionRepository.GenerateJobCard(applicationNumber, userid);
+                return Ok(message);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
+        }
+
+        [HttpPost("/AddConnectionInvoice")]
+        public async Task<IActionResult> AddConnectionInvoice(NewConnectionInvoiceDto invoiceDto)
+        {
+            try
+            {
+                string message = await _newconnectionRepository.AddConnectionInvoice(invoiceDto);
                 return Ok(message);
             }
             catch (ArgumentException ex)

@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Core.DTOs;
 using Microsoft.EntityFrameworkCore;
 using Core.Repositories.Accounting;
 using Core.Models.UserManagement;
+using Core.DTOs.Accounting;
 
 namespace Services.Repositories.Accounting
 {

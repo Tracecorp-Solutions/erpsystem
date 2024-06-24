@@ -5,13 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Core.Models.Billing
+namespace Core.DTOs.Billing
 {
-    public class NewConnectionInvoiceMaterials
+    public class NewConnectionInvoiceMaterialsDto
     {
         public int Id { get; set; }
-
-        [ForeignKey("NewConnectionInvoice")]
         public int NewConnectionInvoiceId { get; set; }
 
         public int MaterialId { get; set; }
@@ -19,8 +17,5 @@ namespace Core.Models.Billing
         public int Quantity { get; set; }
 
         public decimal Price { get; set; }
-
-
-        public virtual NewConnectionInvoice NewConnectionInvoice { get; set; }
     }
 }

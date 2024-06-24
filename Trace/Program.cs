@@ -1,4 +1,4 @@
-using Core.DTOs;
+using Core.DTOs.Settings;
 using Core.Models.UserManagement;
 using Core.Repositories.Accounting;
 using Core.Repositories.Billing;

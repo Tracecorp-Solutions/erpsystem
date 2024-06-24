@@ -1,4 +1,5 @@
-﻿using Core.DTOs;
+﻿using Core.DTOs.Billing;
+using Core.DTOs.UserManagement;
 using Core.Models.Billing;
 using Core.Repositories.Billing;
 using Core.Repositories.Settings;
@@ -342,6 +343,39 @@ namespace Services.Repositories.Billing
             return jobCardNumber;
         }
 
+        public async Task<string> AddConnectionInvoice(NewConnectionInvoiceDto invoiceDto)
+        {
+            //check if application exists
+            var application = await _context.Applications
+                .FirstOrDefaultAsync(a => a.ApplicationNumber == invoiceDto.ApplicationNumber);
 
+            if (application == null) throw new ArgumentException("No application found with that application ID");
+
+            //check application status to see whether the invoice can be generated
+            if (application.Status != "APPROVED FOR CONNECTION") throw new ArgumentException("Application status should be {APPROVED FOR CONNECTION}");
+
+            //check whether materials are available
+            if (invoiceDto.materialsDtos.Count == 0) throw new ArgumentException("No Materials supplied");
+
+            
+            var connectionInvoice = new NewConnectionInvoice {
+                ApplicationId = application.Id,
+                InvoiceNumber = Guid.NewGuid().ToString("N").Substring(0, 8),
+                NewConnectionInvoiceMaterials = invoiceDto.materialsDtos.Select(m => new NewConnectionInvoiceMaterials
+                {
+                    MaterialId = m.MaterialId,
+                    Quantity = m.Quantity,
+                    Price = m.Price
+                }).ToList(),
+                InvoiceDate = invoiceDto.Date,
+                Status = "PENDING PAYMENT",
+            };
+
+
+            _context.NewConnectionInvoices.Add(connectionInvoice);
+            await _context.SaveChangesAsync();
+
+            return connectionInvoice.InvoiceNumber;
+        }
     }
 }

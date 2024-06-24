@@ -1,4 +1,4 @@
-﻿using Core.DTOs;
+﻿using Core.DTOs.UserManagement;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Collections.Generic;
