@@ -603,7 +603,7 @@ const NewApplicationForm = () => {
                       />
                     </div>
                   </div>
-                  <section className="flex flex-col justify-end items-end px-8 py-5 text-base font-semibold leading-6 whitespace-nowrap bg-white max-md:pl-5 max-md:max-w-full">
+                  <section className="flex flex-col justify-between items-end px-8 py-5 text-base mt-12 font-semibold leading-6 whitespace-nowrap bg-white max-md:pl-5 max-md:max-w-full">
                     <div className="flex gap-4 px-8 max-w-full max-md:flex-wrap max-md:px-5">
                       <button
                         className="justify-center items-center px-8 py-4 rounded-3xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 max-md:px-5 w-52"
@@ -717,7 +717,7 @@ const NewApplicationForm = () => {
                       </select>
                     </div>
                   </div>
-                  <section className="flex flex-col justify-end items-end px-8 py-5 text-base font-semibold leading-6 whitespace-nowrap bg-white max-md:pl-5 max-md:max-w-full">
+                  <section className="flex flex-col justify-between items-end px-8 py-5 mt-12 text-base font-semibold leading-6 whitespace-nowrap bg-white max-md:pl-5 max-md:max-w-full">
                     <div className="flex gap-4 px-8 max-w-full  max-md:flex-wrap max-md:px-5">
                       <button
                         className="justify-center items-center px-8 py-4 rounded-3xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 max-md:px-5 w-52"
