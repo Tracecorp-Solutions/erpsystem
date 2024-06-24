@@ -38,6 +38,10 @@ namespace Core.Repositories.Billing
         Task EditBillDeliveryMethod(BillDeliveryMethod billDeliveryMethod);
         Task DeleteBillDeliveryMethod(BillDeliveryMethod billDeliveryMethod);
 
+        Task AddMaterial(Material material);
+        Task<IEnumerable<Material>> GetMaterials();
+        Task EditMaterial(Material material);
+        Task DeleteMaterial(Material material);
         
     }
 }
