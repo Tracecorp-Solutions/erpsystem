@@ -7,6 +7,12 @@
 /.vs
 .vs/
 Trace/.vs
+# Ignore all directories named "bin" and "obj"
+/bin/
+/obj/
+# Ignore files under Trace/bin/Release/net8.0/
+Trace/bin/Release/net8.0/
+
 
 # testing
 /coverage
