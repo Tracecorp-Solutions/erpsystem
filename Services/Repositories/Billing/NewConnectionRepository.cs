@@ -7,14 +7,19 @@ using Core.Repositories.UserManagement;
 using Infrastructure.Data;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
+using Services.Repositories.Settings;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mail;
 using System.Reflection;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 
 namespace Services.Repositories.Billing
 {
@@ -378,14 +383,24 @@ namespace Services.Repositories.Billing
             return connectionInvoice.InvoiceNumber;
         }
 
-        public async Task<NewConnectionInvoice> GetNewConnectionInvoice(string applicationNumber)
+        public async Task<string> GetNewConnectionInvoice(string applicationNumber)
         {
             var connectionInvoice = await _context.NewConnectionInvoices
                 .Include(i => i.Application)
                 .Include(i => i.NewConnectionInvoiceMaterials)
                 .FirstOrDefaultAsync(i => i.Application.ApplicationNumber == applicationNumber);
+            if (connectionInvoice == null) throw new ArgumentException("No invoice found with that application ID");
 
-            return connectionInvoice == null ? throw new ArgumentException("No invoices found") : connectionInvoice;
+            // Serialize to JSON using Newtonsoft.Json with settings to handle circular references
+            var jsonSettings = new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                Formatting = Newtonsoft.Json.Formatting.Indented,
+            };
+
+            string json = JsonConvert.SerializeObject(connectionInvoice, jsonSettings);
+
+            return json;
         }
 
     }
