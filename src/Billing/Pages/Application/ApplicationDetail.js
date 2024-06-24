@@ -1,7 +1,8 @@
-import React, {useState, useEffect} from "react";
-import { Dropdown, Menu } from "antd";
+import React, { useState, useEffect } from "react";
+import { Dropdown, Menu, Modal, Button } from "antd";
 import { DownOutlined } from "@ant-design/icons";
-import { useLocation  } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import axios from "axios";
 import ApplicantSection from "./ApplicantSection";
 import Document from "./Document";
 import ApplicationFormActions from "./Actions/ApplicationFormActions";
@@ -9,21 +10,24 @@ import RejectApplicationFormAction from "./Actions/RejectApplicationFormAction";
 import ContactApplicantFormAction from "./Actions/ContactApplicantForm";
 import AssignSurveyor from "./Actions/AssignSurveyor";
 import SurveyorReport from "./Actions/SurveyorReport";
+import UpdateAuthorizeModal from "./Actions/UpdateAuthorizeModal ";
 
 const ApplicationDetail = () => {
-
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [rejectApplication, setRejectApplication] = useState(false);
   const [contactApplicantForm, setContactApplicantForm] = useState(false);
   const [assignSurveyorAction, setAssignSurveyorAction] = useState(false);
   const [surveyorReport, setSurveyorReport] = useState(false);
   const [applicationData, setApplicationData] = useState(null);
+  const [isUpdateModalVisible, setIsUpdateModalVisible] = useState(false);
 
   console.log("Application Data:", applicationData);
 
   const location = useLocation();
   const { state } = location;
   const applicationNumber = state?.applicationNumber;
+
+  const userid = sessionStorage.getItem("userid");
 
   useEffect(() => {
     if (applicationNumber) {
@@ -32,7 +36,9 @@ const ApplicationDetail = () => {
   }, [applicationNumber]);
 
   const fetchApplicationById = (applicationNumber) => {
-    fetch(`${process.env.REACT_APP_API_URL}/GetApplicationByApplicationNumnber?applicationId=${applicationNumber}`)
+    fetch(
+      `${process.env.REACT_APP_API_URL}/GetApplicationByApplicationNumnber?applicationId=${applicationNumber}`
+    )
       .then((response) => {
         if (!response.ok) {
           throw new Error("Failed to fetch application details");
@@ -48,23 +54,60 @@ const ApplicationDetail = () => {
       });
   };
 
+  const handleGenerateJobCard = () => {
+    if (!applicationNumber || !userid) {
+      console.error("Application number or userId is missing");
+      return;
+    }
+  
+    const apiUrl = `${process.env.REACT_APP_API_URL}/GenerateJobCard?applicationNumber=${encodeURIComponent(applicationNumber)}&userid=${encodeURIComponent(userid)}`;
+  
+    axios
+      .post(apiUrl, {
+        applicationNumber: applicationNumber,
+        userid: userid,
+      })
+      .then((response) => {
+        console.log("Job card generated successfully:", response.data);
+        // Optionally update state or perform other actions after successful API call
+      })
+      .catch((error) => {
+        console.error("Error generating job card:", error.message);
+      });
+  };
+  
+
+
   const handleApproveApplication = () => {
     setIsModalVisible(false);
+  };
+
+  const handleUpdateModalVisible = () => {
+    setIsUpdateModalVisible(!isUpdateModalVisible);
   };
 
   const menu = (
     <Menu>
       <Menu.Item key="1">Print Application</Menu.Item>
-      <Menu.Item key="2" onClick={() => setRejectApplication(true)}>Reject Application</Menu.Item>
-      <Menu.Item key="3" onClick={() => setContactApplicantForm(true)}>Contact Applicant</Menu.Item>
-      <Menu.Item key="4" onClick={() => setIsModalVisible(true)}>Approve Application</Menu.Item>
+      <Menu.Item key="2" onClick={() => setRejectApplication(true)}>
+        Reject Application
+      </Menu.Item>
+      <Menu.Item key="3" onClick={() => setContactApplicantForm(true)}>
+        Contact Applicant
+      </Menu.Item>
+      <Menu.Item key="4" onClick={() => setIsModalVisible(true)}>
+        Approve Application
+      </Menu.Item>
       <Menu.Item key="5">Generate Job card</Menu.Item>
-      <Menu.Item key="6" onClick={() => setAssignSurveyorAction(true)}>Assign Surveyor</Menu.Item>
+      <Menu.Item key="6" onClick={() => setAssignSurveyorAction(true)}>
+        Assign Surveyor
+      </Menu.Item>
     </Menu>
   );
 
   // Safely accessing applicationData properties
-  const applicationNumberDisplay = applicationData?.applicationNumber || "Not Available";
+  const applicationNumberDisplay =
+    applicationData?.applicationNumber || "Not Available";
   const fullName = applicationData?.fullName || "Not Available";
   const dateOfBirth = applicationData?.dateOfBirth || "Not Available";
   const emailAddress = applicationData?.emailAddress || "Not Available";
@@ -145,7 +188,7 @@ const ApplicationDetail = () => {
                 Date of Birth
               </div>
               <div className="mt-2 text-base leading-6 text-neutral-600">
-              {dateOfBirth}
+                {dateOfBirth}
               </div>
             </div>
             <div className="flex flex-col justify-center whitespace-nowrap">
@@ -357,7 +400,10 @@ const ApplicationDetail = () => {
                 No surveyor assigned yet
               </div>
             </div>
-            <button className="justify-center self-start px-6 py-3 mt-2.5 text-sm font-semibold text-white rounded-3xl bg-slate-500 max-md:px-5" onClick={() => setAssignSurveyorAction(true)}>
+            <button
+              className="justify-center self-start px-6 py-3 mt-2.5 text-sm font-semibold text-white rounded-3xl bg-slate-500 max-md:px-5"
+              onClick={() => setAssignSurveyorAction(true)}
+            >
               Assign Surveyor
             </button>
           </div>
@@ -371,7 +417,10 @@ const ApplicationDetail = () => {
                 No Job card generated yet
               </div>
             </div>
-            <button className="justify-center self-start px-6 py-3 mt-2.5 text-sm font-semibold text-white whitespace-nowrap rounded-3xl bg-slate-500 max-md:px-5">
+            <button
+              className="justify-center self-start px-6 py-3 mt-2.5 text-sm font-semibold text-white whitespace-nowrap rounded-3xl bg-slate-500 max-md:px-5"
+              onClick={handleGenerateJobCard}
+            >
               Generate
             </button>
           </div>
@@ -386,7 +435,10 @@ const ApplicationDetail = () => {
               Application is pending survey
             </div>
           </div>
-          <button className="justify-center self-start px-6 py-3 mt-2.5 text-sm font-semibold text-white rounded-3xl bg-slate-500 max-md:px-5" onClick={() => setSurveyorReport(true)}>
+          <button
+            className="justify-center self-start px-6 py-3 mt-2.5 text-sm font-semibold text-white rounded-3xl bg-slate-500 max-md:px-5"
+            onClick={() => setSurveyorReport(true)}
+          >
             Update Findings
           </button>
         </div>
@@ -401,60 +453,50 @@ const ApplicationDetail = () => {
             className="shrink-0 my-auto w-6 aspect-square"
           />
         </header>
-        <div className="shrink-0 mt-4 h-px border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-opacity-10 max-md:max-w-full" />
-        <div className="flex gap-5 justify-between mt-4 max-md:flex-wrap">
-          <div className="flex gap-2 justify-between px-6 py-4 rounded-xl bg-stone-100 max-md:flex-wrap max-md:px-5 max-md:max-w-full">
-            <div className="flex flex-col justify-center text-center">
-              <div className="text-xs font-medium tracking-wide uppercase text-neutral-400">
-                Surveyor Assigned
-              </div>
-              <div className="mt-2 text-base leading-6 text-neutral-600">
-                No surveyor assigned yet
-              </div>
+        <div className="shrink-0 mt-4 h-px border bg-neutral-500 bg-opacity-10 border-neutral-500 border-opacity-10" />
+        <div className="flex gap-5 justify-between mt-4 max-md:flex-wrap w-full">
+          <div className="flex gap-2 justify-between px-6 py-4 rounded-xl bg-stone-100 max-md:flex-wrap max-md:px-5 border w-full">
+            <div>
+              <h2 style={{
+                color: "#a1a1a1",
+                fontFamily: "outFit, Sans-serif",
+                fontSize: "16px"
+              }}>CONNECTION DETAILS</h2>
+              <p>Update details to reflect surveyor recommendations</p>
             </div>
-            <button className="justify-center self-start px-6 py-3 mt-2.5 text-sm font-semibold text-white rounded-3xl bg-slate-500 max-md:px-5" onClick={() => setAssignSurveyorAction(true)}>
-              Assign Surveyor
+            <button className="justify-center self-start px-6 py-3 mt-2.5 text-sm font-semibold text-white whitespace-nowrap rounded-3xl bg-slate-500 max-md:px-5"
+              onClick={handleUpdateModalVisible}
+            >
+             Update and Authorize Connection
             </button>
           </div>
-
-          <div className="flex gap-2 justify-between px-6 py-4 rounded-xl bg-stone-100 max-md:flex-wrap max-md:px-5 max-md:max-w-full">
-            <div className="flex flex-col justify-center text-center">
-              <div className="text-xs font-medium tracking-wide uppercase text-neutral-400">
-                JOB CARD
-              </div>
-              <div className="mt-2 text-base leading-6 text-neutral-600">
-                No Job card generated yet
-              </div>
-            </div>
-            <button className="justify-center self-start px-6 py-3 mt-2.5 text-sm font-semibold text-white whitespace-nowrap rounded-3xl bg-slate-500 max-md:px-5">
-              Generate
-            </button>
-          </div>
-        </div>
-
-        <div className="flex gap-2 justify-between px-6 py-4 mt-4 max-w-full rounded-xl bg-stone-100 w-[508px] max-md:flex-wrap max-md:px-5">
-          <div className="flex flex-col justify-center text-center">
-            <div className="text-xs font-medium tracking-wide uppercase text-neutral-400">
-              Surveyor report
-            </div>
-            <div className="mt-2 text-base leading-6 text-neutral-600">
-              Application is pending survey
-            </div>
-          </div>
-          <button className="justify-center self-start px-6 py-3 mt-2.5 text-sm font-semibold text-white rounded-3xl bg-slate-500 max-md:px-5" onClick={() => setSurveyorReport(true)}>
-            Update Findings
-          </button>
         </div>
       </section>
       <ApplicationFormActions
-       isModalVisible={isModalVisible}
+        isModalVisible={isModalVisible}
         handleApproveApplication={handleApproveApplication}
-        setIsModalVisible={setIsModalVisible} 
-        />
-        <RejectApplicationFormAction rejectApplication={rejectApplication} setRejectApplication={setRejectApplication} />
-        <ContactApplicantFormAction ContactApplicantForm={contactApplicantForm} setContactApplicantForm={setContactApplicantForm}  />
-        <AssignSurveyor applicationId={applicationNumber} assignSurveyorAction={assignSurveyorAction} setAssignSurveyorAction={setAssignSurveyorAction}  />
-        <SurveyorReport surveyorReport={surveyorReport} fullName={fullName} setSurveyorReport={setSurveyorReport} applicationNumberDisplay={applicationNumberDisplay}  />
+        setIsModalVisible={setIsModalVisible}
+      />
+      <RejectApplicationFormAction
+        rejectApplication={rejectApplication}
+        setRejectApplication={setRejectApplication}
+      />
+      <ContactApplicantFormAction
+        ContactApplicantForm={contactApplicantForm}
+        setContactApplicantForm={setContactApplicantForm}
+      />
+      <AssignSurveyor
+        applicationId={applicationNumber}
+        assignSurveyorAction={assignSurveyorAction}
+        setAssignSurveyorAction={setAssignSurveyorAction}
+      />
+      <SurveyorReport
+        surveyorReport={surveyorReport}
+        fullName={fullName}
+        setSurveyorReport={setSurveyorReport}
+        applicationNumberDisplay={applicationNumberDisplay}
+      />
+      <UpdateAuthorizeModal applicationData={applicationData} applicationNumberDisplay={applicationNumberDisplay} fullName={fullName} isUpdateModalVisible={isUpdateModalVisible} handleUpdateModalVisible={handleUpdateModalVisible} />
     </div>
   );
 };
