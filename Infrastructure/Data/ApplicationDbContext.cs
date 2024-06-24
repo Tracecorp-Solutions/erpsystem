@@ -50,6 +50,8 @@ namespace Infrastructure.Data
 
         public DbSet<CustomerType> CustomerTypes { get; set; }
 
+        public DbSet<BillDeliveryMethod> BillDeliveryMethods { get; set; }
+
         #endregion
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

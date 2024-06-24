@@ -142,5 +142,38 @@ namespace Services.Repositories.Billing
             _context.CustomerCategories.Remove(customerCategory);
             await _context.SaveChangesAsync();
         }
+
+        public async Task AddBillDeliveryMethod(BillDeliveryMethod billDeliveryMethod)
+        {
+            _context.BillDeliveryMethods.Add(billDeliveryMethod);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<BillDeliveryMethod>> GetBillDeliveryMethods()
+        {
+            var billdeliverymethods = await _context.BillDeliveryMethods.ToListAsync();
+
+            return billdeliverymethods == null ? throw new ArgumentException("No Bill Delivery Methods Found") : billdeliverymethods;
+        }
+
+        public async Task EditBillDeliveryMethod(BillDeliveryMethod billDeliveryMethod)
+        {
+            //check whether the bill delivery method exists
+            var billdeliverymethod = await _context.BillDeliveryMethods.FindAsync(billDeliveryMethod.Id);
+            if (billdeliverymethod == null)
+                throw new ArgumentException("Bill Delivery Method Not Found");
+            _context.BillDeliveryMethods.Update(billDeliveryMethod);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task DeleteBillDeliveryMethod(BillDeliveryMethod billDeliveryMethod)
+        {
+            //check whether the bill delivery method exists
+            var billdeliverymethod = await _context.BillDeliveryMethods.FindAsync(billDeliveryMethod.Id);
+            if (billdeliverymethod == null)
+                throw new ArgumentException("Bill Delivery Method Not Found");
+            _context.BillDeliveryMethods.Remove(billDeliveryMethod);
+            await _context.SaveChangesAsync();
+        }
     }
 }

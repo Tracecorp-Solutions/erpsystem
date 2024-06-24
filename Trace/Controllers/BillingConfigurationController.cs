@@ -306,5 +306,72 @@ namespace Trace.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
             }
         }
+
+        [HttpPost("/AddBillDeliveryMethod")]
+        public async Task<IActionResult> AddBillDeliveryMethod([FromBody] BillDeliveryMethod billDeliveryMethod) 
+        {
+            try
+            {
+                await _billingConfigurationRepository.AddBillDeliveryMethod(billDeliveryMethod);
+                return Ok("Bill Delivery Method Added Successfully");
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
+        }
+
+        [HttpGet("/GetBillDeliveryMethods")]
+        public async Task<IActionResult> GetBillDeliveryMethods() 
+        {
+            try
+            {
+                var billdeliverymethods = await _billingConfigurationRepository.GetBillDeliveryMethods();
+                return Ok(billdeliverymethods);
+            }catch(ArgumentException ex) 
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
+        }
+
+        [HttpPut("/EditBillDeliveryMethod")]
+        public async Task<IActionResult> EditBillDeliveryMethod([FromBody] BillDeliveryMethod billDeliveryMethod) 
+        {
+            try
+            {
+                await _billingConfigurationRepository.EditBillDeliveryMethod(billDeliveryMethod);
+                return Ok("Bill Delivery Method Updated Successfully");
+            }catch(ArgumentException ex) 
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
+        }
+
+        [HttpDelete("/DeleteBillDeliveryMethod")]
+        public async Task<IActionResult> DeleteBillDeliveryMethod([FromBody] BillDeliveryMethod billDeliveryMethod) 
+        {
+            try
+            {
+                await _billingConfigurationRepository.DeleteBillDeliveryMethod(billDeliveryMethod);
+                return Ok("Bill Delivery Method Deleted Successfully");
+            }catch(ArgumentException ex) 
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
+        }
+
+
     }
 }

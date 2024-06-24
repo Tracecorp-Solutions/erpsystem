@@ -33,6 +33,11 @@ namespace Core.Repositories.Billing
         Task AddCustomerType(CustomerType customerType);
         Task<IEnumerable<CustomerType>> GetCustomerTypes();
 
+        Task AddBillDeliveryMethod(BillDeliveryMethod billDeliveryMethod);
+        Task<IEnumerable<BillDeliveryMethod>> GetBillDeliveryMethods();
+        Task EditBillDeliveryMethod(BillDeliveryMethod billDeliveryMethod);
+        Task DeleteBillDeliveryMethod(BillDeliveryMethod billDeliveryMethod);
+
         
     }
 }

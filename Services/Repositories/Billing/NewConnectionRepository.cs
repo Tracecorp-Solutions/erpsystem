@@ -123,6 +123,7 @@ namespace Services.Repositories.Billing
                 .Include(a => a.Territory)
                 .Include(a => a.SubTerritory)
                 .Include(a => a.CustomerCategory)
+                .Include(a => a.User)
                 .FirstOrDefaultAsync(a => a.ApplicationNumber == applicationId);
 
             if (application == null)
