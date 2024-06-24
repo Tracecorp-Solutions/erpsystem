@@ -377,5 +377,15 @@ namespace Services.Repositories.Billing
 
             return connectionInvoice.InvoiceNumber;
         }
+
+        public async Task<IEnumerable<NewConnectionInvoice>> GetConnectionInvoices()
+        {
+            var connectionInvoices = await _context.NewConnectionInvoices
+                .Include(i => i.Application)
+                .Include(i => i.NewConnectionInvoiceMaterials)
+                .ToListAsync();
+
+            return connectionInvoices == null ? throw new ArgumentException("No connection invoices found") : connectionInvoices;
+        }
     }
 }

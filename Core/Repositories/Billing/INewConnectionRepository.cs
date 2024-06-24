@@ -34,6 +34,8 @@ namespace Core.Repositories.Billing
 
         Task<string> AddConnectionInvoice(NewConnectionInvoiceDto invoiceDto);
 
+        Task<NewConnectionInvoice> GetNewConnectionInvoice(string applicationNumber);
+
       
     }
 }
