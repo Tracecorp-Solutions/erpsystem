@@ -1,5 +1,4 @@
-﻿using Core.Models;
-using Infrastructure.Data;
+﻿using Infrastructure.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +17,7 @@ using System.Diagnostics.Contracts;
 using System.ComponentModel.DataAnnotations;
 using Core.Repositories.UserManagement;
 using Core.Repositories.Settings;
+using Core.Models.UserManagement;
 
 namespace Services.Repositories.UserManagement
 {

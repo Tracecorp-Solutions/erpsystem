@@ -1,5 +1,5 @@
 ﻿using Core.DTOs;
-using Core.Models;
+using Core.Models.Accounting;
 using Core.Repositories.Accounting;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;

@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Core.Models;
 using Microsoft.EntityFrameworkCore;
 using Infrastructure.Data;
 using System.Reflection.Metadata.Ecma335;
 using Core.Repositories.Accounting;
+using Core.Models.Accounting;
 
 namespace Services.Repositories.Accounting
 {

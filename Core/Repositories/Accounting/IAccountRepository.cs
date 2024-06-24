@@ -1,4 +1,4 @@
-﻿using Core.Models;
+﻿using Core.Models.Accounting;
 using System;
 using System.Collections.Generic;
 using System.Linq;

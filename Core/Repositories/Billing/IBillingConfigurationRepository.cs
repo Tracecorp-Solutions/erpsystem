@@ -1,4 +1,4 @@
-﻿using Core.Models;
+﻿using Core.Models.Billing;
 using System;
 using System.Collections.Generic;
 using System.Linq;

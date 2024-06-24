@@ -1,4 +1,4 @@
-﻿using Core.Models;
+﻿using Core.Models.Billing;
 using Core.Repositories.Billing;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;

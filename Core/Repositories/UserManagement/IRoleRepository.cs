@@ -1,4 +1,4 @@
-﻿using Core.Models;
+﻿using Core.Models.UserManagement;
 using System;
 using System.Collections.Generic;
 using System.Linq;

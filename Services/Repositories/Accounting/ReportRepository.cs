@@ -6,8 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Core.DTOs;
 using Microsoft.EntityFrameworkCore;
-using Core.Models;
 using Core.Repositories.Accounting;
+using Core.Models.UserManagement;
 
 namespace Services.Repositories.Accounting
 {

@@ -1,7 +1,7 @@
 ﻿using Xunit;
 using Moq;
 using Trace.Controllers;
-using Core.Models;
+using Core.Models.Accounting;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Core.Repositories.Accounting;

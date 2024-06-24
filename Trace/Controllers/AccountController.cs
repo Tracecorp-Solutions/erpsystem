@@ -1,9 +1,8 @@
-﻿using Core.Models;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Core.Models;
 using Core.Repositories.Accounting;
+using Core.Models.Accounting;
 
 namespace Trace.Controllers
 {

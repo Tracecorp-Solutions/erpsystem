@@ -1,4 +1,6 @@
-﻿using Core.Models;
+﻿using Core.Models.Accounting;
+using Core.Models.Billing;
+using Core.Models.UserManagement;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Data

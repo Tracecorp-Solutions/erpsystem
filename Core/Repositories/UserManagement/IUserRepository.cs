@@ -1,5 +1,5 @@
 ﻿using Core.DTOs;
-using Core.Models;
+using Core.Models.UserManagement;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
