@@ -10,9 +10,10 @@ namespace Core.Models.Billing
     {
         public int MaterialId { get; set; }
         public string MaterialName { get; set; }
-        public string MaterialDescription { get; set; }
-        public decimal MaterialPrice { get; set; }
-        public int MaterialQuantity { get; set; }
+
+        public decimal MaterialUnitPrice { get; set; }
+        public string UnitOfMeasure { get; set; }
+        public string? MaterialDescription { get; set; }
 
     }
 }
