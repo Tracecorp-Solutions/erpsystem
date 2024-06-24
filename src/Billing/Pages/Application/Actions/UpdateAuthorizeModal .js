@@ -50,7 +50,7 @@ const UpdateAuthorizeModal = ({
     axios.post(`${process.env.REACT_APP_API_URL}/AuthorizeConnection`, data)
       .then(response => {
         console.log('Success:', response.data);
-        message.success('Form submitted successfully!');
+        message.success('Connection form submitted successfully!');
         handleUpdateModalVisible();
       })
       .catch(error => {
