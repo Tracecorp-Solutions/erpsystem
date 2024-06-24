@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Modal, Select, message } from "antd";
+import { Modal, Select, message, Space } from "antd";
 import axios from "axios";
 
 const { Option } = Select;
@@ -9,19 +9,20 @@ const UpdateAuthorizeModal = ({
   handleUpdateModalVisible,
   fullName,
   applicationNumberDisplay,
-  applicationData
+  applicationData,
 }) => {
   const [customerCategories, setCustomerCategories] = useState([]);
   const [customerTypes, setCustomerTypes] = useState([]);
   const [selectedConnectionType, setSelectedConnectionType] = useState(null);
-  const [selectedConnectionCategory, setSelectedConnectionCategory] = useState(null);
+  const [selectedConnectionCategory, setSelectedConnectionCategory] =
+    useState(null);
 
   useEffect(() => {
     const fetchCustomerData = async () => {
       try {
         const [categoriesResponse, typesResponse] = await Promise.all([
           axios.get(`${process.env.REACT_APP_API_URL}/GetCustomerCategories`),
-          axios.get(`${process.env.REACT_APP_API_URL}/GetCustomerTypes`)
+          axios.get(`${process.env.REACT_APP_API_URL}/GetCustomerTypes`),
         ]);
 
         setCustomerCategories(categoriesResponse.data);
@@ -35,7 +36,10 @@ const UpdateAuthorizeModal = ({
   }, []);
 
   const handleUpdateAndAuthorize = () => {
-    if (selectedConnectionType === null || selectedConnectionCategory === null) {
+    if (
+      selectedConnectionType === null ||
+      selectedConnectionCategory === null
+    ) {
       console.error("Please select connection type and category.");
       return;
     }
@@ -44,17 +48,18 @@ const UpdateAuthorizeModal = ({
       applicationNumber: applicationNumberDisplay,
       connectionType: selectedConnectionType,
       connectionCategory: selectedConnectionCategory,
-      authorizedBy:  String(applicationData?.user?.id || "")
+      authorizedBy: String(applicationData?.user?.id || ""),
     };
 
-    axios.post(`${process.env.REACT_APP_API_URL}/AuthorizeConnection`, data)
-      .then(response => {
-        console.log('Success:', response.data);
-        message.success('Connection form submitted successfully!');
+    axios
+      .post(`${process.env.REACT_APP_API_URL}/AuthorizeConnection`, data)
+      .then((response) => {
+        console.log("Success:", response.data);
+        message.success("Connection form submitted successfully!");
         handleUpdateModalVisible();
       })
-      .catch(error => {
-        console.error('Error:', error);
+      .catch((error) => {
+        console.error("Error:", error);
       });
   };
 
@@ -126,7 +131,7 @@ const UpdateAuthorizeModal = ({
           className="flex gap-2 justify-between h-14 mt-2 max-w-full text-base leading-6 bg-white rounded-xl border border-solid border-neutral-500 border-opacity-30 text-neutral-400 w-[500px] max-md:flex-wrap"
           dropdownClassName="w-full"
         >
-          <Option value="">Please select</Option>
+          <Space>Please Select Connection Type</Space>{" "}
           {customerTypes.map((type) => (
             <Option key={type.id} value={type.id}>
               {type.name}
@@ -144,6 +149,7 @@ const UpdateAuthorizeModal = ({
           className="flex gap-2 justify-between h-14 mt-2 max-w-full text-base leading-6 bg-white rounded-xl border border-solid border-neutral-500 border-opacity-30 text-neutral-400 w-[500px] max-md:flex-wrap"
           dropdownClassName="w-full"
         >
+          <Space>Proposed Category</Space>{" "}
           {customerCategories.map((category) => (
             <Option key={category.id} value={category.id}>
               {category.name}
