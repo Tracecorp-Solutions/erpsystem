@@ -12,6 +12,8 @@ Trace/.vs
 /obj/
 # Ignore files under Trace/bin/Release/net8.0/
 Trace/bin/Release/net8.0/
+Trace/obj/Release/net8.0/
+
 
 
 # testing
