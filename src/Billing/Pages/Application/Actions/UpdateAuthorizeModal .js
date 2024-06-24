@@ -36,13 +36,10 @@ const UpdateAuthorizeModal = ({
   }, []);
 
   const handleUpdateAndAuthorize = () => {
-    if (
-      selectedConnectionType === null ||
-      selectedConnectionCategory === null
-    ) {
-      console.error("Please select connection type and category.");
-      return;
-    }
+    if (selectedConnectionType === null || selectedConnectionCategory === null) {
+        message.error('Please select connection type and category.');
+        return;
+      }
 
     const data = {
       applicationNumber: applicationNumberDisplay,
@@ -60,6 +57,8 @@ const UpdateAuthorizeModal = ({
       })
       .catch((error) => {
         console.error("Error:", error);
+        message.error("Please select connection type and category.");
+
       });
   };
 
