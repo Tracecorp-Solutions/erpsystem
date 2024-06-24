@@ -492,7 +492,7 @@ const ApplicationDetail = () => {
         setSurveyorReport={setSurveyorReport}
         applicationNumberDisplay={applicationNumberDisplay}
       />
-      <UpdateAuthorizeModal isUpdateModalVisible={isUpdateModalVisible} handleUpdateModalVisible={handleUpdateModalVisible} />
+      <UpdateAuthorizeModal applicationNumberDisplay={applicationNumberDisplay} fullName={fullName} isUpdateModalVisible={isUpdateModalVisible} handleUpdateModalVisible={handleUpdateModalVisible} />
     </div>
   );
 };
