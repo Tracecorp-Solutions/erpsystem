@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Dropdown, Menu } from "antd";
+import { Dropdown, Menu, Modal, Button } from "antd";
 import { DownOutlined } from "@ant-design/icons";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
@@ -10,6 +10,7 @@ import RejectApplicationFormAction from "./Actions/RejectApplicationFormAction";
 import ContactApplicantFormAction from "./Actions/ContactApplicantForm";
 import AssignSurveyor from "./Actions/AssignSurveyor";
 import SurveyorReport from "./Actions/SurveyorReport";
+import UpdateAuthorizeModal from "./Actions/UpdateAuthorizeModal ";
 
 const ApplicationDetail = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -18,6 +19,7 @@ const ApplicationDetail = () => {
   const [assignSurveyorAction, setAssignSurveyorAction] = useState(false);
   const [surveyorReport, setSurveyorReport] = useState(false);
   const [applicationData, setApplicationData] = useState(null);
+  const [isUpdateModalVisible, setIsUpdateModalVisible] = useState(false);
 
   console.log("Application Data:", applicationData);
 
@@ -78,6 +80,10 @@ const ApplicationDetail = () => {
 
   const handleApproveApplication = () => {
     setIsModalVisible(false);
+  };
+
+  const handleUpdateModalVisible = () => {
+    setIsUpdateModalVisible(!isUpdateModalVisible);
   };
 
   const menu = (
@@ -447,57 +453,19 @@ const ApplicationDetail = () => {
             className="shrink-0 my-auto w-6 aspect-square"
           />
         </header>
-        <div className="shrink-0 mt-4 h-px border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-opacity-10 max-md:max-w-full" />
-        <div className="flex gap-5 justify-between mt-4 max-md:flex-wrap">
-          <div className="flex gap-2 justify-between px-6 py-4 rounded-xl bg-stone-100 max-md:flex-wrap max-md:px-5 max-md:max-w-full">
-            <div className="flex flex-col justify-center text-center">
-              <div className="text-xs font-medium tracking-wide uppercase text-neutral-400">
-                Surveyor Assigned
-              </div>
-              <div className="mt-2 text-base leading-6 text-neutral-600">
-                No surveyor assigned yet
-              </div>
-            </div>
-            <button
-              className="justify-center self-start px-6 py-3 mt-2.5 text-sm font-semibold text-white rounded-3xl bg-slate-500 max-md:px-5"
-              onClick={() => setAssignSurveyorAction(true)}
-            >
-              Assign Surveyor
-            </button>
-          </div>
-
-          <div className="flex gap-2 justify-between px-6 py-4 rounded-xl bg-stone-100 max-md:flex-wrap max-md:px-5 max-md:max-w-full">
-            <div className="flex flex-col justify-center text-center">
-              <div className="text-xs font-medium tracking-wide uppercase text-neutral-400">
-                JOB CARD
-              </div>
-              <div className="mt-2 text-base leading-6 text-neutral-600">
-                No Job card generated yet
-              </div>
+        <div className="shrink-0 mt-4 h-px border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-opacity-10" />
+        <div className="flex gap-5 justify-between mt-4 max-md:flex-wrap w-full">
+          <div className="flex gap-2 justify-between px-6 py-4 rounded-xl bg-stone-100 max-md:flex-wrap max-md:px-5 border w-full">
+            <div>
+              <h2>CONNECTION DETAILS</h2>
+              <p>Update details to reflect surveyor recommendations</p>
             </div>
             <button className="justify-center self-start px-6 py-3 mt-2.5 text-sm font-semibold text-white whitespace-nowrap rounded-3xl bg-slate-500 max-md:px-5"
-            onClick={handleGenerateJobCard}
+              onClick={handleUpdateModalVisible}
             >
-              Generate
+             Update and Authorize Connection
             </button>
           </div>
-        </div>
-
-        <div className="flex gap-2 justify-between px-6 py-4 mt-4 max-w-full rounded-xl bg-stone-100 w-[508px] max-md:flex-wrap max-md:px-5">
-          <div className="flex flex-col justify-center text-center">
-            <div className="text-xs font-medium tracking-wide uppercase text-neutral-400">
-              Surveyor report
-            </div>
-            <div className="mt-2 text-base leading-6 text-neutral-600">
-              Application is pending survey
-            </div>
-          </div>
-          <button
-            className="justify-center self-start px-6 py-3 mt-2.5 text-sm font-semibold text-white rounded-3xl bg-slate-500 max-md:px-5"
-            onClick={() => setSurveyorReport(true)}
-          >
-            Update Findings
-          </button>
         </div>
       </section>
       <ApplicationFormActions
@@ -524,6 +492,7 @@ const ApplicationDetail = () => {
         setSurveyorReport={setSurveyorReport}
         applicationNumberDisplay={applicationNumberDisplay}
       />
+      <UpdateAuthorizeModal isUpdateModalVisible={isUpdateModalVisible} handleUpdateModalVisible={handleUpdateModalVisible} />
     </div>
   );
 };
