@@ -58,6 +58,8 @@ namespace Infrastructure.Data
 
         public DbSet<NewConnectionInvoiceMaterials> NewConnectionInvoiceMaterials { get; set; }
 
+        public DbSet<Material> Materials { get; set; }
+
         #endregion
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

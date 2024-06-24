@@ -175,5 +175,11 @@ namespace Services.Repositories.Billing
             _context.BillDeliveryMethods.Remove(billDeliveryMethod);
             await _context.SaveChangesAsync();
         }
+
+        public async Task AddMaterial(Material material)
+        {
+            _context.Materials.Add(material);
+            await _context.SaveChangesAsync();
+        }
     }
 }
