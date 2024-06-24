@@ -101,5 +101,46 @@ namespace Services.Repositories.Billing
 
             return custtypes == null ? throw new ArgumentException("No Customer Types Found") : custtypes;
         }
+
+        public async Task EditCustomerCategory(CustomerCategory customerCategory)
+        {
+            // check whether the customer category exists
+            var custcategory = await _context.CustomerCategories.FindAsync(customerCategory.Id);
+            if (custcategory == null)
+                throw new ArgumentException("Customer Category Not Found");
+
+            _context.CustomerCategories.Update(customerCategory);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task EditCustomerType(CustomerType customerType)
+        {
+            //check whether the customer type exists
+            var custtype = await _context.CustomerTypes.FindAsync(customerType.Id);
+            if (custtype == null)
+                throw new ArgumentException("Customer Type Not Found");
+            _context.CustomerTypes.Update(customerType);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task DeleteCustomerType(CustomerType customerType)
+        {
+            //check whether the customer type exists
+            var custtype = await _context.CustomerTypes.FindAsync(customerType.Id);
+            if (custtype == null)
+                throw new ArgumentException("Customer Type Not Found");
+            _context.CustomerTypes.Remove(customerType);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task DeleteCustomerCategory(CustomerCategory customerCategory)
+        {
+            //check whether the customer category exists
+            var custcategory = await _context.CustomerCategories.FindAsync(customerCategory.Id);
+            if (custcategory == null)
+                throw new ArgumentException("Customer Category Not Found");
+            _context.CustomerCategories.Remove(customerCategory);
+            await _context.SaveChangesAsync();
+        }
     }
 }

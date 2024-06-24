@@ -238,5 +238,73 @@ namespace Trace.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
             }
         }
+
+        [HttpPut("/EditCustomerCategory")]
+        public async Task<IActionResult> EditCustomerCategory([FromBody] CustomerCategory customerCategory) 
+        {
+            try
+            {
+                await _billingConfigurationRepository.EditCustomerCategory(customerCategory);
+                return Ok("Customer Category Updated Successfully");
+            }catch(ArgumentException ex) 
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
+        }
+
+        [HttpPut("/EditCustomerType")]
+        public async Task<IActionResult> EditCustomerType([FromBody] CustomerType customerType) 
+        {
+            try
+            {
+                await _billingConfigurationRepository.EditCustomerType(customerType);
+                return Ok("Customer Type Updated Successfully");
+            }catch(ArgumentException ex) 
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
+        }
+
+        [HttpDelete("/DeleteCustomerType")]
+        public async Task<IActionResult> DeleteCustomerType([FromBody] CustomerType customerType) 
+        {
+            try
+            {
+                await _billingConfigurationRepository.DeleteCustomerType(customerType);
+                return Ok("Customer Type Deleted Successfully");
+            }catch(ArgumentException ex) 
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
+        }
+
+        [HttpDelete("/DeleteCustomerCategory")]
+        public async Task<IActionResult> DeleteCustomerCategory([FromBody] CustomerCategory customerCategory) 
+        {
+            try
+            {
+                await _billingConfigurationRepository.DeleteCustomerCategory(customerCategory);
+                return Ok("Customer Category Deleted Successfully");
+            }catch(ArgumentException ex) 
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
+        }
     }
 }
