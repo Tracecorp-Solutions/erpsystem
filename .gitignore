@@ -15,6 +15,7 @@ Trace/.vs/Trace/
 
 Trace/.vs
 
+
 Infrastructure/bin/Release
 Infrastructure/obj/Release
 Services/obj/Release
@@ -93,6 +94,10 @@ Trace/obj/Release/net8.0/Trace.sourcelink.json
 Trace/obj/Release/net8.0/apphost.exe
 Trace/obj/Release/net8.0/ref/Trace.dll
 Trace/obj/Release/net8.0/refint/Trace.dll
+Trace/.vs/Trace/DesignTimeBuild/.dtbcache.v2
+Trace/.vs/Trace/v17/.suo
+Trace/.vs/Trace/v17/DocumentLayout.json
+
 
 
 # production
