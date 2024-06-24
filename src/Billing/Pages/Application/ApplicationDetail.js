@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Dropdown, Menu, Modal, Button } from "antd";
 import { DownOutlined } from "@ant-design/icons";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import ApplicantSection from "./ApplicantSection";
 import Document from "./Document";
@@ -11,6 +11,7 @@ import ContactApplicantFormAction from "./Actions/ContactApplicantForm";
 import AssignSurveyor from "./Actions/AssignSurveyor";
 import SurveyorReport from "./Actions/SurveyorReport";
 import UpdateAuthorizeModal from "./Actions/UpdateAuthorizeModal ";
+import Payslip from "./Actions/Payslip";
 
 const ApplicationDetail = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -20,14 +21,30 @@ const ApplicationDetail = () => {
   const [surveyorReport, setSurveyorReport] = useState(false);
   const [applicationData, setApplicationData] = useState(null);
   const [isUpdateModalVisible, setIsUpdateModalVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
 
   console.log("Application Data:", applicationData);
 
   const location = useLocation();
+  const navigate = useNavigate();
   const { state } = location;
   const applicationNumber = state?.applicationNumber;
 
   const userid = sessionStorage.getItem("userid");
+
+  const handleClickModalVisible = () => {
+    setIsVisible(true);
+  };
+
+
+  const handleIsModalVisible = () => {
+    setIsModalVisible(true);
+  };
+
+  const handleHideModal = () => {
+    setIsModalVisible(false);
+    setIsVisible(false);
+  };
 
   useEffect(() => {
     if (applicationNumber) {
@@ -59,9 +76,13 @@ const ApplicationDetail = () => {
       console.error("Application number or userId is missing");
       return;
     }
-  
-    const apiUrl = `${process.env.REACT_APP_API_URL}/GenerateJobCard?applicationNumber=${encodeURIComponent(applicationNumber)}&userid=${encodeURIComponent(userid)}`;
-  
+
+    const apiUrl = `${
+      process.env.REACT_APP_API_URL
+    }/GenerateJobCard?applicationNumber=${encodeURIComponent(
+      applicationNumber
+    )}&userid=${encodeURIComponent(userid)}`;
+
     axios
       .post(apiUrl, {
         applicationNumber: applicationNumber,
@@ -75,8 +96,6 @@ const ApplicationDetail = () => {
         console.error("Error generating job card:", error.message);
       });
   };
-  
-
 
   const handleApproveApplication = () => {
     setIsModalVisible(false);
@@ -84,6 +103,10 @@ const ApplicationDetail = () => {
 
   const handleUpdateModalVisible = () => {
     setIsUpdateModalVisible(!isUpdateModalVisible);
+  };
+
+  const handleShowModalVisible = () => {
+    setIsVisible(true);
   };
 
   const menu = (
@@ -457,21 +480,95 @@ const ApplicationDetail = () => {
         <div className="flex gap-5 justify-between mt-4 max-md:flex-wrap w-full">
           <div className="flex gap-2 justify-between px-6 py-4 rounded-xl bg-stone-100 max-md:flex-wrap max-md:px-5 border w-full">
             <div>
-              <h2 style={{
-                color: "#a1a1a1",
-                fontFamily: "outFit, Sans-serif",
-                fontSize: "16px"
-              }}>CONNECTION DETAILS</h2>
+              <h2
+                style={{
+                  color: "#a1a1a1",
+                  fontFamily: "outFit, Sans-serif",
+                  fontSize: "16px",
+                }}
+              >
+                CONNECTION DETAILS
+              </h2>
               <p>Update details to reflect surveyor recommendations</p>
             </div>
-            <button className="justify-center self-start px-6 py-3 mt-2.5 text-sm font-semibold text-white whitespace-nowrap rounded-3xl bg-slate-500 max-md:px-5"
+            <button
+              className="justify-center self-start px-6 py-3 mt-2.5 text-sm font-semibold text-white whitespace-nowrap rounded-3xl bg-slate-500 max-md:px-5"
               onClick={handleUpdateModalVisible}
             >
-             Update and Authorize Connection
+              Update and Authorize Connection
             </button>
           </div>
         </div>
+        <div className="mt-4 max-md:max-w-full">
+          <div className="flex gap-5 max-md:flex-col max-md:gap-0">
+            <div className="flex flex-col w-6/12 max-md:ml-0 max-md:w-full">
+              <div className="grow justify-between px-6 py-4 w-full rounded-xl bg-stone-100 max-md:px-5 max-md:mt-6 max-md:max-w-full">
+                <div className="flex gap-5 max-md:flex-col max-md:gap-0">
+                  <div className="flex flex-col w-[65%] max-md:ml-0 max-md:w-full">
+                    <div className="flex flex-col grow justify-center max-md:mt-10">
+                      <div className="text-xs font-medium tracking-wide text-center uppercase text-neutral-400">
+                        generate invoice
+                      </div>
+                      <div className="mt-2 text-base leading-7 text-neutral-600">
+                        The invoice will depend on the material
+                        <br />
+                        details required for the connection
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex flex-col ml-5 w-[35%] max-md:ml-0 max-md:w-full">
+                    <button
+                      className="grow justify-center px-6 py-3 mt-9 w-full text-sm font-semibold text-white whitespace-nowrap rounded-3xl bg-slate-500 max-md:px-5 max-md:mt-10"
+                      onClick={() => navigate("/update-invoice")}
+                    >
+                      Generate
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="flex flex-col ml-5 w-6/12 max-md:ml-0 max-md:w-full">
+              <div className="grow justify-between px-6 py-4 w-full rounded-xl bg-stone-100 max-md:px-5 max-md:mt-6 max-md:max-w-full">
+                <div className="flex gap-5 max-md:flex-col max-md:gap-0">
+                  <div className="flex flex-col w-[65%] max-md:ml-0 max-md:w-full">
+                    <div className="flex flex-col grow justify-center max-md:mt-10">
+                      <div className="text-xs font-medium tracking-wide text-center uppercase text-neutral-400">
+                        payment references
+                      </div>
+                      <div className="mt-2 text-base leading-7 text-neutral-600">
+                        Generate pay slips for New connection
+                        <br />
+                        and Deposit customer payments
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    {/* Other content */}
+                    <div className="flex flex-col ml-5 w-[35%] max-md:ml-0 max-md:w-full">
+                      <button
+                        className="grow justify-center px-6 py-3 mt-9 w-full text-sm font-semibold text-white whitespace-nowrap rounded-3xl bg-slate-500 max-md:px-5 max-md:mt-10"
+                        onClick={handleClickModalVisible}
+                      >
+                        Generate pay slip
+                      </button>
+                    </div>
+
+                    {isVisible && (
+                      <div className="modal">
+                        <div className="modal-content">
+                          <button onClick={handleHideModal}>Close</button>
+                          <Payslip />
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </section>
+
       <ApplicationFormActions
         isModalVisible={isModalVisible}
         handleApproveApplication={handleApproveApplication}
@@ -496,7 +593,14 @@ const ApplicationDetail = () => {
         setSurveyorReport={setSurveyorReport}
         applicationNumberDisplay={applicationNumberDisplay}
       />
-      <UpdateAuthorizeModal applicationData={applicationData} applicationNumberDisplay={applicationNumberDisplay} fullName={fullName} isUpdateModalVisible={isUpdateModalVisible} handleUpdateModalVisible={handleUpdateModalVisible} />
+      <UpdateAuthorizeModal
+        applicationData={applicationData}
+        applicationNumberDisplay={applicationNumberDisplay}
+        fullName={fullName}
+        isUpdateModalVisible={isUpdateModalVisible}
+        handleUpdateModalVisible={handleUpdateModalVisible}
+      />
+      {/* <Payslip visible={isVisible} onCancel={() => setIsVisible(false)} /> */}
     </div>
   );
 };
