@@ -266,7 +266,7 @@ const NewApplicationForm = () => {
                 onSubmit={handleSubmit}
               >
                 
-                <div className="flex flex-col px-8 pt-8 pb-12">
+                <div className="flex flex-col px-8 pt-8 pb-10 ml-8">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mt-8">
                     <div>
                       <label className="block text-neutral-600 font-medium mb-2">
@@ -414,7 +414,7 @@ const NewApplicationForm = () => {
                 className="flex flex-col mt-6 bg-white rounded-2xl"
                 onSubmit={handleSubmit}
               >
-                <div className="flex flex-col px-5 pt-8 pb-12">
+                <div className="flex flex-col px-5 pt-8 pb-8 ml-8">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8">
                     <div className="flex flex-col w-6/12 max-md:w-full">
                       <label
@@ -638,8 +638,8 @@ const NewApplicationForm = () => {
                 className="flex flex-col mt-6 bg-white rounded-3xl"
                 onSubmit={handleSubmit}
               >
-                <div className="flex flex-col px-8 pt-8 pb-20">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-16">
+                <div className="flex flex-col px-8 pt-8 pb-14 ml-8">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-10">
                     <div className="flex flex-col w-6/12 max-md:w-full">
                       <label
                         htmlFor="CustomerType"
