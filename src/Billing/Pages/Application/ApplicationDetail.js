@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Dropdown, Menu, Modal, Button } from "antd";
+import { Dropdown, Menu, Modal, Button, message } from "antd";
 import { DownOutlined } from "@ant-design/icons";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
@@ -20,6 +20,7 @@ const ApplicationDetail = () => {
   const [surveyorReport, setSurveyorReport] = useState(false);
   const [applicationData, setApplicationData] = useState(null);
   const [isUpdateModalVisible, setIsUpdateModalVisible] = useState(false);
+  const [jobCardInfo, setJobCardInfo] = useState(null);
 
   console.log("Application Data:", applicationData);
 
@@ -59,9 +60,13 @@ const ApplicationDetail = () => {
       console.error("Application number or userId is missing");
       return;
     }
-  
-    const apiUrl = `${process.env.REACT_APP_API_URL}/GenerateJobCard?applicationNumber=${encodeURIComponent(applicationNumber)}&userid=${encodeURIComponent(userid)}`;
-  
+
+    const apiUrl = `${
+      process.env.REACT_APP_API_URL
+    }/GenerateJobCard?applicationNumber=${encodeURIComponent(
+      applicationNumber
+    )}&userid=${encodeURIComponent(userid)}`;
+
     axios
       .post(apiUrl, {
         applicationNumber: applicationNumber,
@@ -69,14 +74,15 @@ const ApplicationDetail = () => {
       })
       .then((response) => {
         console.log("Job card generated successfully:", response.data);
-        // Optionally update state or perform other actions after successful API call
+        message.success("Job card generated successfully", response.data);
+        setJobCardInfo(response.data);
       })
       .catch((error) => {
         console.error("Error generating job card:", error.message);
+        message.error("Error generating job card", error.message);
+
       });
   };
-  
-
 
   const handleApproveApplication = () => {
     setIsModalVisible(false);
@@ -121,6 +127,12 @@ const ApplicationDetail = () => {
   const territory = applicationData?.territory?.name || "Not Available";
   const subTerritory = applicationData?.subTerritory?.name || "Not Available";
   const status = applicationData?.status || "Not Available";
+
+  if (!applicationData) {
+    return <div>Loading...</div>;
+  }
+
+  const { assignedTo } = applicationData;
 
   return (
     <div className="flex flex-wrap justify-center content-start items-center py-6 rounded-3xl bg-stone-100">
@@ -391,39 +403,63 @@ const ApplicationDetail = () => {
         </header>
         <div className="shrink-0 mt-4 h-px border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-opacity-10 max-md:max-w-full" />
         <div className="flex gap-5 justify-between mt-4 max-md:flex-wrap">
-          <div className="flex gap-2 justify-between px-6 py-4 rounded-xl bg-stone-100 max-md:flex-wrap max-md:px-5 max-md:max-w-full">
+          <div
+            className={`flex gap-2 justify-between px-6 py-4 rounded-xl ${
+              applicationData && applicationData.assignedTo
+                ? "bg-green-100"
+                : "bg-stone-100"
+            } max-md:flex-wrap max-md:px-5 max-md:max-w-full`}
+          >
             <div className="flex flex-col justify-center text-center">
               <div className="text-xs font-medium tracking-wide uppercase text-neutral-400">
                 Surveyor Assigned
               </div>
-              <div className="mt-2 text-base leading-6 text-neutral-600">
-                No surveyor assigned yet
-              </div>
+              {applicationData && applicationData.assignedTo ? (
+                <div className="mt-2 text-base leading-6 text-green-600">
+                  Surveyor Name: {applicationData.user.fullName}
+                </div>
+              ) : (
+                <div className="mt-2 text-base leading-6 text-neutral-600">
+                  No surveyor assigned yet
+                </div>
+              )}
             </div>
-            <button
-              className="justify-center self-start px-6 py-3 mt-2.5 text-sm font-semibold text-white rounded-3xl bg-slate-500 max-md:px-5"
-              onClick={() => setAssignSurveyorAction(true)}
-            >
-              Assign Surveyor
-            </button>
+            {!applicationData || !applicationData.assignedTo ? (
+              <button
+                className="justify-center self-start px-6 py-3 mt-2.5 text-sm font-semibold text-white rounded-3xl bg-slate-500 max-md:px-5"
+                onClick={() => setAssignSurveyorAction(true)}
+              >
+                Assign Surveyor
+              </button>
+            ) : null}
           </div>
 
-          <div className="flex gap-2 justify-between px-6 py-4 rounded-xl bg-stone-100 max-md:flex-wrap max-md:px-5 max-md:max-w-full">
-            <div className="flex flex-col justify-center text-center">
-              <div className="text-xs font-medium tracking-wide uppercase text-neutral-400">
-                JOB CARD
-              </div>
-              <div className="mt-2 text-base leading-6 text-neutral-600">
-                No Job card generated yet
-              </div>
-            </div>
-            <button
-              className="justify-center self-start px-6 py-3 mt-2.5 text-sm font-semibold text-white whitespace-nowrap rounded-3xl bg-slate-500 max-md:px-5"
-              onClick={handleGenerateJobCard}
-            >
-              Generate
-            </button>
+          <div>
+      <div className={`flex gap-2 justify-between px-6 py-4 rounded-xl ${jobCardInfo ? 'bg-green-100' : 'bg-stone-100'} max-md:flex-wrap max-md:px-5 max-md:max-w-full`}>
+        <div className="flex flex-col justify-center text-center">
+          <div className="text-xs font-medium tracking-wide uppercase text-neutral-400">
+            JOB CARD
           </div>
+          {jobCardInfo ? (
+            <div className="mt-2 text-base leading-6 text-green-600">
+              Job card number: {jobCardInfo}
+            </div>
+          ) : (
+            <div className="mt-2 text-base leading-6 text-neutral-600">
+              No job card generated yet
+            </div>
+          )}
+        </div>
+        {!jobCardInfo && (
+          <button
+            className="justify-center self-start px-6 py-3 mt-2.5 text-sm font-semibold text-white rounded-3xl bg-slate-500 max-md:px-5"
+            onClick={handleGenerateJobCard}
+          >
+            Generate
+          </button>
+        )}
+      </div>
+    </div>
         </div>
 
         <div className="flex gap-2 justify-between px-6 py-4 mt-4 max-w-full rounded-xl bg-stone-100 w-[508px] max-md:flex-wrap max-md:px-5">
@@ -457,17 +493,22 @@ const ApplicationDetail = () => {
         <div className="flex gap-5 justify-between mt-4 max-md:flex-wrap w-full">
           <div className="flex gap-2 justify-between px-6 py-4 rounded-xl bg-stone-100 max-md:flex-wrap max-md:px-5 border w-full">
             <div>
-              <h2 style={{
-                color: "#a1a1a1",
-                fontFamily: "outFit, Sans-serif",
-                fontSize: "16px"
-              }}>CONNECTION DETAILS</h2>
+              <h2
+                style={{
+                  color: "#a1a1a1",
+                  fontFamily: "outFit, Sans-serif",
+                  fontSize: "16px",
+                }}
+              >
+                CONNECTION DETAILS
+              </h2>
               <p>Update details to reflect surveyor recommendations</p>
             </div>
-            <button className="justify-center self-start px-6 py-3 mt-2.5 text-sm font-semibold text-white whitespace-nowrap rounded-3xl bg-slate-500 max-md:px-5"
+            <button
+              className="justify-center self-start px-6 py-3 mt-2.5 text-sm font-semibold text-white whitespace-nowrap rounded-3xl bg-slate-500 max-md:px-5"
               onClick={handleUpdateModalVisible}
             >
-             Update and Authorize Connection
+              Update and Authorize Connection
             </button>
           </div>
         </div>
@@ -496,7 +537,13 @@ const ApplicationDetail = () => {
         setSurveyorReport={setSurveyorReport}
         applicationNumberDisplay={applicationNumberDisplay}
       />
-      <UpdateAuthorizeModal applicationData={applicationData} applicationNumberDisplay={applicationNumberDisplay} fullName={fullName} isUpdateModalVisible={isUpdateModalVisible} handleUpdateModalVisible={handleUpdateModalVisible} />
+      <UpdateAuthorizeModal
+        applicationData={applicationData}
+        applicationNumberDisplay={applicationNumberDisplay}
+        fullName={fullName}
+        isUpdateModalVisible={isUpdateModalVisible}
+        handleUpdateModalVisible={handleUpdateModalVisible}
+      />
     </div>
   );
 };
