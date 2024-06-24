@@ -3,7 +3,7 @@ import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Dashboard from "./Billing/Components/shared/Dashboard";
 import Dashboardlayout from "./Accounting/Pages/layout/DashboardLayout";
-import NewConnection from "./Billing/Pages/New Connections/ConnectionForm";
+import NewApplicationForm from "./Billing/Pages/New Connections/newApplicationForm";
 import SubGroupSetup from "./Accounting/Pages/Subgroup/SubGroupSetup";
 import AccountSetup from "./Accounting/Pages/Accounts/AccountSetup";
 import Transactions from "./Accounting/Pages/Transaction/Transactions";
@@ -28,6 +28,7 @@ import TrialBalance from "./Accounting/Pages/Reports/TrialBalance ";
 import UserActivity from "./Accounting/Pages/Reports/UserActivity";
 import Billing from "./Accounting/Pages/Billing/Billing";
 import Landing from "./shared/Landing";
+import BillingDashboard from "./Billing/Pages/Layout/BillingDashboard";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -59,7 +60,7 @@ function App() {
                 path="/verify"
                 element={<VerifyUser onVerify={handleVerify} />}
               />
-              <Route path="/connection" element={<NewConnection />} />
+              <Route path="/new-application" element={<NewApplicationForm />} />
               <Route path="/sub-group" element={<SubGroupSetup />} />
               <Route path="/accounts" element={<AccountSetup />} />
               <Route path="/vendors" element={<VendorSetup />} />
@@ -68,6 +69,7 @@ function App() {
               <Route path="/signup" element={<Signup />} />
               <Route path="/verify" element={<VerifyUser />} />
               <Route path="/reset" element={<SetPassword />} />
+              <Route path="/billingdashboard" element={<BillingDashboard />} />
               {/* <Route path="/forgot" element={<Forgot />} /> */}
               <Route path="/Dashboardlayout" element={<Dashboardlayout />} />
               <Route path="/" element={<Layout/>}/>
