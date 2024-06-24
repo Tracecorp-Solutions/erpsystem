@@ -24,6 +24,9 @@ namespace Core.Repositories.Billing
         Task AddCustomerCategory(CustomerCategory customerCategory);
         Task<IEnumerable<CustomerCategory>> GetCustomerCategories();
 
+        Task AddCustomerType(CustomerType customerType);
+        Task<IEnumerable<CustomerType>> GetCustomerTypes();
+
         
     }
 }

@@ -88,5 +88,18 @@ namespace Services.Repositories.Billing
 
             return custcategories == null ? throw new ArgumentException("No Customer Categories Found") : custcategories;
         }
+
+        public async Task AddCustomerType(CustomerType customerType)
+        {
+            _context.CustomerTypes.Add(customerType);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<CustomerType>> GetCustomerTypes()
+        {
+            var custtypes = await _context.CustomerTypes.ToListAsync();
+
+            return custtypes == null ? throw new ArgumentException("No Customer Types Found") : custtypes;
+        }
     }
 }

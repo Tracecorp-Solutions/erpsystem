@@ -202,5 +202,41 @@ namespace Trace.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
             }
         }
+
+        [HttpPost("/AddCustomerType")]
+        public async Task<IActionResult> AddCustomerType([FromBody] CustomerType customerType)
+        {
+            try
+            {
+                await _billingConfigurationRepository.AddCustomerType(customerType);
+                return Ok("Customer Type Added Successfully");
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+
+            }
+        }
+
+        [HttpGet("/GetCustomerTypes")]
+        public async Task<IActionResult> GetCustomerTypes() 
+        {
+            try
+            {
+                var custtypes = await _billingConfigurationRepository.GetCustomerTypes();
+                return Ok(custtypes);
+            }catch(ArgumentException ex) 
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
+        }
     }
 }

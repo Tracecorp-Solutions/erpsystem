@@ -48,6 +48,8 @@ namespace Infrastructure.Data
 
         public DbSet<JobCard> JobCards { get; set; }
 
+        public DbSet<CustomerType> CustomerTypes { get; set; }
+
         #endregion
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

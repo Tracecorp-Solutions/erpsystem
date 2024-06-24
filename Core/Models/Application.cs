@@ -44,6 +44,8 @@ namespace Core.Models
         #endregion endof residential address
 
         #region connection details
+
+        [ForeignKey("CustomerType")]
         public int CustomerType { get; set; }
         public string BillDeliveryMethod { get; set; }
 
@@ -75,6 +77,8 @@ namespace Core.Models
         public CustomerCategory? CustomerCategory { get; set; }
 
         public User? User { get; set; }
+
+        public CustomerType? CustType { get; set; }
 
     }
 }
