@@ -207,5 +207,6 @@ namespace Services.Repositories.Billing
                 throw new ArgumentException("Material Not Found");
             _context.Materials.Remove(material);
             await _context.SaveChangesAsync();
+        }
     }
 }
