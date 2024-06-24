@@ -197,7 +197,7 @@ namespace Trace.Controllers
             try
             {
                 string message = await _newconnectionRepository.AddConnectionInvoice(invoiceDto);
-                return Ok(message);
+                return Ok($"Invoice created successfully with invoice number {message}");
             }
             catch (ArgumentException ex)
             {

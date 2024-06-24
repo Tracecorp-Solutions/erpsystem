@@ -181,5 +181,31 @@ namespace Services.Repositories.Billing
             _context.Materials.Add(material);
             await _context.SaveChangesAsync();
         }
+
+        public async Task<IEnumerable<Material>> GetMaterials()
+        {
+            var materials = await _context.Materials.ToListAsync();
+
+            return materials == null ? throw new ArgumentException("No Materials Found") : materials;
+        }
+
+        public async Task EditMaterial(Material material)
+        {
+            //check whether the material exists
+            var mat = await _context.Materials.FindAsync(material.MaterialId);
+            if (mat == null)
+                throw new ArgumentException("Material Not Found");
+            _context.Materials.Update(material);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task DeleteMaterial(Material material)
+        {
+            //check whether the material exists
+            var mat = await _context.Materials.FindAsync(material.MaterialId);
+            if (mat == null)
+                throw new ArgumentException("Material Not Found");
+            _context.Materials.Remove(material);
+            await _context.SaveChangesAsync();
     }
 }

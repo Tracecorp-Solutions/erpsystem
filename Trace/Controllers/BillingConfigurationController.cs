@@ -372,6 +372,71 @@ namespace Trace.Controllers
             }
         }
 
+        [HttpPost("/AddMaterial")]
+        public async Task<IActionResult> AddMaterial([FromBody] Material material) 
+        {
+            try
+            {
+                await _billingConfigurationRepository.AddMaterial(material);
+                return Ok("Material Added Successfully");
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
+        }
+
+        [HttpGet("/GetMaterials")]
+        public async Task<IActionResult> GetMaterials() 
+        {
+            try
+            {
+                var materials = await _billingConfigurationRepository.GetMaterials();
+                return Ok(materials);
+            }catch(ArgumentException ex) 
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
+        }
+
+        [HttpPut("/EditMaterial")]
+        public async Task<IActionResult> EditMaterial([FromBody] Material material) 
+        {
+            try
+            {
+                await _billingConfigurationRepository.EditMaterial(material);
+                return Ok("Material Updated Successfully");
+            }catch(ArgumentException ex) 
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
+        }
+
+        [HttpDelete("/DeleteMaterial")]
+        public async Task<IActionResult> DeleteMaterial([FromBody] Material material) 
+        {
+            try
+            {
+                await _billingConfigurationRepository.DeleteMaterial(material);
+                return Ok("Material Deleted Successfully");
+            }catch(ArgumentException ex) 
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
+        }
+
 
     }
 }
