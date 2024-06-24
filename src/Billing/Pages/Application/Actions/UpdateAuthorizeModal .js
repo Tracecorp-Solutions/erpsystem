@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Modal, Select } from "antd";
+import { Modal, Select, message } from "antd";
 import axios from "axios";
 
 const { Option } = Select;
@@ -50,6 +50,7 @@ const UpdateAuthorizeModal = ({
     axios.post(`${process.env.REACT_APP_API_URL}/AuthorizeConnection`, data)
       .then(response => {
         console.log('Success:', response.data);
+        message.success('Form submitted successfully!');
         handleUpdateModalVisible();
       })
       .catch(error => {
