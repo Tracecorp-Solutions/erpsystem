@@ -378,7 +378,7 @@ namespace Services.Repositories.Billing
             return connectionInvoice.InvoiceNumber;
         }
 
-        public async Task<NewConnectionInvoice> GetConnectionInvoices(string applicationNumber)
+        public async Task<NewConnectionInvoice> GetNewConnectionInvoice(string applicationNumber)
         {
             var connectionInvoice = await _context.NewConnectionInvoices
                 .Include(i => i.Application)
