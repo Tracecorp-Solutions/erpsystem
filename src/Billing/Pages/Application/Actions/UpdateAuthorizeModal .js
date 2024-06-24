@@ -9,13 +9,15 @@ const UpdateAuthorizeModal = ({
   fullName,
   applicationNumberDisplay,
 }) => {
-
-    const username = sessionStorage.getItem("fullname");
-
-    console.log("username", username);    
+  const username = sessionStorage.getItem("fullname");
 
   return (
-    <Modal visible={isUpdateModalVisible} closable={false} footer={null}>
+    <Modal
+      visible={isUpdateModalVisible}
+      closable={false}
+      footer={null}
+      width={800}
+    >
       <div className="flex flex-col justify-center items-center bg-white rounded-3xl w-full">
         <div className="flex flex-col self-stretch pt-6 w-full text-4xl font-semibold leading-[57.6px] text-neutral-600 max-md:max-w-full">
           <div className="flex gap-5 justify-between self-center px-5 w-full max-w-screen-sm max-md:flex-wrap max-md:max-w-full">
@@ -90,7 +92,7 @@ const UpdateAuthorizeModal = ({
           <Option value="authority2">Authority 2</Option>
           <Option value="authority3">Authority 3</Option>
         </Select>
-        <div className="flex justify-center items-center self-stretch px-16 py-6 mt-10 w-full text-base font-semibold leading-6 text-white bg-stone-100 max-md:px-5 max-md:mt-10 max-md:max-w-full">
+        <div className="flex justify-center items-center self-stretch px-16 py-6 mt-44 w-full text-base font-semibold leading-6 text-white bg-stone-100 max-md:px-5 max-md:mt-10 max-md:max-w-full">
           <button className="justify-center items-center px-8 py-4 max-w-full rounded-3xl bg-slate-500 w-[500px] max-md:px-5">
             Update and Authorize Connection
           </button>
