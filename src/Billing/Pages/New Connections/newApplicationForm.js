@@ -179,25 +179,25 @@ const NewApplicationForm = () => {
     e.preventDefault();
 
     // Ensure all required fields are filled
-    const requiredFields = [
-      "Title",
-      "Gender",
-      "FullName",
-      "IdNumber",
-      "PlotNumber",
-      "PhoneNumber",
-      "CustomerType",
-      "EmailAddress",
-      "StreetAddress",
-      "BillDeliveryMethod",
-    ];
+    // const requiredFields = [
+    //   "Title",
+    //   "Gender",
+    //   "FullName",
+    //   "IdNumber",
+    //   "PlotNumber",
+    //   "PhoneNumber",
+    //   "CustomerType",
+    //   "EmailAddress",
+    //   "StreetAddress",
+    //   "BillDeliveryMethod",
+    // ];
 
-    for (const field of requiredFields) {
-      if (!application[field]) {
-        setErrorMessage(`Please fill in the ${field} field.`);
-        return;
-      }
-    }
+    // for (const field of requiredFields) {
+    //   if (!application[field]) {
+    //     setErrorMessage(`Please fill in the ${field} field.`);
+    //     return;
+    //   }
+    // }
 
     const formData = new FormData();
     formData.append("files", ProofOfIdentity);
@@ -235,7 +235,7 @@ const NewApplicationForm = () => {
       );
       alert(response.data); // Show success message
     } catch (error) {
-      setErrorMessage("Error submitting application"); // Set error message
+      setErrorMessage(""); // Set error message
       console.error(error);
     }
   };
@@ -388,6 +388,7 @@ const NewApplicationForm = () => {
                       
                       <button
                         className="justify-center items-center px-8 py-4 text-white rounded-3xl bg-slate-500 max-md:px-5 w-72"
+                        type="button"
                         onClick={nextStep}
                       >
                         Next
@@ -613,6 +614,7 @@ const NewApplicationForm = () => {
                       </button>
                       <button
                         className="justify-center items-center px-8 py-4 text-white rounded-3xl bg-slate-500 max-md:px-5 w-52"
+                        type="button"
                         onClick={nextStep}
                       >
                         Next
@@ -721,12 +723,14 @@ const NewApplicationForm = () => {
                     <div className="flex gap-4 px-8 max-w-full  max-md:flex-wrap max-md:px-5">
                       <button
                         className="justify-center items-center px-8 py-4 rounded-3xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 max-md:px-5 w-52"
+                        type="button"
                         onClick={prevStep}
                       >
                         Previous
                       </button>
                       <button
                         className="justify-center items-center px-8 py-4 text-white rounded-3xl bg-slate-500 max-md:px-5 w-52"
+                        type="button"
                         onClick={nextStep}
                       >
                         Next
