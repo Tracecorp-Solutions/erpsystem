@@ -453,11 +453,15 @@ const ApplicationDetail = () => {
             className="shrink-0 my-auto w-6 aspect-square"
           />
         </header>
-        <div className="shrink-0 mt-4 h-px border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-opacity-10" />
+        <div className="shrink-0 mt-4 h-px border bg-neutral-500 bg-opacity-10 border-neutral-500 border-opacity-10" />
         <div className="flex gap-5 justify-between mt-4 max-md:flex-wrap w-full">
           <div className="flex gap-2 justify-between px-6 py-4 rounded-xl bg-stone-100 max-md:flex-wrap max-md:px-5 border w-full">
             <div>
-              <h2>CONNECTION DETAILS</h2>
+              <h2 style={{
+                color: "#a1a1a1",
+                fontFamily: "outFit, Sans-serif",
+                fontSize: "16px"
+              }}>CONNECTION DETAILS</h2>
               <p>Update details to reflect surveyor recommendations</p>
             </div>
             <button className="justify-center self-start px-6 py-3 mt-2.5 text-sm font-semibold text-white whitespace-nowrap rounded-3xl bg-slate-500 max-md:px-5"
@@ -492,7 +496,7 @@ const ApplicationDetail = () => {
         setSurveyorReport={setSurveyorReport}
         applicationNumberDisplay={applicationNumberDisplay}
       />
-      <UpdateAuthorizeModal applicationNumberDisplay={applicationNumberDisplay} fullName={fullName} isUpdateModalVisible={isUpdateModalVisible} handleUpdateModalVisible={handleUpdateModalVisible} />
+      <UpdateAuthorizeModal applicationData={applicationData} applicationNumberDisplay={applicationNumberDisplay} fullName={fullName} isUpdateModalVisible={isUpdateModalVisible} handleUpdateModalVisible={handleUpdateModalVisible} />
     </div>
   );
 };
