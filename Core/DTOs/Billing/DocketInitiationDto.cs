@@ -6,14 +6,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Core.Models.Billing
+namespace Core.DTOs.Billing
 {
-    public class DocketInitiation
+    public class DocketInitiationDto
     {
-        public int Id { get; set; }
-
-        [ForeignKey("Application")]
-        public int ApplicationId { get; set; }
+        public string ApplicationNumber { get; set; }
         public string CustomerRef { get; set; }
         public string MeterNumber { get; set; }
         public string? BlockNumber { get; set; }
@@ -24,15 +21,8 @@ namespace Core.Models.Billing
         public string? Dials { get; set; }
         public DateOnly MeterManufactureDate { get; set; }
         public DateOnly DateOfInstallation { get; set; }
-
-        [ForeignKey("User")]
         public int InstalledBy { get; set; }
 
         public string Remarks { get; set; }
-
-        public virtual User? User { get; set; }
-
-        public Application? Application { get; set; }
-
     }
 }

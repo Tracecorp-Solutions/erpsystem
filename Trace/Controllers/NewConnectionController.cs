@@ -226,5 +226,23 @@ namespace Trace.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
             }
         }
+
+        [HttpPost("/DocketInitiation")]
+        public async Task<IActionResult> DocketInitiation(DocketInitiationDto docket) 
+        {
+            try
+            {
+                await _newconnectionRepository.AddDocketInitiation(docket);
+                return Ok("Docket Initiation Added Succesffuly");
+
+            }catch(ArgumentException ex) 
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
+        }
     }
 }

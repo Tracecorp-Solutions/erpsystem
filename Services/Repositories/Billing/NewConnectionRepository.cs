@@ -71,7 +71,7 @@ namespace Services.Repositories.Billing
                 CustomerType = application.CustomerType,
                 BillDeliveryMethod = application.BillDeliveryMethod,
                 CustomerCategoryId = application.CustomerCategory,
-                Status = "PENDING SURVEY",
+                Status = "PENDING ASSIGNING SURVEYOR",
                 ApplicationDate = DateOnly.FromDateTime(DateTime.Now),
                 ProofOfIdentity = ProofOfIdentity,
                 ProofOfOwnerShip = ProofOfOwnerShip,
@@ -213,7 +213,7 @@ namespace Services.Repositories.Billing
             _context.surveyReports.Add(surveyReport);
             await _context.SaveChangesAsync();
 
-            application.Status = "SURVEY REPORT SUBMITTED";
+            application.Status = "PENDING CONNECTION INVOICE";
             await _context.SaveChangesAsync();
 
             return "Survey report submitted successfully";
@@ -401,6 +401,40 @@ namespace Services.Repositories.Billing
             string json = JsonConvert.SerializeObject(connectionInvoice, jsonSettings);
 
             return json;
+        }
+
+        public async Task AddDocketInitiation(DocketInitiationDto docket)
+        {
+            //get applicationid based on application number
+            var application = await _context.Applications.FirstOrDefaultAsync(a => a.ApplicationNumber == docket.ApplicationNumber);
+
+            if (application == null)
+                throw new ArgumentException("No Application found with that applicationNumber");
+
+            //update status of the application
+            application.Status = "CUSTOMER CONNECTED";
+
+            //map doketInitiationDto to docketInitiation model
+            var docketInitaition = new DocketInitiation
+            {
+                ApplicationId = application.Id,
+                CustomerRef = docket.CustomerRef,
+                MeterNumber = docket.MeterNumber,
+                BlockNumber = docket.BlockNumber,
+                MeterType = docket.MeterType,
+                MeterSize = docket.MeterSize,
+                LocationCordinates = docket.LocationCordinates,
+                InitialReading = docket.InitialReading,
+                Dials = docket.Dials,
+                MeterManufactureDate = docket.MeterManufactureDate,
+                DateOfInstallation = docket.DateOfInstallation,
+                InstalledBy = docket.InstalledBy,
+                Remarks = docket.Remarks
+            };
+
+            // save docket
+            _context.DocketInitiations.Add(docketInitaition);
+            await _context.SaveChangesAsync();
         }
 
     }
