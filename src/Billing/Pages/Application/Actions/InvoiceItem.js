@@ -2,7 +2,7 @@ import * as React from "react";
 
 function InvoiceItem() {
   return (
-    <div className="flex flex-col justify-center items-center pt-4 bg-white rounded-3xl max-w-[720px]">
+    <div className="flex flex-col justify-center items-left pt-4 bg-white rounded-3xl max-w-[720px]">
       <img
         loading="lazy"
         src="https://cdn.builder.io/api/v1/image/assets/TEMP/4ca01bd141ef3c6838d235f4d5f39236da6fb968e5e8a926fc57ed376a1cf296?apiKey=5bf51c3fc9cb49b480a07670cbcd768f&"

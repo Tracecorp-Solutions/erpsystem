@@ -138,7 +138,7 @@ function UpdateInvoice() {
       </div>
       {isUpdateModalVisible && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white rounded-lg p-6 w-[70%] max-w-3xl">
+          <div className="bg-white rounded-lg p-6 w-[70%] max-w-xl">
             <InvoiceItem />
             <button
               className="mt-4 px-4 py-2 text-white bg-red-500 rounded"
