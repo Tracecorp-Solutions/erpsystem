@@ -27,9 +27,9 @@ function UpdateInvoice() {
 
   return (
     <>
-      <SideNav />
+     
       <div>
-        <TopNav />
+       
         <div className="flex flex-col flex-wrap justify-center content-start items-center py-8 px-12 rounded-3xl bg-stone-100 mr-12  max-md:max-w-full">
           <div className="flex gap-5 justify-between self-stretch px-6 w-full text-4xl font-semibold leading-[57.6px] text-neutral-600 max-md:flex-wrap max-md:px-5 max-md:max-w-full">
             <div>Material Cost Estimates</div>
