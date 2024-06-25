@@ -2,12 +2,27 @@ import React, { useState } from "react";
 import SideNav from "../../../shared/navigations/SideNav";
 import TopNav from "../../../shared/navigations/TopNav";
 import InvoiceItem from "./InvoiceItem";
+import { Table, Menu, Dropdown } from "antd";
+import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
+import { useNavigate, useLocation } from "react-router-dom";
+import InvoiceDetails from "./InvoiceDetails";
 
 function UpdateInvoice() {
   const [isUpdateModalVisible, setIsUpdateModalVisible] = useState(false);
+  const navigate = useNavigate();
 
   const handleUpdateModalVisible = () => {
     setIsUpdateModalVisible(!isUpdateModalVisible);
+  };
+
+  
+  const handleMenuClick = ({ key }) => {
+    // Implement navigation logic based on the key (menu item clicked)
+    if (key === 'view') {
+      navigate(`/billingdashboard`, { state: { screen: 'invoice-details' } });  // Navigate to invoice details page
+    } else if (key === 'approve') {
+      // Handle other menu item actions if needed
+    }
   };
 
   return (
@@ -88,11 +103,18 @@ function UpdateInvoice() {
                   240,000
                 </div>
                 <div className="flex justify-center items-center self-stretch px-1.5 w-8 h-8 rounded-3xl bg-stone-100">
-                  <img
-                    loading="lazy"
-                    src="https://cdn.builder.io/api/v1/image/assets/TEMP/4907a1f674864e8ed68b4939d25812ca348ded2f8ef108901efc6b37a7eb5357?apiKey=5bf51c3fc9cb49b480a07670cbcd768f&"
-                    className="w-5 aspect-square"
-                  />
+                  <Dropdown
+                    overlay={
+                      <Menu onClick={handleMenuClick}>
+                        <Menu.Item key="view">View invoice</Menu.Item>
+                        <Menu.Item key="approve">Approve Application</Menu.Item>
+                      </Menu>
+                    }
+                    trigger={["click"]}
+                    placement="bottomLeft"
+                  >
+                    <EllipsisVerticalIcon className="w-7 h-7" />
+                  </Dropdown>
                 </div>
               </div>
             </div>

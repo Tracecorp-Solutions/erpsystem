@@ -33,6 +33,7 @@ import ApplicationPage from "./Billing/Pages/Application/ApplicationPage";
 import BillingDashboard from "./Billing/Pages/Layout/BillingDashboard";
 import ApplicationDetail from "./Billing/Pages/Application/ApplicationDetail";
 import UpdateInvoice from "./Billing/Pages/Application/Actions/UpdateInvoice";
+import InvoiceDetails from "./Billing/Pages/Application/Actions/InvoiceDetails";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -100,6 +101,7 @@ function App() {
               <Route path="/user-activity" element={<UserActivity />} />
               <Route path="/application" element={<ApplicationPage />} />
               <Route path="/update-invoice" element={<UpdateInvoice />} />
+              <Route path="/invoice-details" element={<InvoiceDetails />} />
               {/* <Route path="/view-detail" element={<ApplicationDetail />} /> */}
             </Routes>
           </div>
