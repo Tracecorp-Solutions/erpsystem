@@ -26,6 +26,7 @@ const ApplicationDetail = () => {
   const [jobCardInfo, setJobCardInfo] = useState(null);
   const [surveyorAssigned, setSurveyorAssigned] = useState(false);
   const [applicationStatus, setApplicationStatus] = useState(null);
+  const [payslipVisible, setPayslipVisible] = useState(false);
 
   console.log("Application Data:", applicationData);
   console.log("jobCardInfo jobCardInfo:", jobCardInfo);
@@ -607,23 +608,14 @@ const ApplicationDetail = () => {
                   </div>
                   <div>
                     {/* Other content */}
-                    <div className="flex flex-col ml-5 w-[35%] max-md:ml-0 max-md:w-full">
+                    <div className="flex flex-col ml-5 max-md:ml-0 max-md:w-full">
                       <button
-                        className="grow justify-center px-6 py-3 mt-9 w-full text-sm font-semibold text-white whitespace-nowrap rounded-3xl bg-slate-500 max-md:px-5 max-md:mt-10"
-                        onClick={handleClickModalVisible}
+                        className="grow justify-center px-6 py-3 mt-9 w-full text-sm font-semibold text-white whitespace-nowrap rounded-3xl bg-slate-500 max-md:px-5 max-md:mt-10 border"
+                        onClick={() => setPayslipVisible(true)}
                       >
                         Generate pay slip
                       </button>
                     </div>
-
-                    {isVisible && (
-                      <div className="modal">
-                        <div className="modal-content">
-                          <button onClick={handleHideModal}>Close</button>
-                          <Payslip />
-                        </div>
-                      </div>
-                    )}
                   </div>
                 </div>
               </div>
@@ -664,7 +656,7 @@ const ApplicationDetail = () => {
         isUpdateModalVisible={isUpdateModalVisible}
         handleUpdateModalVisible={handleUpdateModalVisible}
       />
-      {/* <Payslip visible={isVisible} onCancel={() => setIsVisible(false)} /> */}
+      <Payslip setPayslipVisible={setPayslipVisible} payslipVisible={payslipVisible}   />
 
     </div>
   );
