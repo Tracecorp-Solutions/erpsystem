@@ -53,7 +53,7 @@ const AddMeter = () => {
 
   const handleSubmit = async () => {
     try {
-      const response = await axios.post('http://3.216.182.63:8095/TestApi/DocketInitiation', formData, {
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/DocketInitiation`, formData, {
         headers: {
           'Content-Type': 'application/json'
         }
