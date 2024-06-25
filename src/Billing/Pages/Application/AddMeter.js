@@ -1,9 +1,15 @@
 import React from 'react';
 import { Select } from 'antd';
+import { useLocation } from 'react-router-dom';
 
 const { Option } = Select;
 
 const AddMeter = () => {
+
+    const location = useLocation();
+    const { state } = location;
+    const applicationNumber = state?.applicationNumberDisplay;
+
   return (
     <div className="flex flex-col justify-center pt-6 pb-12 px-4 text-base leading-6 bg-stone-100 rounded-3xl sm:px-6 lg:px-8">
       {/* Applications section */}
@@ -16,7 +22,7 @@ const AddMeter = () => {
           alt="Icon"
         />
         <div className="justify-center self-stretch px-4 py-1 whitespace-nowrap bg-white rounded-2xl">
-          APP567890
+          {applicationNumber}
         </div>
         <img
           loading="lazy"

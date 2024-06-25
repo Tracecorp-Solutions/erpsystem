@@ -661,7 +661,7 @@ const ApplicationDetail = () => {
                         className="grow justify-center px-6 py-3 mt-9 w-full text-sm font-semibold text-white rounded-3xl bg-slate-500 max-md:px-5 max-md:mt-10"
                         onClick={() =>
                           navigate(`/billingdashboard`, {
-                            state: { screen: "add-meter" },
+                            state: { screen: "add-meter", applicationNumberDisplay },
                           })
                         }
                       >
