@@ -202,12 +202,21 @@ const AddMeter = () => {
 
         {/* Action buttons */}
         <div className="flex justify-end mt-6 px-6">
-          <button className="px-6 py-3 mr-4 text-sm font-semibold text-neutral-600 w-[200px] bg-stone-100 rounded-full border border-solid border-neutral-500 hover:bg-gray-200 focus:outline-none focus:bg-gray-200">
+          <button className="hidden sm:inline-block px-6 py-3 mr-4 text-sm font-semibold text-neutral-600 w-[200px] bg-stone-100 rounded-full border border-solid border-neutral-500 hover:bg-gray-200 focus:outline-none focus:bg-gray-200">
             Cancel
           </button>
-          <button className="px-6 py-3 text-sm font-semibold text-white bg-slate-500 w-[200px] rounded-full hover:bg-slate-600 focus:outline-none focus:bg-slate-600">
+          <button className="hidden sm:inline-block px-6 py-3 text-sm font-semibold text-white bg-slate-500 w-[200px] rounded-full hover:bg-slate-600 focus:outline-none focus:bg-slate-600">
             Save Docket
           </button>
+          {/* Mobile Buttons */}
+          <div className="sm:hidden flex w-full justify-end">
+            <button className="px-4 py-2 mr-2 text-sm font-semibold text-neutral-600 bg-stone-100 rounded-full border border-solid border-neutral-500 hover:bg-gray-200 focus:outline-none focus:bg-gray-200">
+              Cancel
+            </button>
+            <button className="px-4 py-2 text-sm font-semibold text-white bg-slate-500 rounded-full hover:bg-slate-600 focus:outline-none focus:bg-slate-600">
+              Save
+            </button>
+            </div>
         </div>
       </div>
     </div>
