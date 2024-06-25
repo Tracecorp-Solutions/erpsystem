@@ -42,7 +42,7 @@ const AddMeter = () => {
               id="customerType"
               type="text"
               placeholder="Prepaid"
-              className="px-4 py-3 mt-2 rounded-xl border border-solid bg-stone-100 border-neutral-500 focus:outline-none focus:border-blue-500"
+              className="px-4 py-3 mt-2 rounded-xl border border-solid border-neutral-500 focus:outline-none focus:border-blue-500"
             />
 
             <label htmlFor="blockNumber" className="font-semibold text-neutral-600">
@@ -52,7 +52,7 @@ const AddMeter = () => {
               id="blockNumber"
               type="text"
               placeholder="Select block number"
-              className="px-4 py-3 mt-2 rounded-xl border border-solid bg-stone-100 border-neutral-500 focus:outline-none focus:border-blue-500"
+              className="px-4 py-3 mt-2 rounded-xl border border-solid border-neutral-500 focus:outline-none focus:border-blue-500"
             />
 
             <label htmlFor="customerRef" className="font-semibold text-neutral-600">
@@ -62,7 +62,7 @@ const AddMeter = () => {
               id="customerRef"
               type="text"
               placeholder="Generated Customer Reference"
-              className="px-4 py-3 mt-2 rounded-xl border border-solid bg-stone-100 border-neutral-500 focus:outline-none focus:border-blue-500"
+              className="px-4 py-3 mt-2 rounded-xl border border-solid border-neutral-500 focus:outline-none focus:border-blue-500"
             />
           </div>
 
@@ -74,7 +74,7 @@ const AddMeter = () => {
               id="meterType"
               type="text"
               placeholder="Select meter type"
-              className="px-4 py-3 mt-2 rounded-xl border border-solid bg-stone-100 border-neutral-500 focus:outline-none focus:border-blue-500"
+              className="px-4 py-3 mt-2 rounded-xl border border-solid border-neutral-500 focus:outline-none focus:border-blue-500"
             />
 
             <label htmlFor="meterNumber" className="font-semibold text-neutral-600">
@@ -84,7 +84,7 @@ const AddMeter = () => {
               id="meterNumber"
               type="text"
               placeholder="Enter meter number"
-              className="px-4 py-3 mt-2 rounded-xl border border-solid bg-stone-100 border-neutral-500 focus:outline-none focus:border-blue-500"
+              className="px-4 py-3 mt-2 rounded-xl border border-solid border-neutral-500 focus:outline-none focus:border-blue-500"
             />
 
             <label htmlFor="meterSize" className="font-semibold text-neutral-600">
@@ -94,7 +94,7 @@ const AddMeter = () => {
               id="meterSize"
               type="text"
               placeholder="Enter meter size"
-              className="px-4 py-3 mt-2 rounded-xl border border-solid bg-stone-100 border-neutral-500 focus:outline-none focus:border-blue-500"
+              className="px-4 py-3 mt-2 rounded-xl border border-solid border-neutral-500 focus:outline-none focus:border-blue-500"
             />
           </div>
 
@@ -106,7 +106,7 @@ const AddMeter = () => {
               id="location"
               type="text"
               placeholder="Latitude, Longitude"
-              className="px-4 py-3 mt-2 rounded-xl border border-solid bg-stone-100 border-neutral-500 focus:outline-none focus:border-blue-500"
+              className="px-4 py-3 mt-2 rounded-xl border border-solid border-neutral-500 focus:outline-none focus:border-blue-500"
             />
 
             <label htmlFor="initialReading" className="font-semibold text-neutral-600">
@@ -116,7 +116,7 @@ const AddMeter = () => {
               id="initialReading"
               type="text"
               placeholder="Enter meter reading"
-              className="px-4 py-3 mt-2 rounded-xl border border-solid bg-stone-100 border-neutral-500 focus:outline-none focus:border-blue-500"
+              className="px-4 py-3 mt-2 rounded-xl border border-solid border-neutral-500 focus:outline-none focus:border-blue-500"
             />
 
             <label htmlFor="dials" className="font-semibold text-neutral-600">
@@ -126,7 +126,7 @@ const AddMeter = () => {
               id="dials"
               type="text"
               placeholder="Enter Dials"
-              className="px-4 py-3 mt-2 rounded-xl border border-solid bg-stone-100 border-neutral-500 focus:outline-none focus:border-blue-500"
+              className="px-4 py-3 mt-2 rounded-xl border border-solid border-neutral-500 focus:outline-none focus:border-blue-500"
             />
           </div>
 
@@ -138,7 +138,7 @@ const AddMeter = () => {
               id="manufactureDate"
               type="date"
               placeholder="Enter manufacture date"
-              className="px-4 py-3 mt-2 rounded-xl border border-solid bg-stone-100 border-neutral-500 focus:outline-none focus:border-blue-500"
+              className="px-4 py-3 mt-2 rounded-xl border border-solid border-neutral-500 focus:outline-none focus:border-blue-500"
             />
 
             <label htmlFor="installationDate" className="font-semibold text-neutral-600">
@@ -148,7 +148,7 @@ const AddMeter = () => {
               id="installationDate"
               type="date"
               placeholder="Select installation date"
-              className="px-4 py-3 mt-2 rounded-xl border border-solid bg-stone-100 border-neutral-500 focus:outline-none focus:border-blue-500"
+              className="px-4 py-3 mt-2 rounded-xl border border-solid border-neutral-500 focus:outline-none focus:border-blue-500"
             />
 
             <label htmlFor="installedBy" className="font-semibold text-neutral-600">
@@ -158,7 +158,7 @@ const AddMeter = () => {
               id="installedBy"
               type="text"
               placeholder="Choose Field Officer"
-              className="px-4 py-3 mt-2 rounded-xl border border-solid bg-stone-100 border-neutral-500 focus:outline-none focus:border-blue-500"
+              className="px-4 py-3 mt-2 rounded-xl border border-solid border-neutral-500 focus:outline-none focus:border-blue-500"
             />
           </div>
         </div>
@@ -172,7 +172,7 @@ const AddMeter = () => {
             id="remarks"
             rows={1}
             placeholder="Enter Remarks"
-            className="px-4 py-3 mt-2 rounded-xl border border-solid bg-stone-100 border-neutral-500 focus:outline-none focus:border-blue-500"
+            className="px-4 py-3 mt-2 rounded-xl border border-solid border-neutral-500 focus:outline-none focus:border-blue-500"
           ></textarea>
         </div>
 
