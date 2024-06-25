@@ -1,4 +1,7 @@
 import React from 'react';
+import { Select } from 'antd';
+
+const { Option } = Select;
 
 const AddMeter = () => {
   return (
@@ -38,36 +41,43 @@ const AddMeter = () => {
             <label htmlFor="customerType" className="font-semibold text-neutral-600">
               Customer Type
             </label>
-            <input
+            <Select
               id="customerType"
-              type="text"
-              placeholder="Prepaid"
-              className="px-4 py-3 mt-2 rounded-xl border focus:outline-none focus:border-blue-500"
-            />
+              placeholder="Select customer type"
+              className="w-full h-14"
+              allowClear
+            >
+              <Option value="prepaid">Prepaid</Option>
+              <Option value="postpaid">Postpaid</Option>
+              <Option value="corporate">Corporate</Option>
+            </Select>
 
             <label htmlFor="blockNumber" className="font-semibold text-neutral-600">
               Block Number
             </label>
-            <input
+            <Select
               id="blockNumber"
-              type="text"
               placeholder="Select block number"
-              className="px-4 py-3 mt-2 rounded-xl border focus:outline-none focus:border-blue-500"
-            />
+              className="w-full h-14"
+              allowClear
+            >
+              <Option value="block1">Block 1</Option>
+              <Option value="block2">Block 2</Option>
+              <Option value="block3">Block 3</Option>
+            </Select>
 
             <div className="flex gap-2 justify-between font-semibold text-neutral-600 max-md:flex-wrap max-md:max-w-full">
-            <label htmlFor="customerRef" className="font-semibold text-neutral-600">
-              Customer References
-            </label>
+              <label htmlFor="customerRef" className="font-semibold text-neutral-600">
+                Customer References
+              </label>
               <div className="justify-center px-4 rounded bg-lime-400 bg-opacity-20">
                 Get Number
               </div>
             </div>
-
             <input
               id="customerRef"
               type="text"
-              placeholder="Generated Customer Reference"
+              placeholder="customer referenc"
               className="px-4 py-3 mt-2 rounded-xl border focus:outline-none focus:border-blue-500"
             />
           </div>
@@ -76,12 +86,16 @@ const AddMeter = () => {
             <label htmlFor="meterType" className="font-semibold text-neutral-600">
               Meter Type
             </label>
-            <input
+            <Select
               id="meterType"
-              type="text"
               placeholder="Select meter type"
-              className="px-4 py-3 mt-2 rounded-xl border focus:outline-none focus:border-blue-500"
-            />
+              className="w-full h-14"
+              allowClear
+            >
+              <Option value="type1">Type 1</Option>
+              <Option value="type2">Type 2</Option>
+              <Option value="type3">Type 3</Option>
+            </Select>
 
             <label htmlFor="meterNumber" className="font-semibold text-neutral-600">
               Meter Number
@@ -90,7 +104,7 @@ const AddMeter = () => {
               id="meterNumber"
               type="text"
               placeholder="Enter meter number"
-              className="px-4 py-3 mt-2 rounded-xl border focus:outline-none focus:border-blue-500"
+              className="p-4 rounded-xl border focus:outline-none focus:border-blue-500"
             />
 
             <label htmlFor="meterSize" className="font-semibold text-neutral-600">
@@ -100,7 +114,7 @@ const AddMeter = () => {
               id="meterSize"
               type="text"
               placeholder="Enter meter size"
-              className="px-4 py-3 mt-2 rounded-xl border focus:outline-none focus:border-blue-500"
+              className="p-4 rounded-xl border focus:outline-none focus:border-blue-500"
             />
           </div>
 
@@ -112,7 +126,7 @@ const AddMeter = () => {
               id="location"
               type="text"
               placeholder="Latitude, Longitude"
-              className="px-4 py-3 mt-2 rounded-xl border focus:outline-none focus:border-blue-500"
+              className="p-4 mt-2 rounded-xl border focus:outline-none focus:border-blue-500"
             />
 
             <label htmlFor="initialReading" className="font-semibold text-neutral-600">
@@ -122,7 +136,7 @@ const AddMeter = () => {
               id="initialReading"
               type="text"
               placeholder="Enter meter reading"
-              className="px-4 py-3 mt-2 rounded-xl border focus:outline-none focus:border-blue-500"
+              className="p-4 mt-2 rounded-xl border focus:outline-none focus:border-blue-500"
             />
 
             <label htmlFor="dials" className="font-semibold text-neutral-600">
@@ -132,7 +146,7 @@ const AddMeter = () => {
               id="dials"
               type="text"
               placeholder="Enter Dials"
-              className="px-4 py-3 mt-2 rounded-xl border focus:outline-none focus:border-blue-500"
+              className="p-4 mt-2 rounded-xl border focus:outline-none focus:border-blue-500"
             />
           </div>
 
@@ -154,18 +168,22 @@ const AddMeter = () => {
               id="installationDate"
               type="date"
               placeholder="Select installation date"
-              className="px-4 py-3 mt-2 rounded-xl border focus:outline-none focus:border-blue-500"
+              className="p-4 mt-2 rounded-xl border focus:outline-none focus:border-blue-500"
             />
 
             <label htmlFor="installedBy" className="font-semibold text-neutral-600">
               Installed by
             </label>
-            <input
+            <Select
               id="installedBy"
-              type="text"
               placeholder="Choose Field Officer"
-              className="px-4 py-3 mt-2 rounded-xl border focus:outline-none focus:border-blue-500"
-            />
+              className="w-full h-14"
+              allowClear
+            >
+              <Option value="officer1">Field Officer 1</Option>
+              <Option value="officer2">Field Officer 2</Option>
+              <Option value="officer3">Field Officer 3</Option>
+            </Select>
           </div>
         </div>
 
@@ -178,7 +196,7 @@ const AddMeter = () => {
             id="remarks"
             rows={1}
             placeholder="Enter Remarks"
-            className="px-4 py-3 mt-2 rounded-xl border focus:outline-none focus:border-blue-500"
+            className="p-4 mt-2 rounded-xl border focus:outline-none focus:border-blue-500"
           ></textarea>
         </div>
 
