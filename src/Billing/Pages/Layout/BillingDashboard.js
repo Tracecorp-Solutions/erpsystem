@@ -5,6 +5,7 @@ import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import ApplicationPage from "../Application/ApplicationPage";
 import ApplicationDetail from "../Application/ApplicationDetail";
+import UpdateInvoice from "../Application/Actions/UpdateInvoice";
 
 const BillingDashboard = () => {
   const location = useLocation();
@@ -31,6 +32,7 @@ const BillingDashboard = () => {
             <div className="content px-4 sm:px-6 lg:px-8 group-container">
               {screen === "application" && <ApplicationPage />}
               {screen === "view-detail" && <ApplicationDetail />}
+              {screen === "update-invoice" && <UpdateInvoice />}
             </div>
           </div>
         </div>
