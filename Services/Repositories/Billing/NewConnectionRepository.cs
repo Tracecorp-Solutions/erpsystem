@@ -437,5 +437,19 @@ namespace Services.Repositories.Billing
             await _context.SaveChangesAsync();
         }
 
+        public async Task<string> GenerateCustomerRef()
+        {
+            //generate random customer ref
+            var customerRef = Guid.NewGuid().ToString("N").Substring(0, 8);
+
+            // check whether there is any record with the same customer ref in docket initiation
+            var docketInitiation = await _context.DocketInitiations.FirstOrDefaultAsync(d => d.CustomerRef == customerRef);
+
+            //if there is a record with the same customer ref, generate another customer ref
+            if (docketInitiation != null) return await GenerateCustomerRef();
+
+            return customerRef.ToUpper();
+        }
+
     }
 }

@@ -38,6 +38,8 @@ namespace Core.Repositories.Billing
 
         Task AddDocketInitiation(DocketInitiationDto docketInitiationDto);
 
+        Task<string> GenerateCustomerRef();
+
       
     }
 }

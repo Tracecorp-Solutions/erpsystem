@@ -244,5 +244,21 @@ namespace Trace.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
             }
         }
+
+        [HttpGet("/GenerateCustomerRef")]
+        public async Task<IActionResult> GenerateCustomerRef() 
+        {
+            try
+            {
+                string customerRef = await _newconnectionRepository.GenerateCustomerRef();
+                return Ok(customerRef);
+            }catch(ArgumentException ex) 
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
     }
 }
