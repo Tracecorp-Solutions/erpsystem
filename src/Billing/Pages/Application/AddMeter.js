@@ -42,7 +42,7 @@ const AddMeter = () => {
               id="customerType"
               type="text"
               placeholder="Prepaid"
-              className="px-4 py-3 mt-2 rounded-xl border border-solid border-neutral-500 focus:outline-none focus:border-blue-500"
+              className="px-4 py-3 mt-2 rounded-xl border focus:outline-none focus:border-blue-500"
             />
 
             <label htmlFor="blockNumber" className="font-semibold text-neutral-600">
@@ -52,17 +52,23 @@ const AddMeter = () => {
               id="blockNumber"
               type="text"
               placeholder="Select block number"
-              className="px-4 py-3 mt-2 rounded-xl border border-solid border-neutral-500 focus:outline-none focus:border-blue-500"
+              className="px-4 py-3 mt-2 rounded-xl border focus:outline-none focus:border-blue-500"
             />
 
+            <div className="flex gap-2 justify-between font-semibold text-neutral-600 max-md:flex-wrap max-md:max-w-full">
             <label htmlFor="customerRef" className="font-semibold text-neutral-600">
               Customer References
             </label>
+              <div className="justify-center px-4 rounded bg-lime-400 bg-opacity-20">
+                Get Number
+              </div>
+            </div>
+
             <input
               id="customerRef"
               type="text"
               placeholder="Generated Customer Reference"
-              className="px-4 py-3 mt-2 rounded-xl border border-solid border-neutral-500 focus:outline-none focus:border-blue-500"
+              className="px-4 py-3 mt-2 rounded-xl border focus:outline-none focus:border-blue-500"
             />
           </div>
 
@@ -74,7 +80,7 @@ const AddMeter = () => {
               id="meterType"
               type="text"
               placeholder="Select meter type"
-              className="px-4 py-3 mt-2 rounded-xl border border-solid border-neutral-500 focus:outline-none focus:border-blue-500"
+              className="px-4 py-3 mt-2 rounded-xl border focus:outline-none focus:border-blue-500"
             />
 
             <label htmlFor="meterNumber" className="font-semibold text-neutral-600">
@@ -84,7 +90,7 @@ const AddMeter = () => {
               id="meterNumber"
               type="text"
               placeholder="Enter meter number"
-              className="px-4 py-3 mt-2 rounded-xl border border-solid border-neutral-500 focus:outline-none focus:border-blue-500"
+              className="px-4 py-3 mt-2 rounded-xl border focus:outline-none focus:border-blue-500"
             />
 
             <label htmlFor="meterSize" className="font-semibold text-neutral-600">
@@ -94,7 +100,7 @@ const AddMeter = () => {
               id="meterSize"
               type="text"
               placeholder="Enter meter size"
-              className="px-4 py-3 mt-2 rounded-xl border border-solid border-neutral-500 focus:outline-none focus:border-blue-500"
+              className="px-4 py-3 mt-2 rounded-xl border focus:outline-none focus:border-blue-500"
             />
           </div>
 
@@ -106,7 +112,7 @@ const AddMeter = () => {
               id="location"
               type="text"
               placeholder="Latitude, Longitude"
-              className="px-4 py-3 mt-2 rounded-xl border border-solid border-neutral-500 focus:outline-none focus:border-blue-500"
+              className="px-4 py-3 mt-2 rounded-xl border focus:outline-none focus:border-blue-500"
             />
 
             <label htmlFor="initialReading" className="font-semibold text-neutral-600">
@@ -116,7 +122,7 @@ const AddMeter = () => {
               id="initialReading"
               type="text"
               placeholder="Enter meter reading"
-              className="px-4 py-3 mt-2 rounded-xl border border-solid border-neutral-500 focus:outline-none focus:border-blue-500"
+              className="px-4 py-3 mt-2 rounded-xl border focus:outline-none focus:border-blue-500"
             />
 
             <label htmlFor="dials" className="font-semibold text-neutral-600">
@@ -126,7 +132,7 @@ const AddMeter = () => {
               id="dials"
               type="text"
               placeholder="Enter Dials"
-              className="px-4 py-3 mt-2 rounded-xl border border-solid border-neutral-500 focus:outline-none focus:border-blue-500"
+              className="px-4 py-3 mt-2 rounded-xl border focus:outline-none focus:border-blue-500"
             />
           </div>
 
@@ -138,7 +144,7 @@ const AddMeter = () => {
               id="manufactureDate"
               type="date"
               placeholder="Enter manufacture date"
-              className="px-4 py-3 mt-2 rounded-xl border border-solid border-neutral-500 focus:outline-none focus:border-blue-500"
+              className="px-4 py-3 mt-2 rounded-xl border focus:outline-none focus:border-blue-500"
             />
 
             <label htmlFor="installationDate" className="font-semibold text-neutral-600">
@@ -148,7 +154,7 @@ const AddMeter = () => {
               id="installationDate"
               type="date"
               placeholder="Select installation date"
-              className="px-4 py-3 mt-2 rounded-xl border border-solid border-neutral-500 focus:outline-none focus:border-blue-500"
+              className="px-4 py-3 mt-2 rounded-xl border focus:outline-none focus:border-blue-500"
             />
 
             <label htmlFor="installedBy" className="font-semibold text-neutral-600">
@@ -158,7 +164,7 @@ const AddMeter = () => {
               id="installedBy"
               type="text"
               placeholder="Choose Field Officer"
-              className="px-4 py-3 mt-2 rounded-xl border border-solid border-neutral-500 focus:outline-none focus:border-blue-500"
+              className="px-4 py-3 mt-2 rounded-xl border focus:outline-none focus:border-blue-500"
             />
           </div>
         </div>
@@ -172,16 +178,16 @@ const AddMeter = () => {
             id="remarks"
             rows={1}
             placeholder="Enter Remarks"
-            className="px-4 py-3 mt-2 rounded-xl border border-solid border-neutral-500 focus:outline-none focus:border-blue-500"
+            className="px-4 py-3 mt-2 rounded-xl border focus:outline-none focus:border-blue-500"
           ></textarea>
         </div>
 
         {/* Action buttons */}
         <div className="flex justify-end mt-6 px-6">
-          <button className="px-6 py-3 mr-4 text-sm font-semibold text-neutral-600 bg-stone-100 rounded-xl border border-solid border-neutral-500 hover:bg-gray-200 focus:outline-none focus:bg-gray-200">
+          <button className="px-6 py-3 mr-4 text-sm font-semibold text-neutral-600 w-[200px] bg-stone-100 rounded-full border border-solid border-neutral-500 hover:bg-gray-200 focus:outline-none focus:bg-gray-200">
             Cancel
           </button>
-          <button className="px-6 py-3 text-sm font-semibold text-white bg-slate-500 rounded-xl hover:bg-slate-600 focus:outline-none focus:bg-slate-600">
+          <button className="px-6 py-3 text-sm font-semibold text-white bg-slate-500 w-[200px] rounded-full hover:bg-slate-600 focus:outline-none focus:bg-slate-600">
             Save Docket
           </button>
         </div>
