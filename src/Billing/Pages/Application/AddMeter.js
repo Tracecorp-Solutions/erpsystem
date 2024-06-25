@@ -1,14 +1,69 @@
-import React from 'react';
-import { Select } from 'antd';
+import React, { useState } from 'react';
+import { Select, DatePicker, message } from 'antd';
 import { useLocation } from 'react-router-dom';
+import axios from 'axios';
 
 const { Option } = Select;
 
 const AddMeter = () => {
+  const location = useLocation();
+  const { state } = location;
 
-    const location = useLocation();
-    const { state } = location;
-    const applicationNumber = state?.applicationNumberDisplay;
+  const [formData, setFormData] = useState({
+    applicationNumber: state?.applicationNumberDisplay || '',
+    customerRef: '',
+    meterNumber: '',
+    blockNumber: '',
+    customerType: '',
+    meterType: '',
+    meterSize: '',
+    location: '',
+    initialReading: '',
+    dials: '',
+    meterManufactureDate: null,
+    installationDate: null,
+    installedBy: null,
+    remarks: ''
+  });
+
+  const handleInputChange = (e) => {
+    const { id, value } = e.target;
+    setFormData({
+      ...formData,
+      [id]: value
+    });
+  };
+
+  const handleSelectChange = (value, key) => {
+    if (key === 'installedBy') {
+      value = parseInt(value);
+    }
+    setFormData({
+      ...formData,
+      [key]: value
+    });
+  };
+
+  const handleDateChange = (date, dateString, key) => {
+    setFormData({
+      ...formData,
+      [key]: dateString
+    });
+  };
+
+  const handleSubmit = async () => {
+    try {
+      const response = await axios.post('http://3.216.182.63:8095/TestApi/DocketInitiation', formData, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      message.success('Docket initiated successfully!');
+    } catch (error) {
+      console.error('Error submitting data:', error);
+      message.error('Failed to initiate docket. Please try again.');
+    }
+  };
 
   return (
     <div className="flex flex-col justify-center pt-6 pb-12 px-4 text-base leading-6 bg-stone-100 rounded-3xl sm:px-6 lg:px-8">
@@ -22,7 +77,7 @@ const AddMeter = () => {
           alt="Icon"
         />
         <div className="justify-center self-stretch px-4 py-1 whitespace-nowrap bg-white rounded-2xl">
-          {applicationNumber}
+          {formData.applicationNumber}
         </div>
         <img
           loading="lazy"
@@ -52,6 +107,7 @@ const AddMeter = () => {
               placeholder="Select customer type"
               className="w-full h-14"
               allowClear
+              onChange={(value) => handleSelectChange(value, 'customerType')}
             >
               <Option value="prepaid">Prepaid</Option>
               <Option value="postpaid">Postpaid</Option>
@@ -66,6 +122,7 @@ const AddMeter = () => {
               placeholder="Select block number"
               className="w-full h-14"
               allowClear
+              onChange={(value) => handleSelectChange(value, 'blockNumber')}
             >
               <Option value="block1">Block 1</Option>
               <Option value="block2">Block 2</Option>
@@ -83,8 +140,9 @@ const AddMeter = () => {
             <input
               id="customerRef"
               type="text"
-              placeholder="customer referenc"
+              placeholder="customer reference"
               className="px-4 py-3 mt-2 rounded-xl border focus:outline-none focus:border-blue-500"
+              onChange={handleInputChange}
             />
           </div>
 
@@ -97,6 +155,7 @@ const AddMeter = () => {
               placeholder="Select meter type"
               className="w-full h-14"
               allowClear
+              onChange={(value) => handleSelectChange(value, 'meterType')}
             >
               <Option value="type1">Type 1</Option>
               <Option value="type2">Type 2</Option>
@@ -111,6 +170,7 @@ const AddMeter = () => {
               type="text"
               placeholder="Enter meter number"
               className="p-4 rounded-xl border focus:outline-none focus:border-blue-500"
+              onChange={handleInputChange}
             />
 
             <label htmlFor="meterSize" className="font-semibold text-neutral-600">
@@ -121,6 +181,7 @@ const AddMeter = () => {
               type="text"
               placeholder="Enter meter size"
               className="p-4 rounded-xl border focus:outline-none focus:border-blue-500"
+              onChange={handleInputChange}
             />
           </div>
 
@@ -133,6 +194,7 @@ const AddMeter = () => {
               type="text"
               placeholder="Latitude, Longitude"
               className="p-4 mt-2 rounded-xl border focus:outline-none focus:border-blue-500"
+              onChange={handleInputChange}
             />
 
             <label htmlFor="initialReading" className="font-semibold text-neutral-600">
@@ -143,6 +205,7 @@ const AddMeter = () => {
               type="text"
               placeholder="Enter meter reading"
               className="p-4 mt-2 rounded-xl border focus:outline-none focus:border-blue-500"
+              onChange={handleInputChange}
             />
 
             <label htmlFor="dials" className="font-semibold text-neutral-600">
@@ -153,6 +216,7 @@ const AddMeter = () => {
               type="text"
               placeholder="Enter Dials"
               className="p-4 mt-2 rounded-xl border focus:outline-none focus:border-blue-500"
+              onChange={handleInputChange}
             />
           </div>
 
@@ -160,21 +224,21 @@ const AddMeter = () => {
             <label htmlFor="manufactureDate" className="font-semibold text-neutral-600">
               Meter Manufacture Date
             </label>
-            <input
+            <DatePicker
               id="manufactureDate"
-              type="date"
-              placeholder="Enter manufacture date"
-              className="px-4 py-3 mt-2 rounded-xl border focus:outline-none focus:border-blue-500"
+              placeholder="Select manufacture date"
+              className="w-full h-14"
+              onChange={(date, dateString) => handleDateChange(date, dateString, 'meterManufactureDate')}
             />
 
             <label htmlFor="installationDate" className="font-semibold text-neutral-600">
               Dates of Installation
             </label>
-            <input
+            <DatePicker
               id="installationDate"
-              type="date"
               placeholder="Select installation date"
-              className="p-4 mt-2 rounded-xl border focus:outline-none focus:border-blue-500"
+              className="w-full h-14"
+              onChange={(date, dateString) => handleDateChange(date, dateString, 'installationDate')}
             />
 
             <label htmlFor="installedBy" className="font-semibold text-neutral-600">
@@ -185,10 +249,11 @@ const AddMeter = () => {
               placeholder="Choose Field Officer"
               className="w-full h-14"
               allowClear
+              onChange={(value) => handleSelectChange(value, 'installedBy')}
             >
-              <Option value="officer1">Field Officer 1</Option>
-              <Option value="officer2">Field Officer 2</Option>
-              <Option value="officer3">Field Officer 3</Option>
+              <Option value="1">Field Officer 1</Option>
+              <Option value="2">Field Officer 2</Option>
+              <Option value="3">Field Officer 3</Option>
             </Select>
           </div>
         </div>
@@ -203,30 +268,43 @@ const AddMeter = () => {
             rows={1}
             placeholder="Enter Remarks"
             className="p-4 mt-2 rounded-xl border focus:outline-none focus:border-blue-500"
+            onChange={handleInputChange}
           ></textarea>
         </div>
 
         {/* Action buttons */}
         <div className="flex justify-end mt-6 px-6">
-          <button className="hidden sm:inline-block px-6 py-3 mr-4 text-sm font-semibold text-neutral-600 w-[200px] bg-stone-100 rounded-full border border-solid border-neutral-500 hover:bg-gray-200 focus:outline-none focus:bg-gray-200">
+          <button
+            className="hidden sm:inline-block px-6 py-3 mr-4 text-sm font-semibold text-neutral-600 w-[200px] bg-stone-100 rounded-full border border-solid border-neutral-500 hover:bg-gray-200 focus:outline-none focus:bg-gray-200"
+            onClick={handleSubmit}
+          >
             Cancel
           </button>
-          <button className="hidden sm:inline-block px-6 py-3 text-sm font-semibold text-white bg-slate-500 w-[200px] rounded-full hover:bg-slate-600 focus:outline-none focus:bg-slate-600">
+          <button
+            className="hidden sm:inline-block px-6 py-3 text-sm font-semibold text-white bg-slate-500 w-[200px] rounded-full hover:bg-slate-600 focus:outline-none focus:bg-slate-600"
+            onClick={handleSubmit}
+          >
             Save Docket
           </button>
           {/* Mobile Buttons */}
           <div className="sm:hidden flex w-full justify-end">
-            <button className="px-4 py-2 mr-2 text-sm font-semibold text-neutral-600 bg-stone-100 rounded-full border border-solid border-neutral-500 hover:bg-gray-200 focus:outline-none focus:bg-gray-200">
+            <button
+              className="px-4 py-2 mr-2 text-sm font-semibold text-neutral-600 bg-stone-100 rounded-full border border-solid border-neutral-500 hover:bg-gray-200 focus:outline-none focus:bg-gray-200"
+              onClick={handleSubmit}
+            >
               Cancel
             </button>
-            <button className="px-4 py-2 text-sm font-semibold text-white bg-slate-500 rounded-full hover:bg-slate-600 focus:outline-none focus:bg-slate-600">
+            <button
+              className="px-4 py-2 text-sm font-semibold text-white bg-slate-500 rounded-full hover:bg-slate-600 focus:outline-none focus:bg-slate-600"
+              onClick={handleSubmit}
+            >
               Save
             </button>
-            </div>
+          </div>
         </div>
       </div>
     </div>
   );
-}
+};
 
 export default AddMeter;
