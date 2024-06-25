@@ -110,9 +110,11 @@ function AddMaterials() {
             ))}
             <div className="shrink-0 mt-2 h-px border border-solid bg-opacity-10 border-neutral-500 border-opacity-10 max-md:max-w-full" />
           </div>
-          <div className="justify-center self-end px-8 py-4 mt-12 mr-6 text-base font-semibold leading-6 text-white rounded-3xl bg-blue-400 max-md:px-5 max-md:mt-10 max-md:mr-2.5">
+          <button className="justify-center self-end px-8 py-4 mt-12 mr-6 text-base font-semibold leading-6 text-white rounded-3xl bg-blue-400 max-md:px-5 max-md:mt-10 max-md:mr-2.5"
+           type="submit"
+          >
             Save Materials
-          </div>
+          </button>
         </div>
       </div>
       {isUpdateModalVisible && (

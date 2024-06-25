@@ -8,6 +8,7 @@ import ApplicationDetail from "../Application/ApplicationDetail";
 import UpdateInvoice from "../Application/Actions/UpdateInvoice";
 import InvoiceDetails from "../Application/Actions/InvoiceDetails";
 import AddMaterials from "../Application/Actions/AddMaterials";
+import ShowMaterials from "../Application/Actions/ShowMaterials";
 
 const BillingDashboard = () => {
   const location = useLocation();
@@ -37,6 +38,7 @@ const BillingDashboard = () => {
               {screen === "update-invoice" && <UpdateInvoice />}
               {screen === "invoice-details" && <InvoiceDetails />}
               {screen === "add-materials" && <AddMaterials />}
+              {screen === "show-materials" && <ShowMaterials />}
             </div>
           </div>
         </div>
