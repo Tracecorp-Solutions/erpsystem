@@ -60,6 +60,8 @@ namespace Infrastructure.Data
 
         public DbSet<Material> Materials { get; set; }
 
+        public DbSet<DocketInitiation> DocketInitiations { get; set; }
+
         #endregion
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
