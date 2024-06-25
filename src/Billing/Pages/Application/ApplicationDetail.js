@@ -38,7 +38,6 @@ const ApplicationDetail = () => {
     setIsVisible(true);
   };
 
-
   const handleIsModalVisible = () => {
     setIsModalVisible(true);
   };
@@ -98,7 +97,6 @@ const ApplicationDetail = () => {
       .catch((error) => {
         console.error("Error generating job card:", error.message);
         message.error("Error generating job card", error.message);
-
       });
   };
 
@@ -457,31 +455,35 @@ const ApplicationDetail = () => {
           </div>
 
           <div>
-      <div className={`flex gap-2 justify-between px-6 py-4 rounded-xl ${jobCardInfo ? 'bg-green-100' : 'bg-stone-100'} max-md:flex-wrap max-md:px-5 max-md:max-w-full`}>
-        <div className="flex flex-col justify-center text-center">
-          <div className="text-xs font-medium tracking-wide uppercase text-neutral-400">
-            JOB CARD
+            <div
+              className={`flex gap-2 justify-between px-6 py-4 rounded-xl ${
+                jobCardInfo ? "bg-green-100" : "bg-stone-100"
+              } max-md:flex-wrap max-md:px-5 max-md:max-w-full`}
+            >
+              <div className="flex flex-col justify-center text-center">
+                <div className="text-xs font-medium tracking-wide uppercase text-neutral-400">
+                  JOB CARD
+                </div>
+                {jobCardInfo ? (
+                  <div className="mt-2 text-base leading-6 text-green-600">
+                    Job card number: {jobCardInfo}
+                  </div>
+                ) : (
+                  <div className="mt-2 text-base leading-6 text-neutral-600">
+                    No job card generated yet
+                  </div>
+                )}
+              </div>
+              {!jobCardInfo && (
+                <button
+                  className="justify-center self-start px-6 py-3 mt-2.5 text-sm font-semibold text-white rounded-3xl bg-slate-500 max-md:px-5"
+                  onClick={handleGenerateJobCard}
+                >
+                  Generate
+                </button>
+              )}
+            </div>
           </div>
-          {jobCardInfo ? (
-            <div className="mt-2 text-base leading-6 text-green-600">
-              Job card number: {jobCardInfo}
-            </div>
-          ) : (
-            <div className="mt-2 text-base leading-6 text-neutral-600">
-              No job card generated yet
-            </div>
-          )}
-        </div>
-        {!jobCardInfo && (
-          <button
-            className="justify-center self-start px-6 py-3 mt-2.5 text-sm font-semibold text-white rounded-3xl bg-slate-500 max-md:px-5"
-            onClick={handleGenerateJobCard}
-          >
-            Generate
-          </button>
-        )}
-      </div>
-    </div>
         </div>
 
         <div className="flex gap-2 justify-between px-6 py-4 mt-4 max-w-full rounded-xl bg-stone-100 w-[508px] max-md:flex-wrap max-md:px-5">
@@ -554,9 +556,13 @@ const ApplicationDetail = () => {
                   <div className="flex flex-col ml-5 w-[35%] max-md:ml-0 max-md:w-full">
                     <button
                       className="grow justify-center px-6 py-3 mt-9 w-full text-sm font-semibold text-white whitespace-nowrap rounded-3xl bg-slate-500 max-md:px-5 max-md:mt-10"
-                      onClick={() => navigate("/update-invoice")}
+                      onClick={() =>
+                        navigate("/billingdashboard", {
+                          state: { screen: "update-invoice" },
+                        })
+                      }
                     >
-                      Generate
+                      Generate invoice
                     </button>
                   </div>
                 </div>
@@ -605,56 +611,60 @@ const ApplicationDetail = () => {
       </section>
 
       <div className="flex flex-col px-6 pt-4 pb-5 mt-4 bg-white rounded-3xl max-md:px-5">
-      <div className="flex gap-4 justify-between text-2xl font-semibold capitalize text-neutral-600 max-md:flex-wrap max-md:max-w-full">
-        <div>Field Connection</div>
-        <img
-          loading="lazy"
-          src="https://cdn.builder.io/api/v1/image/assets/TEMP/c7749e10a4cb727e5ce0c7fd48d44fb683bf93b2fa7c59643148748496b286b0?apiKey=5bf51c3fc9cb49b480a07670cbcd768f&"
-          className="shrink-0 my-auto w-6 aspect-square"
-        />
-      </div>
-      <div className="shrink-0 mt-4 h-px border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-opacity-10 max-md:max-w-full" />
-      <div className="flex-wrap gap-y-4 justify-between content-start mt-4 max-md:max-w-full">
-        <div className="flex gap-5 max-md:flex-col max-md:gap-0">
-          <div className="flex flex-col w-6/12 max-md:ml-0 max-md:w-full">
-            <div className="grow justify-between px-6 py-4 w-full rounded-xl bg-stone-100 max-md:px-5 max-md:mt-6 max-md:max-w-full">
-              <div className="flex gap-5 max-md:flex-col max-md:gap-0">
-                <div className="flex flex-col w-[64%] max-md:ml-0 max-md:w-full">
-                  <div className="flex flex-col grow justify-center max-md:mt-10">
-                    <div className="text-xs font-medium tracking-wide text-center uppercase text-neutral-400">
-                      material expenditure
-                    </div>
-                    <div className="mt-2 text-base leading-7 text-neutral-600">
-                      {" "}
-                      This is a list of all materials used on the connection
+        <div className="flex gap-4 justify-between text-2xl font-semibold capitalize text-neutral-600 max-md:flex-wrap max-md:max-w-full">
+          <div>Field Connection</div>
+          <img
+            loading="lazy"
+            src="https://cdn.builder.io/api/v1/image/assets/TEMP/c7749e10a4cb727e5ce0c7fd48d44fb683bf93b2fa7c59643148748496b286b0?apiKey=5bf51c3fc9cb49b480a07670cbcd768f&"
+            className="shrink-0 my-auto w-6 aspect-square"
+          />
+        </div>
+        <div className="shrink-0 mt-4 h-px border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-opacity-10 max-md:max-w-full" />
+        <div className="flex-wrap gap-y-4 justify-between content-start mt-4 max-md:max-w-full">
+          <div className="flex gap-5 max-md:flex-col max-md:gap-0">
+            <div className="flex flex-col w-6/12 max-md:ml-0 max-md:w-full">
+              <div className="grow justify-between px-6 py-4 w-full rounded-xl bg-stone-100 max-md:px-5 max-md:mt-6 max-md:max-w-full">
+                <div className="flex gap-5 max-md:flex-col max-md:gap-0">
+                  <div className="flex flex-col w-[64%] max-md:ml-0 max-md:w-full">
+                    <div className="flex flex-col grow justify-center max-md:mt-10">
+                      <div className="text-xs font-medium tracking-wide text-center uppercase text-neutral-400">
+                        material expenditure
+                      </div>
+                      <div className="mt-2 text-base leading-7 text-neutral-600">
+                        {" "}
+                        This is a list of all materials used on the connection
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div className="flex flex-col ml-5 w-[36%] max-md:ml-0 max-md:w-full">
-                  <div className="grow justify-center px-6 py-3 mt-9 w-full text-sm font-semibold text-white rounded-3xl bg-slate-500 max-md:px-5 max-md:mt-10">
-                    Generate List
+                  <div className="flex flex-col ml-5 w-[36%] max-md:ml-0 max-md:w-full">
+                    <button
+                      className="grow justify-center px-6 py-3 mt-9 w-full text-sm font-semibold text-white whitespace-nowrap rounded-3xl bg-slate-500 max-md:px-5 max-md:mt-10"
+                      onClick={() => navigate("/add-materials")}
+                    >
+                      Generate List
+                    </button>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div className="flex flex-col ml-5 w-6/12 max-md:ml-0 max-md:w-full">
-            <div className="grow justify-between px-6 py-4 w-full rounded-xl bg-stone-100 max-md:px-5 max-md:mt-6 max-md:max-w-full">
-              <div className="flex gap-5 max-md:flex-col max-md:gap-0">
-                <div className="flex flex-col w-[65%] max-md:ml-0 max-md:w-full">
-                  <div className="flex flex-col grow justify-center max-md:mt-10">
-                    <div className="text-xs font-medium tracking-wide text-center uppercase text-neutral-400">
-                      docket details
-                    </div>
-                    <div className="mt-2 text-base leading-7 text-neutral-600">
-                      Capture the details of the meter installed at the
-                      customer’s premises
+            <div className="flex flex-col ml-5 w-6/12 max-md:ml-0 max-md:w-full">
+              <div className="grow justify-between px-6 py-4 w-full rounded-xl bg-stone-100 max-md:px-5 max-md:mt-6 max-md:max-w-full">
+                <div className="flex gap-5 max-md:flex-col max-md:gap-0">
+                  <div className="flex flex-col w-[65%] max-md:ml-0 max-md:w-full">
+                    <div className="flex flex-col grow justify-center max-md:mt-10">
+                      <div className="text-xs font-medium tracking-wide text-center uppercase text-neutral-400">
+                        docket details
+                      </div>
+                      <div className="mt-2 text-base leading-7 text-neutral-600">
+                        Capture the details of the meter installed at the
+                        customer’s premises
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div className="flex flex-col ml-5 w-[35%] max-md:ml-0 max-md:w-full">
-                  <div className="grow justify-center px-6 py-3 mt-9 w-full text-sm font-semibold text-white rounded-3xl bg-slate-500 max-md:px-5 max-md:mt-10">
-                    Add Meter
+                  <div className="flex flex-col ml-5 w-[35%] max-md:ml-0 max-md:w-full">
+                    <div className="grow justify-center px-6 py-3 mt-9 w-full text-sm font-semibold text-white rounded-3xl bg-slate-500 max-md:px-5 max-md:mt-10">
+                      Add Meter
+                    </div>
                   </div>
                 </div>
               </div>
@@ -662,7 +672,6 @@ const ApplicationDetail = () => {
           </div>
         </div>
       </div>
-    </div>
 
       <ApplicationFormActions
         isModalVisible={isModalVisible}
@@ -696,11 +705,8 @@ const ApplicationDetail = () => {
         handleUpdateModalVisible={handleUpdateModalVisible}
       />
       {/* <Payslip visible={isVisible} onCancel={() => setIsVisible(false)} /> */}
-
     </div>
   );
 };
 
 export default ApplicationDetail;
-
-
