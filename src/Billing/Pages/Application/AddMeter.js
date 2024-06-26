@@ -134,17 +134,13 @@ const AddMeter = () => {
             <label htmlFor="blockNumber" className="font-semibold text-neutral-600">
               Block Number
             </label>
-            <Select
+            <input
               id="blockNumber"
-              placeholder="Select block number"
-              className="w-full h-14"
-              allowClear
-              onChange={(value) => handleSelectChange(value, 'blockNumber')}
-            >
-              <Option value="block1">Block 1</Option>
-              <Option value="block2">Block 2</Option>
-              <Option value="block3">Block 3</Option>
-            </Select>
+              type="text"
+              placeholder="Enter block number"
+              className="p-4 rounded-xl border focus:outline-none focus:border-blue-500"
+              onChange={handleInputChange}
+            />
 
             <div className="flex gap-2 justify-between font-semibold text-neutral-600 max-md:flex-wrap max-md:max-w-full">
               <label htmlFor="customerRef" className="font-semibold text-neutral-600">
@@ -163,6 +159,7 @@ const AddMeter = () => {
               placeholder="customer reference"
               value={formData.customerRef}
               className="px-4 py-3 mt-2 rounded-xl border focus:outline-none focus:border-blue-500"
+              disabled
               onChange={handleInputChange}
             />
           </div>
