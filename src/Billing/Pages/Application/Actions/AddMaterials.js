@@ -136,12 +136,6 @@ function AddMaterials() {
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
           <div className="bg-white rounded-lg p-6 w-[70%] max-w-xl">
             <MaterialItem />
-            <button
-              className="mt-4 px-4 py-2 text-white bg-red-500 rounded"
-              onClick={handleUpdateModalVisible}
-            >
-              Close
-            </button>
           </div>
         </div>
       )}

@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import SideNav from "../../../shared/navigations/SideNav";
-import TopNav from "../../../shared/navigations/TopNav";
 import InvoiceItem from "./InvoiceItem";
 import { Table, Menu, Dropdown } from "antd";
 import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
@@ -64,9 +62,9 @@ function UpdateInvoice() {
               <div className="my-auto text-2xl capitalize text-neutral-600">
                 Invoice Items
               </div>
-              <div className="flex gap-2 justify-center px-6 py-3 text-base leading-6 text-white rounded-3xl bg-slate-500 max-md:px-5">
+              <div className="flex gap-2 justify-center px-6 py-3 text-base leading-6 text-white rounded-3xl max-md:px-5">
                 <button
-                  className="justify-center self-start px-3 py-3 mt-2.5 text-sm font-semibold text-white whitespace-nowrap rounded-3xl bg-slate-500 max-md:px-5"
+                  className="justify-center self-start px-3 py-3 mt-2.5 text-sm font-semibold text-white whitespace-nowrap rounded-3xl bg-blue-400 max-md:px-5"
                   onClick={handleUpdateModalVisible}
                 >
                   + Add Invoice Item
@@ -140,12 +138,6 @@ function UpdateInvoice() {
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
           <div className="bg-white rounded-lg p-6 w-[70%] max-w-xl">
             <InvoiceItem />
-            <button
-              className="mt-4 px-4 py-2 text-white bg-red-500 rounded"
-              onClick={handleUpdateModalVisible}
-            >
-              Close
-            </button>
           </div>
         </div>
       )}
