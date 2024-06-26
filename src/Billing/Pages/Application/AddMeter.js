@@ -317,7 +317,11 @@ const AddMeter = () => {
         <div className="flex justify-end mt-6 px-6">
           <button
             className="hidden sm:inline-block px-6 py-3 mr-4 text-sm font-semibold text-neutral-600 w-[200px] bg-stone-100 rounded-full border border-solid border-neutral-500 hover:bg-gray-200 focus:outline-none focus:bg-gray-200"
-            onClick={handleSubmit}
+            onClick={() => navigate(`/billingdashboard`, {
+              state: {
+                screen: "application",
+              },
+            })}
           >
             Cancel
           </button>
@@ -331,7 +335,11 @@ const AddMeter = () => {
           <div className="sm:hidden flex w-full justify-end">
             <button
               className="px-4 py-2 mr-2 text-sm font-semibold text-neutral-600 bg-stone-100 rounded-full border border-solid border-neutral-500 hover:bg-gray-200 focus:outline-none focus:bg-gray-200"
-              onClick={handleSubmit}
+              onClick={() => navigate(`/billingdashboard`, {
+                state: {
+                  screen: "application",
+                },
+              })}
             >
               Cancel
             </button>
