@@ -39,6 +39,8 @@ namespace Core.Repositories.Billing
         Task AddDocketInitiation(DocketInitiationDto docketInitiationDto);
         Task<DocketInitiation> GetDocketInitiationByApplicationNumber(string applicationNumber);
 
+        Task EditDocketInitiation(DocketInitiationDto docket);
+
         Task<string> GenerateCustomerRef();
 
       

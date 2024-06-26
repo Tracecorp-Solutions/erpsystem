@@ -472,5 +472,37 @@ namespace Services.Repositories.Billing
                
         }
 
+        public async Task EditDocketInitiation(DocketInitiationDto docket) 
+        {
+            //get applicationid based on application number
+            var application = await _context.Applications
+                .FirstOrDefaultAsync(a => a.ApplicationNumber == docket.ApplicationNumber);
+
+            if (application == null)
+                throw new ArgumentException("No Application found with that applicationNumber");
+
+            //get docket initiation based on application id
+            var docketInitiation = await _context.DocketInitiations
+                .FirstOrDefaultAsync(d => d.ApplicationId == application.Id);
+
+            if (docketInitiation == null)
+                throw new ArgumentException("No Docket initiation found for that application");
+
+            //update docket initiation
+            docketInitiation.MeterNumber = docket.MeterNumber;
+            docketInitiation.BlockNumber = docket.BlockNumber;
+            docketInitiation.MeterType = docket.MeterType;
+            docketInitiation.MeterSize = docket.MeterSize;
+            docketInitiation.LocationCordinates = docket.LocationCordinates;
+            docketInitiation.InitialReading = docket.InitialReading;
+            docketInitiation.Dials = docket.Dials;
+            docketInitiation.MeterManufactureDate = docket.MeterManufactureDate;
+            docketInitiation.DateOfInstallation = docket.DateOfInstallation;
+            docketInitiation.InstalledBy = docket.InstalledBy;
+            docketInitiation.Remarks = docket.Remarks;
+
+            await _context.SaveChangesAsync();
+        }
+
     }
 }
