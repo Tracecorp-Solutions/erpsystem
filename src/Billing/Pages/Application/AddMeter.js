@@ -51,6 +51,23 @@ const AddMeter = () => {
     });
   };
 
+  const handleGetCustomerRef = async () => {
+    try {
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/GenerateCustomerRef`, {
+        headers: {
+          'Accept': 'application/json'
+        }
+      });
+      const generatedRef = response.data;
+      setFormData({
+        ...formData,
+        customerRef: generatedRef
+      });
+    } catch (error) {
+      console.error('Error fetching customer reference:', error);
+    }
+  };
+
   const handleSubmit = async () => {
     try {
       const response = await axios.post(`${process.env.REACT_APP_API_URL}/DocketInitiation`, formData, {
@@ -133,7 +150,10 @@ const AddMeter = () => {
               <label htmlFor="customerRef" className="font-semibold text-neutral-600">
                 Customer References
               </label>
-              <div className="justify-center px-4 rounded bg-lime-400 bg-opacity-20">
+              <div
+                className="justify-center px-4 rounded bg-lime-400 bg-opacity-20 cursor-pointer"
+                onClick={handleGetCustomerRef}
+              >
                 Get Number
               </div>
             </div>
@@ -141,6 +161,7 @@ const AddMeter = () => {
               id="customerRef"
               type="text"
               placeholder="customer reference"
+              value={formData.customerRef}
               className="px-4 py-3 mt-2 rounded-xl border focus:outline-none focus:border-blue-500"
               onChange={handleInputChange}
             />
