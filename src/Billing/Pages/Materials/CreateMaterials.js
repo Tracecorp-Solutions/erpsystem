@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { AiOutlineClose } from 'react-icons/ai'; // Importing the X icon from React Icons
 
 function CreateMaterials() {
-  const [isUpdateModalVisible, setIsUpdateModalVisible] = useState(false);
+  const [isUpdateModalVisible, setIsUpdateModalVisible] = useState(true); // Assuming the modal is visible initially
   const navigate = useNavigate();
 
   const handleUpdateModalVisible = () => {
@@ -49,6 +49,10 @@ function CreateMaterials() {
       alert('An error occurred');
     }
   };
+
+  if (!isUpdateModalVisible) {
+    return null; // Return null if the modal is not visible
+  }
 
   return (
     <div className="flex flex-col items-start text-base leading-6 max-w-[920px] relative">
