@@ -9,6 +9,7 @@ import UpdateInvoice from "../Application/Actions/UpdateInvoice";
 import InvoiceDetails from "../Application/Actions/InvoiceDetails";
 import AddMeter from "../Application/AddMeter";
 import MeterDetails from "../Application/MeterDetails";
+import EditDocketInitiation from "../Application/EditDocketInitiation";
 
 const BillingDashboard = () => {
   const location = useLocation();
@@ -39,6 +40,7 @@ const BillingDashboard = () => {
               {screen === "invoice-details" && <InvoiceDetails />}
               {screen === "add-meter" && <AddMeter />}
               {screen === "report-details" && <MeterDetails />}
+              {screen === "edit-docket-initiation" && <EditDocketInitiation />}
             </div>
           </div>
         </div>

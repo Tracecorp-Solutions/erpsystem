@@ -1,32 +1,54 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Select, DatePicker, message } from 'antd';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+import moment from 'moment';
 import axios from 'axios';
 
 const { Option } = Select;
 
-const AddMeter = () => {
+const EditDocketInitiation = () => {
   const location = useLocation();
   const { state } = location;
 
+  const application = state?.application;
+
   const [formData, setFormData] = useState({
     applicationNumber: state?.applicationNumberDisplay || '',
-    customerRef: '',
-    meterNumber: '',
-    blockNumber: '',
+    customerRef: application?.customerRef || '',
+    meterNumber: application?.meterNumber || '',
+    blockNumber: application?.blockNumber || '',
     customerType: '',
-    meterType: '',
-    meterSize: '',
-    locationCordinates: '',
-    initialReading: '',
-    dials: '',
-    meterManufactureDate: null,
-    installationDate: null,
-    installedBy: null,
-    remarks: ''
+    meterType: application?.meterType || '',
+    meterSize: application?.meterSize || '',
+    location: application?.locationCordinates || '',
+    initialReading: application?.initialReading || '',
+    dials: application?.dials || '',
+    meterManufactureDate: application?.meterManufactureDate ? moment(application.meterManufactureDate) : null,
+    installationDate: application?.dateOfInstallation ? moment(application.dateOfInstallation) : null,
+    installedBy: application?.installedBy || null,
+    remarks: application?.remarks || ''
   });
 
-  const navigate = useNavigate();
+  useEffect(() => {
+    if (application) {
+      setFormData({
+        applicationNumber: application?.application.applicationNumber || '',
+        customerRef: application.customerRef || '',
+        meterNumber: application.meterNumber || '',
+        blockNumber: application.blockNumber || '',
+        customerType: 'helllo',
+        meterType: application.meterType || '',
+        meterSize: application.meterSize || '',
+        locationCordinates: application.locationCordinates || '',
+        initialReading: application.initialReading || '',
+        dials: application.dials || '',
+        meterManufactureDate: application.meterManufactureDate ? moment(application.meterManufactureDate) : null,
+        installationDate: application.dateOfInstallation ? moment(application.dateOfInstallation) : null,
+        installedBy: application.installedBy || null,
+        remarks: application.remarks || ''
+      });
+    }
+  }, [application, state]);
 
   const handleInputChange = (e) => {
     const { id, value } = e.target;
@@ -69,41 +91,27 @@ const AddMeter = () => {
       console.error('Error fetching customer reference:', error);
     }
   };
-
   const handleSubmit = async () => {
     try {
-      const response = await axios.post(`${process.env.REACT_APP_API_URL}/DocketInitiation`, formData, {
+      const dataToSend = {
+        ...formData,
+        meterManufactureDate: formData.meterManufactureDate ? formData.meterManufactureDate.format('YYYY-MM-DD') : null,
+        installationDate: formData.installationDate ? formData.installationDate.format('YYYY-MM-DD') : null
+      };
+  
+      await axios.post(`${process.env.REACT_APP_API_URL}/EditDocketInitiation`, dataToSend, {
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'accept': '*/*'
         }
       });
       message.success('Docket initiated successfully!');
-      setFormData({
-        applicationNumber: state?.applicationNumberDisplay || '',
-        customerRef: '',
-        meterNumber: '',
-        blockNumber: '',
-        customerType: '',
-        meterType: '',
-        meterSize: '',
-        locationCordinates: '',
-        initialReading: '',
-        dials: '',
-        meterManufactureDate: null,
-        installationDate: null,
-        installedBy: null,
-        remarks: ''
-      });
-        navigate(`/billingdashboard`, {
-          state: {
-            screen: "application",
-          },
-        })
     } catch (error) {
       console.error('Error submitting data:', error);
       message.error('Failed to initiate docket. Please try again.');
     }
   };
+  
 
   return (
     <div className="flex flex-col justify-center pt-6 pb-12 px-4 text-base leading-6 bg-stone-100 rounded-3xl sm:px-6 lg:px-8">
@@ -117,7 +125,7 @@ const AddMeter = () => {
           alt="Icon"
         />
         <div className="justify-center self-stretch px-4 py-1 whitespace-nowrap bg-white rounded-2xl">
-          {formData.applicationNumber}
+        {application?.application.applicationNumber}
         </div>
         <img
           loading="lazy"
@@ -163,6 +171,7 @@ const AddMeter = () => {
               placeholder="Enter block number"
               className="p-4 rounded-xl border focus:outline-none focus:border-blue-500"
               onChange={handleInputChange}
+              value={formData.blockNumber}
             />
 
             <div className="flex gap-2 justify-between font-semibold text-neutral-600 max-md:flex-wrap max-md:max-w-full">
@@ -197,6 +206,7 @@ const AddMeter = () => {
               className="w-full h-14"
               allowClear
               onChange={(value) => handleSelectChange(value, 'meterType')}
+              value={formData.meterType}
             >
               <Option value="type1">Type 1</Option>
               <Option value="type2">Type 2</Option>
@@ -212,6 +222,7 @@ const AddMeter = () => {
               placeholder="Enter meter number"
               className="p-4 rounded-xl border focus:outline-none focus:border-blue-500"
               onChange={handleInputChange}
+              value={formData.meterNumber}
             />
 
             <label htmlFor="meterSize" className="font-semibold text-neutral-600">
@@ -223,19 +234,21 @@ const AddMeter = () => {
               placeholder="Enter meter size"
               className="p-4 rounded-xl border focus:outline-none focus:border-blue-500"
               onChange={handleInputChange}
+              value={formData.meterSize}
             />
           </div>
 
           <div className="flex flex-col space-y-4">
-            <label htmlFor="locationCordinates" className="font-semibold text-neutral-600">
+            <label htmlFor="location" className="font-semibold text-neutral-600">
               Location Coordinated
             </label>
             <input
-              id="locationCordinates"
+              id="location"
               type="text"
               placeholder="Latitude, Longitude"
               className="p-4 mt-2 rounded-xl border focus:outline-none focus:border-blue-500"
               onChange={handleInputChange}
+              value={formData.location}
             />
 
             <label htmlFor="initialReading" className="font-semibold text-neutral-600">
@@ -247,6 +260,7 @@ const AddMeter = () => {
               placeholder="Enter meter reading"
               className="p-4 mt-2 rounded-xl border focus:outline-none focus:border-blue-500"
               onChange={handleInputChange}
+              value={formData.initialReading}
             />
 
             <label htmlFor="dials" className="font-semibold text-neutral-600">
@@ -258,6 +272,7 @@ const AddMeter = () => {
               placeholder="Enter Dials"
               className="p-4 mt-2 rounded-xl border focus:outline-none focus:border-blue-500"
               onChange={handleInputChange}
+              value={formData.dials}
             />
           </div>
 
@@ -270,6 +285,7 @@ const AddMeter = () => {
               placeholder="Select manufacture date"
               className="w-full h-14"
               onChange={(date, dateString) => handleDateChange(date, dateString, 'meterManufactureDate')}
+              value={formData.meterManufactureDate ? moment(formData.meterManufactureDate) : null}
             />
 
             <label htmlFor="installationDate" className="font-semibold text-neutral-600">
@@ -280,6 +296,7 @@ const AddMeter = () => {
               placeholder="Select installation date"
               className="w-full h-14"
               onChange={(date, dateString) => handleDateChange(date, dateString, 'installationDate')}
+              value={formData.installationDate ? moment(formData.installationDate) : null}
             />
 
             <label htmlFor="installedBy" className="font-semibold text-neutral-600">
@@ -291,6 +308,7 @@ const AddMeter = () => {
               className="w-full h-14"
               allowClear
               onChange={(value) => handleSelectChange(value, 'installedBy')}
+              value={formData.installedBy}
             >
               <Option value="1">Field Officer 1</Option>
               <Option value="2">Field Officer 2</Option>
@@ -310,6 +328,7 @@ const AddMeter = () => {
             placeholder="Enter Remarks"
             className="p-4 mt-2 rounded-xl border focus:outline-none focus:border-blue-500"
             onChange={handleInputChange}
+            value={formData.remarks}
           ></textarea>
         </div>
 
@@ -317,7 +336,7 @@ const AddMeter = () => {
         <div className="flex justify-end mt-6 px-6">
           <button
             className="hidden sm:inline-block px-6 py-3 mr-4 text-sm font-semibold text-neutral-600 w-[200px] bg-stone-100 rounded-full border border-solid border-neutral-500 hover:bg-gray-200 focus:outline-none focus:bg-gray-200"
-            onClick={handleSubmit}
+            onClick={() => message.info('Canceled')}
           >
             Cancel
           </button>
@@ -331,7 +350,7 @@ const AddMeter = () => {
           <div className="sm:hidden flex w-full justify-end">
             <button
               className="px-4 py-2 mr-2 text-sm font-semibold text-neutral-600 bg-stone-100 rounded-full border border-solid border-neutral-500 hover:bg-gray-200 focus:outline-none focus:bg-gray-200"
-              onClick={handleSubmit}
+              onClick={() => message.info('Canceled')}
             >
               Cancel
             </button>
@@ -348,4 +367,4 @@ const AddMeter = () => {
   );
 };
 
-export default AddMeter;
+export default EditDocketInitiation;

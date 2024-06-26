@@ -1,13 +1,12 @@
 import * as React from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
-const  MeterDetails = () => {
+const MeterDetails = () => {
+  const location = useLocation();
+  const { state } = location;
+  const application = state?.application;
 
-    const location = useLocation();
-    const { state } = location;
-    const application = state?.application;
-
-    console.log("application application application", application);
+  const navigate = useNavigate();
 
   return (
     <div className="flex flex-col flex-wrap justify-center content-start pt-6 pb-4 rounded-3xl bg-stone-100">
@@ -19,7 +18,7 @@ const  MeterDetails = () => {
           className="shrink-0 self-stretch my-auto w-6 aspect-square"
         />
         <div className="justify-center self-stretch px-4 py-1 whitespace-nowrap bg-white rounded-2xl">
-          {application.application.applicationNumber}
+          {application?.application.applicationNumber}
         </div>
         <img
           loading="lazy"
@@ -35,14 +34,24 @@ const  MeterDetails = () => {
           <div className="text-2xl capitalize text-neutral-600">
             Field Connection Details Report
           </div>
-          <div className="flex gap-2 my-auto text-base leading-6 text-slate-500">
+          <button
+            className="flex gap-2 my-auto text-base leading-6 text-slate-500"
+            onClick={() =>
+              navigate(`/billingdashboard`, {
+                state: {
+                  screen: "edit-docket-initiation",
+                  application
+                },
+              })
+            }
+          >
             <img
               loading="lazy"
               src="https://cdn.builder.io/api/v1/image/assets/TEMP/28646497e0d940e907e917326b6524fb1bcf7fd8f0e255904c2cf14fe164efa5?apiKey=0d95acea82cc4b259a61e827c24c5c6c&"
               className="shrink-0 self-start w-6 aspect-square"
             />
             <div className="underline">Edit Report</div>
-          </div>
+          </button>
         </div>
         <div className="flex flex-col px-4 pt-2 pb-4 mt-6 rounded-lg bg-stone-100 max-md:max-w-full">
           <div className="text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">
@@ -55,7 +64,7 @@ const  MeterDetails = () => {
                 INSTALLATION DATE
               </div>
               <div className="mt-2 text-base leading-6 text-neutral-600">
-                {application.dateOfInstallation}
+                {application?.dateOfInstallation}
               </div>
             </div>
             <div className="flex gap-2 max-md:flex-wrap">
@@ -72,7 +81,7 @@ const  MeterDetails = () => {
                   BLOCK NUMBER
                 </div>
                 <div className="mt-2 text-base leading-6 text-neutral-600">
-                  {application.blockNumber}
+                  {application?.blockNumber}
                 </div>
               </div>
               <div className="flex flex-col justify-center">
@@ -80,7 +89,7 @@ const  MeterDetails = () => {
                   customer reference
                 </div>
                 <div className="mt-2 text-base leading-6 text-neutral-600">
-                  {application.customerRef}
+                  {application?.customerRef}
                 </div>
               </div>
             </div>
@@ -91,7 +100,7 @@ const  MeterDetails = () => {
                 installed by
               </div>
               <div className="mt-2 text-base leading-6 text-neutral-600">
-                {application.installedBy}
+                {application?.installedBy}
               </div>
             </div>
             <div className="flex flex-col justify-center max-md:max-w-full">
@@ -99,7 +108,7 @@ const  MeterDetails = () => {
                 engineer remarks
               </div>
               <div className="mt-2 text-base leading-6 text-neutral-600 max-md:max-w-full">
-                {application.remarks}
+                {application?.remarks}
               </div>
             </div>
           </div>
@@ -115,7 +124,7 @@ const  MeterDetails = () => {
                 meter number
               </div>
               <div className="mt-2 text-base leading-6 text-neutral-600">
-                {application.meterNumber}
+                {application?.meterNumber}
               </div>
             </div>
             <div className="flex flex-col justify-center">
@@ -123,7 +132,7 @@ const  MeterDetails = () => {
                 meter size
               </div>
               <div className="mt-2 text-base leading-6 text-neutral-600">
-                {application.meterSize}
+                {application?.meterSize}
               </div>
             </div>
             <div className="flex flex-col justify-center">
@@ -131,7 +140,7 @@ const  MeterDetails = () => {
                 METER TYPE
               </div>
               <div className="mt-2 text-base leading-6 text-neutral-600">
-                {application.meterType}
+                {application?.meterType}
               </div>
             </div>
             <div className="flex flex-col justify-center">
@@ -139,7 +148,7 @@ const  MeterDetails = () => {
                 MANUFACTURED DATE
               </div>
               <div className="mt-2 text-base leading-6 text-neutral-600">
-                {application.meterManufactureDate}
+                {application?.meterManufactureDate}
               </div>
             </div>
           </div>
@@ -149,26 +158,30 @@ const  MeterDetails = () => {
                 LOCATION COORDINATES
               </div>
               <div className="mt-2 text-base leading-6 text-neutral-600">
-                {application.locationCordinates}
+                {application?.locationCordinates}
               </div>
             </div>
             <div className="flex flex-col justify-center">
               <div className="text-xs font-medium tracking-wide uppercase text-neutral-400">
                 meter initial reading
               </div>
-              <div className="mt-2 text-base leading-6 text-neutral-600">{application.initialReading}</div>
+              <div className="mt-2 text-base leading-6 text-neutral-600">
+                {application?.initialReading}
+              </div>
             </div>
             <div className="flex flex-col justify-center whitespace-nowrap">
               <div className="text-xs font-medium tracking-wide uppercase text-neutral-400">
                 dials
               </div>
-              <div className="mt-2 text-base leading-6 text-neutral-600">{application.dials}</div>
+              <div className="mt-2 text-base leading-6 text-neutral-600">
+                {application?.dials}
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
   );
-}
+};
 
 export default MeterDetails;
