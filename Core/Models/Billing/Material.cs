@@ -13,6 +13,8 @@ namespace Core.Models.Billing
 
         public decimal MaterialUnitPrice { get; set; }
         public string UnitOfMeasure { get; set; }
+
+        public bool Invoiceable { get; set; }
         public string? MaterialDescription { get; set; }
 
     }
