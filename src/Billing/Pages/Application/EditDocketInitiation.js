@@ -20,7 +20,7 @@ const EditDocketInitiation = () => {
     customerType: '',
     meterType: application?.meterType || '',
     meterSize: application?.meterSize || '',
-    location: application?.locationCordinates || '',
+    locationCordinates: application?.locationCordinates || '',
     initialReading: application?.initialReading || '',
     dials: application?.dials || '',
     meterManufactureDate: application?.meterManufactureDate ? moment(application.meterManufactureDate) : null,
@@ -105,7 +105,7 @@ const EditDocketInitiation = () => {
           'accept': '*/*'
         }
       });
-      message.success('Docket initiated successfully!');
+      message.success('Docket Updated successfully!');
     } catch (error) {
       console.error('Error submitting data:', error);
       message.error('Failed to initiate docket. Please try again.');
@@ -239,16 +239,16 @@ const EditDocketInitiation = () => {
           </div>
 
           <div className="flex flex-col space-y-4">
-            <label htmlFor="location" className="font-semibold text-neutral-600">
+            <label htmlFor="locationCordinates" className="font-semibold text-neutral-600">
               Location Coordinated
             </label>
             <input
-              id="location"
+              id="locationCordinates"
               type="text"
               placeholder="Latitude, Longitude"
               className="p-4 mt-2 rounded-xl border focus:outline-none focus:border-blue-500"
               onChange={handleInputChange}
-              value={formData.location}
+              value={formData.locationCordinates}
             />
 
             <label htmlFor="initialReading" className="font-semibold text-neutral-600">
