@@ -46,7 +46,7 @@ namespace Core.Models.Billing
 
         #region connection details
 
-        [ForeignKey("CustomerType")]
+        [ForeignKey("CustType")]
         public int CustomerType { get; set; }
         public string BillDeliveryMethod { get; set; }
 
