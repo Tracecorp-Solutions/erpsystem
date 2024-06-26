@@ -11,23 +11,31 @@ function AddMaterials() {
     setIsUpdateModalVisible(!isUpdateModalVisible);
   };
 
-  useEffect(() => {
-    const fetchMaterials = async () => {
-      try {
-        const response = await fetch('http://3.216.182.63:8095/TestApi/GetMaterials');
-        if (response.ok) {
-          const data = await response.json();
-          setMaterials(data);
-        } else {
-          console.error('Failed to fetch materials');
-        }
-      } catch (error) {
-        console.error('Error:', error);
+  const fetchMaterials = async () => {
+    try {
+      const response = await fetch('http://3.216.182.63:8095/TestApi/GetMaterials');
+      if (response.ok) {
+        const data = await response.json();
+        setMaterials(data);
+      } else {
+        console.error('Failed to fetch materials');
       }
-    };
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
 
+  useEffect(() => {
     fetchMaterials();
   }, []);
+
+  const handleSaveMaterials = async () => {
+    // Save the materials logic goes here
+
+    // Refresh materials and navigate to ShowMaterials page
+    await fetchMaterials();
+    navigate(`/billingdashboard`, { state: { screen: 'show-materials' } });
+  };
 
   return (
     <>
@@ -75,9 +83,8 @@ function AddMaterials() {
                 </div>
                 <div className="my-auto">Unit Cost</div>
               </div>
-             
               <div className="flex gap-5 justify-between my-auto">
-              <div>Unit of Measure</div>
+                <div>Unit of Measure</div>
                 <div>Amount Due</div>
                 <div>Action</div>
               </div>
@@ -92,7 +99,7 @@ function AddMaterials() {
                   <div>{material.materialUnitPrice}</div>
                 </div>
                 <div className="flex gap-12 justify-between items-center">
-                  <div className="self-stretch my-auto text-base  leading-6 text-neutral-600">
+                  <div className="self-stretch my-auto text-base leading-6 text-neutral-600">
                     {material.unitOfMeasure}
                   </div>
                   <div className="self-stretch gap-6 my-auto text-base mr-4 leading-6 text-neutral-600">
@@ -112,6 +119,7 @@ function AddMaterials() {
           </div>
           <button className="justify-center self-end px-8 py-4 mt-12 mr-6 text-base font-semibold leading-6 text-white rounded-3xl bg-blue-400 max-md:px-5 max-md:mt-10 max-md:mr-2.5"
            type="submit"
+           onClick={handleSaveMaterials}
           >
             Save Materials
           </button>
