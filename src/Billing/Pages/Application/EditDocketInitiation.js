@@ -139,14 +139,14 @@ const EditDocketInitiation = () => {
           className="self-stretch my-auto w-6 h-6"
           alt="Icon"
         />
-        <div className="self-stretch my-auto">Edit Docket Initiation</div>
+        <div className="self-stretch my-auto">Docket Initiation</div>
       </div>
 
       {/* Main content section */}
       <div className="flex flex-col mt-6 space-y-6 bg-white rounded-3xl shadow-lg pb-10">
         {/* Section title */}
         <div className="self-start px-6 pt-6 text-3xl font-semibold capitalize text-neutral-600 sm:px-8 lg:px-10">
-          Docket Initiation
+        Edit Docket Initiation
         </div>
 
         {/* Form section */}
