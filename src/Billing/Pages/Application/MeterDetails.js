@@ -1,6 +1,13 @@
 import * as React from "react";
+import { useLocation } from "react-router-dom";
 
 const  MeterDetails = () => {
+
+    const location = useLocation();
+    const { state } = location;
+    const application = state?.application;
+
+    console.log("application application application", application);
 
   return (
     <div className="flex flex-col flex-wrap justify-center content-start pt-6 pb-4 rounded-3xl bg-stone-100">
@@ -12,7 +19,7 @@ const  MeterDetails = () => {
           className="shrink-0 self-stretch my-auto w-6 aspect-square"
         />
         <div className="justify-center self-stretch px-4 py-1 whitespace-nowrap bg-white rounded-2xl">
-          APP567890
+          {application.application.applicationNumber}
         </div>
         <img
           loading="lazy"
@@ -48,7 +55,7 @@ const  MeterDetails = () => {
                 INSTALLATION DATE
               </div>
               <div className="mt-2 text-base leading-6 text-neutral-600">
-                28/01/2024
+                {application.dateOfInstallation}
               </div>
             </div>
             <div className="flex gap-2 max-md:flex-wrap">
@@ -65,7 +72,7 @@ const  MeterDetails = () => {
                   BLOCK NUMBER
                 </div>
                 <div className="mt-2 text-base leading-6 text-neutral-600">
-                  087656
+                  {application.blockNumber}
                 </div>
               </div>
               <div className="flex flex-col justify-center">
@@ -73,7 +80,7 @@ const  MeterDetails = () => {
                   customer reference
                 </div>
                 <div className="mt-2 text-base leading-6 text-neutral-600">
-                  CR002456
+                  {application.customerRef}
                 </div>
               </div>
             </div>
@@ -84,7 +91,7 @@ const  MeterDetails = () => {
                 installed by
               </div>
               <div className="mt-2 text-base leading-6 text-neutral-600">
-                Mr. Kinyera Amos
+                {application.installedBy}
               </div>
             </div>
             <div className="flex flex-col justify-center max-md:max-w-full">
@@ -92,7 +99,7 @@ const  MeterDetails = () => {
                 engineer remarks
               </div>
               <div className="mt-2 text-base leading-6 text-neutral-600 max-md:max-w-full">
-                Client / Customer has been connected to water supply.
+                {application.remarks}
               </div>
             </div>
           </div>
@@ -108,7 +115,7 @@ const  MeterDetails = () => {
                 meter number
               </div>
               <div className="mt-2 text-base leading-6 text-neutral-600">
-                HN-123456
+                {application.meterNumber}
               </div>
             </div>
             <div className="flex flex-col justify-center">
@@ -116,7 +123,7 @@ const  MeterDetails = () => {
                 meter size
               </div>
               <div className="mt-2 text-base leading-6 text-neutral-600">
-                DN15
+                {application.meterSize}
               </div>
             </div>
             <div className="flex flex-col justify-center">
@@ -124,7 +131,7 @@ const  MeterDetails = () => {
                 METER TYPE
               </div>
               <div className="mt-2 text-base leading-6 text-neutral-600">
-                BAYLAN
+                {application.meterType}
               </div>
             </div>
             <div className="flex flex-col justify-center">
@@ -132,7 +139,7 @@ const  MeterDetails = () => {
                 MANUFACTURED DATE
               </div>
               <div className="mt-2 text-base leading-6 text-neutral-600">
-                08/11/2021
+                {application.meterManufactureDate}
               </div>
             </div>
           </div>
@@ -142,20 +149,20 @@ const  MeterDetails = () => {
                 LOCATION COORDINATES
               </div>
               <div className="mt-2 text-base leading-6 text-neutral-600">
-                0.0506° N, 32.4604° E
+                {application.locationCordinates}
               </div>
             </div>
             <div className="flex flex-col justify-center">
               <div className="text-xs font-medium tracking-wide uppercase text-neutral-400">
                 meter initial reading
               </div>
-              <div className="mt-2 text-base leading-6 text-neutral-600">0</div>
+              <div className="mt-2 text-base leading-6 text-neutral-600">{application.initialReading}</div>
             </div>
             <div className="flex flex-col justify-center whitespace-nowrap">
               <div className="text-xs font-medium tracking-wide uppercase text-neutral-400">
                 dials
               </div>
-              <div className="mt-2 text-base leading-6 text-neutral-600">5</div>
+              <div className="mt-2 text-base leading-6 text-neutral-600">{application.dials}</div>
             </div>
           </div>
         </div>

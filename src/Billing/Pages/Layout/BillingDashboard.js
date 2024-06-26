@@ -38,7 +38,7 @@ const BillingDashboard = () => {
               {screen === "update-invoice" && <UpdateInvoice />}
               {screen === "invoice-details" && <InvoiceDetails />}
               {screen === "add-meter" && <AddMeter />}
-              {screen === "meter-details" && <MeterDetails />}
+              {screen === "report-details" && <MeterDetails />}
             </div>
           </div>
         </div>

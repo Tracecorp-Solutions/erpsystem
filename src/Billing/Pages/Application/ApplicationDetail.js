@@ -21,11 +21,14 @@ const ApplicationDetail = () => {
   const [surveyorReport, setSurveyorReport] = useState(false);
   const [applicationData, setApplicationData] = useState(null);
   const [isUpdateModalVisible, setIsUpdateModalVisible] = useState(false);
+  const [application, setApplication] = useState(null);
 
   const [isVisible, setIsVisible] = useState(false);
   const [jobCardInfo, setJobCardInfo] = useState(null);
 
   console.log("Application Data:", applicationData);
+
+  console.log("Application Data 222222222:", application);
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -51,6 +54,8 @@ const ApplicationDetail = () => {
     if (applicationNumber) {
       fetchApplicationById(applicationNumber);
     }
+
+    fetchApplicationData();
   }, [applicationNumber]);
 
   const fetchApplicationById = (applicationNumber) => {
@@ -72,6 +77,29 @@ const ApplicationDetail = () => {
       });
   };
 
+ 
+ const fetchApplicationData = async () => {
+    try {
+      const response = await fetch(
+        `http://3.216.182.63:8095/TestApi/GetDocketInitiation?applicationNumber=${applicationNumber}`,
+        {
+          method: "GET",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (response.ok) {
+        const data = await response.json();
+        setApplication(data);
+      } else {
+        console.error("Failed to fetch application data");
+      }
+    } catch (error) {
+      console.error("Error fetching application data:", error);
+    }
+  };
   const handleGenerateJobCard = () => {
     if (!applicationNumber || !userid) {
       console.error("Application number or userId is missing");
@@ -654,7 +682,7 @@ const ApplicationDetail = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="flex flex-col ml-5  max-md:ml-0 max-md:w-full">
+                  {/* <div className="flex flex-col ml-5  max-md:ml-0 max-md:w-full">
                     <div className="flex flex-col ml-5  max-md:ml-0 max-md:w-full">
                       <button
                         type="button"
@@ -668,6 +696,56 @@ const ApplicationDetail = () => {
                         Add Meter
                       </button>
                     </div>
+                    <button
+                        type="button"
+                        className="grow justify-center px-6 py-3 mt-9 w-full text-sm font-semibold text-white rounded-3xl bg-slate-500 max-md:px-5 max-md:mt-10"
+                        onClick={() =>
+                          navigate(`/billingdashboard`, {
+                            state: { screen: "report-details", applicationNumberDisplay},
+                          })
+                        }
+                      >
+                        Report Details
+                      </button>
+                  </div> */}
+
+                  <div className="flex flex-col ml-5 max-md:ml-0 max-md:w-full">
+                    <>
+                      {application?.customerRef ? (
+                        <button
+                          type="button"
+                          className="justify-center px-6 py-3 mt-9 w-[200px] text-sm font-semibold text-white rounded-3xl max-md:mt-10"
+                          style={{
+                            background: "#9EC137"
+                          }}
+                          onClick={() =>
+                            navigate(`/billingdashboard`, {
+                              state: {
+                                screen: "report-details",
+                                application,
+                              },
+                            })
+                          }
+                        >
+                          Report Details
+                        </button>
+                      ) : (
+                        <button
+                          type="button"
+                          className="grow justify-center px-6 py-3 mt-9 w-full text-sm font-semibold text-white rounded-3xl bg-slate-500 max-md:px-5 max-md:mt-10"
+                          onClick={() =>
+                            navigate(`/billingdashboard`, {
+                              state: {
+                                screen: "add-meter",
+                                applicationNumberDisplay,
+                              },
+                            })
+                          }
+                        >
+                          Add Meter
+                        </button>
+                      )}
+                    </>
                   </div>
                 </div>
               </div>
