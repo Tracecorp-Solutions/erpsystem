@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Select, DatePicker, message } from 'antd';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import moment from 'moment';
 import axios from 'axios';
 
@@ -11,6 +11,7 @@ const EditDocketInitiation = () => {
   const { state } = location;
 
   const application = state?.application;
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     applicationNumber: state?.applicationNumberDisplay || '',
@@ -106,6 +107,11 @@ const EditDocketInitiation = () => {
         }
       });
       message.success('Docket Updated successfully!');
+      navigate(`/billingdashboard`, {
+        state: {
+          screen: "application",
+        },
+      })
     } catch (error) {
       console.error('Error submitting data:', error);
       message.error('Failed to initiate docket. Please try again.');
@@ -133,7 +139,7 @@ const EditDocketInitiation = () => {
           className="self-stretch my-auto w-6 h-6"
           alt="Icon"
         />
-        <div className="self-stretch my-auto">Docket Initiation</div>
+        <div className="self-stretch my-auto">Edit Docket Initiation</div>
       </div>
 
       {/* Main content section */}
