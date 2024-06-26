@@ -36,6 +36,8 @@ import UpdateInvoice from "./Billing/Pages/Application/Actions/UpdateInvoice";
 import InvoiceDetails from "./Billing/Pages/Application/Actions/InvoiceDetails";
 import AddMaterials from "./Billing/Pages/Application/Actions/AddMaterials";
 import ShowMaterials from "./Billing/Pages/Application/Actions/ShowMaterials";
+import ConfMaterials from "./Billing/Pages/Materials/ConfMaterials";
+import CreateMaterials from "./Billing/Pages/Materials/CreateMaterials";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -106,6 +108,8 @@ function App() {
               <Route path="/invoice-details" element={<InvoiceDetails />} />
               <Route path="/add-materials" element={<AddMaterials />} />
               <Route path="/show-materials" element={<ShowMaterials />} />
+              <Route path="/conf-materials" element={<ConfMaterials />} />
+              <Route path="/create-materials" element={<CreateMaterials />} />
               {/* <Route path="/view-detail" element={<ApplicationDetail />} /> */}
             </Routes>
           </div>

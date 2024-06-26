@@ -170,13 +170,28 @@ function SideNav() {
               User management
             </button>
           </div>
-          <div className={`flex gap-2 py-3 mt-2 whitespace-nowrap rounded-xl ${location.pathname === "/settings" ? "bg-active-green txt-color-blue font-semibold px-4" : "bg-none"}`}>
-            <Settings className="shrink-0 self-start w-6 aspect-square" />
-            <button onClick={() => navigate("/Dashboardlayout", { state: { screen: "settings" } })}>
-              Settings
+  
+          <div className="mt-3 py-3 w-full">
+            <button className="flex justify-between w-full" onClick={() => toggleDropdown("documents")}>
+              <span className="flex gap-2">
+                <Settings className="shrink-0 self-start w-6 aspect-square" />
+                <span>Configuration</span>
+              </span>
+              <ChevronDown className="shrink-0 self-start w-6 aspect-square" />
             </button>
+            {openDropdown === "documents" && (
+              <div className="pt-3">
+                <div className={`flex gap-2 py-3 mt-2 whitespace-nowrap rounded-xl ${location.pathname === "/billing" ? "bg-active-green txt-color-blue font-semibold px-4 mt-3" : "bg-none"}`}>
+                  <ReceiptText className="shrink-0 self-start w-6 aspect-square" />
+                  <button onClick={() => navigate("/billingdashboard", { state: { screen: "conf-materials" } })}>
+                    Materials Estimates
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         </div>
+
       </div>
     </>
   );
