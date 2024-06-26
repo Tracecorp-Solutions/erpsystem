@@ -37,6 +37,7 @@ namespace Core.Repositories.Billing
         Task<string> GetNewConnectionInvoice(string applicationNumber);
 
         Task AddDocketInitiation(DocketInitiationDto docketInitiationDto);
+        Task<DocketInitiation> GetDocketInitiationByApplicationNumber(string applicationNumber);
 
         Task<string> GenerateCustomerRef();
 

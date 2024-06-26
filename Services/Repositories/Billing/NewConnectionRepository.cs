@@ -15,6 +15,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mail;
+using System.Net.Sockets;
 using System.Reflection;
 using System.Reflection.Metadata;
 using System.Text;
@@ -437,6 +438,8 @@ namespace Services.Repositories.Billing
             await _context.SaveChangesAsync();
         }
 
+
+
         public async Task<string> GenerateCustomerRef()
         {
             //generate random customer ref
@@ -449,6 +452,22 @@ namespace Services.Repositories.Billing
             if (docketInitiation != null) return await GenerateCustomerRef();
 
             return customerRef.ToUpper();
+        }
+
+        public async Task<DocketInitiation> GetDocketInitiationByApplicationNumber(string applicationNumber) 
+        {
+            //get applicationid based on application number
+            var application = await _context.Applications.FirstOrDefaultAsync(a => a.ApplicationNumber == applicationNumber);
+
+            if (application == null)
+                throw new ArgumentException("No Application found with that applicationNumber");
+
+            var docketinitiation = await _context.DocketInitiations
+                .Include(d => d.Application)
+                .Include(d => d.User)
+                .FirstOrDefaultAsync(d => d.ApplicationId == application.Id);
+            return docketinitiation == null ? throw new ArgumentException("No Docket initiation for that ApplicationNumber") : docketinitiation;
+               
         }
 
     }
