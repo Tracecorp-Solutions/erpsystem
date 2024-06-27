@@ -611,9 +611,13 @@ const ApplicationDetail = () => {
                     <div className="flex flex-col ml-5 max-md:ml-0 max-md:w-full">
                       <button
                         className="grow justify-center px-6 py-3 mt-9 w-full text-sm font-semibold text-white whitespace-nowrap rounded-3xl bg-slate-500 max-md:px-5 max-md:mt-10 border"
-                        onClick={() => setPayslipVisible(true)}
+                        onClick={() =>
+                          navigate(`/billingdashboard`, {
+                            state: { screen: "payment-reciepts", applicationNumber },
+                          })
+                        }
                       >
-                        Generate pay slip
+                        Generate
                       </button>
                     </div>
                   </div>
@@ -656,8 +660,6 @@ const ApplicationDetail = () => {
         isUpdateModalVisible={isUpdateModalVisible}
         handleUpdateModalVisible={handleUpdateModalVisible}
       />
-      <Payslip setPayslipVisible={setPayslipVisible} payslipVisible={payslipVisible}   />
-
     </div>
   );
 };
