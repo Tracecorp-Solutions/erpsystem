@@ -24,7 +24,7 @@ const ReconcileInvoice = ({ setIsReconcileInvoice, isReconcileInvoice }) => {
         </div>
 
         <div className="flex flex-col self-center pt-4 pb-5 mt-8 w-full bg-white rounded-3xl max-w-[600px] max-md:max-w-full">
-          <div className="flex gap-5 justify-between py-4 pr-6 text-xs font-medium tracking-wide uppercase rounded-3xl bg-stone-100 text-neutral-400 max-md:flex-wrap max-md:pr-6 pl-2">
+          <div className="flex gap-5 justify-between py-4 pr-6 text-xs font-medium tracking-wide uppercase rounded-3xl bg-stone-100 text-neutral-400 max-md:flex-wrap max-md:pr-6 pl-4">
             <div className="w-1/4">PAYMENT REF.</div>
             <div className="w-1/4 text-right">Total INVOICED</div>
             <div className="w-1/4 text-right">Total PAID</div>
@@ -34,7 +34,7 @@ const ReconcileInvoice = ({ setIsReconcileInvoice, isReconcileInvoice }) => {
           <div className="flex justify-between py-2 pr-6 mt-2 text-base leading-6 rounded-3xl text-neutral-600 max-md:flex-wrap max-md:pr-5 pl-6 max-md:max-w-full">
             <div className="w-1/4">NC009</div>
             <div className="text-right">240,000</div>
-            <div className="w-1/4 ml-4 text-right">240,000</div>
+            <div className="w-1/4 text-right">240,000</div>
             <div className="w-1/4 text-right text-neutral-400">Fully paid</div>
           </div>
 
