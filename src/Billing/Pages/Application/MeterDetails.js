@@ -58,7 +58,7 @@ const MeterDetails = () => {
             Installation Information
           </div>
           <div className="shrink-0 mt-4 h-px border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-opacity-10 max-md:max-w-full" />
-          <div className="flex gap-2 mt-4 max-md:flex-wrap">
+          <div className="flex gap-2 mt-4 max-md:flex-wrap w-full justify-between">
             <div className="flex flex-col justify-center">
               <div className="text-xs font-medium tracking-wide uppercase text-neutral-400">
                 INSTALLATION DATE
@@ -67,7 +67,7 @@ const MeterDetails = () => {
                 {application?.dateOfInstallation}
               </div>
             </div>
-            <div className="flex gap-2 max-md:flex-wrap">
+            <div className="flex gap-2 max-md:flex-wrap w-3/4 justify-between">
               <div className="flex flex-col justify-center">
                 <div className="text-xs font-medium tracking-wide uppercase text-neutral-400">
                   customer type
@@ -94,7 +94,7 @@ const MeterDetails = () => {
               </div>
             </div>
           </div>
-          <div className="flex gap-2 mt-6 max-md:flex-wrap">
+          <div className="flex gap-2 mt-6 max-md:flex-wrap w-2/4">
             <div className="flex flex-col justify-center">
               <div className="text-xs font-medium tracking-wide uppercase text-neutral-400">
                 installed by
@@ -103,8 +103,8 @@ const MeterDetails = () => {
                 {application?.installedBy}
               </div>
             </div>
-            <div className="flex flex-col justify-center max-md:max-w-full">
-              <div className="text-xs font-medium tracking-wide uppercase text-neutral-400 max-md:max-w-full">
+            <div className="flex flex-col justify-center max-md:max-w-full text-center w-3/4">
+              <div className="text-xs font-medium tracking-wide uppercase text-neutral-400 max-md:max-w-full text-center">
                 engineer remarks
               </div>
               <div className="mt-2 text-base leading-6 text-neutral-600 max-md:max-w-full">
@@ -113,12 +113,12 @@ const MeterDetails = () => {
             </div>
           </div>
         </div>
-        <div className="flex flex-col px-4 pt-2 pb-4 mt-6 rounded-lg bg-stone-100 max-md:max-w-full">
+        <div className="flex flex-col px-4 pt-2 pb-4 mt-6 rounded-lg bg-stone-100 justify-between w-full">
           <div className="text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">
             Meter Information
           </div>
           <div className="shrink-0 mt-4 h-px border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-opacity-10 max-md:max-w-full" />
-          <div className="flex gap-2 mt-4 max-md:flex-wrap">
+          <div className="flex gap-2 mt-4 max-md:flex-wrap justify-between w-full">
             <div className="flex flex-col justify-center">
               <div className="text-xs font-medium tracking-wide uppercase text-neutral-400">
                 meter number
@@ -152,7 +152,7 @@ const MeterDetails = () => {
               </div>
             </div>
           </div>
-          <div className="flex gap-2 mt-6 max-md:flex-wrap max-md:pr-5">
+          <div className="flex gap-2 mt-6 max-md:flex-wrap max-md:pr-5 w-2/3 justify-between">
             <div className="flex flex-col justify-center">
               <div className="text-xs font-medium tracking-wide uppercase text-neutral-400">
                 LOCATION COORDINATES

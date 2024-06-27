@@ -146,6 +146,7 @@ const AddMeter = () => {
               id="customerType"
               placeholder="Select customer type"
               className="w-full h-14"
+              disabled
               allowClear
               onChange={(value) => handleSelectChange(value, 'customerType')}
             >
