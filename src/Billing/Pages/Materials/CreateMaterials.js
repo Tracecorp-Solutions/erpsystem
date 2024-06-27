@@ -14,6 +14,7 @@ function CreateMaterials() {
   const [materialUnitPrice, setMaterialUnitPrice] = useState('');
   const [unitOfMeasure, setUnitOfMeasure] = useState('');
   const [materialDescription, setMaterialDescription] = useState('');
+  const [invoiceable, setInvoiceable] = useState('true'); // Initializing invoiceable state
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -23,6 +24,7 @@ function CreateMaterials() {
       materialUnitPrice: parseFloat(materialUnitPrice),
       unitOfMeasure,
       materialDescription,
+      invoiceable: invoiceable === 'true', // Converting to boolean
     };
 
     try {
@@ -41,6 +43,7 @@ function CreateMaterials() {
         setMaterialUnitPrice('');
         setUnitOfMeasure('');
         setMaterialDescription('');
+        setInvoiceable('true');
       } else {
         alert('Failed to add material');
       }
@@ -110,6 +113,19 @@ function CreateMaterials() {
           required
         />
 
+        <div className="mt-4 font-semibold text-neutral-600 max-md:max-w-full text-left">
+          Invoiceable
+        </div>
+        <select
+          value={invoiceable}
+          onChange={(e) => setInvoiceable(e.target.value)}
+          className="mt-2 w-full px-4 py-2 border border-solid border-neutral-500 rounded-xl"
+          required
+        >
+          <option value="true">Yes</option>
+          <option value="false">No</option>
+        </select>
+
         <div className="flex justify-center items-start self-stretch px-16 py-6 mt-10 w-full bg-stone-100 max-md:px-5 max-md:mt-10 max-md:max-w-full">
           <div className="flex gap-4 max-w-full w-[496px] max-md:flex-wrap">
             <button
@@ -120,6 +136,7 @@ function CreateMaterials() {
                 setMaterialUnitPrice('');
                 setUnitOfMeasure('');
                 setMaterialDescription('');
+                setInvoiceable('true');
               }}
             >
               Cancel
