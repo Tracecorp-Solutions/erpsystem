@@ -3,10 +3,12 @@ import { Dropdown, Menu } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
 import { useLocation, useNavigate } from "react-router-dom";
 import PaymentDetails from "./PaymentDetails";
+import ReconcileInvoice from "./ReconcileInvoice";
 
 function Payslip() {
 
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isReconcileInvoice, setIsReconcileInvoice] = useState(false);
 
   const showModal = () => {
     setIsModalVisible(true);
@@ -28,6 +30,8 @@ function Payslip() {
   const handleMenuClick = (e) => {
     if (e.key === '1') {
       showModal();
+    } else if (e.key === "3") {
+      setIsReconcileInvoice(true);
     }
   };
 
@@ -112,6 +116,7 @@ function Payslip() {
         <div className="shrink-0 mt-2 h-px border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-opacity-10 max-md:max-w-full" />
       </div>
       <PaymentDetails isModalVisible={isModalVisible} handleOk={handleOk} handleCancel={handleOk} />
+      <ReconcileInvoice isReconcileInvoice={isReconcileInvoice} setIsReconcileInvoic={setIsReconcileInvoice} />
     </div>
   );
 }
