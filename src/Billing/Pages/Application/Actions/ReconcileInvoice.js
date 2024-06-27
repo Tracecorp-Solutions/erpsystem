@@ -1,7 +1,7 @@
 import React from "react";
 import { Modal } from "antd";
 
-const ReconcileInvoice = ({ setIsReconcileInvoice, isReconcileInvoice }) => {
+const ReconcileInvoice = ({ CanceReconcileInvoice, isReconcileInvoice }) => {
   return (
     <Modal
       visible={isReconcileInvoice}
@@ -17,14 +17,14 @@ const ReconcileInvoice = ({ setIsReconcileInvoice, isReconcileInvoice }) => {
               loading="lazy"
               src="https://cdn.builder.io/api/v1/image/assets/TEMP/9cb4c3a052fc4ce0311e93e84c7d1ec0d87c500974fc2472887163b10b65c326?apiKey=5bf51c3fc9cb49b480a07670cbcd768f&"
               className="shrink-0 my-auto w-8 aspect-square cursor-pointer"
-              onClick={() => setIsReconcileInvoice(false)}
+              onClick={CanceReconcileInvoice}
             />
           </div>
           <div className="mt-6 w-full border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-opacity-10 min-h-[1px] max-md:max-w-full" />
         </div>
 
         <div className="flex flex-col self-center pt-4 pb-5 mt-8 w-full bg-white rounded-3xl max-w-[600px] max-md:max-w-full">
-          <div className="flex gap-5 justify-between py-4 pr-6 text-xs font-medium tracking-wide uppercase rounded-3xl bg-stone-100 text-neutral-400 max-md:flex-wrap max-md:pr-6 pl-4">
+          <div className="flex gap-5 justify-between py-4 pr-6 text-xs font-medium tracking-wide uppercase rounded-3xl bg-stone-100 text-neutral-400 max-md:pr-6 pl-4">
             <div className="w-1/4">PAYMENT REF.</div>
             <div className="w-1/4 text-right">Total INVOICED</div>
             <div className="w-1/4 text-right">Total PAID</div>

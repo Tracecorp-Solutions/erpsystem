@@ -30,13 +30,13 @@ const PaymentDetails = ({ isModalVisible, handleOk, handleCancel }) => {
         <div className="mt-8 text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">
           Payment Reference / Invoice No.
         </div>
-        <Input placeholder="Enter Reference number" className="justify-center items-start px-4 py-4 mt-2 max-w-full text-base leading-6 bg-white rounded-xl border border-solid border-neutral-500 border-opacity-30 text-neutral-400 w-full max-md:pr-5" />
+        <Input placeholder="Enter Reference number" className="justify-center items-start px-4 py-3 mt-2 max-w-full text-base leading-6 bg-white rounded-xl border border-solid border-neutral-500 border-opacity-30 text-neutral-400 w-full max-md:pr-5" />
 
         {/* Bank / Vendor */}
         <div className="mt-4 text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">
           Bank / Vendor
         </div>
-          <Select placeholder="Choose Bank or Vendor" className="flex gap-2 justify-between h-14 mt-2  w-full text-base leading-6 bg-white rounded-xl border-solid border-neutral-500 border-opacity-30 text-neutral-400 max-md:flex-wrap">
+          <Select placeholder="Choose Bank or Vendor" className="flex gap-2 justify-between h-12 mt-2  w-full text-base leading-6 bg-white rounded-xl border-solid border-neutral-500 border-opacity-30 text-neutral-400 max-md:flex-wrap">
             <Option value="bank1">Bank 1</Option>
             <Option value="bank2">Bank 2</Option>
           </Select>
@@ -44,7 +44,7 @@ const PaymentDetails = ({ isModalVisible, handleOk, handleCancel }) => {
           <div className="mt-4 text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">
           Amount Paid
         </div>
-        <div className="flex gap-2 justify-between px-4 py-4 mt-2 max-w-full whitespace-nowrap bg-white rounded-xl border border-solid border-neutral-500 border-opacity-30 w-full max-md:flex-wrap">
+        <div className="flex gap-2 justify-between px-4 py-3 mt-2 max-w-full whitespace-nowrap bg-white rounded-xl border border-solid border-neutral-500 border-opacity-30 w-full max-md:flex-wrap">
           <Input
             className="text-base leading-6 border-none text-neutral-600 w-full p-1 px-2"
             placeholder="0"
@@ -58,13 +58,13 @@ const PaymentDetails = ({ isModalVisible, handleOk, handleCancel }) => {
         <div className="mt-4 text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">
           Payment Date
         </div>
-          <DatePicker style={{ width: '100%' }} placeholder="-- / -- / ----" className="flex gap-2 justify-between px-4 py-4 mt-2  text-base leading-6 bg-white rounded-xl border border-solid border-neutral-500 border-opacity-30 text-neutral-400 w-[500px] max-md:flex-wrap" />
+          <DatePicker style={{ width: '100%' }} placeholder="-- / -- / ----" className="flex gap-2 justify-between px-4 py-3 mt-2  text-base leading-6 bg-white rounded-xl border border-solid border-neutral-500 border-opacity-30 text-neutral-400 w-[500px] max-md:flex-wrap" />
 
         {/* Payment Method */}
         <div className="mt-4 text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">
           Payment Method
         </div>
-          <Select placeholder="Choose payment method"  className="flex gap-2 justify-between h-14 mt-2 w-full text-base leading-6 bg-white rounded-xl border-solid border-neutral-500 border-opacity-30 text-neutral-400 max-md:flex-wrap">
+          <Select placeholder="Choose payment method"  className="flex gap-2 justify-between h-12 mt-2 w-full text-base leading-6 bg-white rounded-full border-solid border-neutral-500 border-opacity-30 text-neutral-400 max-md:flex-wrap">
             <Option value="method1">Method 1</Option>
             <Option value="method2">Method 2</Option>
           </Select>

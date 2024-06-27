@@ -18,11 +18,11 @@ function Payslip() {
     setIsModalVisible(false);
     // Logic to handle saving payment details
   };
-
-  const handleCancel = () => {
-    setIsModalVisible(false);
+ 
+  const CanceReconcileInvoice = () => {
+    setIsReconcileInvoice(false)
   }
-
+  
   const location = useLocation();
   const { state } = location;
   const application = state?.applicationNumber;
@@ -116,7 +116,7 @@ function Payslip() {
         <div className="shrink-0 mt-2 h-px border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-opacity-10 max-md:max-w-full" />
       </div>
       <PaymentDetails isModalVisible={isModalVisible} handleOk={handleOk} handleCancel={handleOk} />
-      <ReconcileInvoice isReconcileInvoice={isReconcileInvoice} setIsReconcileInvoic={setIsReconcileInvoice} />
+      <ReconcileInvoice isReconcileInvoice={isReconcileInvoice} CanceReconcileInvoice={CanceReconcileInvoice} />
     </div>
   );
 }
