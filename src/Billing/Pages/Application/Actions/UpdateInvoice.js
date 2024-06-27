@@ -118,15 +118,15 @@ function UpdateInvoice() {
             </div>
             <div className="shrink-0 mt-2 h-px border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-opacity-10 max-md:max-w-full" />
           </div>
-          <div className="justify-end py-6 mt-6 max-w-full w-[1040px] max-md:pl-5">
+          <div className="items-end py-6 mt-6 max-w-full w-[500px] max-md:pl-5">
             <div className="flex gap-5 max-md:flex-col max-md:gap-0">
-              <div className="flex flex-col w-6/12 max-md:ml-0 max-md:w-full">
-                <div className="grow justify-center items-center px-8 py-4 w-full text-base leading-6 whitespace-nowrap rounded-3xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 max-md:px-5 max-md:mt-10">
+              <div className="flex flex-col w-4/12 max-md:ml-0 max-md:w-full">
+                <div className="grow justify-center items-center px-4 py-4 w-full text-base leading-6 whitespace-nowrap rounded-3xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 max-md:px-5 max-md:mt-10">
                   Cancel
                 </div>
               </div>
-              <div className="flex flex-col ml-5 w-6/12 max-md:ml-0 max-md:w-full">
-                <div className="grow justify-center items-center px-8 py-4 w-full text-base font-semibold leading-6 text-white rounded-3xl bg-slate-500 max-md:px-5 max-md:mt-10">
+              <div className="flex flex-col ml-5 w-4/12 max-md:ml-0 max-md:w-full">
+                <div className="grow justify-center items-center px-4 py-4 w-full text-base font-semibold leading-6 text-white rounded-3xl bg-blue-400 max-md:px-5 max-md:mt-10">
                   Save Invoice
                 </div>
               </div>
