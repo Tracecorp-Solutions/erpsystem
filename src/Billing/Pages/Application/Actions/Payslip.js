@@ -1,21 +1,43 @@
-import React from "react";
+import React,{ useState } from "react";
 import { Dropdown, Menu } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
 import { useLocation, useNavigate } from "react-router-dom";
+import PaymentDetails from "./PaymentDetails";
 
 function Payslip() {
+
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const showModal = () => {
+    setIsModalVisible(true);
+  };
+
+  const handleOk = () => {
+    setIsModalVisible(false);
+    // Logic to handle saving payment details
+  };
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  }
 
   const location = useLocation();
   const { state } = location;
   const application = state?.applicationNumber;
 
+  const handleMenuClick = (e) => {
+    if (e.key === '1') {
+      showModal();
+    }
+  };
+
   const menu = (
-    <Menu>
+    <Menu onClick={handleMenuClick}>
       <Menu.Item key="1">Add New Payment</Menu.Item>
       <Menu.Item key="2">Confirm Payment</Menu.Item>
       <Menu.Item key="3">Reconcile Invoice</Menu.Item>
     </Menu>
-  );
+  )
 
   return (
     <div className="flex flex-col flex-wrap justify-center content-start items-center py-6 font-semibold rounded-3xl bg-stone-100 leading-[160%]">
@@ -89,6 +111,7 @@ function Payslip() {
 
         <div className="shrink-0 mt-2 h-px border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-opacity-10 max-md:max-w-full" />
       </div>
+      <PaymentDetails isModalVisible={isModalVisible} handleOk={handleOk} handleCancel={handleOk} />
     </div>
   );
 }
