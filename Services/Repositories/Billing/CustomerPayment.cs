@@ -25,6 +25,12 @@ namespace Services.Repositories.Billing
             if (invoice == null)
                 throw new ArgumentException("Reference cannot be found");
 
+            //check whether Payment Reference exists
+            var paym = _context.Payments.FirstOrDefault(x => x.PaymntReference == pyt.PaymntReference);
+
+            if (paym != null)
+                throw new ArgumentException("Payment Reference already exists");
+
             //map dto to model
             var payment = new Payment
             {
