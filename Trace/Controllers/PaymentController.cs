@@ -32,5 +32,23 @@ namespace Trace.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpGet("/ValidateCustomer/{customerRef}")]
+        public async Task<IActionResult> ValidateCustomer(string customerRef)
+        {
+            try
+            {
+                var customer = await _customerPayments.ValidateCustomerDetails(customerRef);
+                return Ok(customer);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

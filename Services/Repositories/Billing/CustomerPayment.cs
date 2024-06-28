@@ -7,6 +7,7 @@ using Core.DTOs.Billing;
 using Core.Models.Billing;
 using Core.Repositories.Billing;
 using Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace Services.Repositories.Billing
 {
@@ -45,6 +46,20 @@ namespace Services.Repositories.Billing
 
             _context.Payments.Add(payment);
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<ValidateCustomerDto> ValidateCustomerDetails(string customeRef)
+        {
+            var invoice = await _context.NewConnectionInvoices.FirstOrDefaultAsync(x => x.InvoiceNumber == customeRef);
+
+            if (invoice == null)
+                throw new ArgumentException("Reference cannot be found");
+
+            return new ValidateCustomerDto
+            {
+                Name = invoice.Application.FullName,
+                Balance =invoice.NewConnectionInvoiceMaterials.Sum(x => x.Price)
+            };
         }
     }
 }

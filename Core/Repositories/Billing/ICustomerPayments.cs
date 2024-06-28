@@ -11,6 +11,6 @@ namespace Core.Repositories.Billing
     {
         Task AddPayments(PaymentDto pyt);
 
-        Task<string> ValidateCustomerDetails(string customeRef);
+        Task<ValidateCustomerDto> ValidateCustomerDetails(string customeRef);
     }
 }

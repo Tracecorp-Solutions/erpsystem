@@ -8,5 +8,7 @@ namespace Core.DTOs.Billing
 {
     public class ValidateCustomerDto
     {
+        public string Name { get; set; }
+        public decimal Balance { get; set; }
     }
 }
