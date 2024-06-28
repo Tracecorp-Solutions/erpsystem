@@ -13,8 +13,6 @@ function UpdateInvoice() {
 
   const applicationNumber = state?.applicationNumber;
 
-  console.log(";llllllllllllll", applicationNumber);
-
   // const fetchApplicationDetails = async () => {
   //   try {
   //     const response = await fetch(
