@@ -93,7 +93,7 @@ const PaymentDetails = ({ handleCancelPayment, showPaymentForm }) => {
         </div>
 
         {/* Scrollable Content */}
-        <div className="flex flex-col py-4 px-12  h-[550px] overflow-y-auto">
+        <div className="flex flex-col py-4 px-12">
           {/* Customer Reference */}
           <div className="w-full text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">
             Customer Reference
@@ -133,7 +133,7 @@ const PaymentDetails = ({ handleCancelPayment, showPaymentForm }) => {
               <div className="mt-4 w-full text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">
                 Amount Paid
               </div>
-              <div className="flex gap-2 justify-between px-4 py-2 mt-2 w-full whitespace-nowrap bg-white rounded-xl border border-solid border-neutral-500 border-opacity-30 max-md:flex-wrap max-md:max-w-full">
+              <div className="flex gap-2 justify-between px-4 py-1 mt-2 w-full whitespace-nowrap bg-white rounded-xl border border-solid border-neutral-500 border-opacity-30 max-md:flex-wrap max-md:max-w-full">
                 <Input
                   className="text-base leading-6 border-none text-neutral-600 w-full px-2"
                   placeholder="0"
@@ -181,12 +181,12 @@ const PaymentDetails = ({ handleCancelPayment, showPaymentForm }) => {
           />
 
           {/* Payment Method */}
-          <div className="mt-4 w-full text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">
+          <div className="mt-4 w-full text-base font-semibold leading-6 text-neutral-600">
             Payment Method
           </div>
           <Select
             placeholder="Choose payment method"
-            className="mt-2 w-full text-base  bg-white rounded-xl"
+            className="mt-2 w-full h-10 text-base  bg-white rounded-xl border"
             value={paymentMethod}
             onChange={(value) => setPaymentMethod(value)}
           >
