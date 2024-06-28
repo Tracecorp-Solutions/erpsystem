@@ -45,6 +45,8 @@ namespace Core.Repositories.Billing
 
         Task<IEnumerable<NewConnectionInvoiceDto>> GetAllInvoices();
 
+        Task<NewConnectionInvoiceDto> GetInvoiceByInvoiceNumber(string invoiceNumber);
+
       
     }
 }
