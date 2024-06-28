@@ -62,6 +62,8 @@ namespace Infrastructure.Data
 
         public DbSet<DocketInitiation> DocketInitiations { get; set; }
 
+        public DbSet<Payment> Payments { get; set; }
+
         #endregion
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
