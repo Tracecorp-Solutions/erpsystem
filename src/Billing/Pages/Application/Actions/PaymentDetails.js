@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import { Modal, Input, Select, Button, DatePicker } from "antd";
+import { Modal, Input, Select, Button, DatePicker, message } from "antd";
 import axios from "axios";
-import { PlusOutlined } from "@ant-design/icons";
 
 const { Option } = Select;
 
@@ -32,9 +31,10 @@ const PaymentDetails = ({ handleCancelPayment, showPaymentForm }) => {
       setValidationResult(response.data);
       setName(response.data.name);
       setAmount(response.data.balance);
+      message.success("Customer validated successfully!");
     } catch (error) {
       console.error("Error validating customer:", error);
-      alert("Failed to validate customer. Please try again.");
+      message.error("Failed to validate customer. Please try again.");
     }
   };
 
@@ -64,6 +64,7 @@ const PaymentDetails = ({ handleCancelPayment, showPaymentForm }) => {
 
       console.log("Payment successfully added:", response.data);
       handleCancelPayment();
+      message.success("Payment successfully added!");
     } catch (error) {
       if (error.response) {
         console.error("Error adding payment:", error.response.data);
@@ -71,6 +72,7 @@ const PaymentDetails = ({ handleCancelPayment, showPaymentForm }) => {
         console.error("No response received:", error.request);
       } else {
         console.error("Error setting up request:", error.message);
+        message.error("Error setting up request. Please try again.");
       }
     }
   };
