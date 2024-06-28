@@ -1,14 +1,77 @@
-import React from "react";
-import { Modal, Input, DatePicker, Select, Button } from "antd";
+import React, { useState } from "react";
+import { Modal, Input, Select, Button, DatePicker } from "antd";
+import axios from "axios";
 import { PlusOutlined } from "@ant-design/icons";
 
 const { Option } = Select;
 
 const PaymentDetails = ({ handleCancelPayment, showPaymentForm }) => {
+  // State for form fields
+  const [customerRef, setCustomerRef] = useState("");
+  const [paymntReference, setPaymntReference] = useState("");
+  const [vendor, setVendor] = useState("");
+  const [amount, setAmount] = useState(0);
+  const [paymentDate, setPaymentDate] = useState(null);
+  const [paymentMethod, setPaymentMethod] = useState("");
+  const [narration, setNarration] = useState("");
+
+  // State for validation result
+  const [validationResult, setValidationResult] = useState(null);
+  const [name, setName] = useState("");
+  const [amountPaid, setAmountPaid] = useState(0);
+
+  const handleValidateCustomer = async () => {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}/ValidateCustomer/${customerRef}`,
+        {
+          headers: {
+            accept: "*/*",
+          },
+        }
+      );
+      setValidationResult(response.data);
+      setName(response.data.name);
+      setAmountPaid(response.data.balance);
+    } catch (error) {
+      console.error("Error validating customer:", error);
+      alert("Failed to validate customer. Please try again.");
+    }
+  };
+
+  const handleSubmit = async () => {
+    try {
+      const formData = {
+        customerRef,
+        paymntReference,
+        vendor,
+        amount,
+        paymentDate: paymentDate ? paymentDate.toISOString() : null,
+        paymentMethod,
+        narration,
+      };
+
+      const response = await axios.post(
+        `${process.env.REACT_APP_API_URL}/AddPayment`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            accept: "*/*",
+          },
+        }
+      );
+
+      console.log("Payment successfully added:", response.data);
+
+    } catch (error) {
+      console.error("Error adding payment:", error);
+    }
+  };
+
   return (
     <Modal visible={showPaymentForm} closable={false} width={550} footer={null}>
       <div className="flex flex-col items-center max-w-[750px] h-[600px] overflow-y-auto">
-        {/* Header */}
         <div className="flex flex-col self-stretch pt-2 w-full text-4xl font-semibold leading-[57.6px] text-neutral-600 max-md:max-w-full">
           <div className="flex gap-5 justify-between self-center px-5 w-full max-w-screen-sm max-md:flex-wrap max-md:max-w-full">
             <div>Add Payment Details</div>
@@ -24,74 +87,115 @@ const PaymentDetails = ({ handleCancelPayment, showPaymentForm }) => {
 
         {/* Scrollable Content */}
         <div className="flex flex-col py-4 px-12 max-w-[900px]">
+          {/* Customer Reference */}
           <div className="w-full text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">
             Customer Reference
           </div>
           <div className="flex gap-2 justify-between py-1 pr-1 pl-4 mt-2 w-full text-base leading-6 bg-white rounded-xl border border-solid border-neutral-500 border-opacity-30 max-md:flex-wrap max-md:max-w-full">
-            <div className="my-auto text-neutral-400">Enter Customer Ref</div>
-            <div className="justify-center px-4 py-3 font-semibold text-white rounded-lg bg-blue-400 max-md:px-5">
+            <Input
+              placeholder="Enter Customer Ref"
+              className="flex-grow px-4 py-3 text-base leading-6 bg-white rounded-xl border-none text-neutral-600 focus:border-blue-400 focus:ring-0"
+              value={customerRef}
+              onChange={(e) => setCustomerRef(e.target.value)}
+            />
+            <button
+              type="button"
+              className="font-semibold text-white rounded-lg bg-blue-400 w-full"
+              onClick={handleValidateCustomer}
+            >
               Validate Customer
-            </div>
+            </button>
           </div>
-          <div className="mt-4 w-full text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">
-            Customer Name
-          </div>
-          <div className="justify-center items-start px-4 py-4 mt-2 w-full text-base leading-6 rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-400 max-md:pr-5 max-md:max-w-full">
-            Customer’s Full Name
-          </div>
+
+          {/* Display Validation Result */}
+          {validationResult && (
+            <>
+              {/* Customer Name */}
+              <div className="mt-4 w-full text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">
+                Customer Name
+              </div>
+              <Input
+                placeholder="Enter Customer's Full Name"
+                className="px-4 py-3 mt-2 max-w-full text-base leading-6 bg-white rounded-xl border border-solid border-neutral-500 border-opacity-30 text-neutral-400"
+                value={name}
+                disabled
+                readOnly
+              />
+
+              {/* Amount Paid */}
+              <div className="mt-4 w-full text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">
+                Amount Paid
+              </div>
+              <div className="flex gap-2 justify-between px-4 py-4 mt-2 w-full whitespace-nowrap bg-white rounded-xl border border-solid border-neutral-500 border-opacity-30 max-md:flex-wrap max-md:max-w-full">
+                <Input
+                  className="text-base leading-6 border-none text-neutral-600 w-full px-2"
+                  placeholder="0"
+                  value={amountPaid}
+                />
+                <div className="my-auto text-xs font-medium tracking-wide uppercase text-neutral-400">
+                  NGN
+                </div>
+              </div>
+            </>
+          )}
+
+          {/* Payment Reference */}
           <div className="mt-4 w-full text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">
             Payment Reference
           </div>
-          <div className="justify-center items-start px-4 py-4 mt-2 w-full text-base leading-6 bg-white rounded-xl border border-solid border-neutral-500 border-opacity-30 text-neutral-400 max-md:pr-5 max-md:max-w-full">
-            Enter Reference number / Invoice
-          </div>
-          <div>
-            <div class="mt-4 w-full text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">
-              Bank / Vendor
-            </div>
+          <Input
+            placeholder="Enter Payment Reference"
+            className="px-4 py-3 mt-2 max-w-full text-base leading-6 bg-white rounded-xl border border-solid border-neutral-500 border-opacity-30 text-neutral-400"
+            value={paymntReference}
+            onChange={(e) => setPaymntReference(e.target.value)}
+          />
 
-            <select class="flex gap-2 justify-between px-4 py-4 mt-2 w-full bg-white rounded-xl border border-solid border-neutral-500 border-opacity-30 text-neutral-400 max-md:flex-wrap max-md:max-w-full">
-              <option value="bank">Bank</option>
-              <option value="vendor">Vendor</option>
-            </select>
-          </div>
+          {/* Vendor */}
           <div className="mt-4 w-full text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">
-            Amount Paid
+            Vendor
           </div>
-          <div className="flex gap-2 justify-between px-4 py-4 mt-2 w-full whitespace-nowrap bg-white rounded-xl border border-solid border-neutral-500 border-opacity-30 max-md:flex-wrap max-md:max-w-full">
-            <div className="text-base leading-6 text-neutral-600">0</div>
-            <div className="my-auto text-xs font-medium tracking-wide uppercase text-neutral-400">
-              NGN
-            </div>
-          </div>
+          <Input
+            placeholder="Enter Vendor"
+            className="px-4 py-3 mt-2 max-w-full text-base leading-6 bg-white rounded-xl border border-solid border-neutral-500 border-opacity-30 text-neutral-400"
+            value={vendor}
+            onChange={(e) => setVendor(e.target.value)}
+          />
+
+          {/* Payment Date */}
           <div className="mt-4 w-full text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">
             Payment Date
           </div>
-          <div className="flex gap-2 justify-between px-4 py-4 mt-2 w-full text-base leading-6 bg-white rounded-xl border border-solid border-neutral-500 border-opacity-30 text-neutral-400 max-md:flex-wrap max-md:max-w-full">
-            <div>-- / -- / ----</div>
-            <img
-              loading="lazy"
-              src="https://cdn.builder.io/api/v1/image/assets/TEMP/8c7515d0e48a8702b0a75494e4c7e35f39776b5b1f5e110f501c8205396c6041?apiKey=5bf51c3fc9cb49b480a07670cbcd768f&"
-              className="shrink-0 self-start w-6 aspect-square"
-            />
-          </div>
+          <DatePicker
+            style={{ width: '100%' }}
+            className="px-4 py-3 mt-2 text-base leading-6 bg-white rounded-xl border border-solid border-neutral-500 border-opacity-30 text-neutral-400"
+            value={paymentDate}
+            onChange={(date) => setPaymentDate(date)}
+          />
+
+          {/* Payment Method */}
           <div className="mt-4 w-full text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">
             Payment Method
           </div>
-          <div className="flex gap-2 justify-between px-4 py-4 mt-2 w-full text-base leading-6 bg-white rounded-xl border border-solid border-neutral-500 border-opacity-30 text-neutral-400 max-md:flex-wrap max-md:max-w-full">
-            <div>Choose payment method</div>
-            <img
-              loading="lazy"
-              src="https://cdn.builder.io/api/v1/image/assets/TEMP/a8721aa8c44b81e6b2348dce4fb02570aeacf025a99ab01d6575684f8de43c45?apiKey=5bf51c3fc9cb49b480a07670cbcd768f&"
-              className="shrink-0 self-start w-6 aspect-square"
-            />
-          </div>
+          <Select
+            placeholder="Choose payment method"
+            className="mt-2 w-full h-12 text-base leading-6 bg-white rounded-xl border border-solid border-neutral-500 border-opacity-30 text-neutral-400"
+            value={paymentMethod}
+            onChange={(value) => setPaymentMethod(value)}
+          >
+            <Option value="method1">Method 1</Option>
+            <Option value="method2">Method 2</Option>
+          </Select>
+
+          {/* Narration */}
           <div className="mt-4 w-full text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">
             Narration
           </div>
-          <div className="items-start px-4 pt-3 pb-16 mt-2 w-full text-base leading-6 bg-white rounded-xl border border-solid border-neutral-500 border-opacity-30 text-neutral-400 max-md:pr-5 max-md:max-w-full">
-            Add a comment ...
-          </div>
+          <Input.TextArea
+            className="px-4 pt-3 pb-16 mt-2 w-full text-base leading-6 bg-white rounded-xl border border-solid border-neutral-500 border-opacity-30 text-neutral-400"
+            placeholder="Add a comment ..."
+            value={narration}
+            onChange={(e) => setNarration(e.target.value)}
+          />
         </div>
 
         {/* Submit Button */}
@@ -99,7 +203,7 @@ const PaymentDetails = ({ handleCancelPayment, showPaymentForm }) => {
           <Button
             type="primary"
             className="justify-center items-center px-8 py-6 max-w-full rounded-3xl bg-blue-400"
-            // onClick={handleOk}
+            onClick={handleSubmit}
           >
             Update and Authorize Connection
           </Button>
