@@ -4,7 +4,8 @@ import { useNavigate } from "react-router-dom";
 
 function UpdateInvoice() {
   const [isUpdateModalVisible, setIsUpdateModalVisible] = useState(false);
-  const [applicationDetails, setApplicationDetails] = useState(null); // State to store application details
+  const [applicationDetails, setApplicationDetails] = useState(null);
+  const [invoiceItems, setInvoiceItems] = useState([]); // State to store invoice items
   const navigate = useNavigate();
   const applicationNumber = "adasdasdasdasdsadas"; // Replace with your application number
 
@@ -15,7 +16,7 @@ function UpdateInvoice() {
       );
       if (response.ok) {
         const data = await response.json();
-        setApplicationDetails(data); // Store fetched application details in state
+        setApplicationDetails(data);
       } else {
         console.error("Failed to fetch application details");
       }
@@ -24,12 +25,29 @@ function UpdateInvoice() {
     }
   };
 
+  const fetchInvoiceItems = async () => {
+    try {
+      const response = await fetch(
+        `http://3.216.182.63:8095/TestApi/GetInvoiceItems?applicationNumber=${applicationNumber}`
+      );
+      if (response.ok) {
+        const data = await response.json();
+        setInvoiceItems(data);
+      } else {
+        console.error("Failed to fetch invoice items");
+      }
+    } catch (error) {
+      console.error("Error fetching invoice items:", error);
+    }
+  };
+
   useEffect(() => {
     fetchApplicationDetails();
+    fetchInvoiceItems();
   }, [applicationNumber]);
 
   const onClose = () => {
-    setIsUpdateModalVisible(false); // Closing the modal by updating state
+    setIsUpdateModalVisible(false);
   };
 
   const handleUpdateModalVisible = () => {
@@ -45,9 +63,8 @@ function UpdateInvoice() {
   };
 
   const handleItemAdded = () => {
-    // Refresh application details after item is added
-    fetchApplicationDetails();
-    onClose(); // Close modal after item is added
+    fetchInvoiceItems(); // Refresh invoice items after item is added
+    onClose();
   };
 
   return (
@@ -75,12 +92,9 @@ function UpdateInvoice() {
                 </div>
                 <div className="flex flex-col">
                   <div className="font-semibold">Surveyor’s Name</div>
-                  <div className="mt-2">{applicationDetails.surveyorsName}</div>
+                  <div className="mt-2">{applicationDetails.user.fullName}</div>
                 </div>
-                <div className="flex flex-col">
-                  <div className="font-semibold">Job Number</div>
-                  <div className="mt-2">{applicationDetails.jobNumber}</div>
-                </div>
+                
               </div>
             </div>
           )}
@@ -112,6 +126,17 @@ function UpdateInvoice() {
                 <div>Amount due</div>
               </div>
             </div>
+            {invoiceItems.map((item) => (
+              <div key={item.materialId} className="flex gap-5 justify-between px-6 py-3.5 mt-4 w-full text-xs font-medium tracking-wide rounded-3xl bg-white text-neutral-600 max-md:flex-wrap max-md:px-5 max-md:max-w-full">
+                <div className="flex gap-4">
+                  <div className="shrink-0 w-5 h-5 bg-white rounded-2 border-2 border-solid border-neutral-500 border-opacity-10" />
+                  <div className="my-auto">{item.materialName}</div>
+                </div>
+                <div className="my-auto">{item.unitCost}</div>
+                <div className="my-auto">{item.quantity}</div>
+                <div className="my-auto">{item.amountDue}</div>
+              </div>
+            ))}
             <div className="shrink-0 mt-2 h-px border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-opacity-10 max-md:max-w-full" />
           </div>
           <div className="items-end py-6 mt-6 max-w-full w-[500px] max-md:pl-5">
@@ -136,7 +161,7 @@ function UpdateInvoice() {
             <span className="close" onClick={onClose}>&times;</span>
             <InvoiceItem
               applicationNumber={applicationNumber}
-              onItemAdded={handleItemAdded} // Pass callback to handle item addition
+              onItemAdded={handleItemAdded} // Callback to refresh invoice items after adding a new item
             />
           </div>
         </div>

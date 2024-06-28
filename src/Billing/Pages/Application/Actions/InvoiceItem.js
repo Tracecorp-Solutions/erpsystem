@@ -53,6 +53,7 @@ function InvoiceItem({ applicationNumber }) {
     onClose();
   };
 
+
   const handleAddItem = async () => {
     const selectedMaterialData = materials.find(
       (material) => material.materialName === selectedMaterial
@@ -102,7 +103,7 @@ function InvoiceItem({ applicationNumber }) {
         className="absolute top-4 right-4 text-gray-500"
         onClick={onClose}
       >
-        <AiOutlineClose />
+      
       </button>
       
       <div className="text-2xl font-semibold leading-9 text-neutral-600 max-md:max-w-full">
