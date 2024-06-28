@@ -220,7 +220,8 @@
               "RelativeToolTip": "Controllers\\NewConnectionController.cs",
               "ViewState": "AQIAAAMBAAAAAAAAAIAwwA4BAABJAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-24T08:33:26.154Z"
+              "WhenOpened": "2024-06-24T08:33:26.154Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -232,7 +233,8 @@
               "RelativeToolTip": "..\\Services\\Repositories\\Billing\\NewConnectionRepository.cs",
               "ViewState": "AQIAAMIBAAAAAAAAAIAwwM0BAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-24T09:52:27.681Z"
+              "WhenOpened": "2024-06-24T09:52:27.681Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",

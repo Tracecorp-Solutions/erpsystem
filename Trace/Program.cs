@@ -39,6 +39,7 @@ builder.Services.AddScoped<ISettings, Settings>();
 builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
 builder.Services.AddSingleton<EmailService>();
 builder.Services.AddScoped<INewConnectionRepository, NewConnectionRepository>();
+builder.Services.AddScoped<ICustomerPayments, CustomerPayment>();
 
 builder.Services.AddControllers();
 builder.Services.AddCors(options =>
