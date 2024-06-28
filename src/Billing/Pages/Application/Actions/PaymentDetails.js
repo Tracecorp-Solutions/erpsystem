@@ -50,9 +50,9 @@ const PaymentDetails = ({ handleCancelPayment, showPaymentForm }) => {
         paymentDate: paymentDate ? paymentDate.format() : null,
         paymentMethod,
         narration,
-        payment: true
+        payment: true,
       };
-  
+
       const response = await axios.post(
         `${process.env.REACT_APP_API_URL}/AddPayment`,
         formData,
@@ -63,22 +63,18 @@ const PaymentDetails = ({ handleCancelPayment, showPaymentForm }) => {
           },
         }
       );
-  
+
       console.log("Payment successfully added:", response.data);
-  
     } catch (error) {
       if (error.response) {
-       
         console.error("Error adding payment:", error.response.data);
       } else if (error.request) {
-
         console.error("No response received:", error.request);
       } else {
         console.error("Error setting up request:", error.message);
       }
     }
   };
-  
 
   return (
     <Modal visible={showPaymentForm} closable={false} footer={null}>
@@ -105,13 +101,13 @@ const PaymentDetails = ({ handleCancelPayment, showPaymentForm }) => {
           <div className="flex gap-2 justify-between py-1 pr-1 pl-4 mt-2 w-full text-base leading-6 bg-white rounded-xl border border-solid border-neutral-500 border-opacity-30 max-md:flex-wrap max-md:max-w-full">
             <Input
               placeholder="Enter Customer Ref"
-              className="flex-grow px-4 py-3 text-base leading-6 bg-white rounded-xl border-none text-neutral-600 focus:border-blue-400 focus:ring-0"
+              className="flex-grow px-4 py-1 text-base leading-6 bg-white rounded-xl border-none text-neutral-600 focus:border-blue-400 focus:ring-0"
               value={customerRef}
               onChange={(e) => setCustomerRef(e.target.value)}
             />
             <Button
               type="primary"
-              className="justify-center items-center px-8 py-6 max-w-full rounded-xl bg-slate-500"
+              className="justify-center items-center px-8 py-2 max-w-full rounded-xl bg-slate-500"
               onClick={handleValidateCustomer}
             >
               Validate Customer
@@ -127,7 +123,7 @@ const PaymentDetails = ({ handleCancelPayment, showPaymentForm }) => {
               </div>
               <Input
                 placeholder="Enter Customer's Full Name"
-                className="px-4 py-3 mt-2 max-w-full text-base leading-6 bg-white rounded-xl border border-solid border-neutral-500 border-opacity-30 text-neutral-400"
+                className="px-4 py-2 mt-2 max-w-full text-base leading-6 bg-white rounded-xl border border-solid border-neutral-500 border-opacity-30 text-neutral-400"
                 value={name}
                 disabled
                 readOnly
@@ -137,7 +133,7 @@ const PaymentDetails = ({ handleCancelPayment, showPaymentForm }) => {
               <div className="mt-4 w-full text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">
                 Amount Paid
               </div>
-              <div className="flex gap-2 justify-between px-4 py-4 mt-2 w-full whitespace-nowrap bg-white rounded-xl border border-solid border-neutral-500 border-opacity-30 max-md:flex-wrap max-md:max-w-full">
+              <div className="flex gap-2 justify-between px-4 py-2 mt-2 w-full whitespace-nowrap bg-white rounded-xl border border-solid border-neutral-500 border-opacity-30 max-md:flex-wrap max-md:max-w-full">
                 <Input
                   className="text-base leading-6 border-none text-neutral-600 w-full px-2"
                   placeholder="0"
@@ -157,7 +153,7 @@ const PaymentDetails = ({ handleCancelPayment, showPaymentForm }) => {
           </div>
           <Input
             placeholder="Enter Payment Reference"
-            className="px-4 py-3 mt-2 max-w-full text-base leading-6 bg-white rounded-xl border border-solid border-neutral-500 border-opacity-30 text-neutral-400"
+            className="px-4 py-2 mt-2 max-w-full text-base leading-6 bg-white rounded-xl border border-solid border-neutral-500 border-opacity-30 text-neutral-400"
             value={paymntReference}
             onChange={(e) => setPaymntReference(e.target.value)}
           />
@@ -168,7 +164,7 @@ const PaymentDetails = ({ handleCancelPayment, showPaymentForm }) => {
           </div>
           <Input
             placeholder="Enter Vendor"
-            className="px-4 py-3 mt-2 max-w-full text-base leading-6 bg-white rounded-xl border border-solid border-neutral-500 border-opacity-30 text-neutral-400"
+            className="px-4 py-2 mt-2 max-w-full text-base leading-6 bg-white rounded-xl border border-solid border-neutral-500 border-opacity-30 text-neutral-400"
             value={vendor}
             onChange={(e) => setVendor(e.target.value)}
           />
@@ -178,8 +174,8 @@ const PaymentDetails = ({ handleCancelPayment, showPaymentForm }) => {
             Payment Date
           </div>
           <DatePicker
-            style={{ width: '100%' }}
-            className="px-4 py-3 mt-2 text-base leading-6 bg-white rounded-xl border border-solid border-neutral-500 border-opacity-30 text-neutral-400"
+            style={{ width: "100%" }}
+            className="px-4 py-2 mt-2 text-base leading-6 bg-white rounded-xl border border-solid border-neutral-500 border-opacity-30 text-neutral-400"
             value={paymentDate}
             onChange={(date) => setPaymentDate(date)}
           />
@@ -190,7 +186,7 @@ const PaymentDetails = ({ handleCancelPayment, showPaymentForm }) => {
           </div>
           <Select
             placeholder="Choose payment method"
-            className="mt-2 w-full h-12 text-base leading-6 bg-white rounded-xl border border-solid border-neutral-500 border-opacity-30 text-neutral-400"
+            className="mt-2 w-full text-base  bg-white rounded-xl"
             value={paymentMethod}
             onChange={(value) => setPaymentMethod(value)}
           >
@@ -199,15 +195,21 @@ const PaymentDetails = ({ handleCancelPayment, showPaymentForm }) => {
           </Select>
 
           {/* Narration */}
-          <div className="mt-4 w-full text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">
-            Narration
+          <div className="mb-6 mt-3">
+            <label
+              htmlFor="narration"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Narration
+            </label>
+            <textarea
+              id="narration"
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              placeholder="Add a comment ..."
+              value={narration}
+              onChange={(e) => setNarration(e.target.value)}
+            />
           </div>
-          <Input.TextArea
-            className="px-2 pt-3 pb-16 mt-2 w-full text-base leading-6 bg-white rounded-xl border border-solid border-neutral-500 border-opacity-30 text-neutral-400"
-            placeholder="Add a comment ..."
-            value={narration}
-            onChange={(e) => setNarration(e.target.value)}
-          />
         </div>
 
         {/* Submit Button */}
