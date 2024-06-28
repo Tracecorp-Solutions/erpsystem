@@ -516,12 +516,8 @@ namespace Services.Repositories.Billing
                 ApplicationNumber = i.Application.ApplicationNumber,
                 InvoiceNumber = i.InvoiceNumber,
                 Date = i.InvoiceDate,
-                materialsDtos = i.NewConnectionInvoiceMaterials.Select(m => new NewConnectionInvoiceMaterialsDto
-                {
-                    MaterialId = m.MaterialId,
-                    Quantity = m.Quantity,
-                    Price = m.Price
-                }).ToList()
+                Status = i.Status,
+                InvoiceAmount = i.NewConnectionInvoiceMaterials.Sum(m => m.Price)
             });
         }
 
