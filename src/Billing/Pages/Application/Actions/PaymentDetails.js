@@ -109,13 +109,13 @@ const PaymentDetails = ({ handleCancelPayment, showPaymentForm }) => {
               value={customerRef}
               onChange={(e) => setCustomerRef(e.target.value)}
             />
-            <button
-              type="button"
-              className="font-semibold text-white rounded-lg bg-blue-400 w-full"
+            <Button
+              type="primary"
+              className="justify-center items-center px-8 py-6 max-w-full rounded-xl bg-slate-500"
               onClick={handleValidateCustomer}
             >
               Validate Customer
-            </button>
+            </Button>
           </div>
 
           {/* Display Validation Result */}
@@ -214,7 +214,7 @@ const PaymentDetails = ({ handleCancelPayment, showPaymentForm }) => {
         <div className="flex justify-center items-center self-stretch px-16 py-6 mt-4 w-full text-base font-semibold leading-6 text-white bg-stone-100 max-md:px-5 max-md:max-w-full">
           <Button
             type="primary"
-            className="justify-center items-center px-8 py-6 max-w-full rounded-3xl bg-blue-400"
+            className="justify-center items-center px-8 py-6 max-w-full rounded-3xl bg-slate-500"
             onClick={handleSubmit}
           >
             Update and Authorize Connection
