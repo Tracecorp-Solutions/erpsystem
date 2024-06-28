@@ -10,5 +10,7 @@ namespace Core.Repositories.Billing
     public interface ICustomerPayments
     {
         Task AddPayments(PaymentDto pyt);
+
+        Task<string> ValidateCustomerDetails(string customeRef);
     }
 }
