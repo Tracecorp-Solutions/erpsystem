@@ -33,6 +33,7 @@ const PaymentDetails = ({ handleCancelPayment, showPaymentForm }) => {
       setValidationResult(response.data);
       setName(response.data.name);
       setAmount(response.data.balance);
+      handleCancelPayment();
     } catch (error) {
       console.error("Error validating customer:", error);
       alert("Failed to validate customer. Please try again.");
@@ -70,6 +71,7 @@ const PaymentDetails = ({ handleCancelPayment, showPaymentForm }) => {
        
         console.error("Error adding payment:", error.response.data);
       } else if (error.request) {
+
         console.error("No response received:", error.request);
       } else {
         console.error("Error setting up request:", error.message);
@@ -79,8 +81,8 @@ const PaymentDetails = ({ handleCancelPayment, showPaymentForm }) => {
   
 
   return (
-    <Modal visible={showPaymentForm} closable={false} width={550} footer={null}>
-      <div className="flex flex-col items-center max-w-[750px] h-[600px] overflow-y-auto">
+    <Modal visible={showPaymentForm} closable={false} footer={null}>
+      <div className="flex flex-col items-center">
         <div className="flex flex-col self-stretch pt-2 w-full text-4xl font-semibold leading-[57.6px] text-neutral-600 max-md:max-w-full">
           <div className="flex gap-5 justify-between self-center px-5 w-full max-w-screen-sm max-md:flex-wrap max-md:max-w-full">
             <div>Add Payment Details</div>
@@ -95,7 +97,7 @@ const PaymentDetails = ({ handleCancelPayment, showPaymentForm }) => {
         </div>
 
         {/* Scrollable Content */}
-        <div className="flex flex-col py-4 px-12 max-w-[900px]">
+        <div className="flex flex-col py-4 px-12  h-[550px] overflow-y-auto">
           {/* Customer Reference */}
           <div className="w-full text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">
             Customer Reference
@@ -201,7 +203,7 @@ const PaymentDetails = ({ handleCancelPayment, showPaymentForm }) => {
             Narration
           </div>
           <Input.TextArea
-            className="px-4 pt-3 pb-16 mt-2 w-full text-base leading-6 bg-white rounded-xl border border-solid border-neutral-500 border-opacity-30 text-neutral-400"
+            className="px-2 pt-3 pb-16 mt-2 w-full text-base leading-6 bg-white rounded-xl border border-solid border-neutral-500 border-opacity-30 text-neutral-400"
             placeholder="Add a comment ..."
             value={narration}
             onChange={(e) => setNarration(e.target.value)}
