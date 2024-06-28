@@ -14,6 +14,8 @@ namespace Core.DTOs.Billing
 
         public List<NewConnectionInvoiceMaterialsDto> materialsDtos { get; set; }
 
+        public string? Status { get; set; }
+
 
     }
 }

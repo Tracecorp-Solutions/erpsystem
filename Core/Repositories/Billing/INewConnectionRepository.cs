@@ -43,6 +43,8 @@ namespace Core.Repositories.Billing
 
         Task<string> GenerateCustomerRef();
 
+        Task<IEnumerable<NewConnectionInvoiceDto>> GetAllInvoices();
+
       
     }
 }
