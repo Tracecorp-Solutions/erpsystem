@@ -36,7 +36,7 @@ const BillingDashboard = () => {
               {screen === "application" && <ApplicationPage />}
               {screen === "view-detail" && <ApplicationDetail />}
               {screen === "update-invoice" && <UpdateInvoice />}
-              {screen === "payment-reciepts" && <Payslip />}
+              {screen === "customer-invoice" && <Payslip />}
               {screen === "reconcile-invoice" && <ReconcileInvoice />}
               {screen === "reconciliation" && <Reconcillations />}
             </div>

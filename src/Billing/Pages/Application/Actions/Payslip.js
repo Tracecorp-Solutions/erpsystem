@@ -1,50 +1,114 @@
-import React,{ useState } from "react";
-import { Dropdown, Menu } from 'antd';
-import { DownOutlined } from '@ant-design/icons';
-import { useLocation, useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { useLocation } from "react-router-dom";
+import { Table, Dropdown, Menu, Button } from "antd";
+import { EllipsisOutlined } from "@ant-design/icons";
+import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
 import PaymentDetails from "./PaymentDetails";
 import ReconcileInvoice from "./ReconcileInvoice";
 
-function Payslip() {
-
+const Payslip = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isReconcileInvoice, setIsReconcileInvoice] = useState(false);
 
-  const showModal = () => {
-    setIsModalVisible(true);
-  };
+  const location = useLocation();
+  const { state } = location;
+  const application = state?.applicationNumber;
 
   const handleOk = () => {
     setIsModalVisible(false);
     // Logic to handle saving payment details
   };
- 
-  const CanceReconcileInvoice = () => {
-    setIsReconcileInvoice(false)
-  }
-  
-  const location = useLocation();
-  const { state } = location;
-  const application = state?.applicationNumber;
 
-  const handleMenuClick = (e) => {
-    if (e.key === '1') {
-      showModal();
-    } else if (e.key === "3") {
-      setIsReconcileInvoice(true);
-    }
+  const CanceReconcileInvoice = () => {
+    setIsReconcileInvoice(false);
   };
 
-  const menu = (
-    <Menu onClick={handleMenuClick}>
-      <Menu.Item key="1">Add New Payment</Menu.Item>
-      <Menu.Item key="2">Confirm Payment</Menu.Item>
-      <Menu.Item key="3">Reconcile Invoice</Menu.Item>
-    </Menu>
-  )
+  const handleMenuClick = (applicationNumber, key) => {
+    // Handle menu item clicks here
+    console.log(`Clicked on ${key} for application ${applicationNumber}`);
+  };
+
+  const showModal = () => {
+    setIsModalVisible(true);
+  };
+
+  const columns = [
+    {
+      title: "Application No.",
+      dataIndex: "applicationNo",
+      key: "applicationNo",
+    },
+    {
+      title: "Payment Ref.",
+      dataIndex: "paymentRef",
+      key: "paymentRef",
+    },
+    {
+      title: "Amount Paid",
+      dataIndex: "amountPaid",
+      key: "amountPaid",
+    },
+    {
+      title: "Balance",
+      dataIndex: "balance",
+      key: "balance",
+    },
+    {
+      title: "Payment Date",
+      dataIndex: "paymentDate",
+      key: "paymentDate",
+    },
+    {
+      title: "Status",
+      dataIndex: "status",
+      key: "status",
+    },
+    {
+      title: "Action",
+      key: "action",
+      render: (text, record) => (
+        <Dropdown
+          overlay={
+            <Menu onClick={({ key }) => handleMenuClick(record.applicationNo, key)}>
+              <Menu.Item key="view">View Details</Menu.Item>
+              <Menu.Item key="generate">Generate Job Card</Menu.Item>
+              <Menu.Item key="print">Print Application</Menu.Item>
+              <Menu.Item key="contact">Contact Applicant</Menu.Item>
+              <Menu.Item key="approve">Approve Application</Menu.Item>
+              <Menu.Item key="assign">Assign Surveyor</Menu.Item>
+            </Menu>
+          }
+          trigger={["click"]}
+        >
+       <EllipsisVerticalIcon className="h-5 cursor-pointer" />
+     </Dropdown>
+      ),
+    },
+  ];
+
+  const data = [
+    {
+      key: "1",
+      applicationNo: "AB/00/22022022/1",
+      paymentRef: "NC009",
+      amountPaid: "400,000",
+      balance: "0",
+      paymentDate: "20/04/2024",
+      status: "Paid",
+    },
+    {
+      key: "2",
+      applicationNo: "AB/00/22022022/2",
+      paymentRef: "NC009",
+      amountPaid: "93,000",
+      balance: "0",
+      paymentDate: "20/04/2024",
+      status: "Deposit",
+    },
+  ];
 
   return (
-    <div className="flex flex-col flex-wrap justify-center content-start items-center py-6 font-semibold rounded-3xl bg-stone-100 leading-[160%]">
+    <div className="flex flex-col justify-center items-center py-6 font-semibold rounded-3xl bg-stone-100 leading-[160%]">
       {/* Applications Section */}
       <div className="flex gap-2 items-center self-stretch px-6 text-base text-neutral-600 max-md:flex-wrap max-md:px-5">
         <div className="self-stretch my-auto">Applications</div>
@@ -52,6 +116,7 @@ function Payslip() {
           loading="lazy"
           src="https://cdn.builder.io/api/v1/image/assets/TEMP/d86f4adfe62571b3a93bdc441d8816afef791164dcc95e442522025a86a279bf?apiKey=5bf51c3fc9cb49b480a07670cbcd768f&"
           className="shrink-0 self-stretch my-auto w-6 aspect-square"
+          alt="Application Icon"
         />
         <div className="justify-center self-stretch px-4 py-1 whitespace-nowrap bg-white rounded-2xl">
           {application}
@@ -60,65 +125,34 @@ function Payslip() {
           loading="lazy"
           src="https://cdn.builder.io/api/v1/image/assets/TEMP/d86f4adfe62571b3a93bdc441d8816afef791164dcc95e442522025a86a279bf?apiKey=5bf51c3fc9cb49b480a07670cbcd768f&"
           className="shrink-0 self-stretch my-auto w-6 aspect-square"
+          alt="Payment Reference Icon"
         />
         <div className="self-stretch my-auto max-md:max-w-full">
           Payment References
         </div>
       </div>
 
-      {/* Payment Receipts Section */}
-      <div className="flex gap-4 justify-between px-5 mt-6 w-full max-w-[1088px] max-md:flex-wrap max-md:max-w-full">
-        <div className="text-4xl text-neutral-600">Payment Receipts</div>
-        
-        {/* Ant Design Dropdown */}
-        <Dropdown overlay={menu} trigger={['click']} placement="bottomRight">
-          <div className="flex gap-2 justify-center py-2 pr-4 pl-6 my-auto text-base text-white whitespace-nowrap rounded-3xl bg-slate-500 cursor-pointer">
-            <div>Actions</div>
-            <DownOutlined />
-          </div>
-        </Dropdown>
-        
+      <div className="w-full max-w-[1088px] mt-6">
+        <div className="text-4xl text-neutral-600 px-5">Customer Invoice</div>
+        <Table
+          columns={columns}
+          dataSource={data}
+          pagination={true}
+          className="mt-4"
+        />
       </div>
 
-      {/* Payment Details Section */}
-      <div className="flex flex-col px-6 pt-4 pb-5 mt-6 w-full text-base bg-white rounded-3xl max-w-[1088px] text-neutral-600 max-md:px-5 max-md:max-w-full">
-        {/* Header Row */}
-        <div className="flex gap-5 justify-between px-6 py-4 text-xs font-medium tracking-wide uppercase rounded-3xl bg-stone-100 text-neutral-400 max-md:flex-wrap max-md:px-5 max-md:max-w-full">
-          <div>application no.</div>
-          <div>PAYMENT REF.</div>
-          <div>AMOUNT PAID</div>
-          <div>BALANCE</div>
-          <div>PAYMENT DATE</div>
-          <div className="text-neutral-600">status</div>
-        </div>
-
-        {/* Payment Rows */}
-        <div className="flex gap-5 justify-between px-6 py-2 mt-2 whitespace-nowrap rounded-3xl max-md:flex-wrap max-md:px-5 max-md:max-w-full">
-          <div>AB/00/22022022/1</div>
-          <div>NC009</div>
-          <div>400,000</div>
-          <div className="text-center">0</div>
-          <div className="text-neutral-600">20/04/2024</div>
-          <div className="text-neutral-400">Paid</div>
-        </div>
-
-        <div className="shrink-0 mt-2 h-px border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-opacity-10 max-md:max-w-full" />
-
-        <div className="flex gap-5 justify-between px-6 py-2 mt-2 whitespace-nowrap rounded-3xl max-md:flex-wrap max-md:px-5 max-md:max-w-full">
-          <div>AB/00/22022022/1</div>
-          <div>NC009</div>
-          <div>93,000</div>
-          <div className="text-center">0</div>
-          <div className="text-neutral-600">20/04/2024</div>
-          <div className="text-neutral-400">Deposit</div>
-        </div>
-
-        <div className="shrink-0 mt-2 h-px border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-opacity-10 max-md:max-w-full" />
-      </div>
-      <PaymentDetails isModalVisible={isModalVisible} handleOk={handleOk} handleCancel={handleOk} />
-      <ReconcileInvoice isReconcileInvoice={isReconcileInvoice} CanceReconcileInvoice={CanceReconcileInvoice} />
+      <PaymentDetails
+        isModalVisible={isModalVisible}
+        handleOk={handleOk}
+        handleCancel={handleOk}
+      />
+      <ReconcileInvoice
+        isReconcileInvoice={isReconcileInvoice}
+        CanceReconcileInvoice={CanceReconcileInvoice}
+      />
     </div>
   );
-}
+};
 
 export default Payslip;
