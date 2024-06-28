@@ -1,13 +1,19 @@
-
 import React, { useState, useEffect } from "react";
 import { Select } from "antd";
+import { AiOutlineClose } from "react-icons/ai";
 
 const { Option } = Select;
 
-function InvoiceItem() {
+function InvoiceItem({ applicationNumber }) {
   const [materials, setMaterials] = useState([]);
   const [selectedMaterial, setSelectedMaterial] = useState("");
   const [itemQuantity, setItemQuantity] = useState(1);
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [isUpdateModalVisible, setIsUpdateModalVisible] = useState(false);
+
+  const onClose = () => {
+    setIsUpdateModalVisible(false); // Closing the modal by updating state
+  };
 
   useEffect(() => {
     const fetchMaterials = async () => {
@@ -25,32 +31,80 @@ function InvoiceItem() {
     fetchMaterials();
   }, []);
 
+  useEffect(() => {
+    const selectedMaterialData = materials.find(
+      (material) => material.materialName === selectedMaterial
+    );
+    if (selectedMaterialData) {
+      setTotalPrice(selectedMaterialData.materialUnitPrice * itemQuantity);
+    }
+  }, [selectedMaterial, itemQuantity, materials]);
+
   const handleMaterialChange = (value) => {
     setSelectedMaterial(value);
   };
 
   const handleQuantityChange = (e) => {
-    setItemQuantity(e.target.value);
+    setItemQuantity(parseFloat(e.target.value));
   };
 
   const handleCancel = () => {
-    // Implement cancel logic here
     console.log("Cancelled adding item.");
+    onClose();
   };
 
-  const handleAddItem = () => {
-    // Implement add item logic here
-    console.log("Adding item:", selectedMaterial, "Quantity:", itemQuantity);
+  const handleAddItem = async () => {
+    const selectedMaterialData = materials.find(
+      (material) => material.materialName === selectedMaterial
+    );
+
+    const invoiceData = {
+      applicationNumber: applicationNumber,
+      date: new Date().toISOString(),
+      materialsDtos: [
+        {
+          newConnectionInvoiceId: 0,
+          materialId: selectedMaterialData.materialId,
+          quantity: itemQuantity,
+          price: totalPrice,
+        },
+      ],
+    };
+
+    try {
+      const response = await fetch(
+        "http://3.216.182.63:8095/TestApi/AddConnectionInvoice",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(invoiceData),
+        }
+      );
+
+      if (response.ok) {
+        alert("Invoice item added successfully");
+        onClose(); // Close the modal after successful submission
+      } else {
+        alert("Failed to add invoice item");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      alert("An error occurred");
+    }
   };
 
   return (
-    <div className="flex flex-col justify-center items-left pt-4 bg-white rounded-3xl max-w-[720px]">
-      <img
-        loading="lazy"
-        src="https://cdn.builder.io/api/v1/image/assets/TEMP/4ca01bd141ef3c6838d235f4d5f39236da6fb968e5e8a926fc57ed376a1cf296?apiKey=5bf51c3fc9cb49b480a07670cbcd768f&"
-        className="z-10 self-end mr-12 w-8 aspect-square max-md:mr-2.5"
-        alt="Invoice Item"
-      />
+    <div className="flex flex-col justify-center items-left pt-4 bg-white rounded-3xl max-w-[720px] relative">
+      <button
+        type="button"
+        className="absolute top-4 right-4 text-gray-500"
+        onClick={onClose}
+      >
+        <AiOutlineClose />
+      </button>
+      
       <div className="text-2xl font-semibold leading-9 text-neutral-600 max-md:max-w-full">
         Create Invoice Item
       </div>
@@ -82,7 +136,11 @@ function InvoiceItem() {
         className="justify-center items-start px-4 py-2 mt-2 max-w-full text-base leading-6 whitespace-nowrap bg-white rounded-xl border border-solid border-neutral-500 border-opacity-30 text-neutral-600 w-[500px] max-md:pr-5"
         value={itemQuantity}
         onChange={handleQuantityChange}
+        min="1"
       />
+      <div className="mt-2 text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">
+        Total Price: ${totalPrice.toFixed(2)}
+      </div>
       <div className="flex justify-center items-center self-stretch px-12 py-4 mt-6 w-full text-base leading-6 bg-white-100 max-md:px-5 max-md:mt-6 max-md:max-w-full">
         <div className="flex gap-8 max-w-full w-[696px] max-md:flex-wrap">
           <button
