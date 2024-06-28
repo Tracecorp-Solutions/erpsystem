@@ -22,23 +22,44 @@ const PaymentDetails = ({ handleCancelPayment, showPaymentForm }) => {
               src="https://cdn.builder.io/api/v1/image/assets/TEMP/9cb4c3a052fc4ce0311e93e84c7d1ec0d87c500974fc2472887163b10b65c326?apiKey=5bf51c3fc9cb49b480a07670cbcd768f&"
               className="shrink-0 my-auto w-8 aspect-square cursor-pointer"
               onClick={handleCancelPayment}
+              alt="Cancel Icon"
             />
           </div>
           <div className="mt-6 w-full border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-opacity-10 min-h-[1px] max-md:max-w-full" />
         </div>
 
         {/* Scrollable Content */}
-        <div className="mt-6 w-full py-4" 
-        style={{
-          maxHeight: "50vh",
-          overflowY: "auto",
-          msOverflowStyle: "none",
-          scrollbarWidth: "none",
-          "&::-webkit-scrollbar": { display: "none" },
-        }}>
-          {/* Payment Reference / Invoice No. */}
-          <div className="text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">
-            Payment Reference / Invoice No.
+        <div className="mt-6 w-full py-4" style={{ maxHeight: "60vh", overflowY: "auto" }}>
+          {/* Customer Reference */}
+          <div className="text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full flex items-center">
+            Customer Reference.
+           
+          </div>
+          <div className="flex">
+          <Input
+            placeholder="Enter Customer Reference number"
+            className="px-4 py-3 mt-2 w-3/4 text-base leading-6 bg-white rounded-xl border border-solid border-neutral-500 border-opacity-30 text-neutral-400"
+          />
+           <button
+              type="text"
+              onClick={() => {
+                // Handle button click action
+              }}
+              className="mt-15 border"
+            >Validates Customer </button>
+          </div>
+          {/* Customer Name */}
+          <div className="mt-4 text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">
+            Customer Name
+          </div>
+          <Input
+            placeholder="Enter Customer Full Name"
+            className="px-4 py-3 mt-2 max-w-full text-base leading-6 bg-white rounded-xl border border-solid border-neutral-500 border-opacity-30 text-neutral-400"
+          />
+
+          {/* Payment Reference */}
+          <div className="mt-4 text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">
+            Payment Reference
           </div>
           <Input
             placeholder="Enter Reference number"
