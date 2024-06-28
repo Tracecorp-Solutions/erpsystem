@@ -558,7 +558,7 @@ const ApplicationDetail = () => {
                       className="grow justify-center px-6 py-3 mt-9 w-full text-sm font-semibold text-white whitespace-nowrap rounded-3xl bg-slate-500 max-md:px-5 max-md:mt-10"
                       onClick={() =>
                         navigate("/billingdashboard", {
-                          state: { screen: "update-invoice" },
+                          state: { screen: "update-invoice", applicationNumber, applicationData },
                         })
                       }
                     >
@@ -641,7 +641,7 @@ const ApplicationDetail = () => {
                       className="grow justify-center px-6 py-3 mt-9 w-full text-sm font-semibold text-white whitespace-nowrap rounded-3xl bg-slate-500 max-md:px-5 max-md:mt-10"
                       onClick={() =>
                         navigate("/billingdashboard", {
-                          state: { screen: "add-materials" },
+                          state: { screen: "add-materials", applicationNumber },
                         })
                       }
                     >

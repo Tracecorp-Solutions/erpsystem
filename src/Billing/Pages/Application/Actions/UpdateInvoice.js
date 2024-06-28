@@ -13,42 +13,44 @@ function UpdateInvoice() {
 
   const applicationNumber = state?.applicationNumber;
 
-  const fetchApplicationDetails = async () => {
-    try {
-      const response = await fetch(
-        `http://3.216.182.63:8095/TestApi/GetApplicationByApplicationNumnber?applicationId=${applicationNumber}`
-      );
-      if (response.ok) {
-        const data = await response.json();
-        setApplicationDetails(data);
-      } else {
-        console.error("Failed to fetch application details");
-      }
-    } catch (error) {
-      console.error("Error fetching application details:", error);
-    }
-  };
+  console.log(";llllllllllllll", applicationNumber);
 
-  const fetchInvoiceItems = async () => {
-    try {
-      const response = await fetch(
-        `http://3.216.182.63:8095/TestApi/GetInvoiceItems?applicationNumber=${applicationNumber}`
-      );
-      if (response.ok) {
-        const data = await response.json();
-        setInvoiceItems(data.materialsDtos); // Assuming materialsDtos contains the invoice items
-      } else {
-        console.error("Failed to fetch invoice items");
-      }
-    } catch (error) {
-      console.error("Error fetching invoice items:", error);
-    }
-  };
+  // const fetchApplicationDetails = async () => {
+  //   try {
+  //     const response = await fetch(
+  //       `http://3.216.182.63:8095/TestApi/GetApplicationByApplicationNumnber?applicationId=${applicationNumber}`
+  //     );
+  //     if (response.ok) {
+  //       const data = await response.json();
+  //       setApplicationDetails(data);
+  //     } else {
+  //       console.error("Failed to fetch application details");
+  //     }
+  //   } catch (error) {
+  //     console.error("Error fetching application details:", error);
+  //   }
+  // };
 
-  useEffect(() => {
-    fetchApplicationDetails();
-    fetchInvoiceItems();
-  }, [applicationNumber]);
+  // const fetchInvoiceItems = async () => {
+  //   try {
+  //     const response = await fetch(
+  //       `http://3.216.182.63:8095/TestApi/GetInvoiceItems?applicationNumber=${applicationNumber}`
+  //     );
+  //     if (response.ok) {
+  //       const data = await response.json();
+  //       setInvoiceItems(data.materialsDtos); // Assuming materialsDtos contains the invoice items
+  //     } else {
+  //       console.error("Failed to fetch invoice items");
+  //     }
+  //   } catch (error) {
+  //     console.error("Error fetching invoice items:", error);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   fetchApplicationDetails();
+  //   fetchInvoiceItems();
+  // }, [applicationNumber]);
 
   const onClose = () => {
     setIsUpdateModalVisible(false);
@@ -67,7 +69,7 @@ function UpdateInvoice() {
   };
 
   const handleItemAdded = () => {
-    fetchInvoiceItems(); // Refresh invoice items after item is added
+    // fetchInvoiceItems();
     onClose();
   };
 
