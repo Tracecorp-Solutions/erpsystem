@@ -4,10 +4,10 @@ import { PlusOutlined } from "@ant-design/icons";
 
 const { Option } = Select;
 
-const PaymentDetails = ({ isModalVisible, handleOk, handleCancel }) => {
+const PaymentDetails = ({ handleCancelPayment, showPaymentForm }) => {
   return (
     <Modal
-      visible={isModalVisible}
+      visible={showPaymentForm}
       closable={false}
       width={600}
       footer={null}
@@ -21,7 +21,7 @@ const PaymentDetails = ({ isModalVisible, handleOk, handleCancel }) => {
               loading="lazy"
               src="https://cdn.builder.io/api/v1/image/assets/TEMP/9cb4c3a052fc4ce0311e93e84c7d1ec0d87c500974fc2472887163b10b65c326?apiKey=5bf51c3fc9cb49b480a07670cbcd768f&"
               className="shrink-0 my-auto w-8 aspect-square cursor-pointer"
-              onClick={handleCancel}
+              onClick={handleCancelPayment}
             />
           </div>
           <div className="mt-6 w-full border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-opacity-10 min-h-[1px] max-md:max-w-full" />
@@ -108,7 +108,7 @@ const PaymentDetails = ({ isModalVisible, handleOk, handleCancel }) => {
           <Button
             type="primary"
             className="justify-center items-center px-8 py-6 max-w-full rounded-3xl bg-slate-500"
-            onClick={handleOk}
+            // onClick={handleOk}
           >
             Update and Authorize Connection
           </Button>

@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
 import { Table, Dropdown, Menu, Button } from "antd";
-import { EllipsisOutlined } from "@ant-design/icons";
 import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
+import { EllipsisOutlined } from "@ant-design/icons";
 import PaymentDetails from "./PaymentDetails";
 import ReconcileInvoice from "./ReconcileInvoice";
 
@@ -80,8 +80,8 @@ const Payslip = () => {
           }
           trigger={["click"]}
         >
-       <EllipsisVerticalIcon className="h-5 cursor-pointer" />
-     </Dropdown>
+          <EllipsisVerticalIcon className="h-6" />
+        </Dropdown>
       ),
     },
   ];
@@ -106,6 +106,11 @@ const Payslip = () => {
       status: "Deposit",
     },
   ];
+
+  const paginationConfig = {
+    pageSize: 1,
+    total: data.length,
+    };
 
   return (
     <div className="flex flex-col justify-center items-center py-6 font-semibold rounded-3xl bg-stone-100 leading-[160%]">
@@ -137,7 +142,7 @@ const Payslip = () => {
         <Table
           columns={columns}
           dataSource={data}
-          pagination={true}
+          pagination={paginationConfig}
           className="mt-4"
         />
       </div>
