@@ -32,7 +32,7 @@ const PaymentDetails = ({ handleCancelPayment, showPaymentForm }) => {
       );
       setValidationResult(response.data);
       setName(response.data.name);
-      setAmountPaid(response.data.balance);
+      setAmount(response.data.balance);
     } catch (error) {
       console.error("Error validating customer:", error);
       alert("Failed to validate customer. Please try again.");
@@ -46,11 +46,12 @@ const PaymentDetails = ({ handleCancelPayment, showPaymentForm }) => {
         paymntReference,
         vendor,
         amount,
-        paymentDate: paymentDate ? paymentDate.toISOString() : null,
+        paymentDate: paymentDate ? paymentDate.format() : null,
         paymentMethod,
         narration,
+        payment: true
       };
-
+  
       const response = await axios.post(
         `${process.env.REACT_APP_API_URL}/AddPayment`,
         formData,
@@ -61,13 +62,21 @@ const PaymentDetails = ({ handleCancelPayment, showPaymentForm }) => {
           },
         }
       );
-
+  
       console.log("Payment successfully added:", response.data);
-
+  
     } catch (error) {
-      console.error("Error adding payment:", error);
+      if (error.response) {
+       
+        console.error("Error adding payment:", error.response.data);
+      } else if (error.request) {
+        console.error("No response received:", error.request);
+      } else {
+        console.error("Error setting up request:", error.message);
+      }
     }
   };
+  
 
   return (
     <Modal visible={showPaymentForm} closable={false} width={550} footer={null}>
@@ -130,7 +139,8 @@ const PaymentDetails = ({ handleCancelPayment, showPaymentForm }) => {
                 <Input
                   className="text-base leading-6 border-none text-neutral-600 w-full px-2"
                   placeholder="0"
-                  value={amountPaid}
+                  onChange={(e) => setAmount(e.target.value)}
+                  value={amount}
                 />
                 <div className="my-auto text-xs font-medium tracking-wide uppercase text-neutral-400">
                   NGN
