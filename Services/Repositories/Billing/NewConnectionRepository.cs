@@ -521,5 +521,25 @@ namespace Services.Repositories.Billing
             });
         }
 
+        public async Task<NewConnectionInvoiceDto> GetInvoiceByInvoiceNumber(string invoiceNumber) 
+        {
+            var invoice = await _context.NewConnectionInvoices
+                .Include(i => i.Application)
+                .Include(i => i.NewConnectionInvoiceMaterials)
+                .FirstOrDefaultAsync(i => i.InvoiceNumber == invoiceNumber);
+
+            if (invoice == null)
+                throw new ArgumentException("No invoice found with that invoice number");
+
+            return new NewConnectionInvoiceDto
+            {
+                ApplicationNumber = invoice.Application.ApplicationNumber,
+                InvoiceNumber = invoice.InvoiceNumber,
+                Date = invoice.InvoiceDate,
+                Status = invoice.Status,
+                InvoiceAmount = invoice.NewConnectionInvoiceMaterials.Sum(m => m.Price)
+            };
+        }
+
     }
 }
