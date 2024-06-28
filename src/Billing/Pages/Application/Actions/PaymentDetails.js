@@ -18,7 +18,6 @@ const PaymentDetails = ({ handleCancelPayment, showPaymentForm }) => {
   // State for validation result
   const [validationResult, setValidationResult] = useState(null);
   const [name, setName] = useState("");
-  const [amountPaid, setAmountPaid] = useState(0);
 
   const handleValidateCustomer = async () => {
     try {
@@ -33,7 +32,6 @@ const PaymentDetails = ({ handleCancelPayment, showPaymentForm }) => {
       setValidationResult(response.data);
       setName(response.data.name);
       setAmount(response.data.balance);
-      handleCancelPayment();
     } catch (error) {
       console.error("Error validating customer:", error);
       alert("Failed to validate customer. Please try again.");
@@ -65,6 +63,7 @@ const PaymentDetails = ({ handleCancelPayment, showPaymentForm }) => {
       );
 
       console.log("Payment successfully added:", response.data);
+      handleCancelPayment();
     } catch (error) {
       if (error.response) {
         console.error("Error adding payment:", error.response.data);
