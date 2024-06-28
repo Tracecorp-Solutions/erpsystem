@@ -504,5 +504,26 @@ namespace Services.Repositories.Billing
             await _context.SaveChangesAsync();
         }
 
+        public async Task<IEnumerable<NewConnectionInvoiceDto>> GetAllInvoices()
+        {
+            var invoices = await _context.NewConnectionInvoices
+                .Include(i => i.Application)
+                .Include(i => i.NewConnectionInvoiceMaterials)
+                .ToListAsync();
+
+            return invoices == null ? throw new ArgumentException("No invoices found") : invoices.Select(i => new NewConnectionInvoiceDto
+            {
+                ApplicationNumber = i.Application.ApplicationNumber,
+                InvoiceNumber = i.InvoiceNumber,
+                Date = i.InvoiceDate,
+                materialsDtos = i.NewConnectionInvoiceMaterials.Select(m => new NewConnectionInvoiceMaterialsDto
+                {
+                    MaterialId = m.MaterialId,
+                    Quantity = m.Quantity,
+                    Price = m.Price
+                }).ToList()
+            });
+        }
+
     }
 }

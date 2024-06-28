@@ -297,5 +297,23 @@ namespace Trace.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
             }
         }
+
+        [HttpGet("/GetAllInvoices")]
+        public async Task<IActionResult> GetAllInvoices()
+        {
+            try
+            {
+                var invoices = await _newconnectionRepository.GetAllInvoices();
+                return Ok(invoices);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
+        }
     }
 }

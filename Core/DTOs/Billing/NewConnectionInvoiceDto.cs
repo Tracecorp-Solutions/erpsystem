@@ -16,6 +16,8 @@ namespace Core.DTOs.Billing
 
         public string? Status { get; set; }
 
+        public string? InvoiceNumber { get; set; }
+
 
     }
 }
