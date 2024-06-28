@@ -64,5 +64,24 @@ namespace Services.Repositories.Billing
                 Balance =invoice.NewConnectionInvoiceMaterials.Sum(x => x.Price)
             };
         }
+
+        public async Task<IEnumerable<PaymentDto>> GetAllPayments()
+        {
+            var payments = await _context.Payments.ToListAsync();
+
+            if (payments == null)
+                throw new ArgumentException("No payments found");
+
+            return payments.Select(x => new PaymentDto
+            {
+                CustomerRef = x.CustomerRef,
+                PaymntReference = x.PaymntReference,
+                Vendor = x.Vendor,
+                Amount = x.Amount,
+                PaymentDate = x.PaymentDate,
+                PaymentMethod = x.PaymentMethod,
+                Narration = x.Narration
+            });
+        }
     }
 }

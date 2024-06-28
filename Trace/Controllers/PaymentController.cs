@@ -50,5 +50,22 @@ namespace Trace.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpGet("/GetAllPayments")]
+        public async Task<IActionResult> GetAllPayments()
+        {
+            try
+            {
+                var payments = await _customerPayments.GetAllPayments();
+                return Ok(payments);
+            }catch(ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }
