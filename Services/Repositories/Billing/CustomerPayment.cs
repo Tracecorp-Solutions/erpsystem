@@ -50,7 +50,10 @@ namespace Services.Repositories.Billing
 
         public async Task<ValidateCustomerDto> ValidateCustomerDetails(string customeRef)
         {
-            var invoice = await _context.NewConnectionInvoices.FirstOrDefaultAsync(x => x.InvoiceNumber == customeRef);
+            var invoice = await _context.NewConnectionInvoices
+                .Include(x => x.NewConnectionInvoiceMaterials)
+                .Include(x => x.Application)
+                .FirstOrDefaultAsync(x => x.InvoiceNumber == customeRef);
 
             if (invoice == null)
                 throw new ArgumentException("Reference cannot be found");
