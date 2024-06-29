@@ -11,7 +11,7 @@ const Payments = () => {
   const [searchText, setSearchText] = useState("");
   const [filteredPayments, setFilteredPayments] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const pageSize = 10; // Number of items per page
+  const pageSize = 10;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -26,7 +26,6 @@ const Payments = () => {
           throw new Error('Failed to fetch data');
         }
         const data = await response.json();
-        // Assuming each payment has a unique id, use that as the key
         const formattedData = data.map((item, index) => ({ ...item, key: item.paymentId }));
         setPayments(formattedData);
         setFilteredPayments(formattedData);
@@ -111,7 +110,7 @@ const Payments = () => {
               />
             </div>
           </div>
-          <div className="flex items-center gap-2 rounded-3xl border border-neutral-500 border-opacity-30 p-3 border w-40">
+          <div className="flex items-center gap-2 rounded-3xl border border-neutral-500 border-opacity-30 p-3 w-40">
             <FilterOutlined />
             <div>Filter</div>
           </div>
@@ -120,7 +119,16 @@ const Payments = () => {
           <table className="w-full border-collapse">
             <thead>
               <tr className="bg-neutral-100">
-                <th className="px-4 py-2"></th>
+                <th className="px-4 py-2">
+                  <input
+                    type="checkbox"
+                    checked={selectedRows.length === currentDisplayData.length}
+                    onChange={() => {
+                      const newSelectedRows = selectedRows.length === currentDisplayData.length ? [] : currentDisplayData.map(payment => payment.paymentId);
+                      setSelectedRows(newSelectedRows);
+                    }}
+                  />
+                </th>
                 <th className="px-4 py-2" style={{
                 color: "#A1A1A1",
                 fontFamily: "outFit, Sans-serif",
