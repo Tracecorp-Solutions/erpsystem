@@ -121,11 +121,11 @@ function UpdateInvoice() {
                 </div>
                 <div className="flex flex-col">
                   <div className="font-semibold">Applicant Name</div>
-                  <div className="mt-2">{state?.applicantName}</div>
+                  <div className="mt-2">{invoiceItems.Application.FullName}</div>
                 </div>
                 <div className="flex flex-col">
                   <div className="font-semibold">Surveyor’s Name</div>
-                  <div className="mt-2">{state?.surveyorName}</div>
+                  <div className="mt-2">{invoiceItems.Application.surveyorName}</div>
                 </div>
               </div>
             </div>
