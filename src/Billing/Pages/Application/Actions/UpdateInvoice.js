@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import InvoiceItem from "./InvoiceItem";
-import { Table, Menu, Dropdown } from "antd";
+import { Table, Menu, Dropdown, message } from "antd";
 import { useNavigate, useLocation } from "react-router-dom";
 import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
 
 function UpdateInvoice() {
   const [isUpdateModalVisible, setIsUpdateModalVisible] = useState(false);
   const [invoiceItems, setInvoiceItems] = useState([]);
+  const [successMessage, setSuccessMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
   const location = useLocation();
   const navigate = useNavigate();
   const { state } = location;
@@ -22,7 +24,6 @@ function UpdateInvoice() {
 
   const fetchInvoiceItems = async (applicationNumber) => {
     try {
-      // Replace with actual endpoint URL and fetch logic
       const response = await fetch(`http://3.216.182.63:8095/TestApi/GetNewConnectionInvoice?applicationNumber=${applicationNumber}`);
       if (!response.ok) {
         throw new Error('Failed to fetch invoice items');
@@ -33,7 +34,6 @@ function UpdateInvoice() {
       }
     } catch (error) {
       console.error('Error fetching invoice items:', error);
-      // Handle error as needed
     }
   };
 
@@ -54,21 +54,19 @@ function UpdateInvoice() {
   };
 
   const handleItemAdded = () => {
-    // Fetch invoice items again after adding an item, if needed
     onClose();
   };
 
   const handleSaveInvoice = async () => {
     try {
-      // Replace with actual endpoint URL and payload
       const response = await fetch('http://3.216.182.63:8095/TestApi/AddConnectionInvoice', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          invoiceItems, // Include invoice items data as needed
-          applicationNumber, // Include application number or other relevant data
+          invoiceItems,
+          applicationNumber,
         }),
       });
 
@@ -76,17 +74,29 @@ function UpdateInvoice() {
         throw new Error('Failed to save invoice');
       }
 
-      // Navigate to InvoiceDetails page upon successful save
+      setSuccessMessage('Invoice saved successfully');
+      setErrorMessage('');
       navigate(`/billingdashboard`, { state: { screen: "invoice-details" } });
     } catch (error) {
       console.error('Error saving invoice:', error);
-      // Handle error as needed
+      setErrorMessage('Failed to save invoice');
+      setSuccessMessage('');
     }
   };
 
   return (
     <>
       <div>
+        {successMessage && (
+          <div className="flex justify-center mt-2 text-green-600">
+            {successMessage}
+          </div>
+        )}
+        {errorMessage && (
+          <div className="flex justify-center mt-2 text-red-600">
+            {errorMessage}
+          </div>
+        )}
         <div className="flex flex-col p-6 mt-6 w-full bg-white rounded-3xl max-w-[1088px] text-neutral-600 max-md:px-5 max-md:max-w-full">
           <div className="text-2xl font-semibold capitalize max-md:max-w-full">
             Application Information
@@ -99,11 +109,11 @@ function UpdateInvoice() {
             </div>
             <div className="flex flex-col">
               <div className="font-semibold">Applicant Name</div>
-              
+              <div className="mt-2">{state?.applicantName}</div> {/* Display Applicant Name */}
             </div>
             <div className="flex flex-col">
               <div className="font-semibold">Surveyor’s Name</div>
-             
+              <div className="mt-2">{state?.surveyorName}</div> {/* Display Surveyor's Name */}
             </div>
           </div>
         </div>
@@ -128,7 +138,6 @@ function UpdateInvoice() {
                 <div className="shrink-0 w-5 h-5 bg-white rounded-2 border-2 border-solid border-neutral-500 border-opacity-10" />
                 <div className="my-auto">Material Name</div>
               </div>
-             
             </div>
             <div className="flex gap-52 justify-between my-auto">
               <div>Quantity</div>
@@ -138,30 +147,28 @@ function UpdateInvoice() {
           </div>
           {invoiceItems.map((item) => (
             <div
-              key={item.MaterialId} // Adjust as per your data structure
+              key={item.materialId}
               className="flex gap-5 justify-between px-6 py-3.5 mt-4 w-full text-x font-medium tracking-wide rounded-3xl bg-white text-neutral-600 max-md:flex-wrap max-md:px-5 max-md:max-w-full"
             >
               <div className="flex gap-4">
                 <div className="shrink-0 w-5 h-5 bg-white rounded-2 border-2 border-solid border-neutral-500 border-opacity-10" />
-                <div className="my-auto">{item.MaterialId}</div> 
+                <div className="my-auto">{item.MaterialId}</div> {/* Display Material Name */}
               </div>
-             
               <div className="my-auto">{item.Quantity}</div>
-              <div className="my-auto">{item.Price}</div> 
+              <div className="my-auto">{item.Price}</div>
               <div className="flex justify-center items-center self-stretch px-1.5 w-8 h-8 rounded-3xl bg-stone-100">
-                  <Dropdown
-                    overlay={
-                      <Menu onClick={handleMenuClick}>
-                        <Menu.Item key="view">View Invoice</Menu.Item>
-                        
-                      </Menu>
-                    }
-                    trigger={["click"]}
-                    placement="bottomLeft"
-                  >
-                    <EllipsisVerticalIcon className="w-7 h-7" />
-                  </Dropdown>
-                </div>
+                <Dropdown
+                  overlay={
+                    <Menu onClick={handleMenuClick}>
+                      <Menu.Item key="view">View Invoice</Menu.Item>
+                    </Menu>
+                  }
+                  trigger={["click"]}
+                  placement="bottomLeft"
+                >
+                  <EllipsisVerticalIcon className="w-7 h-7" />
+                </Dropdown>
+              </div>
             </div>
           ))}
           <div className="shrink-0 mt-2 h-px border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-opacity-10 max-md:max-w-full" />
@@ -178,8 +185,8 @@ function UpdateInvoice() {
             </div>
             <div className="flex flex-col ml-5 w-6/12 max-md:ml-0 max-md:w-full">
               <button
-                className="grow justify-center items-center px-8 py-4 w-full text-base font-semibold leading-6 text-white rounded-3xl bg-blue-400 max-md:px-5 max-md:mt-10"
-                onClick={handleSaveInvoice} // Call handleSaveInvoice on button click
+                className="grow justify-center items-center px-8 py-4 w-full text-base font-semibold leading-6 text-white rounded-3xl bg-blue-400 max-md:px-5"
+                onClick={handleSaveInvoice}
               >
                 Save Invoice
               </button>
@@ -188,17 +195,11 @@ function UpdateInvoice() {
         </div>
       </div>
       {isUpdateModalVisible && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white rounded-lg p-6 w-[70%] max-w-xl">
-            <span className="close" onClick={onClose}>
-              &times;
-            </span>
-            <InvoiceItem
-              applicationNumber={applicationNumber}
-              onItemAdded={handleItemAdded} // Callback to refresh invoice items after adding a new item
-            />
-          </div>
-        </div>
+        <InvoiceItem
+          applicationNumber={applicationNumber}
+          onClose={handleUpdateModalVisible}
+          onItemAdded={handleItemAdded}
+        />
       )}
     </>
   );

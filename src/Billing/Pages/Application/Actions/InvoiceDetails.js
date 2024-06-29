@@ -35,22 +35,18 @@ function InvoiceDetails() {
         <div className="flex flex-col w-full max-w-[1200px] max-md:max-w-full">
           <img
             loading="lazy"
-            src="https://cdn.builder.io/api/v1/image/assets/TEMP/4ca01bd141ef3c6838d235f4d5f39236da6fb968e5e8a926fc57ed376a1cf296?apiKey=5bf51c3fc9cb49b480a07670cbcd768f&"
-            className="self-end w-8 aspect-square"
+            srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/408fafcebc6b68b9bb22a4c9f099c724596e89747ebf76a6651a94c7f3a08b5e?apiKey=5bf51c3fc9cb49b480a07670cbcd768f&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/408fafcebc6b68b9bb22a4c9f099c724596e89747ebf76a6651a94c7f3a08b5e?apiKey=5bf51c3fc9cb49b480a07670cbcd768f&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/408fafcebc6b68b9bb22a4c9f099c724596e89747ebf76a6651a94c7f3a08b5e?apiKey=5bf51c3fc9cb49b480a07670cbcd768f&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/408fafcebc6b68b9bb22a4c9f099c724596e89747ebf76a6651a94c7f3a08b5e?apiKey=5bf51c3fc9cb49b480a07670cbcd768f&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/408fafcebc6b68b9bb22a4c9f099c724596e89747ebf76a6651a94c7f3a08b5e?apiKey=5bf51c3fc9cb49b480a07670cbcd768f&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/408fafcebc6b68b9bb22a4c9f099c724596e89747ebf76a6651a94c7f3a08b5e?apiKey=5bf51c3fc9cb49b480a07670cbcd768f&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/408fafcebc6b68b9bb22a4c9f099c724596e89747ebf76a6651a94c7f3a08b5e?apiKey=5bf51c3fc9cb49b480a07670cbcd768f&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/408fafcebc6b68b9bb22a4c9f099c724596e89747ebf76a6651a94c7f3a08b5e?apiKey=5bf51c3fc9cb49b480a07670cbcd768f&"
+            className="aspect-[1.25] w-[87px]"
           />
-          <img
-            loading="lazy"
-            srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/9009977c571abc9efbe32602ba25dc59733103572bd5f39009eec5a1cdee5f43?apiKey=5bf51c3fc9cb49b480a07670cbcd768f&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/9009977c571abc9efbe32602ba25dc59733103572bd5f39009eec5a1cdee5f43?apiKey=5bf51c3fc9cb49b480a07670cbcd768f&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/9009977c571abc9efbe32602ba25dc59733103572bd5f39009eec5a1cdee5f43?apiKey=5bf51c3fc9cb49b480a07670cbcd768f&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/9009977c571abc9efbe32602ba25dc59733103572bd5f39009eec5a1cdee5f43?apiKey=5bf51c3fc9cb49b480a07670cbcd768f&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/9009977c571abc9efbe32602ba25dc59733103572bd5f39009eec5a1cdee5f43?apiKey=5bf51c3fc9cb49b480a07670cbcd768f&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/9009977c571abc9efbe32602ba25dc59733103572bd5f39009eec5a1cdee5f43?apiKey=5bf51c3fc9cb49b480a07670cbcd768f&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/9009977c571abc9efbe32602ba25dc59733103572bd5f39009eec5a1cdee5f43?apiKey=5bf51c3fc9cb49b480a07670cbcd768f&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/9009977c571abc9efbe32602ba25dc59733103572bd5f39009eec5a1cdee5f43?apiKey=5bf51c3fc9cb49b480a07670cbcd768f&"
-            className="mt-8 aspect-[1.09] w-[76px]"
-          />
+          
           <div className="flex gap-5 justify-between mt-2 w-full max-md:flex-wrap max-md:max-w-full">
             <div className="flex gap-5 justify-between text-neutral-600 max-md:flex-wrap">
-              <div className="text-4xl font-semibold leading-[57.6px] max-md:max-w-full">
-                Ogun State Water Corporation
-              </div>
-              <div className="justify-center px-6 py-2.5 my-auto text-xs font-medium tracking-wide uppercase whitespace-nowrap rounded-3xl bg-stone-100 max-md:px-5">
-                unpaid
-              </div>
+            <div className="text-4xl font-semibold leading-[57.6px]">
+            TraceCorp Solutions
+          </div>
+          <div className="justify-center px-6 py-2.5 my-auto text-xs font-medium tracking-wide uppercase whitespace-nowrap rounded-3xl bg-stone-100 max-md:px-5">
+            unpaid
+          </div>
             </div>
             <div className="flex gap-2 justify-center py-2 pr-3 pl-4 my-auto text-base bg-blue-400 font-semibold leading-6 text-white whitespace-nowrap rounded-3xl">
               <Dropdown
