@@ -11,7 +11,7 @@ const Payments = () => {
   const [searchText, setSearchText] = useState("");
   const [filteredPayments, setFilteredPayments] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const pageSize = 1;
+  const pageSize = 10; // Number of items per page
 
   useEffect(() => {
     const fetchData = async () => {
@@ -26,6 +26,7 @@ const Payments = () => {
           throw new Error('Failed to fetch data');
         }
         const data = await response.json();
+        // Assuming each payment has a unique id, use that as the key
         const formattedData = data.map((item, index) => ({ ...item, key: item.paymentId }));
         setPayments(formattedData);
         setFilteredPayments(formattedData);
@@ -73,18 +74,21 @@ const Payments = () => {
     setCurrentPage(page);
   };
 
+  // Calculate pagination and display logic
   const startIndex = (currentPage - 1) * pageSize;
   const endIndex = startIndex + pageSize;
   const currentDisplayData = filteredPayments.slice(startIndex, endIndex);
 
   return (
-    <div className="px-6 py-5 rounded-3xl bg-stone-100 max-md:px-5">
-      <div className="flex justify-between items-center mb-6 font-semibold text-4xl text-neutral-600">
-        Payments
-        <button
-          type="button"
+    <div className="md:px-6 md:py-5 rounded-3xl bg-stone-100">
+      <div className="mb-6 md:flex md:justify-between md:items-center md:mb-6 font-semibold text-4xl text-neutral-600">
+        <div className="mb-4 md:mb-0">
+          Payments
+        </div>
+        <Button
+          type="primary"
           onClick={handleShowPaymentForm}
-          className="flex items-center px-4 py-2 rounded-full bg-slate-500"
+          className="flex items-center md:ml-auto px-4 py-2 rounded-full bg-slate-500"
         >
           <img
             src="https://cdn.builder.io/api/v1/image/assets/TEMP/5a6fbf858a262ca173836b28ea1635646ad60c82456acd8cee2b922f3be3bea7?apiKey=5bf51c3fc9cb49b480a07670cbcd768f&"
@@ -92,25 +96,27 @@ const Payments = () => {
             className="w-6 h-6"
           />
           <span className="text-xl text-white ml-2">Add Payment</span>
-        </button>
+        </Button>
       </div>
       <div className="bg-white rounded-3xl">
-        <div className="flex justify-between p-6 border-b border-neutral-500 border-opacity-10">
-          <div className="flex items-center gap-2 rounded-3xl border border-neutral-500 border-opacity-10 p-3">
-            <SearchOutlined />
-            <Input
-              placeholder="Search Payment Ref..."
-              className="bg-transparent outline-none border-none"
-              value={searchText}
-              onChange={(e) => handleSearch(e.target.value)}
-            />
+        <div className="flex flex-col md:flex-row md:justify-between p-6 border-b border-neutral-500 border-opacity-10">
+          <div className="mb-4 md:mb-0 md:mr-4">
+            <div className="flex items-center gap-2 rounded-3xl border border-neutral-500 border-opacity-10 p-3">
+              <SearchOutlined />
+              <Input
+                placeholder="Search Payment Ref..."
+                className="bg-transparent outline-none border-none"
+                value={searchText}
+                onChange={(e) => handleSearch(e.target.value)}
+              />
+            </div>
           </div>
           <div className="flex items-center gap-2 rounded-3xl border border-neutral-500 border-opacity-30 p-3">
             <FilterOutlined />
             <div>Filter</div>
           </div>
         </div>
-        <div className="p-6">
+        <div className="p-6 overflow-x-auto">
           <table className="w-full border-collapse">
             <thead>
               <tr className="bg-neutral-100">
