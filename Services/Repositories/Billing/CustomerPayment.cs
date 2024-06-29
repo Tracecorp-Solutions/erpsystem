@@ -18,23 +18,27 @@ namespace Services.Repositories.Billing
         
         public CustomerPayment(ApplicationDbContext context) { _context = context; }
 
-        public async Task AddPayments(PaymentDto pyt) 
+        public async Task AddPayments(PaymentDto pyt)
         {
-            //validate whether invoice exists in the database
-            var invoice = _context.NewConnectionInvoices.FirstOrDefault(x => x.InvoiceNumber == pyt.CustomerRef);
+            // Validate whether invoice exists in the database
+            var invoice = await _context.NewConnectionInvoices
+                .Include(x => x.Application)
+                .FirstOrDefaultAsync(x => x.InvoiceNumber == pyt.CustomerRef);
 
             if (invoice == null)
                 throw new ArgumentException("Reference cannot be found");
 
-            //check whether Payment Reference exists
-            var paym = _context.Payments.FirstOrDefault(x => x.PaymntReference == pyt.PaymntReference);
+            // Check whether Payment Reference exists
+            bool paymentExists = await _context.Payments
+                .AnyAsync(x => x.PaymntReference == pyt.PaymntReference);
 
-            if (paym != null)
+            if (paymentExists)
                 throw new ArgumentException("Payment Reference already exists");
 
-            //map dto to model
+            // Map dto to model
             var payment = new Payment
             {
+                CustomerName = invoice.Application.FullName,
                 CustomerRef = pyt.CustomerRef,
                 PaymntReference = pyt.PaymntReference,
                 Vendor = pyt.Vendor,
@@ -44,9 +48,22 @@ namespace Services.Repositories.Billing
                 Narration = pyt.Narration
             };
 
+            // Check whether payment amount is greater than invoice amount
+            var invoiceAmount = await _context.NewConnectionInvoiceMaterials
+                .Where(x => x.NewConnectionInvoiceId == invoice.Id)
+                .SumAsync(x => x.Price);
+
+            if (payment.Amount >= invoiceAmount)
+            {
+                // Update invoice status to paid
+                invoice.Status = "Paid";
+                invoice.PaymentDate = payment.PaymentDate;
+            }
+
             _context.Payments.Add(payment);
             await _context.SaveChangesAsync();
         }
+
 
         public async Task<ValidateCustomerDto> ValidateCustomerDetails(string customeRef)
         {

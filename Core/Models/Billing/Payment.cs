@@ -9,7 +9,7 @@ namespace Core.Models.Billing
     public class Payment
     {
         public int Id { get; set; }
-
+        public string CustomerName { get; set; }
         public string CustomerRef { get; set; }
         public string PaymntReference { get; set; }
 

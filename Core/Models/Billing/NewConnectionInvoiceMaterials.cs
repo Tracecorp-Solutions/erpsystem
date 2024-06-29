@@ -14,6 +14,7 @@ namespace Core.Models.Billing
         [ForeignKey("NewConnectionInvoice")]
         public int NewConnectionInvoiceId { get; set; }
 
+        [ForeignKey("Material")]
         public int MaterialId { get; set; }
 
         public int Quantity { get; set; }
@@ -22,5 +23,7 @@ namespace Core.Models.Billing
 
 
         public virtual NewConnectionInvoice NewConnectionInvoice { get; set; }
+
+        public virtual Material Material { get; set; }
     }
 }

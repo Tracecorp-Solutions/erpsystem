@@ -389,6 +389,7 @@ namespace Services.Repositories.Billing
             var connectionInvoice = await _context.NewConnectionInvoices
                 .Include(i => i.Application)
                 .Include(i => i.NewConnectionInvoiceMaterials)
+                .ThenInclude(i => i.Material)
                 .FirstOrDefaultAsync(i => i.Application.ApplicationNumber == applicationNumber);
             if (connectionInvoice == null) throw new ArgumentException("No invoice found with that application ID");
 
