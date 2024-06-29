@@ -88,7 +88,7 @@ const Payments = () => {
         <Button
           type="primary"
           onClick={handleShowPaymentForm}
-          className="flex items-center md:ml-auto px-4 py-2 rounded-full bg-slate-500"
+          className="flex items-center md:ml-auto px-4 py-5 rounded-full bg-slate-500"
         >
           <img
             src="https://cdn.builder.io/api/v1/image/assets/TEMP/5a6fbf858a262ca173836b28ea1635646ad60c82456acd8cee2b922f3be3bea7?apiKey=5bf51c3fc9cb49b480a07670cbcd768f&"
@@ -121,12 +121,36 @@ const Payments = () => {
             <thead>
               <tr className="bg-neutral-100">
                 <th className="px-4 py-2"></th>
-                <th className="px-4 py-2">CUSTOMER REF</th>
-                <th className="px-4 py-2">PAYMENT REF</th>
-                <th className="px-4 py-2">VENDOR ID</th>
-                <th className="px-4 py-2">AMOUNT</th>
-                <th className="px-4 py-2">PAYMENT DATE</th>
-                <th className="px-4 py-2">PAYMENT METHOD</th>
+                <th className="px-4 py-2" style={{
+                color: "#A1A1A1",
+                fontFamily: "outFit, Sans-serif",
+                fontWeight: "400"
+              }}>CUSTOMER REF</th>
+                <th className="px-4 py-2" style={{
+                color: "#A1A1A1",
+                fontFamily: "outFit, Sans-serif",
+                fontWeight: "400"
+              }}>PAYMENT REF</th>
+                <th className="px-4 py-2" style={{
+                color: "#A1A1A1",
+                fontFamily: "outFit, Sans-serif",
+                fontWeight: "400"
+              }}>VENDOR ID</th>
+                <th className="px-4 py-2" style={{
+                color: "#A1A1A1",
+                fontFamily: "outFit, Sans-serif",
+                fontWeight: "400"
+              }}>AMOUNT</th>
+                <th className="px-4 py-2" style={{
+                color: "#A1A1A1",
+                fontFamily: "outFit, Sans-serif",
+                fontWeight: "400"
+              }}>PAYMENT DATE</th>
+                <th className="px-4 py-2" style={{
+                color: "#A1A1A1",
+                fontFamily: "outFit, Sans-serif",
+                fontWeight: "400"
+              }}>PAYMENT METHOD</th>
               </tr>
             </thead>
             <tbody>
@@ -143,7 +167,7 @@ const Payments = () => {
                   <td className="px-4 py-2">{payment.paymntReference}</td>
                   <td className="px-4 py-2">{payment.vendor}</td>
                   <td className="px-4 py-2">{payment.amount}</td>
-                  <td className="px-4 py-2">{payment.paymentDate}</td>
+                  <td className="px-4 py-2">{new Date(payment.paymentDate).toLocaleDateString()}</td>
                   <td className="px-4 py-2">{payment.paymentMethod}</td>
                 </tr>
               ))}
