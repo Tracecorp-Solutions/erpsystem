@@ -81,8 +81,8 @@ const Payments = () => {
     <div className="px-6 py-5 rounded-3xl bg-stone-100 max-md:px-5">
       <div className="flex justify-between items-center mb-6 font-semibold text-4xl text-neutral-600">
         Payments
-        <Button
-          type="primary"
+        <button
+          type="button"
           onClick={handleShowPaymentForm}
           className="flex items-center px-4 py-2 rounded-full bg-slate-500"
         >
@@ -92,7 +92,7 @@ const Payments = () => {
             className="w-6 h-6"
           />
           <span className="text-xl text-white ml-2">Add Payment</span>
-        </Button>
+        </button>
       </div>
       <div className="bg-white rounded-3xl">
         <div className="flex justify-between p-6 border-b border-neutral-500 border-opacity-10">
