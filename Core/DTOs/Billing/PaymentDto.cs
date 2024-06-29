@@ -16,5 +16,7 @@ namespace Core.DTOs.Billing
         public DateTime PaymentDate { get; set; }
         public string PaymentMethod { get; set; }
         public string Narration { get; set; }
+
+        public string CustomerName { get; set; }
     }
 }

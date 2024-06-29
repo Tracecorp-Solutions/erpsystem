@@ -97,7 +97,8 @@ namespace Services.Repositories.Billing
                 Amount = x.Amount,
                 PaymentDate = x.PaymentDate,
                 PaymentMethod = x.PaymentMethod,
-                Narration = x.Narration
+                Narration = x.Narration,
+                CustomerName = x.CustomerName
             });
         }
     }
