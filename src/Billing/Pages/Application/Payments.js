@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Table, Button, Input } from "antd";
+import { Button, Input } from "antd";
 import { SearchOutlined, FilterOutlined } from "@ant-design/icons";
 import PaymentDetails from "./Actions/PaymentDetails";
 
@@ -7,13 +7,13 @@ const Payments = () => {
   const [showPaymentForm, setShowPaymentForm] = useState(false);
   const [payments, setPayments] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [selectedRows, setSelectedRows] = useState([]);
 
   useEffect(() => {
-    // Fetch data from API
     const fetchData = async () => {
       setLoading(true);
       try {
-        const response = await fetch('http://3.216.182.63:8095/TestApi/GetAllPayments', {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/GetAllPayments`, {
           headers: {
             'Accept': 'application/json'
           }
@@ -22,7 +22,9 @@ const Payments = () => {
           throw new Error('Failed to fetch data');
         }
         const data = await response.json();
-        setPayments(data); // Update state with fetched data
+        // Assuming each payment has a unique id, use that as the key
+        const formattedData = data.map((item, index) => ({ ...item, key: item.paymentId }));
+        setPayments(formattedData);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -40,15 +42,16 @@ const Payments = () => {
     setShowPaymentForm(false);
   };
 
-  const columns = [
-    { title: "CUSTOMER REF", dataIndex: "customerRef", key: "customerRef", width: 120 },
-    { title: "PAYMENT REF", dataIndex: "paymntReference", key: "paymntReference", width: 150 },
-    { title: "VENDOR ID", dataIndex: "vendor", key: "vendor", width: 100 },
-    { title: "AMOUNT", dataIndex: "amount", key: "amount", width: 100 },
-    { title: "PAYMENT DATE", dataIndex: "paymentDate", key: "paymentDate", width: 120 },
-    { title: "PAYMENT METHOD", dataIndex: "paymentMethod", key: "paymentMethod", width: 100 },
-    { title: "NARRATION", dataIndex: "narration", key: "narration", width: 120 },
-  ];
+  const toggleSelectRow = (paymentId) => {
+    const isSelected = selectedRows.includes(paymentId);
+    if (isSelected) {
+      setSelectedRows(selectedRows.filter(id => id !== paymentId));
+    } else {
+      setSelectedRows([...selectedRows, paymentId]);
+    }
+  };
+
+  const isSelected = (paymentId) => selectedRows.includes(paymentId);
 
   return (
     <div className="px-6 py-5 rounded-3xl bg-stone-100 max-md:px-5">
@@ -78,13 +81,40 @@ const Payments = () => {
             <div>Filter</div>
           </div>
         </div>
-        <Table
-          columns={columns}
-          dataSource={payments}
-          loading={loading}
-          pagination={{ pageSize: 10 }}
-          className="p-6"
-        />
+        <div className="p-6">
+          <table className="w-full border-collapse">
+            <thead>
+              <tr className="bg-neutral-100">
+                <th className="px-4 py-2"></th>
+                <th className="px-4 py-2">CUSTOMER REF</th>
+                <th className="px-4 py-2">PAYMENT REF</th>
+                <th className="px-4 py-2">VENDOR ID</th>
+                <th className="px-4 py-2">AMOUNT</th>
+                <th className="px-4 py-2">PAYMENT DATE</th>
+                <th className="px-4 py-2">PAYMENT METHOD</th>
+              </tr>
+            </thead>
+            <tbody>
+              {payments.map((payment) => (
+                <tr key={payment.paymentId}>
+                  <td className="px-4 py-2">
+                    <input
+                      type="checkbox"
+                      checked={isSelected(payment.paymentId)}
+                      onChange={() => toggleSelectRow(payment.paymentId)}
+                    />
+                  </td>
+                  <td className="px-4 py-2">{payment.customerRef}</td>
+                  <td className="px-4 py-2">{payment.paymntReference}</td>
+                  <td className="px-4 py-2">{payment.vendor}</td>
+                  <td className="px-4 py-2">{payment.amount}</td>
+                  <td className="px-4 py-2">{payment.paymentDate}</td>
+                  <td className="px-4 py-2">{payment.paymentMethod}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
         <div className="p-6 text-neutral-400">Showing 1 - {payments.length} of {payments.length}</div>
       </div>
       <PaymentDetails
