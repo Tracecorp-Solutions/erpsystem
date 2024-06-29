@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Button, Input } from "antd";
+import { Button, Input, Pagination } from "antd";
 import { SearchOutlined, FilterOutlined } from "@ant-design/icons";
 import PaymentDetails from "./Actions/PaymentDetails";
 
@@ -8,6 +8,10 @@ const Payments = () => {
   const [payments, setPayments] = useState([]);
   const [loading, setLoading] = useState(false);
   const [selectedRows, setSelectedRows] = useState([]);
+  const [searchText, setSearchText] = useState("");
+  const [filteredPayments, setFilteredPayments] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 1;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -22,9 +26,9 @@ const Payments = () => {
           throw new Error('Failed to fetch data');
         }
         const data = await response.json();
-        // Assuming each payment has a unique id, use that as the key
         const formattedData = data.map((item, index) => ({ ...item, key: item.paymentId }));
         setPayments(formattedData);
+        setFilteredPayments(formattedData);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -53,6 +57,26 @@ const Payments = () => {
 
   const isSelected = (paymentId) => selectedRows.includes(paymentId);
 
+  const handleSearch = (value) => {
+    setSearchText(value);
+    const filteredData = payments.filter(payment =>
+      payment.customerRef.toLowerCase().includes(value.toLowerCase()) ||
+      payment.paymntReference.toLowerCase().includes(value.toLowerCase()) ||
+      payment.vendor.toLowerCase().includes(value.toLowerCase()) ||
+      payment.paymentMethod.toLowerCase().includes(value.toLowerCase())
+    );
+    setFilteredPayments(filteredData);
+    setCurrentPage(1);
+  };
+
+  const handleChangePage = (page) => {
+    setCurrentPage(page);
+  };
+
+  const startIndex = (currentPage - 1) * pageSize;
+  const endIndex = startIndex + pageSize;
+  const currentDisplayData = filteredPayments.slice(startIndex, endIndex);
+
   return (
     <div className="px-6 py-5 rounded-3xl bg-stone-100 max-md:px-5">
       <div className="flex justify-between items-center mb-6 font-semibold text-4xl text-neutral-600">
@@ -74,7 +98,12 @@ const Payments = () => {
         <div className="flex justify-between p-6 border-b border-neutral-500 border-opacity-10">
           <div className="flex items-center gap-2 rounded-3xl border border-neutral-500 border-opacity-10 p-3">
             <SearchOutlined />
-            <Input placeholder="Search Payment Ref..." className="bg-transparent outline-none border-none" />
+            <Input
+              placeholder="Search Payment Ref..."
+              className="bg-transparent outline-none border-none"
+              value={searchText}
+              onChange={(e) => handleSearch(e.target.value)}
+            />
           </div>
           <div className="flex items-center gap-2 rounded-3xl border border-neutral-500 border-opacity-30 p-3">
             <FilterOutlined />
@@ -95,7 +124,7 @@ const Payments = () => {
               </tr>
             </thead>
             <tbody>
-              {payments.map((payment) => (
+              {currentDisplayData.map((payment) => (
                 <tr key={payment.paymentId}>
                   <td className="px-4 py-2">
                     <input
@@ -115,7 +144,14 @@ const Payments = () => {
             </tbody>
           </table>
         </div>
-        <div className="p-6 text-neutral-400">Showing 1 - {payments.length} of {payments.length}</div>
+        <div className="flex justify-end p-6">
+          <Pagination
+            current={currentPage}
+            pageSize={pageSize}
+            total={filteredPayments.length}
+            onChange={handleChangePage}
+          />
+        </div>
       </div>
       <PaymentDetails
         handleShowPaymentForm={handleShowPaymentForm}
