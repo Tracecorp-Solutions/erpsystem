@@ -390,6 +390,7 @@ namespace Services.Repositories.Billing
                 .Include(i => i.Application)
                 .Include(i => i.NewConnectionInvoiceMaterials)
                 .ThenInclude(i => i.Material)
+                .Include(i => i.Application.User)
                 .FirstOrDefaultAsync(i => i.Application.ApplicationNumber == applicationNumber);
             if (connectionInvoice == null) throw new ArgumentException("No invoice found with that application ID");
 
