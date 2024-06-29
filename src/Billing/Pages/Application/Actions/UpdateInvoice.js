@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
-import InvoiceItem from "./InvoiceItem";
-import { Table, Menu, Dropdown, message } from "antd";
 import { useNavigate, useLocation } from "react-router-dom";
+import { Dropdown, Menu } from "antd";
 import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
+import InvoiceItem from "./InvoiceItem";
 
 function UpdateInvoice() {
   const [isUpdateModalVisible, setIsUpdateModalVisible] = useState(false);
   const [invoiceItems, setInvoiceItems] = useState([]);
-  const [successMessage, setSuccessMessage] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const location = useLocation();
   const navigate = useNavigate();
   const { state } = location;
@@ -16,7 +16,6 @@ function UpdateInvoice() {
   const applicationNumber = state?.applicationNumber;
 
   useEffect(() => {
-    // Fetch invoice items based on applicationNumber
     if (applicationNumber) {
       fetchInvoiceItems(applicationNumber);
     }
@@ -24,16 +23,19 @@ function UpdateInvoice() {
 
   const fetchInvoiceItems = async (applicationNumber) => {
     try {
-      const response = await fetch(`http://3.216.182.63:8095/TestApi/GetNewConnectionInvoice?applicationNumber=${applicationNumber}`);
+      const response = await fetch(
+        `http://3.216.182.63:8095/TestApi/GetNewConnectionInvoice?applicationNumber=${applicationNumber}`
+      );
       if (!response.ok) {
-        throw new Error('Failed to fetch invoice items');
+        throw new Error("Failed to fetch invoice items");
       }
       const data = await response.json();
-      if (data && data.NewConnectionInvoiceMaterials) {
-        setInvoiceItems(data.NewConnectionInvoiceMaterials);
-      }
+      console.log("Fetched data:", data); // Log fetched data for debugging
+      setInvoiceItems(data); // Update invoice items state
     } catch (error) {
-      console.error('Error fetching invoice items:', error);
+      console.error("Error fetching invoice items:", error);
+      setInvoiceItems([]); // Handle error state
+      setErrorMessage("Failed to fetch invoice items");
     }
   };
 
@@ -59,28 +61,31 @@ function UpdateInvoice() {
 
   const handleSaveInvoice = async () => {
     try {
-      const response = await fetch('http://3.216.182.63:8095/TestApi/AddConnectionInvoice', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          invoiceItems,
-          applicationNumber,
-        }),
-      });
+      const response = await fetch(
+        "http://3.216.182.63:8095/TestApi/AddConnectionInvoice",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            invoiceItems,
+            applicationNumber,
+          }),
+        }
+      );
 
       if (!response.ok) {
-        throw new Error('Failed to save invoice');
+        throw new Error("Failed to save invoice");
       }
 
-      setSuccessMessage('Invoice saved successfully');
-      setErrorMessage('');
+      setSuccessMessage("Invoice saved successfully");
+      setErrorMessage("");
       navigate(`/billingdashboard`, { state: { screen: "invoice-details" } });
     } catch (error) {
-      console.error('Error saving invoice:', error);
-      setErrorMessage('Failed to save invoice');
-      setSuccessMessage('');
+      console.error("Error saving invoice:", error);
+      setErrorMessage("Failed to save invoice");
+      setSuccessMessage("");
     }
   };
 
@@ -98,7 +103,7 @@ function UpdateInvoice() {
           </div>
         )}
         <div className="flex flex-col p-6 mt-6 w-full bg-white rounded-3xl max-w-[1088px] text-neutral-600 max-md:px-5 max-md:max-w-full">
-          <div className="text-2xl font-semibold capitalize max-md:max-w-full">
+        <div className="text-2xl font-semibold capitalize max-md:max-w-full">
             Application Information
           </div>
           <div className="shrink-0 mt-4 h-px border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-opacity-10 max-md:max-w-full" />
@@ -118,7 +123,7 @@ function UpdateInvoice() {
           </div>
         </div>
         <div className="flex flex-col p-6 mt-6 w-full bg-white rounded-3xl max-w-[1088px] max-md:px-5 max-md:max-w-full">
-          <div className="flex gap-4 justify-between w-full font-semibold max-md:flex-wrap max-md:max-w-full">
+        <div className="flex gap-4 justify-between w-full font-semibold max-md:flex-wrap max-md:max-w-full">
             <div className="my-auto text-2xl capitalize text-neutral-600">
               Invoice Items
             </div>
@@ -130,48 +135,41 @@ function UpdateInvoice() {
                 + Add Invoice Item
               </button>
             </div>
-          </div>
-          <div className="shrink-0 mt-4 h-px border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-opacity-10 max-md:max-w-full" />
-          <div className="flex gap-18 justify-between px-6 py-3.5 mt-4 w-full text-x font-medium tracking-wide uppercase rounded-3xl bg-stone-100 text-neutral-400 max-md:flex-wrap max-md:px-5 max-md:max-w-full">
-            <div className="flex gap-5 justify-between max-md:flex-wrap max-md:max-w-full">
-              <div className="flex gap-4">
-                <div className="shrink-0 w-5 h-5 bg-white rounded-2 border-2 border-solid border-neutral-500 border-opacity-10" />
-                <div className="my-auto">Material Name</div>
-              </div>
             </div>
-            <div className="flex gap-52 justify-between my-auto">
-              <div>Quantity</div>
-              <div>Amount Due</div>
-              <div>Actions</div>
-            </div>
-          </div>
-          {invoiceItems.map((item) => (
-            <div
-              key={item.materialId}
-              className="flex gap-5 justify-between px-6 py-3.5 mt-4 w-full text-x font-medium tracking-wide rounded-3xl bg-white text-neutral-600 max-md:flex-wrap max-md:px-5 max-md:max-w-full"
-            >
-              <div className="flex gap-4">
-                <div className="shrink-0 w-5 h-5 bg-white rounded-2 border-2 border-solid border-neutral-500 border-opacity-10" />
-                <div className="my-auto">{item.MaterialId}</div> {/* Display Material Name */}
+            {invoiceItems.length > 0 ? (
+            invoiceItems.map((invoice) => (
+              <div key={invoice.Id}>
+                {invoice.NewConnectionInvoiceMaterials.map((item) => (
+                  <div
+                    key={item.Id}
+                    className="flex gap-5 justify-between px-6 py-3.5 mt-4 w-full text-x font-medium tracking-wide rounded-3xl bg-white text-neutral-600 max-md:flex-wrap max-md:px-5 max-md:max-w-full"
+                  >
+                    <div className="flex gap-4">
+                      <div className="shrink-0 w-5 h-5 bg-white rounded-2 border-2 border-solid border-neutral-500 border-opacity-10" />
+                      <div className="my-auto">{item.MaterialId}</div>
+                    </div>
+                    <div className="my-auto">{item.Quantity}</div>
+                    <div className="my-auto">{item.Price}</div>
+                    <div className="flex justify-center items-center self-stretch px-1.5 w-8 h-8 rounded-3xl bg-stone-100">
+                      <Dropdown
+                        overlay={
+                          <Menu onClick={handleMenuClick}>
+                            <Menu.Item key="view">View Invoice</Menu.Item>
+                          </Menu>
+                        }
+                        trigger={["click"]}
+                        placement="bottomLeft"
+                      >
+                        <EllipsisVerticalIcon className="w-7 h-7" />
+                      </Dropdown>
+                    </div>
+                  </div>
+                ))}
               </div>
-              <div className="my-auto">{item.Quantity}</div>
-              <div className="my-auto">{item.Price}</div>
-              <div className="flex justify-center items-center self-stretch px-1.5 w-8 h-8 rounded-3xl bg-stone-100">
-                <Dropdown
-                  overlay={
-                    <Menu onClick={handleMenuClick}>
-                      <Menu.Item key="view">View Invoice</Menu.Item>
-                    </Menu>
-                  }
-                  trigger={["click"]}
-                  placement="bottomLeft"
-                >
-                  <EllipsisVerticalIcon className="w-7 h-7" />
-                </Dropdown>
-              </div>
-            </div>
-          ))}
-          <div className="shrink-0 mt-2 h-px border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-opacity-10 max-md:max-w-full" />
+            ))
+          ) : (
+            <div>No invoice items found</div>
+          )}
         </div>
         <div className="justify-end py-6 mt-6 max-w-full w-[1040px] max-md:pl-5">
           <div className="flex gap-5 max-md:flex-col max-md:gap-0">
@@ -194,6 +192,7 @@ function UpdateInvoice() {
           </div>
         </div>
       </div>
+      {/* Invoice Item Modal */}
       {isUpdateModalVisible && (
         <InvoiceItem
           applicationNumber={applicationNumber}
