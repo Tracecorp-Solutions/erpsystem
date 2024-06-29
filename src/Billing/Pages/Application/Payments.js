@@ -111,7 +111,7 @@ const Payments = () => {
               />
             </div>
           </div>
-          <div className="flex items-center gap-2 rounded-3xl border border-neutral-500 border-opacity-30 p-3">
+          <div className="flex items-center gap-2 rounded-3xl border border-neutral-500 border-opacity-30 p-3 border w-40">
             <FilterOutlined />
             <div>Filter</div>
           </div>
