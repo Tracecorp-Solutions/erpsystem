@@ -1,36 +1,21 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Dropdown, Menu } from "antd";
 import { DownOutlined } from "@ant-design/icons";
-import Reject from "./Reject"; // Import your Reject component if needed
+import { useLocation } from "react-router-dom";
+import Reject from "./Reject";
 
 function InvoiceDetails() {
-  const [invoice, setInvoice] = useState(null); // State to store invoice details
   const [isUpdateModalVisible, setIsUpdateModalVisible] = useState(false);
+  const location = useLocation();
+  const { state } = location;
+  const invoiceItems = state?.invoiceItems;
 
-  useEffect(() => {
-    // Function to fetch invoice details
-    const fetchInvoiceDetails = async () => {
-      try {
-        const response = await fetch(`http://3.216.182.63:8095/TestApi/GetNewConnectionInvoice?applicationNumber=c0a1acea`);
-        if (response.ok) {
-          const data = await response.json();
-          setInvoice(data); // Assuming data structure includes invoice details
-        } else {
-          throw new Error("Failed to fetch invoice details");
-        }
-      } catch (error) {
-        console.error("Error fetching invoice details:", error);
-        // Handle error state or alert user
-      }
-    };
-
-    fetchInvoiceDetails(); // Invoke the function when component mounts
-  }, []);
-
+  // Handle modal visibility toggle
   const handleUpdateModalVisible = () => {
     setIsUpdateModalVisible(!isUpdateModalVisible);
   };
 
+  // Handle menu click for authorize and reject actions
   const handleMenuClick = ({ key }) => {
     if (key === "authorize") {
       console.log("Authorize Invoice clicked");
@@ -41,6 +26,7 @@ function InvoiceDetails() {
     }
   };
 
+  // Dropdown menu for actions
   const menu = (
     <Menu onClick={handleMenuClick}>
       <Menu.Item key="authorize">Authorize Invoice</Menu.Item>
@@ -50,8 +36,8 @@ function InvoiceDetails() {
     </Menu>
   );
 
-  // Render loading state or placeholder while waiting for data
-  if (!invoice) {
+  // Render loading state while waiting for data
+  if (!invoiceItems) {
     return <div>Loading...</div>;
   }
 
@@ -63,10 +49,10 @@ function InvoiceDetails() {
           <div className="flex gap-5 justify-between mt-2 w-full max-md:flex-wrap">
             <div className="flex gap-5 justify-between text-neutral-600 max-md:flex-wrap">
               <div className="text-4xl font-semibold leading-[57.6px]">
-                {invoice.Application.FullName}
+                {invoiceItems.Application.FullName}
               </div>
               <div className="justify-center px-6 py-2.5 my-auto text-xs font-medium tracking-wide uppercase whitespace-nowrap rounded-3xl bg-stone-100 max-md:px-5">
-                {invoice.Status}
+                {invoiceItems.Status}
               </div>
             </div>
             <div className="flex gap-2 justify-center py-2 pr-3 pl-4 my-auto text-base bg-blue-400 font-semibold leading-6 text-white whitespace-nowrap rounded-3xl">
@@ -91,7 +77,7 @@ function InvoiceDetails() {
                       Invoice No
                     </div>
                     <div className="text-base font-semibold leading-6 text-neutral-600">
-                      {invoice.InvoiceNumber}
+                      {invoiceItems.InvoiceNumber}
                     </div>
                   </div>
                   <div className="flex gap-1 mt-1 max-md:flex-wrap">
@@ -99,7 +85,7 @@ function InvoiceDetails() {
                       Address
                     </div>
                     <div className="text-base leading-6 text-neutral-600">
-                      {invoice.Application.StreetAddress}
+                      {invoiceItems.Application.StreetAddress}
                     </div>
                   </div>
                   <div className="flex gap-1 mt-1 whitespace-nowrap max-md:flex-wrap">
@@ -107,7 +93,7 @@ function InvoiceDetails() {
                       Phone
                     </div>
                     <div className="text-base leading-6 text-neutral-600">
-                      {invoice.Application.PhoneNumber}
+                      {invoiceItems.Application.PhoneNumber}
                     </div>
                   </div>
                   <div className="flex gap-1 mt-1 max-md:flex-wrap">
@@ -115,7 +101,7 @@ function InvoiceDetails() {
                       Issue Date
                     </div>
                     <div className="text-base leading-6 text-neutral-600">
-                      {new Date(invoice.InvoiceDate).toLocaleDateString()}
+                      {new Date(invoiceItems.InvoiceDate).toLocaleDateString()}
                     </div>
                   </div>
                 </div>
@@ -128,7 +114,7 @@ function InvoiceDetails() {
                       Invoice To
                     </div>
                     <div className="text-base font-semibold leading-6 text-neutral-600">
-                      {invoice.Application.FullName}
+                      {invoiceItems.Application.FullName}
                     </div>
                   </div>
                   <div className="flex gap-1 mt-1 max-md:flex-wrap">
@@ -136,7 +122,7 @@ function InvoiceDetails() {
                       Address
                     </div>
                     <div className="text-base leading-6 text-neutral-600">
-                      {invoice.Application.StreetAddress}
+                      {invoiceItems.Application.StreetAddress}
                     </div>
                   </div>
                   <div className="flex gap-1 mt-1 whitespace-nowrap max-md:flex-wrap">
@@ -144,7 +130,7 @@ function InvoiceDetails() {
                       Phone
                     </div>
                     <div className="text-base leading-6 text-neutral-600">
-                      {invoice.Application.PhoneNumber}
+                      {invoiceItems.Application.PhoneNumber}
                     </div>
                   </div>
                   <div className="flex gap-1 mt-1 max-md:flex-wrap">
@@ -152,7 +138,7 @@ function InvoiceDetails() {
                       Due Date
                     </div>
                     <div className="text-base leading-6 text-neutral-600">
-                      {invoice.PaymentDate ? new Date(invoice.PaymentDate).toLocaleDateString() : "Not specified"}
+                      {invoiceItems.InvoiceDate ? new Date(invoiceItems.InvoiceDate).toLocaleDateString() : "Not specified"}
                     </div>
                   </div>
                 </div>
@@ -178,7 +164,7 @@ function InvoiceDetails() {
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-stone-100">
-                    {invoice.NewConnectionInvoiceMaterials.map((item, index) => (
+                    {invoiceItems.NewConnectionInvoiceMaterials.map((item, index) => (
                       <tr key={index}>
                         <td className="px-6 py-2 whitespace-nowrap">
                           <div className="text-sm leading-5 text-neutral-600">
@@ -208,7 +194,7 @@ function InvoiceDetails() {
               Notes
             </div>
             <div className="mt-2 text-base leading-6 text-neutral-600 max-md:max-w-full">
-              {invoice.notes}
+              {invoiceItems.notes}
             </div>
           </div>
           {/* Actions section */}
