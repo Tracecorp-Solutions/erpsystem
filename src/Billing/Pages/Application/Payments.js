@@ -134,6 +134,11 @@ const Payments = () => {
                 fontFamily: "outFit, Sans-serif",
                 fontWeight: "400"
               }}>CUSTOMER REF</th>
+              <th className="px-4 py-2" style={{
+                color: "#A1A1A1",
+                fontFamily: "outFit, Sans-serif",
+                fontWeight: "400"
+              }}>CUSTOMER NAME</th>
                 <th className="px-4 py-2" style={{
                 color: "#A1A1A1",
                 fontFamily: "outFit, Sans-serif",
@@ -172,6 +177,7 @@ const Payments = () => {
                     />
                   </td>
                   <td className="px-4 py-2">{payment.customerRef}</td>
+                  <td className="px-4 py-2">{payment.customerName}</td>
                   <td className="px-4 py-2">{payment.paymntReference}</td>
                   <td className="px-4 py-2">{payment.vendor}</td>
                   <td className="px-4 py-2">{payment.amount}</td>
