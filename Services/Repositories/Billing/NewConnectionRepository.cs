@@ -494,6 +494,16 @@ namespace Services.Repositories.Billing
                 Remarks = docket.Remarks
             };
 
+            // add first reading of the customer in the meter reading
+            await _context.MeterReadings.AddAsync(new MeterReading
+            {
+                CustomerRef = docket.CustomerRef,
+                MeterNo = docket.MeterNumber,
+                Reading = docket.InitialReading,
+                ReadingDate = docket.DateOfInstallation,
+                ReadingBy = docket.InstalledBy
+            });
+
             //add application log
             await _context.ApplicationLogs.AddAsync(new ApplicationLog
             {

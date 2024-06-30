@@ -20,7 +20,7 @@ namespace Core.Models.Billing
         public string MeterType { get; set; }
         public string? MeterSize { get; set; }
         public string? LocationCordinates { get; set; }
-        public string? InitialReading { get; set; }
+        public int InitialReading { get; set; }
         public string? Dials { get; set; }
         public DateOnly MeterManufactureDate { get; set; }
         public DateOnly DateOfInstallation { get; set; }
