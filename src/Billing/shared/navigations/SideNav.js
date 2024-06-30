@@ -239,7 +239,7 @@ function SideNav() {
               </div>
               <div
                 className={`flex gap-2 py-3 mt-2 whitespace-nowrap rounded-xl ${
-                  location.state?.dropdown === "payments"
+                  location.state?.dropdown === "adjustment"
                     ? "bg-active-green txt-color-blue font-semibold px-4"
                     : "bg-none"
                 }`}
@@ -248,12 +248,12 @@ function SideNav() {
                 <button
                   onClick={() =>
                     handleNavigation("/billingdashboard", {
-                      dropdown: "payments",
-                      screen: "payments",
+                      dropdown: "adjustment",
+                      screen: "bill-adjsutment",
                     })
                   }
                 >
-                  Payments
+                  Bill Adjusmtent
                 </button>
               </div>
             </div>

@@ -11,6 +11,7 @@ import ReconcileInvoice from "../Application/Actions/ReconcileInvoice";
 import Reconcillations from "../Application/Reconcillations";
 import Payments from "../Application/Payments";
 import BillingCycle from "../Application/BillingCycle";
+import BillAdjustment from "../Application/BillAdjustment";
 
 const BillingDashboard = () => {
   const location = useLocation();
@@ -43,6 +44,7 @@ const BillingDashboard = () => {
               {screen === "reconciliation" && <Reconcillations />}
               {screen === "payments" && <Payments />}
               {screen === "billing" && <BillingCycle />}
+              {screen === "bill-adjsutment" && <BillAdjustment />}
             </div>
           </div>
         </div>
