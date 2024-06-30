@@ -1,4 +1,4 @@
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import SideNav from "../../shared/navigations/SideNav";
 import TopNav from "../../shared/navigations/TopNav";
 import { useLocation } from "react-router-dom";
@@ -11,20 +11,24 @@ import AddMaterials from "../Application/Actions/AddMaterials";
 import ShowMaterials from "../Application/Actions/ShowMaterials";
 import ConfMaterials from "../Materials/ConfMaterials";
 import CreateMaterials from "../Materials/CreateMaterials";
+import One from "../Meter/One";
+import Replacement from "../Meter/Replacement";
+import Bulk from "../Meter/Bulk";
+import Servicing from "../Meter/Servicing";
 
 const BillingDashboard = () => {
   const location = useLocation();
   const { state } = location;
   const screen = state?.screen || "billingdashboard";
   const navigate = useNavigate();
-  const [sidebarOpen, setSidebarOpen] = useState(false);  
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   useEffect(() => {
     if (sessionStorage.getItem("userid") == null) {
-      navigate('/');
-      return ;
+      navigate("/");
+      return;
     }
-  },[navigate]);
-  
+  }, [navigate]);
+
   return (
     <div className="flex flex-col md:flex-row w-full">
       <SideNav />
@@ -43,6 +47,11 @@ const BillingDashboard = () => {
               {screen === "show-materials" && <ShowMaterials />}
               {screen === "conf-materials" && <ConfMaterials />}
               {screen === "create-materials" && <CreateMaterials />}
+              {screen === "one" && <One />}
+              {screen === "bulk" && <Bulk />}
+              {screen === "servicing" && <Servicing />}
+              {screen === "replacement" && <Replacement />}
+
             </div>
           </div>
         </div>
