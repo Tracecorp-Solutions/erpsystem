@@ -1,14 +1,31 @@
 import * as React from "react";
+import { useNavigate } from "react-router-dom";
 
 function Servicing() {
+  const navigate = useNavigate();
+
+  const handleNavigate = (screen) => {
+    navigate("/billingdashboard", { state: { screen } });
+  };
+
   return (
     <div className="flex flex-col p-6 text-base leading-6 bg-white rounded-3xl max-md:px-5">
       <div className="flex gap-5 pr-20 font-semibold text-neutral-400 max-md:flex-wrap max-md:pr-5">
-        <div className="justify-center px-6 py-4 rounded-lg bg-stone-100 text-slate-500 max-md:px-5">
+        <div
+          onClick={() => handleNavigate("servicing")}
+          className="justify-center px-6 py-4 rounded-lg bg-stone-100 text-slate-500 max-md:px-5"
+          role="button"
+        >
           Meter Servicing
         </div>
-        <div className="justify-center px-6 py-4 bg-white rounded-lg max-md:px-5">
-          Meter Replacement
+        <div className="flex gap-5">
+          <div
+            onClick={() => handleNavigate("replacement")}
+            className="justify-center px-6 py-4 rounded-lg bg-stone-100 text-slate-500 max-md:px-5"
+            role="button"
+          >
+            Meter Replacement
+          </div>
         </div>
         <div className="justify-center px-6 py-4 bg-white rounded-lg max-md:px-5">
           Approve Requests
