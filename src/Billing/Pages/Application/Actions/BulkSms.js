@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Modal, Select, DatePicker } from "antd";
+import { Modal, Select, DatePicker, message } from "antd";
 import axios from "axios";
 
 const { Option } = Select;
@@ -12,9 +12,11 @@ const BulkSms = ({ showBulkSms, handleCancelBulkSms }) => {
   const [scheduledBillingDate, setScheduledBillingDate] = useState(null);
   const [biller, setBiller] = useState(null);
   const [operationAreas, setOperationAreas] = useState([]);
+  const [branches, setBranches] = useState([]);
 
   useEffect(() => {
     fetchOperationAreas();
+    fetchBranches();
   }, []);
 
   const fetchOperationAreas = async () => {
@@ -30,10 +32,28 @@ const BulkSms = ({ showBulkSms, handleCancelBulkSms }) => {
       );
 
       console.log("Operation Areas fetched successfully:", response.data);
-      setOperationAreas(response.data); // Assuming response.data is an array of objects with id and name fields
+      setOperationAreas(response.data);
     } catch (error) {
       console.error("Error fetching Operation Areas:", error);
-      // Handle error states or display error messages
+    }
+  };
+
+  const fetchBranches = async () => {
+    try {
+      const response = await axios.get(
+        "http://3.216.182.63:8095/TestApi/GetBranches",
+        {
+          headers: {
+            accept: "*/*",
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      console.log("Branches fetched successfully:", response.data);
+      setBranches(response.data);
+    } catch (error) {
+      console.error("Error fetching Branches:", error);
     }
   };
 
@@ -65,11 +85,12 @@ const BulkSms = ({ showBulkSms, handleCancelBulkSms }) => {
       );
 
       console.log("Request sent successfully:", response.data);
+      message.success("Request sent successfully");
 
       setShowBillRequestsModal(false);
     } catch (error) {
       console.error("Error sending request:", error);
-      // Handle error states or display error messages
+      message.error("Error sending request");
     }
   };
 
@@ -127,9 +148,11 @@ const BulkSms = ({ showBulkSms, handleCancelBulkSms }) => {
             className="flex gap-2 justify-between h-14 mt-2 max-w-full whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 w-[500px] max-md:flex-wrap"
             placeholder="Select Branch"
           >
-            <Option value={1}>Ibara</Option>
-            <Option value={2}>Ikeja</Option>
-            <Option value={3}>Wuse</Option>
+            {branches.map((branch) => (
+              <Option key={branch.id} value={branch.id}>
+                {branch.name}
+              </Option>
+            ))}
           </Select>
 
           {/* Billing Period */}
