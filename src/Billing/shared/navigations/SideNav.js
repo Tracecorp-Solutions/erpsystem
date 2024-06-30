@@ -203,6 +203,61 @@ function SideNav() {
               </div>
             )}
           </div>
+            {/* Billing & Invoicing */}
+            <div className="flex gap-2 py-3 mt-2 whitespace-nowrap justify-between rounded-xl">
+            <div className="flex">
+              <ArrowRightLeft className="shrink-0 self-start w-6 aspect-square" />
+              <span>Billing & Invoicing</span>
+            </div>
+            <button
+              onClick={() => toggleDropdown("billing")}
+              className="flex items-center"
+            >
+              <ChevronDown className="shrink-0 self-start w-6 aspect-square ml-2" />
+            </button>
+          </div>
+          {openDropdown === "billing" && (
+            <div className="pt-3">
+              <div
+                className={`flex gap-2 py-3 mt-2 whitespace-nowrap rounded-xl ${
+                  location.state?.dropdown === "billing"
+                    ? "bg-active-green txt-color-blue font-semibold px-4"
+                    : "bg-none"
+                }`}
+              >
+                <Minus className="shrink-0 self-start w-6 aspect-square" />
+                <button
+                   onClick={() =>
+                    handleNavigation("/billingdashboard", {
+                      dropdown: "billing",
+                      screen: "billing",
+                    })
+                  }
+                >
+                  Billing Cycle
+                </button>
+              </div>
+              <div
+                className={`flex gap-2 py-3 mt-2 whitespace-nowrap rounded-xl ${
+                  location.state?.dropdown === "payments"
+                    ? "bg-active-green txt-color-blue font-semibold px-4"
+                    : "bg-none"
+                }`}
+              >
+                <Minus className="shrink-0 self-start w-6 aspect-square" />
+                <button
+                  onClick={() =>
+                    handleNavigation("/billingdashboard", {
+                      dropdown: "payments",
+                      screen: "payments",
+                    })
+                  }
+                >
+                  Payments
+                </button>
+              </div>
+            </div>
+          )}
           {/* Payments section */}
           <div className="flex gap-2 py-3 mt-2 whitespace-nowrap justify-between rounded-xl">
             <div className="flex">
