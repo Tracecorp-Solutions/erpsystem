@@ -280,14 +280,14 @@ const BulkSms = ({ showBulkSms, handleCancelBulkSms }) => {
               <div className="flex justify-center mt-12 w-full text-center">
                 <button
                   type="button"
-                  className="px-8 py-4 rounded-3xl bg-stone-100 border max-w-full"
+                  className="px-8 py-4 rounded-3xl bg-stone-100 border w-full"
                   onClick={handleCancelBillRequestsModal}
                 >
                   No, Yet
                 </button>
                 <button
                   type="button"
-                  className="px-8 py-4 ml-6 rounded-3xl bg-slate-500 max-w-full text-white"
+                  className="px-8 py-4 ml-6 rounded-3xl bg-slate-500 w-full text-white"
                   onClick={handleSubmtBillRequests}
                 >
                   Yes, Proceed
