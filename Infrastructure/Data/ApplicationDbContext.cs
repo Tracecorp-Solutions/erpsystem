@@ -64,6 +64,8 @@ namespace Infrastructure.Data
 
         public DbSet<Payment> Payments { get; set; }
 
+        public DbSet<BillingRequest> BillingRequests { get; set; }
+
         #endregion
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
