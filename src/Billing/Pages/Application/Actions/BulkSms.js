@@ -22,7 +22,7 @@ const BulkSms = ({ showBulkSms, handleCancelBulkSms }) => {
   const fetchOperationAreas = async () => {
     try {
       const response = await axios.get(
-        "http://3.216.182.63:8095/TestApi/GetOperationAreas",
+        `${process.env.REACT_APP_API_URL}/GetOperationAreas`,
         {
           headers: {
             accept: "*/*",
@@ -31,7 +31,6 @@ const BulkSms = ({ showBulkSms, handleCancelBulkSms }) => {
         }
       );
 
-      console.log("Operation Areas fetched successfully:", response.data);
       setOperationAreas(response.data);
     } catch (error) {
       console.error("Error fetching Operation Areas:", error);
@@ -41,7 +40,7 @@ const BulkSms = ({ showBulkSms, handleCancelBulkSms }) => {
   const fetchBranches = async () => {
     try {
       const response = await axios.get(
-        "http://3.216.182.63:8095/TestApi/GetBranches",
+        `${process.env.REACT_APP_API_URL}/GetBranches`,
         {
           headers: {
             accept: "*/*",
@@ -50,7 +49,6 @@ const BulkSms = ({ showBulkSms, handleCancelBulkSms }) => {
         }
       );
 
-      console.log("Branches fetched successfully:", response.data);
       setBranches(response.data);
     } catch (error) {
       console.error("Error fetching Branches:", error);
@@ -70,11 +68,10 @@ const BulkSms = ({ showBulkSms, handleCancelBulkSms }) => {
       biller,
     };
 
-    console.log("data data", data);
 
     try {
       const response = await axios.post(
-        "http://3.216.182.63:8095/TestApi/AddBillingRequest",
+        `${process.env.REACT_APP_API_URL}/AddBillingRequest`,
         data,
         {
           headers: {
@@ -84,7 +81,6 @@ const BulkSms = ({ showBulkSms, handleCancelBulkSms }) => {
         }
       );
 
-      console.log("Request sent successfully:", response.data);
       message.success("Request sent successfully");
 
       setShowBillRequestsModal(false);
@@ -96,6 +92,7 @@ const BulkSms = ({ showBulkSms, handleCancelBulkSms }) => {
 
   const handleSendBillRequests = () => {
     setShowBillRequestsModal(true);
+    handleCancelBulkSms();
   };
 
   const handleCancelBillRequestsModal = () => {
@@ -234,6 +231,18 @@ const BulkSms = ({ showBulkSms, handleCancelBulkSms }) => {
               </div>
               <div className="mt-6 leading-7">
                 <ul>
+                <li>
+                    Operation Area:{" "}
+                    <span className="font-bold">
+                      {operationAreas.find((area) => area.id === operationAreaId)?.name || ""}
+                    </span>
+                  </li>
+                  <li>
+                    Branch:{" "}
+                    <span className="font-bold">
+                      {branches.find((branch) => branch.id === branchId)?.name || ""}
+                    </span>
+                  </li>
                   <li>
                     Billing Period:{" "}
                     <span className="font-bold">
@@ -271,14 +280,14 @@ const BulkSms = ({ showBulkSms, handleCancelBulkSms }) => {
               <div className="flex justify-center mt-12 w-full text-center">
                 <button
                   type="button"
-                  className="px-8 py-4 rounded-3xl bg-slate-500 max-w-full"
+                  className="px-8 py-4 rounded-3xl bg-stone-100 border max-w-full"
                   onClick={handleCancelBillRequestsModal}
                 >
-                  No, Cancel
+                  No, Yet
                 </button>
                 <button
                   type="button"
-                  className="px-8 py-4 ml-6 rounded-3xl bg-stone-100 max-w-full"
+                  className="px-8 py-4 ml-6 rounded-3xl bg-slate-500 max-w-full text-white"
                   onClick={handleSubmtBillRequests}
                 >
                   Yes, Proceed
