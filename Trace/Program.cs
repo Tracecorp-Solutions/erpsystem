@@ -40,6 +40,7 @@ builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("Emai
 builder.Services.AddSingleton<EmailService>();
 builder.Services.AddScoped<INewConnectionRepository, NewConnectionRepository>();
 builder.Services.AddScoped<ICustomerPayments, CustomerPayment>();
+builder.Services.AddScoped<IBilling, Billing>();
 
 builder.Services.AddControllers();
 builder.Services.AddCors(options =>
