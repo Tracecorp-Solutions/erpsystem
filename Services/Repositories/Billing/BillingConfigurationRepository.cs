@@ -210,6 +210,27 @@ namespace Services.Repositories.Billing
             await _context.SaveChangesAsync();
         }
 
+        public async Task AddCustomerTarrif(CustomerTarrifDto dto)
+        {
+            var tarrif = new CustomerTarrif
+            {
+                TarrifName = dto.TarrifName,
+                TarrifDescription = dto.TarrifDescription,
+                TarrifAmount = dto.TarrifAmount,
+                CreatedAt = DateTime.Now
+            };
+
+            _context.CustomerTarrifs.Add(tarrif);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<CustomerTarrif>> GetCustomerTarrifs()
+        {
+            var tarrifs = await _context.CustomerTarrifs.ToListAsync();
+
+            return tarrifs == null ? throw new ArgumentException("No Customer Tarrifs Found") : tarrifs;
+        }
+
         
     }
 }

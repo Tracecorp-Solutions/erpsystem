@@ -1,4 +1,5 @@
-﻿using Core.Models.Billing;
+﻿using Core.DTOs.Billing;
+using Core.Models.Billing;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,6 +43,8 @@ namespace Core.Repositories.Billing
         Task<IEnumerable<Material>> GetMaterials();
         Task EditMaterial(Material material);
         Task DeleteMaterial(Material material);
+        Task AddCustomerTarrif(CustomerTarrifDto dto);  
+        Task<IEnumerable<CustomerTarrif>> GetCustomerTarrifs();
 
         
         

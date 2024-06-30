@@ -437,6 +437,38 @@ namespace Trace.Controllers
             }
         }
 
+        [HttpPost("/AddCustomerTarrif")]
+        public async Task<IActionResult> AddCustomerTarrif([FromBody] CustomerTarrifDto dto) 
+        {
+            try
+            {
+                await _billingConfigurationRepository.AddCustomerTarrif(dto);
+                return Ok("Customer Tarrif Added Successfully");
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
+        }
+
+        [HttpGet("/GetCustomerTarrifs")]
+        public async Task<IActionResult> GetCustomerTarrifs()
+        {
+            try
+            {
+                var tarrifs = await _billingConfigurationRepository.GetCustomerTarrifs();
+                return Ok(tarrifs);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
+        }
+
 
     }
 }
