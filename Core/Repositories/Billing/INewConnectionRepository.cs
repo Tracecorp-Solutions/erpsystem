@@ -47,6 +47,8 @@ namespace Core.Repositories.Billing
 
         Task<NewConnectionInvoiceDto> GetInvoiceByInvoiceNumber(string invoiceNumber);
 
+        Task AssignCustomerTarrif(string applicationNumber, int trarrifId);
+
       
     }
 }

@@ -333,5 +333,23 @@ namespace Trace.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
             }
         }
+
+        [HttpPost("AssignCustomerTarrif")]
+        public async Task<IActionResult> AssignCustomerTarrif(string appilcationNumber, int tarrifId)
+        {
+            try
+            {
+                await _newconnectionRepository.AssignCustomerTarrif(appilcationNumber, tarrifId);
+                return Ok("Tarrif Assigned Successfully");
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
+        }
     }
 }

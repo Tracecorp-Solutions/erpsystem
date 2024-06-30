@@ -474,7 +474,7 @@ namespace Services.Repositories.Billing
                 throw new ArgumentException("No Application found with that applicationNumber");
 
             //update status of the application
-            application.Status = "CUSTOMER CONNECTED";
+            application.Status = "CUSTOMER CONNECTED PENDING TARRIF";
 
             //map doketInitiationDto to docketInitiation model
             var docketInitaition = new DocketInitiation
@@ -493,6 +493,15 @@ namespace Services.Repositories.Billing
                 InstalledBy = docket.InstalledBy,
                 Remarks = docket.Remarks
             };
+
+            //add application log
+            await _context.ApplicationLogs.AddAsync(new ApplicationLog
+            {
+                ApplicationNumber = application.ApplicationNumber,
+                Status = "CUSTOMER CONNECTED PENDING TARRIF",
+                Message = "Docket Initiation has been submitted",
+                Date = DateTime.Now
+            });
 
             // save docket
             _context.DocketInitiations.Add(docketInitaition);
@@ -600,6 +609,53 @@ namespace Services.Repositories.Billing
                 Status = invoice.Status,
                 InvoiceAmount = invoice.NewConnectionInvoiceMaterials.Sum(m => m.Price)
             };
+        }
+
+        public async Task AssignCustomerTarrif(string applicationNumber, int trarrifId) 
+        {
+            //get applicationid based on application number
+            var application = await _context.Applications
+                .FirstOrDefaultAsync(a => a.ApplicationNumber == applicationNumber);
+
+            //get docket initiation for customer
+            var docketInitiation = await _context.DocketInitiations
+                .FirstOrDefaultAsync(d => d.ApplicationId == application.Id);
+
+            if (docketInitiation == null)
+                throw new ArgumentException("No Docket initiation found for that application");
+
+            if (application == null)
+                throw new ArgumentException("No Application found with that applicationNumber");
+
+            //get customer tarrif based on tarrif id
+            var customerTarrif = await _context.CustomerTarrifs
+                .FirstOrDefaultAsync(t => t.Id == trarrifId);
+
+            if (customerTarrif == null)
+                throw new ArgumentException("No Customer Tarrif found with that tarrif ID");
+
+            //create new customer in customer table with new tarrif
+
+            await _context.BillingCustomers.AddAsync(new BillingCustomer
+            {
+                ApplicationId = application.Id,
+                CustomerRef = docketInitiation.CustomerRef,
+                TarrifId = trarrifId
+            });
+
+            //update status of the application
+            application.Status = "CUSTOMER CONNECTED";
+
+            //add application log
+            await _context.ApplicationLogs.AddAsync(new ApplicationLog
+            {
+                ApplicationNumber = application.ApplicationNumber,
+                Status = "CUSTOMER CONNECTED",
+                Message = "Customer Tarrif has been assigned",
+                Date = DateTime.Now
+            });
+
+            await _context.SaveChangesAsync();
         }
 
     }

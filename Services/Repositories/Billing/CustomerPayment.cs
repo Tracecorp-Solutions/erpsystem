@@ -20,6 +20,7 @@ namespace Services.Repositories.Billing
 
         public async Task AddPayments(PaymentDto pyt)
         {
+
             // Validate whether invoice exists in the database
             var invoice = await _context.NewConnectionInvoices
                 .Include(x => x.Application)
@@ -27,6 +28,12 @@ namespace Services.Repositories.Billing
 
             if (invoice == null)
                 throw new ArgumentException("Reference cannot be found");
+
+            //update status of application
+            var application = await _context.Applications
+                .FirstOrDefaultAsync(x => x.Id == invoice.ApplicationId);
+            if (application == null)
+                throw new ArgumentException("Application not found");
 
             // Check whether Payment Reference exists
             bool paymentExists = await _context.Payments
@@ -58,9 +65,21 @@ namespace Services.Repositories.Billing
                 // Update invoice status to paid
                 invoice.Status = "Paid";
                 invoice.PaymentDate = payment.PaymentDate;
+
+                //update status of application and log application log
+
+                application.Status = "PENDING CONNECTION";
+                await _context.ApplicationLogs.AddAsync(new ApplicationLog
+                {
+                    ApplicationNumber = application.ApplicationNumber,
+                    Status = "PENDING CONNECTION",
+                    Date = DateTime.Now
+                });
             }
 
             _context.Payments.Add(payment);
+
+
             await _context.SaveChangesAsync();
         }
 
