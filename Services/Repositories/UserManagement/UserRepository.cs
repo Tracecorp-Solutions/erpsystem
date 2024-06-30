@@ -149,7 +149,7 @@ namespace Services.Repositories.UserManagement
 
         public async Task<UserDTO> GetUserDetailsByEmail(string email)
         {
-            var user = _context.Users.FirstOrDefault(u => u.Email == email);
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
             if (user == null)
                 throw new ArgumentException("Invalid Email Address");
 

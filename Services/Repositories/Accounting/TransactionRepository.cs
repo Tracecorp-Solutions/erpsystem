@@ -77,13 +77,14 @@ namespace Services.Repositories.Accounting
                 .ToListAsync();
         }
 
-        private async Task<Account> GetAccountWithGroupAsync(int accountId)
+        private Task<Account> GetAccountWithGroupAsync(int accountId)
         {
-            return await _context.Accounts
+            return _context.Accounts
                 .Include(a => a.SubGroupAccount)
-                .ThenInclude(s => s.GroupAccount)
+                    .ThenInclude(s => s.GroupAccount)
                 .SingleOrDefaultAsync(a => a.Id == accountId);
         }
+
 
         private void ValidateAccounts(Account accountFrom, Account accountTo, decimal amount)
         {
@@ -139,7 +140,7 @@ namespace Services.Repositories.Accounting
 
         public async Task<TransactionDto> GetTransactionDetails(int tranid)
         {
-            var trans = _context.transactionEntries
+            var trans = await _context.transactionEntries
                 .AsNoTracking()
                 .Include(t => t.Account)
                 .Where(t => t.Id == tranid)

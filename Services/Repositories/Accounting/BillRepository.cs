@@ -24,7 +24,7 @@ namespace Services.Repositories.Accounting
             if (bill.BillTranItems.Count < 1)
                 throw new ArgumentException("No transactions entered in the bill");
 
-            await ValidateBillType(bill.Type);
+            ValidateBillType(bill.Type);
             ValidateBillStatus(bill.Status);
 
             await ValidateVendorAsync(bill.VendorId);
@@ -78,11 +78,14 @@ namespace Services.Repositories.Accounting
         }
 
 
-        private async Task ValidateBillType(string type)
+        private void ValidateBillType(string type)
         {
             if (type != "Expense" && type != "Income")
+            {
                 throw new ArgumentException("Bill type must be either 'Expense' or 'Income'");
+            }
         }
+
 
         private void ValidateBillStatus(string status)
         {
@@ -168,7 +171,7 @@ namespace Services.Repositories.Accounting
             if (existingBill == null)
                 throw new ArgumentException("No bill found with that id");
 
-            await ValidateBillType(bill.Type);
+            ValidateBillType(bill.Type);
             ValidateBillStatus(bill.Status);
 
             await ValidateVendorAsync(bill.VendorId);

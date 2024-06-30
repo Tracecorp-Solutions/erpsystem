@@ -1,4 +1,5 @@
-﻿using Core.Models.Billing;
+﻿using Core.DTOs.Billing;
+using Core.Models.Billing;
 using Core.Repositories.Billing;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -24,7 +25,7 @@ namespace Trace.Controllers
                 await _billingConfigurationRepository.AddState(state);
                 return Ok("State Added Successfully");
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
             }
@@ -41,7 +42,7 @@ namespace Trace.Controllers
             {
                 return BadRequest(ex.Message);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
             }
@@ -180,7 +181,7 @@ namespace Trace.Controllers
                 await _billingConfigurationRepository.AddCustomerCategory(customerCategory);
                 return Ok("Customer Category Added Successfully");
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
             }
