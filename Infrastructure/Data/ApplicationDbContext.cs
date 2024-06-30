@@ -66,6 +66,8 @@ namespace Infrastructure.Data
 
         public DbSet<BillingRequest> BillingRequests { get; set; }
 
+        public DbSet<MeterReading> MeterReadings { get; set; }
+
         #endregion
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
