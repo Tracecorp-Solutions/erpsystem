@@ -90,7 +90,7 @@ namespace Services.Repositories.Billing
 
 
             newapplication.ApplicationNumber = Guid.NewGuid().ToString("N").Substring(0, 8);
-            _context.Applications.Add(newapplication);
+            await _context.Applications.AddAsync(newapplication);
             _context.ApplicationLogs.Add(applicationlog);
             await _context.SaveChangesAsync();
             return newapplication.ApplicationNumber;
@@ -145,6 +145,11 @@ namespace Services.Repositories.Billing
             var application = await _context.Applications
                 .FirstOrDefaultAsync(a => a.ApplicationNumber == applicationId);
 
+
+            //check whether application has status of PENDING ASSIGNING SURVEYOR
+            if (application.Status != "PENDING ASSIGNING SURVEYOR")
+                throw new ArgumentException("Application status should be PENDING ASSIGNING SURVEYOR");
+
             if (application == null)
                 throw new ArgumentException("No applications found");
 
@@ -154,9 +159,21 @@ namespace Services.Repositories.Billing
             if (surveyor == null)
                 throw new ArgumentException("No Surveyor found");
 
+            //add application log
+
+            var applicationLog = new ApplicationLog
+            {
+                ApplicationNumber = application.ApplicationNumber,
+                Status = "PENDING SURVEY",
+                Message = "Surveyor has been assigned",
+                Date = DateTime.Now
+            };
+
+            await _context.ApplicationLogs.AddAsync(applicationLog);
+
             
             application.AssignedTo = surveyorId;
-            application.Status = "ASSIGNED TO SURVEYOR";
+            application.Status = "PENDING SURVEY";
             await _context.SaveChangesAsync();
 
             return "Surveyor assigned successfully";
@@ -167,6 +184,10 @@ namespace Services.Repositories.Billing
             // Get application by application Id
             var application = await _context.Applications
                 .FirstOrDefaultAsync(a => a.ApplicationNumber == report.ApplicationNumber);
+
+            //check whether application has status of PENDING SURVEY
+            if (application.Status != "PENDING SURVEY")
+                throw new ArgumentException("Application status should be PENDING SURVEY");
 
             //check whether files have been uploaded
             if (formFile == null)
@@ -214,10 +235,68 @@ namespace Services.Repositories.Billing
             _context.surveyReports.Add(surveyReport);
             await _context.SaveChangesAsync();
 
+            //add application log
+            var applicationLog = new ApplicationLog
+            {
+                ApplicationNumber = application.ApplicationNumber,
+                Status = "PENDING CONNECTION INVOICE",
+                Message = "Survey report has been submitted",
+                Date = DateTime.Now
+            };
+            await _context.ApplicationLogs.AddAsync(applicationLog);
+
             application.Status = "PENDING CONNECTION INVOICE";
             await _context.SaveChangesAsync();
 
             return "Survey report submitted successfully";
+        }
+
+        public async Task<string> GetNewConnectionInvoice(string applicationNumber)
+        {
+            //check whetger application exists
+            var application = await _context.Applications
+                .FirstOrDefaultAsync(a => a.ApplicationNumber == applicationNumber);
+            if (application == null)
+                throw new ArgumentException("No application found with that application ID");
+
+            //check whether application has status of PENDING CONNECTION INVOICE
+            if (application.Status != "PENDING CONNECTION INVOICE")
+                throw new ArgumentException("Application status should be PENDING CONNECTION INVOICE");
+
+            var connectionInvoice = await _context.NewConnectionInvoices
+                .Include(i => i.Application)
+                .Include(i => i.NewConnectionInvoiceMaterials)
+                .ThenInclude(i => i.Material)
+                .Include(i => i.Application.User)
+                .FirstOrDefaultAsync(i => i.Application.ApplicationNumber == applicationNumber);
+            if (connectionInvoice == null) throw new ArgumentException("No invoice found with that application ID");
+
+            // Serialize to JSON using Newtonsoft.Json with settings to handle circular references
+            var jsonSettings = new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                Formatting = Newtonsoft.Json.Formatting.Indented,
+            };
+
+            // update status of application and add application log
+            application.Status = "PENDING INVOICE PAYMENT";
+            
+            //add application log
+            var applicationLog = new ApplicationLog
+            {
+                ApplicationNumber = application.ApplicationNumber,
+                Status = "PENDING INVOICE PAYMENT",
+                Message = "Connection invoice has been generated",
+                Date = DateTime.Now
+            };
+
+            await _context.ApplicationLogs.AddAsync(applicationLog);
+
+            await _context.SaveChangesAsync();
+
+            string json = JsonConvert.SerializeObject(connectionInvoice, jsonSettings);
+
+            return json;
         }
 
         public async Task<IEnumerable<SurveyReport>> GetSurveyReports()
@@ -384,27 +463,7 @@ namespace Services.Repositories.Billing
             return connectionInvoice.InvoiceNumber;
         }
 
-        public async Task<string> GetNewConnectionInvoice(string applicationNumber)
-        {
-            var connectionInvoice = await _context.NewConnectionInvoices
-                .Include(i => i.Application)
-                .Include(i => i.NewConnectionInvoiceMaterials)
-                .ThenInclude(i => i.Material)
-                .Include(i => i.Application.User)
-                .FirstOrDefaultAsync(i => i.Application.ApplicationNumber == applicationNumber);
-            if (connectionInvoice == null) throw new ArgumentException("No invoice found with that application ID");
-
-            // Serialize to JSON using Newtonsoft.Json with settings to handle circular references
-            var jsonSettings = new JsonSerializerSettings
-            {
-                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-                Formatting = Newtonsoft.Json.Formatting.Indented,
-            };
-
-            string json = JsonConvert.SerializeObject(connectionInvoice, jsonSettings);
-
-            return json;
-        }
+        
 
         public async Task AddDocketInitiation(DocketInitiationDto docket)
         {
