@@ -42,6 +42,8 @@ namespace Core.Repositories.Billing
         Task<IEnumerable<Material>> GetMaterials();
         Task EditMaterial(Material material);
         Task DeleteMaterial(Material material);
+
+        
         
     }
 }

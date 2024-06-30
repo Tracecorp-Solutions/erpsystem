@@ -9,7 +9,7 @@ namespace Core.Models.Billing
 {
     public class BillingRequest
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
 
         [ForeignKey("OperationArea")]
         public int OperationAreaId { get; set; }
@@ -22,6 +22,6 @@ namespace Core.Models.Billing
 
         public OperationArea? OperationArea { get; set; }
 
-        public Branch Branch { get; set; }
+        public Branch? Branch { get; set; }
     }
 }
