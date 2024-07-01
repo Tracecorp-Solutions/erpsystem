@@ -36,7 +36,8 @@ function One() {
   const handleSaveReading = async () => {
     try {
       const response = await axios.post(
-        "http://3.216.182.63:8095/TestApi/AddMeterReading",
+        `${process.env.REACT_APP_API_URL}/AddMeterReading`
+        ,
         {
           meterNo: formData.meterNo,
           customerRef: formData.customerRef,

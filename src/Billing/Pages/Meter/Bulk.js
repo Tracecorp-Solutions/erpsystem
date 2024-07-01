@@ -13,7 +13,10 @@ function Bulk() {
       <div className="text-4xl font-semibold text-neutral-600 max-md:max-w-full">
         Capture Readings
       </div>
-      <div className="flex flex-col p-6 mt-6 text-base px-8 py-6 bg-white rounded-3xl max-md:px-5 max-md:max-w-full"style={{ width: '90%' }} >
+      <div
+        className="flex flex-col p-6 mt-6 text-base px-8 py-6 bg-white rounded-3xl max-md:px-5 max-md:max-w-full"
+        style={{ width: "90%" }}
+      >
         <div className="flex gap-5 pr-20 font-semibold max-md:flex-wrap max-md:pr-5">
           <div
             onClick={() => handleNavigate("one")}
@@ -34,7 +37,7 @@ function Bulk() {
           <div className="flex gap-4 max-md:flex-wrap w-full">
             <div className="flex flex-col px-5 flex-1">
               <div className="font-semibold text-neutral-600 w-full">
-                Meter Serial Number
+                Operational Area
               </div>
               <div className="justify-center items-start px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 w-full">
                 24632628786735
@@ -42,7 +45,7 @@ function Bulk() {
             </div>
             <div className="flex flex-col px-5 flex-1">
               <div className="font-semibold text-neutral-600 w-full">
-                Previous Reading
+                Branch/Zone
               </div>
               <div className="justify-center items-start px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 w-full">
                 0
@@ -52,7 +55,7 @@ function Bulk() {
           <div className="flex gap-4 mt-4 max-md:flex-wrap w-full">
             <div className="flex flex-col px-5 flex-1">
               <div className="font-semibold text-neutral-600 w-full">
-                Previous Reading Date
+                Current Period
               </div>
               <div className="flex gap-2 justify-between px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 w-full">
                 <div>04/04/2024</div>
@@ -63,96 +66,26 @@ function Bulk() {
                 />
               </div>
             </div>
-            <div className="flex flex-col px-5 flex-1">
-              <div className="font-semibold w-full">Consumption</div>
-              <div className="justify-center items-start px-4 py-4 mt-2 rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 w-full">
-                0
-              </div>
-            </div>
           </div>
           <div className="flex gap-4 mt-4 max-md:flex-wrap w-full">
             <div className="flex flex-col px-5 flex-1">
-              <div className="font-semibold w-full">Average Consumption</div>
+              <div className="font-semibold w-full">Current Reading Date</div>
               <div className="justify-center items-start px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 w-full">
                 0
               </div>
             </div>
             <div className="flex flex-col px-5 flex-1">
-              <div className="font-semibold w-full">Meter Dials</div>
+              <div className="font-semibold w-full">Meter Reader</div>
               <div className="justify-center items-start px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 w-full">
                 0
               </div>
             </div>
           </div>
-          <div className="flex gap-4 mt-4 max-md:flex-wrap w-full">
-            <div className="flex flex-col px-5 flex-1">
-              <div className="font-semibold w-full">Reading Type</div>
-              <div className="justify-center items-start px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 w-full">
-                PERIODIC
-              </div>
-            </div>
-            <div className="flex flex-col px-5 flex-1">
-              <div className="font-semibold w-full">Is Billed?</div>
-              <div className="justify-center items-start px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 w-full">
-                YES
-              </div>
-            </div>
-          </div>
+
           <div className="flex gap-4 mt-4 max-md:flex-wrap w-full">
             <div className="flex flex-col px-5 flex-1">
               <div className="font-semibold text-neutral-600 w-full">
-                Current Reading
-              </div>
-              <div className="justify-center items-start px-4 py-4 mt-2 rounded-xl border border-solid border-neutral-500 border-opacity-30 text-neutral-400 w-full">
-                Enter Reading
-              </div>
-            </div>
-            <div className="flex flex-col px-5 flex-1">
-              <div className="font-semibold text-neutral-600 w-full">
-                Current Reading Date
-              </div>
-              <div className="flex gap-2 justify-between px-4 py-4 mt-2 rounded-xl border border-solid border-neutral-500 border-opacity-30 text-neutral-400 w-full">
-                <div>-- / -- / ----</div>
-                <img
-                  loading="lazy"
-                  src="https://cdn.builder.io/api/v1/image/assets/TEMP/8c7515d0e48a8702b0a75494e4c7e35f39776b5b1f5e110f501c8205396c6041?apiKey=5bf51c3fc9cb49b480a07670cbcd768f&"
-                  className="shrink-0 self-start w-6 aspect-square"
-                />
-              </div>
-            </div>
-          </div>
-          <div className="flex gap-4 mt-4 max-md:flex-wrap w-full">
-            <div className="flex flex-col px-5 flex-1">
-              <div className="font-semibold text-neutral-600 w-full">
-                Meter Reader
-              </div>
-              <div className="flex gap-2 justify-between px-4 py-4 mt-2 rounded-xl border border-solid border-neutral-500 border-opacity-30 text-neutral-400 w-full">
-                <div>Select Reader</div>
-                <img
-                  loading="lazy"
-                  src="https://cdn.builder.io/api/v1/image/assets/TEMP/a8721aa8c44b81e6b2348dce4fb02570aeacf025a99ab01d6575684f8de43c45?apiKey=5bf51c3fc9cb49b480a07670cbcd768f&"
-                  className="shrink-0 self-start w-6 aspect-square"
-                />
-              </div>
-            </div>
-            <div className="flex flex-col px-5 flex-1">
-              <div className="font-semibold text-neutral-600 w-full">
-                Is the Reading an Estimate?
-              </div>
-              <div className="flex gap-2 justify-between px-4 py-4 mt-2 rounded-xl border border-solid border-neutral-500 border-opacity-30 text-neutral-400 w-full">
-                <div>Select your Answer</div>
-                <img
-                  loading="lazy"
-                  src="https://cdn.builder.io/api/v1/image/assets/TEMP/a8721aa8c44b81e6b2348dce4fb02570aeacf025a99ab01d6575684f8de43c45?apiKey=5bf51c3fc9cb49b480a07670cbcd768f&"
-                  className="shrink-0 self-start w-6 aspect-square"
-                />
-              </div>
-            </div>
-          </div>
-          <div className="flex gap-4 mt-4 max-md:flex-wrap w-full">
-            <div className="flex flex-col px-5 flex-1">
-              <div className="font-semibold text-neutral-600 w-full">
-                Was the meter reset?
+                Does this file have a header?
               </div>
               <div className="flex gap-2 justify-between px-4 py-4 mt-2 rounded-xl border border-solid border-neutral-500 border-opacity-30 text-neutral-400 w-full">
                 <div>Select your Answer</div>
@@ -164,16 +97,14 @@ function Bulk() {
               </div>
             </div>
             <div className="flex flex-col px-5 flex-1">
-              <div className="font-semibold text-neutral-600 w-full">
-                Is the expected reading for today?
+              <div className="w-full font-semibold text-neutral-600 max-md:max-w-full">
+                Browse File
               </div>
-              <div className="flex gap-2 justify-between px-4 py-4 mt-2 rounded-xl border border-solid border-neutral-500 border-opacity-30 text-neutral-400 w-full">
-                <div>Select your Answer</div>
-                <img
-                  loading="lazy"
-                  src="https://cdn.builder.io/api/v1/image/assets/TEMP/a8721aa8c44b81e6b2348dce4fb02570aeacf025a99ab01d6575684f8de43c45?apiKey=5bf51c3fc9cb49b480a07670cbcd768f&"
-                  className="shrink-0 self-start w-6 aspect-square"
-                />
+              <div className="flex gap-2 justify-between px-4 py-2 mt-2 rounded-xl border border-solid border-neutral-500 border-opacity-30 text-neutral-400 w-full">
+                <div className="justify-center items-center px-12 py-2 whitespace-nowrap rounded-md bg-stone-200 text-neutral-600 max-md:px-5">
+                  Browse
+                </div>
+                <div className="my-auto text-neutral-400">No file selected</div>
               </div>
             </div>
           </div>
