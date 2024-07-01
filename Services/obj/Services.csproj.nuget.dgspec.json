@@ -4,6 +4,7 @@
     "D:\\working directory\\erpsystem\\Services\\Services.csproj": {}
   },
   "projects": {
+<<<<<<< HEAD
     "D:\\working directory\\erpsystem\\Core\\Core.csproj": {
       "version": "1.0.0",
       "restore": {
@@ -146,6 +147,8 @@
         }
       }
     },
+=======
+>>>>>>> testmain
     "D:\\working directory\\erpsystem\\Services\\Services.csproj": {
       "version": "1.0.0",
       "restore": {
@@ -170,14 +173,7 @@
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
-            "projectReferences": {
-              "D:\\working directory\\erpsystem\\Core\\Core.csproj": {
-                "projectPath": "D:\\working directory\\erpsystem\\Core\\Core.csproj"
-              },
-              "D:\\working directory\\erpsystem\\Infrastructure\\Infrastructure.csproj": {
-                "projectPath": "D:\\working directory\\erpsystem\\Infrastructure\\Infrastructure.csproj"
-              }
-            }
+            "projectReferences": {}
           }
         },
         "warningProperties": {
