@@ -168,7 +168,7 @@ function InvoiceDetails() {
                       <tr key={index}>
                         <td className="px-6 py-2 whitespace-nowrap">
                           <div className="text-sm leading-5 text-neutral-600">
-                            {item.MaterialId}
+                            {item.MaterialName}
                           </div>
                         </td>
                         <td className="px-6 py-2 whitespace-nowrap">
