@@ -8,17 +8,20 @@ function ConfMaterials() {
   const [materials, setMaterials] = useState([]);
   const [isUpdateModalVisible, setIsUpdateModalVisible] = useState(false);
   const navigate = useNavigate();
-  
+
   const handleUpdateModalVisible = () => {
-    setIsUpdateModalVisible(!isUpdateModalVisible);
+    setIsUpdateModalVisible(true);
   };
 
-   
+  const handleCloseModalVisible = () => {
+    setIsUpdateModalVisible(false);
+  }
+
   const handleMenuClick = ({ key }) => {
     // Implement navigation logic based on the key (menu item clicked)
-    if (key === 'view') {
-      navigate(`/billingdashboard`, { state: { screen: 'invoice-details' } });  // Navigate to invoice details page
-    } else if (key === 'approve') {
+    if (key === "view") {
+      navigate(`/billingdashboard`, { state: { screen: "invoice-details" } }); // Navigate to invoice details page
+    } else if (key === "approve") {
       // Handle other menu item actions if needed
     }
   };
@@ -106,13 +109,9 @@ function ConfMaterials() {
           <div className="shrink-0 mt-2 h-px border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-opacity-10 max-md:max-w-full" />
         </div>
       </div>
-      {isUpdateModalVisible && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white rounded-lg p-6 w-[70%] max-w-xl">
-            <CreateMaterials />
-          </div>
-        </div>
-      )}
+    
+            <CreateMaterials isUpdateModalVisible={isUpdateModalVisible} handleCloseModalVisible={handleCloseModalVisible} />
+      
     </>
   );
 }
