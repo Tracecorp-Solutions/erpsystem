@@ -3,6 +3,7 @@ import SideNav from "../../shared/navigations/SideNav";
 import TopNav from "../../shared/navigations/TopNav";
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import NewApplicationForm from "../New Connections/newApplicationForm";
 import ApplicationPage from "../Application/ApplicationPage";
 import ApplicationDetail from "../Application/ApplicationDetail";
 import UpdateInvoice from "../Application/Actions/UpdateInvoice";
@@ -12,6 +13,7 @@ import Reconcillations from "../Application/Reconcillations";
 import Payments from "../Application/Payments";
 import BillingCycle from "../Application/BillingCycle";
 import BillAdjustment from "../Application/BillAdjustment";
+import InvoiceDetails from "../Application/Actions/InvoiceDetails";
 
 const BillingDashboard = () => {
   const location = useLocation();
@@ -36,6 +38,7 @@ const BillingDashboard = () => {
         <div className="w-full flex justify-center">
           <div className="main-content bg-stone-100 pb-6 rounded-t-3xl">
             <div className="content px-4 sm:px-6 lg:px-8 group-container">
+              {screen === "new-application" && <NewApplicationForm />}
               {screen === "application" && <ApplicationPage />}
               {screen === "view-detail" && <ApplicationDetail />}
               {screen === "update-invoice" && <UpdateInvoice />}
@@ -45,6 +48,7 @@ const BillingDashboard = () => {
               {screen === "payments" && <Payments />}
               {screen === "billing" && <BillingCycle />}
               {screen === "bill-adjsutment" && <BillAdjustment />}
+              {screen === "invoice-details" && <InvoiceDetails />}
             </div>
           </div>
         </div>

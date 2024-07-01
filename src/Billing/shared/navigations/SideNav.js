@@ -24,7 +24,7 @@ function SideNav() {
 
   const moduleScreens = [
     { to: "/Dashboard", label: "Dashboard" },
-    { to: "/groups", label: "Groups" },
+    { to: "/connection", label: "Connection" },
     { to: "/sub-group", label: "Subgroups" },
     { to: "/accounts", label: "Accounts" },
     { to: "/transactions", label: "Transactions" },
@@ -154,13 +154,7 @@ function SideNav() {
                   }`}
                 >
                   <Minus className="shrink-0 self-start w-6 aspect-square" />
-                  <button
-                    onClick={() =>
-                      navigate("/Dashboardlayout", {
-                        state: { screen: "groups" },
-                      })
-                    }
-                  >
+                  <button onClick={() => navigate("/billingDashboard", { state: { screen: "new-application" } })}>
                     New Connections
                   </button>
                 </div>

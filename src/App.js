@@ -3,7 +3,7 @@ import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Dashboard from "./Billing/Components/shared/Dashboard";
 import Dashboardlayout from "./Accounting/Pages/layout/DashboardLayout";
-import GroupAccountSetUp from "./Accounting/Pages/Group/GroupAccountSetUp";
+import NewApplicationForm from "./Billing/Pages/New Connections/newApplicationForm";
 import SubGroupSetup from "./Accounting/Pages/Subgroup/SubGroupSetup";
 import AccountSetup from "./Accounting/Pages/Accounts/AccountSetup";
 import Transactions from "./Accounting/Pages/Transaction/Transactions";
@@ -34,6 +34,7 @@ import BillingDashboard from "./Billing/Pages/Layout/BillingDashboard";
 import ApplicationDetail from "./Billing/Pages/Application/ApplicationDetail";
 import UpdateInvoice from "./Billing/Pages/Application/Actions/UpdateInvoice";
 import Reconcillations from "./Billing/Pages/Application/Reconcillations";
+import InvoiceDetails from "./Billing/Pages/Application/Actions/InvoiceDetails";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -65,7 +66,7 @@ function App() {
                 path="/verify"
                 element={<VerifyUser onVerify={handleVerify} />}
               />
-              <Route path="/groups" element={<GroupAccountSetUp />} />
+              <Route path="/new-application" element={<NewApplicationForm />} />
               <Route path="/sub-group" element={<SubGroupSetup />} />
               <Route path="/accounts" element={<AccountSetup />} />
               <Route path="/vendors" element={<VendorSetup />} />
@@ -74,6 +75,7 @@ function App() {
               <Route path="/signup" element={<Signup />} />
               <Route path="/verify" element={<VerifyUser />} />
               <Route path="/reset" element={<SetPassword />} />
+              <Route path="/billingdashboard" element={<BillingDashboard />} />
               {/* <Route path="/forgot" element={<Forgot />} /> */}
               <Route path="/Dashboardlayout" element={<Dashboardlayout />} />
               <Route path="/billingdashboard" element={<BillingDashboard />} />
@@ -102,6 +104,7 @@ function App() {
               <Route path="/application" element={<ApplicationPage />} />
               <Route path="/update-invoice" element={<UpdateInvoice />} />
               <Route path="/reconciliation" element={<Reconcillations />} />
+              <Route path="/invoice-details" element={<InvoiceDetails />} />
               {/* <Route path="/view-detail" element={<ApplicationDetail />} /> */}
               reconciliation
             </Routes>
