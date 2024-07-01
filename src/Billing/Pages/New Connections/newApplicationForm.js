@@ -1,47 +1,24 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import SideNav from "../../shared/navigations/SideNav";
-import TopNav from "../../shared/navigations/TopNav";
 import {
-  addOperationalArea,
   getOperationalAreas,
 } from "../../Apis/operationAreaApi";
-import { getStates, addState } from "../../Apis/stateApi";
-import { addBranch, getBranches } from "../../Apis/branchApi";
-import { addTerritory, getTerritories } from "../../Apis/territoryApi";
-import { addSubTerritory, getSubTerritories } from "../../Apis/subTerritoryApi";
+import { getStates } from "../../Apis/stateApi";
+import {  getBranches } from "../../Apis/branchApi";
+import {  getTerritories } from "../../Apis/territoryApi";
+import {  getSubTerritories } from "../../Apis/subTerritoryApi";
 import {
-  getApplications,
-  getApplicationById,
-} from "../../Apis/getApplicationApi";
-import {
-  addCustomerCategories,
   getCustomerCategories,
 } from "../../Apis/customerCategory";
-import { addCustomerType, getCustomerTypes } from "../../Apis/customerTypes";
+import {  getCustomerTypes } from "../../Apis/customerTypes";
 import {
-  addBillDeliveryMethod,
   getBillDeliveryMethods,
 } from "../../Apis/billDeliveryMethod";
 
-function Step({ stepNumber, stepTitle, imgSrc, isActive }) {
+
+function Step({  stepTitle,  isActive }) {
   return (
     <div className="flex flex-col items-center">
-      <div
-      // className={`flex justify-center items-center px-3 w-12 h-12 rounded-3xl ${
-      //   isActive ? "bg-slate-500" : "bg-stone-100"
-      // }`}
-      >
-        {/* <img
-          loading="lazy"
-          src={imgSrc}
-          alt={`Step ${stepNumber} Icon`}
-          className="w-full aspect-square"
-        /> */}
-      </div>
-      {/* <div className="mt-2 text-xs font-medium tracking-wide uppercase text-neutral-400">
-        step {stepNumber}
-      </div> */}
       <div
         className={`self-stretch mt-1 text-base font-semibold leading-6 ${
           isActive ? "text-neutral-600" : "text-neutral-400"
@@ -223,7 +200,7 @@ const NewApplicationForm = () => {
 
     try {
       const response = await axios.post(
-        "http://3.216.182.63:8095/TestApi/NewApplication",
+        `${process.env.REACT_APP_API_URL}/NewApplication`,
         formData,
         {
           headers: {
@@ -231,6 +208,7 @@ const NewApplicationForm = () => {
           },
         }
       );
+
       alert(response.data); // Show success message
     } catch (error) {
       setErrorMessage(""); // Set error message
