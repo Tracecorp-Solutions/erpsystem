@@ -14,6 +14,10 @@ import Payments from "../Application/Payments";
 import BillingCycle from "../Application/BillingCycle";
 import BillAdjustment from "../Application/BillAdjustment";
 import InvoiceDetails from "../Application/Actions/InvoiceDetails";
+import AddMaterials from "../Application/Actions/AddMaterials";
+import ShowMaterials from "../Application/Actions/ShowMaterials";
+import ConfMaterials from "../Materials/ConfMaterials";
+import CreateMaterials from "../Materials/CreateMaterials";
 import AddMeter from "../Application/AddMeter";
 import MeterDetails from "../Application/MeterDetails";
 import EditDocketInitiation from "../Application/EditDocketInitiation";
@@ -52,6 +56,10 @@ const BillingDashboard = () => {
               {screen === "billing" && <BillingCycle />}
               {screen === "bill-adjsutment" && <BillAdjustment />}
               {screen === "invoice-details" && <InvoiceDetails />}
+              {screen === "add-materials" && <AddMaterials />}
+              {screen === "show-materials" && <ShowMaterials />}
+              {screen === "conf-materials" && <ConfMaterials />}
+              {screen === "create-materials" && <CreateMaterials />}
               {screen === "add-meter" && <AddMeter />}
               {screen === "report-details" && <MeterDetails />}
               {screen === "edit-docket-initiation" && <EditDocketInitiation />}

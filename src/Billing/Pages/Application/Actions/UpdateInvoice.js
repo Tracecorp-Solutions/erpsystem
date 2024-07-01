@@ -1,153 +1,205 @@
-import React, { useState } from "react";
-import SideNav from "../../../shared/navigations/SideNav";
-import TopNav from "../../../shared/navigations/TopNav";
-import InvoiceItem from "./InvoiceItem";
-import { Table, Menu, Dropdown } from "antd";
-import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
+import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import InvoiceDetails from "./InvoiceDetails";
+import { Dropdown, Menu } from "antd";
+import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
+import InvoiceItem from "./InvoiceItem";
 
 function UpdateInvoice() {
   const [isUpdateModalVisible, setIsUpdateModalVisible] = useState(false);
+  const [invoiceItems, setInvoiceItems] = useState(null); // Initialize as null
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const location = useLocation();
   const navigate = useNavigate();
+  const { state } = location;
+
+  const applicationNumber = state?.applicationNumber;
+
+  useEffect(() => {
+    if (applicationNumber) {
+      fetchInvoiceItems(applicationNumber);
+    }
+  }, [applicationNumber]);
+
+  const fetchInvoiceItems = async (applicationNumber) => {
+    try {
+      const response = await fetch(
+        `http://3.216.182.63:8095/TestApi/GetNewConnectionInvoice?applicationNumber=${applicationNumber}`
+      );
+      if (!response.ok) {
+        throw new Error("Failed to fetch invoice items");
+      }
+      const data = await response.json();
+      console.log("Fetched data:", data);
+      setInvoiceItems(data); // Assuming data is the entire object from API
+      setErrorMessage(""); // Clear error message on successful fetch
+    } catch (error) {
+      console.error("Error fetching invoice items:", error);
+      setInvoiceItems(null); // Reset invoiceItems to null on error
+      setErrorMessage("Failed to fetch invoice items");
+    }
+  };
+
+  const onClose = () => {
+    setIsUpdateModalVisible(false);
+  };
 
   const handleUpdateModalVisible = () => {
     setIsUpdateModalVisible(!isUpdateModalVisible);
   };
 
-  
   const handleMenuClick = ({ key }) => {
-    // Implement navigation logic based on the key (menu item clicked)
-    if (key === 'view') {
-      navigate(`/billingdashboard`, { state: { screen: 'invoice-details' } });  // Navigate to invoice details page
-    } else if (key === 'approve') {
-      // Handle other menu item actions if needed
+    if (key === "view") {
+      navigate(`/billingdashboard`, { state: { screen: "invoice-details", invoiceItems } });
+    } else if (key === "approve") {
+      // Handle approve logic
     }
   };
 
+  const handleItemAdded = () => {
+    onClose();
+  };
+
+  const handleSaveInvoice = async () => {
+    try {
+      const response = await fetch(
+        "http://3.216.182.63:8095/TestApi/AddConnectionInvoice",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            invoiceItems: invoiceItems.NewConnectionInvoiceMaterials, // Adjusted to send just the materials array
+            applicationNumber,
+          }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to save invoice");
+      }
+
+      setSuccessMessage("Invoice saved successfully");
+      setErrorMessage("");
+      navigate(`/billingdashboard`, { state: { screen: "invoice-details" } });
+    } catch (error) {
+      console.error("Error saving invoice:", error);
+      setErrorMessage("Failed to save invoice");
+      setSuccessMessage("");
+    }
+  };
+
+  console.log("invoiceItems:", invoiceItems);
+
   return (
     <>
-      <SideNav />
       <div>
-        <TopNav />
-        <div className="flex flex-col flex-wrap justify-center content-start items-center py-8 px-12 rounded-3xl bg-stone-100 mr-12  max-md:max-w-full">
-          <div className="flex gap-5 justify-between self-stretch px-6 w-full text-4xl font-semibold leading-[57.6px] text-neutral-600 max-md:flex-wrap max-md:px-5 max-md:max-w-full">
-            <div>Material Cost Estimates</div>
-            <div>$0.00</div>
+        {successMessage && (
+          <div className="flex justify-center mt-2 text-green-600">
+            {successMessage}
           </div>
-          <div className="flex flex-col p-6 mt-6 w-full bg-white rounded-3xl max-w-[1088px] text-neutral-600 max-md:px-5 max-md:max-w-full">
-            <div className="text-2xl font-semibold capitalize max-md:max-w-full">
-              Application Information
-            </div>
-            <div className="shrink-0 mt-4 h-px border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-opacity-10 max-md:max-w-full" />
-            <div className="flex gap-4 justify-between pt-4 mt-4 text-base leading-6 max-md:flex-wrap max-md:max-w-full">
-              <div className="flex flex-col">
-                <div className="font-semibold">Application Number</div>
-                <div className="mt-2">APP567890</div>
-              </div>
-              <div className="flex flex-col">
-                <div className="font-semibold">Applicant Name</div>
-                <div className="mt-2">Grace Eze</div>
-              </div>
-              <div className="flex flex-col">
-                <div className="font-semibold">Surveyor’s Name</div>
-                <div className="mt-2">Nowembabazi Nickson</div>
-              </div>
-              <div className="flex flex-col">
-                <div className="font-semibold">Job Number</div>
-                <div className="mt-2">JCN/AB/00/22022022/1</div>
-              </div>
-            </div>
+        )}
+        {errorMessage && (
+          <div className="flex justify-center mt-2 text-red-600">
+            {errorMessage}
           </div>
-          <div className="flex flex-col p-6 mt-6 w-full bg-white rounded-3xl max-w-[1088px] max-md:px-5 max-md:max-w-full">
-            <div className="flex gap-4 justify-between w-full font-semibold max-md:flex-wrap max-md:max-w-full">
-              <div className="my-auto text-2xl capitalize text-neutral-600">
-                Invoice Items
+        )}
+        {!invoiceItems ? (
+          <div className="flex justify-center mt-2">Loading...</div>
+        ) : (
+          <div>
+            <div className="flex flex-col p-6 mt-6 w-full bg-white rounded-3xl max-w-[1088px] text-neutral-600 max-md:px-5 max-md:max-w-full">
+              <div className="text-2xl font-semibold capitalize max-md:max-w-full">
+                Application Information
               </div>
-              <div className="flex gap-2 justify-center px-6 py-3 text-base leading-6 text-white rounded-3xl bg-slate-500 max-md:px-5">
-                <button
-                  className="justify-center self-start px-3 py-3 mt-2.5 text-sm font-semibold text-white whitespace-nowrap rounded-3xl bg-slate-500 max-md:px-5"
-                  onClick={handleUpdateModalVisible}
-                >
-                  + Add Invoice Item
-                </button>
+              <div className="shrink-0 mt-4 h-px border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-opacity-10 max-md:max-w-full" />
+              <div className="flex gap-4 justify-between pt-4 mt-4 text-base leading-6 max-md:flex-wrap max-md:max-w-full">
+                <div className="flex flex-col">
+                  <div className="font-semibold">Application Number</div>
+                  <div className="mt-2">{applicationNumber}</div>
+                </div>
+                <div className="flex flex-col">
+                  <div className="font-semibold">Applicant Name</div>
+                  <div className="mt-2">{invoiceItems.Application.FullName}</div>
+                </div>
+                <div className="flex flex-col">
+                  <div className="font-semibold">Surveyor’s Name</div>
+                  <div className="mt-2">{invoiceItems.Application.surveyorName}</div>
+                </div>
               </div>
             </div>
-            <div className="shrink-0 mt-4 h-px border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-opacity-10 max-md:max-w-full" />
-            <div className="flex gap-5 justify-between px-6 py-3.5 mt-4 w-full text-xs font-medium tracking-wide uppercase rounded-3xl bg-stone-100 text-neutral-400 max-md:flex-wrap max-md:px-5 max-md:max-w-full">
-              <div className="flex gap-5 justify-between max-md:flex-wrap max-md:max-w-full">
-                <div className="flex gap-4">
-                  <div className="shrink-0 w-5 h-5 bg-white rounded border-2 border-solid border-neutral-500 border-opacity-10" />
-                  <div className="my-auto">ITEM NAME</div>
+            <div className="flex flex-col p-6 mt-6 w-full bg-white rounded-3xl max-w-[1088px] max-md:px-5 max-md:max-w-full">
+              <div className="flex gap-4 justify-between w-full font-semibold max-md:flex-wrap max-md:max-w-full">
+                <div className="my-auto text-2xl capitalize text-neutral-600">
+                  Invoice Items
                 </div>
-                <div className="my-auto">UNIT COST</div>
-              </div>
-              <div className="flex gap-5 justify-between my-auto">
-                <div>QUANTITY</div>
-                <div>Amount due</div>
-              </div>
-            </div>
-            <div className="flex gap-5 justify-between px-6 py-2 mt-2 w-full rounded-3xl max-md:flex-wrap max-md:px-5 max-md:max-w-full">
-              <div className="flex gap-5 justify-between my-auto text-base leading-6 text-neutral-600 max-md:flex-wrap max-md:max-w-full">
-                <div className="flex gap-4 bg-white">
-                  <div className="shrink-0 my-auto w-5 h-5 bg-white rounded border-2 border-solid border-neutral-500 border-opacity-10" />
-                  <div>Water pipes | 20 meters</div>
-                </div>
-                <div>80,000</div>
-              </div>
-              <div className="flex gap-5 justify-between items-center">
-                <div className="self-stretch my-auto text-base leading-6 text-neutral-600">
-                  3
-                </div>
-                <div className="self-stretch my-auto text-base leading-6 text-neutral-600">
-                  240,000
-                </div>
-                <div className="flex justify-center items-center self-stretch px-1.5 w-8 h-8 rounded-3xl bg-stone-100">
-                  <Dropdown
-                    overlay={
-                      <Menu onClick={handleMenuClick}>
-                        <Menu.Item key="view">View invoice</Menu.Item>
-                        <Menu.Item key="approve">Approve Application</Menu.Item>
-                      </Menu>
-                    }
-                    trigger={["click"]}
-                    placement="bottomLeft"
+                <div className="flex gap-2 justify-center px-6 py-3 text-base leading-6 text-white rounded-3xl max-md:px-5">
+                  <button
+                    className="justify-center self-start px-3 py-3 mt-2.5 text-sm font-semibold text-white whitespace-nowrap rounded-3xl bg-blue-400 max-md:px-5"
+                    onClick={handleUpdateModalVisible}
                   >
-                    <EllipsisVerticalIcon className="w-7 h-7" />
-                  </Dropdown>
+                    + Add Invoice Item
+                  </button>
+                </div>
+              </div>
+              {invoiceItems.NewConnectionInvoiceMaterials.map((item) => (
+                <div
+                  key={item.Id}
+                  className="flex gap-5 justify-between px-6 py-3.5 mt-4 w-full text-x font-medium tracking-wide rounded-3xl bg-white text-neutral-600 max-md:flex-wrap max-md:px-5 max-md:max-w-full"
+                >
+                  <div className="flex gap-4">
+                    <div className="shrink-0 w-5 h-5 bg-white rounded-2 border-2 border-solid border-neutral-500 border-opacity-10" />
+                    <div className="my-auto">{item.MaterialId}</div>
+                  </div>
+                  <div className="my-auto">{item.Quantity}</div>
+                  <div className="my-auto">{item.Price}</div>
+                  <div className="flex justify-center items-center self-stretch px-1.5 w-8 h-8 rounded-3xl bg-stone-100">
+                    <Dropdown
+                      overlay={
+                        <Menu onClick={handleMenuClick}>
+                          <Menu.Item key="view">View Invoice</Menu.Item>
+                        </Menu>
+                      }
+                      trigger={["click"]}
+                      placement="bottomLeft"
+                    >
+                      <EllipsisVerticalIcon className="w-7 h-7" />
+                    </Dropdown>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="justify-end py-6 mt-6 max-w-full w-[1040px] max-md:pl-5">
+              <div className="flex gap-5 max-md:flex-col max-md:gap-0">
+                <div className="flex flex-col w-6/12 max-md:ml-0 max-md:w-full">
+                  <button
+                    className="grow justify-center items-center px-8 py-4 w-full text-base leading-6 whitespace-nowrap rounded-3xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 max-md:px-5 max-md:mt-10"
+                    onClick={() => navigate('/billingdashboard')}
+                  >
+                    Cancel
+                  </button>
+                </div>
+                <div className="flex flex-col ml-5 w-6/12 max-md:ml-0 max-md:w-full">
+                  <button
+                    className="grow justify-center items-center px-8 py-4 w-full text-base font-semibold leading-6 text-white rounded-3xl bg-blue-400 max-md:px-5"
+                    onClick={handleSaveInvoice}
+                  >
+                    Save Invoice
+                  </button>
                 </div>
               </div>
             </div>
-            <div className="shrink-0 mt-2 h-px border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-opacity-10 max-md:max-w-full" />
           </div>
-          <div className="justify-end py-6 mt-6 max-w-full w-[1040px] max-md:pl-5">
-            <div className="flex gap-5 max-md:flex-col max-md:gap-0">
-              <div className="flex flex-col w-6/12 max-md:ml-0 max-md:w-full">
-                <div className="grow justify-center items-center px-8 py-4 w-full text-base leading-6 whitespace-nowrap rounded-3xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 max-md:px-5 max-md:mt-10">
-                  Cancel
-                </div>
-              </div>
-              <div className="flex flex-col ml-5 w-6/12 max-md:ml-0 max-md:w-full">
-                <div className="grow justify-center items-center px-8 py-4 w-full text-base font-semibold leading-6 text-white rounded-3xl bg-slate-500 max-md:px-5 max-md:mt-10">
-                  Save Invoice
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        )}
       </div>
+      {/* Invoice Item Modal */}
       {isUpdateModalVisible && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white rounded-lg p-6 w-[70%] max-w-3xl">
-            <InvoiceItem />
-            <button
-              className="mt-4 px-4 py-2 text-white bg-red-500 rounded"
-              onClick={handleUpdateModalVisible}
-            >
-              Close
-            </button>
-          </div>
-        </div>
+        <InvoiceItem
+          applicationNumber={applicationNumber}
+          onClose={handleUpdateModalVisible}
+          onItemAdded={handleItemAdded}
+        />
       )}
     </>
   );

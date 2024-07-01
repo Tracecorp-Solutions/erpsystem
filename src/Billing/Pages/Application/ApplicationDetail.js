@@ -610,9 +610,13 @@ const ApplicationDetail = () => {
                   <div className="flex flex-col ml-5 w-[35%] max-md:ml-0 max-md:w-full">
                     <button
                       className="grow justify-center px-6 py-3 mt-9 w-full text-sm font-semibold text-white whitespace-nowrap rounded-3xl bg-slate-500 max-md:px-5 max-md:mt-10"
-                      onClick={() => navigate("/update-invoice")}
+                      onClick={() =>
+                        navigate("/billingdashboard", {
+                          state: { screen: "update-invoice", applicationNumber, applicationData },
+                        })
+                      }
                     >
-                      Generate
+                      Generate invoice
                     </button>
                   </div>
                 </div>
@@ -682,9 +686,16 @@ const ApplicationDetail = () => {
                     </div>
                   </div>
                   <div className="flex flex-col ml-5 w-[36%] max-md:ml-0 max-md:w-full">
-                    <div className="grow justify-center px-6 py-3 mt-9 w-full text-sm font-semibold text-white rounded-3xl bg-slate-500 max-md:px-5 max-md:mt-10">
+                    <button
+                      className="grow justify-center px-6 py-3 mt-9 w-full text-sm font-semibold text-white whitespace-nowrap rounded-3xl bg-slate-500 max-md:px-5 max-md:mt-10"
+                      onClick={() =>
+                        navigate("/billingdashboard", {
+                          state: { screen: "add-materials", applicationNumber },
+                        })
+                      }
+                    >
                       Generate List
-                    </div>
+                    </button>
                   </div>
                 </div>
               </div>
