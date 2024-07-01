@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { Dropdown, Menu, Modal, Button } from "antd";
+import { Dropdown, Menu } from "antd";
 import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
 import InvoiceItem from "./InvoiceItem";
 
@@ -125,7 +125,7 @@ function UpdateInvoice() {
                 </div>
                 <div className="flex flex-col">
                   <div className="font-semibold">Surveyor’s Name</div>
-                  <div className="mt-2">{invoiceItems.Application.surveyorName}</div>
+                  <div className="mt-2">{invoiceItems.Application.user.FullName}</div>
                 </div>
               </div>
             </div>
@@ -135,12 +135,12 @@ function UpdateInvoice() {
                   Invoice Items
                 </div>
                 <div className="flex gap-2 justify-center px-6 py-3 text-base leading-6 text-white rounded-3xl max-md:px-5">
-                  <Button
+                  <button
                     className="justify-center self-start px-3 py-3 mt-2.5 text-sm font-semibold text-white whitespace-nowrap rounded-3xl bg-blue-400 max-md:px-5"
                     onClick={handleUpdateModalVisible}
                   >
                     + Add Invoice Item
-                  </Button>
+                  </button>
                 </div>
               </div>
               {invoiceItems.NewConnectionInvoiceMaterials.map((item) => (
@@ -150,7 +150,7 @@ function UpdateInvoice() {
                 >
                   <div className="flex gap-4">
                     <div className="shrink-0 w-5 h-5 bg-white rounded-2 border-2 border-solid border-neutral-500 border-opacity-10" />
-                    <div className="my-auto">{item.MaterialId}</div>
+                    <div className="my-auto">{item.MaterialName}</div>
                   </div>
                   <div className="my-auto">{item.Quantity}</div>
                   <div className="my-auto">{item.Price}</div>
@@ -194,18 +194,13 @@ function UpdateInvoice() {
         )}
       </div>
       {/* Invoice Item Modal */}
-      <Modal
-        title="Add Invoice Item"
-        visible={isUpdateModalVisible}
-        onCancel={onClose}
-        footer={null}
-      >
+      {isUpdateModalVisible && (
         <InvoiceItem
           applicationNumber={applicationNumber}
           onClose={handleUpdateModalVisible}
           onItemAdded={handleItemAdded}
         />
-      </Modal>
+      )}
     </>
   );
 }
