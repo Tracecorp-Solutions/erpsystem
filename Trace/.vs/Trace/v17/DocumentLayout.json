@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "D:\\working directory\\erpsystem\\Trace\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{97CA6EF6-720A-4545-8A15-EBF2D4F20DA0}|Trace.csproj|d:\\working directory\\erpsystem\\trace\\controllers\\billingconfigurationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{97CA6EF6-720A-4545-8A15-EBF2D4F20DA0}|Trace.csproj|solutionrelative:controllers\\billingconfigurationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{97CA6EF6-720A-4545-8A15-EBF2D4F20DA0}|Trace.csproj|d:\\working directory\\erpsystem\\trace\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{97CA6EF6-720A-4545-8A15-EBF2D4F20DA0}|Trace.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -85,10 +89,6 @@
     },
     {
       "AbsoluteMoniker": "D:0:0:{A176F11F-4BEC-4DAC-9205-CF64F57D23C0}|..\\Core\\Core.csproj|d:\\working directory\\erpsystem\\core\\models\\billing\\material.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{97CA6EF6-720A-4545-8A15-EBF2D4F20DA0}|Trace.csproj|d:\\working directory\\erpsystem\\trace\\controllers\\billingconfigurationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{97CA6EF6-720A-4545-8A15-EBF2D4F20DA0}|Trace.csproj|solutionrelative:controllers\\billingconfigurationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{7735A439-FAA5-47B0-AAB7-17DB1C05A2D8}|..\\Infrastructure\\Infrastructure.csproj|d:\\working directory\\erpsystem\\infrastructure\\migrations\\20240625113629_docketinitiation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
@@ -177,7 +177,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 10,
+          "SelectedChildIndex": 11,
           "Children": [
             {
               "$type": "Bookmark",
@@ -205,20 +205,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "MeterReadingController.cs",
-              "DocumentMoniker": "D:\\working directory\\erpsystem\\Trace\\Controllers\\MeterReadingController.cs",
-              "RelativeDocumentMoniker": "Controllers\\MeterReadingController.cs",
-              "ToolTip": "D:\\working directory\\erpsystem\\Trace\\Controllers\\MeterReadingController.cs",
-              "RelativeToolTip": "Controllers\\MeterReadingController.cs",
-              "ViewState": "AQIAAEAAAAAAAAAAAAAkwF0AAAAJAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-30T19:44:04.207Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "MeterReadingRepository.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Services\\Repositories\\Billing\\MeterReadingRepository.cs",
               "RelativeDocumentMoniker": "..\\Services\\Repositories\\Billing\\MeterReadingRepository.cs",
@@ -226,12 +213,11 @@
               "RelativeToolTip": "..\\Services\\Repositories\\Billing\\MeterReadingRepository.cs",
               "ViewState": "AQIAAAoAAAAAAAAAAAAmwBMAAAAJAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-30T19:37:51.181Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-06-30T19:37:51.181Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "IMeterReadingRepository.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Core\\Repositories\\Billing\\IMeterReadingRepository.cs",
               "RelativeDocumentMoniker": "..\\Core\\Repositories\\Billing\\IMeterReadingRepository.cs",
@@ -239,12 +225,11 @@
               "RelativeToolTip": "..\\Core\\Repositories\\Billing\\IMeterReadingRepository.cs",
               "ViewState": "AQIAAAMAAAAAAAAAAAAAAA4AAAA+AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-30T19:36:30.125Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-06-30T19:36:30.125Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 9,
               "Title": "MeterReadingDto.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Core\\DTOs\\Billing\\MeterReadingDto.cs",
               "RelativeDocumentMoniker": "..\\Core\\DTOs\\Billing\\MeterReadingDto.cs",
@@ -252,25 +237,24 @@
               "RelativeToolTip": "..\\Core\\DTOs\\Billing\\MeterReadingDto.cs",
               "ViewState": "AQIAAAgAAAAAAAAAAAAxwBIAAABRAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-30T19:34:07.339Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-06-30T19:34:07.339Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "Program.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Trace\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
               "ToolTip": "D:\\working directory\\erpsystem\\Trace\\Program.cs",
               "RelativeToolTip": "Program.cs",
-              "ViewState": "AQIAABsAAAAAAAAAAADgvysAAABOAAAA",
+              "ViewState": "AQIAABsAAAAAAAAAAADgvysAAAAlAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-06-24T12:29:15.703Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "BillController.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Trace\\Controllers\\BillController.cs",
               "RelativeDocumentMoniker": "Controllers\\BillController.cs",
@@ -278,12 +262,36 @@
               "RelativeToolTip": "Controllers\\BillController.cs",
               "ViewState": "AQIAABAAAAAAAAAAAAAQwCEAAACAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-30T13:44:40.671Z",
+              "WhenOpened": "2024-06-30T13:44:40.671Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "BillingConfigurationController.cs",
+              "DocumentMoniker": "D:\\working directory\\erpsystem\\Trace\\Controllers\\BillingConfigurationController.cs",
+              "RelativeDocumentMoniker": "Controllers\\BillingConfigurationController.cs",
+              "ToolTip": "D:\\working directory\\erpsystem\\Trace\\Controllers\\BillingConfigurationController.cs",
+              "RelativeToolTip": "Controllers\\BillingConfigurationController.cs",
+              "ViewState": "AQIAAK0BAAAAAAAAAAAkwLsBAAAPAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-24T08:49:20.248Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 2,
+              "Title": "MeterReadingController.cs",
+              "DocumentMoniker": "D:\\working directory\\erpsystem\\Trace\\Controllers\\MeterReadingController.cs",
+              "RelativeDocumentMoniker": "Controllers\\MeterReadingController.cs",
+              "ToolTip": "D:\\working directory\\erpsystem\\Trace\\Controllers\\MeterReadingController.cs",
+              "RelativeToolTip": "Controllers\\MeterReadingController.cs",
+              "ViewState": "AQIAAEAAAAAAAAAAAAAkwF0AAAAJAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-30T19:44:04.207Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
               "Title": "CustomerPayment.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Services\\Repositories\\Billing\\CustomerPayment.cs",
               "RelativeDocumentMoniker": "..\\Services\\Repositories\\Billing\\CustomerPayment.cs",
@@ -295,7 +303,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "ApplicationDbContext.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Infrastructure\\Data\\ApplicationDbContext.cs",
               "RelativeDocumentMoniker": "..\\Infrastructure\\Data\\ApplicationDbContext.cs",
@@ -303,12 +311,11 @@
               "RelativeToolTip": "..\\Infrastructure\\Data\\ApplicationDbContext.cs",
               "ViewState": "AQIAAAcAAAAAAAAAAAAtwCMAAAAIAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-21T15:55:19.145Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-06-21T15:55:19.145Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 17,
               "Title": "Application.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Core\\Models\\Billing\\Application.cs",
               "RelativeDocumentMoniker": "..\\Core\\Models\\Billing\\Application.cs",
@@ -320,7 +327,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 13,
               "Title": "BillingRequest.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Core\\Models\\Billing\\BillingRequest.cs",
               "RelativeDocumentMoniker": "..\\Core\\Models\\Billing\\BillingRequest.cs",
@@ -332,7 +339,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "NewConnectionController.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Trace\\Controllers\\NewConnectionController.cs",
               "RelativeDocumentMoniker": "Controllers\\NewConnectionController.cs",
@@ -340,12 +347,11 @@
               "RelativeToolTip": "Controllers\\NewConnectionController.cs",
               "ViewState": "AQIAAMsAAAAAAAAAAAAuwNgAAABKAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-24T08:33:26.154Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-06-24T08:33:26.154Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 8,
               "Title": "MeterReading.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Core\\Models\\Billing\\MeterReading.cs",
               "RelativeDocumentMoniker": "..\\Core\\Models\\Billing\\MeterReading.cs",
@@ -353,12 +359,11 @@
               "RelativeToolTip": "..\\Core\\Models\\Billing\\MeterReading.cs",
               "ViewState": "AQIAAA0AAAAAAAAAAAAAwBAAAAAjAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-26T18:43:20.379Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-06-26T18:43:20.379Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 12,
               "Title": "IBilling.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Core\\Repositories\\Billing\\IBilling.cs",
               "RelativeDocumentMoniker": "..\\Core\\Repositories\\Billing\\IBilling.cs",
@@ -370,7 +375,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 11,
               "Title": "Billing.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Services\\Repositories\\Billing\\Billing.cs",
               "RelativeDocumentMoniker": "..\\Services\\Repositories\\Billing\\Billing.cs",
@@ -382,7 +387,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 10,
               "Title": "WaterBillController.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Trace\\Controllers\\WaterBillController.cs",
               "RelativeDocumentMoniker": "Controllers\\WaterBillController.cs",
@@ -394,7 +399,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 16,
               "Title": "NewConnectionInvoice.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Core\\Models\\Billing\\NewConnectionInvoice.cs",
               "RelativeDocumentMoniker": "..\\Core\\Models\\Billing\\NewConnectionInvoice.cs",
@@ -406,7 +411,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 14,
               "Title": "IBillingConfigurationRepository.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Core\\Repositories\\Billing\\IBillingConfigurationRepository.cs",
               "RelativeDocumentMoniker": "..\\Core\\Repositories\\Billing\\IBillingConfigurationRepository.cs",
@@ -418,7 +423,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 15,
               "Title": "NewConnectionRepository.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Services\\Repositories\\Billing\\NewConnectionRepository.cs",
               "RelativeDocumentMoniker": "..\\Services\\Repositories\\Billing\\NewConnectionRepository.cs",
@@ -430,7 +435,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 18,
               "Title": "INewConnectionRepository.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Core\\Repositories\\Billing\\INewConnectionRepository.cs",
               "RelativeDocumentMoniker": "..\\Core\\Repositories\\Billing\\INewConnectionRepository.cs",
@@ -442,7 +447,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 21,
               "Title": "Payment.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Core\\Models\\Billing\\Payment.cs",
               "RelativeDocumentMoniker": "..\\Core\\Models\\Billing\\Payment.cs",
@@ -454,7 +459,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 20,
               "Title": "PaymentController.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Trace\\Controllers\\PaymentController.cs",
               "RelativeDocumentMoniker": "Controllers\\PaymentController.cs",
@@ -466,7 +471,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 22,
               "Title": "NewConnectionInvoiceMaterials.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Core\\Models\\Billing\\NewConnectionInvoiceMaterials.cs",
               "RelativeDocumentMoniker": "..\\Core\\Models\\Billing\\NewConnectionInvoiceMaterials.cs",
@@ -478,7 +483,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 23,
               "Title": "PaymentDto.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Core\\DTOs\\Billing\\PaymentDto.cs",
               "RelativeDocumentMoniker": "..\\Core\\DTOs\\Billing\\PaymentDto.cs",
@@ -490,7 +495,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 24,
               "Title": "ICustomerPayments.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Core\\Repositories\\Billing\\ICustomerPayments.cs",
               "RelativeDocumentMoniker": "..\\Core\\Repositories\\Billing\\ICustomerPayments.cs",
@@ -514,7 +519,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
+              "DocumentIndex": 25,
               "Title": "ISettings.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Core\\Repositories\\Settings\\ISettings.cs",
               "RelativeDocumentMoniker": "..\\Core\\Repositories\\Settings\\ISettings.cs",
@@ -539,18 +544,6 @@
             {
               "$type": "Document",
               "DocumentIndex": 26,
-              "Title": "BillingConfigurationController.cs",
-              "DocumentMoniker": "D:\\working directory\\erpsystem\\Trace\\Controllers\\BillingConfigurationController.cs",
-              "RelativeDocumentMoniker": "Controllers\\BillingConfigurationController.cs",
-              "ToolTip": "D:\\working directory\\erpsystem\\Trace\\Controllers\\BillingConfigurationController.cs",
-              "RelativeToolTip": "Controllers\\BillingConfigurationController.cs",
-              "ViewState": "AQIAAHEBAAAAAAAAAAAuwHcBAABEAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-24T08:49:20.248Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 25,
               "Title": "Material.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Core\\Models\\Billing\\Material.cs",
               "RelativeDocumentMoniker": "..\\Core\\Models\\Billing\\Material.cs",
