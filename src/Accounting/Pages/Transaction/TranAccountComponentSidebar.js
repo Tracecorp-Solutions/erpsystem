@@ -159,10 +159,70 @@ export default function TranAccountComponentSidebar({
                 fontSize: "6",
               }}
             >
-              ABOUT ACCOUNT
+              ABOUT THIS ACCOUNT
             </h6>
-          </div>
-          {/* Existing code for displaying account description */}
+            <div className="px- text-start">
+              <Card style={{ width: 400, background: "#f6f6f4" }}>
+                <h2
+                  className="font-medium text-gray-600 text-left"
+                  style={{
+                    fontSize: "12px",
+                    color: "#a1a1a1",
+                    fontFamily: "outFit, Sans-serif",
+                    fontWeight: "500",
+                  }}
+                >
+                  Account Number
+                </h2>
+                <p className="text-gray-800">{selectedAccount.accountNumber}</p>
+              </Card>
+
+              <Card style={{ width: 400, background: "#f6f6f4" }}>
+                <h2
+                  className="font-medium text-gray-600 text-left"
+                  style={{
+                    fontSize: "12px",
+                    color: "#a1a1a1",
+                    fontFamily: "outFit, Sans-serif",
+                    fontWeight: "500",
+                  }}
+                >
+                  Balance
+                </h2>
+                <p className="text-gray-800">{selectedAccount.balance}</p>
+              </Card>
+
+              <Card style={{ width: 400, background: "#f6f6f4" }}>
+                <h2
+                  className="font-medium text-gray-600 text-left"
+                  style={{
+                    fontSize: "12px",
+                    color: "#a1a1a1",
+                    fontFamily: "outFit, Sans-serif",
+                    fontWeight: "500",
+                  }}
+                >
+                  Subgroup
+                </h2>
+                <p className="text-gray-800">{selectedAccount.subGroupAccountId}</p>
+              </Card>
+
+              <Card style={{ width: 400, background: "#f6f6f4" }}>
+                <h2
+                  className="font-medium text-gray-600 text-left"
+                  style={{
+                    fontSize: "12px",
+                    color: "#a1a1a1",
+                    fontFamily: "outFit, Sans-serif",
+                    fontWeight: "500",
+                  }}
+                >
+                  Behaviour
+                </h2>
+                <p className="text-gray-800">{selectedAccount.behaviour}</p>
+              </Card>
+            </div>
+          </div>     
         </div>
         <Modal
           visible={modalVisible}

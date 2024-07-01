@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Modal, Button, Dropdown, Menu, Pagination } from "antd";
-import { EyeOutlined, EditOutlined } from "@ant-design/icons";
+import { EyeOutlined, EditOutlined, DownloadOutlined } from "@ant-design/icons";
 
 import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
 import TranAccountComponentSidebar from "./TranAccountComponentSidebar";
 import TransactionNavigationFilter from "./TranAccountNavigationFilter";
 // import "../styles/AccountCreation.css";
 import EmptyData from "../../components/Shared/EmptyData";
-
-// import TopNav from "../components/TopNav";
-// import SideNav from "../components/SideNav";
+import html2pdf from "html2pdf.js";
+import * as XLSX from "xlsx";
+import { saveAs } from "file-saver";
 
 const Transactions = () => {
   const [showModal, setShowModal] = useState(false);
@@ -32,7 +32,7 @@ const Transactions = () => {
   const [editedAccount, setEditedAccount] = useState(null);
   const [accountNameFilter, setAccountNameFilter] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(10);
+  const [itemsPerPage] = useState(15);
   const [successMessage, setSuccessMessage] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -146,6 +146,44 @@ const Transactions = () => {
     console.log("transacyaiaiiia", accountId);
     setDropdownVisible({ ...dropdownVisible, [accountId]: visible });
   };
+
+  const generatePDF = () => {
+    const htmlContent = document.getElementById("transactionsContent").innerHTML;
+    html2pdf().from(htmlContent).save(`Transactions.pdf`);
+  };
+
+  const generateExcel = () => {
+    const worksheet = XLSX.utils.json_to_sheet(transactions); // replace billData with your actual data
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+    const excelBuffer = XLSX.write(workbook, {
+      bookType: "xlsx",
+      type: "array",
+    });
+    const file = new Blob([excelBuffer], { type: "application/octet-stream" });
+    saveAs(file, `Data.xlsx`);
+  };
+
+  const handleDownload = ({ key }) => {
+    switch (key) {
+      case "pdf":
+        generatePDF();
+        break;
+      case "excel":
+        generateExcel();
+        break;
+      default:
+        break;
+    }
+  };
+
+  const menu = (
+    <Menu onClick={handleDownload}>
+      {/* <Menu.Item key="pdf">Download PDF</Menu.Item> */}
+      <Menu.Item key="excel">Download Excel</Menu.Item>
+    </Menu>
+  );
+
 
   // const handleEdit = async (accountId) => {
   //   try {
@@ -268,6 +306,21 @@ const Transactions = () => {
           >
             Transact
           </h2>
+          <Dropdown overlay={menu} trigger={["click"]}>
+          <Button
+              type="primary"
+              icon={<DownloadOutlined />}
+              style={{
+                background: "#9ec137",
+                borderRadius: "28px",
+                fontFamily: "outFit, Sans-serif",
+                marginLeft: "auto", // Pushes the button to the right
+                display: "block", // Ensures the button is a block element
+              }}
+            >
+              Download
+            </Button>
+          </Dropdown>
           <Button
             type="primary"
             onClick={() => setShowModal(true)}
@@ -275,6 +328,7 @@ const Transactions = () => {
               background: "#4467a1",
               borderRadius: "28px",
               fontFamily: "outFit, Sans-serif",
+              marginLeft: "12px",
             }}
           >
             + Start Transaction

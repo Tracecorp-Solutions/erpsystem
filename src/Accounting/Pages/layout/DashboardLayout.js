@@ -51,6 +51,7 @@ const Dashboardlayout = () => {
               )}
               {screen === 'vendors' && <VendorSetup />}
               {screen === 'customer' && <Customer />}
+       
               {screen === 'invoice' && <Invoice />}
               {screen === 'billing' && <Billing />}
               {screen === 'billsform' && <BillsForm />}

@@ -159,7 +159,7 @@ const BillsForm = () => {
       <form onSubmit={handleSubmit} className="content">
         <TopNav />
         <div>
-          <div className="sm:flex justify-between items-center mb-8">
+          <div className="sm:flex justify-between items-center mb-4">
             <h2
               className="text-2xl font-semibold mb-4"
               style={{
@@ -176,17 +176,18 @@ const BillsForm = () => {
                 style={{
                   fontSize: "24px",
                   marginRight: "8px",
-                  marginBottom: "15px",
+                  marginBottom: "4px",
+                  marginLeft: "15px",
                 }}
               />
             </h2>
             
-            <strong className="text-2xl font-semibold">
+            <strong className="text-2xl font-semibold mr-8">
               ${calculateTotalAmount()}
             </strong>
           </div>
 
-          <div className="max-w-screen-xl mx-auto mt-10 p-6 bg-white rounded-lg">
+          <div className="max-w-screen-xl mx-auto mt-3 p-6 bg-white rounded-lg">
             <h2
               className="text-2xl font-semibold mb-4"
               style={{
@@ -321,7 +322,7 @@ const BillsForm = () => {
                   borderRadius: "28px",
                   fontFamily: "outFit, Sans-serif",
                   width: "150px",
-                  paddingBottom: "30px",
+                  paddingBottom: "10px",
                 }}
               >
                 + Add Bill Item
@@ -511,7 +512,7 @@ const BillsForm = () => {
                   borderRadius: "28px",
                   fontFamily: "outFit, Sans-serif",
                   width: "150px",
-                  paddingBottom: "30px",
+                  paddingTop: "10px",
                   color: "#505050",
                   marginRight: "15px",
                 }}
@@ -527,7 +528,7 @@ const BillsForm = () => {
                   borderRadius: "28px",
                   fontFamily: "outFit, Sans-serif",
                   width: "150px",
-                  paddingBottom: "30px",
+                  paddingBottom: "10px",
                 }}
               >
                 Add Item
@@ -559,7 +560,7 @@ const BillsForm = () => {
                 borderRadius: "28px",
                 fontFamily: "outFit, Sans-serif",
                 width: "150px",
-                paddingBottom: "30px",
+                paddingBottom: "10px",
                 color: "#505050",
                 marginRight: "15px",
               }}
@@ -574,7 +575,7 @@ const BillsForm = () => {
                 borderRadius: "28px",
                 fontFamily: "outFit, Sans-serif",
                 width: "150px",
-                paddingBottom: "30px",
+                paddingBottom: "10px",
               }}
             >
               Save Bill

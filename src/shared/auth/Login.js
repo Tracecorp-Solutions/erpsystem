@@ -16,21 +16,21 @@ const Login = () => {
     e.preventDefault();
     setLoading(true);
     try {
+      
       const response = await axios.post(
         `${process.env.REACT_APP_API_URL}/AuthenticateUser`,
         { username, password }
       );
+      
       const token = response.data;
       sessionStorage.setItem("token", token);
       const userData = await axios.get(`${process.env.REACT_APP_API_URL}/GetUserByToken/${token}`);// get all the user details using the token
       if (userData.data.organisation && userData.data.verified && userData.data.active)// navigate to the dashboard if the user is active and verified
       {
-        sessionStorage.setItem("userid",userData.data.Id);
+        sessionStorage.setItem("userid",userData.data.id);
         sessionStorage.setItem("fullname",userData.data.fullName);
         sessionStorage.setItem("organisationname",userData.data.organisation.name);
         sessionStorage.setItem("profilepic",userData.data.profilePic);
-        
-        console.log("Profile pic **********",userData.data.profilePic);
         navigate('/landing');
       }else{
         navigate("/profilelayout");
@@ -64,7 +64,13 @@ const Login = () => {
           <img src="/img/wave.png" alt="login" />
         </span>
       </div>
-      <form onSubmit={handleLogin}>
+      <form onSubmit={handleLogin} style={{
+         width: "80%",
+         display: "flex",
+         flexDirection: "column",
+         gap: "18px",
+         marginBottom: "18px"
+      }}>
         {feedback && (
           <div
             className={`message ${feedback.startsWith("Error") ? "error-message" : "success-message"}`}

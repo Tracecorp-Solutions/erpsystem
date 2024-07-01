@@ -4,8 +4,9 @@ import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
 import { EyeOutlined, ArrowLeftOutlined } from "@ant-design/icons";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import InvoiceCard from ".//InvoiceCard";
+import InvoiceCard from "./InvoiceCard";
 import InvoiceNavigationbar from "./InvoicesNavigationbar";
+import ViewInvoice from "./ViewInvoice"; // Import ViewInvoice component
 
 const Invoice = () => {
   const [invoice, setInvoice] = useState([]);
@@ -23,6 +24,7 @@ const Invoice = () => {
   const [unpaidTotalAmount, setUnpaidTotalAmount] = useState(0);
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
   const [selectInvoiceId, setSelectedInvoiceId] = useState(null);
+  const [viewInvoiceId, setViewInvoiceId] = useState(null); // State to track which invoice to view
 
   const navigate = useNavigate();
 
@@ -72,6 +74,14 @@ const Invoice = () => {
     fetchData();
   }, []);
 
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const day = date.getDate().toString().padStart(2, "0");
+    const month = date.toLocaleString("default", { month: "short" });
+    const year = date.getFullYear();
+    return `${day} ${month} ${year}`;
+  };
+
   const handleCreateInvoice = () => {
     navigate("/create-invoice");
   };
@@ -81,26 +91,13 @@ const Invoice = () => {
   };
 
   const handleViewInvoice = (id) => {
-    navigate(`/view-invoice/${id}`);
-  };
-
-  const handleViewClick = () => {
-    setDrawerVisible(true);
+    setViewInvoiceId(id); // Set the invoice ID to view
+    setDrawerVisible(true); // Open the drawer
   };
 
   const handleMarkAsPaid = async (id) => {
-    console.log(id);
     setSelectedInvoiceId(id);
     setShowConfirmationModal(true);
-
-    try {
-      const response = await axios.get(
-        `${process.env.REACT_APP_API_URL}/GetBillById/${id}`
-      );
-      console.log("Fetched Invoice Data:", response.data);
-    } catch (error) {
-      console.error("Error fetching invoice data:", error);
-    }
   };
 
   const handleConfirmation = async () => {
@@ -248,7 +245,7 @@ const Invoice = () => {
                           {inv.vendor.fullName}
                         </td>
                         <td className="px-3 py-4 whitespace-nowrap mt-3 text-sm text-gray-800">
-                          {inv.billDate}
+                        {formatDate(inv.billDate)}
                         </td>
                         <td className="px-3 py-4 whitespace-nowrap mt-3 text-sm text-gray-800">
                           {inv.billNo}
@@ -319,7 +316,6 @@ const Invoice = () => {
           onOk={handleConfirmation}
           onCancel={() => setShowConfirmationModal(false)}
           okButtonProps={{
-            // Style props for OK button
             style: {
               backgroundColor: "#4467a1",
               color: "#fff",
@@ -340,6 +336,11 @@ const Invoice = () => {
           <p>Are you sure you want to mark this invoice as paid?</p>
         </Modal>
       </div>
+      <ViewInvoice
+        billId={viewInvoiceId} // Pass the invoice ID to view
+        onClose={() => setDrawerVisible(false)} // Close the drawer
+        visible={drawerVisible} // Control drawer visibility
+      />
     </>
   );
 };

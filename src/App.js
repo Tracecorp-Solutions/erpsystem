@@ -14,6 +14,7 @@ import Login from "./shared/auth/Login";
 import SetPassword from "./shared/auth/shared/SetPassword";
 import VerifyUser from "./shared/auth/shared/VerifyUser";
 import ViewTransactions from "./Accounting/Pages/Transaction/ViewTransactions";
+import ViewBill from "./Accounting/Pages/Billing/ViewBill";
 import BillsForm from "./Accounting/Pages/Billing/BillsForm";
 import InvoiceSidebar from "./components/InvoiceSidebar";
 import InvoiceForm from "./Accounting/Pages/Invoices/InvoiceForm";
@@ -28,7 +29,11 @@ import TrialBalance from "./Accounting/Pages/Reports/TrialBalance ";
 import UserActivity from "./Accounting/Pages/Reports/UserActivity";
 import Billing from "./Accounting/Pages/Billing/Billing";
 import Landing from "./shared/Landing";
+import ApplicationPage from "./Billing/Pages/Application/ApplicationPage";
 import BillingDashboard from "./Billing/Pages/Layout/BillingDashboard";
+import ApplicationDetail from "./Billing/Pages/Application/ApplicationDetail";
+import UpdateInvoice from "./Billing/Pages/Application/Actions/UpdateInvoice";
+import InvoiceDetails from "./Billing/Pages/Application/Actions/InvoiceDetails";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -72,10 +77,15 @@ function App() {
               <Route path="/billingdashboard" element={<BillingDashboard />} />
               {/* <Route path="/forgot" element={<Forgot />} /> */}
               <Route path="/Dashboardlayout" element={<Dashboardlayout />} />
+              <Route path="/billingdashboard" element={<BillingDashboard />} />
               <Route path="/" element={<Layout/>}/>
               <Route
                 path="view-transactions/:accountId"
                 element={<ViewTransactions />}
+              />
+              <Route
+                path="view-bill/:billId"
+                element={<ViewBill />}
               />
               <Route path="/customer" element={<Customer />} />
               <Route path="/create-bills" element={<BillsForm />} />
@@ -90,6 +100,10 @@ function App() {
               <Route path="/balance-sheet" element={<BalanceSheets />} />
               <Route path="/trial-balance" element={<TrialBalance />} />
               <Route path="/user-activity" element={<UserActivity />} />
+              <Route path="/application" element={<ApplicationPage />} />
+              <Route path="/update-invoice" element={<UpdateInvoice />} />
+              <Route path="/invoice-details" element={<InvoiceDetails />} />
+              {/* <Route path="/view-detail" element={<ApplicationDetail />} /> */}
             </Routes>
           </div>
           <Routes>

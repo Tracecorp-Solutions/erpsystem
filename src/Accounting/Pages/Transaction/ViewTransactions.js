@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { Table } from "antd";
-// import TopNav from "../components/TopNav";
-// import SideNav from "../components/SideNav";
+import TopNav from "../../shared/navigations/TopNav";
+import SideNav from "../../shared/navigations/SideNav";
 
 const ViewTransactions = () => {
   const location = useLocation();
@@ -78,26 +78,40 @@ const ViewTransactions = () => {
 
   return (
     <>
-      {/* <SideNav /> */}
+      <SideNav />
       <div className="content">
-        {/* <TopNav /> */}
-        
+        <TopNav />
+
         <h1
           style={{
             marginBottom: "10px",
+            marginLeft: "6px",
+            marginRight: "6px",
             marginTop: "10px",
             fontFamily: "Sans-serif",
-            color: "rgb(72, 164, 249)",
+            color: "gray",
           }}
         >
           Transactions Under This Account
         </h1>
-        <Table
-          columns={columns}
-          dataSource={transactions}
-          loading={loading}
-          rowKey="id"
-        />
+        <div
+          style={{
+            backgroundColor: "#f8f8f8",
+            margin: "0 4px",
+            padding: "16px",
+            borderRadius: "8px",
+            height: "500px", // Set the desired height for the container
+            overflowY: "auto", // Add vertical scroll
+          }}
+        >
+          <Table
+            columns={columns}
+            dataSource={transactions}
+            loading={loading}
+            rowKey="id"
+            style={{ backgroundColor: "#f8f8f8" }} // Optional: if you want to ensure the table itself has the background color
+          />
+        </div>
       </div>
     </>
   );
