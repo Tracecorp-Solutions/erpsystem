@@ -3,7 +3,7 @@
 import axios from 'axios';
 
 // Define the base URL for the API
-const BASE_URL = 'http://localhost:5102';
+const BASE_URL = process.env.REACT_APP_API_URL;
 
 // Function to add a customer category
 export const addCustomerType = async (category) => {
