@@ -127,7 +127,7 @@ function SideNav() {
             <LayoutDashboard className="shrink-0 self-start w-6 aspect-square" />
             <button
               onClick={() =>
-                navigate("/Dashboardlayout", { state: { screen: "dashboard" } })
+                navigate("/billingdashboard", { state: { screen: "billingdashboard" } })
               }
             >
               Dashboard

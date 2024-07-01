@@ -58,9 +58,24 @@ const ApplicationDetail = () => {
     if (applicationNumber) {
       fetchApplicationById(applicationNumber);
     }
-
     fetchApplicationData();
+    fetchJobCard(applicationNumber);
   }, [applicationNumber]);
+
+  const fetchJobCard = async (applicationNumber) =>
+    {
+      try{
+        const response = await axios.get(
+          `${process.env.REACT_APP_API_URL}/GetJobCardNumberByApplicationId?applicationNumber=${applicationNumber}`
+        );
+        if(!response.ok)
+          setJobCardInfo(null);
+
+        setJobCardInfo(response.data);
+      }catch(error){
+        console.log(error)
+      };
+    };
 
   const fetchApplicationById = (applicationNumber) => {
     fetch(
@@ -97,7 +112,7 @@ const ApplicationDetail = () => {
  const fetchApplicationData = async () => {
     try {
       const response = await fetch(
-        `http://3.216.182.63:8095/TestApi/GetDocketInitiation?applicationNumber=${applicationNumber}`,
+        `${process.env.REACT_APP_API_URL}/GetDocketInitiation?applicationNumber=${applicationNumber}`,
         {
           method: "GET",
           headers: {
@@ -117,6 +132,7 @@ const ApplicationDetail = () => {
     }
   };
   const handleGenerateJobCard = () => {
+
     if (!applicationNumber || !userid) {
       console.error("Application number or userId is missing");
       return;
