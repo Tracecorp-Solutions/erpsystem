@@ -64,9 +64,6 @@ function InvoiceItem({ applicationNumber, modalView, closeAddItemsForm, onItemAd
   };
 
   const handleMaterialChange = (e) => {
-    console.log("*****************");
-    console.log(e);
-    console.log("*****************");
     setSelectedMaterial(e);
     setFormData((prevFormData) =>({
       ...prevFormData,
@@ -89,10 +86,6 @@ function InvoiceItem({ applicationNumber, modalView, closeAddItemsForm, onItemAd
   };
 
   const totalSum = data.reduce((sum, item) => sum + parseFloat(item.price), 0);
-
-  console.log("*********************");
-  console.log(totalSum);
-  console.log("*********************");
 
   return (
     <Modal visible={modalView} footer={null} onCancel={handleCancel}>

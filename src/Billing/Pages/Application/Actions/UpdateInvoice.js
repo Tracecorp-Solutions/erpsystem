@@ -54,56 +54,23 @@ function UpdateInvoice() {
 
   const handleSaveInvoice = async () => {
     try {
-      console.log("***************");
-      console.log(invoiceItems);
-      console.log("***************");
       var jsonobject = JSON.stringify({
         "applicationNumber" : applicationNumber,
          "date" : DateTime.now(),
          "materialsDtos" : invoiceItems
       });
 
-      const response = await fetch(
-        `${process.env.REACT_APP_API_URL}/AddConnectionInvoice`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: jsonobject,
-        }
+      const resp = await axios.post(`${process.env.REACT_APP_API_URL}/AddConnectionInvoice`,jsonobject,{
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
       );
 
-      message.success(response.data);
-
-
-      console.log(jsonobject);
-      // const response = await fetch(
-      //   `${process.env.REACT_APP_API_URL}/AddConnectionInvoice`,
-      //   {
-      //     method: "POST",
-      //     headers: {
-      //       "Content-Type": "application/json",
-      //     },
-      //     body: JSON.stringify({
-      //       invoiceItems,
-      //       applicationNumber,
-      //     }),
-      //   }
-      // );
-
-      // if (!response.ok) {
-      //   throw new Error("Failed to save invoice");
-      // }
-
-      // setSuccessMessage("Invoice saved successfully");
-      // setErrorMessage("");
-      // navigate(`/billingdashboard`, { state: { screen: "invoice-details" } });
-    } catch (error) {
-      message.error(error.response);
-      console.error("Error saving invoice:", error);
-      setErrorMessage("Failed to save invoice");
-      setSuccessMessage("");
+      message.success(resp.data);
+      navigate(`/billingdashboard`, { state: { screen: "application" } });
+    }catch(error){
+      message.error(error.response.data);
     }
   };
 

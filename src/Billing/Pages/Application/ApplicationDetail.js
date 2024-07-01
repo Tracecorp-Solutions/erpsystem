@@ -57,20 +57,19 @@ const ApplicationDetail = () => {
     fetchJobCard(applicationNumber);
   }, [applicationNumber]);
 
-  const fetchJobCard = async (applicationNumber) =>
-    {
-      try{
-        const response = await axios.get(
-          `${process.env.REACT_APP_API_URL}/GetJobCardNumberByApplicationId?applicationNumber=${applicationNumber}`
-        );
-        if(!response.ok)
-          setJobCardInfo(null);
+  const fetchJobCard = async (applicationNumber) => {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}/GetJobCardNumberByApplicationId?applicationNumber=${applicationNumber}`
+      );
+      if (!response.ok)
+        setJobCardInfo(null);
 
-        setJobCardInfo(response.data);
-      }catch(error){
-        console.log(error)
-      };
+      setJobCardInfo(response.data);
+    } catch (error) {
+      console.log(error)
     };
+  };
 
   const fetchApplicationById = (applicationNumber) => {
     fetch(
@@ -103,8 +102,8 @@ const ApplicationDetail = () => {
       });
   };
 
- 
- const fetchApplicationData = async () => {
+
+  const fetchApplicationData = async () => {
     try {
       const response = await fetch(
         `${process.env.REACT_APP_API_URL}/GetDocketInitiation?applicationNumber=${applicationNumber}`,
@@ -133,11 +132,10 @@ const ApplicationDetail = () => {
       return;
     }
 
-    const apiUrl = `${
-      process.env.REACT_APP_API_URL
-    }/GenerateJobCard?applicationNumber=${encodeURIComponent(
-      applicationNumber
-    )}&userid=${encodeURIComponent(userid)}`;
+    const apiUrl = `${process.env.REACT_APP_API_URL
+      }/GenerateJobCard?applicationNumber=${encodeURIComponent(
+        applicationNumber
+      )}&userid=${encodeURIComponent(userid)}`;
 
     axios
       .post(apiUrl, {
@@ -479,9 +477,8 @@ const ApplicationDetail = () => {
         <div className="shrink-0 mt-4 h-px border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-opacity-10 max-md:max-w-full" />
         <div className="flex gap-5 justify-between mt-4 max-md:flex-wrap">
           <div
-            className={`flex gap-2 justify-between px-6 py-4 rounded-xl ${
-              surveyorAssigned ? "bg-green-100" : "bg-stone-100"
-            } max-md:flex-wrap max-md:px-5 max-md:max-w-full`}
+            className={`flex gap-2 justify-between px-6 py-4 rounded-xl ${surveyorAssigned ? "bg-green-100" : "bg-stone-100"
+              } max-md:flex-wrap max-md:px-5 max-md:max-w-full`}
           >
             <div className="flex flex-col justify-center text-center">
               <div className="text-xs font-medium tracking-wide uppercase text-neutral-400">
@@ -509,9 +506,8 @@ const ApplicationDetail = () => {
 
           <div>
             <div
-              className={`flex gap-2 justify-between px-6 py-4 rounded-xl ${
-                jobCardInfo ? "bg-green-100" : "bg-stone-100"
-              } max-md:flex-wrap max-md:px-5 max-md:max-w-full`}
+              className={`flex gap-2 justify-between px-6 py-4 rounded-xl ${jobCardInfo ? "bg-green-100" : "bg-stone-100"
+                } max-md:flex-wrap max-md:px-5 max-md:max-w-full`}
             >
               <div className="flex flex-col justify-center text-center">
                 <div className="text-xs font-medium tracking-wide uppercase text-neutral-400">
@@ -558,9 +554,9 @@ const ApplicationDetail = () => {
         ) : (
           <div className="flex gap-2 justify-between px-6 py-4 mt-4 max-w-full rounded-xl bg-green-100 w-[270px] max-md:flex-wrap max-md:px-5">
             <div className="flex flex-col justify-center text-center">
-            <div className="text-xs font-medium tracking-wide uppercase text-neutral-400">
-                  STATUS
-                </div>
+              <div className="text-xs font-medium tracking-wide uppercase text-neutral-400">
+                STATUS
+              </div>
               <div className="mt-2 text-base leading-6 text-green-600">
                 {applicationData.status}
               </div>
@@ -595,22 +591,22 @@ const ApplicationDetail = () => {
             </div>
             {status === "PENDING CONNECTION INVOICE" ? (
               <button
-              className="justify-center self-start px-6 py-3 mt-2.5 text-sm font-semibold text-white whitespace-nowrap rounded-3xl bg-slate-500 max-md:px-5"
-              onClick={handleUpdateModalVisible}
-            >
-              Update and Authorize Connection
-            </button>
+                className="justify-center self-start px-6 py-3 mt-2.5 text-sm font-semibold text-white whitespace-nowrap rounded-3xl bg-slate-500 max-md:px-5"
+                onClick={handleUpdateModalVisible}
+              >
+                Update and Authorize Connection
+              </button>
             ) : <div className="flex gap-2 justify-between px-6 py-4 mt-4 max-w-full rounded-xl bg-green-100 max-md:flex-wrap max-md:px-5">
-            <div className="flex flex-col justify-center text-center">
-            <div className="text-xs font-medium tracking-wide uppercase text-neutral-400">
+              <div className="flex flex-col justify-center text-center">
+                <div className="text-xs font-medium tracking-wide uppercase text-neutral-400">
                   STATUS
                 </div>
-              <div className="mt-2 text-base leading-6 text-green-600">
-                {applicationData.status}
-              </div>
-            </div>{" "}
-          </div>}
-            
+                <div className="mt-2 text-base leading-6 text-green-600">
+                  {applicationData.status}
+                </div>
+              </div>{" "}
+            </div>}
+
           </div>
         </div>
         <div className="mt-4 max-md:max-w-full">
@@ -630,96 +626,32 @@ const ApplicationDetail = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="flex flex-col ml-5 w-[35%] max-md:ml-0 max-md:w-full">
-                    <button
-                      className="grow justify-center px-6 py-3 mt-9 w-full text-sm font-semibold text-white whitespace-nowrap rounded-3xl bg-slate-500 max-md:px-5 max-md:mt-10"
-                      onClick={() =>
-                        navigate("/billingdashboard", {
-                          state: { screen: "update-invoice", applicationNumber, applicationData },
-                        })
-                      }
-                    >
-                      Generate invoice
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="flex flex-col ml-5 w-6/12 max-md:ml-0 max-md:w-full">
-              <div className="grow justify-between px-6 py-4 w-full rounded-xl bg-stone-100 max-md:px-5 max-md:mt-6 max-md:max-w-full">
-                <div className="flex gap-5 max-md:flex-col max-md:gap-0">
-                  <div className="flex flex-col w-[65%] max-md:ml-0 max-md:w-full">
-                    <div className="flex flex-col grow justify-center max-md:mt-10">
-                      <div className="text-xs font-medium tracking-wide text-center uppercase text-neutral-400">
-                        payment references
-                      </div>
-                      <div className="mt-2 text-base leading-7 text-neutral-600">
-                        Generate pay slips for New connection
-                        <br />
-                        and Deposit customer payments
-                      </div>
-                    </div>
-                  </div>
-                  <div>
-                    {/* Other content */}
-                    <div className="flex flex-col ml-5 max-md:ml-0 max-md:w-full">
+                  {status === "APPROVED FOR CONNECTION" ? (
+                    <div className="flex flex-col ml-5 w-[35%] max-md:ml-0 max-md:w-full">
                       <button
-                        className="grow justify-center px-6 py-3 mt-9 w-full text-sm font-semibold text-white whitespace-nowrap rounded-3xl bg-slate-500 max-md:px-5 max-md:mt-10 border"
+                        className="grow justify-center px-4 py-3 mt-9 w-full text-sm font-semibold text-white whitespace-nowrap rounded-3xl bg-blue-400 max-md:px-5 max-md:mt-10"
                         onClick={() =>
-                          navigate(`/billingdashboard`, {
-                            state: { screen: "payment-reciepts", applicationNumber },
+                          navigate("/billingdashboard", {
+                            state: { screen: "update-invoice", applicationNumber, applicationData },
                           })
                         }
                       >
-                        Generate
+                        Generate invoice
                       </button>
                     </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <div className="flex flex-col px-6 pt-4 pb-5 mt-4 bg-white rounded-3xl max-md:px-5">
-        <div className="flex gap-4 justify-between text-2xl font-semibold capitalize text-neutral-600 max-md:flex-wrap max-md:max-w-full">
-          <div>Field Connection</div>
-          <img
-            loading="lazy"
-            src="https://cdn.builder.io/api/v1/image/assets/TEMP/c7749e10a4cb727e5ce0c7fd48d44fb683bf93b2fa7c59643148748496b286b0?apiKey=5bf51c3fc9cb49b480a07670cbcd768f&"
-            className="shrink-0 my-auto w-6 aspect-square"
-          />
-        </div>
-        <div className="shrink-0 mt-4 h-px border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-opacity-10 max-md:max-w-full" />
-        <div className="flex-wrap gap-y-4 justify-between content-start mt-4 max-md:max-w-full">
-          <div className="flex gap-5 max-md:flex-col max-md:gap-0">
-            <div className="flex flex-col w-6/12 max-md:ml-0 max-md:w-full">
-              <div className="grow justify-between px-6 py-4 w-full rounded-xl bg-stone-100 max-md:px-5 max-md:mt-6 max-md:max-w-full">
-                <div className="flex gap-5 max-md:flex-col max-md:gap-0">
-                  <div className="flex flex-col w-[64%] max-md:ml-0 max-md:w-full">
-                    <div className="flex flex-col grow justify-center max-md:mt-10">
-                      <div className="text-xs font-medium tracking-wide text-center uppercase text-neutral-400">
-                        material expenditure
-                      </div>
-                      <div className="mt-2 text-base leading-7 text-neutral-600">
-                        {" "}
-                        This is a list of all materials used on the connection
-                      </div>
+                  ) :
+                    <div className="flex gap-2 justify-between px-6 py-4 mt-4 max-w-full rounded-xl bg-green-100 max-md:flex-wrap max-md:px-5">
+                      <div className="flex flex-col justify-center text-center">
+                        <div className="text-xs font-medium tracking-wide uppercase text-neutral-400">
+                          STATUS
+                        </div>
+                        <div className="mt-2 text-base leading-6 text-green-600">
+                          {applicationData.status}
+                        </div>
+                      </div>{" "}
                     </div>
-                  </div>
-                  <div className="flex flex-col ml-5 w-[36%] max-md:ml-0 max-md:w-full">
-                    <button
-                      className="grow justify-center px-6 py-3 mt-9 w-full text-sm font-semibold text-white whitespace-nowrap rounded-3xl bg-slate-500 max-md:px-5 max-md:mt-10"
-                      onClick={() =>
-                        navigate("/billingdashboard", {
-                          state: { screen: "add-materials", applicationNumber },
-                        })
-                      }
-                    >
-                      Generate List
-                    </button>
-                  </div>
+                  }
+
                 </div>
               </div>
             </div>
@@ -807,7 +739,7 @@ const ApplicationDetail = () => {
             </div>
           </div>
         </div>
-      </div>
+      </section>
 
       <ApplicationFormActions
         isModalVisible={isModalVisible}
