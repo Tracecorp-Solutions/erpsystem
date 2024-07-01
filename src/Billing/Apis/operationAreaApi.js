@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = 'http://3.216.182.63:8095/TestApi';
+const BASE_URL = 'http://localhost:5102';
 
 export const addOperationalArea = async (operationalArea) => {
   try {

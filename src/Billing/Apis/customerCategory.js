@@ -3,7 +3,7 @@
 import axios from 'axios';
 
 // Define the base URL for the API
-const BASE_URL = 'http://3.216.182.63:8095/TestApi';
+const BASE_URL = 'http://localhost:5102';
 
 // Function to add a customer category
 export const addCustomerCategory = async (category) => {

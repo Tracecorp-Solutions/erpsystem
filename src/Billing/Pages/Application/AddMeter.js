@@ -9,6 +9,7 @@ const AddMeter = () => {
   const location = useLocation();
   const { state } = location;
   const [plumbers, setPlumbers] = useState([]);
+  const [customerCategory, setCustomerCategory] = useState('');
 
   const [formData, setFormData] = useState({
     applicationNumber: state?.applicationNumberDisplay || '',
@@ -38,7 +39,33 @@ const AddMeter = () => {
     };
 
     fetchPlumbers();
-  }, []);
+
+    if (state?.applicationNumberDisplay) {
+      fetchCustomerCategory(state.applicationNumberDisplay);
+    }
+  }, [state]);
+
+  const fetchCustomerCategory = async (applicationId) => {
+    try {
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/GetApplicationByApplicationNumnber`, {
+        params: {
+          applicationId: applicationId
+        }
+      });
+      const { customerCategory } = response.data;
+
+      console.log('customerCategory', customerCategory);
+      setCustomerCategory(customerCategory);
+      setFormData({
+        ...formData,
+        customerType: customerCategory
+      });
+    } catch (error) {
+      console.error('Error fetching customer category:', error);
+      message.error('Failed to fetch customer category. Please try again.');
+    }
+  };
+
 
   const navigate = useNavigate();
 
@@ -162,7 +189,7 @@ const AddMeter = () => {
               placeholder="Select customer type"
               className="w-full h-14"
               disabled
-              allowClear
+              value={customerCategory.name}
               onChange={(value) => handleSelectChange(value, 'customerType')}
             />
 
