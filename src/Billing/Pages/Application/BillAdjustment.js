@@ -27,9 +27,18 @@ const BillAdjustment = () => {
       <div className="text-4xl font-semibold text-neutral-600 max-md:max-w-full">
         Adjust Bill
       </div>
+      <div className="bg-white rounded-3xl w-full  mt-6">
+      <div className="flex gap-5 ml-10 mt-5  text-base font-semibold leading-6 max-md:flex-wrap">
+      <div className="justify-center px-6 py-4 rounded-lg bg-stone-100 text-slate-500 max-md:px-5">
+        Adjustment Request
+      </div>
+      <div className="justify-center px-6 py-4 bg-white rounded-lg text-neutral-400 max-md:px-5">
+        View Adjustments
+      </div>
+    </div>
       <form
         onSubmit={handleSubmit}
-        className="flex flex-col p-6 mt-6 text-base bg-white rounded-3xl max-md:px-5 w-full"
+        className="flex flex-col p-6 text-base"
       >
         {/* Adjustment tabs and separator lines omitted for brevity */}
 
@@ -184,19 +193,20 @@ const BillAdjustment = () => {
           <div className="flex gap-4 self-end mt-4 max-w-full w-[498px] max-md:flex-wrap">
             <button
               type="button"
-              className="justify-center items-center px-8 py-4 whitespace-nowrap rounded-3xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 max-md:px-5"
+              className="justify-center items-center px-8 py-2 whitespace-nowrap rounded-full border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 max-md:px-5"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="justify-center px-8 py-2 text-white rounded-3xl bg-slate-500 max-md:pr-6 max-md:pl-6"
+              className="justify-center px-8 text-white rounded-full bg-slate-500 "
             >
               Submit Request
             </button>
           </div>
         </div>
       </form>
+      </div>
     </div>
   );
 };
