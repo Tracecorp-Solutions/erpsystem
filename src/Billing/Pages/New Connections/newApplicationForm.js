@@ -15,6 +15,8 @@ import {
   getBillDeliveryMethods,
 } from "../../Apis/billDeliveryMethod";
 
+import {message} from "antd";
+
 
 function Step({  stepTitle,  isActive }) {
   return (
@@ -208,11 +210,9 @@ const NewApplicationForm = () => {
           },
         }
       );
-
-      alert(response.data); // Show success message
+        message.success(response.data);
     } catch (error) {
-      setErrorMessage(""); // Set error message
-      console.error(error);
+      message.error(error.response);
     }
   };
 
