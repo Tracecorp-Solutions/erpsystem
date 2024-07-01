@@ -21,6 +21,7 @@ const ApplicationDetail = () => {
   const [surveyorReport, setSurveyorReport] = useState(false);
   const [applicationData, setApplicationData] = useState(null);
   const [isUpdateModalVisible, setIsUpdateModalVisible] = useState(false);
+  const [application, setApplication] = useState(null);
 
   const [isVisible, setIsVisible] = useState(false);
   const [jobCardInfo, setJobCardInfo] = useState(null);
@@ -30,6 +31,8 @@ const ApplicationDetail = () => {
 
   console.log("Application Data:", applicationData);
   console.log("jobCardInfo jobCardInfo:", jobCardInfo);
+
+  console.log("Application Data 222222222:", application);
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -41,7 +44,6 @@ const ApplicationDetail = () => {
   const handleClickModalVisible = () => {
     setIsVisible(true);
   };
-
 
   const handleIsModalVisible = () => {
     setIsModalVisible(true);
@@ -56,6 +58,8 @@ const ApplicationDetail = () => {
     if (applicationNumber) {
       fetchApplicationById(applicationNumber);
     }
+
+    fetchApplicationData();
   }, [applicationNumber]);
 
   const fetchApplicationById = (applicationNumber) => {
@@ -89,6 +93,29 @@ const ApplicationDetail = () => {
       });
   };
 
+ 
+ const fetchApplicationData = async () => {
+    try {
+      const response = await fetch(
+        `http://3.216.182.63:8095/TestApi/GetDocketInitiation?applicationNumber=${applicationNumber}`,
+        {
+          method: "GET",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (response.ok) {
+        const data = await response.json();
+        setApplication(data);
+      } else {
+        console.error("Failed to fetch application data");
+      }
+    } catch (error) {
+      console.error("Error fetching application data:", error);
+    }
+  };
   const handleGenerateJobCard = () => {
     if (!applicationNumber || !userid) {
       console.error("Application number or userId is missing");
@@ -629,56 +656,117 @@ const ApplicationDetail = () => {
       </section>
 
       <div className="flex flex-col px-6 pt-4 pb-5 mt-4 bg-white rounded-3xl max-md:px-5">
-      <div className="flex gap-4 justify-between text-2xl font-semibold capitalize text-neutral-600 max-md:flex-wrap max-md:max-w-full">
-        <div>Field Connection</div>
-        <img
-          loading="lazy"
-          src="https://cdn.builder.io/api/v1/image/assets/TEMP/c7749e10a4cb727e5ce0c7fd48d44fb683bf93b2fa7c59643148748496b286b0?apiKey=5bf51c3fc9cb49b480a07670cbcd768f&"
-          className="shrink-0 my-auto w-6 aspect-square"
-        />
-      </div>
-      <div className="shrink-0 mt-4 h-px border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-opacity-10 max-md:max-w-full" />
-      <div className="flex-wrap gap-y-4 justify-between content-start mt-4 max-md:max-w-full">
-        <div className="flex gap-5 max-md:flex-col max-md:gap-0">
-          <div className="flex flex-col w-6/12 max-md:ml-0 max-md:w-full">
-            <div className="grow justify-between px-6 py-4 w-full rounded-xl bg-stone-100 max-md:px-5 max-md:mt-6 max-md:max-w-full">
-              <div className="flex gap-5 max-md:flex-col max-md:gap-0">
-                <div className="flex flex-col w-[64%] max-md:ml-0 max-md:w-full">
-                  <div className="flex flex-col grow justify-center max-md:mt-10">
-                    <div className="text-xs font-medium tracking-wide text-center uppercase text-neutral-400">
-                      material expenditure
-                    </div>
-                    <div className="mt-2 text-base leading-7 text-neutral-600">
-                      {" "}
-                      This is a list of all materials used on the connection
+        <div className="flex gap-4 justify-between text-2xl font-semibold capitalize text-neutral-600 max-md:flex-wrap max-md:max-w-full">
+          <div>Field Connection</div>
+          <img
+            loading="lazy"
+            src="https://cdn.builder.io/api/v1/image/assets/TEMP/c7749e10a4cb727e5ce0c7fd48d44fb683bf93b2fa7c59643148748496b286b0?apiKey=5bf51c3fc9cb49b480a07670cbcd768f&"
+            className="shrink-0 my-auto w-6 aspect-square"
+          />
+        </div>
+        <div className="shrink-0 mt-4 h-px border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-opacity-10 max-md:max-w-full" />
+        <div className="flex-wrap gap-y-4 justify-between content-start mt-4 max-md:max-w-full">
+          <div className="flex gap-5 max-md:flex-col max-md:gap-0">
+            <div className="flex flex-col w-6/12 max-md:ml-0 max-md:w-full">
+              <div className="grow justify-between px-6 py-4 w-full rounded-xl bg-stone-100 max-md:px-5 max-md:mt-6 max-md:max-w-full">
+                <div className="flex gap-5 max-md:flex-col max-md:gap-0">
+                  <div className="flex flex-col w-[64%] max-md:ml-0 max-md:w-full">
+                    <div className="flex flex-col grow justify-center max-md:mt-10">
+                      <div className="text-xs font-medium tracking-wide text-center uppercase text-neutral-400">
+                        material expenditure
+                      </div>
+                      <div className="mt-2 text-base leading-7 text-neutral-600">
+                        {" "}
+                        This is a list of all materials used on the connection
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div className="flex flex-col ml-5 w-[36%] max-md:ml-0 max-md:w-full">
-                  <div className="grow justify-center px-6 py-3 mt-9 w-full text-sm font-semibold text-white rounded-3xl bg-slate-500 max-md:px-5 max-md:mt-10">
-                    Generate List
+                  <div className="flex flex-col ml-5 w-[36%] max-md:ml-0 max-md:w-full">
+                    <div className="grow justify-center px-6 py-3 mt-9 w-full text-sm font-semibold text-white rounded-3xl bg-slate-500 max-md:px-5 max-md:mt-10">
+                      Generate List
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div className="flex flex-col ml-5 w-6/12 max-md:ml-0 max-md:w-full">
-            <div className="grow justify-between px-6 py-4 w-full rounded-xl bg-stone-100 max-md:px-5 max-md:mt-6 max-md:max-w-full">
-              <div className="flex gap-5 max-md:flex-col max-md:gap-0">
-                <div className="flex flex-col w-[65%] max-md:ml-0 max-md:w-full">
-                  <div className="flex flex-col grow justify-center max-md:mt-10">
-                    <div className="text-xs font-medium tracking-wide text-center uppercase text-neutral-400">
-                      docket details
-                    </div>
-                    <div className="mt-2 text-base leading-7 text-neutral-600">
-                      Capture the details of the meter installed at the
-                      customer’s premises
+            <div className="flex flex-col ml-5 w-6/12 max-md:ml-0 max-md:w-full">
+              <div className="grow justify-between px-6 py-4 w-full rounded-xl bg-stone-100 max-md:px-5 max-md:mt-6 max-md:max-w-full">
+                <div className="flex gap-5 max-md:flex-col max-md:gap-0">
+                  <div className="flex flex-col w-[65%] max-md:ml-0 max-md:w-full">
+                    <div className="flex flex-col grow justify-center max-md:mt-10">
+                      <div className="text-xs font-medium tracking-wide text-center uppercase text-neutral-400">
+                        docket details
+                      </div>
+                      <div className="mt-2 text-base leading-7 text-neutral-600">
+                        Capture the details of the meter installed at the
+                        customer’s premises
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div className="flex flex-col ml-5 w-[35%] max-md:ml-0 max-md:w-full">
-                  <div className="grow justify-center px-6 py-3 mt-9 w-full text-sm font-semibold text-white rounded-3xl bg-slate-500 max-md:px-5 max-md:mt-10">
-                    Add Meter
+                  {/* <div className="flex flex-col ml-5  max-md:ml-0 max-md:w-full">
+                    <div className="flex flex-col ml-5  max-md:ml-0 max-md:w-full">
+                      <button
+                        type="button"
+                        className="grow justify-center px-6 py-3 mt-9 w-full text-sm font-semibold text-white rounded-3xl bg-slate-500 max-md:px-5 max-md:mt-10"
+                        onClick={() =>
+                          navigate(`/billingdashboard`, {
+                            state: { screen: "add-meter", applicationNumberDisplay },
+                          })
+                        }
+                      >
+                        Add Meter
+                      </button>
+                    </div>
+                    <button
+                        type="button"
+                        className="grow justify-center px-6 py-3 mt-9 w-full text-sm font-semibold text-white rounded-3xl bg-slate-500 max-md:px-5 max-md:mt-10"
+                        onClick={() =>
+                          navigate(`/billingdashboard`, {
+                            state: { screen: "report-details", applicationNumberDisplay},
+                          })
+                        }
+                      >
+                        Report Details
+                      </button>
+                  </div> */}
+
+                  <div className="flex flex-col ml-5 max-md:ml-0 max-md:w-full">
+                    <>
+                      {application?.customerRef ? (
+                        <button
+                          type="button"
+                          className="justify-center px-6 py-3 mt-9 w-[200px] text-sm font-semibold text-white rounded-3xl max-md:mt-10"
+                          style={{
+                            background: "#9EC137"
+                          }}
+                          onClick={() =>
+                            navigate(`/billingdashboard`, {
+                              state: {
+                                screen: "report-details",
+                                application,
+                              },
+                            })
+                          }
+                        >
+                          Report Details
+                        </button>
+                      ) : (
+                        <button
+                          type="button"
+                          className="grow justify-center px-6 py-3 mt-9 w-full text-sm font-semibold text-white rounded-3xl bg-slate-500 max-md:px-5 max-md:mt-10"
+                          onClick={() =>
+                            navigate(`/billingdashboard`, {
+                              state: {
+                                screen: "add-meter",
+                                applicationNumberDisplay,
+                              },
+                            })
+                          }
+                        >
+                          Add Meter
+                        </button>
+                      )}
+                    </>
                   </div>
                 </div>
               </div>
@@ -686,7 +774,6 @@ const ApplicationDetail = () => {
           </div>
         </div>
       </div>
-    </div>
 
       <ApplicationFormActions
         isModalVisible={isModalVisible}
@@ -720,10 +807,9 @@ const ApplicationDetail = () => {
         isUpdateModalVisible={isUpdateModalVisible}
         handleUpdateModalVisible={handleUpdateModalVisible}
       />
+      {/* <Payslip visible={isVisible} onCancel={() => setIsVisible(false)} /> */}
     </div>
   );
 };
 
 export default ApplicationDetail;
-
-

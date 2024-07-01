@@ -14,6 +14,9 @@ import Payments from "../Application/Payments";
 import BillingCycle from "../Application/BillingCycle";
 import BillAdjustment from "../Application/BillAdjustment";
 import InvoiceDetails from "../Application/Actions/InvoiceDetails";
+import AddMeter from "../Application/AddMeter";
+import MeterDetails from "../Application/MeterDetails";
+import EditDocketInitiation from "../Application/EditDocketInitiation";
 
 const BillingDashboard = () => {
   const location = useLocation();
@@ -49,6 +52,9 @@ const BillingDashboard = () => {
               {screen === "billing" && <BillingCycle />}
               {screen === "bill-adjsutment" && <BillAdjustment />}
               {screen === "invoice-details" && <InvoiceDetails />}
+              {screen === "add-meter" && <AddMeter />}
+              {screen === "report-details" && <MeterDetails />}
+              {screen === "edit-docket-initiation" && <EditDocketInitiation />}
             </div>
           </div>
         </div>
