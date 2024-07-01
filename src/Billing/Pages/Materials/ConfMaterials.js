@@ -108,7 +108,7 @@ function ConfMaterials() {
       </div>
       {isUpdateModalVisible && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white rounded-lg p-6 w-[70%] max-w-xl">
+          <div className="bg-white rounded-lg p-6 w-[70%] h-[90%] max-w-xl">
             <CreateMaterials />
           </div>
         </div>

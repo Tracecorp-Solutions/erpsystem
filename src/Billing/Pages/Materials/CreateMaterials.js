@@ -103,7 +103,7 @@ function CreateMaterials() {
           required
         />
 
-        <div className="mt-4 font-semibold text-neutral-600 max-md:max-w-full text-left">
+        <div className="mt-2 font-semibold text-neutral-600 max-md:max-w-full text-left">
           Material Description
         </div>
         <textarea
@@ -113,7 +113,7 @@ function CreateMaterials() {
           required
         />
 
-        <div className="mt-4 font-semibold text-neutral-600 max-md:max-w-full text-left">
+        <div className="mt-2 font-semibold text-neutral-600 max-md:max-w-full text-left">
           Invoiceable
         </div>
         <select
@@ -126,7 +126,7 @@ function CreateMaterials() {
           <option value="false">No</option>
         </select>
 
-        <div className="flex justify-center items-start self-stretch px-16 py-6 mt-10 w-full bg-stone-100 max-md:px-5 max-md:mt-10 max-md:max-w-full">
+        <div className="flex justify-center items-start self-stretch px-16 py-6 mt-10 w-full bg-stone-100 max-md:px-5 max-md:mt-8 max-md:max-w-full">
           <div className="flex gap-4 max-w-full w-[496px] max-md:flex-wrap">
             <button
               type="button"
