@@ -2,18 +2,18 @@ import React, { useState, useEffect } from "react";
 import { Select, Modal } from "antd";
 import { AiOutlineClose } from "react-icons/ai";
 
-
 const { Option } = Select;
 
-function InvoiceItem({ applicationNumber, modalView, closeAddItemsForm }) {
+function InvoiceItem({ applicationNumber, modalView, closeAddItemsForm, onItemAdded }) {
   const [materials, setMaterials] = useState([]);
   const [selectedMaterial, setSelectedMaterial] = useState("");
-  const [itemQuantity, setItemQuantity] = useState(0);
-  const [totalPrice, setTotalPrice] = useState(0);
+  const [materialName,setMaterialName] = useState("");
+  const [quantity, setItemQuantity] = useState(0);
+  const [price, setTotalPrice] = useState(0);
   const [formData, setFormData] = useState({
     materialId: "",
-    itemQuantity: "",
-    totalPrice: "",
+    quantity: "",
+    price: "",
   });
   const [data, setData] = useState([]);
 
@@ -36,14 +36,15 @@ function InvoiceItem({ applicationNumber, modalView, closeAddItemsForm }) {
       (material) => material.materialName === selectedMaterial
     );
     if (selectedMaterialData) {
-      setTotalPrice(selectedMaterialData.materialUnitPrice * itemQuantity);
+      setTotalPrice(selectedMaterialData.materialUnitPrice * quantity);
       setFormData((prevFormData) => ({
         ...prevFormData,
         materialId: selectedMaterialData.materialId,
-        totalPrice: selectedMaterialData.materialUnitPrice * itemQuantity,
+        price: selectedMaterialData.materialUnitPrice * quantity,
+        totalSum: totalSum
       }));
     }
-  }, [selectedMaterial, itemQuantity, materials]);
+  }, [selectedMaterial, quantity, materials]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -52,16 +53,25 @@ function InvoiceItem({ applicationNumber, modalView, closeAddItemsForm }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setData([...data, formData]);
-    sessionStorage.setItem("items",data);
-    setFormData({ materialId: "", itemQuantity: "", totalPrice: "" });
+    const newItem = { ...formData };
+    setData([...data, newItem]);
+    setFormData({ materialId: "", quantity: "", price: "" });
     setSelectedMaterial("");
     setItemQuantity(0);
     setTotalPrice(0);
+    onItemAdded(newItem);
+    handleCancel();
   };
 
-  const handleMaterialChange = (value) => {
-    setSelectedMaterial(value);
+  const handleMaterialChange = (e) => {
+    console.log("*****************");
+    console.log(e);
+    console.log("*****************");
+    setSelectedMaterial(e);
+    setFormData((prevFormData) =>({
+      ...prevFormData,
+      materialId: e
+    }));
   };
 
   const handleQuantityChange = (e) => {
@@ -69,7 +79,7 @@ function InvoiceItem({ applicationNumber, modalView, closeAddItemsForm }) {
     setItemQuantity(quantity);
     setFormData((prevFormData) => ({
       ...prevFormData,
-      itemQuantity: quantity,
+      quantity: quantity,
     }));
   };
 
@@ -78,18 +88,16 @@ function InvoiceItem({ applicationNumber, modalView, closeAddItemsForm }) {
     console.log("Cancelled adding item.");
   };
 
-  const totalSum = data.reduce((sum, item) => sum + item.totalPrice, 0);
+  const totalSum = data.reduce((sum, item) => sum + parseFloat(item.price), 0);
+
+  console.log("*********************");
+  console.log(totalSum);
+  console.log("*********************");
 
   return (
     <Modal visible={modalView} footer={null} onCancel={handleCancel}>
       <div className="flex flex-col justify-center items-left pt-4 bg-white rounded-3xl max-w-[720px] relative">
-        <button
-          type="button"
-          className="absolute top-4 right-4 text-gray-500"
-          onClick={handleCancel}
-        >
-          <AiOutlineClose />
-        </button>
+
         <form onSubmit={handleSubmit}>
           <div className="text-2xl font-semibold leading-9 text-neutral-600 max-md:max-w-full">
             Create Invoice Item
@@ -117,12 +125,12 @@ function InvoiceItem({ applicationNumber, modalView, closeAddItemsForm }) {
           <input
             type="number"
             className="justify-center items-start px-4 py-2 mt-2 max-w-full text-base leading-6 whitespace-nowrap bg-white rounded-xl border border-solid border-neutral-500 border-opacity-30 text-neutral-600 w-[500px] max-md:pr-5"
-            value={itemQuantity}
+            value={quantity}
             onChange={handleQuantityChange}
-            min="1"
+            min="0"
           />
           <div className="mt-2 text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">
-            Total Price: ${totalPrice.toFixed(2)}
+            Total Price: ${totalSum.toFixed(2)}
           </div>
           <div className="flex justify-center items-center self-stretch px-12 py-4 mt-6 w-full text-base leading-6 bg-white-100 max-md:px-5 max-md:mt-6 max-md:max-w-full">
             <div className="flex gap-8 max-w-full w-[696px] max-md:flex-wrap">
@@ -142,28 +150,6 @@ function InvoiceItem({ applicationNumber, modalView, closeAddItemsForm }) {
             </div>
           </div>
         </form>
-        <table border="1" className="mt-4 w-full text-left">
-          <thead>
-            <tr>
-              <th>Material ID</th>
-              <th>Quantity</th>
-              <th>Total Price</th>
-            </tr>
-          </thead>
-          <tbody>
-            {data.map((item, index) => (
-              <tr key={index}>
-                <td>{item.materialId}</td>
-                <td>{item.itemQuantity}</td>
-                <td>${item.totalPrice.toFixed(2)}</td>
-              </tr>
-            ))}
-            <tr>
-              <td colSpan="2" style={{ textAlign: "right", fontWeight: "bold" }}>Total Sum:</td>
-              <td style={{ fontWeight: "bold" }}>${totalSum.toFixed(2)}</td>
-            </tr>
-          </tbody>
-        </table>
       </div>
     </Modal>
   );
