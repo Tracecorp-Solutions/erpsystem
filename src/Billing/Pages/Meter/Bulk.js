@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -10,9 +11,12 @@ function Bulk() {
   const [meterReader, setMeterReader] = useState("");
   const [fileHasHeader, setFileHasHeader] = useState("");
 
+  const handleNavigate = (screen) => {
+    navigate("/billingdashboard", { state: { screen } });
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Logic to handle form submission
     navigate("/billingdashboard", {
       state: {
         operationalArea,
@@ -37,14 +41,14 @@ function Bulk() {
         >
           <div className="flex gap-5 pr-20 font-semibold max-md:flex-wrap max-md:pr-5">
             <div
-              onClick={() => handleSubmit("one")}
+              onClick={() => handleNavigate("one")}
               className="cursor-pointer justify-center px-6 py-4 rounded-lg bg-stone-100 text-slate-500 max-md:px-5"
               role="button"
             >
               One by One
             </div>
             <div
-              onClick={() => handleSubmit("bulk")}
+              onClick={() => handleNavigate("bulk")}
               className="cursor-pointer justify-center px-6 py-4 bg-white rounded-lg text-neutral-400 max-md:px-5"
               role="button"
             >
@@ -148,13 +152,16 @@ function Bulk() {
               </div>
             </div>
           </div>
-          <div className="mt-6">
-            <button
-              type="submit"
-              className="px-8 py-3 bg-primary-500 text-white rounded-lg hover:bg-primary-600"
-            >
-              Submit
-            </button>
+          <div className="flex flex-col pt-2 text-base font-semibold leading-6 whitespace-nowrap bg-white">
+            <div className="w-full border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-opacity-10 min-h-[1px] max-md:max-w-full" />
+            <div className="flex gap-4 self-end mt-4 max-w-full w-[496px] max-md:flex-wrap">
+              <div className="justify-center items-center px-12 py-4 rounded-3xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 max-md:px-5">
+                Cancel
+              </div>
+              <div className="justify-center items-center px-12 py-4 text-white rounded-3xl bg-blue-400 max-md:px-5">
+                Upload
+              </div>
+            </div>
           </div>
         </div>
       </div>

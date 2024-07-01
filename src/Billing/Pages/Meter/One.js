@@ -143,7 +143,7 @@ function One() {
             />
           </div>
           <div className="flex flex-col px-5 flex-1">
-            <div className="font-semibold w-full">Consumption</div>
+            <div className="font-semibold text-neutral-600 w-full">Consumption</div>
             <input
               type="text"
               className="justify-center items-start px-4 py-4 mt-2 rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 w-full"
@@ -155,7 +155,7 @@ function One() {
         </div>
         <div className="flex gap-4 mt-4 max-md:flex-wrap w-full">
           <div className="flex flex-col px-5 flex-1">
-            <div className="font-semibold w-full">Average Consumption</div>
+            <div className="font-semibold text-neutral-600 w-full">Average Consumption</div>
             <input
               type="text"
               className="justify-center items-start px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 w-full"
@@ -165,7 +165,7 @@ function One() {
             />
           </div>
           <div className="flex flex-col px-5 flex-1">
-            <div className="font-semibold w-full">Meter Dials</div>
+            <div className="font-semibold w-full text-neutral-600">Meter Dials</div>
             <input
               type="text"
               className="justify-center items-start px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 w-full"
@@ -177,7 +177,7 @@ function One() {
         </div>
         <div className="flex gap-4 mt-4 max-md:flex-wrap w-full">
           <div className="flex flex-col px-5 flex-1">
-            <div className="font-semibold w-full">Reading Type</div>
+            <div className="font-semibold w-full text-neutral-600" >Reading Type</div>
             <select
               className="justify-center items-start px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 w-full"
               name="readingType"
@@ -189,7 +189,7 @@ function One() {
             </select>
           </div>
           <div className="flex flex-col px-5 flex-1">
-            <div className="font-semibold w-full">Is Billed?</div>
+            <div className="font-semibold w-full text-neutral-600">Is Billed?</div>
             <select
               className="justify-center items-start px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 w-full"
               name="isBilled"
@@ -215,7 +215,7 @@ function One() {
             />
           </div>
           <div className="flex flex-col px-5 flex-1">
-            <div className="font-semibold w-full">Reading Date</div>
+            <div className="font-semibold text-neutral-600 w-full">Reading Date</div>
             <input
               type="date"
               className="flex gap-2 justify-between px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid border-neutral-500 border-opacity-30 w-full"
