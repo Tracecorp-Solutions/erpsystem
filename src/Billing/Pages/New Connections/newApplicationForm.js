@@ -24,14 +24,13 @@ import {
   getBillDeliveryMethods,
 } from "../../Apis/billDeliveryMethod";
 
-
 function Step({ stepNumber, stepTitle, imgSrc, isActive }) {
   return (
     <div className="flex flex-col items-center">
       <div
-        // className={`flex justify-center items-center px-3 w-12 h-12 rounded-3xl ${
-        //   isActive ? "bg-slate-500" : "bg-stone-100"
-        // }`}
+      // className={`flex justify-center items-center px-3 w-12 h-12 rounded-3xl ${
+      //   isActive ? "bg-slate-500" : "bg-stone-100"
+      // }`}
       >
         {/* <img
           loading="lazy"
@@ -53,7 +52,6 @@ function Step({ stepNumber, stepTitle, imgSrc, isActive }) {
     </div>
   );
 }
-
 
 const NewApplicationForm = () => {
   const [step, setStep] = useState(1);
@@ -179,7 +177,7 @@ const NewApplicationForm = () => {
     e.preventDefault();
 
     // Ensure all required fields are filled
-    const requiredFields = [
+   const requiredFields = [
       "Title",
       "Gender",
       "FullName",
@@ -235,7 +233,7 @@ const NewApplicationForm = () => {
       );
       alert(response.data); // Show success message
     } catch (error) {
-      setErrorMessage("Error submitting application"); // Set error message
+      setErrorMessage(""); // Set error message
       console.error(error);
     }
   };
@@ -252,21 +250,94 @@ const NewApplicationForm = () => {
     switch (step) {
       case 1:
         return (
-          <div className="flex flex-row h-screen overflow-hidden">
-            <SideNav />
+          <div className="flex flex-row ">
+            {/* <SideNav /> */}
             {/* Step 1: SideNav (if any) goes here */}
 
             <div className="flex-1 overflow-auto px-6 py-5 bg-stone-100 ml-5 rounded-3xl">
-              <TopNav />
-              <header className="text-4xl font-semibold leading-[57.6px] text-neutral-600">
-                Step 1: Basic Information
-              </header>
+              {/* <TopNav /> */}
+              <div className="flex gap-4 justify-between max-md:flex-wrap">
+                <div className="flex flex-col items-center px-5">
+                  <div className="flex justify-center items-center px-3 w-12 h-12 rounded-3xl bg-slate-500">
+                    <img
+                      loading="lazy"
+                      src="https://cdn.builder.io/api/v1/image/assets/TEMP/199c93b6c6f6722d44a5034345d6f2fe17ea88a437145380dc5f98b5469fa385?apiKey=5bf51c3fc9cb49b480a07670cbcd768f&"
+                      className="w-full aspect-square"
+                    />
+                  </div>
+                  <div className="mt-2 text-xs font-medium tracking-wide uppercase text-neutral-400">
+                    step 1
+                  </div>
+                  <div className="self-stretch mt-1 text-base font-semibold leading-6 text-neutral-600">
+                    Personal Information
+                  </div>
+                </div>
+                <img
+                  loading="lazy"
+                  src="https://cdn.builder.io/api/v1/image/assets/TEMP/0b54045018ad575579a22acd36a3ab79789b2d22bda7c14c51157473741f6225?apiKey=5bf51c3fc9cb49b480a07670cbcd768f&"
+                  className="shrink-0 self-start mt-6 border-solid aspect-[20] border-[5px] border-neutral-500 border-opacity-30 stroke-[5px] stroke-neutral-500 stroke-opacity-30 w-[95px]"
+                />
+                <div className="flex flex-col items-center px-5">
+                  <div className="flex justify-center items-center px-3 w-12 h-12 rounded-3xl bg-stone-100">
+                    <img
+                      loading="lazy"
+                      src="https://cdn.builder.io/api/v1/image/assets/TEMP/0e84324a03d414e428a64c19c8b8118b3af742d2a47c41a4414c51ba2c57ae4f?apiKey=5bf51c3fc9cb49b480a07670cbcd768f&"
+                      className="w-full aspect-square"
+                    />
+                  </div>
+                  <div className="mt-2 text-xs font-medium tracking-wide uppercase text-neutral-400">
+                    step 2
+                  </div>
+                  <div className="self-stretch mt-1 text-base font-semibold leading-6 text-neutral-400">
+                    Residential Information
+                  </div>
+                </div>
+                <img
+                  loading="lazy"
+                  src="https://cdn.builder.io/api/v1/image/assets/TEMP/0b54045018ad575579a22acd36a3ab79789b2d22bda7c14c51157473741f6225?apiKey=5bf51c3fc9cb49b480a07670cbcd768f&"
+                  className="shrink-0 self-start mt-6 border-solid aspect-[20] border-[5px] border-neutral-500 border-opacity-30 stroke-[5px] stroke-neutral-500 stroke-opacity-30 w-[95px]"
+                />
+                <div className="flex flex-col items-center px-5">
+                  <div className="flex justify-center items-center px-3 w-12 h-12 rounded-3xl bg-stone-100">
+                    <img
+                      loading="lazy"
+                      src="https://cdn.builder.io/api/v1/image/assets/TEMP/f309f384046042bf92699181c71e583cfc28443429080c7c232bc6d58a3ff51c?apiKey=5bf51c3fc9cb49b480a07670cbcd768f&"
+                      className="w-full aspect-square"
+                    />
+                  </div>
+                  <div className="mt-2 text-xs font-medium tracking-wide uppercase text-neutral-400">
+                    step 3
+                  </div>
+                  <div className="self-stretch mt-1 text-base font-semibold leading-6 text-neutral-400">
+                    Connection Details
+                  </div>
+                </div>
+                <img
+                  loading="lazy"
+                  src="https://cdn.builder.io/api/v1/image/assets/TEMP/0b54045018ad575579a22acd36a3ab79789b2d22bda7c14c51157473741f6225?apiKey=5bf51c3fc9cb49b480a07670cbcd768f&"
+                  className="shrink-0 self-start mt-6 border-solid aspect-[20] border-[5px] border-neutral-500 border-opacity-30 stroke-[5px] stroke-neutral-500 stroke-opacity-30 w-[95px]"
+                />
+                <div className="flex flex-col items-center px-5">
+                  <div className="flex justify-center items-center px-3 w-12 h-12 rounded-3xl bg-stone-100">
+                    <img
+                      loading="lazy"
+                      src="https://cdn.builder.io/api/v1/image/assets/TEMP/afaabd6e24598ceadf15575ce63050eec599a60d5662a97bffd02fbefed93411?apiKey=5bf51c3fc9cb49b480a07670cbcd768f&"
+                      className="w-full aspect-square"
+                    />
+                  </div>
+                  <div className="mt-2 text-xs font-medium tracking-wide uppercase text-neutral-400">
+                    step 4
+                  </div>
+                  <div className="self-stretch mt-1 text-base font-semibold leading-6 text-neutral-400">
+                    Supporting Documents
+                  </div>
+                </div>
+              </div>
               <form
                 className="flex flex-col mt-6 bg-white rounded-3xl"
                 onSubmit={handleSubmit}
               >
-                
-                <div className="flex flex-col px-8 pt-8 pb-12">
+                <div className="flex flex-col px-8 pt-8 pb-10 ml-8">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mt-8">
                     <div>
                       <label className="block text-neutral-600 font-medium mb-2">
@@ -326,7 +397,6 @@ const NewApplicationForm = () => {
                         onChange={handleChange}
                         className="border border-gray-200 rounded-md px-3 py-2 w-72" // Adjust h-10 to increase height
                       >
-
                         <option value="select gender">
                           Select your gender
                         </option>
@@ -383,11 +453,11 @@ const NewApplicationForm = () => {
                       />
                     </div>
                   </div>
-                  <section className="flex flex-col justify-end items-end px-16 py-5 text-base font-semibold leading-6 whitespace-nowrap bg-gray max-md:pl-5 max-md:max-w-full">
+                  <section className="flex flex-col justify-end items-end px-8 py-5 text-base font-semibold leading-6 whitespace-nowrap bg-gray max-md:pl-5 max-md:max-w-full">
                     <div className="flex gap-4 px-8 max-w-full w-[232px] max-md:flex-wrap max-md:px-5">
-                      
                       <button
                         className="justify-center items-center px-8 py-4 text-white rounded-3xl bg-slate-500 max-md:px-5 w-72"
+                        type="button"
                         onClick={nextStep}
                       >
                         Next
@@ -402,20 +472,90 @@ const NewApplicationForm = () => {
 
       case 2:
         return (
-          <div className="flex flex-row h-screen overflow-hidden">
-
-            <SideNav />
-            {/* Step 2: SideNav (if any) goes here */}
+          <div className="flex flex-row">
             <div className="flex-1 overflow-auto px-6 py-5 bg-stone-100 ml-5 rounded-3xl">
-              <TopNav />
-              <header className="text-4xl font-semibold leading-[57.6px] text-neutral-600">
-                Step 2: Additional Information
-              </header>
+              <div className="flex gap-4 justify-between max-md:flex-wrap">
+                <div className="flex flex-col items-center px-5">
+                  <div className="flex justify-center items-center px-3 w-12 h-12 bg-lime-400 rounded-3xl">
+                    <img
+                      loading="lazy"
+                      src="https://cdn.builder.io/api/v1/image/assets/TEMP/ff8638ff9fab467bad1cb0313acaf5a3ce156fc9accd2302209d4e76b24f0549?apiKey=5bf51c3fc9cb49b480a07670cbcd768f&"
+                      className="w-full aspect-square"
+                    />
+                  </div>
+                  <div className="mt-2 text-xs font-medium tracking-wide uppercase text-neutral-400">
+                    step 1
+                  </div>
+                  <div className="self-stretch mt-1 text-base font-semibold leading-6 text-neutral-600">
+                    Personal Information
+                  </div>
+                </div>
+                <img
+                  loading="lazy"
+                  src="https://cdn.builder.io/api/v1/image/assets/TEMP/0b54045018ad575579a22acd36a3ab79789b2d22bda7c14c51157473741f6225?apiKey=5bf51c3fc9cb49b480a07670cbcd768f&"
+                  className="shrink-0 self-start mt-6 border-solid aspect-[20] border-[5px] border-neutral-500 border-opacity-30 stroke-[5px] stroke-neutral-500 stroke-opacity-30 w-[95px]"
+                />
+                <div className="flex flex-col items-center px-5">
+                  <div className="flex justify-center items-center px-3 w-12 h-12 rounded-3xl bg-slate-500">
+                    <img
+                      loading="lazy"
+                      src="https://cdn.builder.io/api/v1/image/assets/TEMP/0f84e7d882c1c96515c9aec1b28bd72a25653b4057fd4bb262e9e7c73d7a6675?apiKey=5bf51c3fc9cb49b480a07670cbcd768f&"
+                      className="w-full aspect-square"
+                    />
+                  </div>
+                  <div className="mt-2 text-xs font-medium tracking-wide uppercase text-neutral-400">
+                    step 2
+                  </div>
+                  <div className="self-stretch mt-1 text-base font-semibold leading-6 text-neutral-600">
+                    Residential Information
+                  </div>
+                </div>
+                <img
+                  loading="lazy"
+                  src="https://cdn.builder.io/api/v1/image/assets/TEMP/0b54045018ad575579a22acd36a3ab79789b2d22bda7c14c51157473741f6225?apiKey=5bf51c3fc9cb49b480a07670cbcd768f&"
+                  className="shrink-0 self-start mt-6 border-solid aspect-[20] border-[5px] border-neutral-500 border-opacity-30 stroke-[5px] stroke-neutral-500 stroke-opacity-30 w-[95px]"
+                />
+                <div className="flex flex-col items-center px-5">
+                  <div className="flex justify-center items-center px-3 w-12 h-12 rounded-3xl bg-stone-100">
+                    <img
+                      loading="lazy"
+                      src="https://cdn.builder.io/api/v1/image/assets/TEMP/f309f384046042bf92699181c71e583cfc28443429080c7c232bc6d58a3ff51c?apiKey=5bf51c3fc9cb49b480a07670cbcd768f&"
+                      className="w-full aspect-square"
+                    />
+                  </div>
+                  <div className="mt-2 text-xs font-medium tracking-wide uppercase text-neutral-400">
+                    step 3
+                  </div>
+                  <div className="self-stretch mt-1 text-base font-semibold leading-6 text-neutral-400">
+                    Connection Details
+                  </div>
+                </div>
+                <img
+                  loading="lazy"
+                  src="https://cdn.builder.io/api/v1/image/assets/TEMP/0b54045018ad575579a22acd36a3ab79789b2d22bda7c14c51157473741f6225?apiKey=5bf51c3fc9cb49b480a07670cbcd768f&"
+                  className="shrink-0 self-start mt-6 border-solid aspect-[20] border-[5px] border-neutral-500 border-opacity-30 stroke-[5px] stroke-neutral-500 stroke-opacity-30 w-[95px]"
+                />
+                <div className="flex flex-col items-center px-5">
+                  <div className="flex justify-center items-center px-3 w-12 h-12 rounded-3xl bg-stone-100">
+                    <img
+                      loading="lazy"
+                      src="https://cdn.builder.io/api/v1/image/assets/TEMP/700b08a5ca31bc1a0e4f23e30dfcf37c6bac8fd9279bc171b2668f0266d9b6a5?apiKey=5bf51c3fc9cb49b480a07670cbcd768f&"
+                      className="w-full aspect-square"
+                    />
+                  </div>
+                  <div className="mt-2 text-xs font-medium tracking-wide uppercase text-neutral-400">
+                    step 4
+                  </div>
+                  <div className="self-stretch mt-1 text-base font-semibold leading-6 text-neutral-400">
+                    Supporting Documents
+                  </div>
+                </div>
+              </div>
               <form
-                className="flex flex-col mt-6 bg-gray rounded-2xl"
+                className="flex flex-col mt-6 bg-white rounded-2xl"
                 onSubmit={handleSubmit}
               >
-                <div className="flex flex-col px-5 pt-8 pb-12">
+                <div className="flex flex-col px-5 pt-8 pb-8 ml-8">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8">
                     <div className="flex flex-col w-6/12 max-md:w-full">
                       <label
@@ -604,16 +744,17 @@ const NewApplicationForm = () => {
                       />
                     </div>
                   </div>
-                  <section className="flex flex-col justify-end items-end px-16 py-5 text-base font-semibold leading-6 whitespace-nowrap bg-gray max-md:pl-5 max-md:max-w-full">
-                    <div className="flex gap-4 px-8 max-w-full w-[232px] max-md:flex-wrap max-md:px-5">
+                  <section className="flex flex-col justify-between items-end px-8 py-5 text-base mt-12 font-semibold leading-6 whitespace-nowrap bg-white max-md:pl-5 max-md:max-w-full">
+                    <div className="flex gap-4 px-8 max-w-full max-md:flex-wrap max-md:px-5">
                       <button
-                        className="justify-center items-center px-8 py-4 rounded-3xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 max-md:px-5 w-72"
+                        className="justify-center items-center px-8 py-4 rounded-3xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 max-md:px-5 w-52"
                         onClick={prevStep}
                       >
                         Previous
                       </button>
                       <button
-                        className="justify-center items-center px-8 py-4 text-white rounded-3xl bg-slate-500 max-md:px-5 w-72"
+                        className="justify-center items-center px-8 py-4 text-white rounded-3xl bg-slate-500 max-md:px-5 w-52"
+                        type="button"
                         onClick={nextStep}
                       >
                         Next
@@ -629,19 +770,90 @@ const NewApplicationForm = () => {
       case 3:
         return (
           <div className="flex flex-row">
-            <SideNav />
-            {/* Step 3: SideNav (if any) goes here */}
             <div className="flex-1 overflow-auto px-6 py-5 bg-stone-100 ml-5 rounded-3xl">
-              <TopNav />
-              <header className="text-4xl font-semibold leading-[57.6px] text-neutral-600">
-                Step 3: Customer Details
-              </header>
+              <div className="flex gap-4 justify-between max-md:flex-wrap">
+                <div className="flex flex-col items-center px-5">
+                  <div className="flex justify-center items-center px-3 w-12 h-12 bg-lime-400 rounded-3xl">
+                    <img
+                      loading="lazy"
+                      src="https://cdn.builder.io/api/v1/image/assets/TEMP/ff8638ff9fab467bad1cb0313acaf5a3ce156fc9accd2302209d4e76b24f0549?apiKey=5bf51c3fc9cb49b480a07670cbcd768f&"
+                      className="w-full aspect-square"
+                    />
+                  </div>
+                  <div className="mt-2 text-xs font-medium tracking-wide uppercase text-neutral-400">
+                    step 1
+                  </div>
+                  <div className="self-stretch mt-1 text-base font-semibold leading-6 text-neutral-600">
+                    Personal Information
+                  </div>
+                </div>
+                <img
+                  loading="lazy"
+                  src="https://cdn.builder.io/api/v1/image/assets/TEMP/29e775b8417bcbfed9697896a5b81879c830b3fdb9810856fcd8fe58283c0d10?apiKey=5bf51c3fc9cb49b480a07670cbcd768f&"
+                  className="shrink-0 self-start mt-6 border-lime-400 border-solid aspect-[20] border-[5px] stroke-[5px] stroke-lime-400 w-[95px]"
+                />
+                <div className="flex flex-col items-center px-5">
+                  <div className="flex justify-center items-center px-3 w-12 h-12 bg-lime-400 rounded-3xl">
+                    <img
+                      loading="lazy"
+                      src="https://cdn.builder.io/api/v1/image/assets/TEMP/c57246ea05570b894523c0f90636ac81bfb23704dcf87e79fe5b49fa39bc2b30?apiKey=5bf51c3fc9cb49b480a07670cbcd768f&"
+                      className="w-full aspect-square"
+                    />
+                  </div>
+                  <div className="mt-2 text-xs font-medium tracking-wide uppercase text-neutral-400">
+                    step 2
+                  </div>
+                  <div className="self-stretch mt-1 text-base font-semibold leading-6 text-neutral-600">
+                    Residential Information
+                  </div>
+                </div>
+                <img
+                  loading="lazy"
+                  src="https://cdn.builder.io/api/v1/image/assets/TEMP/0b54045018ad575579a22acd36a3ab79789b2d22bda7c14c51157473741f6225?apiKey=5bf51c3fc9cb49b480a07670cbcd768f&"
+                  className="shrink-0 self-start mt-6 border-solid aspect-[20] border-[5px] border-neutral-500 border-opacity-30 stroke-[5px] stroke-neutral-500 stroke-opacity-30 w-[95px]"
+                />
+                <div className="flex flex-col items-center px-5">
+                  <div className="flex justify-center items-center px-3 w-12 h-12 rounded-3xl bg-slate-500">
+                    <img
+                      loading="lazy"
+                      src="https://cdn.builder.io/api/v1/image/assets/TEMP/fe059ad519d9778134432158d864c1c204a9aae9db4f16303fb0397185a8101f?apiKey=5bf51c3fc9cb49b480a07670cbcd768f&"
+                      className="w-full aspect-square"
+                    />
+                  </div>
+                  <div className="mt-2 text-xs font-medium tracking-wide uppercase text-neutral-400">
+                    step 3
+                  </div>
+                  <div className="self-stretch mt-1 text-base font-semibold leading-6 text-neutral-600">
+                    Connection Details
+                  </div>
+                </div>
+                <img
+                  loading="lazy"
+                  src="https://cdn.builder.io/api/v1/image/assets/TEMP/0b54045018ad575579a22acd36a3ab79789b2d22bda7c14c51157473741f6225?apiKey=5bf51c3fc9cb49b480a07670cbcd768f&"
+                  className="shrink-0 self-start mt-6 border-solid aspect-[20] border-[5px] border-neutral-500 border-opacity-30 stroke-[5px] stroke-neutral-500 stroke-opacity-30 w-[95px]"
+                />
+                <div className="flex flex-col items-center px-5">
+                  <div className="flex justify-center items-center px-3 w-12 h-12 rounded-3xl bg-stone-100">
+                    <img
+                      loading="lazy"
+                      src="https://cdn.builder.io/api/v1/image/assets/TEMP/700b08a5ca31bc1a0e4f23e30dfcf37c6bac8fd9279bc171b2668f0266d9b6a5?apiKey=5bf51c3fc9cb49b480a07670cbcd768f&"
+                      className="w-full aspect-square"
+                    />
+                  </div>
+                  <div className="mt-2 text-xs font-medium tracking-wide uppercase text-neutral-400">
+                    step 4
+                  </div>
+                  <div className="self-stretch mt-1 text-base font-semibold leading-6 text-neutral-400">
+                    Supporting Documents
+                  </div>
+                </div>
+              </div>
               <form
-                className="flex flex-col mt-6 bg-gray rounded-3xl"
+                className="flex flex-col mt-6 bg-white rounded-3xl"
                 onSubmit={handleSubmit}
               >
-                <div className="flex flex-col px-8 pt-8 pb-20">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-16">
+                <div className="flex flex-col px-8 pt-8 pb-14 ml-8">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-10">
                     <div className="flex flex-col w-6/12 max-md:w-full">
                       <label
                         htmlFor="CustomerType"
@@ -719,16 +931,18 @@ const NewApplicationForm = () => {
                       </select>
                     </div>
                   </div>
-                  <section className="flex flex-col justify-end items-end px-16 py-5 text-base font-semibold leading-6 whitespace-nowrap bg-gray max-md:pl-5 max-md:max-w-full">
-                    <div className="flex gap-4 px-8 max-w-full w-[232px] max-md:flex-wrap max-md:px-5">
+                  <section className="flex flex-col justify-between items-end px-8 py-5 mt-12 text-base font-semibold leading-6 whitespace-nowrap bg-white max-md:pl-5 max-md:max-w-full">
+                    <div className="flex gap-4 px-8 max-w-full  max-md:flex-wrap max-md:px-5">
                       <button
-                        className="justify-center items-center px-8 py-4 rounded-3xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 max-md:px-5"
+                        className="justify-center items-center px-8 py-4 rounded-3xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 max-md:px-5 w-52"
+                        type="button"
                         onClick={prevStep}
                       >
                         Previous
                       </button>
                       <button
-                        className="justify-center items-center px-8 py-4 text-white rounded-3xl bg-slate-500 max-md:px-5"
+                        className="justify-center items-center px-8 py-4 text-white rounded-3xl bg-slate-500 max-md:px-5 w-52"
+                        type="button"
                         onClick={nextStep}
                       >
                         Next
@@ -744,13 +958,84 @@ const NewApplicationForm = () => {
       case 4:
         return (
           <div className="flex flex-row">
-            <SideNav />
-            {/* Step 4: SideNav (if any) goes here */}
             <div className="flex-1 overflow-auto px-6 py-5 bg-stone-100 ml-5 rounded-3xl">
-              <TopNav />
-              <header className="text-4xl font-semibold leading-[57.6px] text-neutral-600">
-                Step 4: Attachments
-              </header>
+              <div className="flex gap-4 justify-between max-md:flex-wrap">
+                <div className="flex flex-col items-center px-5">
+                  <div className="flex justify-center items-center px-3 w-12 h-12 bg-lime-400 rounded-3xl">
+                    <img
+                      loading="lazy"
+                      src="https://cdn.builder.io/api/v1/image/assets/TEMP/ff8638ff9fab467bad1cb0313acaf5a3ce156fc9accd2302209d4e76b24f0549?apiKey=5bf51c3fc9cb49b480a07670cbcd768f&"
+                      className="w-full aspect-square"
+                    />
+                  </div>
+                  <div className="mt-2 text-xs font-medium tracking-wide uppercase text-neutral-400">
+                    step 1
+                  </div>
+                  <div className="self-stretch mt-1 text-base font-semibold leading-6 text-neutral-600">
+                    Personal Information
+                  </div>
+                </div>
+                <img
+                  loading="lazy"
+                  src="https://cdn.builder.io/api/v1/image/assets/TEMP/29e775b8417bcbfed9697896a5b81879c830b3fdb9810856fcd8fe58283c0d10?apiKey=5bf51c3fc9cb49b480a07670cbcd768f&"
+                  className="shrink-0 self-start mt-6 border-lime-400 border-solid aspect-[20] border-[5px] stroke-[5px] stroke-lime-400 w-[95px]"
+                />
+                <div className="flex flex-col items-center px-5">
+                  <div className="flex justify-center items-center px-3 w-12 h-12 bg-lime-400 rounded-3xl">
+                    <img
+                      loading="lazy"
+                      src="https://cdn.builder.io/api/v1/image/assets/TEMP/397529da95fc37cab8f73b39fe86983d38236d63bebe0a8c694da34e9f42341e?apiKey=5bf51c3fc9cb49b480a07670cbcd768f&"
+                      className="w-full aspect-square"
+                    />
+                  </div>
+                  <div className="mt-2 text-xs font-medium tracking-wide uppercase text-neutral-400">
+                    step 2
+                  </div>
+                  <div className="self-stretch mt-1 text-base font-semibold leading-6 text-neutral-600">
+                    Residential Information
+                  </div>
+                </div>
+                <img
+                  loading="lazy"
+                  src="https://cdn.builder.io/api/v1/image/assets/TEMP/29e775b8417bcbfed9697896a5b81879c830b3fdb9810856fcd8fe58283c0d10?apiKey=5bf51c3fc9cb49b480a07670cbcd768f&"
+                  className="shrink-0 self-start mt-6 border-lime-400 border-solid aspect-[20] border-[5px] stroke-[5px] stroke-lime-400 w-[95px]"
+                />
+                <div className="flex flex-col items-center px-5">
+                  <div className="flex justify-center items-center px-3 w-12 h-12 bg-lime-400 rounded-3xl">
+                    <img
+                      loading="lazy"
+                      src="https://cdn.builder.io/api/v1/image/assets/TEMP/d0d2ae8360bcc177d8031f7a8f24b93e24b7c403ab01f427696edc41dd63fe1d?apiKey=5bf51c3fc9cb49b480a07670cbcd768f&"
+                      className="w-full aspect-square"
+                    />
+                  </div>
+                  <div className="mt-2 text-xs font-medium tracking-wide uppercase text-neutral-400">
+                    step 3
+                  </div>
+                  <div className="self-stretch mt-1 text-base font-semibold leading-6 text-neutral-600">
+                    Connection Details
+                  </div>
+                </div>
+                <img
+                  loading="lazy"
+                  src="https://cdn.builder.io/api/v1/image/assets/TEMP/0b54045018ad575579a22acd36a3ab79789b2d22bda7c14c51157473741f6225?apiKey=5bf51c3fc9cb49b480a07670cbcd768f&"
+                  className="shrink-0 self-start mt-6 border-solid aspect-[20] border-[5px] border-neutral-500 border-opacity-30 stroke-[5px] stroke-neutral-500 stroke-opacity-30 w-[95px]"
+                />
+                <div className="flex flex-col items-center px-5">
+                  <div className="flex justify-center items-center px-3 w-12 h-12 rounded-3xl bg-slate-500">
+                    <img
+                      loading="lazy"
+                      src="https://cdn.builder.io/api/v1/image/assets/TEMP/0618cda44dc55270c347b99023da949dd92e2e0f2510b60ba7f7e800d3824181?apiKey=5bf51c3fc9cb49b480a07670cbcd768f&"
+                      className="w-full aspect-square"
+                    />
+                  </div>
+                  <div className="mt-2 text-xs font-medium tracking-wide uppercase text-neutral-400">
+                    step 4
+                  </div>
+                  <div className="self-stretch mt-1 text-base font-semibold leading-6 text-neutral-600">
+                    Supporting Documents
+                  </div>
+                </div>
+              </div>
               <form
                 className="flex flex-col mt-6 bg-white rounded-3xl"
                 onSubmit={handleSubmit}
@@ -765,8 +1050,8 @@ const NewApplicationForm = () => {
                         Proof of Identity
                       </label>
                       <p className="text-sm text-gray-500 mt-1">
-                          Attach a scanned copy of your identity document.
-                        </p>
+                        Attach a scanned copy of your identity document.
+                      </p>
                       <input
                         type="file"
                         name="proofOfIdentity"
@@ -779,8 +1064,8 @@ const NewApplicationForm = () => {
                         Proof of Ownership
                       </label>
                       <p className="text-sm text-gray-500 mt-1">
-                          Attach a scanned copy of the ownership document.
-                        </p>
+                        Attach a scanned copy of the ownership document.
+                      </p>
                       <input
                         type="file"
                         name="ProofOfOwnerShip"
@@ -793,9 +1078,8 @@ const NewApplicationForm = () => {
                         Proof of Installation Site
                       </label>
                       <p className="text-sm text-gray-500 mt-1">
-                          Attach a scanned copy of the installation site
-                          document.
-                        </p>
+                        Attach a scanned copy of the installation site document.
+                      </p>
                       <input
                         type="file"
                         onChange={handleFile3Change}
@@ -807,9 +1091,9 @@ const NewApplicationForm = () => {
                         Local Authorization Document
                       </label>
                       <p className="text-sm text-gray-500 mt-1">
-                          Attach a scanned copy of the local authorization
-                          document.
-                        </p>
+                        Attach a scanned copy of the local authorization
+                        document.
+                      </p>
                       <input
                         type="file"
                         name="LocalAuthorizationDocument"
