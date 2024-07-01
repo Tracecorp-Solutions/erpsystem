@@ -27,12 +27,7 @@ const ApplicationDetail = () => {
   const [jobCardInfo, setJobCardInfo] = useState(null);
   const [surveyorAssigned, setSurveyorAssigned] = useState(false);
   const [applicationStatus, setApplicationStatus] = useState(null);
-  const [payslipVisible, setPayslipVisible] = useState(false);
 
-  console.log("Application Data:", applicationData);
-  console.log("jobCardInfo jobCardInfo:", jobCardInfo);
-
-  console.log("Application Data 222222222:", application);
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -543,7 +538,7 @@ const ApplicationDetail = () => {
             </div>
           </div>
         </div>
-        {applicationStatus.status === "PENDING SURVEY" ? (
+        {status === "PENDING JOB CARD" ? (
           <div className="flex gap-2 justify-between px-6 py-4 mt-4 max-w-full rounded-xl bg-stone-100 w-[508px] max-md:flex-wrap max-md:px-5">
             <div className="flex flex-col justify-center text-center">
               <div className="text-xs font-medium tracking-wide uppercase text-neutral-400">
@@ -598,12 +593,24 @@ const ApplicationDetail = () => {
               </h2>
               <p>Update details to reflect surveyor recommendations</p>
             </div>
-            <button
+            {status === "PENDING CONNECTION INVOICE" ? (
+              <button
               className="justify-center self-start px-6 py-3 mt-2.5 text-sm font-semibold text-white whitespace-nowrap rounded-3xl bg-slate-500 max-md:px-5"
               onClick={handleUpdateModalVisible}
             >
               Update and Authorize Connection
             </button>
+            ) : <div className="flex gap-2 justify-between px-6 py-4 mt-4 max-w-full rounded-xl bg-green-100 max-md:flex-wrap max-md:px-5">
+            <div className="flex flex-col justify-center text-center">
+            <div className="text-xs font-medium tracking-wide uppercase text-neutral-400">
+                  STATUS
+                </div>
+              <div className="mt-2 text-base leading-6 text-green-600">
+                {applicationData.status}
+              </div>
+            </div>{" "}
+          </div>}
+            
           </div>
         </div>
         <div className="mt-4 max-md:max-w-full">

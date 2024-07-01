@@ -3,49 +3,76 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { Dropdown, Menu } from "antd";
 import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
 import InvoiceItem from "./InvoiceItem";
+import { message, Modal } from "antd";
+import axios from "axios";
 
 function UpdateInvoice() {
   const [isUpdateModalVisible, setIsUpdateModalVisible] = useState(false);
   const [invoiceItems, setInvoiceItems] = useState(null); // Initialize as null
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [application, setApplication] = useState();
   const location = useLocation();
   const navigate = useNavigate();
+  const [modalView, setModalView] = useState(false);
   const { state } = location;
 
   const applicationNumber = state?.applicationNumber;
 
   useEffect(() => {
     if (applicationNumber) {
-      fetchInvoiceItems(applicationNumber);
+      fetchApplicationDetails(applicationNumber);
+      //fetchInvoiceItems(applicationNumber);
     }
   }, [applicationNumber]);
+
+  const showAddItemsForm = ()=>{
+    setModalView(true);
+  };
+
+
+  const closeAddItemsForm =()=>{
+    setModalView(false);
+  };
+
 
   const fetchInvoiceItems = async (applicationNumber) => {
     try {
       const response = await fetch(
-        `http://3.216.182.63:8095/TestApi/GetNewConnectionInvoice?applicationNumber=${applicationNumber}`
+        `${process.env.REACT_APP_API_URL}/GetNewConnectionInvoice?applicationNumber=${applicationNumber}`
       );
-      if (!response.ok) {
-        throw new Error("Failed to fetch invoice items");
-      }
+
+      message.success(response.data);
       const data = await response.json();
       console.log("Fetched data:", data);
       setInvoiceItems(data); // Assuming data is the entire object from API
       setErrorMessage(""); // Clear error message on successful fetch
     } catch (error) {
+      message.error("eaeeaeae", error.response);
       console.error("Error fetching invoice items:", error);
       setInvoiceItems(null); // Reset invoiceItems to null on error
       setErrorMessage("Failed to fetch invoice items");
     }
   };
 
+  const fetchApplicationDetails = async (applicationNumber) => {
+    try {
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/GetApplicationByApplicationNumnber?applicationId=${applicationNumber}`)
+      setApplication(response.data);
+    } catch (error) {
+      //display error from the api
+      message.error(error.response);
+    }
+  };
+
+
+
   const onClose = () => {
-    setIsUpdateModalVisible(false);
+    setModalView(false);
   };
 
   const handleUpdateModalVisible = () => {
-    setIsUpdateModalVisible(!isUpdateModalVisible);
+    setModalView(true);
   };
 
   const handleMenuClick = ({ key }) => {
@@ -56,14 +83,10 @@ function UpdateInvoice() {
     }
   };
 
-  const handleItemAdded = () => {
-    onClose();
-  };
-
   const handleSaveInvoice = async () => {
     try {
       const response = await fetch(
-        "http://3.216.182.63:8095/TestApi/AddConnectionInvoice",
+        `${process.env.REACT_APP_API_URL}/AddConnectionInvoice`,
         {
           method: "POST",
           headers: {
@@ -105,9 +128,7 @@ function UpdateInvoice() {
             {errorMessage}
           </div>
         )}
-        {!invoiceItems ? (
-          <div className="flex justify-center mt-2">Loading...</div>
-        ) : (
+        {(
           <div>
             <div className="flex flex-col p-6 mt-6 w-full bg-white rounded-3xl max-w-[1088px] text-neutral-600 max-md:px-5 max-md:max-w-full">
               <div className="text-2xl font-semibold capitalize max-md:max-w-full">
@@ -117,18 +138,19 @@ function UpdateInvoice() {
               <div className="flex gap-4 justify-between pt-4 mt-4 text-base leading-6 max-md:flex-wrap max-md:max-w-full">
                 <div className="flex flex-col">
                   <div className="font-semibold">Application Number</div>
-                  <div className="mt-2">{applicationNumber}</div>
+                  <div className="mt-2">{application?.applicationNumber}</div>
                 </div>
                 <div className="flex flex-col">
                   <div className="font-semibold">Applicant Name</div>
-                  <div className="mt-2">{invoiceItems.Application.FullName}</div>
+                  <div className="mt-2">{application?.fullName}</div>
                 </div>
                 <div className="flex flex-col">
                   <div className="font-semibold">Surveyor’s Name</div>
-                  <div className="mt-2">{invoiceItems.Application.surveyorName}</div>
+                  <div className="mt-2">{application?.user.fullName}</div>
                 </div>
               </div>
             </div>
+
             <div className="flex flex-col p-6 mt-6 w-full bg-white rounded-3xl max-w-[1088px] max-md:px-5 max-md:max-w-full">
               <div className="flex gap-4 justify-between w-full font-semibold max-md:flex-wrap max-md:max-w-full">
                 <div className="my-auto text-2xl capitalize text-neutral-600">
@@ -143,7 +165,7 @@ function UpdateInvoice() {
                   </button>
                 </div>
               </div>
-              {invoiceItems.NewConnectionInvoiceMaterials.map((item) => (
+              {invoiceItems?.NewConnectionInvoiceMaterials.map((item) => (
                 <div
                   key={item.Id}
                   className="flex gap-5 justify-between px-6 py-3.5 mt-4 w-full text-x font-medium tracking-wide rounded-3xl bg-white text-neutral-600 max-md:flex-wrap max-md:px-5 max-md:max-w-full"
@@ -194,13 +216,14 @@ function UpdateInvoice() {
         )}
       </div>
       {/* Invoice Item Modal */}
-      {isUpdateModalVisible && (
-        <InvoiceItem
-          applicationNumber={applicationNumber}
-          onClose={handleUpdateModalVisible}
-          onItemAdded={handleItemAdded}
-        />
-      )}
+      (
+      <InvoiceItem
+        applicationNumber={applicationNumber}
+        modalView={modalView} 
+        closeAddItemsForm={onClose}
+        // onItemAdded={handleItemAdded}
+      />
+      )
     </>
   );
 }
