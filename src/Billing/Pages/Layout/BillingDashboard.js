@@ -3,9 +3,16 @@ import SideNav from "../../shared/navigations/SideNav";
 import TopNav from "../../shared/navigations/TopNav";
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import NewApplicationForm from "../New Connections/newApplicationForm";
 import ApplicationPage from "../Application/ApplicationPage";
 import ApplicationDetail from "../Application/ApplicationDetail";
 import UpdateInvoice from "../Application/Actions/UpdateInvoice";
+import Payslip from "../Application/Actions/Payslip";
+import ReconcileInvoice from "../Application/Actions/ReconcileInvoice";
+import Reconcillations from "../Application/Reconcillations";
+import Payments from "../Application/Payments";
+import BillingCycle from "../Application/BillingCycle";
+import BillAdjustment from "../Application/BillAdjustment";
 import InvoiceDetails from "../Application/Actions/InvoiceDetails";
 import AddMeter from "../Application/AddMeter";
 import MeterDetails from "../Application/MeterDetails";
@@ -34,9 +41,16 @@ const BillingDashboard = () => {
         <div className="w-full flex justify-center">
           <div className="main-content bg-stone-100 pb-6 rounded-t-3xl">
             <div className="content px-4 sm:px-6 lg:px-8 group-container">
+              {screen === "new-application" && <NewApplicationForm />}
               {screen === "application" && <ApplicationPage />}
               {screen === "view-detail" && <ApplicationDetail />}
               {screen === "update-invoice" && <UpdateInvoice />}
+              {screen === "customer-invoice" && <Payslip />}
+              {screen === "reconcile-invoice" && <ReconcileInvoice />}
+              {screen === "reconciliation" && <Reconcillations />}
+              {screen === "payments" && <Payments />}
+              {screen === "billing" && <BillingCycle />}
+              {screen === "bill-adjsutment" && <BillAdjustment />}
               {screen === "invoice-details" && <InvoiceDetails />}
               {screen === "add-meter" && <AddMeter />}
               {screen === "report-details" && <MeterDetails />}
