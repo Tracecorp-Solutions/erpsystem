@@ -22,14 +22,14 @@ namespace Trace.Controllers
             try
             {
                 await _customerPayments.AddPayments(payment);
-                return Ok();
+                return Ok("Payment Added Successfully");
             }catch(ArgumentException ex)
             {
                 return BadRequest(ex.Message);
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(ex.InnerException);
             }
         }
 

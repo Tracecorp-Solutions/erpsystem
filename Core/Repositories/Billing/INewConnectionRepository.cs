@@ -49,6 +49,8 @@ namespace Core.Repositories.Billing
 
         Task AssignCustomerTarrif(string applicationNumber, int trarrifId);
 
-      
+        Task<string> GetJobCardNumberByApplicationNumber(string applicationNumber);
+
+
     }
 }

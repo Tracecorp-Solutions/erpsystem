@@ -186,7 +186,7 @@ namespace Services.Repositories.Billing
                 .FirstOrDefaultAsync(a => a.ApplicationNumber == report.ApplicationNumber);
 
             //check whether application has status of PENDING SURVEY
-            if (application.Status != "PENDING SURVEY")
+            if (application.Status != "PENDING JOB CARD")
                 throw new ArgumentException("Application status should be PENDING SURVEY");
 
             //check whether files have been uploaded
@@ -259,9 +259,6 @@ namespace Services.Repositories.Billing
             if (application == null)
                 throw new ArgumentException("No application found with that application ID");
 
-            //check whether application has status of PENDING CONNECTION INVOICE
-            if (application.Status != "PENDING CONNECTION INVOICE")
-                throw new ArgumentException("Application status should be PENDING CONNECTION INVOICE");
 
             var connectionInvoice = await _context.NewConnectionInvoices
                 .Include(i => i.Application)
@@ -422,6 +419,9 @@ namespace Services.Repositories.Billing
                 DateUpdated = DateTime.Now
             };
 
+            //update status of the application
+            application.Status = "PENDING JOB CARD";
+
             _context.JobCards.Add(jobCard);
             await _context.SaveChangesAsync();
 
@@ -455,6 +455,18 @@ namespace Services.Repositories.Billing
                 InvoiceDate = invoiceDto.Date,
                 Status = "PENDING PAYMENT",
             };
+
+            //update status of the application
+            application.Status = "PENDING INVOICE PAYMENT";
+
+            //add application log
+            await _context.ApplicationLogs.AddAsync(new ApplicationLog
+            {
+                ApplicationNumber = application.ApplicationNumber,
+                Status = "PENDING INVOICE PAYMENT",
+                Message = "Connection Invoice has been generated",
+                Date = DateTime.Now
+            });
 
 
             _context.NewConnectionInvoices.Add(connectionInvoice);
@@ -656,6 +668,19 @@ namespace Services.Repositories.Billing
             });
 
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<string> GetJobCardNumberByApplicationNumber(string applicationNumber) 
+        {
+            //get applicationid based on application number
+            var application = await _context.Applications
+                .FirstOrDefaultAsync(a => a.ApplicationNumber == applicationNumber);
+
+            //get job card based on application id
+            var jobCard = await _context.JobCards
+                .FirstOrDefaultAsync(j => j.applicationId == application.Id);
+
+            return jobCard == null ? throw new ArgumentException("No Job Card found for that application") : jobCard.JobCardNumber;
         }
 
     }

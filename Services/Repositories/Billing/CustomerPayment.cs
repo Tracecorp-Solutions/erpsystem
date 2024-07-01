@@ -73,11 +73,12 @@ namespace Services.Repositories.Billing
                 {
                     ApplicationNumber = application.ApplicationNumber,
                     Status = "PENDING CONNECTION",
-                    Date = DateTime.Now
+                    Date = DateTime.Now,
+                    Message = "Payment Received"
                 });
             }
 
-            _context.Payments.Add(payment);
+            await _context.Payments.AddAsync(payment);
 
 
             await _context.SaveChangesAsync();

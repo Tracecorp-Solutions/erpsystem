@@ -351,5 +351,23 @@ namespace Trace.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
             }
         }
+
+        [HttpGet("/GetJobCardNumberByApplicationId")]
+        public async Task<IActionResult> GetJobCardNumberByApplicationId(string applicationNumber)
+        {
+            try
+            {
+                var jobCardNumber = await _newconnectionRepository.GetJobCardNumberByApplicationNumber(applicationNumber);
+                return Ok(jobCardNumber);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
+        }
     }
 }
