@@ -21,11 +21,18 @@ const ApplicationDetail = () => {
   const [surveyorReport, setSurveyorReport] = useState(false);
   const [applicationData, setApplicationData] = useState(null);
   const [isUpdateModalVisible, setIsUpdateModalVisible] = useState(false);
+  const [application, setApplication] = useState(null);
 
   const [isVisible, setIsVisible] = useState(false);
   const [jobCardInfo, setJobCardInfo] = useState(null);
+  const [surveyorAssigned, setSurveyorAssigned] = useState(false);
+  const [applicationStatus, setApplicationStatus] = useState(null);
+  const [payslipVisible, setPayslipVisible] = useState(false);
 
   console.log("Application Data:", applicationData);
+  console.log("jobCardInfo jobCardInfo:", jobCardInfo);
+
+  console.log("Application Data 222222222:", application);
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -51,6 +58,8 @@ const ApplicationDetail = () => {
     if (applicationNumber) {
       fetchApplicationById(applicationNumber);
     }
+
+    fetchApplicationData();
   }, [applicationNumber]);
 
   const fetchApplicationById = (applicationNumber) => {
@@ -66,12 +75,47 @@ const ApplicationDetail = () => {
       .then((data) => {
         console.log("Fetched application data:", data);
         setApplicationData(data);
+        // Check if surveyor is assigned and update state accordingly
+        if (data && data.assignedTo) {
+          setSurveyorAssigned(true);
+        } else {
+          setSurveyorAssigned(false);
+        }
+
+        if (data && data.status) {
+          setApplicationStatus(true);
+        } else {
+          setApplicationStatus(false);
+        }
       })
       .catch((error) => {
         console.error("Error fetching application details:", error.message);
       });
   };
 
+ 
+ const fetchApplicationData = async () => {
+    try {
+      const response = await fetch(
+        `http://3.216.182.63:8095/TestApi/GetDocketInitiation?applicationNumber=${applicationNumber}`,
+        {
+          method: "GET",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (response.ok) {
+        const data = await response.json();
+        setApplication(data);
+      } else {
+        console.error("Failed to fetch application data");
+      }
+    } catch (error) {
+      console.error("Error fetching application data:", error);
+    }
+  };
   const handleGenerateJobCard = () => {
     if (!applicationNumber || !userid) {
       console.error("Application number or userId is missing");
@@ -425,16 +469,14 @@ const ApplicationDetail = () => {
         <div className="flex gap-5 justify-between mt-4 max-md:flex-wrap">
           <div
             className={`flex gap-2 justify-between px-6 py-4 rounded-xl ${
-              applicationData && applicationData.assignedTo
-                ? "bg-green-100"
-                : "bg-stone-100"
+              surveyorAssigned ? "bg-green-100" : "bg-stone-100"
             } max-md:flex-wrap max-md:px-5 max-md:max-w-full`}
           >
             <div className="flex flex-col justify-center text-center">
               <div className="text-xs font-medium tracking-wide uppercase text-neutral-400">
                 Surveyor Assigned
               </div>
-              {applicationData && applicationData.assignedTo ? (
+              {surveyorAssigned ? (
                 <div className="mt-2 text-base leading-6 text-green-600">
                   Surveyor Name: {applicationData.user.fullName}
                 </div>
@@ -444,7 +486,7 @@ const ApplicationDetail = () => {
                 </div>
               )}
             </div>
-            {!applicationData || !applicationData.assignedTo ? (
+            {!surveyorAssigned ? (
               <button
                 className="justify-center self-start px-6 py-3 mt-2.5 text-sm font-semibold text-white rounded-3xl bg-slate-500 max-md:px-5"
                 onClick={() => setAssignSurveyorAction(true)}
@@ -485,23 +527,35 @@ const ApplicationDetail = () => {
             </div>
           </div>
         </div>
-
-        <div className="flex gap-2 justify-between px-6 py-4 mt-4 max-w-full rounded-xl bg-stone-100 w-[508px] max-md:flex-wrap max-md:px-5">
-          <div className="flex flex-col justify-center text-center">
-            <div className="text-xs font-medium tracking-wide uppercase text-neutral-400">
-              Surveyor report
+        {applicationStatus.status === "PENDING SURVEY" ? (
+          <div className="flex gap-2 justify-between px-6 py-4 mt-4 max-w-full rounded-xl bg-stone-100 w-[508px] max-md:flex-wrap max-md:px-5">
+            <div className="flex flex-col justify-center text-center">
+              <div className="text-xs font-medium tracking-wide uppercase text-neutral-400">
+                Surveyor report
+              </div>
+              <div className="mt-2 text-base leading-6 text-neutral-600">
+                Application is pending survey
+              </div>
             </div>
-            <div className="mt-2 text-base leading-6 text-neutral-600">
-              Application is pending survey
-            </div>
+            <button
+              className="justify-center self-start px-6 py-3 mt-2.5 text-sm font-semibold text-white rounded-3xl bg-slate-500 max-md:px-5"
+              onClick={() => setSurveyorReport(true)}
+            >
+              Update Findings
+            </button>
           </div>
-          <button
-            className="justify-center self-start px-6 py-3 mt-2.5 text-sm font-semibold text-white rounded-3xl bg-slate-500 max-md:px-5"
-            onClick={() => setSurveyorReport(true)}
-          >
-            Update Findings
-          </button>
-        </div>
+        ) : (
+          <div className="flex gap-2 justify-between px-6 py-4 mt-4 max-w-full rounded-xl bg-green-100 w-[270px] max-md:flex-wrap max-md:px-5">
+            <div className="flex flex-col justify-center text-center">
+            <div className="text-xs font-medium tracking-wide uppercase text-neutral-400">
+                  STATUS
+                </div>
+              <div className="mt-2 text-base leading-6 text-green-600">
+                {applicationData.status}
+              </div>
+            </div>{" "}
+          </div>
+        )}
       </section>
       <section className="flex flex-col px-6 pt-4 pb-5 mt-6 w-full bg-white rounded-3xl max-md:px-5 max-md:max-w-full">
         <header className="flex gap-4 justify-between text-2xl font-semibold capitalize text-neutral-600 max-md:flex-wrap max-md:max-w-full">
@@ -585,23 +639,18 @@ const ApplicationDetail = () => {
                   </div>
                   <div>
                     {/* Other content */}
-                    <div className="flex flex-col ml-5 w-[35%] max-md:ml-0 max-md:w-full">
+                    <div className="flex flex-col ml-5 max-md:ml-0 max-md:w-full">
                       <button
-                        className="grow justify-center px-6 py-3 mt-9 w-full text-sm font-semibold text-white whitespace-nowrap rounded-3xl bg-slate-500 max-md:px-5 max-md:mt-10"
-                        onClick={handleClickModalVisible}
+                        className="grow justify-center px-6 py-3 mt-9 w-full text-sm font-semibold text-white whitespace-nowrap rounded-3xl bg-slate-500 max-md:px-5 max-md:mt-10 border"
+                        onClick={() =>
+                          navigate(`/billingdashboard`, {
+                            state: { screen: "payment-reciepts", applicationNumber },
+                          })
+                        }
                       >
-                        Generate pay slip
+                        Generate
                       </button>
                     </div>
-
-                    {isVisible && (
-                      <div className="modal">
-                        <div className="modal-content">
-                          <button onClick={handleHideModal}>Close</button>
-                          <Payslip />
-                        </div>
-                      </div>
-                    )}
                   </div>
                 </div>
               </div>
@@ -665,10 +714,70 @@ const ApplicationDetail = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="flex flex-col ml-5 w-[35%] max-md:ml-0 max-md:w-full">
-                    <div className="grow justify-center px-6 py-3 mt-9 w-full text-sm font-semibold text-white rounded-3xl bg-slate-500 max-md:px-5 max-md:mt-10">
-                      Add Meter
+                  {/* <div className="flex flex-col ml-5  max-md:ml-0 max-md:w-full">
+                    <div className="flex flex-col ml-5  max-md:ml-0 max-md:w-full">
+                      <button
+                        type="button"
+                        className="grow justify-center px-6 py-3 mt-9 w-full text-sm font-semibold text-white rounded-3xl bg-slate-500 max-md:px-5 max-md:mt-10"
+                        onClick={() =>
+                          navigate(`/billingdashboard`, {
+                            state: { screen: "add-meter", applicationNumberDisplay },
+                          })
+                        }
+                      >
+                        Add Meter
+                      </button>
                     </div>
+                    <button
+                        type="button"
+                        className="grow justify-center px-6 py-3 mt-9 w-full text-sm font-semibold text-white rounded-3xl bg-slate-500 max-md:px-5 max-md:mt-10"
+                        onClick={() =>
+                          navigate(`/billingdashboard`, {
+                            state: { screen: "report-details", applicationNumberDisplay},
+                          })
+                        }
+                      >
+                        Report Details
+                      </button>
+                  </div> */}
+
+                  <div className="flex flex-col ml-5 max-md:ml-0 max-md:w-full">
+                    <>
+                      {application?.customerRef ? (
+                        <button
+                          type="button"
+                          className="justify-center px-6 py-3 mt-9 w-[200px] text-sm font-semibold text-white rounded-3xl max-md:mt-10"
+                          style={{
+                            background: "#9EC137"
+                          }}
+                          onClick={() =>
+                            navigate(`/billingdashboard`, {
+                              state: {
+                                screen: "report-details",
+                                application,
+                              },
+                            })
+                          }
+                        >
+                          Report Details
+                        </button>
+                      ) : (
+                        <button
+                          type="button"
+                          className="grow justify-center px-6 py-3 mt-9 w-full text-sm font-semibold text-white rounded-3xl bg-slate-500 max-md:px-5 max-md:mt-10"
+                          onClick={() =>
+                            navigate(`/billingdashboard`, {
+                              state: {
+                                screen: "add-meter",
+                                applicationNumberDisplay,
+                              },
+                            })
+                          }
+                        >
+                          Add Meter
+                        </button>
+                      )}
+                    </>
                   </div>
                 </div>
               </div>
@@ -700,6 +809,7 @@ const ApplicationDetail = () => {
         fullName={fullName}
         setSurveyorReport={setSurveyorReport}
         applicationNumberDisplay={applicationNumberDisplay}
+        applicationData={applicationData}
       />
       <UpdateAuthorizeModal
         applicationData={applicationData}

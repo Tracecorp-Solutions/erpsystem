@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Modal, DatePicker, message, Select, Button } from "antd";
+import { Modal, DatePicker, message, Select, Button, Space } from "antd";
 import axios from "axios";
 import moment from "moment";
 
@@ -18,7 +18,8 @@ const SurveyorReport = ({
   surveyorReport,
   setSurveyorReport,
   applicationNumberDisplay,
-  fullName
+  fullName,
+  applicationData
 }) => {
   const [formData, setFormData] = useState({
     surveyorId: 2,
@@ -113,7 +114,7 @@ const SurveyorReport = ({
             <h3 className="font-semibold">Applicant Name</h3>
             <p>{fullName}</p>
           </div>
-          <LabelInput label="Surveyor’s Name" value={formData.surveyorId} />
+          <LabelInput label="Surveyor’s Name" value={applicationData?.user?.fullName} />
         </div>
 
         <div className="mt-6">
@@ -483,6 +484,7 @@ const SurveyorReport = ({
             style={{ width: "100%", marginTop: "8px" }}
             className="h-14"
           >
+            <Space>Choose Installation</Space>{" "}
             <Option value="proceed">Proceed with Installation</Option>
             <Option value="not-proceed">Do Not Proceed</Option>
           </Select>
