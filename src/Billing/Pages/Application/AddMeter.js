@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Select, DatePicker, message } from 'antd';
 import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -8,6 +8,7 @@ const { Option } = Select;
 const AddMeter = () => {
   const location = useLocation();
   const { state } = location;
+  const [plumbers, setPlumbers] = useState([]);
 
   const [formData, setFormData] = useState({
     applicationNumber: state?.applicationNumberDisplay || '',
@@ -25,6 +26,19 @@ const AddMeter = () => {
     installedBy: null,
     remarks: ''
   });
+
+  useEffect(() => {
+    const fetchPlumbers = async () => {
+      try {
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/GetPlumbers`);
+        setPlumbers(response.data);
+      } catch (error) {
+        message.error(error.response.data);
+      }
+    };
+
+    fetchPlumbers();
+  }, []);
 
   const navigate = useNavigate();
 
@@ -94,11 +108,11 @@ const AddMeter = () => {
         installedBy: null,
         remarks: ''
       });
-        navigate(`/billingdashboard`, {
-          state: {
-            screen: "application",
-          },
-        })
+      navigate(`/billingdashboard`, {
+        state: {
+          screen: "application",
+        },
+      });
     } catch (error) {
       console.error('Error submitting data:', error);
       message.error('Failed to initiate docket. Please try again.');
@@ -142,18 +156,15 @@ const AddMeter = () => {
             <label htmlFor="customerType" className="font-semibold text-neutral-600">
               Customer Type
             </label>
-            <Select
+            <input
               id="customerType"
+              type='text'
               placeholder="Select customer type"
               className="w-full h-14"
               disabled
               allowClear
               onChange={(value) => handleSelectChange(value, 'customerType')}
-            >
-              <Option value="prepaid">Prepaid</Option>
-              <Option value="postpaid">Postpaid</Option>
-              <Option value="corporate">Corporate</Option>
-            </Select>
+            />
 
             <label htmlFor="blockNumber" className="font-semibold text-neutral-600">
               Block Number
@@ -286,17 +297,17 @@ const AddMeter = () => {
             <label htmlFor="installedBy" className="font-semibold text-neutral-600">
               Installed by
             </label>
-            <Select
+            <select
               id="installedBy"
-              placeholder="Choose Field Officer"
-              className="w-full h-14"
-              allowClear
-              onChange={(value) => handleSelectChange(value, 'installedBy')}
+              value={formData.installedBy}  // Ensure to bind the value of the select
+              className="p-4 mt-2 rounded-xl border focus:outline-none focus:border-blue-500"
+              onChange={(e) => handleSelectChange(e.target.value, 'installedBy')}
             >
-              <Option value="1">Field Officer 1</Option>
-              <Option value="2">Field Officer 2</Option>
-              <Option value="3">Field Officer 3</Option>
-            </Select>
+              <option value="" disabled selected>Choose Plumber</option>
+              {plumbers.map((plumber) => (
+                <option key={plumber.id} value={plumber.id}>{plumber.name}</option>
+              ))}
+            </select>
           </div>
         </div>
 
