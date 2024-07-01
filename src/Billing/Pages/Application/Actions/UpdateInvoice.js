@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { Dropdown, Menu } from "antd";
+import { Dropdown, Menu, Modal, Button } from "antd";
 import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
 import InvoiceItem from "./InvoiceItem";
 
@@ -135,12 +135,12 @@ function UpdateInvoice() {
                   Invoice Items
                 </div>
                 <div className="flex gap-2 justify-center px-6 py-3 text-base leading-6 text-white rounded-3xl max-md:px-5">
-                  <button
+                  <Button
                     className="justify-center self-start px-3 py-3 mt-2.5 text-sm font-semibold text-white whitespace-nowrap rounded-3xl bg-blue-400 max-md:px-5"
                     onClick={handleUpdateModalVisible}
                   >
                     + Add Invoice Item
-                  </button>
+                  </Button>
                 </div>
               </div>
               {invoiceItems.NewConnectionInvoiceMaterials.map((item) => (
@@ -194,13 +194,18 @@ function UpdateInvoice() {
         )}
       </div>
       {/* Invoice Item Modal */}
-      {isUpdateModalVisible && (
+      <Modal
+        title="Add Invoice Item"
+        visible={isUpdateModalVisible}
+        onCancel={onClose}
+        footer={null}
+      >
         <InvoiceItem
           applicationNumber={applicationNumber}
           onClose={handleUpdateModalVisible}
           onItemAdded={handleItemAdded}
         />
-      )}
+      </Modal>
     </>
   );
 }
