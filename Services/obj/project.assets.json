@@ -251,23 +251,6 @@
           }
         }
       },
-<<<<<<< HEAD
-      "MySqlConnector/2.3.5": {
-        "type": "package",
-        "dependencies": {
-          "Microsoft.Extensions.Logging.Abstractions": "7.0.1"
-        },
-        "compile": {
-          "lib/net8.0/MySqlConnector.dll": {
-            "related": ".xml"
-          }
-        },
-        "runtime": {
-          "lib/net8.0/MySqlConnector.dll": {
-            "related": ".xml"
-          }
-        }
-      },
       "Newtonsoft.Json/13.0.3": {
         "type": "package",
         "compile": {
@@ -281,25 +264,6 @@
           }
         }
       },
-      "Pomelo.EntityFrameworkCore.MySql/8.0.2": {
-        "type": "package",
-        "dependencies": {
-          "Microsoft.EntityFrameworkCore.Relational": "[8.0.2, 8.0.999]",
-          "MySqlConnector": "2.3.5"
-        },
-        "compile": {
-          "lib/net8.0/Pomelo.EntityFrameworkCore.MySql.dll": {
-            "related": ".xml"
-          }
-        },
-        "runtime": {
-          "lib/net8.0/Pomelo.EntityFrameworkCore.MySql.dll": {
-            "related": ".xml"
-          }
-        }
-      },
-=======
->>>>>>> testmain
       "System.IdentityModel.Tokens.Jwt/7.5.2": {
         "type": "package",
         "dependencies": {
@@ -760,36 +724,6 @@
         "microsoft.identitymodel.tokens.nuspec"
       ]
     },
-<<<<<<< HEAD
-    "MySqlConnector/2.3.5": {
-      "sha512": "AmEfUPkFl+Ev6jJ8Dhns3CYHBfD12RHzGYWuLt6DfG6/af6YvOMyPz74ZPPjBYQGRJkumD2Z48Kqm8s5DJuhLA==",
-      "type": "package",
-      "path": "mysqlconnector/2.3.5",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "README.md",
-        "lib/net462/MySqlConnector.dll",
-        "lib/net462/MySqlConnector.xml",
-        "lib/net471/MySqlConnector.dll",
-        "lib/net471/MySqlConnector.xml",
-        "lib/net48/MySqlConnector.dll",
-        "lib/net48/MySqlConnector.xml",
-        "lib/net6.0/MySqlConnector.dll",
-        "lib/net6.0/MySqlConnector.xml",
-        "lib/net7.0/MySqlConnector.dll",
-        "lib/net7.0/MySqlConnector.xml",
-        "lib/net8.0/MySqlConnector.dll",
-        "lib/net8.0/MySqlConnector.xml",
-        "lib/netstandard2.0/MySqlConnector.dll",
-        "lib/netstandard2.0/MySqlConnector.xml",
-        "lib/netstandard2.1/MySqlConnector.dll",
-        "lib/netstandard2.1/MySqlConnector.xml",
-        "logo.png",
-        "mysqlconnector.2.3.5.nupkg.sha512",
-        "mysqlconnector.nuspec"
-      ]
-    },
     "Newtonsoft.Json/13.0.3": {
       "sha512": "HrC5BXdl00IP9zeV+0Z848QWPAoCr9P3bDEZguI+gkLcBKAOxix/tLEAAHC+UvDNPv4a2d18lOReHMOagPa+zQ==",
       "type": "package",
@@ -820,23 +754,6 @@
         "packageIcon.png"
       ]
     },
-    "Pomelo.EntityFrameworkCore.MySql/8.0.2": {
-      "sha512": "XjnlcxVBLnEMbyEc5cZzgZeDyLvAniACZQ04W1slWN0f4rmfNzl98gEMvHnFH0fMDF06z9MmgGi/Sr7hJ+BVnw==",
-      "type": "package",
-      "path": "pomelo.entityframeworkcore.mysql/8.0.2",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "README.md",
-        "icon.png",
-        "lib/net8.0/Pomelo.EntityFrameworkCore.MySql.dll",
-        "lib/net8.0/Pomelo.EntityFrameworkCore.MySql.xml",
-        "pomelo.entityframeworkcore.mysql.8.0.2.nupkg.sha512",
-        "pomelo.entityframeworkcore.mysql.nuspec"
-      ]
-    },
-=======
->>>>>>> testmain
     "System.IdentityModel.Tokens.Jwt/7.5.2": {
       "sha512": "taMjs3z9+tTYNhdD5g5XU89gMcqX7PSI6oji7yZXK8E4T1XjsZR5yDLdIqC1PVKYL5FAlrNWBNBaLshuESYHlw==",
       "type": "package",
@@ -902,11 +819,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\working directory\\erpsystem\\Services\\Services.csproj",
+      "projectUniqueName": "D:\\erpsystem\\Services\\Services.csproj",
       "projectName": "Services",
-      "projectPath": "D:\\working directory\\erpsystem\\Services\\Services.csproj",
+      "projectPath": "D:\\erpsystem\\Services\\Services.csproj",
       "packagesPath": "C:\\Users\\ngobi\\.nuget\\packages\\",
-      "outputPath": "D:\\working directory\\erpsystem\\Services\\obj\\",
+      "outputPath": "D:\\erpsystem\\Services\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\ngobi\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -983,6 +900,12 @@
     }
   },
   "logs": [
+    {
+      "code": "Undefined",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Problem reading the cache file D:\\erpsystem\\Services\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
+    },
     {
       "code": "NU1701",
       "level": "Warning",
