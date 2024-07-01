@@ -7,6 +7,12 @@ import NewApplicationForm from "../New Connections/newApplicationForm";
 import ApplicationPage from "../Application/ApplicationPage";
 import ApplicationDetail from "../Application/ApplicationDetail";
 import UpdateInvoice from "../Application/Actions/UpdateInvoice";
+import Payslip from "../Application/Actions/Payslip";
+import ReconcileInvoice from "../Application/Actions/ReconcileInvoice";
+import Reconcillations from "../Application/Reconcillations";
+import Payments from "../Application/Payments";
+import BillingCycle from "../Application/BillingCycle";
+import BillAdjustment from "../Application/BillAdjustment";
 import InvoiceDetails from "../Application/Actions/InvoiceDetails";
 
 const BillingDashboard = () => {
@@ -36,6 +42,12 @@ const BillingDashboard = () => {
               {screen === "application" && <ApplicationPage />}
               {screen === "view-detail" && <ApplicationDetail />}
               {screen === "update-invoice" && <UpdateInvoice />}
+              {screen === "customer-invoice" && <Payslip />}
+              {screen === "reconcile-invoice" && <ReconcileInvoice />}
+              {screen === "reconciliation" && <Reconcillations />}
+              {screen === "payments" && <Payments />}
+              {screen === "billing" && <BillingCycle />}
+              {screen === "bill-adjsutment" && <BillAdjustment />}
               {screen === "invoice-details" && <InvoiceDetails />}
             </div>
           </div>
