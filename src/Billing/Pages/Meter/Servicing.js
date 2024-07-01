@@ -49,7 +49,7 @@ function Servicing() {
         <div className="flex gap-4 max-md:flex-wrap w-full">
           <div className="flex flex-col px-5 flex-1">
             <div className="font-semibold text-neutral-600 w-full">
-              Meter Serial Number
+              Customer Name
             </div>
             <input
               type="text"
@@ -60,7 +60,7 @@ function Servicing() {
           </div>
           <div className="flex flex-col px-5 flex-1">
             <div className="font-semibold text-neutral-600 w-full">
-              Previous Reading
+             Meter Serial number
             </div>
             <input
               type="text"
