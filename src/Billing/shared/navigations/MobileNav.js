@@ -64,7 +64,7 @@ function MobileNav({ links, closeMenu }) {
               <div className="pt-2">
                 <div className={`flex items-center gap-2 py-2 mt-2 whitespace-nowrap rounded-xl ${location.pathname === "/groups" ? "bg-active-green txt-color-blue font-semibold px-4" : "bg-none"}`}>
                   <Minus className="shrink-0 w-5 aspect-square" />
-                  <button onClick={() => closeAndNavigate("/Dashboardlayout", { screen: "groups" })}>
+                  <button onClick={() => closeAndNavigate("/Dashboard", { screen: "connection" })}>
                     New connections
                   </button>
                 </div>

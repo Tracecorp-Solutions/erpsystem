@@ -3,6 +3,7 @@ import SideNav from "../../shared/navigations/SideNav";
 import TopNav from "../../shared/navigations/TopNav";
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import NewApplicationForm from "../New Connections/newApplicationForm";
 import ApplicationPage from "../Application/ApplicationPage";
 import ApplicationDetail from "../Application/ApplicationDetail";
 import UpdateInvoice from "../Application/Actions/UpdateInvoice";
@@ -31,6 +32,7 @@ const BillingDashboard = () => {
         <div className="w-full flex justify-center">
           <div className="main-content bg-stone-100 pb-6 rounded-t-3xl">
             <div className="content px-4 sm:px-6 lg:px-8 group-container">
+              {screen === "new-application" && <NewApplicationForm />}
               {screen === "application" && <ApplicationPage />}
               {screen === "view-detail" && <ApplicationDetail />}
               {screen === "update-invoice" && <UpdateInvoice />}
