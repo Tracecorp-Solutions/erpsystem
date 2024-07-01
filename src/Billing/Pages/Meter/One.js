@@ -106,6 +106,7 @@ function One() {
             </div>
             <input
               type="text"
+              name="meterNo"
               className="justify-center items-start px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 w-full"
               value={formData.meterNo}
               onChange={handleChange}
@@ -118,8 +119,9 @@ function One() {
             </div>
             <input
               type="text"
+              name="reading"
               className="justify-center items-start px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 w-full"
-              value="0"
+              value={formData.reading}
               onChange={handleChange}
               placeholder="Enter previous reading"
             />
@@ -132,8 +134,9 @@ function One() {
             </div>
             <input
               type="date"
+              name="readingDate"
               className="flex gap-2 justify-between px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 w-full"
-              value="2024-04-04"
+              value={formData.readingDate}
               onChange={handleChange}
               placeholder="Previous reading date"
             />
@@ -144,7 +147,8 @@ function One() {
               type="text"
               className="justify-center items-start px-4 py-4 mt-2 rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 w-full"
               value="0"
-              readOnly
+              onChange={handleChange}
+              placeholder="consumption" 
             />
           </div>
         </div>
@@ -155,7 +159,8 @@ function One() {
               type="text"
               className="justify-center items-start px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 w-full"
               value="0"
-              readOnly
+              onChange={handleChange}
+              placeholder="Average Consumption"
             />
           </div>
           <div className="flex flex-col px-5 flex-1">
@@ -164,7 +169,8 @@ function One() {
               type="text"
               className="justify-center items-start px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 w-full"
               value="0"
-              readOnly
+              onChange={handleChange}
+              placeholder="Enter Meter Dails"
             />
           </div>
         </div>
