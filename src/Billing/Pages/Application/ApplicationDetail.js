@@ -642,12 +642,13 @@ const ApplicationDetail = () => {
                   ) :
                     <div className="flex gap-2 justify-between px-6 py-4 mt-4 max-w-full rounded-xl bg-green-100 max-md:flex-wrap max-md:px-5">
                       <div className="flex flex-col justify-center text-center">
-                        <div className="text-xs font-medium tracking-wide uppercase text-neutral-400">
-                          STATUS
-                        </div>
-                        <div className="mt-2 text-base leading-6 text-green-600">
-                          {applicationData.status}
-                        </div>
+                        <button onClick={() =>
+                          navigate("/billingdashboard", {
+                            state: { screen: "invoice-details", applicationNumber }
+                          })
+                        } className="mt-2 text-base leading-6 text-green-600">
+                          See Details
+                        </button>
                       </div>{" "}
                     </div>
                   }
