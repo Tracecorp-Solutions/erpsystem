@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { message } from "antd";
 
 function One() {
   const navigate = useNavigate();
@@ -20,6 +21,24 @@ function One() {
     isExpectedReadingToday: "",
   });
 
+  const [meterReaders, setMeterReaders] = useState([]);
+
+  useEffect(() => {
+    const fetchMeterReaders = async () => {
+      try {
+        const resp = await axios.get(`${process.env.REACT_APP_API_URL}/GetMeterReaders`);
+        console.log("*********************");
+        console.log(resp);
+        console.log("*********************");
+        setMeterReaders(resp.data);
+      } catch (error) {
+        message.error("Failed to fetch meter readers. Please try again.");
+      }
+    };
+
+    fetchMeterReaders();
+  }, []);
+
   const handleNavigate = (screen) => {
     navigate("/billingdashboard", { state: { screen } });
   };
@@ -33,7 +52,7 @@ function One() {
   };
 
   const handleValidateCustomer = async () => {
-
+    // Implement customer validation logic here
   };
 
   const handleSaveReading = async () => {
@@ -123,7 +142,6 @@ function One() {
           placeholder="Enter Customer Ref"
         />
         <button onClick={handleValidateCustomer} className="justify-center px-8 py-3 font-semibold text-white rounded-lg bg-blue-400 max-md:px-5">Validate Customer</button>
-
       </div>
       <div className="flex flex-col flex-wrap justify-center px-8 py-6 content-start pb-6 text-base leading-6 w-full">
         <div className="flex gap-4 max-md:flex-wrap w-full">
@@ -168,39 +186,7 @@ function One() {
               placeholder="Previous reading date"
             />
           </div>
-          {/* <div className="flex flex-col px-5 flex-1">
-            <div className="font-semibold w-full text-neutral-600">Consumption</div>
-            <input
-              type="text"
-              className="justify-center items-start px-4 py-4 mt-2 rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 w-full"
-              value="0"
-              onChange={handleChange}
-              placeholder="consumption" 
-            />
-          </div> */}
         </div>
-        {/* <div className="flex gap-4 mt-4 max-md:flex-wrap w-full">
-          <div className="flex flex-col px-5 flex-1">
-            <div className="font-semibold text-neutral-600 w-full">Average Consumption</div>
-            <input
-              type="text"
-              className="justify-center items-start px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 w-full"
-              value="0"
-              onChange={handleChange}
-              placeholder="Average Consumption"
-            />
-          </div>
-          <div className="flex flex-col px-5 flex-1">
-            <div className="font-semibold w-full text-neutral-600">Meter Dials</div>
-            <input
-              type="text"
-              className="justify-center items-start px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 w-full"
-              value="0"
-              onChange={handleChange}
-              placeholder="Enter Meter Dails"
-            />
-          </div>
-        </div> */}
         <div className="flex gap-4 mt-4 max-md:flex-wrap w-full">
           <div className="flex flex-col px-5 flex-1">
             <div className="font-semibold w-full text-neutral-600" >Reading Type</div>
@@ -272,14 +258,19 @@ function One() {
           </div>
           <div className="flex flex-col px-5 flex-1">
             <div className="font-semibold text-neutral-600 w-full">Reading By</div>
-            <input
-              type="text"
+            <select
               name="readingBy"
-              className="justify-center items-start px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 w-full"
-              value={formData.readingBy}
               onChange={handleChange}
-              placeholder="Enter your name"
-            />
+              value={formData.readingBy}
+              className="justify-center items-start px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 w-full"
+            >
+              <option value="">Select Meter Reader...</option>
+              {meterReaders.map((meterreader) => (
+                <option key={meterreader.id} value={meterreader.id}>
+                  {meterreader.name}
+                </option>
+              ))}
+            </select>
           </div>
         </div>
         <div className="flex gap-4 mt-4 max-md:flex-wrap w-full">
