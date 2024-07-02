@@ -44,23 +44,23 @@ const BillPeriodSetup = () => {
             <Option value="Kano">Kano</Option>
             <Option value="Abuja">Abuja</Option>
           </Select>
-        <div className="flex gap-4 mt-4 max-md:flex-wrap">
-          <div className="flex flex-col max-md:max-w-full">
+          <div className="flex gap-4 mt-4 max-md:flex-wrap">
+          <div className="flex flex-col flex-1 max-md:max-w-full">
             <label htmlFor="startDate" className="font-semibold text-neutral-600 max-md:max-w-full">
               Start Date
             </label>
             <DatePicker
               id="startDate"
-              className="flex gap-2 justify-between px-4 py-4 mt-2 rounded-xl border border-solid border-neutral-500 border-opacity-30 text-neutral-400 max-md:flex-wrap max-md:max-w-full"
+              className="flex gap-2 justify-between px-4 py-4 mt-2 rounded-xl border border-solid border-neutral-500 border-opacity-30 text-neutral-400 max-w-full"
             />
           </div>
-          <div className="flex flex-col max-md:max-w-full">
+          <div className="flex flex-col flex-1 max-md:max-w-full">
             <label htmlFor="endDate" className="font-semibold text-neutral-600 max-md:max-w-full">
               End Date
             </label>
             <DatePicker
               id="endDate"
-              className="flex gap-2 justify-between px-4 py-4 mt-2 rounded-xl border border-solid border-neutral-500 border-opacity-30 text-neutral-400 max-md:flex-wrap max-md:max-w-full"
+              className="flex gap-2 justify-between px-4 py-4 mt-2 rounded-xl border border-solid border-neutral-500 border-opacity-30 text-neutral-400 max-w-full"
             />
           </div>
         </div>
