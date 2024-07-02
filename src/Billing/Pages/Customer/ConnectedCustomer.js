@@ -54,7 +54,7 @@ function ConnectedCustomers() {
   const handleMenuClick = (applicationNumber, action) => {
     switch (action) {
       case "view":
-        navigate(`/billingdashboard`, { state: { screen: 'view-detail', applicationNumber } });
+        navigate(`/billingdashboard`, { state: { screen: 'customer-details', applicationNumber } });
         break;
       case "generate":
         // Handle generate job card
