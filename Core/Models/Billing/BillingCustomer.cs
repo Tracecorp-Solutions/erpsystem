@@ -18,6 +18,8 @@ namespace Core.Models.Billing
         [ForeignKey("CustomerTarrif")]
         public int TarrifId { get; set; }
 
+        public DateTime DateConnected { get; set; }
+
 
         public virtual Application Application { get; set; }
 

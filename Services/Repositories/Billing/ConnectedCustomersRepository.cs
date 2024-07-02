@@ -27,7 +27,7 @@ namespace Services.Repositories.Billing
                     FullName = x.Application.FullName,
                     ApplicationNo = x.Application.ApplicationNumber,
                     Balance = "0",//x.Balance,
-                    DateConnected = x.
+                    DateConnected = DateOnly.FromDateTime( x.DateConnected)
                 }).ToListAsync();
 
             return connectedCustomers;
