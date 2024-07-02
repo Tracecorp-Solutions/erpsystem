@@ -1,30 +1,30 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import {
   getOperationalAreas,
 } from "../../Apis/operationAreaApi";
 import { getStates } from "../../Apis/stateApi";
-import {  getBranches } from "../../Apis/branchApi";
-import {  getTerritories } from "../../Apis/territoryApi";
-import {  getSubTerritories } from "../../Apis/subTerritoryApi";
+import { getBranches } from "../../Apis/branchApi";
+import { getTerritories } from "../../Apis/territoryApi";
+import { getSubTerritories } from "../../Apis/subTerritoryApi";
 import {
   getCustomerCategories,
 } from "../../Apis/customerCategory";
-import {  getCustomerTypes } from "../../Apis/customerTypes";
+import { getCustomerTypes } from "../../Apis/customerTypes";
 import {
   getBillDeliveryMethods,
 } from "../../Apis/billDeliveryMethod";
 
-import {message} from "antd";
+import { message } from "antd";
 
 
-function Step({  stepTitle,  isActive }) {
+function Step({ stepTitle, isActive }) {
   return (
     <div className="flex flex-col items-center">
       <div
-        className={`self-stretch mt-1 text-base font-semibold leading-6 ${
-          isActive ? "text-neutral-600" : "text-neutral-400"
-        } `}
+        className={`self-stretch mt-1 text-base font-semibold leading-6 ${isActive ? "text-neutral-600" : "text-neutral-400"
+          } `}
       >
         {stepTitle}
       </div>
@@ -39,6 +39,9 @@ const NewApplicationForm = () => {
   const [ProofOfInstallationSite, setProofOfInstallationSite] = useState(null);
   const [LocalAuthorizationDocument, setLocalAuthorizationDocument] =
     useState(null);
+
+  const location = useLocation()
+  const navigate = useNavigate();
   const [application, setApplication] = useState({
     Title: "",
     FullName: "",
@@ -156,7 +159,7 @@ const NewApplicationForm = () => {
     e.preventDefault();
 
     // Ensure all required fields are filled
-   const requiredFields = [
+    const requiredFields = [
       "Title",
       "Gender",
       "FullName",
@@ -171,7 +174,7 @@ const NewApplicationForm = () => {
 
     for (const field of requiredFields) {
       if (!application[field]) {
-        setErrorMessage(`Please fill in the ${field} field.`);
+        //setErrorMessage(`Please fill in the ${field} field.`);
         return;
       }
     }
@@ -210,7 +213,8 @@ const NewApplicationForm = () => {
           },
         }
       );
-        message.success(response.data);
+      message.success(response.data);
+      navigate("/billingdashboard", { state: { screen: "application" } });
     } catch (error) {
       message.error(error.response);
     }

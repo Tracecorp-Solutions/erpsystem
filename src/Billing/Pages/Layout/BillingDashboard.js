@@ -32,7 +32,6 @@ const BillingDashboard = () => {
   const { state } = location;
   const screen = state?.screen || "billingdashboard";
   const navigate = useNavigate();
-  const [sidebarOpen, setSidebarOpen] = useState(false);
   useEffect(() => {
     if (sessionStorage.getItem("userid") == null) {
       navigate('/');
