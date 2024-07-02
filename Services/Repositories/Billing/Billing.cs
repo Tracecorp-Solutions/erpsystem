@@ -96,6 +96,23 @@ namespace Services.Repositories.Billing
             return bills;
         }
 
+        public async Task<IEnumerable<CustomerBill>> GetCustomerBills()
+        {
+            var bills = await _context.CustomerBills
+                .Include(x => x.Customer)
+                    .ThenInclude(c => c.CustomerTarrif)
+                .Include(x => x.Customer)
+                    .ThenInclude(c => c.Application)
+                .ToListAsync();
+
+            if (bills == null || bills.Count == 0)
+            {
+                throw new ArgumentException("No Customer Bill found.");
+            }
+
+            return bills;
+        }
+
 
     }
 }

@@ -65,6 +65,23 @@ namespace Trace.Controllers
             }
         }
 
+        [HttpGet("/GetCustomerBills")]
+        public async Task<IActionResult> GetCustomerBills()
+        {
+            try
+            {
+                var bills = await _billing.GetCustomerBills();
+                return Ok(bills);
+            }catch(ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
+        }
+
 
     }
 }
