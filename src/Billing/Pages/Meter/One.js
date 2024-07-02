@@ -5,6 +5,8 @@ import { message } from "antd";
 
 function One() {
   const navigate = useNavigate();
+  const [customerData,setCustomerData] = useState(null);
+  const [customerRef,setCustomerRef] =useState("");
   const [formData, setFormData] = useState({
     meterNo: "",
     customerRef: "",
@@ -20,8 +22,6 @@ function One() {
     isMeterReset: "",
     isExpectedReadingToday: "",
   });
-
-  const [customerData,setCustomerData] = useEffect(null);
 
   const [meterReaders, setMeterReaders] = useState([]);
 
@@ -53,26 +53,15 @@ function One() {
     }));
   };
 
-  const handleCustomerValidation = async () => {
-    try {
-      const response = await axios.get(`${process.env.REACT_APP_API_URL}/ValidateCustomer/${customerRef}`);
-      if (response.ok) {
-        const data = await response.json();
-        setCustomerData(response.data);
-        alert(customerData);
-        // setCustomerData({
-        //   customerName: data.name,
-        //   meterNumber: data.meterNumber,
-        //   tariff: data.tariff,
-        //   previousReading: data.previousReading,
-        // });
-      } else {
-        console.error('Failed to fetch customer data');
-        // Optionally handle error here
-      }
-    } catch (error) {
-      message.error
-      console.error('Error occurred while fetching customer data:', error);
+  const handleValidateCustomer = async () => {
+    // Implement customer validation logic here
+    try{
+      const resp = await axios.get(`${process.env.REACT_APP_API_URL}/ValidateCustomer/${customerRef}`);
+      //setCustomerData(resp.data);
+      setFormData(resp.data)
+      
+    }catch(error){
+      message.error(error.response);
     }
   };
 
