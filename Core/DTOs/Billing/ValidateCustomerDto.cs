@@ -16,6 +16,7 @@ namespace Core.DTOs.Billing
         public string MeterNumber { get; set; }
         public string Tariff { get; set; }
         public string PreviousReading { get; set; }
+        public DateOnly PreviousReadingDate { get; set; }
         public string MeterSerial { get; set; }
         public string MeterType { get; set; }
 

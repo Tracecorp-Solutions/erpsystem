@@ -20,18 +20,20 @@ namespace Services.Repositories.Billing
         }
         public async Task AddMeterReading(MeterReadingDto meterReadingDto)
         {
-            //mapping dto to model
-            var meterreading = new MeterReading
-            {
-                MeterNo = meterReadingDto.MeterNo,
+            //map model to meterReading
+            var meterreading = new MeterReading {
                 CustomerRef = meterReadingDto.CustomerRef,
-                ReadingDate = meterReadingDto.ReadingDate,
+                MeterNo = meterReadingDto.MeterNo,
+                PreviousReading = meterReadingDto.PreviousReading,
+                PreviousReadingDate = meterReadingDto.PreviousReadingDate,
                 Reading = meterReadingDto.Reading,
                 ReadingType = meterReadingDto.ReadingType,
-                ReadingStatus = meterReadingDto.ReadingStatus,
+                IsBilled = meterReadingDto.IsBilled,
                 ReadingSource = meterReadingDto.ReadingSource,
                 ReadingReason = meterReadingDto.ReadingReason,
-                ReadingBy = meterReadingDto.ReadingBy
+                ReadingStatus = meterReadingDto.ReadingStatus,
+                ReadingBy = meterReadingDto.ReadingBy,
+                ReadingDate = meterReadingDto.ReadingDate
             };
 
             _context.MeterReadings.Add(meterreading);

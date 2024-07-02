@@ -121,7 +121,8 @@ namespace Services.Repositories.Billing
                     Tariff = customer.CustomerTarrif.TarrifName,
                     PreviousReading = docket.InitialReading,
                     ApplicationNo = customer.Application.ApplicationNumber,
-                    MeterType = docket.MeterType
+                    MeterType = docket.MeterType,
+                    PreviousReadingDate = docket.DateOfInstallation
                 };
             }
                 
