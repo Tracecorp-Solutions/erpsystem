@@ -25,6 +25,7 @@ import Servicing from "../Meter/Servicing";
 import AddMeter from "../Application/AddMeter";
 import MeterDetails from "../Application/MeterDetails";
 import EditDocketInitiation from "../Application/EditDocketInitiation";
+import ConnectedCustomers from "../Customer/ConnectedCustomer";
 
 const BillingDashboard = () => {
   const location = useLocation();
@@ -75,6 +76,7 @@ const BillingDashboard = () => {
               {screen === "bulk" && <Bulk />}
               {screen === "servicing" && <Servicing />}
               {screen === "replacement" && <Replacement />}
+              {screen === "connectedcustomers" && <ConnectedCustomers/>}
               </div>
             </div>
           </div>

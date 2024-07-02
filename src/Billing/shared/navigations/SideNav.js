@@ -148,7 +148,7 @@ function SideNav() {
               <div className="pt-3">
                 <div
                   className={`flex gap-2 py-3 mt-2 whitespace-nowrap rounded-xl ${
-                    location.pathname === "/groups"
+                    location.pathname === "/newapplication"
                       ? "bg-active-green txt-color-blue font-semibold px-4 mt-3"
                       : "bg-none"
                   }`}
@@ -186,8 +186,8 @@ function SideNav() {
                   <Minus className="shrink-0 self-start w-6 aspect-square" />
                   <button
                     onClick={() =>
-                      navigate("/Dashboardlayout", {
-                        state: { screen: "accounts" },
+                      navigate("/billingdashboard", {
+                        state: { screen: "connectedcustomers" },
                       })
                     }
                   >
@@ -379,7 +379,7 @@ function SideNav() {
             </button>
           </div>
           <div className="mt-3 py-3 w-full">
-            <button className="flex justify-between w-full">
+            <button className="flex justify-between w-full" onClick={() => toggleDropdown("documents")}>
               <span className="flex gap-2">
                 <FolderClosed className="shrink-0 self-start w-6 aspect-square" />
                 <span>Meter Readings</span>
