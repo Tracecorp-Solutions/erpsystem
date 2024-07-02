@@ -14,7 +14,7 @@ const BillingCycle = () => {
   const [searchText, setSearchText] = useState('');
   const [filteredPayments, setFilteredPayments] = useState([]);
   const [showBillingCustomer, setShowBillingCustomer] = useState(false);
-  const [showBulkSms, SetShowBulkSms] = useState(false);
+  const [showBulkSms, setShowBulkSms] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 10;
 
@@ -24,7 +24,7 @@ const BillingCycle = () => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const response = await fetch(`${process.env.REACT_APP_API_URL}/GetAllPayments`, {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/GetCustomerBills`, {
           headers: {
             Accept: 'application/json',
           },
@@ -33,7 +33,17 @@ const BillingCycle = () => {
           throw new Error('Failed to fetch data');
         }
         const data = await response.json();
-        const formattedData = data.map((item, index) => ({ ...item, key: item.paymentId }));
+        const formattedData = data.map((item, index) => ({
+          ...item,
+          key: item.customerBillId,
+          customerRef: item.customer.customerRef, // Adjust as per API response
+          customerName: item.customer.fullName.application.fullName, // Adjust as per API response
+          paymntReference: item.billPeriod, // Adjust as per API response or leave as is
+          vendor: item.vendor, // Adjust as per API response or leave as is
+          amount: item.totalBillAmount, // Adjust as per API response or leave as is
+          paymentDate: item.billDate, // Adjust as per API response or leave as is
+          paymentMethod: item.paymentMethod, // Adjust as per API response or leave as is
+        }));
         setPayments(formattedData);
         setFilteredPayments(formattedData);
       } catch (error) {
@@ -41,10 +51,10 @@ const BillingCycle = () => {
       }
       setLoading(false);
     };
-
+  
     fetchData();
   }, []);
-
+  
   const handleShowPaymentForm = () => {
     setShowPaymentForm(true);
   };
@@ -55,20 +65,19 @@ const BillingCycle = () => {
 
   const handleShowBillingCustomer = () => {
     setShowBillingCustomer(true);
-  }
+  };
 
   const handleCancelBillingCustomer = () => {
     setShowBillingCustomer(false);
-  }
+  };
 
   const handleShowBulkSms = () => {
-    SetShowBulkSms(true);
-  }
+    setShowBulkSms(true);
+  };
 
   const handleCancelBulkSms = () => {
-    SetShowBulkSms(false);
-
-  }
+    setShowBulkSms(false);
+  };
 
   const handleSearch = (value) => {
     setSearchText(value);
@@ -124,11 +133,15 @@ const BillingCycle = () => {
 
   const actionMenu = (
     <Menu onClick={({ key }) => handleDropdownMenuClick(key)}>
-      <Menu.Item key="view" onClick={handleShowBillingCustomer}>Bill Customer</Menu.Item>
+      <Menu.Item key="view" onClick={handleShowBillingCustomer}>
+        Bill Customer
+      </Menu.Item>
       <Menu.Item key="generate">Download Bill</Menu.Item>
       <Menu.Item key="print">Print Bill</Menu.Item>
       <Menu.Item key="contact">View Bill</Menu.Item>
-      <Menu.Item key="bulkbilling" onClick={handleShowBulkSms}>Bulk Billing</Menu.Item>
+      <Menu.Item key="bulkbilling" onClick={handleShowBulkSms}>
+        Bulk Billing
+      </Menu.Item>
     </Menu>
   );
 
@@ -149,11 +162,6 @@ const BillingCycle = () => {
       key: 'paymntReference',
     },
     {
-      title: 'Vendor ID',
-      dataIndex: 'vendor',
-      key: 'vendor',
-    },
-    {
       title: 'Amount',
       dataIndex: 'amount',
       key: 'amount',
@@ -163,11 +171,6 @@ const BillingCycle = () => {
       dataIndex: 'paymentDate',
       key: 'paymentDate',
       render: (text) => new Date(text).toLocaleDateString(),
-    },
-    {
-      title: 'Payment Method',
-      dataIndex: 'paymentMethod',
-      key: 'paymentMethod',
     },
     {
       title: 'Action',
@@ -182,13 +185,16 @@ const BillingCycle = () => {
     },
   ];
 
+  console.log("currentDisplayData currentDisplayData", currentDisplayData);
+
   return (
     <div className="md:px-6 md:py-5 rounded-3xl bg-stone-100">
       <div className="mb-6 md:flex md:justify-between md:items-center md:mb-6 font-semibold text-4xl text-neutral-600">
         <div className="mb-4 md:mb-0">Billing</div>
         <Dropdown overlay={actionMenu} trigger={['click']}>
           <button className="flex items-center gap-1 bg-slate-500 py-3 rounded-full text-white px-5 border-none outline-none">
-            <span className="text-xl">Actions</span> <DownOutlined className="mt-2 text-xl" />
+            <span className="text-xl">Actions</span>{' '}
+            <DownOutlined className="mt-2 text-xl" />
           </button>
         </Dropdown>
       </div>
@@ -237,8 +243,14 @@ const BillingCycle = () => {
         handleCancelPayment={handleCancelPayment}
         showPaymentForm={showPaymentForm}
       />
-      <BillingCustomer showBillingCustomer={showBillingCustomer} handleCancelBillingCustomer={handleCancelBillingCustomer} />
-      <BulkSms showBulkSms={showBulkSms} handleCancelBulkSms={handleCancelBulkSms} />
+      <BillingCustomer
+        showBillingCustomer={showBillingCustomer}
+        handleCancelBillingCustomer={handleCancelBillingCustomer}
+      />
+      <BulkSms
+        showBulkSms={showBulkSms}
+        handleCancelBulkSms={handleCancelBulkSms}
+      />
     </div>
   );
 };
