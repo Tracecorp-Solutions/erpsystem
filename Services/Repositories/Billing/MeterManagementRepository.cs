@@ -71,7 +71,8 @@ namespace Services.Repositories.Billing
                 MeterlifeDuration = meterServicing.MeterlifeDuration,
                 InitialReading = meterServicing.InitialReading,
                 DateOfInstallation = meterServicing.DateOfInstallation,
-                InstalledBy = meterServicing.InstalledBy
+                InstalledBy = meterServicing.InstalledBy,
+                MeterMakeId = meterServicing.MeterMakes
             };
 
             //add entity to context
