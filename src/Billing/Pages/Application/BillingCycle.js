@@ -16,7 +16,7 @@ const BillingCycle = () => {
   const [showBillingCustomer, setShowBillingCustomer] = useState(false);
   const [showBulkSms, setShowBulkSms] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const pageSize = 10;
+  const pageSize = 4;
 
   const navigate = useNavigate();
 
@@ -81,16 +81,26 @@ const BillingCycle = () => {
 
   const handleSearch = (value) => {
     setSearchText(value);
-    const filteredData = payments.filter(
-      (payment) =>
-        payment.customerRef.toLowerCase().includes(value.toLowerCase()) ||
-        payment.paymntReference.toString().toLowerCase().includes(value.toLowerCase()) ||
-        payment.vendor.toLowerCase().includes(value.toLowerCase()) ||
-        payment.paymentMethod.toLowerCase().includes(value.toLowerCase())
-    );
+    const lowerCaseValue = value.toLowerCase();
+  
+    const filteredData = payments.filter(payment => {
+      return Object.keys(payment).some(key => {
+        if (key === 'paymentDate') {
+          return new Date(payment[key]).toLocaleDateString().toLowerCase().includes(lowerCaseValue);
+        } else {
+          const fieldValue = payment[key];
+          if (typeof fieldValue === 'string' || typeof fieldValue === 'number') {
+            return fieldValue.toString().toLowerCase().includes(lowerCaseValue);
+          }
+          return false;
+        }
+      });
+    });
+  
     setFilteredPayments(filteredData);
     setCurrentPage(1);
   };
+  
 
   const handleChangePage = (page) => {
     setCurrentPage(page);
