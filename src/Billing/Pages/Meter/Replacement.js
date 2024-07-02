@@ -4,6 +4,7 @@ import axios from "axios";
 import { getMeterMakes } from "../../Apis/getMeterMakes";
 import { getMeterTypes } from "../../Apis/getMeterTypes";
 import { getMeterSizes } from "../../Apis/getMeterSize";
+import { message } from "antd";
 
 function Replacement() {
   const navigate = useNavigate();
@@ -80,6 +81,8 @@ function Replacement() {
       const response = await axios.get(
         `${process.env.REACT_APP_API_URL}/ValidateCustomer/${customerRef}`
       );
+
+      message.success("Customer validated successfully");
       const data = response.data;
       setCustomerData({
         name: data.name,
@@ -93,6 +96,7 @@ function Replacement() {
         meterType: data.meterType,
         meterMake: data.meterMake,
       });
+
     } catch (error) {
       console.error("Error occurred while fetching customer data:", error);
     }
@@ -101,7 +105,7 @@ function Replacement() {
   const handleSubmit = async () => {
     try {
       const response = await axios.post(
-        `${process.env.REACT_APP_API_URL}/TestApi/AddMeterServicing`,
+        `${process.env.REACT_APP_API_URL}/AddMeterServicing`,
         {
           customerRef: customerData.customerRef,
           meterNo: servicingData.meterNo,
@@ -120,6 +124,7 @@ function Replacement() {
       );
       console.log("Form submitted", response.data);
     } catch (error) {
+    
       console.error("Error occurred while submitting servicing data:", error);
     }
   };
