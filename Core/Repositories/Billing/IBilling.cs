@@ -12,6 +12,8 @@ namespace Core.Repositories.Billing
     {
         Task AddBillingRequest(BillingRequest billingRequest);
 
-        Task BillCustomer(BillWaterCustomerDto customerBill);
+        Task<CustomerBill> BillCustomer(BillWaterCustomerDto customerBill);
+
+        Task<IEnumerable<CustomerBill>> GetCustomerBillsByCustRef(string custRef);
     }
 }

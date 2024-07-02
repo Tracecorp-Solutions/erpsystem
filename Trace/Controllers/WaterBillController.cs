@@ -1,4 +1,5 @@
-﻿using Core.Models.Billing;
+﻿using Core.DTOs.Billing;
+using Core.Models.Billing;
 using Core.Repositories.Billing;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -29,5 +30,41 @@ namespace Trace.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
             }
         }
+
+        [HttpPost("/BillCustomer")]
+        public async Task<IActionResult> BillCustomer([FromBody] BillWaterCustomerDto customerBill)
+        {
+            try
+            {
+                await _billing.BillCustomer(customerBill);
+                return Ok("Customer billed successfully");
+            }catch(ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
+        }
+
+        [HttpGet("/GetCustomerBills/{customerRef}")]
+        public async Task<IActionResult> GetCustomerBills(string customerRef)
+        {
+            try
+            {
+                var bills = await _billing.GetCustomerBillsByCustRef(customerRef);
+                return Ok(bills);
+            }catch(ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
+        }
+
+
     }
 }

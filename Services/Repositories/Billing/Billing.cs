@@ -26,30 +26,36 @@ namespace Services.Repositories.Billing
             await _context.SaveChangesAsync();
         }
 
-        public async Task BillCustomer(BillWaterCustomerDto dto)
+        public async Task<CustomerBill> BillCustomer(BillWaterCustomerDto dto)
         {
-            //get customer details basing on customer ref
-            var customer = _context.BillingCustomers
+            // Get customer details based on customer ref
+            var customer = await _context.BillingCustomers
                 .Include(x => x.CustomerTarrif)
-                .FirstOrDefault(x => x.CustomerRef == dto.CustomerRef);
+                .FirstOrDefaultAsync(x => x.CustomerRef == dto.CustomerRef);
 
             if (customer == null)
+            {
                 throw new Exception("Customer not found");
+            }
 
-            //get previous reading for customer
-            var readings = _context.MeterReadings.Where(x => x.CustomerRef == dto.CustomerRef).OrderByDescending(x => x.Id).FirstOrDefault();
-
-            
+            // Get previous reading for customer
+            var readings = await _context.MeterReadings
+                .Where(x => x.CustomerRef == dto.CustomerRef)
+                .OrderByDescending(x => x.Id)
+                .FirstOrDefaultAsync();
 
             if (readings == null)
+            {
                 throw new Exception("No previous reading found");
+            }
 
-            var consumption = readings.Reading - readings.PreviousReading;  
-
+            var consumption = readings.Reading - readings.PreviousReading;
             var cons = consumption * customer.CustomerTarrif.TarrifAmount;
 
-            //get total payment amount for customer greater than bill from date
-            var totalAmountPaid = _context.Payments.Where(x => x.CustomerRef == customer.CustomerRef && DateOnly.FromDateTime(x.PaymentDate) >= dto.BillFrom).Sum(x => x.Amount);
+            // Get total payment amount for customer greater than bill from date
+            var totalAmountPaid = await _context.Payments
+                .Where(x => x.CustomerRef == customer.CustomerRef && DateOnly.FromDateTime(x.PaymentDate) >= dto.BillFrom)
+                .SumAsync(x => x.Amount);
 
             var amtdue = cons - totalAmountPaid;
 
@@ -68,6 +74,28 @@ namespace Services.Repositories.Billing
 
             await _context.CustomerBills.AddAsync(bill);
             await _context.SaveChangesAsync();
+
+            return bill;
         }
+
+        public async Task<IEnumerable<CustomerBill>> GetCustomerBillsByCustRef(string custRef)
+        {
+            var bills = await _context.CustomerBills
+                .Include(x => x.Customer)
+                    .ThenInclude(c => c.CustomerTarrif)
+                .Include(x => x.Customer)
+                    .ThenInclude(c => c.Application)
+                .Where(x => x.Customer.CustomerRef == custRef)
+                .ToListAsync();
+
+            if (bills == null || bills.Count == 0)
+            {
+                throw new ArgumentException("No Customer Bill found for the given customer reference.");
+            }
+
+            return bills;
+        }
+
+
     }
 }
