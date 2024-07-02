@@ -1,5 +1,14 @@
 import React, { useState } from "react";
-import { DatePicker, Input, Select, Form, Table, Button, Dropdown, Menu } from "antd";
+import {
+  DatePicker,
+  Input,
+  Select,
+  Form,
+  Table,
+  Button,
+  Dropdown,
+  Menu,
+} from "antd";
 import { EllipsisOutlined } from "@ant-design/icons";
 
 const { Option } = Select;
@@ -41,7 +50,7 @@ const BillAdjustment = () => {
     },
     // Add more data entries as needed
   ];
-  
+
   const columns = [
     {
       title: "Customer Ref",
@@ -86,7 +95,10 @@ const BillAdjustment = () => {
           overlay={
             <Menu>
               <Menu.Item key="1">
-                <a href="#">Print</a>
+                <a href="#">View Adjustment</a>
+              </Menu.Item>
+              <Menu.Item key="2">
+                <a href="#">Commit to Database</a>
               </Menu.Item>
             </Menu>
           }
@@ -94,7 +106,11 @@ const BillAdjustment = () => {
         >
           <Button
             type="text"
-            icon={<EllipsisOutlined style={{ fontSize: "20px", color: "#1890ff" }} />}
+            icon={
+              <EllipsisOutlined
+                style={{ fontSize: "20px", color: "#1890ff" }}
+              />
+            }
           />
         </Dropdown>
       ),
@@ -107,7 +123,7 @@ const BillAdjustment = () => {
         Adjust Bill
       </div>
       <div className="bg-white  w-full  mt-6">
-      <div className="flex flex-wrap justify-start space-x-2 px-6 py-4 text-slate-500">
+        <div className="flex flex-wrap justify-start space-x-2 px-6 py-4 text-slate-500">
           {/* Toggle Tabs */}
           <button
             type="button"
@@ -303,27 +319,28 @@ const BillAdjustment = () => {
         )}
       </div>
       {activeTab === "viewAdjustments" && (
-         <div className="p-6 bg-white">
-         <div className="shrink-0 mt-4 h-px border border-solid  bg-white border-neutral-500 border-opacity-10 max-md:max-w-full" />
-         <div className="mt-8">
-           <Table
-             dataSource={data}
-             columns={columns}
-             pagination={false}
-             rowClassName={() => "text-neutral-600"}
-             scroll={{ x: true }}
-             className="max-md:max-w-full"
-           />
-         </div>
-         <div className="flex justify-end">
-           <button
-             type="button"
-             className="justify-center self-end px-6 py-3 mt-8 text-base font-semibold leading-6 text-white rounded-3xl bg-slate-500 max-md:px-5"           >
-             Print List
-           </button>
-         </div>
-       </div>
-      )}
+  <div className="p-6 bg-white">
+    <div className="shrink-0 mt-4 h-px border border-solid bg-white border-neutral-500 border-opacity-10 max-md:max-w-full" />
+    <div className="mt-8 overflow-x-auto max-w-full">
+      <Table
+        dataSource={data}
+        columns={columns}
+        pagination={false}
+        rowClassName={() => "text-neutral-600"}
+        scroll={{ x: true }}
+      />
+    </div>
+    <div className="flex justify-end">
+      <button
+        type="button"
+        className="justify-center self-end px-6 py-3 mt-8 text-base font-semibold leading-6 text-white rounded-3xl bg-slate-500 max-md:px-5"
+      >
+        Print List
+      </button>
+    </div>
+  </div>
+)}
+
     </div>
   );
 };
