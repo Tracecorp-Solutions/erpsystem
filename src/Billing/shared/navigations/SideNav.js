@@ -250,6 +250,25 @@ function SideNav() {
                   Bill Adjusmtent
                 </button>
               </div>
+              <div
+                className={`flex gap-2 py-3 mt-2 whitespace-nowrap rounded-xl ${
+                  location.state?.dropdown === "bill-period"
+                    ? "bg-active-green txt-color-blue font-semibold px-4"
+                    : "bg-none"
+                }`}
+              >
+                <Minus className="shrink-0 self-start w-6 aspect-square" />
+                <button
+                  onClick={() =>
+                    handleNavigation("/billingdashboard", {
+                      dropdown: "bill-period",
+                      screen: "bill-period",
+                    })
+                  }
+                >
+                  Bill Period Setup
+                </button>
+              </div>
             </div>
           )}
           {/* Payments section */}

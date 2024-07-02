@@ -21,6 +21,7 @@ import CreateMaterials from "../Materials/CreateMaterials";
 import AddMeter from "../Application/AddMeter";
 import MeterDetails from "../Application/MeterDetails";
 import EditDocketInitiation from "../Application/EditDocketInitiation";
+import BillPeriodSetup from "../Application/BillPeriodSetup";
 
 const BillingDashboard = () => {
   const location = useLocation();
@@ -68,6 +69,7 @@ const BillingDashboard = () => {
                 {screen === "add-meter" && <AddMeter />}
                 {screen === "report-details" && <MeterDetails />}
                 {screen === "edit-docket-initiation" && <EditDocketInitiation />}
+                {screen === "bill-period" && <BillPeriodSetup />}
               </div>
             </div>
           </div>

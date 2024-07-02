@@ -34,7 +34,7 @@ export default function BillAdjustmentDrawer({
         </button>
 
         <div className="flex flex-col px-8 pt-5 pb-10 bg-white max-w-[550px] max-md:px-5">
-          <div className="mt-8 text-2xl font-semibold leading-10 text-neutral-600 max-md:max-w-full">
+          <div className="mt-8 text-2xl text-start font-semibold leading-10 text-neutral-600 max-md:max-w-full">
             Bill Adjustment Details
           </div>
           
