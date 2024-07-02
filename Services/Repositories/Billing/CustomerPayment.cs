@@ -91,12 +91,14 @@ namespace Services.Repositories.Billing
             var invoice = await _context.NewConnectionInvoices
                 .Include(x => x.NewConnectionInvoiceMaterials)
                 .Include(x => x.Application)
+                .Include(x => x.Application.CustomerTarrif)
                 .Where(x => x.Status != "Paid")
                 .FirstOrDefaultAsync(x => x.InvoiceNumber == customeRef);
 
             //check if the customer exists
             var customer = await _context.BillingCustomers
                 .Include(x => x.Application)
+                .Include(x => x.Application.CustomerTarrif)
                 .FirstOrDefaultAsync(x => x.CustomerRef == customeRef);
 
             if (invoice == null && customer == null)
@@ -104,12 +106,26 @@ namespace Services.Repositories.Billing
 
             //if invoice is not found but customer is found return customer details
             if (invoice == null)
+            {
+                //get docket initiation for the customer
+                var docket = await _context.DocketInitiations
+                    .FirstOrDefaultAsync(x => x.CustomerRef == customeRef);
+
+
                 return new ValidateCustomerDto
                 {
                     Name = customer.Application.FullName,
-                    Balance = 0
-
+                    Balance = 0,
+                    CustomerRef = customer.CustomerRef,
+                    MeterNumber = docket.MeterNumber,
+                    Tariff = customer.CustomerTarrif.TarrifName,
+                    PreviousReading = docket.InitialReading,
+                    ApplicationNo = customer.Application.ApplicationNumber,
+                    MeterType = docket.MeterType
                 };
+            }
+                
+                
 
             return new ValidateCustomerDto
             {
