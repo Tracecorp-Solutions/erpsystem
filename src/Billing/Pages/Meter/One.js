@@ -21,6 +21,8 @@ function One() {
     isExpectedReadingToday: "",
   });
 
+  const [customerData,setCustomerData] = useEffect(null);
+
   const [meterReaders, setMeterReaders] = useState([]);
 
   useEffect(() => {
@@ -56,12 +58,14 @@ function One() {
       const response = await axios.get(`${process.env.REACT_APP_API_URL}/ValidateCustomer/${customerRef}`);
       if (response.ok) {
         const data = await response.json();
-        setCustomerData({
-          customerName: data.name,
-          meterNumber: data.meterNumber,
-          tariff: data.tariff,
-          previousReading: data.previousReading,
-        });
+        setCustomerData(response.data);
+        alert(customerData);
+        // setCustomerData({
+        //   customerName: data.name,
+        //   meterNumber: data.meterNumber,
+        //   tariff: data.tariff,
+        //   previousReading: data.previousReading,
+        // });
       } else {
         console.error('Failed to fetch customer data');
         // Optionally handle error here
