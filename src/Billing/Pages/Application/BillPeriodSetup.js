@@ -1,6 +1,18 @@
 import React, { useState } from "react";
-import { DatePicker, Select, Modal, Table, Space, Typography  } from "antd";
+import {
+  DatePicker,
+  Select,
+  Modal,
+  Table,
+  Space,
+  Typography,
+  Checkbox,
+  Dropdown,
+  Menu,
+  Button,
+} from "antd";
 import { EllipsisOutlined } from "@ant-design/icons";
+import BillingDetailsPeriodsDrawer from "./Actions/BillingPeriodDetailsDrawer";
 
 const { Option } = Select;
 const { Text } = Typography;
@@ -13,6 +25,21 @@ const BillPeriodSetup = () => {
     startDate: null,
     endDate: null,
   });
+  const [data, setData] = useState([
+    {
+      key: "1",
+      code: "213032024",
+      period: "032024",
+      cycle: "30",
+      startDate: "01/03/2024",
+      endDate: "31/03/2024",
+      isClosed: "No",
+      closedBy: "Ogun Billing",
+      isChecked: false,
+    },
+  ]);
+
+  const [drawerVisible, setDrawerVisible] = useState(false)
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -44,19 +71,21 @@ const BillPeriodSetup = () => {
     setIsFormVisible(false);
   };
 
-  const data = [
-    {
-      key: "1",
-      code: "213032024",
-      period: "032024",
-      cycle: "30",
-      startDate: "01/03/2024",
-      endDate: "31/03/2024",
-      isClosed: "No",
-      closedBy: "Ogun Billing",
-    },
-    // Add more objects as needed
-  ];
+  const renderMenu = () => (
+    <Menu>
+      <Menu.Item key="1">
+        <Button type="text" onClick={() => setDrawerVisible(true)}>
+          View Periods Details
+        </Button>
+      </Menu.Item>
+      <Menu.Item key="2">
+        <Button type="text">
+          Close Period
+        </Button>
+      </Menu.Item>
+    </Menu>
+  );
+
 
   const columns = [
     {
@@ -109,21 +138,25 @@ const BillPeriodSetup = () => {
     {
       title: "Action",
       key: "action",
-      render: () => (
-        <Space size="middle">
-          {/* Replace with your desired action icons */}
-          <EllipsisOutlined style={{ fontSize: 20, color: "#1890ff" }} />
-        </Space>
+      render: (_, record) => (
+        <Dropdown overlay={renderMenu(record)} placement="bottomRight">
+          <Button
+            type="text"
+            icon={
+              <EllipsisOutlined style={{ fontSize: 20, color: "#1890ff" }} />
+            }
+          />
+        </Dropdown>
       ),
     },
   ];
 
   return (
-    <div className="flex flex-col flex-wrap justify-center content-start px-8 py-6 rounded-3xl bg-stone-100 leading-[160%] max-md:px-5">
+    <div className="flex flex-col flex-wrap justify-center content-start px-8 py-6 rounded-3xl bg-white leading-[160%] max-md:px-5">
       <div className="text-4xl font-semibold text-neutral-600 max-md:max-w-full">
         Billing Period Setup
       </div>
-      <div className="flex gap-5 pr-20 mt-10 font-semibold max-md:flex-wrap max-md:pr-5">
+      <div className="flex gap-5 pr-20 mt-10 bg-white font-semibold max-md:flex-wrap max-md:pr-5">
         <button
           type="button"
           className={`justify-center px-6 py-4 rounded-lg ${
@@ -219,14 +252,14 @@ const BillPeriodSetup = () => {
         </form>
       ) : (
         <div className="flex flex-col p-6 bg-white rounded-3xl w-full mt-10">
-        <div className="shrink-0 mt-4 h-px border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-10 w-full" />
-        <Table
-          columns={columns}
-          dataSource={data}
-          pagination={false}
-          className="mt-8"
-        />
-      </div>
+          <div className="shrink-0 mt-4 h-px border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-10 w-full" />
+          <Table
+            columns={columns}
+            dataSource={data}
+            pagination={false}
+            className="mt-8"
+          />
+        </div>
       )}
       <Modal
         visible={isModalVisible}
@@ -281,6 +314,7 @@ const BillPeriodSetup = () => {
           </div>
         </div>
       </Modal>
+      <BillingDetailsPeriodsDrawer drawerVisible={drawerVisible} setDrawerVisible={setDrawerVisible} />
     </div>
   );
 };
