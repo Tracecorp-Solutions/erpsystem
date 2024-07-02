@@ -1,14 +1,32 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Dropdown, Menu } from "antd";
 import { DownOutlined } from "@ant-design/icons";
 import { useLocation } from "react-router-dom";
+import axios from "axios";
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
 import Reject from "./Reject";
 
 function InvoiceDetails() {
   const [isUpdateModalVisible, setIsUpdateModalVisible] = useState(false);
+  const [invoiceItems, setInvoiceItems] = useState(null);
   const location = useLocation();
   const { state } = location;
-  const invoiceItems = state?.invoiceItems;
+  const applicationNumber = state?.applicationNumber;
+  const printRef = useRef();
+
+  useEffect(() => {
+    if (applicationNumber) {
+      axios
+        .get(`${process.env.REACT_APP_API_URL}/GetNewConnectionInvoice?applicationNumber=${applicationNumber}`)
+        .then((response) => {
+          setInvoiceItems(response.data);
+        })
+        .catch((error) => {
+          console.error("Error fetching invoice data:", error);
+        });
+    }
+  }, [applicationNumber]);
 
   // Handle modal visibility toggle
   const handleUpdateModalVisible = () => {
@@ -26,13 +44,26 @@ function InvoiceDetails() {
     }
   };
 
+  // Function to generate and download the PDF
+  const handleDownloadInvoice = () => {
+    if (!printRef.current) return;
+
+    html2canvas(printRef.current).then((canvas) => {
+      const imgData = canvas.toDataURL("image/png");
+      const pdf = new jsPDF();
+      const imgProps = pdf.getImageProperties(imgData);
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+
+      pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+      pdf.save("invoice.pdf");
+    });
+  };
+
   // Dropdown menu for actions
   const menu = (
     <Menu onClick={handleMenuClick}>
-      <Menu.Item key="authorize">Authorize Invoice</Menu.Item>
-      <Menu.Item key="reject" style={{ color: "red" }}>
-        Reject Invoice
-      </Menu.Item>
+      <Menu.Item key="authorize">Back</Menu.Item>
     </Menu>
   );
 
@@ -43,8 +74,8 @@ function InvoiceDetails() {
 
   return (
     <>
-      <div className="flex flex-col justify-end items-center px-16 pt-8 bg-white max-md:px-5">
-        <div className="flex flex-col w-full max-w-[1200px] max-md:max-w-full">
+      <div className="d-block flex-col justify-end items-center pt-8 bg-white w-full border" style={{ display: 'block' }}>
+        <div className="px-16 flex flex-col w-full"ref={printRef} >
           {/* Header section */}
           <div className="flex gap-5 justify-between mt-2 w-full max-md:flex-wrap">
             <div className="flex gap-5 justify-between text-neutral-600 max-md:flex-wrap">
@@ -55,14 +86,14 @@ function InvoiceDetails() {
                 {invoiceItems.Status}
               </div>
             </div>
-            <div className="flex gap-2 justify-center py-2 pr-3 pl-4 my-auto text-base bg-blue-400 font-semibold leading-6 text-white whitespace-nowrap rounded-3xl">
+            {/* <div className="flex gap-2 justify-center py-2 pr-3 pl-4 my-auto text-base bg-blue-400 font-semibold leading-6 text-white whitespace-nowrap rounded-3xl">
               <Dropdown overlay={menu} trigger={["click"]} placement="bottomLeft">
                 <div className="flex gap-2 justify-center py-3 pr-4 pl-6 my-auto text-base font-semibold leading-6 text-white whitespace-nowrap rounded-3xl bg-blue-400">
                   <div>Actions</div>
                   <DownOutlined />
                 </div>
               </Dropdown>
-            </div>
+            </div> */}
           </div>
           {/* Divider */}
           <div className="shrink-0 mt-2 h-px border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-opacity-10 max-md:max-w-full" />
@@ -168,7 +199,7 @@ function InvoiceDetails() {
                       <tr key={index}>
                         <td className="px-6 py-2 whitespace-nowrap">
                           <div className="text-sm leading-5 text-neutral-600">
-                            {item.MaterialName}
+                            {item.Material.MaterialName}
                           </div>
                         </td>
                         <td className="px-6 py-2 whitespace-nowrap">
@@ -178,7 +209,7 @@ function InvoiceDetails() {
                         </td>
                         <td className="px-6 py-2 whitespace-nowrap">
                           <div className="text-sm leading-5 text-neutral-600">
-                            {item.Price.toFixed(2)} {/* Assuming you want to format price */}
+                            {item.Price.toFixed(2)}
                           </div>
                         </td>
                       </tr>
@@ -189,17 +220,28 @@ function InvoiceDetails() {
             </div>
           </div>
           {/* Notes section */}
-          <div className="flex flex-col items-start p-4 mt-8 rounded-lg bg-stone-100 max-md:pr-5">
-            <div className="text-xs font-medium tracking-wide uppercase text-neutral-400 max-md:max-w-full">
-              Notes
-            </div>
-            <div className="mt-2 text-base leading-6 text-neutral-600 max-md:max-w-full">
-              {invoiceItems.notes}
-            </div>
-          </div>
+         
           {/* Actions section */}
           {isUpdateModalVisible && <Reject />}
         </div>
+        <div className="justify-end px-20 py-6 max-md:pl-5">
+            <div className="flex gap-5 max-md:flex-col max-md:gap-0">
+              <div className="flex flex-col w-3/12 max-md:ml-0 max-md:w-full">
+                <div className="grow justify-center items-center px-8 py-4 w-full text-base leading-6 rounded-3xl bg-stone-100 text-neutral-600 max-md:px-5 max-md:mt-10">
+                  Send Invoice
+                </div>
+              </div>
+              <div className="flex flex-col ml-5 w-3/12 max-md:ml-0 max-md:w-full">
+                <div
+                  className="grow justify-center px-8 py-4 w-full text-base font-semibold leading-6 text-white rounded-3xl bg-blue-400 max-md:px-5 max-md:mt-10"
+                  onClick={handleDownloadInvoice}
+                  style={{ cursor: 'pointer' }} // Add pointer cursor to indicate it's clickable
+                >
+                  Download Invoice
+                </div>
+              </div>
+            </div>
+          </div>
       </div>
     </>
   );
