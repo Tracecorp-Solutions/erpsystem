@@ -18,6 +18,10 @@ import AddMaterials from "../Application/Actions/AddMaterials";
 import ShowMaterials from "../Application/Actions/ShowMaterials";
 import ConfMaterials from "../Materials/ConfMaterials";
 import CreateMaterials from "../Materials/CreateMaterials";
+import One from "../Meter/One";
+import Replacement from "../Meter/Replacement";
+import Bulk from "../Meter/Bulk";
+import Servicing from "../Meter/Servicing";
 import AddMeter from "../Application/AddMeter";
 import MeterDetails from "../Application/MeterDetails";
 import EditDocketInitiation from "../Application/EditDocketInitiation";
@@ -36,7 +40,6 @@ const BillingDashboard = () => {
   }, [navigate]);
 
   return (
-
     <div>
       {screen === "invoice-details" ? <InvoiceDetails /> :   <div className="flex flex-col md:flex-row w-full">
       
@@ -68,6 +71,10 @@ const BillingDashboard = () => {
                 {screen === "add-meter" && <AddMeter />}
                 {screen === "report-details" && <MeterDetails />}
                 {screen === "edit-docket-initiation" && <EditDocketInitiation />}
+                {screen === "one" && <One />}
+              {screen === "bulk" && <Bulk />}
+              {screen === "servicing" && <Servicing />}
+              {screen === "replacement" && <Replacement />}
               </div>
             </div>
           </div>
