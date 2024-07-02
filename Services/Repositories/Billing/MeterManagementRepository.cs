@@ -32,8 +32,8 @@ namespace Services.Repositories.Billing
             //check whether meter exists
             var meter = _context.DocketInitiations.FirstOrDefault(m => m.MeterNumber == meterServicing.MeterNo);
 
-            if (meter == null)
-                throw new ArgumentException("Meter does not exist");
+            //if (meter == null)
+            //    throw new ArgumentException("Meter does not exist");
 
             //check whether meter is already assigned to a customer
             var meterAssigned = _context.NewMeterServicings.FirstOrDefault(m => m.MeterNo == meterServicing.MeterNo);
