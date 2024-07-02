@@ -41,14 +41,15 @@ function Replacement() {
           Validate Customer
         </div>
       </div>
-      <div className="mt-8 text-2xl font-semibold text-neutral-600 max-md:max-w-full" >
+      <div className="mt-8 text-2xl font-semibold text-neutral-600 max-md:max-w-full">
         Old Meter Details
       </div>
+      <div className="shrink-0 mt-2 h-px border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-opacity-10 max-md:max-w-full" />
       <div className="flex flex-col flex-wrap justify-center px-8 py-6 content-start pb-6 text-base leading-6 w-full">
         <div className="flex gap-4 max-md:flex-wrap w-full">
           <div className="flex flex-col px-5 flex-1">
             <div className="font-semibold text-neutral-600 w-full">
-              Meter Serial Number
+              Customer Name
             </div>
             <input
               type="text"
@@ -59,7 +60,7 @@ function Replacement() {
           </div>
           <div className="flex flex-col px-5 flex-1">
             <div className="font-semibold text-neutral-600 w-full">
-              Previous Reading
+              Meter Serial number
             </div>
             <input
               type="text"
@@ -72,17 +73,19 @@ function Replacement() {
         <div className="flex gap-4 mt-4 max-md:flex-wrap w-full">
           <div className="flex flex-col px-5 flex-1">
             <div className="font-semibold text-neutral-600 w-full">
-              Previous Reading Date
+              Meter Dials
             </div>
             <input
-              type="date"
+              type="text"
               className="flex gap-2 justify-between px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 w-full"
               value="2024-04-04"
               readOnly
             />
           </div>
           <div className="flex flex-col px-5 flex-1">
-            <div className="font-semibold w-full">Consumption</div>
+            <div className="font-semibold text-neutral-600 w-full">
+              Meter Type
+            </div>
             <input
               type="text"
               className="justify-center items-start px-4 py-4 mt-2 rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 w-full"
@@ -93,7 +96,9 @@ function Replacement() {
         </div>
         <div className="flex gap-4 mt-4 max-md:flex-wrap w-full">
           <div className="flex flex-col px-5 flex-1">
-            <div className="font-semibold w-full">Average Consumption</div>
+            <div className="font-semibold text-neutral-600  w-full">
+              Meter Size
+            </div>
             <input
               type="text"
               className="justify-center items-start px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 w-full"
@@ -102,7 +107,9 @@ function Replacement() {
             />
           </div>
           <div className="flex flex-col px-5 flex-1">
-            <div className="font-semibold w-full">Meter Dials</div>
+            <div className="font-semibold w-full text-neutral-600">
+              Meter Previous Reading
+            </div>
             <input
               type="text"
               className="justify-center items-start px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 w-full"
@@ -113,7 +120,9 @@ function Replacement() {
         </div>
         <div className="flex gap-4 mt-4 max-md:flex-wrap w-full">
           <div className="flex flex-col px-5 flex-1">
-            <div className="font-semibold w-full">Reading Type</div>
+            <div className="font-semibold w-full text-neutral-600">
+              Reading Type
+            </div>
             <select
               className="justify-center items-start px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 w-full"
               defaultValue="PERIODIC"
@@ -124,7 +133,7 @@ function Replacement() {
             </select>
           </div>
           <div className="flex flex-col px-5 flex-1">
-            <div className="font-semibold w-full">Is Billed?</div>
+            <div className="font-semibold w-full text-neutral-600">Is Billed?</div>
             <select
               className="justify-center items-start px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 w-full"
               defaultValue="YES"
@@ -188,7 +197,7 @@ function Replacement() {
         <div className="flex gap-4 mt-4 max-md:flex-wrap w-full">
           <div className="flex flex-col px-5 flex-1">
             <div className="font-semibold text-neutral-600 w-full">
-              Was the meter reset?
+              Reason for Servicing
             </div>
             <select
               className="flex gap-2 justify-between px-4 py-4 mt-2 rounded-xl border border-solid border-neutral-500 border-opacity-30 text-neutral-400 w-full"
@@ -199,18 +208,123 @@ function Replacement() {
               <option value="No">No</option>
             </select>
           </div>
+        </div>
+      </div>
+      <div className="mt-8 text-2xl font-semibold text-neutral-600 max-md:max-w-full">
+        New Meter Details
+      </div>
+      <div className="shrink-0 mt-2 h-px border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-opacity-10 max-md:max-w-full" />
+      <div className="flex flex-col flex-wrap justify-center px-8 py-6 content-start pb-6 text-base leading-6 w-full">
+        <div className="flex gap-4 mt-4 max-md:flex-wrap w-full">
           <div className="flex flex-col px-5 flex-1">
             <div className="font-semibold text-neutral-600 w-full">
-              Is the expected reading for today?
+              New Meter Serial Number
             </div>
-            <select
-              className="flex gap-2 justify-between px-4 py-4 mt-2 rounded-xl border border-solid border-neutral-500 border-opacity-30 text-neutral-400 w-full"
-              defaultValue="Select your Answer"
-            >
-              <option value="Select your Answer">Select your Answer</option>
-              <option value="Yes">Yes</option>
-              <option value="No">No</option>
-            </select>
+            <input
+              type="text"
+              className="flex gap-2 justify-between px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 w-full"
+              value="2024-04-04"
+              readOnly
+            />
+          </div>
+          <div className="flex flex-col px-5 flex-1">
+            <div className="font-semibold text-neutral-600 w-full">New Meter Size</div>
+            <input
+              type="text"
+              className="justify-center items-start px-4 py-4 mt-2 rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 w-full"
+              value="0"
+              readOnly
+            />
+          </div>
+        </div>
+        <div className="flex gap-4 mt-4 max-md:flex-wrap w-full">
+          <div className="flex flex-col px-5 flex-1">
+            <div className="font-semibold text-neutral-600 w-full">
+              New Meter Make /type
+            </div>
+            <input
+              type="text"
+              className="flex gap-2 justify-between px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 w-full"
+              value="2024-04-04"
+              readOnly
+            />
+          </div>
+          <div className="flex flex-col px-5 flex-1">
+            <div className="font-semibold text-neutral-600 w-full">New Meter Dials</div>
+            <input
+              type="text"
+              className="justify-center items-start px-4 py-4 mt-2 rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 w-full"
+              value="0"
+              readOnly
+            />
+          </div>
+        </div>
+        <div className="flex gap-4 max-md:flex-wrap w-full">
+          <div className="flex flex-col px-5 flex-1">
+            <div className="font-semibold text-neutral-600 w-full">
+              New Meter Manufacture date
+            </div>
+            <input
+              type="text"
+              className="justify-center items-start px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 w-full"
+              value="24632628786735"
+              readOnly
+            />
+          </div>
+          <div className="flex flex-col px-5 flex-1">
+            <div className="font-semibold text-neutral-600 w-full">
+              New Meter Life/ Duration
+            </div>
+            <input
+              type="text"
+              className="justify-center items-start px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 w-full"
+              value="0"
+              readOnly
+            />
+          </div>
+        </div>
+        <div className="flex gap-4 mt-4 max-md:flex-wrap w-full">
+          <div className="flex flex-col px-5 flex-1">
+            <div className="font-semibold text-neutral-600 w-full">
+              New Mter Initail Reading
+            </div>
+            <input
+              type="text"
+              className="flex gap-2 justify-between px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 w-full"
+              value="2024-04-04"
+              readOnly
+            />
+          </div>
+          <div className="flex flex-col px-5 flex-1">
+            <div className="font-semibold text-neutral-600 w-full">New Meter Installation Date</div>
+            <input
+              type="text"
+              className="justify-center items-start px-4 py-4 mt-2 rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 w-full"
+              value="0"
+              readOnly
+            />
+          </div>
+        </div>
+        <div className="flex gap-4 mt-4 max-md:flex-wrap w-full">
+          <div className="flex flex-col px-5 flex-1">
+            <div className="font-semibold text-neutral-600 w-full">
+              installed By
+            </div>
+            <input
+              type="text"
+              className="flex gap-2 justify-between px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 w-full"
+              value="2024-04-04"
+              readOnly
+            />
+          </div>
+          <div className="flex flex-col px-5 flex-1">
+            <div className="font-semibold text-neutral-600 w-full">Comment</div>
+            <input
+              type="text"
+              className="justify-center items-start px-4 py-4 mt-2 rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 w-full"
+              value="0"
+              readOnly
+            />
           </div>
         </div>
       </div>

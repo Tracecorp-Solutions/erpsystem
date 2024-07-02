@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 function Bulk() {
   const navigate = useNavigate();
   const [operationalArea, setOperationalArea] = useState("");
-  const [branchZone, setBranchZone] = useState("");
+  const [branch, setBranch] = useState("");
   const [currentPeriod, setCurrentPeriod] = useState("");
   const [currentReadingDate, setCurrentReadingDate] = useState("");
   const [meterReader, setMeterReader] = useState("");
@@ -20,7 +20,7 @@ function Bulk() {
     navigate("/billingdashboard", {
       state: {
         operationalArea,
-        branchZone,
+        branch,
         currentPeriod,
         currentReadingDate,
         meterReader,
@@ -64,6 +64,7 @@ function Bulk() {
                 type="text"
                 id="operationalArea"
                 value={operationalArea}
+                placeholder="Enter Operational Area"
                 onChange={(e) => setOperationalArea(e.target.value)}
                 className="justify-center items-start px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 w-full"
               />
@@ -74,9 +75,10 @@ function Bulk() {
               </label>
               <input
                 type="text"
-                id="branchZone"
-                value={branchZone}
-                onChange={(e) => setBranchZone(e.target.value)}
+                id="branch"
+                placeholder="Enter your branch"
+                value={branch}
+                onChange={(e) => setBranch(e.target.value)}
                 className="justify-center items-start px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 w-full"
               />
             </div>
@@ -89,6 +91,7 @@ function Bulk() {
               <input
                 type="text"
                 id="currentPeriod"
+                placeholder="Enter current period"
                 value={currentPeriod}
                 onChange={(e) => setCurrentPeriod(e.target.value)}
                 className="flex gap-2 justify-between px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 w-full"
@@ -102,6 +105,7 @@ function Bulk() {
                 type="text"
                 id="currentReadingDate"
                 value={currentReadingDate}
+                placeholder="Enter current date"
                 onChange={(e) => setCurrentReadingDate(e.target.value)}
                 className="justify-center items-start px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 w-full"
               />
@@ -116,6 +120,7 @@ function Bulk() {
                 type="text"
                 id="meterReader"
                 value={meterReader}
+                placeholder="Enter meter reader"
                 onChange={(e) => setMeterReader(e.target.value)}
                 className="justify-center items-start px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 w-full"
               />
@@ -127,6 +132,7 @@ function Bulk() {
               <input
                 type="text"
                 id="fileHasHeader"
+                placeholder="does the file have a header"
                 value={fileHasHeader}
                 onChange={(e) => setFileHasHeader(e.target.value)}
                 className="flex gap-2 justify-between px-4 py-4 mt-2 rounded-xl border border-solid border-neutral-500 border-opacity-30 text-neutral-400 w-full"
