@@ -98,7 +98,7 @@ function Bulk() {
               />
             </div>
             <div className="flex flex-col px-5 flex-1">
-              <label htmlFor="currentReadingDate" className="font-semibold w-full">
+              <label htmlFor="currentReadingDate" className="font-semibold  text-neutral-600 w-full">
                 Current Reading Date
               </label>
               <input
@@ -113,7 +113,7 @@ function Bulk() {
           </div>
           <div className="flex gap-4 mt-4 max-md:flex-wrap w-full">
             <div className="flex flex-col px-5 flex-1">
-              <label htmlFor="meterReader" className="font-semibold w-full">
+              <label htmlFor="meterReader" className="font-semibold text-neutral-600 w-full">
                 Meter Reader
               </label>
               <input
