@@ -1,94 +1,92 @@
-import React, { useState, useEffect } from "react";
-import { Table, Menu, Dropdown, message } from "antd";
-import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
+import React, { useState } from "react";
+import { Table, Menu, Dropdown, message, Input, Space, Switch } from "antd";
+import { EllipsisOutlined, SearchOutlined, FilterOutlined } from "@ant-design/icons";
 import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 
+const { Search } = Input;
+
 function ConnectedCustomers() {
-  const [applications, setApplications] = useState([]);
-  const [customers,setConnectedCustomers] = useState([]);
-
   const navigate = useNavigate();
+  const location = useLocation();
+  const [searchText, setSearchText] = useState("");
+  const [searchedColumn, setSearchedColumn] = useState("");
+  const [toggleDisabled, setToggleDisabled] = useState(false); // State for switch
 
-  useEffect(() => {
-    GetConnectedCustomers();
-    //fetchApplications();
-    //fetchApplicationById();
-  }, []);
-
-  const GetConnectedCustomers = async() =>{
-    try{
-        const resp = await axios.get(`${process.env.REACT_APP_API_URL}/GetConnectedCustomers`);
-        setConnectedCustomers(resp.data);
-    }catch(error){
-        message.error(error.response)
-    }
-
+  const handleMenuClick = (e) => {
+    message.info(`Click on menu item ${e.key}`);
   };
 
-  const fetchApplications = () => {
-    fetch(`${process.env.REACT_APP_API_URL}/GetApplications`)
-      .then(response => response.json())
-      .then(data => {
-        setApplications(data);
-      })
-      .catch(error => {
-        console.error("Error fetching data:", error);
-      });
+  const menu = (
+    <Menu onClick={handleMenuClick}>
+      <Menu.Item key="1">Menu Item 1</Menu.Item>
+      <Menu.Item key="2">Menu Item 2</Menu.Item>
+      <Menu.Item key="3">Menu Item 3</Menu.Item>
+    </Menu>
+  );
+
+  const handleSearch = (selectedKeys, confirm, dataIndex) => {
+    confirm();
+    setSearchText(selectedKeys[0]);
+    setSearchedColumn(dataIndex);
   };
 
-  const fetchApplicationById = (applicationNumber) => {
-    fetch(`${process.env.REACT_APP_API_URL}/GetApplicationByApplicationNumnber?applicationId=${applicationNumber}`)
-      .then(response => response.json())
-      .then(data => {
-        // Handle the fetched application data, for example:
-        console.log("Fetched application data:", data);
-        // Optionally, update state with this specific application data if needed
-      })
-      .catch(error => {
-        console.error("Error fetching application by id:", error);
-        // Optionally, show an error message to the user
-      });
+  const handleReset = (clearFilters) => {
+    clearFilters();
+    setSearchText("");
   };
 
-  const handleMenuClick = (applicationNumber, action) => {
-    switch (action) {
-      case "view":
-        navigate(`/billingdashboard`, { state: { screen: 'view-detail', applicationNumber } });
-        break;
-      case "generate":
-        // Handle generate job card
-        break;
-      case "print":
-        // Handle print application
-        break;
-      case "contact":
-        // Handle contact applicant
-        break;
-      case "approve":
-        // Handle approve application
-        break;
-      case "assign":
-        // Handle assign surveyor
-        break;
-      default:
-        console.log("Unknown action:", action);
-    }
-  };
+  const getColumnSearchProps = (dataIndex, placeholder) => ({
+    filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
+      <div style={{ padding: 8 }}>
+        <Search
+          placeholder={placeholder}
+          value={selectedKeys[0]}
+          onChange={(e) => setSelectedKeys(e.target.value ? [e.target.value] : [])}
+          onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
+          style={{ width: 188, marginBottom: 8, display: "block" }}
+        />
+        <Space>
+          <button
+            type="button"
+            onClick={() => handleReset(clearFilters)}
+            style={{ width: 90 }}
+          >
+            Reset
+          </button>
+        </Space>
+      </div>
+    ),
+    filterIcon: (filtered) => (
+      <EllipsisOutlined style={{ color: filtered ? "#1890ff" : undefined }} />
+    ),
+    onFilter: (value, record) =>
+      record[dataIndex]
+        ? record[dataIndex].toString().toLowerCase().includes(value.toLowerCase())
+        : "",
+    render: (text) =>
+      searchedColumn === dataIndex ? (
+        <strong>{text}</strong>
+      ) : (
+        text
+      ),
+  });
 
   const columns = [
     {
-      title: "Applicant Name",
-      dataIndex: "fullName",
-      key: "fullName",
-    },
-    {
-      title: "Customer Ref",
+      title: "Customer Reference",
       dataIndex: "customerRef",
       key: "customerRef",
+      ...getColumnSearchProps("customerRef", "Search Customer Reference"),
     },
     {
-      title: "Application Number",
+      title: "Customer Name",
+      dataIndex: "customerName",
+      key: "customerName",
+      ...getColumnSearchProps("customerName", "Search Customer Name"),
+    },
+    {
+      title: "Application No.",
       dataIndex: "applicationNo",
       key: "applicationNo",
     },
@@ -96,49 +94,67 @@ function ConnectedCustomers() {
       title: "Balance",
       dataIndex: "balance",
       key: "balance",
-      render: status => <span className="px-3 py-1">{status}</span>,
     },
     {
-        title: "Date Created",
-        dataIndex: "dateConnected",
-        key: "dateConnected",
-        render: status => <span className="px-3 py-1">{status}</span>,
-      },
+      title: "Property Ref",
+      dataIndex: "propertyRef",
+      key: "propertyRef",
+    },
+    {
+      title: "Date Connected",
+      dataIndex: "dateConnected",
+      key: "dateConnected",
+    },
     {
       title: "Action",
       key: "action",
-      render: (text, record) => (
-        <Dropdown
-          overlay={
-            <Menu onClick={({ key }) => handleMenuClick(record.applicationNumber, key)}>
-              <Menu.Item key="view">View Details</Menu.Item>
-            </Menu>
-          }
-          trigger={["click"]}
-          placement="bottomLeft"
-        >
-          <EllipsisVerticalIcon className="w-7 h-7" />
+      render: () => (
+        <Dropdown overlay={menu} trigger={["click"]}>
+          <a className="ant-dropdown-link" onClick={(e) => e.preventDefault()}>
+            Actions <EllipsisOutlined />
+          </a>
         </Dropdown>
       ),
     },
   ];
 
+  const data = [
+    {
+      key: "1",
+      customerRef: "21110911",
+      customerName: "Grace Eze",
+      applicationNo: "211/77/54/1",
+      balance: "56,000",
+      propertyRef: "211/77/54/1",
+      dateConnected: "12/06/2024",
+    },
+    // Add more data as needed
+  ];
+
   return (
-    <section className="pb-0.5 mx-auto rounded-3xl bg-stone-100 max-md:mr-2.5 w-full">
-      <h1 className="text-4xl font-semibold leading-[57.6px] text-neutral-600 max-md:max-w-full p-6">
-        Customers
-      </h1>
-      <div className="p-6 mt-6 bg-white">
-        <Table
-          dataSource={customers}
-          columns={columns}
-          rowKey="id"
-          pagination={{ pageSize: 10 }}
-          scroll={{ x: 768 }}
-          className="max-md:px-5 w-full"
+    <div className="p-6 bg-white rounded-3xl max-md:px-5">
+      <div className="flex justify-between w-full">
+        <Input
+          placeholder="Search Accounts"
+          prefix={<SearchOutlined />}
+          className="mb-2 md:mb-0 md:mr-4 w-full md:w-auto"
+          style={{ borderRadius: "24px", padding: "10px" }}
+          value={searchText}
+          onChange={(e) => setSearchText(e.target.value)}
+        />
+
+        {/* Filter Input */}
+        <Input
+          placeholder="Filter"
+          prefix={<FilterOutlined style={{ fontSize: "25px" }} />}
+          className="mb-2 md:mb-0 md:mr-4 md:w-auto w-full lg:w-22"
+          style={{ borderRadius: "24px", padding: "10px" }}
         />
       </div>
-    </section>
+
+      {/* Table Component */}
+      <Table columns={columns} dataSource={data} />
+    </div>
   );
 }
 

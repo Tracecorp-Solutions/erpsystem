@@ -1,11 +1,44 @@
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
+import { Select } from "antd";
+
+const { Option } = Select;
 
 function Servicing() {
   const navigate = useNavigate();
+  const [meterTypes, setMeterTypes] = React.useState([]);
+  const [selectedMeterType, setSelectedMeterType] = React.useState(null);
+
+  // Fetch meter types from the API
+  React.useEffect(() => {
+    fetchMeterTypes();
+  }, []);
+
+  const fetchMeterTypes = async () => {
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/GetMeterTypes`
+      );
+      if (!response.ok) {
+        throw new Error("Failed to fetch meter types");
+      }
+      const data = await response.json();
+      setMeterTypes(data);
+    } catch (error) {
+      console.error("Error fetching meter types:", error);
+    }
+  };
+
+  const handleMeterTypeChange = (value) => {
+    setSelectedMeterType(value);
+  };
 
   const handleNavigate = (screen) => {
     navigate("/billingdashboard", { state: { screen } });
+  };
+
+  const handleSubmit = () => {
+    console.log("Submitting meter replacement data...");
   };
 
   return (
@@ -83,13 +116,21 @@ function Servicing() {
             />
           </div>
           <div className="flex flex-col px-5 flex-1">
-            <div className="font-semibold text-neutral-600 w-full">Meter Type</div>
-            <input
-              type="text"
-              className="justify-center items-start px-4 py-4 mt-2 rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 w-full"
-              value="0"
-              readOnly
-            />
+            <div className="font-semibold text-neutral-600 w-full">
+              Meter Type
+            </div>
+            <Select
+              className="w-full h-14"
+              placeholder="Select Meter Type"
+              onChange={handleMeterTypeChange}
+              value={selectedMeterType}
+            >
+              {meterTypes.map((meterType) => (
+                <Option key={meterType.id} value={meterType.meterType}>
+                  {meterType.meterType}
+                </Option>
+              ))}
+            </Select>
           </div>
         </div>
         <div className="flex gap-4 mt-4 max-md:flex-wrap w-full">
