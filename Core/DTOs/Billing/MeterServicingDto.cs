@@ -25,5 +25,6 @@ namespace Core.DTOs.Billing
         public int InstalledBy { get; set; }
 
         public bool IsMeterServiced { get; set; }
+        public int MeterMakes { get; set; }
     }
 }

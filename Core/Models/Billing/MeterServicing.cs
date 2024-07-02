@@ -21,6 +21,9 @@ namespace Core.Models.Billing
         [ForeignKey("MeterTypes")]
         public int MeterTypeId { get; set; }
 
+        [ForeignKey("MeterMake")]
+        public int MeterMakeId { get; set; }
+
         public string Dials { get; set; }
 
         public DateOnly ManufactureDate { get; set; }
@@ -36,6 +39,7 @@ namespace Core.Models.Billing
 
         public MeterSize MeterSizeNavigation { get; set; }
         public MeterTypes MeterTypeNavigation { get; set; }
+        public MeterMake MeterMakeNavigation { get; set; }
 
         public User User { get; set; }
     }
