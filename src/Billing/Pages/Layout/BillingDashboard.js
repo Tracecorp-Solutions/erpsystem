@@ -26,6 +26,9 @@ import AddMeter from "../Application/AddMeter";
 import MeterDetails from "../Application/MeterDetails";
 import EditDocketInitiation from "../Application/EditDocketInitiation";
 import ConnectedCustomers from "../Customer/ConnectedCustomer";
+import TopCards from "./TopCards";
+import Graph from "./Graph";
+import RecentPayments from "./RecentPayments";
 
 const BillingDashboard = () => {
   const location = useLocation();
@@ -71,18 +74,32 @@ const BillingDashboard = () => {
                 {screen === "report-details" && <MeterDetails />}
                 {screen === "edit-docket-initiation" && <EditDocketInitiation />}
                 {screen === "one" && <One />}
-              {screen === "bulk" && <Bulk />}
-              {screen === "servicing" && <Servicing />}
-              {screen === "replacement" && <Replacement />}
-              {screen === "connectedcustomers" && <ConnectedCustomers/>}
+                {screen === "bulk" && <Bulk />}
+                {screen === "servicing" && <Servicing />}
+                {screen === "replacement" && <Replacement />}
+                {screen === "connectedcustomers" && <ConnectedCustomers/>}
+              </div>
+              <div className="flex flex-col items-start px-6 w-full max-md:px-5 max-md:max-w-full">
+                <time className="text-xs font-medium tracking-wide uppercase text-neutral-400">
+                  3rd May, 2024
+                </time>
+                <h1 className="text-4xl font-semibold leading-[57.6px] text-neutral-600">
+                  Dashboard
+                </h1>
+              </div>
+              <div className="px-6 pt-6">
+                <TopCards />
+              </div>
+              <div className="px-6 pt-6">
+                <Graph />
+              </div>
+              <div className="px-6 pt-6">
+                <RecentPayments />
               </div>
             </div>
           </div>
         </main>
       </>
-
-
-
     </div>}
     </div>
   
