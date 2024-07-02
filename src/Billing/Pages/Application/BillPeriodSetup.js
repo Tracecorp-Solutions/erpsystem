@@ -1,7 +1,9 @@
 import React, { useState } from "react";
-import { DatePicker, Select, Modal } from "antd";
+import { DatePicker, Select, Modal, Table, Space, Typography  } from "antd";
+import { EllipsisOutlined } from "@ant-design/icons";
 
 const { Option } = Select;
+const { Text } = Typography;
 
 const BillPeriodSetup = () => {
   const [isFormVisible, setIsFormVisible] = useState(false);
@@ -41,6 +43,80 @@ const BillPeriodSetup = () => {
   const handleViewBillingPeriodsClick = () => {
     setIsFormVisible(false);
   };
+
+  const data = [
+    {
+      key: "1",
+      code: "213032024",
+      period: "032024",
+      cycle: "30",
+      startDate: "01/03/2024",
+      endDate: "31/03/2024",
+      isClosed: "No",
+      closedBy: "Ogun Billing",
+    },
+    // Add more objects as needed
+  ];
+
+  const columns = [
+    {
+      title: (
+        <div className="flex gap-4 items-center">
+          <div className="w-5 h-5 bg-white rounded border-2 border-solid border-neutral-500 border-opacity-10" />
+          <div>Code</div>
+        </div>
+      ),
+      dataIndex: "code",
+      key: "code",
+      render: (text) => <Text>{text}</Text>,
+    },
+    {
+      title: "Period",
+      dataIndex: "period",
+      key: "period",
+      render: (text) => <Text>{text}</Text>,
+    },
+    {
+      title: "Cycle",
+      dataIndex: "cycle",
+      key: "cycle",
+      render: (text) => <Text>{text}</Text>,
+    },
+    {
+      title: "Start Date",
+      dataIndex: "startDate",
+      key: "startDate",
+      render: (text) => <Text>{text}</Text>,
+    },
+    {
+      title: "End Date",
+      dataIndex: "endDate",
+      key: "endDate",
+      render: (text) => <Text>{text}</Text>,
+    },
+    {
+      title: "Is Closed",
+      dataIndex: "isClosed",
+      key: "isClosed",
+      render: (text) => <Text>{text}</Text>,
+    },
+    {
+      title: "Closed By",
+      dataIndex: "closedBy",
+      key: "closedBy",
+      render: (text) => <Text>{text}</Text>,
+    },
+    {
+      title: "Action",
+      key: "action",
+      render: () => (
+        <Space size="middle">
+          {/* Replace with your desired action icons */}
+          <EllipsisOutlined style={{ fontSize: 20, color: "#1890ff" }} />
+        </Space>
+      ),
+    },
+  ];
 
   return (
     <div className="flex flex-col flex-wrap justify-center content-start px-8 py-6 rounded-3xl bg-stone-100 leading-[160%] max-md:px-5">
@@ -143,58 +219,14 @@ const BillPeriodSetup = () => {
         </form>
       ) : (
         <div className="flex flex-col p-6 bg-white rounded-3xl w-full mt-10">
-          <div className="shrink-0 mt-4 h-px border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-10 w-full" />
-          <div className="flex gap-5 justify-between px-6 py-3.5 mt-8 w-full text-xs font-medium tracking-wide uppercase rounded-3xl bg-stone-100 text-neutral-400 max-md:flex-wrap max-md:px-5 border w-full">
-            <div className="flex gap-5 justify-between whitespace-nowrap">
-              <div className="flex gap-4">
-                <div className="shrink-0 w-5 h-5 bg-white rounded border-2 border-solid border-neutral-500 border-opacity-10" />
-                <div className="my-auto">code</div>
-              </div>
-              <div className="my-auto">period</div>
-            </div>
-            <div className="flex flex-auto gap-5 justify-between my-auto max-md:flex-wrap max-md:max-w-full">
-              <div>cycle</div>
-              <div>start date</div>
-              <div>end date</div>
-              <div>isclosed</div>
-              <div>closed by</div>
-            </div>
-          </div>
-          <div className="flex gap-5 justify-between px-6 py-2 mt-2 w-full rounded-3xl max-md:flex-wrap max-md:px-5 max-md:max-w-full">
-            <div className="flex gap-5 justify-between my-auto text-base leading-6 whitespace-nowrap text-neutral-600">
-              <div className="flex gap-4 bg-white">
-                <div className="shrink-0 my-auto w-5 h-5 bg-white rounded border-2 border-solid border-neutral-500 border-opacity-10" />
-                <div>213032024</div>
-              </div>
-              <div>032024</div>
-            </div>
-            <div className="flex flex-auto gap-5 justify-between items-center max-md:flex-wrap">
-              <div className="justify-center self-stretch my-auto text-base leading-6 whitespace-nowrap bg-white text-neutral-600">
-                30
-              </div>
-              <div className="justify-center self-stretch my-auto text-base leading-6 whitespace-nowrap bg-white text-neutral-600">
-                01/03/2024
-              </div>
-              <div className="justify-center self-stretch my-auto text-base leading-6 whitespace-nowrap bg-white text-neutral-600">
-                31/03/2024
-              </div>
-              <div className="justify-center self-stretch my-auto text-base leading-6 whitespace-nowrap bg-white text-neutral-600">
-                No
-              </div>
-              <div className="justify-center self-stretch my-auto text-base leading-6 bg-white text-neutral-600">
-                Ogun Billing
-              </div>
-              <div className="flex justify-center items-center self-stretch px-1.5 w-8 h-8 rounded-3xl bg-stone-100">
-                <img
-                  loading="lazy"
-                  src="https://cdn.builder.io/api/v1/image/assets/TEMP/8f250d71008ed233affe9f8bafd8c493757f0ac3c10f38fe68b1757a8d765ec9?apiKey=0d95acea82cc4b259a61e827c24c5c6c&"
-                  className="w-5 aspect-square"
-                />
-              </div>
-            </div>
-          </div>
-          <div className="shrink-0 mt-2 h-px border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-opacity-10 max-md:max-w-full" />
-        </div>
+        <div className="shrink-0 mt-4 h-px border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-10 w-full" />
+        <Table
+          columns={columns}
+          dataSource={data}
+          pagination={false}
+          className="mt-8"
+        />
+      </div>
       )}
       <Modal
         visible={isModalVisible}
