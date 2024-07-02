@@ -22,6 +22,7 @@ namespace Core.Models.Billing
         public string ReadingReason { get; set; } // 1 = Normal, 2 = Leak, 3 = Tampered, 4 = Others
         public string ReadingStatus { get; set; } // 1 = Active, 2 = PERIODIC, 3 = DISCONNECTED, 4 = RECONNECTED
         public bool IsMeterReset { get; set; }
+        public bool Active { get; set; }
         [ForeignKey("User")]
         public int ReadingBy { get; set; } // 1 = Customer, 2 = Staff, 3 = Others
         public DateTime ReadingDate { get; set; } // Date of Reading

@@ -80,6 +80,8 @@ namespace Infrastructure.Data
 
         public DbSet<NewMeterServicing> NewMeterServicings { get; set; }
 
+        public DbSet<CustomerBill> CustomerBills { get; set; }
+
         #endregion
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

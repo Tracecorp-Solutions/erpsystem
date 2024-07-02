@@ -1,4 +1,5 @@
-﻿using Core.Models.Billing;
+﻿using Core.DTOs.Billing;
+using Core.Models.Billing;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +11,7 @@ namespace Core.Repositories.Billing
     public interface IBilling
     {
         Task AddBillingRequest(BillingRequest billingRequest);
+
+        Task BillCustomer(BillWaterCustomerDto customerBill);
     }
 }

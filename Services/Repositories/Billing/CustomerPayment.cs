@@ -20,27 +20,61 @@ namespace Services.Repositories.Billing
 
         public async Task AddPayments(PaymentDto pyt)
         {
-
             // Validate whether invoice exists in the database
             var invoice = await _context.NewConnectionInvoices
                 .Include(x => x.Application)
-                .FirstOrDefaultAsync(x => x.InvoiceNumber == pyt.CustomerRef);
+                .Where(x => x.Status != "Paid" && x.InvoiceNumber == pyt.CustomerRef)
+                .FirstOrDefaultAsync();
 
+            // If invoice is not found, check if customer exists
             if (invoice == null)
-                throw new ArgumentException("Reference cannot be found");
+            {
+                var customer = await _context.BillingCustomers
+                    .Include(x => x.Application)
+                    .FirstOrDefaultAsync(x => x.CustomerRef == pyt.CustomerRef);
 
-            //update status of application
-            var application = await _context.Applications
-                .FirstOrDefaultAsync(x => x.Id == invoice.ApplicationId);
+                if (customer == null)
+                {
+                    throw new ArgumentException("Reference cannot be found");
+                }
+
+                // Get docket initiation for the customer
+                var docket = await _context.DocketInitiations
+                    .FirstOrDefaultAsync(x => x.CustomerRef == pyt.CustomerRef);
+
+                // Map dto to model
+                var custpyt = new Payment
+                {
+                    CustomerName = customer.Application.FullName,
+                    CustomerRef = pyt.CustomerRef,
+                    PaymntReference = pyt.PaymntReference,
+                    Vendor = pyt.Vendor,
+                    Amount = pyt.Amount,
+                    PaymentDate = pyt.PaymentDate,
+                    PaymentMethod = pyt.PaymentMethod,
+                    Narration = pyt.Narration
+                };
+
+                await _context.Payments.AddAsync(custpyt);
+                await _context.SaveChangesAsync();
+                return;
+            }
+
+            // If invoice is found, update status of application
+            var application = invoice.Application;
             if (application == null)
+            {
                 throw new ArgumentException("Application not found");
+            }
 
             // Check whether Payment Reference exists
             bool paymentExists = await _context.Payments
                 .AnyAsync(x => x.PaymntReference == pyt.PaymntReference);
 
             if (paymentExists)
+            {
                 throw new ArgumentException("Payment Reference already exists");
+            }
 
             // Map dto to model
             var payment = new Payment
@@ -53,7 +87,6 @@ namespace Services.Repositories.Billing
                 PaymentDate = pyt.PaymentDate,
                 PaymentMethod = pyt.PaymentMethod,
                 Narration = pyt.Narration,
-                
             };
 
             // Check whether payment amount is greater than invoice amount
@@ -67,8 +100,7 @@ namespace Services.Repositories.Billing
                 invoice.Status = "Paid";
                 invoice.PaymentDate = payment.PaymentDate;
 
-                //update status of application and log application log
-
+                // Update status of application and log application log
                 application.Status = "PENDING CONNECTION";
                 await _context.ApplicationLogs.AddAsync(new ApplicationLog
                 {
@@ -80,10 +112,9 @@ namespace Services.Repositories.Billing
             }
 
             await _context.Payments.AddAsync(payment);
-
-
             await _context.SaveChangesAsync();
         }
+
 
 
         public async Task<ValidateCustomerDto> ValidateCustomerDetails(string customeRef)
