@@ -1,5 +1,7 @@
 
-import React, { useState } from "react";
+import { message } from "antd";
+import axios from "axios";
+import React, { useState,useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 function Bulk() {
@@ -11,8 +13,27 @@ function Bulk() {
   const [meterReader, setMeterReader] = useState("");
   const [fileHasHeader, setFileHasHeader] = useState("");
 
+  //states to handle drop downs
+  const [operationAreas,setOperationAreas] = useState([]);
+  const [branches,setBranches] = useState([]);
+
+
   const handleNavigate = (screen) => {
     navigate("/billingdashboard", { state: { screen } });
+  };
+
+  useEffect(()=>{
+    GetOperationAreas();
+  },[]);
+
+  //fetch operation areas
+  const GetOperationAreas = async() =>{
+    try{
+      const resp = await axios.get(`${process.env.REACT_APP_API_URL}/GetOperationAreas`);
+      setOperationAreas(resp.data);
+    }catch(error){
+      message.error(error.response);
+    }
   };
 
   const handleSubmit = (e) => {
@@ -60,14 +81,19 @@ function Bulk() {
               <label htmlFor="operationalArea" className="font-semibold text-neutral-600 w-full">
                 Operational Area
               </label>
-              <input
-                type="text"
-                id="operationalArea"
-                value={operationalArea}
-                placeholder="Enter Operational Area"
-                onChange={(e) => setOperationalArea(e.target.value)}
-                className="justify-center items-start px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 w-full"
-              />
+              <select
+              name="operationalArea"
+              value={operationalArea}
+              onChange={(e) => setOperationalArea(e.target.value)}
+              className="justify-center items-start px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 w-full"
+            >
+              <option value="">Select Operation Area..</option>
+              {operationAreas.map((operationarea) => (
+                <option key={operationarea.id} value={operationarea.id}>
+                  {operationarea.name}
+                </option>
+              ))}
+            </select>
             </div>
             <div className="flex flex-col px-5 flex-1">
               <label htmlFor="branchZone" className="font-semibold text-neutral-600 w-full">
