@@ -20,7 +20,7 @@ namespace Services.Repositories.Billing
         {
             var connectedCustomers = await _context.BillingCustomers
                 .Include(x => x.Application)
-                .Where(x => x.Application.Status == "Connected")
+                //.Where(x => x.Application.Status == "Connected")
                 .Select(x => new ConnectedCustomerDto
                 {
                     CustomerRef = x.CustomerRef,
