@@ -1,14 +1,20 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function Servicing() {
   const navigate = useNavigate();
   const [customerRef, setCustomerRef] = useState("");
   const [customerData, setCustomerData] = useState({
     name: "",
+    balance: 0,
+    applicationNo: "",
+    customerRef: "",
     meterNumber: "",
     tariff: "",
     previousReading: "",
+    meterSerial: "",
+    meterType: "",
   });
 
   const handleNavigate = (screen) => {
@@ -17,19 +23,21 @@ function Servicing() {
 
   const handleCustomerValidation = async () => {
     try {
-      const response = await fetch(`http://3.216.182.63:8095/TestApi/ValidateCustomer/${customerRef}`);
-      if (response.ok) {
-        const data = await response.json();
-        setCustomerData({
-          customerName: data.name,
-          meterNumber: data.meterNumber,
-          tariff: data.tariff,
-          previousReading: data.previousReading,
-        });
-      } else {
-        console.error('Failed to fetch customer data');
-        // Optionally handle error here
-      }
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}/ValidateCustomer/${customerRef}`
+      );
+      const data = response.data;
+      setCustomerData({
+        name: data.name,
+        balance: data.balance,
+        applicationNo: data.applicationNo,
+        customerRef: data.customerRef,
+        meterNumber: data.meterNumber,
+        tariff: data.tariff,
+        previousReading: data.previousReading,
+        meterSerial: data.meterSerial,
+        meterType: data.meterType,
+      });
     } catch (error) {
       console.error('Error occurred while fetching customer data:', error);
     }
@@ -37,7 +45,7 @@ function Servicing() {
 
   const handleSubmit = () => {
     // Implement your submit logic here
-    console.log("Form submitted");
+    console.log("Form submitted", customerData);
   };
 
   return (
@@ -95,13 +103,13 @@ function Servicing() {
             <input
               type="text"
               className="px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 w-full"
-              value={customerData.customerName}
-              onChange={(e) => setCustomerData({ ...customerData, customerName: e.target.value })}
+              value={customerData.name}
+              onChange={(e) => setCustomerData({ ...customerData, name: e.target.value })}
             />
           </div>
           <div className="flex flex-col px-5 flex-1">
             <div className="font-semibold text-neutral-600 w-full">
-              Meter Serial number
+              Meter Number
             </div>
             <input
               type="text"
@@ -114,7 +122,7 @@ function Servicing() {
         <div className="flex gap-4 mt-4 max-md:flex-wrap w-full">
           <div className="flex flex-col px-5 flex-1">
             <div className="font-semibold text-neutral-600 w-full">
-              Tariff
+              Meter Dials
             </div>
             <input
               type="text"
@@ -125,27 +133,26 @@ function Servicing() {
           </div>
           <div className="flex flex-col px-5 flex-1">
             <div className="font-semibold text-neutral-600 w-full">
-              Previous Reading
+              Meter Type
             </div>
             <input
               type="text"
               className="px-4 py-4 mt-2 rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 w-full"
-              value={customerData.previousReading}
-              onChange={(e) => setCustomerData({ ...customerData, previousReading: e.target.value })}
+              value={customerData.meterType}
+              onChange={(e) => setCustomerData({ ...customerData, meterType: e.target.value })}
             />
           </div>
         </div>
-        {/* Additional fields */}
         <div className="flex gap-4 mt-4 max-md:flex-wrap w-full">
           <div className="flex flex-col px-5 flex-1">
             <div className="font-semibold text-neutral-600 w-full">
-              Application Number
+              Previous Reading
             </div>
             <input
               type="text"
               className="px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 w-full"
-              value={customerData.applicationNo}
-              onChange={(e) => setCustomerData({ ...customerData, applicationNo: e.target.value })}
+              value={customerData.previousReading}
+              onChange={(e) => setCustomerData({ ...customerData, previousReading: e.target.value })}
             />
           </div>
           <div className="flex flex-col px-5 flex-1">
@@ -160,19 +167,38 @@ function Servicing() {
             />
           </div>
         </div>
-      </div>
-      <div className="flex flex-col items-end px-16 pt-6 mt-8 font-semibold bg-white max-md:pl-5 max-md:max-w-full">
-        <div className="flex gap-4 max-w-full w-[496px] max-md:flex-wrap">
-          <div className="justify-center items-center px-8 py-4 whitespace-nowrap rounded-3xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 max-md:px-5 cursor-pointer">
-            Cancel
+        <div className="flex gap-4 mt-4 max-md:flex-wrap w-full">
+          <div className="flex flex-col px-5 flex-1">
+            <div className="font-semibold text-neutral-600 w-full">
+              Application Number
+            </div>
+            <input
+              type="text"
+              className="px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 w-full"
+              value={customerData.applicationNo}
+              onChange={(e) => setCustomerData({ ...customerData, applicationNo: e.target.value })}
+            />
           </div>
-          <div
-            onClick={handleSubmit}
-            className="justify-center px-8 py-4 text-white rounded-3xl bg-blue-400 max-md:px-5 cursor-pointer"
-          >
-            Submit for Approval
+          <div className="flex flex-col px-5 flex-1">
+            <div className="font-semibold text-neutral-600 w-full">
+              Tariff
+            </div>
+            <input
+              type="text"
+              className="px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 w-full"
+              value={customerData.tariff}
+              onChange={(e) => setCustomerData({ ...customerData, tariff: e.target.value })}
+            />
           </div>
         </div>
+      </div>
+      <div className="flex justify-center mt-8">
+        <button
+          onClick={handleSubmit}
+          className="justify-center px-6 py-4 font-semibold text-white rounded-lg bg-slate-500 max-md:px-5 cursor-pointer"
+        >
+          Submit
+        </button>
       </div>
     </div>
   );
