@@ -1,11 +1,51 @@
-import * as React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function Replacement() {
   const navigate = useNavigate();
+  const [customerRef, setCustomerRef] = useState("");
+  const [customerData, setCustomerData] = useState({
+    name: "",
+    balance: 0,
+    applicationNo: "",
+    customerRef: "",
+    meterNumber: "",
+    tariff: "",
+    previousReading: "",
+    meterSerial: "",
+    meterType: "",
+  });
 
   const handleNavigate = (screen) => {
     navigate("/billingdashboard", { state: { screen } });
+  };
+
+  const handleCustomerValidation = async () => {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}/ValidateCustomer/${customerRef}`
+      );
+      const data = response.data;
+      setCustomerData({
+        name: data.name,
+        balance: data.balance,
+        applicationNo: data.applicationNo,
+        customerRef: data.customerRef,
+        meterNumber: data.meterNumber,
+        tariff: data.tariff,
+        previousReading: data.previousReading,
+        meterSerial: data.meterSerial,
+        meterType: data.meterType,
+      });
+    } catch (error) {
+      console.error('Error occurred while fetching customer data:', error);
+    }
+  };
+
+  const handleSubmit = () => {
+    // Implement your submit logic here
+    console.log("Form submitted", customerData);
   };
 
   return (
@@ -13,7 +53,7 @@ function Replacement() {
       <div className="flex gap-5 pr-20 font-semibold text-neutral-400 max-md:flex-wrap max-md:pr-5">
         <div
           onClick={() => handleNavigate("servicing")}
-          className="justify-center px-6 py-4 rounded-lg bg-stone-100 text-slate-500 max-md:px-5"
+          className="justify-center px-6 py-4 rounded-lg bg-stone-200 text-slate-500 max-md:px-5"
           role="button"
         >
           Meter Servicing
@@ -36,8 +76,17 @@ function Replacement() {
         Customer Reference
       </div>
       <div className="flex gap-2 justify-between py-1 pr-1 pl-4 mt-2 bg-white rounded-xl border border-solid border-neutral-500 border-opacity-30 max-md:flex-wrap max-md:max-w-full">
-        <div className="my-auto text-neutral-400">Enter Customer Ref</div>
-        <div className="justify-center px-8 py-3 font-semibold text-white rounded-lg bg-blue-400 max-md:px-5">
+        <input
+          type="text"
+          className="my-auto px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 w-full"
+          placeholder="Enter Customer Ref"
+          value={customerRef}
+          onChange={(e) => setCustomerRef(e.target.value)}
+        />
+        <div
+          onClick={handleCustomerValidation}
+          className="justify-center px-8 py-3 font-semibold text-white rounded-lg bg-slate-500 max-md:px-5 cursor-pointer"
+        >
           Validate Customer
         </div>
       </div>
@@ -53,20 +102,20 @@ function Replacement() {
             </div>
             <input
               type="text"
-              className="justify-center items-start px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 w-full"
-              value="24632628786735"
-              readOnly
+              className="px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 w-full"
+              value={customerData.name}
+              onChange={(e) => setCustomerData({ ...customerData, name: e.target.value })}
             />
           </div>
           <div className="flex flex-col px-5 flex-1">
             <div className="font-semibold text-neutral-600 w-full">
-              Meter Serial number
+              Meter Number
             </div>
             <input
               type="text"
-              className="justify-center items-start px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 w-full"
-              value="0"
-              readOnly
+              className="px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 w-full"
+              value={customerData.meterNumber}
+              onChange={(e) => setCustomerData({ ...customerData, meterNumber: e.target.value })}
             />
           </div>
         </div>
@@ -77,9 +126,9 @@ function Replacement() {
             </div>
             <input
               type="text"
-              className="flex gap-2 justify-between px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 w-full"
-              value="2024-04-04"
-              readOnly
+              className="px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 w-full"
+              value={customerData.tariff}
+              onChange={(e) => setCustomerData({ ...customerData, tariff: e.target.value })}
             />
           </div>
           <div className="flex flex-col px-5 flex-1">
@@ -88,255 +137,68 @@ function Replacement() {
             </div>
             <input
               type="text"
-              className="justify-center items-start px-4 py-4 mt-2 rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 w-full"
-              value="0"
-              readOnly
-            />
-          </div>
-        </div>
-        <div className="flex gap-4 mt-4 max-md:flex-wrap w-full">
-          <div className="flex flex-col px-5 flex-1">
-            <div className="font-semibold text-neutral-600  w-full">
-              Meter Size
-            </div>
-            <input
-              type="text"
-              className="justify-center items-start px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 w-full"
-              value="0"
-              readOnly
-            />
-          </div>
-          <div className="flex flex-col px-5 flex-1">
-            <div className="font-semibold w-full text-neutral-600">
-              Meter Previous Reading
-            </div>
-            <input
-              type="text"
-              className="justify-center items-start px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 w-full"
-              value="0"
-              readOnly
-            />
-          </div>
-        </div>
-        <div className="flex gap-4 mt-4 max-md:flex-wrap w-full">
-          <div className="flex flex-col px-5 flex-1">
-            <div className="font-semibold w-full text-neutral-600">
-              Reading Type
-            </div>
-            <select
-              className="justify-center items-start px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 w-full"
-              defaultValue="PERIODIC"
-              readOnly
-            >
-              <option value="PERIODIC">PERIODIC</option>
-              <option value="SPOT">SPOT</option>
-            </select>
-          </div>
-          <div className="flex flex-col px-5 flex-1">
-            <div className="font-semibold w-full text-neutral-600">Is Billed?</div>
-            <select
-              className="justify-center items-start px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 w-full"
-              defaultValue="YES"
-              readOnly
-            >
-              <option value="YES">YES</option>
-              <option value="NO">NO</option>
-            </select>
-          </div>
-        </div>
-        <div className="flex gap-4 mt-4 max-md:flex-wrap w-full">
-          <div className="flex flex-col px-5 flex-1">
-            <div className="font-semibold text-neutral-600 w-full">
-              Current Reading
-            </div>
-            <input
-              type="text"
-              className="justify-center items-start px-4 py-4 mt-2 rounded-xl border border-solid border-neutral-500 border-opacity-30 text-neutral-400 w-full"
-              placeholder="Enter Reading"
-            />
-          </div>
-          <div className="flex flex-col px-5 flex-1">
-            <div className="font-semibold text-neutral-600 w-full">
-              Current Reading Date
-            </div>
-            <input
-              type="date"
-              className="flex gap-2 justify-between px-4 py-4 mt-2 rounded-xl border border-solid border-neutral-500 border-opacity-30 text-neutral-400 w-full"
-              placeholder="-- / -- / ----"
+              className="px-4 py-4 mt-2 rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 w-full"
+              value={customerData.meterType}
+              onChange={(e) => setCustomerData({ ...customerData, meterType: e.target.value })}
             />
           </div>
         </div>
         <div className="flex gap-4 mt-4 max-md:flex-wrap w-full">
           <div className="flex flex-col px-5 flex-1">
             <div className="font-semibold text-neutral-600 w-full">
-              Meter Reader
-            </div>
-            <select
-              className="flex gap-2 justify-between px-4 py-4 mt-2 rounded-xl border border-solid border-neutral-500 border-opacity-30 text-neutral-400 w-full"
-              defaultValue="Select Reader"
-            >
-              <option value="Select Reader">Select Reader</option>
-              <option value="Reader 1">Reader 1</option>
-              <option value="Reader 2">Reader 2</option>
-            </select>
-          </div>
-          <div className="flex flex-col px-5 flex-1">
-            <div className="font-semibold text-neutral-600 w-full">
-              Is the Reading an Estimate?
-            </div>
-            <select
-              className="flex gap-2 justify-between px-4 py-4 mt-2 rounded-xl border border-solid border-neutral-500 border-opacity-30 text-neutral-400 w-full"
-              defaultValue="Select your Answer"
-            >
-              <option value="Select your Answer">Select your Answer</option>
-              <option value="Yes">Yes</option>
-              <option value="No">No</option>
-            </select>
-          </div>
-        </div>
-        <div className="flex gap-4 mt-4 max-md:flex-wrap w-full">
-          <div className="flex flex-col px-5 flex-1">
-            <div className="font-semibold text-neutral-600 w-full">
-              Reason for Servicing
-            </div>
-            <select
-              className="flex gap-2 justify-between px-4 py-4 mt-2 rounded-xl border border-solid border-neutral-500 border-opacity-30 text-neutral-400 w-full"
-              defaultValue="Select your Answer"
-            >
-              <option value="Select your Answer">Select your Answer</option>
-              <option value="Yes">Yes</option>
-              <option value="No">No</option>
-            </select>
-          </div>
-        </div>
-      </div>
-      <div className="mt-8 text-2xl font-semibold text-neutral-600 max-md:max-w-full">
-        New Meter Details
-      </div>
-      <div className="shrink-0 mt-2 h-px border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-opacity-10 max-md:max-w-full" />
-      <div className="flex flex-col flex-wrap justify-center px-8 py-6 content-start pb-6 text-base leading-6 w-full">
-        <div className="flex gap-4 mt-4 max-md:flex-wrap w-full">
-          <div className="flex flex-col px-5 flex-1">
-            <div className="font-semibold text-neutral-600 w-full">
-              New Meter Serial Number
+              Previous Reading
             </div>
             <input
               type="text"
-              className="flex gap-2 justify-between px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 w-full"
-              value="2024-04-04"
-              readOnly
+              className="px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 w-full"
+              value={customerData.previousReading}
+              onChange={(e) => setCustomerData({ ...customerData, previousReading: e.target.value })}
             />
           </div>
           <div className="flex flex-col px-5 flex-1">
-            <div className="font-semibold text-neutral-600 w-full">New Meter Size</div>
+            <div className="font-semibold text-neutral-600 w-full">
+              Balance
+            </div>
             <input
               type="text"
-              className="justify-center items-start px-4 py-4 mt-2 rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 w-full"
-              value="0"
-              readOnly
+              className="px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 w-full"
+              value={customerData.balance}
+              onChange={(e) => setCustomerData({ ...customerData, balance: e.target.value })}
             />
           </div>
         </div>
         <div className="flex gap-4 mt-4 max-md:flex-wrap w-full">
           <div className="flex flex-col px-5 flex-1">
             <div className="font-semibold text-neutral-600 w-full">
-              New Meter Make /type
+              Application Number
             </div>
             <input
               type="text"
-              className="flex gap-2 justify-between px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 w-full"
-              value="2024-04-04"
-              readOnly
-            />
-          </div>
-          <div className="flex flex-col px-5 flex-1">
-            <div className="font-semibold text-neutral-600 w-full">New Meter Dials</div>
-            <input
-              type="text"
-              className="justify-center items-start px-4 py-4 mt-2 rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 w-full"
-              value="0"
-              readOnly
-            />
-          </div>
-        </div>
-        <div className="flex gap-4 max-md:flex-wrap w-full">
-          <div className="flex flex-col px-5 flex-1">
-            <div className="font-semibold text-neutral-600 w-full">
-              New Meter Manufacture date
-            </div>
-            <input
-              type="text"
-              className="justify-center items-start px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 w-full"
-              value="24632628786735"
-              readOnly
+              className="px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 w-full"
+              value={customerData.applicationNo}
+              onChange={(e) => setCustomerData({ ...customerData, applicationNo: e.target.value })}
             />
           </div>
           <div className="flex flex-col px-5 flex-1">
             <div className="font-semibold text-neutral-600 w-full">
-              New Meter Life/ Duration
+              Tariff
             </div>
             <input
               type="text"
-              className="justify-center items-start px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 w-full"
-              value="0"
-              readOnly
-            />
-          </div>
-        </div>
-        <div className="flex gap-4 mt-4 max-md:flex-wrap w-full">
-          <div className="flex flex-col px-5 flex-1">
-            <div className="font-semibold text-neutral-600 w-full">
-              New Mter Initail Reading
-            </div>
-            <input
-              type="text"
-              className="flex gap-2 justify-between px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 w-full"
-              value="2024-04-04"
-              readOnly
-            />
-          </div>
-          <div className="flex flex-col px-5 flex-1">
-            <div className="font-semibold text-neutral-600 w-full">New Meter Installation Date</div>
-            <input
-              type="text"
-              className="justify-center items-start px-4 py-4 mt-2 rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 w-full"
-              value="0"
-              readOnly
-            />
-          </div>
-        </div>
-        <div className="flex gap-4 mt-4 max-md:flex-wrap w-full">
-          <div className="flex flex-col px-5 flex-1">
-            <div className="font-semibold text-neutral-600 w-full">
-              installed By
-            </div>
-            <input
-              type="text"
-              className="flex gap-2 justify-between px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 w-full"
-              value="2024-04-04"
-              readOnly
-            />
-          </div>
-          <div className="flex flex-col px-5 flex-1">
-            <div className="font-semibold text-neutral-600 w-full">Comment</div>
-            <input
-              type="text"
-              className="justify-center items-start px-4 py-4 mt-2 rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 w-full"
-              value="0"
-              readOnly
+              className="px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 w-full"
+              value={customerData.tariff}
+              onChange={(e) => setCustomerData({ ...customerData, tariff: e.target.value })}
             />
           </div>
         </div>
       </div>
-      <div className="flex flex-col items-end px-16 pt-6 mt-8 font-semibold bg-white max-md:pl-5 max-md:max-w-full">
-        <div className="flex gap-4 max-w-full w-[496px] max-md:flex-wrap">
-          <div className="justify-center items-center px-8 py-4 whitespace-nowrap rounded-3xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 max-md:px-5">
-            Cancel
-          </div>
-          <div className="justify-center px-8 py-4 text-white rounded-3xl bg-blue-400 max-md:px-5">
-            Submit for Approval
-          </div>
-        </div>
+      <div className="flex justify-center mt-8">
+        <button
+          onClick={handleSubmit}
+          className="justify-center px-6 py-4 font-semibold text-white rounded-lg bg-slate-500 max-md:px-5 cursor-pointer"
+        >
+          Submit
+        </button>
       </div>
     </div>
   );
