@@ -1,25 +1,31 @@
-import React, { useState, useEffect } from 'react';
-import { Modal, Input, Select, DatePicker, Button, message, Spin } from 'antd';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import { Modal, Input, Select, DatePicker, Button, message, Spin } from "antd";
+import axios from "axios";
+import moment from "moment";
 
 const { Option } = Select;
 
-const BillingCustomer = ({ showBillingCustomer, handleCancelBillingCustomer }) => {
-  const [customerRef, setCustomerRef] = useState('');
+const BillingCustomer = ({
+  showBillingCustomer,
+  handleCancelBillingCustomer,
+}) => {
+  const [customerRef, setCustomerRef] = useState("");
   const [customerDetails, setCustomerDetails] = useState({
-    fullName: '',
-    balance: '',
-    applicationNo: '',
-    dateConnected: '',
-    meterNumber: '',
-    meterSerial: '',
-    meterType: '',
-    previousReading: '',
-    previousReadingDate: '',
-    tariff: ''
+    fullName: "",
+    balance: "",
+    applicationNo: "",
+    dateConnected: "",
+    meterNumber: "",
+    meterSerial: "",
+    meterType: "",
+    previousReading: "",
+    previousReadingDate: "",
+    tariff: "",
   });
   const [customerList, setCustomerList] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [billFrom, setBillFrom] = useState(null);
+  const [billTo, setBillTo] = useState(null);
 
   useEffect(() => {
     fetchCustomerReferences();
@@ -28,15 +34,18 @@ const BillingCustomer = ({ showBillingCustomer, handleCancelBillingCustomer }) =
   const fetchCustomerReferences = async () => {
     try {
       setLoading(true);
-      const response = await axios.get('http://3.216.182.63:8095/TestApi/GetConnectedCustomers', {
-        headers: {
-          'Accept': '*/*'
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}/GetConnectedCustomers`,
+        {
+          headers: {
+            Accept: "*/*",
+          },
         }
-      });
+      );
       setCustomerList(response.data);
     } catch (error) {
-      console.error('Error fetching customer references:', error);
-      message.error('Failed to fetch customer references');
+      console.error("Error fetching customer references:", error);
+      message.error("Failed to fetch customer references");
     } finally {
       setLoading(false);
     }
@@ -44,39 +53,70 @@ const BillingCustomer = ({ showBillingCustomer, handleCancelBillingCustomer }) =
 
   const fetchCustomerDetails = async () => {
     if (!customerRef) {
-      message.error('Please enter a valid Customer Reference');
+      message.error("Please enter a valid Customer Reference");
       return;
     }
 
     try {
       setLoading(true);
-      const response = await axios.get(`http://3.216.182.63:8095/TestApi/ValidateCustomer/${customerRef}`, {
-        headers: {
-          'Accept': '*/*'
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}/ValidateCustomer/${customerRef}`,
+        {
+          headers: {
+            Accept: "*/*",
+          },
         }
-      });
-      setCustomerDetails(response.data); // Assuming the API response directly returns customer details for the specified customerRef
+      );
+      setCustomerDetails(response.data);
     } catch (error) {
-      console.error('Error fetching customer details:', error);
-      message.error('Failed to fetch customer details');
+      console.error("Error fetching customer details:", error);
+      message.error("Failed to fetch customer details");
     } finally {
       setLoading(false);
     }
   };
 
-  const handleBillCustomer = () => {
-    console.log('Billing customer:', customerDetails);
-    // Here you can proceed with billing logic using customerDetails
+  const handleBillCustomer = async () => {
+    if (!customerRef || !billFrom || !billTo) {
+      message.error("Please enter all required fields");
+      return;
+    }
+
+    const payload = {
+      customerRef: customerRef,
+      billFrom: billFrom.format('YYYY-MM-DD'),
+      billTo: billTo.format('YYYY-MM-DD')
+    };
+
+    console.log("payloadpayload", payload);
+
+    try {
+      setLoading(true);
+      const response = await axios.post(
+        `${process.env.REACT_APP_API_URL}/BillCustomer`,
+        payload,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            accept: "*/*",
+          },
+        }
+      );
+      console.log("Bill Customer Response:", response.data);
+      message.success("Customer billed successfully!");
+      handleCancelBillingCustomer();
+    } catch (error) {
+      console.error("Error billing customer:", error);
+      message.error("Failed to bill customer");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const onSelectCustomer = (value) => {
-    // When a customer is selected from the list, auto-fill the Customer Reference field
     setCustomerRef(value);
-    // Fetch details for the selected customer
     fetchCustomerDetails();
   };
-
-  console.log(customerDetails)
 
   return (
     <Modal visible={showBillingCustomer} closable={false} footer={null}>
@@ -105,20 +145,20 @@ const BillingCustomer = ({ showBillingCustomer, handleCancelBillingCustomer }) =
         />
 
         {/* Fetch Button */}
-        <Button
+        {/* <Button
           type="primary"
           className="mt-4 max-w-full w-[500px] max-md:px-5"
           onClick={fetchCustomerDetails}
           disabled={!customerRef || loading}
         >
-          {loading ? <Spin /> : 'Fetch Customer Details'}
-        </Button>
+          {loading ? <Spin /> : "Fetch Customer Details"}
+        </Button> */}
 
         {/* Customer Name */}
         <div className="mt-4 max-md:max-w-full">Customer Name</div>
         <Input
           className="justify-center items-start px-4 py-4 mt-2 max-w-full rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 w-[500px] max-md:pr-5"
-          value={customerDetails.fullName}
+          value={customerDetails.name}
           readOnly
         />
 
@@ -146,27 +186,28 @@ const BillingCustomer = ({ showBillingCustomer, handleCancelBillingCustomer }) =
           readOnly
         />
 
-        {/* Billing Period */}
-        <div className="mt-4 max-md:max-w-full">Billing Period</div>
-        <Select
-          className="flex gap-2 justify-between h-14 mt-2 max-w-full rounded-xl border border-solid border-neutral-500 border-opacity-30 text-neutral-400 w-[500px] max-md:flex-wrap"
-          placeholder="Choose Billing Period"
-        >
-          <Option value="monthly">Monthly</Option>
-          <Option value="quarterly">Quarterly</Option>
-          <Option value="yearly">Yearly</Option>
-        </Select>
+        {/* Bill From and Bill To */}
+        <div className="mt-4 max-md:max-w-full">Bill From</div>
+        <DatePicker
+          className="flex gap-2 justify-between px-4 py-4 mt-2 max-w-full rounded-xl border border-solid border-neutral-500 border-opacity-30 text-neutral-400 w-[500px] max-md:flex-wrap"
+          placeholder="Choose Billing Date"
+          value={billFrom}
+          onChange={(date, dateString) => setBillFrom(date)} // Use 'date' object directly for 'value'
+        />
 
-        {/* Bill To */}
         <div className="mt-4 max-md:max-w-full">Bill To</div>
         <DatePicker
           className="flex gap-2 justify-between px-4 py-4 mt-2 max-w-full rounded-xl border border-solid border-neutral-500 border-opacity-30 text-neutral-400 w-[500px] max-md:flex-wrap"
           placeholder="Choose Billing Date"
+          value={billTo}
+          onChange={(date, dateString) => setBillTo(date)}
         />
 
         {/* List of Customers */}
-        <div className="mt-4 max-md:max-w-full">List of Connected Customers:</div>
-        {customerList.map(customer => (
+        {/* <div className="mt-4 max-md:max-w-full">
+          List of Connected Customers:
+        </div>
+        {customerList.map((customer) => (
           <div
             key={customer.customerRef}
             className="mt-2 max-w-full rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 w-[500px] max-md:pr-5 px-4 py-2 cursor-pointer"
@@ -178,13 +219,17 @@ const BillingCustomer = ({ showBillingCustomer, handleCancelBillingCustomer }) =
             <div>Balance: {customer.balance}</div>
             <div>Date Connected: {customer.dateConnected}</div>
           </div>
-        ))}
+        ))} */}
 
         {/* Bill Button */}
         <div className="flex justify-center items-center self-stretch px-16 py-6 mt-8 w-full text-white bg-stone-100 max-md:px-5 max-md:max-w-full">
-          <Button type="primary" className="justify-center items-center px-8 py-4 max-w-full rounded-3xl bg-slate-500 w-[500px] max-md:px-5" onClick={handleBillCustomer}>
+          <button
+            type="submit"
+            className="justify-center items-center px-8 py-4 max-w-full rounded-3xl bg-slate-500 w-[500px] max-md:px-5"
+            onClick={handleBillCustomer}
+          >
             Bill this Customer
-          </Button>
+          </button>
         </div>
       </div>
     </Modal>
