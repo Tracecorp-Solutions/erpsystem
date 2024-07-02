@@ -51,8 +51,25 @@ function One() {
     }));
   };
 
-  const handleValidateCustomer = async () => {
-    // Implement customer validation logic here
+  const handleCustomerValidation = async () => {
+    try {
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/ValidateCustomer/${customerRef}`);
+      if (response.ok) {
+        const data = await response.json();
+        setCustomerData({
+          customerName: data.name,
+          meterNumber: data.meterNumber,
+          tariff: data.tariff,
+          previousReading: data.previousReading,
+        });
+      } else {
+        console.error('Failed to fetch customer data');
+        // Optionally handle error here
+      }
+    } catch (error) {
+      message.error
+      console.error('Error occurred while fetching customer data:', error);
+    }
   };
 
   const handleSaveReading = async () => {
