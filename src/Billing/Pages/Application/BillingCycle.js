@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, Dropdown, Input, Pagination, Table } from 'antd';
-import { SearchOutlined, FilterOutlined, DownOutlined } from '@ant-design/icons';
+import { SearchOutlined, FilterOutlined, DownOutlined, EllipsisOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 import PaymentDetails from './Actions/PaymentDetails';
 import BillingCustomer from './Actions/BillingCustomer';
@@ -36,13 +36,13 @@ const BillingCycle = () => {
         const formattedData = data.map((item, index) => ({
           ...item,
           key: item.customerBillId,
-          customerRef: item.customer.customerRef, // Adjust as per API response
-          customerName: item.customer.fullName.application.fullName, // Adjust as per API response
-          paymntReference: item.billPeriod, // Adjust as per API response or leave as is
-          vendor: item.vendor, // Adjust as per API response or leave as is
-          amount: item.totalBillAmount, // Adjust as per API response or leave as is
-          paymentDate: item.billDate, // Adjust as per API response or leave as is
-          paymentMethod: item.paymentMethod, // Adjust as per API response or leave as is
+          customerRef: item.customer.customerRef,
+          customerName: item.customer.fullName.application.fullName,
+          paymntReference: item.billPeriod,
+          vendor: item.vendor,
+          amount: item.totalBillAmount,
+          paymentDate: item.billDate,
+          paymentMethod: item.paymentMethod,
         }));
         setPayments(formattedData);
         setFilteredPayments(formattedData);
@@ -51,10 +51,10 @@ const BillingCycle = () => {
       }
       setLoading(false);
     };
-  
+
     fetchData();
   }, []);
-  
+
   const handleShowPaymentForm = () => {
     setShowPaymentForm(true);
   };
@@ -84,7 +84,7 @@ const BillingCycle = () => {
     const filteredData = payments.filter(
       (payment) =>
         payment.customerRef.toLowerCase().includes(value.toLowerCase()) ||
-        payment.paymntReference.toLowerCase().includes(value.toLowerCase()) ||
+        payment.paymntReference.toString().toLowerCase().includes(value.toLowerCase()) ||
         payment.vendor.toLowerCase().includes(value.toLowerCase()) ||
         payment.paymentMethod.toLowerCase().includes(value.toLowerCase())
     );
@@ -96,7 +96,6 @@ const BillingCycle = () => {
     setCurrentPage(page);
   };
 
-  // Calculate pagination and display logic
   const startIndex = (currentPage - 1) * pageSize;
   const endIndex = startIndex + pageSize;
   const currentDisplayData = filteredPayments.slice(startIndex, endIndex);
@@ -127,22 +126,46 @@ const BillingCycle = () => {
   };
 
   const handleDropdownMenuClick = (e) => {
-    // Implement your logic based on the selected menu item
     console.log('Clicked on menu item:', e.key);
+    // Implement your logic based on the selected menu item
+    switch (e.key) {
+      case 'view':
+        handleShowBillingCustomer();
+        break;
+      case 'bulkbilling':
+        handleShowBulkSms();
+        break;
+      default:
+        break;
+    }
   };
 
   const actionMenu = (
-    <Menu onClick={({ key }) => handleDropdownMenuClick(key)}>
-      <Menu.Item key="view" onClick={handleShowBillingCustomer}>
+    <Menu onClick={handleDropdownMenuClick}>
+      <Menu.Item key="view">
         Bill Customer
       </Menu.Item>
-      <Menu.Item key="generate">Download Bill</Menu.Item>
-      <Menu.Item key="print">Print Bill</Menu.Item>
-      <Menu.Item key="contact">View Bill</Menu.Item>
-      <Menu.Item key="bulkbilling" onClick={handleShowBulkSms}>
+      <Menu.Item key="generate">
+        Download Bill
+      </Menu.Item>
+      <Menu.Item key="print">
+        Print Bill
+      </Menu.Item>
+      <Menu.Item key="contact">
+        View Bill
+      </Menu.Item>
+      <Menu.Item key="bulkbilling">
         Bulk Billing
       </Menu.Item>
     </Menu>
+  );
+
+  const renderActions = (text, record) => (
+    <Dropdown overlay={actionMenu} trigger={['click']} placement="bottomLeft">
+      <button className="ant-dropdown-link bg-transparent border-none outline-none">
+        <EllipsisOutlined style={{ fontSize: 20, color: '#1890ff' }} />
+      </button>
+    </Dropdown>
   );
 
   const columns = [
@@ -175,17 +198,9 @@ const BillingCycle = () => {
     {
       title: 'Action',
       key: 'action',
-      render: (text, record) => (
-        <Dropdown overlay={actionMenu} trigger={['click']} placement="bottomLeft">
-          <button className="ant-dropdown-link bg-transparent border-none outline-none">
-            Actions <DownOutlined />
-          </button>
-        </Dropdown>
-      ),
+      render: renderActions,
     },
   ];
-
-  console.log("currentDisplayData currentDisplayData", currentDisplayData);
 
   return (
     <div className="md:px-6 md:py-5 rounded-3xl bg-stone-100">
@@ -220,7 +235,7 @@ const BillingCycle = () => {
           <Table
             dataSource={currentDisplayData}
             columns={columns}
-            rowKey="paymentId"
+            rowKey="customerBillId"
             pagination={false}
             rowSelection={{
               type: 'checkbox',
