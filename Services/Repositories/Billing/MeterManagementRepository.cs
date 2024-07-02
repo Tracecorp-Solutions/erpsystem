@@ -76,7 +76,7 @@ namespace Services.Repositories.Billing
             };
 
             //add entity to context
-            _context.NewMeterServicings.Add(newMeterServicing);
+            await _context.NewMeterServicings.AddAsync(newMeterServicing);
 
             //add log for meter replacement
             var log = new ApplicationLog
@@ -88,7 +88,7 @@ namespace Services.Repositories.Billing
                 //Log = $"Meter with number {meterServicing.MeterNo} was installed by {user.FirstName} {user.LastName} on {meterServicing.DateOfInstallation}"
             };
 
-            _context.ApplicationLogs.Add(log);
+            await _context.ApplicationLogs.AddAsync(log);
 
             //save changes
             await _context.SaveChangesAsync();
@@ -97,8 +97,8 @@ namespace Services.Repositories.Billing
         public async Task<IEnumerable<NewMeterServicing>> GetMeterServicing()
         {
             return await _context.NewMeterServicings
-                .Include(m => m.MeterSizeNavigation)
-                .Include(m => m.MeterTypeNavigation)
+                .Include(m => m.MeterSize)
+                .Include(m => m.MeterType)
                 .Include(m => m.User)
                 .ToListAsync();
         }
@@ -106,8 +106,8 @@ namespace Services.Repositories.Billing
         public async Task<NewMeterServicing> GetMeterServicingByCustomerRef(string customerRef)
         {
             return await _context.NewMeterServicings
-                .Include(m => m.MeterSizeNavigation)
-                .Include(m => m.MeterTypeNavigation)
+                .Include(m => m.MeterSize)
+                .Include(m => m.MeterType)
                 .Include(m => m.User)
                 .FirstOrDefaultAsync(m => m.CustomerRef == customerRef);
         }

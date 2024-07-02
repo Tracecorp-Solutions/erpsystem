@@ -11,7 +11,6 @@ namespace Core.Models.Billing
     public class NewMeterServicing
     {
         public int Id { get; set; }
-
         public string CustomerRef { get; set; }
         public string MeterNo { get; set; }
 
@@ -25,22 +24,18 @@ namespace Core.Models.Billing
         public int MeterMakeId { get; set; }
 
         public string Dials { get; set; }
-
         public DateOnly ManufactureDate { get; set; }
-
         public string MeterlifeDuration { get; set; }
-
         public int InitialReading { get; set; }
         public DateOnly DateOfInstallation { get; set; }
 
         [ForeignKey("User")]
-        public int InstalledBy { get; set; }    
+        public int InstalledBy { get; set; }
 
-
-        public MeterSize MeterSizeNavigation { get; set; }
-        public MeterTypes MeterTypeNavigation { get; set; }
-        public MeterMake MeterMakeNavigation { get; set; }
-
+        public MeterSize MeterSize { get; set; }
+        public MeterTypes MeterType { get; set; }
+        public MeterMake MeterMake { get; set; }
         public User User { get; set; }
     }
+
 }

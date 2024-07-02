@@ -29,6 +29,7 @@ namespace Trace.Controllers
             }
             catch (Exception ex)
             {
+                string rror = ex.InnerException.Message;
                 return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
             }
         }
