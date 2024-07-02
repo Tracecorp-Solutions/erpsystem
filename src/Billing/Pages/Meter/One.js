@@ -9,18 +9,18 @@ function One() {
     meterNumber: "",
     customerRef: "",
     readingdate: "2024-07-01",
-    readingType: "PERIODIC",
-    readingStatus: 0,
-    readingSource: "",
-    readingReason: "",
+    readingType: "1", // assuming "1" represents "Normal"
+    readingStatus: "PERIODIC", // assuming "PERIODIC" is the default
+    readingSource: "1", // assuming "1" represents "Actual"
+    readingReason: "Normal",
     readingBy: "",
     isBilled: "YES",
     isEstimate: "",
-    isMeterReset: "",
+    isMeterReset: "NO", // assuming "NO" is the default
     isExpectedReadingToday: "",
-    previousReading : 0,
-    previousReadingDate:"",
-    currentReading : ""
+    previousReading: 0,
+    previousReadingDate: "",
+    currentReading: ""
   });
 
   const [meterReaders, setMeterReaders] = useState([]);
@@ -51,52 +51,49 @@ function One() {
   };
 
   const handleValidateCustomer = async () => {
-    // Implement customer validation logic here
-    try{
+    try {
       const resp = await axios.get(`${process.env.REACT_APP_API_URL}/ValidateCustomer/${formData.customerRef}`);
       console.log(resp.data);
-      setFormData(resp.data);
-      message.success("customer validated successfully");
+      // Update state with validated customer data if needed
+      setFormData((prevData) => ({
+        ...prevData,
+        ...resp.data, // Assuming resp.data contains additional customer data
+      }));
+      message.success("Customer validated successfully");
       console.log("*********************");
       console.log(formData);
-      
-    }catch(error){
+    } catch (error) {
       message.error(error.response);
     }
   };
 
   const handleSaveReading = async () => {
-    alert(formData.readingSource);
-    if (
-      !formData.meterNumber ||
-      !formData.customerRef ||
-      !formData.readingdate ||
-      !formData.currentReading //||
-      // !formData.readingBy
-    ) {
-      message.error("Please fill in all required fields.{meterNo,customerRef,readingDate,reading,readingBy}");
+    // Validate required fields
+    if (!formData.meterNumber || !formData.customerRef || !formData.readingdate || !formData.currentReading) {
+      message.error("Please fill in all required fields.");
       return;
     }
-
+  
+    const postData = {
+      customerRef: formData.customerRef,
+      meterNo: parseInt(formData.meterNumber, 10),
+      previousReading: parseInt(formData.previousReading, 10),
+      previousReadingDate: formData.previousReadingDate,
+      reading: parseInt(formData.currentReading, 10),
+      readingType: parseInt(formData.readingType, 10),
+      isBilled: formData.isBilled === "YES",
+      readingSource: "",
+      readingReason: "",
+      readingStatus: "",
+      isMeterReset: formData.isMeterReset === "YES",
+      readingBy: parseInt(formData.readingBy, 10),
+      readingDate: formData.readingdate + "T14:28:48.517Z",
+    };
+  
     try {
       const response = await axios.post(
         `${process.env.REACT_APP_API_URL}/AddMeterReading`,
-        {
-          CustomerRef : formData.customerRef ,
-          meterNo : parseInt(formData.meterNumber,15),
-          previousReading : parseInt(formData.previousReading,10),
-          previousReadingDate: formData.previousReadingDate,
-          reading : parseInt(formData.currentReading,10),
-          readingType: formData.readingType === "PERIODIC" ? 1 : 2, // 1 for periodic 
-          isBilled: formData.isBilled ==="YES" ? true:false,
-          readingSource : formData.readingSource,
-          readingReason : formData.readingReason,
-          readingStatus : formData.readingStatus,
-          isMeterReset : formData.isMeterReset,
-          readingBy : 1,
-          readingDate : formData.readingdate,
-          
-        },
+        postData,
         {
           headers: {
             "Content-Type": "application/json",
@@ -104,15 +101,14 @@ function One() {
           },
         }
       );
-      message.success(response.data);
+      message.success("Reading saved successfully");
       console.log("Reading saved:", response.data);
-      alert("Reading saved successfully!");
     } catch (error) {
-      message.error(error.response);
+      message.error("Failed to save reading. Please try again.");
       console.error("Error saving reading:", error);
-      alert("Failed to save reading. Please try again.");
     }
   };
+  
 
   return (
     <div className="flex flex-col p-6 text-base leading-6 bg-white rounded-3xl max-md:px-5">
@@ -147,7 +143,12 @@ function One() {
           onChange={handleChange}
           placeholder="Enter Customer Ref"
         />
-        <button onClick={handleValidateCustomer} className="justify-center px-8 py-3 font-semibold text-white rounded-lg bg-blue-400 max-md:px-5">Validate Customer</button>
+        <button
+          onClick={handleValidateCustomer}
+          className="justify-center px-8 py-3 font-semibold text-white rounded-lg bg-blue-400 max-md:px-5"
+        >
+          Validate Customer
+        </button>
       </div>
       <div className="flex flex-col flex-wrap justify-center px-8 py-6 content-start pb-6 text-base leading-6 w-full">
         <div className="flex gap-4 max-md:flex-wrap w-full">
@@ -157,7 +158,7 @@ function One() {
             </div>
             <input
               type="text"
-              name="meterNo"
+              name="meterNumber"
               className="justify-center items-start px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 w-full"
               value={formData.meterNumber}
               onChange={handleChange}
@@ -170,7 +171,7 @@ function One() {
             </div>
             <input
               type="text"
-              name="reading"
+              name="previousReading"
               className="justify-center items-start px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 w-full"
               value={formData.previousReading}
               onChange={handleChange}
@@ -185,7 +186,7 @@ function One() {
             </div>
             <input
               type="date"
-              name="readingDate"
+              name="previousReadingDate"
               className="flex gap-2 justify-between px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 w-full"
               value={formData.previousReadingDate}
               onChange={handleChange}
@@ -208,7 +209,9 @@ function One() {
         </div>
         <div className="flex gap-4 mt-4 max-md:flex-wrap w-full">
           <div className="flex flex-col px-5 flex-1">
-            <div className="font-semibold w-full text-neutral-600" >Reading Type</div>
+            <div className="font-semibold w-full text-neutral-600">
+              Reading Type
+            </div>
             <select
               className="justify-center items-start px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 w-full"
               name="readingType"
@@ -310,10 +313,14 @@ function One() {
             <div className="font-semibold text-neutral-600 w-full">
               Reading Date
             </div>
-            <input type="date" name="readingdate" value={formData.readingdate} onChange={handleChange} className="justify-center items-start px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 w-full"/>
+            <input
+              type="date"
+              name="readingdate"
+              value={formData.readingdate}
+              onChange={handleChange}
+              className="justify-center items-start px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 w-full"
+            />
           </div>
-        </div>
-        <div className="flex gap-4 mt-4 max-md:flex-wrap w-full">
         </div>
       </div>
       <div className="flex justify-center mt-4 w-full">
