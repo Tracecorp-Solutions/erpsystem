@@ -10,7 +10,7 @@ import {
   Menu,
 } from "antd";
 import { EllipsisOutlined } from "@ant-design/icons";
-
+import BillAdjustmentDrawer from "./Actions/BillAdjustmentDrawer";
 const { Option } = Select;
 
 const BillAdjustment = () => {
@@ -21,6 +21,9 @@ const BillAdjustment = () => {
   const [attachment, setAttachment] = useState(null);
   const [adjustmentReason, setAdjustmentReason] = useState("");
   const [activeTab, setActiveTab] = useState("adjustmentRequest");
+
+  const [drawerVisible, setDrawerVisible] = useState(false);
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -94,8 +97,8 @@ const BillAdjustment = () => {
         <Dropdown
           overlay={
             <Menu>
-              <Menu.Item key="1">
-                <a href="#">View Adjustment</a>
+              <Menu.Item key="1" onClick={() => setDrawerVisible(true)}>
+                View Adjustment
               </Menu.Item>
               <Menu.Item key="2">
                 <a href="#">Commit to Database</a>
@@ -340,6 +343,8 @@ const BillAdjustment = () => {
     </div>
   </div>
 )}
+
+<BillAdjustmentDrawer setDrawerVisible={setDrawerVisible} drawerVisible={drawerVisible} />
 
     </div>
   );
