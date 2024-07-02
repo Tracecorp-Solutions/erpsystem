@@ -53,7 +53,6 @@ const BillingDashboard = () => {
           <div className="w-full flex justify-center">
             <div className="main-content bg-stone-100 pb-6 rounded-t-3xl">
               <div className="content px-4 sm:px-6 lg:px-8 group-container">
-                {console.log(screen)}
                 {screen === "new-application" && <NewApplicationForm />}
                 {screen === "application" && <ApplicationPage />}
                 {screen === "view-detail" && <ApplicationDetail />}
