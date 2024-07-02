@@ -21,6 +21,7 @@ namespace Core.Repositories.Billing
         Task<IEnumerable<SurveyorDto>> GetSurveyor();
 
         Task<IEnumerable<SurveyorDto>> GetPlumbers();
+        Task<IEnumerable<SurveyorDto>> GetMeterReaders();
         Task<string> AssignSurveyor(string applicationId, int surveyorId,DateOnly ScheduledDate);
 
         Task<string> SubmitSurveyReport(IFormFile formFile,SurveyReportDto report);
