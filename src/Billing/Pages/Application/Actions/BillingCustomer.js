@@ -6,6 +6,7 @@ import moment from "moment";
 const { Option } = Select;
 
 const BillingCustomer = ({
+  custRef,
   showBillingCustomer,
   handleCancelBillingCustomer,
 }) => {
@@ -22,34 +23,27 @@ const BillingCustomer = ({
     previousReadingDate: "",
     tariff: "",
   });
-  const [customerList, setCustomerList] = useState([]);
+  const [customer, setCustomer] = useState();
   const [loading, setLoading] = useState(false);
   const [billFrom, setBillFrom] = useState(null);
   const [billTo, setBillTo] = useState(null);
-
   useEffect(() => {
-    fetchCustomerReferences();
+    const fetchCustomerByRef = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.get(
+          `${process.env.REACT_APP_API_URL}/ValidateCustomer/${custRef}`
+        );
+        setCustomerDetails(response.data);
+      } catch (error) {
+        console.error("Error fetching customer references:", error);
+        message.error("Failed to fetch customer references");
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchCustomerByRef();
   }, []);
-
-  const fetchCustomerReferences = async () => {
-    try {
-      setLoading(true);
-      const response = await axios.get(
-        `${process.env.REACT_APP_API_URL}/GetConnectedCustomers`,
-        {
-          headers: {
-            Accept: "*/*",
-          },
-        }
-      );
-      setCustomerList(response.data);
-    } catch (error) {
-      console.error("Error fetching customer references:", error);
-      message.error("Failed to fetch customer references");
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const fetchCustomerDetails = async () => {
     if (!customerRef) {
@@ -76,7 +70,8 @@ const BillingCustomer = ({
     }
   };
 
-  const handleBillCustomer = async () => {
+  const handleBillCustomer = async (e) => {
+    e.preventDefault();
     if (!customerRef || !billFrom || !billTo) {
       message.error("Please enter all required fields");
       return;
@@ -84,8 +79,8 @@ const BillingCustomer = ({
 
     const payload = {
       customerRef: customerRef,
-      billFrom: billFrom.format('YYYY-MM-DD'),
-      billTo: billTo.format('YYYY-MM-DD')
+      billFrom: billFrom.format("YYYY-MM-DD"),
+      billTo: billTo.format("YYYY-MM-DD"),
     };
 
     console.log("payloadpayload", payload);
@@ -118,6 +113,8 @@ const BillingCustomer = ({
     fetchCustomerDetails();
   };
 
+  console.log("customerDetails", customerDetails);
+
   return (
     <Modal visible={showBillingCustomer} closable={false} footer={null}>
       <div className="flex flex-col items-center text-base font-semibold leading-6 max-w-[820px] text-neutral-600">
@@ -139,7 +136,7 @@ const BillingCustomer = ({
         <div className="mt-8 max-md:max-w-full">Customer Reference</div>
         <Input
           className="justify-center items-start px-4 py-4 mt-2 max-w-full whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 w-[500px] max-md:pr-5"
-          value={customerRef}
+          value={custRef}
           onChange={(e) => setCustomerRef(e.target.value)}
           placeholder="Enter Customer Reference"
         />
