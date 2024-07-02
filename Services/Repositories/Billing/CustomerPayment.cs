@@ -91,15 +91,30 @@ namespace Services.Repositories.Billing
             var invoice = await _context.NewConnectionInvoices
                 .Include(x => x.NewConnectionInvoiceMaterials)
                 .Include(x => x.Application)
+                .Where(x => x.Status != "Paid")
                 .FirstOrDefaultAsync(x => x.InvoiceNumber == customeRef);
 
-            if (invoice == null)
+            //check if the customer exists
+            var customer = await _context.BillingCustomers
+                .Include(x => x.Application)
+                .FirstOrDefaultAsync(x => x.CustomerRef == customeRef);
+
+            if (invoice == null && customer == null)
                 throw new ArgumentException("Reference cannot be found");
+
+            //if invoice is not found but customer is found return customer details
+            if (invoice == null)
+                return new ValidateCustomerDto
+                {
+                    Name = customer.Application.FullName,
+                    Balance = 0
+
+                };
 
             return new ValidateCustomerDto
             {
                 Name = invoice.Application.FullName,
-                Balance =invoice.NewConnectionInvoiceMaterials.Sum(x => x.Price)
+                Balance = invoice.NewConnectionInvoiceMaterials.Sum(x => x.Price)
             };
         }
 
