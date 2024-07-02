@@ -534,6 +534,38 @@ namespace Trace.Controllers
             }
         }
 
+        [HttpPost("/AddMeterMake")]
+        public async Task<IActionResult> AddMeterMake([FromBody] MeterMake meterMake) 
+        {
+            try
+            {
+                await _billingConfigurationRepository.AddMeterMake(meterMake);
+                return Ok("Meter Make Added Successfully");
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
+        }
+
+        [HttpGet("/GetMeterMakes")]
+        public async Task<IActionResult> GetMeterMakes()
+        {
+            try
+            {
+                var metermakes = await _billingConfigurationRepository.GetMeterMakes();
+                return Ok(metermakes);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
+        }
+
 
     }
 }

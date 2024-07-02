@@ -51,5 +51,8 @@ namespace Core.Repositories.Billing
 
         Task AddMeterSize(MeterSize meterSize);
         Task<IEnumerable<MeterSize>> GetMeterSizes();
+
+        Task AddMeterMake(MeterMake meterMake);
+        Task<IEnumerable<MeterMake>> GetMeterMakes();
     }
 }

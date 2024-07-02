@@ -257,6 +257,19 @@ namespace Services.Repositories.Billing
             return metersizes == null ? throw new ArgumentException("No Meter Sizes Found") : metersizes;
         }
 
+        public async Task AddMeterMake(MeterMake meterMake)
+        {
+            _context.MeterMakes.Add(meterMake);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<MeterMake>> GetMeterMakes()
+        {
+            var metermakes = await _context.MeterMakes.ToListAsync();
+
+            return metermakes == null ? throw new ArgumentException("No Meter Makes Found") : metermakes;
+        }
+
         
     }
 }
