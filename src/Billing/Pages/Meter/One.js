@@ -32,6 +32,10 @@ function One() {
     }));
   };
 
+  const handleValidateCustomer = async () => {
+
+  };
+
   const handleSaveReading = async () => {
     const {
       meterNo,
@@ -118,9 +122,8 @@ function One() {
           onChange={handleChange}
           placeholder="Enter Customer Ref"
         />
-        <div className="justify-center px-8 py-3 font-semibold text-white rounded-lg bg-blue-400 max-md:px-5">
-          Validate Customer
-        </div>
+        <button onClick={handleValidateCustomer} className="justify-center px-8 py-3 font-semibold text-white rounded-lg bg-blue-400 max-md:px-5">Validate Customer</button>
+
       </div>
       <div className="flex flex-col flex-wrap justify-center px-8 py-6 content-start pb-6 text-base leading-6 w-full">
         <div className="flex gap-4 max-md:flex-wrap w-full">
