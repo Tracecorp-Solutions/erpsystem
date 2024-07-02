@@ -5,12 +5,14 @@ import { useNavigate } from 'react-router-dom';
 import PaymentDetails from './Actions/PaymentDetails';
 import BillingCustomer from './Actions/BillingCustomer';
 import BulkSms from './Actions/BulkSms';
+import axios from 'axios';
 
 const BillingCycle = () => {
   const [showPaymentForm, setShowPaymentForm] = useState(false);
   const [payments, setPayments] = useState([]);
   const [loading, setLoading] = useState(false);
   const [selectedRows, setSelectedRows] = useState([]);
+  const [customerBills,setCustomerBills] = useState([]);
   const [searchText, setSearchText] = useState('');
   const [filteredPayments, setFilteredPayments] = useState([]);
   const [showBillingCustomer, setShowBillingCustomer] = useState(false);
@@ -24,20 +26,18 @@ const BillingCycle = () => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const response = await fetch(`${process.env.REACT_APP_API_URL}/GetCustomerBills`, {
-          headers: {
-            Accept: 'application/json',
-          },
-        });
-        if (!response.ok) {
-          throw new Error('Failed to fetch data');
-        }
-        const data = await response.json();
+        
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/GetCustomerBills`);
+        setCustomerBills(response.data);
+        // if (!response.ok) {
+        //   throw new Error('Failed to fetch data');
+        // }
+        const data = response.data;
         const formattedData = data.map((item, index) => ({
-          ...item,
+          item,
           key: item.customerBillId,
           customerRef: item.customer.customerRef,
-          customerName: item.customer.fullName.application.fullName,
+          customerName: item.customer.application.fullName,
           paymntReference: item.billPeriod,
           vendor: item.vendor,
           amount: item.totalBillAmount,
@@ -45,6 +45,9 @@ const BillingCycle = () => {
           paymentMethod: item.paymentMethod,
         }));
         setPayments(formattedData);
+        console.log("*****************");
+        console.log(payments);
+        console.log("*****************");
         setFilteredPayments(formattedData);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -79,28 +82,28 @@ const BillingCycle = () => {
     setShowBulkSms(false);
   };
 
-  const handleSearch = (value) => {
-    setSearchText(value);
-    const lowerCaseValue = value.toLowerCase();
-  
-    const filteredData = payments.filter(payment => {
-      return Object.keys(payment).some(key => {
-        if (key === 'paymentDate') {
-          return new Date(payment[key]).toLocaleDateString().toLowerCase().includes(lowerCaseValue);
-        } else {
-          const fieldValue = payment[key];
-          if (typeof fieldValue === 'string' || typeof fieldValue === 'number') {
-            return fieldValue.toString().toLowerCase().includes(lowerCaseValue);
-          }
-          return false;
+ const handleSearch = (value) => {
+  setSearchText(value);
+  const lowerCaseValue = value.toLowerCase();
+
+  const filteredData = payments.filter(payment => {
+    return Object.keys(payment).some(key => {
+      if (key === 'paymentDate') {
+        return new Date(payment[key]).toLocaleDateString().toLowerCase().includes(lowerCaseValue);
+      } else {
+        const fieldValue = payment[key];
+        if (typeof fieldValue === 'string' || typeof fieldValue === 'number') {
+          return fieldValue.toString().toLowerCase().includes(lowerCaseValue);
         }
-      });
+        return false;
+      }
     });
-  
-    setFilteredPayments(filteredData);
-    setCurrentPage(1);
-  };
-  
+  });
+
+  setFilteredPayments(filteredData);
+  setCurrentPage(1);
+};
+
 
   const handleChangePage = (page) => {
     setCurrentPage(page);
@@ -108,7 +111,7 @@ const BillingCycle = () => {
 
   const startIndex = (currentPage - 1) * pageSize;
   const endIndex = startIndex + pageSize;
-  const currentDisplayData = filteredPayments.slice(startIndex, endIndex);
+  const currentDisplayData = payments.slice(startIndex, endIndex);
 
   const handleMenuClick = (applicationNumber, action) => {
     switch (action) {
@@ -243,7 +246,7 @@ const BillingCycle = () => {
         </div>
         <div className="p-6 overflow-x-auto">
           <Table
-            dataSource={currentDisplayData}
+            dataSource={payments}
             columns={columns}
             rowKey="customerBillId"
             pagination={false}
