@@ -78,6 +78,8 @@ namespace Infrastructure.Data
 
         public DbSet<MeterMake> MeterMakes { get; set; }
 
+        public DbSet<NewMeterServicing> NewMeterServicings { get; set; }
+
         #endregion
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
