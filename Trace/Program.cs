@@ -42,6 +42,7 @@ builder.Services.AddScoped<INewConnectionRepository, NewConnectionRepository>();
 builder.Services.AddScoped<ICustomerPayments, CustomerPayment>();
 builder.Services.AddScoped<IBilling, Billing>();
 builder.Services.AddScoped<IMeterReadingRepository, MeterReadingRepository>();
+builder.Services.AddScoped<IConnectedCustomersRepository, ConnectedCustomersRepository>();
 
 builder.Services.AddControllers();
 builder.Services.AddCors(options =>
