@@ -53,7 +53,7 @@ function Replacement() {
       <div className="flex gap-5 pr-20 font-semibold text-neutral-400 max-md:flex-wrap max-md:pr-5">
         <div
           onClick={() => handleNavigate("servicing")}
-          className="justify-center px-6 py-4 rounded-lg bg-stone-200 text-slate-500 max-md:px-5"
+          className="justify-center px-6 py-4 rounded-lg bg-stone-100 text-slate-500 max-md:px-5"
           role="button"
         >
           Meter Servicing
@@ -61,7 +61,7 @@ function Replacement() {
         <div className="flex gap-5">
           <div
             onClick={() => handleNavigate("replacement")}
-            className="justify-center px-6 py-4 rounded-lg bg-stone-100 text-slate-500 max-md:px-5"
+            className="justify-center px-6 py-4 rounded-lg bg-stone-200 text-slate-500 max-md:px-5"
             role="button"
           >
             Meter Replacement
@@ -85,7 +85,7 @@ function Replacement() {
         />
         <div
           onClick={handleCustomerValidation}
-          className="justify-center px-8 py-3 font-semibold text-white rounded-lg bg-slate-500 max-md:px-5 cursor-pointer"
+          className="justify-center px-8 py-3 font-semibold text-white rounded-lg bg-blue-500 max-md:px-5 cursor-pointer"
         >
           Validate Customer
         </div>
