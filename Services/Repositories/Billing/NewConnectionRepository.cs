@@ -366,6 +366,8 @@ namespace Services.Repositories.Billing
             application.CustomerCategoryId = connectionDto.ConnectionCategory;
             application.CustomerType = connectionDto.ConnectionType;
             application.Status = "APPROVED FOR CONNECTION";
+            application.CustomertarrifId = connectionDto.tariffId;
+            
 
             //save application log
             var applicationLog = new ApplicationLog
@@ -486,7 +488,7 @@ namespace Services.Repositories.Billing
                 throw new ArgumentException("No Application found with that applicationNumber");
 
             //update status of the application
-            application.Status = "CUSTOMER CONNECTED PENDING TARRIF";
+            application.Status = "CUSTOMER CONNECTED";
 
             //map doketInitiationDto to docketInitiation model
             var docketInitaition = new DocketInitiation
@@ -510,9 +512,17 @@ namespace Services.Repositories.Billing
             await _context.ApplicationLogs.AddAsync(new ApplicationLog
             {
                 ApplicationNumber = application.ApplicationNumber,
-                Status = "CUSTOMER CONNECTED PENDING TARRIF",
+                Status = "CUSTOMER CONNECTED",
                 Message = "Docket Initiation has been submitted",
                 Date = DateTime.Now
+            });
+
+            //add customer to billing customer table
+            await _context.BillingCustomers.AddAsync(new BillingCustomer
+            {
+                ApplicationId = application.Id,
+                CustomerRef = docket.CustomerRef,
+                TarrifId = 1
             });
 
             // save docket
@@ -681,6 +691,18 @@ namespace Services.Repositories.Billing
                 .FirstOrDefaultAsync(j => j.applicationId == application.Id);
 
             return jobCard == null ? throw new ArgumentException("No Job Card found for that application") : jobCard.JobCardNumber;
+        }
+
+        // get all plumbers
+        public async Task<IEnumerable<SurveyorDto>> GetPlumbers()
+        {
+            var plumbers = await _userRepository.GetUsersByRoleName("Plumber");
+
+            return plumbers == null ? throw new ArgumentException("No Plumbers found") : plumbers.Select(s => new SurveyorDto
+            {
+                Id = s.Id,
+                Name = s.FullName
+            });
         }
 
     }

@@ -52,7 +52,8 @@ namespace Services.Repositories.Billing
                 Amount = pyt.Amount,
                 PaymentDate = pyt.PaymentDate,
                 PaymentMethod = pyt.PaymentMethod,
-                Narration = pyt.Narration
+                Narration = pyt.Narration,
+                
             };
 
             // Check whether payment amount is greater than invoice amount

@@ -392,6 +392,9 @@ namespace Infrastructure.Migrations
                     b.Property<int>("CustomerType")
                         .HasColumnType("int");
 
+                    b.Property<int?>("CustomertarrifId")
+                        .HasColumnType("int");
+
                     b.Property<DateOnly>("DateOfBirth")
                         .HasColumnType("date");
 
@@ -475,6 +478,8 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("CustomerType");
 
+                    b.HasIndex("CustomertarrifId");
+
                     b.HasIndex("OperationAreaId");
 
                     b.HasIndex("StateId");
@@ -529,6 +534,33 @@ namespace Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("BillDeliveryMethods");
+                });
+
+            modelBuilder.Entity("Core.Models.Billing.BillingCustomer", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ApplicationId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CustomerRef")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("TarrifId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicationId");
+
+                    b.HasIndex("TarrifId");
+
+                    b.ToTable("BillingCustomers");
                 });
 
             modelBuilder.Entity("Core.Models.Billing.BillingRequest", b =>
@@ -600,6 +632,33 @@ namespace Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("CustomerCategories");
+                });
+
+            modelBuilder.Entity("Core.Models.Billing.CustomerTarrif", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<decimal>("TarrifAmount")
+                        .HasColumnType("decimal(65,30)");
+
+                    b.Property<string>("TarrifDescription")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("TarrifName")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CustomerTarrifs");
                 });
 
             modelBuilder.Entity("Core.Models.Billing.CustomerType", b =>
@@ -1321,6 +1380,10 @@ namespace Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Core.Models.Billing.CustomerTarrif", "CustomerTarrif")
+                        .WithMany()
+                        .HasForeignKey("CustomertarrifId");
+
                     b.HasOne("Core.Models.Billing.OperationArea", "OperationArea")
                         .WithMany()
                         .HasForeignKey("OperationAreaId")
@@ -1351,6 +1414,8 @@ namespace Infrastructure.Migrations
 
                     b.Navigation("CustomerCategory");
 
+                    b.Navigation("CustomerTarrif");
+
                     b.Navigation("OperationArea");
 
                     b.Navigation("State");
@@ -1360,6 +1425,25 @@ namespace Infrastructure.Migrations
                     b.Navigation("Territory");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Core.Models.Billing.BillingCustomer", b =>
+                {
+                    b.HasOne("Core.Models.Billing.Application", "Application")
+                        .WithMany()
+                        .HasForeignKey("ApplicationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Core.Models.Billing.CustomerTarrif", "CustomerTarrif")
+                        .WithMany()
+                        .HasForeignKey("TarrifId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Application");
+
+                    b.Navigation("CustomerTarrif");
                 });
 
             modelBuilder.Entity("Core.Models.Billing.BillingRequest", b =>

@@ -11,6 +11,7 @@ namespace Core.DTOs.Billing
         public string ApplicationNumber { get; set; }
         public int ConnectionType { get; set; }
         public int ConnectionCategory { get; set; }
+        public int tariffId { get; set; }
         public string AuthorizedBy { get; set; }
 
     }

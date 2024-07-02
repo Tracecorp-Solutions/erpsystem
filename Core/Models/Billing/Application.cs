@@ -53,6 +53,9 @@ namespace Core.Models.Billing
         [ForeignKey("CustomerCategory")]
         public int CustomerCategoryId { get; set; }
 
+        [ForeignKey("CustomerTarrif")]
+        public int? CustomertarrifId { get; set; }
+
         #endregion
 
         #region supporting Documents
@@ -80,6 +83,8 @@ namespace Core.Models.Billing
         public User? User { get; set; }
 
         public CustomerType? CustType { get; set; }
+
+        public CustomerTarrif? CustomerTarrif { get; set; }
 
     }
 }

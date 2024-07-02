@@ -369,5 +369,24 @@ namespace Trace.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
             }
         }
+
+        //get plumbers
+        [HttpGet("/GetPlumbers")]
+        public async Task<IActionResult> GetPlumbers()
+        {
+            try
+            {
+                var plumbers = await _newconnectionRepository.GetPlumbers();
+                return Ok(plumbers);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
+        }
     }
 }
