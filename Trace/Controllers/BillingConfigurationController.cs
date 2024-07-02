@@ -502,6 +502,38 @@ namespace Trace.Controllers
             }
         }
 
+        [HttpPost("/AddMeterSize")]
+        public async Task<IActionResult> AddMeterSize([FromBody] MeterSize meterSize) 
+        {
+            try
+            {
+                await _billingConfigurationRepository.AddMeterSize(meterSize);
+                return Ok("Meter Size Added Successfully");
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
+        }
+
+        [HttpGet("/GetMeterSizes")]
+        public async Task<IActionResult> GetMeterSizes()
+        {
+            try
+            {
+                var metersizes = await _billingConfigurationRepository.GetMeterSizes();
+                return Ok(metersizes);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
+        }
+
 
     }
 }
