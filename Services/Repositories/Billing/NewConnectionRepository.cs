@@ -705,5 +705,17 @@ namespace Services.Repositories.Billing
             });
         }
 
+        // get all meter readers
+        public async Task<IEnumerable<SurveyorDto>> GetMeterReaders()
+        {
+            var meterReaders = await _userRepository.GetUsersByRoleName("Meter Reader");
+
+            return meterReaders == null ? throw new ArgumentException("No Meter Readers found") : meterReaders.Select(s => new SurveyorDto
+            {
+                Id = s.Id,
+                Name = s.FullName
+            });
+        }
+
     }
 }
