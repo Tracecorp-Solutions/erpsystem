@@ -231,6 +231,19 @@ namespace Services.Repositories.Billing
             return tarrifs == null ? throw new ArgumentException("No Customer Tarrifs Found") : tarrifs;
         }
 
+        public async Task AddMeterType(MeterTypes meterType)
+        {
+            _context.MeterTypes.Add(meterType);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<MeterTypes>> GetMeterTypes()
+        {
+            var metertypes = await _context.MeterTypes.ToListAsync();
+
+            return metertypes == null ? throw new ArgumentException("No Meter Types Found") : metertypes;
+        }
+
         
     }
 }

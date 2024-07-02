@@ -470,6 +470,38 @@ namespace Trace.Controllers
             }
         }
 
+        [HttpPost("/AddMeterType")]
+        public async Task<IActionResult> AddMeterType([FromBody] MeterTypes meterType) 
+        {
+            try
+            {
+                await _billingConfigurationRepository.AddMeterType(meterType);
+                return Ok("Meter Type Added Successfully");
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
+        }
+
+        [HttpGet("/GetMeterTypes")]
+        public async Task<IActionResult> GetMeterTypes()
+        {
+            try
+            {
+                var metertypes = await _billingConfigurationRepository.GetMeterTypes();
+                return Ok(metertypes);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
+        }
+
 
     }
 }

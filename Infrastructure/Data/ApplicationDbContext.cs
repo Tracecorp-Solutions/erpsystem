@@ -72,6 +72,8 @@ namespace Infrastructure.Data
 
         public DbSet<BillingCustomer> BillingCustomers { get; set; }
 
+        public DbSet<MeterTypes> MeterTypes { get; set; }
+
         #endregion
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

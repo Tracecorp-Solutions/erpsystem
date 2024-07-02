@@ -46,7 +46,7 @@ namespace Core.Repositories.Billing
         Task AddCustomerTarrif(CustomerTarrifDto dto);  
         Task<IEnumerable<CustomerTarrif>> GetCustomerTarrifs();
 
-        
-        
+        Task AddMeterType(MeterTypes meterType);
+        Task<IEnumerable<MeterTypes>> GetMeterTypes();
     }
 }
