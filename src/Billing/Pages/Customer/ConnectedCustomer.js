@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import { Table, Menu, Dropdown, message, Input, Space, Switch } from "antd";
-import { EllipsisOutlined, SearchOutlined, FilterOutlined } from "@ant-design/icons";
+import { Table, Input, Dropdown, Menu, Button } from "antd";
+import { SearchOutlined, FilterOutlined } from "@ant-design/icons";
 import { useNavigate, useLocation } from "react-router-dom";
-import axios from "axios";
 
 const { Search } = Input;
 
@@ -11,17 +10,17 @@ function ConnectedCustomers() {
   const location = useLocation();
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
-  const [toggleDisabled, setToggleDisabled] = useState(false); // State for switch
+  const [selectedFilter, setSelectedFilter] = useState(null);
 
   const handleMenuClick = (e) => {
-    message.info(`Click on menu item ${e.key}`);
+    setSelectedFilter(e.key);
   };
 
-  const menu = (
+  const filterMenu = (
     <Menu onClick={handleMenuClick}>
-      <Menu.Item key="1">Menu Item 1</Menu.Item>
-      <Menu.Item key="2">Menu Item 2</Menu.Item>
-      <Menu.Item key="3">Menu Item 3</Menu.Item>
+      <Menu.Item key="operation">Operation Area</Menu.Item>
+      <Menu.Item key="branch">Branch</Menu.Item>
+      <Menu.Item key="customerType">Customer Type</Menu.Item>
     </Menu>
   );
 
@@ -46,19 +45,17 @@ function ConnectedCustomers() {
           onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
           style={{ width: 188, marginBottom: 8, display: "block" }}
         />
-        <Space>
-          <button
-            type="button"
-            onClick={() => handleReset(clearFilters)}
-            style={{ width: 90 }}
-          >
-            Reset
-          </button>
-        </Space>
+        <button
+          type="button"
+          onClick={() => handleReset(clearFilters)}
+          style={{ marginTop: 8, width: 90, borderRadius: "24px", padding: "6px 16px" }}
+        >
+          Reset
+        </button>
       </div>
     ),
     filterIcon: (filtered) => (
-      <EllipsisOutlined style={{ color: filtered ? "#1890ff" : undefined }} />
+      <FilterOutlined style={{ color: filtered ? "#1890ff" : undefined }} />
     ),
     onFilter: (value, record) =>
       record[dataIndex]
@@ -109,10 +106,10 @@ function ConnectedCustomers() {
       title: "Action",
       key: "action",
       render: () => (
-        <Dropdown overlay={menu} trigger={["click"]}>
-          <a className="ant-dropdown-link" onClick={(e) => e.preventDefault()}>
-            Actions <EllipsisOutlined />
-          </a>
+        <Dropdown overlay={filterMenu} trigger={["click"]}>
+          <Button type="text" className="ant-dropdown-link">
+            Actions <FilterOutlined />
+          </Button>
         </Dropdown>
       ),
     },
@@ -143,13 +140,15 @@ function ConnectedCustomers() {
           onChange={(e) => setSearchText(e.target.value)}
         />
 
-        {/* Filter Input */}
-        <Input
-          placeholder="Filter"
-          prefix={<FilterOutlined style={{ fontSize: "25px" }} />}
-          className="mb-2 md:mb-0 md:mr-4 md:w-auto w-full lg:w-22"
-          style={{ borderRadius: "24px", padding: "10px" }}
-        />
+        {/* Filter Button */}
+        <Dropdown overlay={filterMenu} trigger={["click"]} placement="bottomRight">
+          <Button
+            className="mb-2 md:mb-0 md:mr-4 md:w-auto w-full lg:w-22"
+            style={{ borderRadius: "24px", padding: "10px" }}
+          >
+            <FilterOutlined style={{ fontSize: "25px" }} />
+          </Button>
+        </Dropdown>
       </div>
 
       {/* Table Component */}
