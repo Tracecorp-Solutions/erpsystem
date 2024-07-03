@@ -271,7 +271,7 @@ function Replacement() {
             <input
               type="text"
               className="px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 w-full"
-              value={servicingData.MeterNo}
+              value={servicingData.meterNo}
               onChange={(e) =>
                 setServicingData({
                   ...servicingData,
@@ -303,18 +303,15 @@ function Replacement() {
               Meter Type
             </div>
             <select
-              className="px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 w-full"
+              className="px-4 py-4 mt-2 rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 w-full"
               value={servicingData.meterTypeId}
               onChange={(e) =>
-                setServicingData({
-                  ...servicingData,
-                  meterTypeId: parseInt(e.target.value),
-                })
+                setServicingData({ ...servicingData, meterTypeId: e.target.value })
               }
             >
               <option value="">Select Meter Type</option>
               {meterTypes.map((type) => (
-                <option key={type.meterTypeId} value={type.meterTypeId}>
+                <option key={type.id} value={type.id}>
                   {type.meterType}
                 </option>
               ))}
