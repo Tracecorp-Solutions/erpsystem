@@ -166,7 +166,7 @@ function Replacement() {
         />
         <div
           onClick={handleCustomerValidation}
-          className="justify-center px-8 py-3 font-semibold text-white rounded-lg bg-slate-500 max-md:px-5 cursor-pointer"
+          className="justify-center px-8 py-3 font-semibold text-white rounded-lg bg-blue-400 max-md:px-5 cursor-pointer"
         >
           Validate Customer
         </div>
@@ -451,16 +451,17 @@ function Replacement() {
         <div className="flex gap-4 mt-4 max-md:flex-wrap w-full">
           
         </div>
-        <div className="flex justify-between mt-8 gap-4 max-md:flex-wrap w-full">
+        <div className="flex justify-end mt-8 gap-4 w-full max-md:flex-wrap">
+          <div className="px-8 py-4 font-semibold text-white rounded-lg bg-gray-300 cursor-pointer max-md:px-5">
+            Clear Form
+          </div>
           <div
             onClick={handleSubmit}
-            className="justify-center px-12 py-4 font-semibold text-white rounded-lg bg-slate-500 max-md:px-5 cursor-pointer"
+            className="px-8 py-4 font-semibold text-white rounded-lg bg-blue-400 cursor-pointer max-md:px-5"
           >
             Submit
           </div>
-          <div className="justify-center px-12 py-4 font-semibold text-white rounded-lg bg-slate-500 max-md:px-5 cursor-pointer">
-            Clear Form
-          </div>
+
         </div>
       </div>
     </div>

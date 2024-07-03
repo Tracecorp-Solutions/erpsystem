@@ -1,8 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { getMeterMakes } from "../../Apis/getMeterMakes";
+import { getMeterTypes } from "../../Apis/getMeterTypes";
+import { getMeterSizes } from "../../Apis/getMeterSize";
+import { message } from "antd";
 
-function Servicing() {
+function Replacement() {
   const navigate = useNavigate();
   const [customerRef, setCustomerRef] = useState("");
   const [customerData, setCustomerData] = useState({
@@ -15,14 +19,58 @@ function Servicing() {
     previousReading: "",
     meterSerial: "",
     meterType: "",
+    meterMake: "",
   });
 
   const [servicingData, setServicingData] = useState({
-    newMeterNumber: "",
-    newMeterReadingDate: "",
-    servicedBy: "",
-    comment: "",
+    meterNo: "",
+    dateOfInstallation: "",
+    meterTypeId: 0,
+    meterSizeId: 0,
+    dials: "",
+    manufactureDate: "",
+    meterlifeDuration: "",
+    initialReading: 0,
+    installedBy: "",
+    meterMakes: 0,
   });
+
+  const [meterMakes, setMeterMakes] = useState([]);
+  const [meterTypes, setMeterTypes] = useState([]);
+  const [meterSizes, setMeterSizes] = useState([]);
+
+  useEffect(() => {
+    fetchMeterMakes();
+    fetchMeterTypes();
+    fetchMeterSizes();
+  }, []);
+
+  const fetchMeterMakes = async () => {
+    try {
+      const makes = await getMeterMakes();
+      setMeterMakes(makes);
+    } catch (error) {
+      console.error("Error fetching meter makes:", error);
+    }
+  };
+
+  const fetchMeterTypes = async () => {
+    try {
+      const types = await getMeterTypes();
+      setMeterTypes(types);
+    } catch (error) {
+      console.error("Error fetching meter types:", error);
+    }
+  };
+
+  const fetchMeterSizes = async () => {
+    try {
+      const sizes = await getMeterSizes();
+      setMeterSizes(sizes);
+    } catch (error) {
+      console.error("Error fetching meter sizes:", error);
+    }
+  };
 
   const handleNavigate = (screen) => {
     navigate("/billingdashboard", { state: { screen } });
@@ -33,6 +81,8 @@ function Servicing() {
       const response = await axios.get(
         `${process.env.REACT_APP_API_URL}/ValidateCustomer/${customerRef}`
       );
+
+      message.success("Customer validated successfully");
       const data = response.data;
       setCustomerData({
         name: data.name,
@@ -44,33 +94,38 @@ function Servicing() {
         previousReading: data.previousReading,
         meterSerial: data.meterSerial,
         meterType: data.meterType,
+        meterMake: data.meterMake,
       });
+
     } catch (error) {
-      console.error('Error occurred while fetching customer data:', error);
+      console.error("Error occurred while fetching customer data:", error);
     }
   };
 
   const handleSubmit = async () => {
     try {
       const response = await axios.post(
-        `${process.env.REACT_APP_API_URL}/TestApi/AddMeterServicing`,
+        `${process.env.REACT_APP_API_URL}/AddMeterServicing`,
         {
           customerRef: customerData.customerRef,
-          newMeterNo: servicingData.newMeterNumber,
-          meterSizeId: 0, // Update accordingly
-          meterTypeId: 0, // Update accordingly
-          dials: customerData.tariff,
-          manufactureDate: new Date().toISOString().split('T')[0],
-          meterlifeDuration: "5 years", // Update accordingly
-          initialReading: parseInt(customerData.previousReading, 10),
-          dateOfInstallation: servicingData.newMeterReadingDate,
-          installedBy: servicingData.servicedBy,
-          comment: servicingData.comment,
+          meterNo: servicingData.meterNo,
+          meterSizeId: servicingData.meterSizeId,
+          meterTypeId: servicingData.meterTypeId,
+          dials: servicingData.dials,
+          manufactureDate: servicingData.manufactureDate,
+          meterlifeDuration: servicingData.meterlifeDuration,
+          initialReading: servicingData.initialReading,
+          dateOfInstallation: servicingData.dateOfInstallation,
+          installedBy: servicingData.installedBy,
+          isMeterServiced: false,
+          meterMakes: servicingData.meterMakes,
         }
+
       );
       console.log("Form submitted", response.data);
     } catch (error) {
-      console.error('Error occurred while submitting servicing data:', error);
+
+      console.error("Error occurred while submitting servicing data:", error);
     }
   };
 
@@ -79,7 +134,7 @@ function Servicing() {
       <div className="flex gap-5 pr-20 font-semibold text-neutral-400 max-md:flex-wrap max-md:pr-5">
         <div
           onClick={() => handleNavigate("servicing")}
-          className="justify-center px-6 py-4 rounded-lg bg-stone-200 text-slate-500 max-md:px-5"
+          className="justify-center px-6 py-4 rounded-lg bg-stone-200 text-slate-600 max-md:px-5"
           role="button"
         >
           Meter Servicing
@@ -130,7 +185,9 @@ function Servicing() {
               type="text"
               className="px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 w-full"
               value={customerData.name}
-              onChange={(e) => setCustomerData({ ...customerData, name: e.target.value })}
+              onChange={(e) =>
+                setCustomerData({ ...customerData, name: e.target.value })
+              }
             />
           </div>
           <div className="flex flex-col px-5 flex-1">
@@ -141,7 +198,12 @@ function Servicing() {
               type="text"
               className="px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 w-full"
               value={customerData.meterNumber}
-              onChange={(e) => setCustomerData({ ...customerData, meterNumber: e.target.value })}
+              onChange={(e) =>
+                setCustomerData({
+                  ...customerData,
+                  meterNumber: e.target.value,
+                })
+              }
             />
           </div>
         </div>
@@ -154,7 +216,9 @@ function Servicing() {
               type="text"
               className="px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 w-full"
               value={customerData.tariff}
-              onChange={(e) => setCustomerData({ ...customerData, tariff: e.target.value })}
+              onChange={(e) =>
+                setCustomerData({ ...customerData, tariff: e.target.value })
+              }
             />
           </div>
           <div className="flex flex-col px-5 flex-1">
@@ -183,30 +247,6 @@ function Servicing() {
           </div>
           <div className="flex flex-col px-5 flex-1">
             <div className="font-semibold text-neutral-600 w-full">
-              Balance
-            </div>
-            <input
-              type="text"
-              className="px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 w-full"
-              value={customerData.balance}
-              onChange={(e) => setCustomerData({ ...customerData, balance: e.target.value })}
-            />
-          </div>
-        </div>
-        <div className="flex gap-4 mt-4 max-md:flex-wrap w-full">
-          <div className="flex flex-col px-5 flex-1">
-            <div className="font-semibold text-neutral-600 w-full">
-              Meter Reading date
-            </div>
-            <input
-              type="text"
-              className="px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 w-full"
-              value={customerData.meterReadingDate}
-              onChange={(e) => setCustomerData({ ...customerData, meterReadingDate: e.target.value })}
-            />
-          </div>
-          <div className="flex flex-col px-5 flex-1">
-            <div className="font-semibold text-neutral-600 w-full">
               Application No.
             </div>
             <input
@@ -231,8 +271,13 @@ function Servicing() {
             <input
               type="text"
               className="px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 w-full"
-              value={servicingData.newMeterNumber}
-              onChange={(e) => setServicingData({ ...servicingData, newMeterNumber: e.target.value })}
+              value={servicingData.meterNo}
+              onChange={(e) =>
+                setServicingData({
+                  ...servicingData,
+                  meterNo: e.target.value,
+                })
+              }
             />
           </div>
           <div className="flex flex-col px-5 flex-1">
@@ -240,47 +285,188 @@ function Servicing() {
               New Meter Reading Date
             </div>
             <input
-              type="text"
-              className="px-4 py-4 mt-2 rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 w-full"
-              value={servicingData.newMeterReadingDate}
-              onChange={(e) => setServicingData({ ...servicingData, newMeterReadingDate: e.target.value })}
+              type="date"
+              className="px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 w-full"
+              value={servicingData.dateOfInstallation}
+              onChange={(e) =>
+                setServicingData({
+                  ...servicingData,
+                  dateOfInstallation: e.target.value,
+                })
+              }
             />
           </div>
         </div>
         <div className="flex gap-4 mt-4 max-md:flex-wrap w-full">
           <div className="flex flex-col px-5 flex-1">
             <div className="font-semibold text-neutral-600 w-full">
-              Serviced By
+              Meter Type
+            </div>
+            <select
+              className="px-4 py-4 mt-2 rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 w-full"
+              value={servicingData.meterTypeId}
+              onChange={(e) =>
+                setServicingData({ ...servicingData, meterTypeId: e.target.value })
+              }
+            >
+              <option value="">Select Meter Type</option>
+              {meterTypes.map((type) => (
+                <option key={type.id} value={type.id}>
+                  {type.meterType}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="flex flex-col px-5 flex-1">
+            <div className="font-semibold text-neutral-600 w-full">
+              New Meter Size
+            </div>
+            <select
+              className="px-4 py-4 mt-2 rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 w-full"
+              value={servicingData.meterSizeId}
+              onChange={(e) =>
+                setServicingData({
+                  ...servicingData,
+                  meterSizeId: e.target.value,
+                })
+              }
+            >
+              <option value="">Select New Meter Size</option>
+              {meterSizes.map((size) => (
+                <option key={size.id} value={size.id}>
+                  {size.size}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+        <div className="flex gap-4 mt-4 max-md:flex-wrap w-full">
+          <div className="flex flex-col px-5 flex-1">
+            <div className="font-semibold text-neutral-600 w-full">
+              New Meter Dials
             </div>
             <input
               type="text"
               className="px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 w-full"
-              value={servicingData.servicedBy}
-              onChange={(e) => setServicingData({ ...servicingData, servicedBy: e.target.value })}
+              value={servicingData.dials}
+              onChange={(e) =>
+                setServicingData({
+                  ...servicingData,
+                  dials: e.target.value,
+                })
+              }
             />
           </div>
           <div className="flex flex-col px-5 flex-1">
             <div className="font-semibold text-neutral-600 w-full">
-              Comment
+              New Meter Manufacture Date
             </div>
-            <textarea
+            <input
+              type="date"
               className="px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 w-full"
-              value={servicingData.comment}
-              onChange={(e) => setServicingData({ ...servicingData, comment: e.target.value })}
+              value={servicingData.manufactureDate}
+              onChange={(e) =>
+                setServicingData({
+                  ...servicingData,
+                  manufactureDate: e.target.value,
+                })
+              }
             />
           </div>
         </div>
-        <div className="flex justify-center mt-8">
+        <div className="flex gap-4 mt-4 max-md:flex-wrap w-full">
+          <div className="flex flex-col px-5 flex-1">
+            <div className="font-semibold text-neutral-600 w-full">
+              New Meter Life Duration
+            </div>
+            <input
+              type="text"
+              className="px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 w-full"
+              value={servicingData.meterlifeDuration}
+              onChange={(e) =>
+                setServicingData({
+                  ...servicingData,
+                  meterlifeDuration: e.target.value,
+                })
+              }
+            />
+          </div>
+          <div className="flex flex-col px-5 flex-1">
+            <div className="font-semibold text-neutral-600 w-full">
+              New Meter Initial Reading
+            </div>
+            <input
+              type="text"
+              className="px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 w-full"
+              value={servicingData.initialReading}
+              onChange={(e) =>
+                setServicingData({
+                  ...servicingData,
+                  initialReading: e.target.value,
+                })
+              }
+            />
+          </div>
+        </div>
+        <div className="flex gap-4 mt-4 max-md:flex-wrap w-full">
+          <div className="flex flex-col px-5 flex-1">
+            <div className="font-semibold text-neutral-600 w-full">
+              Installed By
+            </div>
+            <input
+              type="text"
+              className="px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 w-full"
+              value={servicingData.installedBy}
+              onChange={(e) =>
+                setServicingData({
+                  ...servicingData,
+                  installedBy: e.target.value,
+                })
+              }
+            />
+          </div>
+          <div className="flex flex-col px-5 flex-1">
+            <div className="font-semibold text-neutral-600 w-full">
+              Meter Make
+            </div>
+            <select
+              className="px-4 py-4 mt-2 rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 w-full"
+              value={servicingData.meterMakes}
+              onChange={(e) =>
+                setServicingData({
+                  ...servicingData,
+                  meterMakes: e.target.value,
+                })
+              }
+            >
+              <option value="">Select Meter Make</option>
+              {meterMakes.map((make) => (
+                <option key={make.id} value={make.id}>
+                  {make.make}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+        <div className="flex gap-4 mt-4 max-md:flex-wrap w-full">
+
+        </div>
+        <div className="flex justify-end mt-8 gap-4 w-full max-md:flex-wrap">
+          <div className="px-8 py-4 font-semibold text-white rounded-lg bg-gray-300 cursor-pointer max-md:px-5">
+            Clear Form
+          </div>
           <div
             onClick={handleSubmit}
-            className="justify-center px-8 py-3 font-semibold text-white rounded-lg bg-slate-500 max-md:px-5 cursor-pointer"
+            className="px-8 py-4 font-semibold text-white rounded-lg bg-blue-400 cursor-pointer max-md:px-5"
           >
             Submit
           </div>
+
         </div>
+
       </div>
     </div>
   );
 }
 
-export default Servicing;
+export default Replacement;
