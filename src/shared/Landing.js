@@ -9,7 +9,7 @@ const Card = ({ title, description, isLoading, isComingSoon }) => {
     setButtonClicked(true);
     try {
       if (title === "Water Billing System") {
-        navigate("/Dashboard");
+        navigate("/billingdashboard");
       } else {
         navigate("/Dashboardlayout");
       }

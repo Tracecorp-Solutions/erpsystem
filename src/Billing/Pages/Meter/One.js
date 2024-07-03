@@ -1,24 +1,42 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { message } from "antd";
 
 function One() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    meterNo: "",
+    meterNumber: "",
     customerRef: "",
-    readingDate: "2024-07-01",
-    reading: 0,
-    readingType: "PERIODIC",
-    readingStatus: 0,
-    readingSource: 0,
-    readingReason: 0,
+    readingdate: "2024-07-01",
+    readingType: "1", // assuming "1" represents "Normal"
+    readingStatus: "PERIODIC", // assuming "PERIODIC" is the default
+    readingSource: "1", // assuming "1" represents "Actual"
+    readingReason: "Normal",
     readingBy: "",
     isBilled: "YES",
     isEstimate: "",
-    isMeterReset: "",
+    isMeterReset: "NO", // assuming "NO" is the default
     isExpectedReadingToday: "",
+    previousReading: 0,
+    previousReadingDate: "",
+    currentReading: ""
   });
+
+  const [meterReaders, setMeterReaders] = useState([]);
+
+  useEffect(() => {
+    const fetchMeterReaders = async () => {
+      try {
+        const resp = await axios.get(`${process.env.REACT_APP_API_URL}/GetMeterReaders`);
+        setMeterReaders(resp.data);
+      } catch (error) {
+        message.error("Failed to fetch meter readers. Please try again.");
+      }
+    };
+
+    fetchMeterReaders();
+  }, []);
 
   const handleNavigate = (screen) => {
     navigate("/billingdashboard", { state: { screen } });
@@ -33,47 +51,49 @@ function One() {
   };
 
   const handleValidateCustomer = async () => {
-
+    try {
+      const resp = await axios.get(`${process.env.REACT_APP_API_URL}/ValidateCustomer/${formData.customerRef}`);
+      console.log(resp.data);
+      // Update state with validated customer data if needed
+      setFormData((prevData) => ({
+        ...prevData,
+        ...resp.data, // Assuming resp.data contains additional customer data
+      }));
+      message.success("Customer validated successfully");
+      console.log("*********************");
+      console.log(formData);
+    } catch (error) {
+      message.error(error.response);
+    }
   };
 
   const handleSaveReading = async () => {
-    const {
-      meterNo,
-      customerRef,
-      readingDate,
-      reading,
-      readingType,
-      readingStatus,
-      readingSource,
-      readingReason,
-      readingBy,
-    } = formData;
-
-    if (
-      !meterNo ||
-      !customerRef ||
-      !readingDate ||
-      !reading ||
-      !readingBy
-    ) {
-      alert("Please fill in all required fields.");
+    // Validate required fields
+    if (!formData.meterNumber || !formData.customerRef || !formData.readingdate || !formData.currentReading) {
+      message.error("Please fill in all required fields.");
       return;
     }
-
+  
+    const postData = {
+      customerRef: formData.customerRef,
+      meterNo: parseInt(formData.meterNumber, 10),
+      previousReading: parseInt(formData.previousReading, 10),
+      previousReadingDate: formData.previousReadingDate,
+      reading: parseInt(formData.currentReading, 10),
+      readingType: parseInt(formData.readingType, 10),
+      isBilled: formData.isBilled === "YES",
+      readingSource: "",
+      readingReason: "",
+      readingStatus: "",
+      isMeterReset: formData.isMeterReset === "YES",
+      readingBy: parseInt(formData.readingBy, 10),
+      readingDate: formData.readingdate + "T14:28:48.517Z",
+    };
+  
     try {
       const response = await axios.post(
         `${process.env.REACT_APP_API_URL}/AddMeterReading`,
-        {
-          meterNo,
-          customerRef,
-          readingDate,
-          reading: parseInt(reading, 10),
-          readingType: readingType === "PERIODIC" ? 0 : 1,
-          readingStatus,
-          readingSource,
-          readingReason,
-          readingBy,
-        },
+        postData,
         {
           headers: {
             "Content-Type": "application/json",
@@ -81,13 +101,14 @@ function One() {
           },
         }
       );
+      message.success("Reading saved successfully");
       console.log("Reading saved:", response.data);
-      alert("Reading saved successfully!");
     } catch (error) {
+      message.error("Failed to save reading. Please try again.");
       console.error("Error saving reading:", error);
-      alert("Failed to save reading. Please try again.");
     }
   };
+  
 
   return (
     <div className="flex flex-col p-6 text-base leading-6 bg-white rounded-3xl max-md:px-5">
@@ -122,20 +143,24 @@ function One() {
           onChange={handleChange}
           placeholder="Enter Customer Ref"
         />
-        <button onClick={handleValidateCustomer} className="justify-center px-8 py-3 font-semibold text-white rounded-lg bg-blue-400 max-md:px-5">Validate Customer</button>
-
+        <button
+          onClick={handleValidateCustomer}
+          className="justify-center px-8 py-3 font-semibold text-white rounded-lg bg-blue-400 max-md:px-5"
+        >
+          Validate Customer
+        </button>
       </div>
       <div className="flex flex-col flex-wrap justify-center px-8 py-6 content-start pb-6 text-base leading-6 w-full">
         <div className="flex gap-4 max-md:flex-wrap w-full">
           <div className="flex flex-col px-5 flex-1">
             <div className="font-semibold text-neutral-600 w-full">
-              Meter Serial Number
+              Meter Number
             </div>
             <input
               type="text"
-              name="meterNo"
+              name="meterNumber"
               className="justify-center items-start px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 w-full"
-              value={formData.meterNo}
+              value={formData.meterNumber}
               onChange={handleChange}
               placeholder="Enter Meter Serial Number"
             />
@@ -146,9 +171,9 @@ function One() {
             </div>
             <input
               type="text"
-              name="reading"
+              name="previousReading"
               className="justify-center items-start px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 w-full"
-              value={formData.reading}
+              value={formData.previousReading}
               onChange={handleChange}
               placeholder="Enter previous reading"
             />
@@ -161,57 +186,40 @@ function One() {
             </div>
             <input
               type="date"
-              name="readingDate"
+              name="previousReadingDate"
               className="flex gap-2 justify-between px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 w-full"
-              value={formData.readingDate}
+              value={formData.previousReadingDate}
               onChange={handleChange}
               placeholder="Previous reading date"
             />
           </div>
-          {/* <div className="flex flex-col px-5 flex-1">
-            <div className="font-semibold w-full text-neutral-600">Consumption</div>
+          <div className="flex flex-col px-5 flex-1">
+            <div className="font-semibold text-neutral-600 w-full">
+              Current Reading
+            </div>
             <input
               type="text"
-              className="justify-center items-start px-4 py-4 mt-2 rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 w-full"
-              value="0"
+              name="currentReading"
+              className="flex gap-2 justify-between px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 w-full"
+              value={formData.currentReading}
               onChange={handleChange}
-              placeholder="consumption" 
+              placeholder="Latest reading"
             />
-          </div> */}
+          </div>
         </div>
-        {/* <div className="flex gap-4 mt-4 max-md:flex-wrap w-full">
-          <div className="flex flex-col px-5 flex-1">
-            <div className="font-semibold text-neutral-600 w-full">Average Consumption</div>
-            <input
-              type="text"
-              className="justify-center items-start px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 w-full"
-              value="0"
-              onChange={handleChange}
-              placeholder="Average Consumption"
-            />
-          </div>
-          <div className="flex flex-col px-5 flex-1">
-            <div className="font-semibold w-full text-neutral-600">Meter Dials</div>
-            <input
-              type="text"
-              className="justify-center items-start px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 w-full"
-              value="0"
-              onChange={handleChange}
-              placeholder="Enter Meter Dails"
-            />
-          </div>
-        </div> */}
         <div className="flex gap-4 mt-4 max-md:flex-wrap w-full">
           <div className="flex flex-col px-5 flex-1">
-            <div className="font-semibold w-full text-neutral-600" >Reading Type</div>
+            <div className="font-semibold w-full text-neutral-600">
+              Reading Type
+            </div>
             <select
               className="justify-center items-start px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 w-full"
               name="readingType"
               value={formData.readingType}
               onChange={handleChange}
             >
-              <option value="PERIODIC">PERIODIC</option>
-              <option value="SPOT">SPOT</option>
+              <option value="1">Normal</option>
+              <option value="2">Reversed</option>
             </select>
           </div>
           <div className="flex flex-col px-5 flex-1">
@@ -238,9 +246,8 @@ function One() {
               value={formData.readingSource}
               onChange={handleChange}
             >
-              <option value="0">Normal</option>
-              <option value="1">Estimate</option>
-              <option value="2">Unknown</option>
+              <option value="1">Actual</option>
+              <option value="2">Estimate</option>
             </select>
           </div>
           <div className="flex flex-col px-5 flex-1">
@@ -251,9 +258,10 @@ function One() {
               value={formData.readingReason}
               onChange={handleChange}
             >
-              <option value="0">Normal</option>
-              <option value="1">Move In</option>
-              <option value="2">Move Out</option>
+              <option value="Normal">Normal</option>
+              <option value="Leak">Leak</option>
+              <option value="Tampered">Tampered</option>
+              <option value="Others">Others</option>
             </select>
           </div>
         </div>
@@ -266,20 +274,26 @@ function One() {
               value={formData.readingStatus}
               onChange={handleChange}
             >
-              <option value="0">Normal</option>
-              <option value="1">Error</option>
+              <option value="PERIODIC">PERIODIC</option>
+              <option value="DISCONNECTED">DISCONNECTED</option>
+              <option value="RECONNECTED">RECONNECTED</option>
             </select>
           </div>
           <div className="flex flex-col px-5 flex-1">
             <div className="font-semibold text-neutral-600 w-full">Reading By</div>
-            <input
-              type="text"
+            <select
               name="readingBy"
-              className="justify-center items-start px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 w-full"
               value={formData.readingBy}
               onChange={handleChange}
-              placeholder="Enter your name"
-            />
+              className="justify-center items-start px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 w-full"
+            >
+              <option value="">Select Meter Reader...</option>
+              {meterReaders.map((meterreader) => (
+                <option key={meterreader.id} value={meterreader.id}>
+                  {meterreader.name}
+                </option>
+              ))}
+            </select>
           </div>
         </div>
         <div className="flex gap-4 mt-4 max-md:flex-wrap w-full">
@@ -296,32 +310,16 @@ function One() {
             </select>
           </div>
           <div className="flex flex-col px-5 flex-1">
-            <div className="font-semibold text-neutral-600 w-full">Is Estimate?</div>
-            <select
-              className="justify-center items-start px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 w-full"
-              name="isEstimate"
-              value={formData.isEstimate}
-              onChange={handleChange}
-            >
-              <option value="YES">YES</option>
-              <option value="NO">NO</option>
-            </select>
-          </div>
-        </div>
-        <div className="flex gap-4 mt-4 max-md:flex-wrap w-full">
-          <div className="flex flex-col px-5 flex-1">
             <div className="font-semibold text-neutral-600 w-full">
-              Is Expected Reading Today?
+              Reading Date
             </div>
-            <select
-              className="justify-center items-start px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 w-full"
-              name="isExpectedReadingToday"
-              value={formData.isExpectedReadingToday}
+            <input
+              type="date"
+              name="readingdate"
+              value={formData.readingdate}
               onChange={handleChange}
-            >
-              <option value="YES">YES</option>
-              <option value="NO">NO</option>
-            </select>
+              className="justify-center items-start px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 w-full"
+            />
           </div>
         </div>
       </div>

@@ -1,14 +1,15 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { Table, Dropdown, Menu, Button } from "antd";
+import { Table, Dropdown, Menu, Button, message } from "antd";
 import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
-import { EllipsisOutlined } from "@ant-design/icons";
 import PaymentDetails from "./PaymentDetails";
 import ReconcileInvoice from "./ReconcileInvoice";
+import axios from "axios";
 
 const Payslip = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isReconcileInvoice, setIsReconcileInvoice] = useState(false);
+  const [invoices,setInvoices] = useState([]);
 
   const location = useLocation();
   const { state } = location;
@@ -23,6 +24,10 @@ const Payslip = () => {
     setIsReconcileInvoice(false);
   };
 
+  useEffect(()=>{
+    getCustomerInvoices();
+  },[]);
+
   const handleMenuClick = (applicationNumber, key) => {
     // Handle menu item clicks here
     console.log(`Clicked on ${key} for application ${applicationNumber}`);
@@ -32,31 +37,36 @@ const Payslip = () => {
     setIsModalVisible(true);
   };
 
+  const getCustomerInvoices = async ()=>{
+    try{
+      const resp = await axios.get(`${process.env.REACT_APP_API_URL}/GetAllInvoices`);
+      message.success("Successfully fetched invoice items");
+      setInvoices(resp.data);
+    }catch(error){
+      message.error(error.response);
+    }
+  };
+
   const columns = [
     {
       title: "Application No.",
-      dataIndex: "applicationNo",
-      key: "applicationNo",
+      dataIndex: "applicationNumber",
+      key: "applicationNumber",
     },
     {
       title: "Payment Ref.",
-      dataIndex: "paymentRef",
-      key: "paymentRef",
+      dataIndex: "invoiceNumber",
+      key: "invoiceNumber",
     },
     {
-      title: "Amount Paid",
-      dataIndex: "amountPaid",
-      key: "amountPaid",
+      title: "Invoice Amount",
+      dataIndex: "invoiceAmount",
+      key: "invoiceAmount",
     },
     {
-      title: "Balance",
-      dataIndex: "balance",
-      key: "balance",
-    },
-    {
-      title: "Payment Date",
-      dataIndex: "paymentDate",
-      key: "paymentDate",
+      title: "Creation Date",
+      dataIndex: "date",
+      key: "date",
     },
     {
       title: "Status",
@@ -71,11 +81,6 @@ const Payslip = () => {
           overlay={
             <Menu onClick={({ key }) => handleMenuClick(record.applicationNo, key)}>
               <Menu.Item key="view">View Details</Menu.Item>
-              <Menu.Item key="generate">Generate Job Card</Menu.Item>
-              <Menu.Item key="print">Print Application</Menu.Item>
-              <Menu.Item key="contact">Contact Applicant</Menu.Item>
-              <Menu.Item key="approve">Approve Application</Menu.Item>
-              <Menu.Item key="assign">Assign Surveyor</Menu.Item>
             </Menu>
           }
           trigger={["click"]}
@@ -108,7 +113,7 @@ const Payslip = () => {
   ];
 
   const paginationConfig = {
-    pageSize: 1,
+    pageSize: 10,
     total: data.length,
     };
 
@@ -138,10 +143,10 @@ const Payslip = () => {
       </div>
 
       <div className="w-full max-w-[1088px] mt-6">
-        <div className="text-4xl text-neutral-600 px-5">Customer Invoice</div>
+        <div className="text-4xl text-neutral-600 px-5">Customer Invoices</div>
         <Table
           columns={columns}
-          dataSource={data}
+          dataSource={invoices}
           pagination={paginationConfig}
           className="mt-4"
         />
