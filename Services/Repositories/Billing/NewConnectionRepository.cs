@@ -502,11 +502,26 @@ namespace Services.Repositories.Billing
                 LocationCordinates = docket.LocationCordinates,
                 InitialReading = docket.InitialReading,
                 Dials = docket.Dials,
-                MeterManufactureDate = docket.MeterManufactureDate,
+                MeterManufactureDate = docket.MeterManufactureDate !=null ? DateOnly.FromDateTime(DateTime.Now) : DateOnly.FromDateTime(DateTime.Now),
                 DateOfInstallation = docket.DateOfInstallation,
                 InstalledBy = docket.InstalledBy,
                 Remarks = docket.Remarks
             };
+
+            //record first meter reading
+            await _context.MeterReadings.AddAsync(new MeterReading
+            {
+                CustomerRef = docket.CustomerRef,
+                MeterNo = int.Parse(docket.MeterNumber),
+                Reading = int.Parse(docket.InitialReading),
+                ReadingSource = "ACTUAL",
+                ReadingReason = "INITIAL",
+                ReadingStatus = "Normal",
+                IsMeterReset = false,
+                Active = true,
+                ReadingBy = docket.InstalledBy,
+                ReadingDate = docket.DateOfInstallation.ToDateTime(TimeOnly.MinValue)
+            });
 
             //add application log
             await _context.ApplicationLogs.AddAsync(new ApplicationLog
@@ -588,7 +603,7 @@ namespace Services.Repositories.Billing
             docketInitiation.LocationCordinates = docket.LocationCordinates;
             docketInitiation.InitialReading = docket.InitialReading;
             docketInitiation.Dials = docket.Dials;
-            docketInitiation.MeterManufactureDate = docket.MeterManufactureDate;
+            docketInitiation.MeterManufactureDate = docket.MeterManufactureDate != null ? DateOnly.FromDateTime(DateTime.Now) : DateOnly.FromDateTime(DateTime.Now);
             docketInitiation.DateOfInstallation = docket.DateOfInstallation;
             docketInitiation.InstalledBy = docket.InstalledBy;
             docketInitiation.Remarks = docket.Remarks;

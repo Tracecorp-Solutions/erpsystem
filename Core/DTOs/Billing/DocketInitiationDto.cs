@@ -19,7 +19,7 @@ namespace Core.DTOs.Billing
         public string? LocationCordinates { get; set; }
         public string? InitialReading { get; set; }
         public string? Dials { get; set; }
-        public DateOnly MeterManufactureDate { get; set; }
+        public DateOnly? MeterManufactureDate { get; set; }
         public DateOnly DateOfInstallation { get; set; }
         public int InstalledBy { get; set; }
 
