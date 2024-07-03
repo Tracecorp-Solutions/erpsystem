@@ -1,5 +1,7 @@
 
-import React, { useState } from "react";
+import { message } from "antd";
+import axios from "axios";
+import React, { useState,useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 function Bulk() {
@@ -11,9 +13,40 @@ function Bulk() {
   const [meterReader, setMeterReader] = useState("");
   const [fileHasHeader, setFileHasHeader] = useState("");
 
+  //states to handle drop downs
+  const [operationAreas,setOperationAreas] = useState([]);
+  const [branches,setBranches] = useState([]);
+
+
   const handleNavigate = (screen) => {
     navigate("/billingdashboard", { state: { screen } });
   };
+
+  //fetch operation areas
+  const GetOperationAreas = async() =>{
+    try{
+      const resp = await axios.get(`${process.env.REACT_APP_API_URL}/GetOperationAreas`);
+      setOperationAreas(resp.data);
+    }catch(error){
+      message.error(error.response);
+    }
+  };
+
+  //fetch operation areas
+  const GetBranches = async() =>{
+    try{
+      const resp = await axios.get(`${process.env.REACT_APP_API_URL}/GetBranches`);
+      setBranches(resp.data);
+    }catch(error){
+      message.error(error.response);
+    }
+  };
+  useEffect(()=>{
+    GetOperationAreas();
+    GetBranches();
+  },[GetOperationAreas,GetBranches]);
+
+  
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -42,14 +75,14 @@ function Bulk() {
           <div className="flex gap-5 pr-20 font-semibold max-md:flex-wrap max-md:pr-5">
             <div
               onClick={() => handleNavigate("one")}
-              className="cursor-pointer justify-center px-6 py-4 rounded-lg bg-stone-100 text-slate-500 max-md:px-5"
+              className="cursor-pointer justify-center px-6 py-4 bg-white rounded-lg text-neutral-400 max-md:px-5"
               role="button"
             >
               One by One
             </div>
             <div
               onClick={() => handleNavigate("bulk")}
-              className="cursor-pointer justify-center px-6 py-4 bg-white rounded-lg text-neutral-400 max-md:px-5"
+              className="cursor-pointer justify-center px-6 py-4 rounded-lg bg-stone-100 text-slate-500 max-md:px-5"
               role="button"
             >
               Bulk Upload
@@ -60,27 +93,37 @@ function Bulk() {
               <label htmlFor="operationalArea" className="font-semibold text-neutral-600 w-full">
                 Operational Area
               </label>
-              <input
-                type="text"
-                id="operationalArea"
-                value={operationalArea}
-                placeholder="Enter Operational Area"
-                onChange={(e) => setOperationalArea(e.target.value)}
-                className="justify-center items-start px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 w-full"
-              />
+              <select
+              name="operationalArea"
+              value={operationalArea}
+              onChange={(e) => setOperationalArea(e.target.value)}
+              className="justify-center items-start px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 w-full"
+            >
+              <option value="">Select Operation Area..</option>
+              {operationAreas.map((operationarea) => (
+                <option key={operationarea.id} value={operationarea.id}>
+                  {operationarea.name}
+                </option>
+              ))}
+            </select>
             </div>
             <div className="flex flex-col px-5 flex-1">
               <label htmlFor="branchZone" className="font-semibold text-neutral-600 w-full">
                 Branch/Zone
               </label>
-              <input
-                type="text"
-                id="branch"
-                placeholder="Enter your branch"
-                value={branch}
-                onChange={(e) => setBranch(e.target.value)}
-                className="justify-center items-start px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 w-full"
-              />
+              <select
+              name="branch"
+              value={branch}
+              onChange={(e) => setBranch(e.target.value)}
+              className="justify-center items-start px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 w-full"
+            >
+              <option value="">Select Branch..</option>
+              {branches.map((branch) => (
+                <option key={branch.id} value={branch.id}>
+                  {branch.name}
+                </option>
+              ))}
+            </select>
             </div>
           </div>
           <div className="flex gap-4 mt-4 max-md:flex-wrap w-full">

@@ -26,13 +26,16 @@ import AddMeter from "../Application/AddMeter";
 import MeterDetails from "../Application/MeterDetails";
 import EditDocketInitiation from "../Application/EditDocketInitiation";
 import ConnectedCustomers from "../Customer/ConnectedCustomer";
+import CustomerDetails from "../Customer/CustomerDetails";
+import CustomerReadings from "../Customer/CustomerReadings";
+import CustomerBills from "../Customer/CustomerBills";
+import CustomerTransactions from "../Customer/CustomerTransactions";
 
 const BillingDashboard = () => {
   const location = useLocation();
   const { state } = location;
   const screen = state?.screen || "billingdashboard";
   const navigate = useNavigate();
-  const [sidebarOpen, setSidebarOpen] = useState(false);
   useEffect(() => {
     if (sessionStorage.getItem("userid") == null) {
       navigate('/');
@@ -53,7 +56,6 @@ const BillingDashboard = () => {
           <div className="w-full flex justify-center">
             <div className="main-content bg-stone-100 pb-6 rounded-t-3xl">
               <div className="content px-4 sm:px-6 lg:px-8 group-container">
-                {console.log(screen)}
                 {screen === "new-application" && <NewApplicationForm />}
                 {screen === "application" && <ApplicationPage />}
                 {screen === "view-detail" && <ApplicationDetail />}
@@ -73,18 +75,37 @@ const BillingDashboard = () => {
                 {screen === "report-details" && <MeterDetails />}
                 {screen === "edit-docket-initiation" && <EditDocketInitiation />}
                 {screen === "one" && <One />}
-              {screen === "bulk" && <Bulk />}
-              {screen === "servicing" && <Servicing />}
-              {screen === "replacement" && <Replacement />}
-              {screen === "connectedcustomers" && <ConnectedCustomers/>}
+              {screen === "customer-details" && <CustomerDetails/>}
+              {screen === "customer-readings" && <CustomerReadings/>}
+              {screen === "customer-bills" && <CustomerBills/>}
+              {screen === "customer-transactions" && <CustomerTransactions/>}
+
+                {screen === "bulk" && <Bulk />}
+                {screen === "servicing" && <Servicing />}
+                {screen === "replacement" && <Replacement />}
+                {screen === "connectedcustomers" && <ConnectedCustomers/>}
+              </div>
+              <div className="flex flex-col items-start px-6 w-full max-md:px-5 max-md:max-w-full">
+                <time className="text-xs font-medium tracking-wide uppercase text-neutral-400">
+                  3rd May, 2024
+                </time>
+                <h1 className="text-4xl font-semibold leading-[57.6px] text-neutral-600">
+                  Dashboard
+                </h1>
+              </div>
+              <div className="px-6 pt-6">
+                <TopCards />
+              </div>
+              <div className="px-6 pt-6">
+                <Graph />
+              </div>
+              <div className="px-6 pt-6">
+                <RecentPayments />
               </div>
             </div>
           </div>
         </main>
       </>
-
-
-
     </div>}
     </div>
   

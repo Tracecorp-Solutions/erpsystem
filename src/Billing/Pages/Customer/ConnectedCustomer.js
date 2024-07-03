@@ -29,10 +29,32 @@ function ConnectedCustomers() {
     setSearchText(selectedKeys[0]);
     setSearchedColumn(dataIndex);
   };
-
   const handleReset = (clearFilters) => {
     clearFilters();
     setSearchText("");
+  const handleMenuClick = (applicationNumber, action) => {
+    switch (action) {
+      case "view":
+        navigate(`/billingdashboard`, { state: { screen: 'customer-details', applicationNumber } });
+        break;
+      case "generate":
+        // Handle generate job card
+        break;
+      case "print":
+        // Handle print application
+        break;
+      case "contact":
+        // Handle contact applicant
+        break;
+      case "approve":
+        // Handle approve application
+        break;
+      case "assign":
+        // Handle assign surveyor
+        break;
+      default:
+        console.log("Unknown action:", action);
+    }
   };
 
   const getColumnSearchProps = (dataIndex, placeholder) => ({
