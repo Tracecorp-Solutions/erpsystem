@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Modal, Input, Select, DatePicker, Button, message, Spin } from "antd";
+import { Modal, Input, DatePicker, message, Spin } from "antd";
 import axios from "axios";
 import moment from "moment";
-
-const { Option } = Select;
 
 const BillingCustomer = ({
   custRef,
@@ -13,20 +11,14 @@ const BillingCustomer = ({
   const [customerRef, setCustomerRef] = useState("");
   const [customerDetails, setCustomerDetails] = useState({
     fullName: "",
-    balance: "",
-    applicationNo: "",
-    dateConnected: "",
     meterNumber: "",
-    meterSerial: "",
     meterType: "",
     previousReading: "",
-    previousReadingDate: "",
-    tariff: "",
   });
-  const [customer, setCustomer] = useState();
   const [loading, setLoading] = useState(false);
   const [billFrom, setBillFrom] = useState(null);
   const [billTo, setBillTo] = useState(null);
+
   useEffect(() => {
     const fetchCustomerByRef = async () => {
       try {
@@ -42,8 +34,10 @@ const BillingCustomer = ({
         setLoading(false);
       }
     };
-    fetchCustomerByRef();
-  }, []);
+    if (custRef) {
+      fetchCustomerByRef();
+    }
+  }, [custRef]);
 
   const fetchCustomerDetails = async () => {
     if (!customerRef) {
@@ -54,12 +48,7 @@ const BillingCustomer = ({
     try {
       setLoading(true);
       const response = await axios.get(
-        `${process.env.REACT_APP_API_URL}/ValidateCustomer/${customerRef}`,
-        {
-          headers: {
-            Accept: "*/*",
-          },
-        }
+        `${process.env.REACT_APP_API_URL}/ValidateCustomer/${custRef}`
       );
       setCustomerDetails(response.data);
     } catch (error) {
@@ -72,18 +61,16 @@ const BillingCustomer = ({
 
   const handleBillCustomer = async (e) => {
     e.preventDefault();
-    if (!customerRef || !billFrom || !billTo) {
+    if (!custRef || !billFrom || !billTo) {
       message.error("Please enter all required fields");
       return;
     }
 
     const payload = {
-      customerRef: customerRef,
-      billFrom: billFrom.format("YYYY-MM-DD"),
-      billTo: billTo.format("YYYY-MM-DD"),
+      customerRef: custRef,
+      billFrom: moment(billFrom).format("YYYY-MM-DD"),
+      billTo: moment(billTo).format("YYYY-MM-DD"),
     };
-
-    console.log("payloadpayload", payload);
 
     try {
       setLoading(true);
@@ -113,8 +100,6 @@ const BillingCustomer = ({
     fetchCustomerDetails();
   };
 
-  console.log("customerDetails", customerDetails);
-
   return (
     <Modal visible={showBillingCustomer} closable={false} footer={null}>
       <div className="flex flex-col items-center text-base font-semibold leading-6 max-w-[820px] text-neutral-600">
@@ -140,16 +125,6 @@ const BillingCustomer = ({
           onChange={(e) => setCustomerRef(e.target.value)}
           placeholder="Enter Customer Reference"
         />
-
-        {/* Fetch Button */}
-        {/* <Button
-          type="primary"
-          className="mt-4 max-w-full w-[500px] max-md:px-5"
-          onClick={fetchCustomerDetails}
-          disabled={!customerRef || loading}
-        >
-          {loading ? <Spin /> : "Fetch Customer Details"}
-        </Button> */}
 
         {/* Customer Name */}
         <div className="mt-4 max-md:max-w-full">Customer Name</div>
@@ -189,7 +164,7 @@ const BillingCustomer = ({
           className="flex gap-2 justify-between px-4 py-4 mt-2 max-w-full rounded-xl border border-solid border-neutral-500 border-opacity-30 text-neutral-400 w-[500px] max-md:flex-wrap"
           placeholder="Choose Billing Date"
           value={billFrom}
-          onChange={(date, dateString) => setBillFrom(date)} // Use 'date' object directly for 'value'
+          onChange={(date) => setBillFrom(date)} // Use 'date' object directly for 'value'
         />
 
         <div className="mt-4 max-md:max-w-full">Bill To</div>
@@ -197,26 +172,8 @@ const BillingCustomer = ({
           className="flex gap-2 justify-between px-4 py-4 mt-2 max-w-full rounded-xl border border-solid border-neutral-500 border-opacity-30 text-neutral-400 w-[500px] max-md:flex-wrap"
           placeholder="Choose Billing Date"
           value={billTo}
-          onChange={(date, dateString) => setBillTo(date)}
+          onChange={(date) => setBillTo(date)}
         />
-
-        {/* List of Customers */}
-        {/* <div className="mt-4 max-md:max-w-full">
-          List of Connected Customers:
-        </div>
-        {customerList.map((customer) => (
-          <div
-            key={customer.customerRef}
-            className="mt-2 max-w-full rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 w-[500px] max-md:pr-5 px-4 py-2 cursor-pointer"
-            onClick={() => onSelectCustomer(customer.customerRef)} // Set customerRef and fetch details on click
-          >
-            <div>Customer Reference: {customer.customerRef}</div>
-            <div>Full Name: {customer.fullName}</div>
-            <div>Application Number: {customer.applicationNo}</div>
-            <div>Balance: {customer.balance}</div>
-            <div>Date Connected: {customer.dateConnected}</div>
-          </div>
-        ))} */}
 
         {/* Bill Button */}
         <div className="flex justify-center items-center self-stretch px-16 py-6 mt-8 w-full text-white bg-stone-100 max-md:px-5 max-md:max-w-full">
