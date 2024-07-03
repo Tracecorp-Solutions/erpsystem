@@ -15,17 +15,17 @@ namespace Core.Models.Billing
         public string MeterNo { get; set; }
 
         [ForeignKey("MeterSize")]
-        public int MeterSizeId { get; set; }
+        public int? MeterSizeId { get; set; }
 
         [ForeignKey("MeterTypes")]
-        public int MeterTypeId { get; set; }
+        public int? MeterTypeId { get; set; }
 
         [ForeignKey("MeterMake")]
         public int MeterMakeId { get; set; }
 
-        public string Dials { get; set; }
-        public DateOnly ManufactureDate { get; set; }
-        public string MeterlifeDuration { get; set; }
+        public string? Dials { get; set; }
+        public DateOnly? ManufactureDate { get; set; }
+        public string? MeterlifeDuration { get; set; }
         public int InitialReading { get; set; }
         public DateOnly DateOfInstallation { get; set; }
 
