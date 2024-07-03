@@ -112,19 +112,19 @@ function Replacement() {
           meterSizeId: servicingData.meterSizeId,
           meterTypeId: servicingData.meterTypeId,
           dials: servicingData.dials,
-          manufactureDate: servicingData.manufactureDate,
+          //manufactureDate: servicingData.manufactureDate,
           meterlifeDuration: servicingData.meterlifeDuration,
           initialReading: servicingData.initialReading,
-          dateOfInstallation: servicingData.dateOfInstallation,
+         // dateOfInstallation: servicingData.dateOfInstallation,
           installedBy: servicingData.installedBy,
-          isMeterServiced: false,
+          isMeterServiced: true,
           meterMakes: servicingData.meterMakes,
         }
 
       );
-      console.log("Form submitted", response.data);
+      message.success(response.data);
     } catch (error) {
-
+      message.error(error.response.statusText);
       console.error("Error occurred while submitting servicing data:", error);
     }
   };
@@ -264,18 +264,18 @@ function Replacement() {
       <div className="shrink-0 mt-2 h-px border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-opacity-10 max-md:max-w-full" />
       <div className="flex flex-col flex-wrap justify-center px-8 py-6 content-start pb-6 text-base leading-6 w-full">
         <div className="flex gap-4 max-md:flex-wrap w-full">
-          <div className="flex flex-col px-5 flex-1">
+        <div className="flex flex-col px-5 flex-1">
             <div className="font-semibold text-neutral-600 w-full">
-              New Meter Number
+              New Meter Initial Reading
             </div>
             <input
               type="text"
               className="px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 w-full"
-              value={servicingData.meterNo}
+              value={servicingData.initialReading}
               onChange={(e) =>
                 setServicingData({
                   ...servicingData,
-                  meterNo: e.target.value,
+                  initialReading: e.target.value,
                 })
               }
             />
@@ -297,7 +297,7 @@ function Replacement() {
             />
           </div>
         </div>
-        <div className="flex gap-4 mt-4 max-md:flex-wrap w-full">
+        {/* <div className="flex gap-4 mt-4 max-md:flex-wrap w-full">
           <div className="flex flex-col px-5 flex-1">
             <div className="font-semibold text-neutral-600 w-full">
               Meter Type
@@ -339,8 +339,8 @@ function Replacement() {
               ))}
             </select>
           </div>
-        </div>
-        <div className="flex gap-4 mt-4 max-md:flex-wrap w-full">
+        </div> */}
+        {/* <div className="flex gap-4 mt-4 max-md:flex-wrap w-full">
           <div className="flex flex-col px-5 flex-1">
             <div className="font-semibold text-neutral-600 w-full">
               New Meter Dials
@@ -373,8 +373,8 @@ function Replacement() {
               }
             />
           </div>
-        </div>
-        <div className="flex gap-4 mt-4 max-md:flex-wrap w-full">
+        </div> */}
+        {/* <div className="flex gap-4 mt-4 max-md:flex-wrap w-full">
           <div className="flex flex-col px-5 flex-1">
             <div className="font-semibold text-neutral-600 w-full">
               New Meter Life Duration
@@ -393,22 +393,38 @@ function Replacement() {
           </div>
           <div className="flex flex-col px-5 flex-1">
             <div className="font-semibold text-neutral-600 w-full">
-              New Meter Initial Reading
+              New Meter Number
             </div>
             <input
               type="text"
               className="px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 w-full"
-              value={servicingData.initialReading}
+              value={servicingData.meterNo}
               onChange={(e) =>
                 setServicingData({
                   ...servicingData,
-                  initialReading: e.target.value,
+                  meterNo: e.target.value,
                 })
               }
             />
           </div>
-        </div>
+        </div> */}
         <div className="flex gap-4 mt-4 max-md:flex-wrap w-full">
+        <div className="flex flex-col px-5 flex-1">
+            <div className="font-semibold text-neutral-600 w-full">
+              Meter Number
+            </div>
+            <input
+              type="text"
+              className="px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 w-full"
+              value={customerData.meterNumber}
+              onChange={(e) =>
+                setCustomerData({
+                  ...customerData,
+                  meterNumber: e.target.value,
+                })
+              }
+            />
+          </div>
           <div className="flex flex-col px-5 flex-1">
             <div className="font-semibold text-neutral-600 w-full">
               Installed By
@@ -425,7 +441,8 @@ function Replacement() {
               }
             />
           </div>
-          <div className="flex flex-col px-5 flex-1">
+
+          {/* <div className="flex flex-col px-5 flex-1">
             <div className="font-semibold text-neutral-600 w-full">
               Meter Make
             </div>
@@ -446,7 +463,7 @@ function Replacement() {
                 </option>
               ))}
             </select>
-          </div>
+          </div> */}
         </div>
         <div className="flex gap-4 mt-4 max-md:flex-wrap w-full">
 
