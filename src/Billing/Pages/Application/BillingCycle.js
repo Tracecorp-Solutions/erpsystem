@@ -11,6 +11,8 @@ import PaymentDetails from "./Actions/PaymentDetails";
 import BillingCustomer from "./Actions/BillingCustomer";
 import BulkSms from "./Actions/BulkSms";
 import axios from "axios";
+import jsPDF from "jspdf";
+import "jspdf-autotable";
 
 const BillingCycle = () => {
   const [showPaymentForm, setShowPaymentForm] = useState(false);
@@ -120,58 +122,37 @@ const BillingCycle = () => {
   const endIndex = startIndex + pageSize;
   const currentDisplayData = filteredPayments.slice(startIndex, endIndex);
 
-  const handleMenuClick = (applicationNumber, action) => {
-    switch (action) {
-      case "view":
-        navigate(`/billingdashboard`, {
-          state: { screen: "view-detail", applicationNumber },
-        });
-        break;
-      case "generate":
-        // Handle generate job card
-        break;
-      case "print":
-        // Handle print application
-        break;
-      case "contact":
-        // Handle contact applicant
-        break;
-      case "approve":
-        // Handle approve application
-        break;
-      case "assign":
-        // Handle assign surveyor
-        break;
-      default:
-        console.log("Unknown action:", action);
-    }
-  };
+  const generatePDF = () => {
+    // Initialize jsPDF
+    const doc = new jsPDF();
 
-  const handleDropdownMenuClick = (record, e) => {
-    console.log("Clicked on menu item:", e.key);
+    // Define columns for the table
+    const columns = [
+      { title: "Customer Ref", dataKey: "customerRef" },
+      { title: "Customer Name", dataKey: "customerName" },
+      { title: "Payment Ref", dataKey: "paymntReference" },
+      { title: "Amount", dataKey: "amount" },
+      { title: "Payment Date", dataKey: "paymentDate" },
+    ];
 
-    switch (e.key) {
-      case "view":
-        handleShowBillingCustomer(record.customerRef);
-        break;
-      case "generate":
-        // Handle generate job card
-        break;
-      case "print":
-        // Handle print application
-        break;
-      case "contact":
-        // Handle contact applicant
-        break;
-      case "approve":
-        // Handle approve application
-        break;
-      case "assign":
-        // Handle assign surveyor
-        break;
-      default:
-        break;
-    }
+    // Prepare rows from filteredPayments
+    const rows = filteredPayments.map((payment) => ({
+      customerRef: payment.customerRef,
+      customerName: payment.customerName,
+      paymntReference: payment.paymntReference,
+      amount: payment.amount,
+      paymentDate: new Date(payment.paymentDate).toLocaleDateString(),
+    }));
+
+    // AutoTable plugin to generate table
+    doc.autoTable({
+      head: [columns.map((col) => col.title)],
+      body: rows.map((row) => Object.values(row)),
+      startY: 20, // Position from top
+    });
+
+    // Download the PDF
+    doc.save("billing_data.pdf");
   };
 
   const actionMenu = (record) => (
@@ -184,6 +165,31 @@ const BillingCycle = () => {
       <Menu.Item key="assign">Assign Surveyor</Menu.Item>
     </Menu>
   );
+
+  const handleDropdownMenuClick = (record, e) => {
+    switch (e.key) {
+      case "view":
+        handleShowBillingCustomer(record.customerRef);
+        break;
+      case "generate":
+        generatePDF(); // Call generatePDF function
+        break;
+      case "print":
+        // Handle print application
+        break;
+      case "contact":
+        // Handle contact applicant
+        break;
+      case "approve":
+        // Handle approve application
+        break;
+      case "assign":
+        // Handle assign surveyor
+        break;
+      default:
+        break;
+    }
+  };
 
   const renderActions = (text, record) => (
     <Dropdown
