@@ -26,9 +26,10 @@ import AddMeter from "../Application/AddMeter";
 import MeterDetails from "../Application/MeterDetails";
 import EditDocketInitiation from "../Application/EditDocketInitiation";
 import ConnectedCustomers from "../Customer/ConnectedCustomer";
-import TopCards from "./TopCards";
-import Graph from "./Graph";
-import RecentPayments from "./RecentPayments";
+import CustomerDetails from "../Customer/CustomerDetails";
+import CustomerReadings from "../Customer/CustomerReadings";
+import CustomerBills from "../Customer/CustomerBills";
+import CustomerTransactions from "../Customer/CustomerTransactions";
 
 const BillingDashboard = () => {
   const location = useLocation();
@@ -74,6 +75,11 @@ const BillingDashboard = () => {
                 {screen === "report-details" && <MeterDetails />}
                 {screen === "edit-docket-initiation" && <EditDocketInitiation />}
                 {screen === "one" && <One />}
+              {screen === "customer-details" && <CustomerDetails/>}
+              {screen === "customer-readings" && <CustomerReadings/>}
+              {screen === "customer-bills" && <CustomerBills/>}
+              {screen === "customer-transactions" && <CustomerTransactions/>}
+
                 {screen === "bulk" && <Bulk />}
                 {screen === "servicing" && <Servicing />}
                 {screen === "replacement" && <Replacement />}
