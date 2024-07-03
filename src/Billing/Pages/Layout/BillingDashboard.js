@@ -30,6 +30,7 @@ import CustomerDetails from "../Customer/CustomerDetails";
 import CustomerReadings from "../Customer/CustomerReadings";
 import CustomerBills from "../Customer/CustomerBills";
 import CustomerTransactions from "../Customer/CustomerTransactions";
+import DashboardBilling from "../Dashboard/DashboardBilling";
 
 const BillingDashboard = () => {
   const location = useLocation();
@@ -45,6 +46,8 @@ const BillingDashboard = () => {
 
   return (
     <div>
+      {console.log("***************")}
+      {console.log(screen)}
       {screen === "invoice-details" ? <InvoiceDetails /> :   <div className="flex flex-col md:flex-row w-full">
       
       <>
@@ -56,6 +59,8 @@ const BillingDashboard = () => {
           <div className="w-full flex justify-center">
             <div className="main-content bg-stone-100 pb-6 rounded-t-3xl">
               <div className="content px-4 sm:px-6 lg:px-8 group-container">
+                
+                {screen === "billingdashboard" && <DashboardBilling/>}
                 {screen === "new-application" && <NewApplicationForm />}
                 {screen === "application" && <ApplicationPage />}
                 {screen === "view-detail" && <ApplicationDetail />}
@@ -84,23 +89,6 @@ const BillingDashboard = () => {
                 {screen === "servicing" && <Servicing />}
                 {screen === "replacement" && <Replacement />}
                 {screen === "connectedcustomers" && <ConnectedCustomers/>}
-              </div>
-              <div className="flex flex-col items-start px-6 w-full max-md:px-5 max-md:max-w-full">
-                <time className="text-xs font-medium tracking-wide uppercase text-neutral-400">
-                  3rd May, 2024
-                </time>
-                <h1 className="text-4xl font-semibold leading-[57.6px] text-neutral-600">
-                  Dashboard
-                </h1>
-              </div>
-              <div className="px-6 pt-6">
-                <TopCards />
-              </div>
-              <div className="px-6 pt-6">
-                <Graph />
-              </div>
-              <div className="px-6 pt-6">
-                <RecentPayments />
               </div>
             </div>
           </div>

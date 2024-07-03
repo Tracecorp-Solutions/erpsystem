@@ -372,7 +372,7 @@ function SideNav() {
             <Users className="shrink-0 self-start w-6 aspect-square" />
             <button
               onClick={() =>
-                navigate("/Dashboardlayout", { state: { screen: "customer" } })
+                navigate("/billingdashboard", { state: { screen: "customer" } })
               }
             >
               Billing & Invoice
