@@ -22,7 +22,7 @@ namespace Trace.Controllers
             try
             {
                 await _meterManagementRepository.AddMeterServicing(meterServicing);
-                return Ok();
+                return Ok("Meter has been serviced/ replaced successfully");
             }catch(ArgumentException ex)
             {
                 return BadRequest(ex.Message);
