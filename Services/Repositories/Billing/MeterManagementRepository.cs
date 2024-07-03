@@ -41,17 +41,22 @@ namespace Services.Repositories.Billing
             if (meterAssigned != null)
                 throw new ArgumentException("Meter is already assigned to a customer");
 
-            //check whether meter size exists
-            var meterSize = _context.MeterSizes.FirstOrDefault(m => m.Id == meterServicing.MeterSizeId);
+            if (meterServicing.IsMeterServiced) 
+            {
+                //check whether meter size exists
+                var meterSize = _context.MeterSizes.FirstOrDefault(m => m.Id == meterServicing.MeterSizeId);
 
-            if (meterSize == null)
-                throw new ArgumentException("Meter size does not exist");
+                if (meterSize == null)
+                    throw new ArgumentException("Meter size does not exist");
 
-            //check whether meter type exists
-            var meterType = _context.MeterTypes.FirstOrDefault(m => m.Id == meterServicing.MeterTypeId);
+                //check whether meter type exists
+                var meterType = _context.MeterTypes.FirstOrDefault(m => m.Id == meterServicing.MeterTypeId);
 
-            if (meterType == null)
-                throw new ArgumentException("Meter type does not exist");
+                if (meterType == null)
+                    throw new ArgumentException("Meter type does not exist");
+            }
+
+            
 
             //check whether user exists
             var user = _context.Users.FirstOrDefault(u => u.Id == meterServicing.InstalledBy);
