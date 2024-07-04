@@ -14,54 +14,59 @@ import axios from "axios";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 
-// Define MyComponent here
-function MyComponent() {
+function MyComponent({ payments }) {
   return (
     <div className="flex flex-col justify-center px-8 py-6 text-base max-w-[550px] max-md:px-5">
-      <div className="flex flex-col items-center py-4 text-white bg-slate-500 leading-[160%] max-md:max-w-full">
-        <div className="self-stretch text-2xl font-semibold text-center max-md:max-w-full">
-          {" "}
-          Ogun State Water Corporation
+      {payments.map((payment) => (
+        <div key={payment.customerBillId} className="mb-8">
+          <div className="flex flex-col items-center py-4 text-white bg-slate-500 leading-[160%] max-md:max-w-full">
+            <div className="self-stretch text-2xl font-semibold text-center max-md:max-w-full">
+              Ogun State Water Corporation
+            </div>
+            <div className="mt-4 text-center">Location: Abeokuta</div>
+            <div className="mt-1">
+              Phone: 08031230137 / 08139936865
+            </div>
+            <div className="mt-1">
+              Email: ogunwater2018@yahoo.com
+            </div>
+            <div className="mt-1 text-center">
+              Website: http://ogunwater.org.ng
+            </div>
+          </div>
+          <div className="mt-6 leading-7 text-neutral-600 max-md:max-w-full">
+            <span className="font-semibold">Customer Information:</span> <br />
+            ----------------------------------------------------------------- <br />
+            Customer Name: {payment.customerName} <br />
+            Account Number: {payment.customerRef} <br />
+            Service Address: {payment.customer.application.streetAddress} <br />
+            Billing Date: {new Date(payment.billDate).toLocaleDateString()} <br />
+            Due Date: {new Date(payment.paymentDate).toLocaleDateString()}
+            ----------------------------------------------------------------- <br />
+            <span className="font-semibold">Water Usage Details: </span> <br />
+            ----------------------------------------------------------------- <br />
+            Meter Number: {payment.meterNumber} <br />
+            Previous Reading (June 1, 2024): {payment.previousReading} m³ <br />
+            Current Reading (July 1, 2024): {payment.currentReading} m³ <br />
+            Usage: {payment.consuption} m³ Rate per m³: ₦{payment.customer.customerTarrif.tarrifAmount} <br />
+            Usage Charge: ₦{payment.amount}
+            ----------------------------------------------------------------- <br />
+            <span className="font-semibold">Bill Summary: </span> <br />
+            ----------------------------------------------------------------- <br />
+            Previous Balance: ₦{payment.previousBalance} <br />
+            Payments Received: ₦{payment.totalAmountPaid} <br />
+            Adjustments: ₦{payment.adjustments} <br />
+            Balance Forward: ₦{payment.amount} <br />
+            <span className="font-semibold">Current Charges: </span> <br />
+            - Water Usage Charge: ₦{payment.amount} <br />
+            - Service Charge: ₦{payment.amount} <br />
+            - Other Charges: ₦{payment.amount} <br />
+            Total Current Charges: ₦{payment.amount} <br />
+            <span className="font-semibold">Total Amount Due: ₦{payment.amount} </span>
+            -----------------------------------------------------------------
+          </div>
         </div>
-        <div className="mt-4 text-center">Location: Abeokuta</div>
-        <div className="mt-1">Phone: 08031230137 / 08139936865</div>
-        <div className="mt-1">Email: ogunwater2018@yahoo.com</div>
-        <div className="mt-1 text-center">Website: http://ogunwater.org.ng</div>
-      </div>
-      <div className="mt-6 leading-7 text-neutral-600 max-md:max-w-full">
-        <span className="font-semibold">Customer Information:</span>{" "}
-        -----------------------------------------------------------------
-        <br />
-        Customer Name: Grace Eze <br />
-        Account Number: 123456789 <br />
-        Service Address: 123 Main Street, Abeokuta, Ogun State <br />
-        Billing Date: July 1, 2024 <br />
-        Due Date: July 31, 2024
-        -----------------------------------------------------------------
-        <br />
-        <span className="font-semibold">Water Usage Details: </span>
-        ----------------------------------------------------------------- Meter
-        Number: 987654321 <br />
-        Previous Reading (June 1, 2024): 5000 m³ <br />
-        Current Reading (July 1, 2024): 5200 m³ <br />
-        Usage: 200 m³ Rate per m³: ₦37.50 <br />
-        Usage Charge: ₦7,500
-        -----------------------------------------------------------------
-        <br />
-        <span className="font-semibold">Bill Summary: </span>
-        <br />
-        -----------------------------------------------------------------
-        Previous Balance: ₦10,000 <br />
-        Payments Received: ₦5,000 <br />
-        Adjustments: ₦0 <br />
-        Balance Forward: ₦5,000 <br />
-        <span className="font-semibold">Current Charges: </span> <br />- Water
-        Usage Charge: ₦7,500 <br />- Service Charge: ₦1,500 <br />- Other
-        Charges: ₦500 <br />
-        Total Current Charges: ₦9,500 <br />
-        <span className="font-semibold">Total Amount Due: ₦14,500 </span>
-        -----------------------------------------------------------------
-      </div>
+      ))}
     </div>
   );
 }
@@ -289,6 +294,8 @@ const BillingCycle = () => {
     },
   ];
 
+  console.log("payments payments", payments);
+
   return (
     <div className="md:px-6 md:py-5 rounded-3xl bg-stone-100">
       <div className="mb-6 md:flex md:justify-between md:items-center md:mb-6 font-semibold text-4xl text-neutral-600">
@@ -361,7 +368,7 @@ const BillingCycle = () => {
       />
 
       {/* Display MyComponent below the Table */}
-      <MyComponent />
+      <MyComponent payments={payments} />
     </div>
   );
 };
