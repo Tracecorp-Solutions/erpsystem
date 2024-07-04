@@ -223,7 +223,7 @@ const TrialBalance = () => {
           $3,120
         </div>
         <div className="justify-center font-semibold whitespace-nowrap bg-white">
-          $1,120
+          $3,120
         </div>
       </div>
       <div className="shrink-0 mt-2 h-px border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-opacity-10 max-md:max-w-full" />
