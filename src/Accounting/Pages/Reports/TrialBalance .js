@@ -217,39 +217,13 @@ const TrialBalance = () => {
       <div className="flex gap-5 justify-between px-6 py-3 mt-2 text-base leading-6 rounded-3xl text-neutral-600 max-md:flex-wrap max-md:px-5 max-md:max-w-full">
         <div className="justify-center bg-white">Petty Cash</div>
         <div className="text-ellipsis">
-          Pay for developer Facilitation
-        </div>
-        <div className="justify-center font-semibold whitespace-nowrap bg-white">
-          $3,120
+          Pay Smart TV Screen for developer presentations
         </div>
         <div className="justify-center font-semibold whitespace-nowrap bg-white">
           $1,120
         </div>
-      </div>
-      <div className="shrink-0 mt-2 h-px border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-opacity-10 max-md:max-w-full" />
-      <div className="flex gap-5 justify-between px-6 py-3 mt-2 text-base leading-6 rounded-3xl text-neutral-600 max-md:flex-wrap max-md:px-5 max-md:max-w-full">
-        <div className="justify-center bg-white">Bank</div>
-        <div className="text-ellipsis">
-         Per Diem
-        </div>
         <div className="justify-center font-semibold whitespace-nowrap bg-white">
-          $1,000
-        </div>
-        <div className="justify-center font-semibold whitespace-nowrap bg-white">
-          $1,000
-        </div>
-      </div>
-      <div className="shrink-0 mt-2 h-px border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-opacity-10 max-md:max-w-full" />
-      <div className="flex gap-5 justify-between px-6 py-3 mt-2 text-base leading-6 rounded-3xl text-neutral-600 max-md:flex-wrap max-md:px-5 max-md:max-w-full">
-        <div className="justify-center bg-white">Bank</div>
-        <div className="text-ellipsis">
-          Pay for meals 
-        </div>
-        <div className="justify-center font-semibold whitespace-nowrap bg-white">
-          $920
-        </div>
-        <div className="justify-center font-semibold whitespace-nowrap bg-white">
-          $920
+          $1,120
         </div>
       </div>
       <div className="shrink-0 mt-2 h-px border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-opacity-10 max-md:max-w-full" />
@@ -265,18 +239,69 @@ const TrialBalance = () => {
           $1,120
         </div>
       </div>
-  
       <div className="shrink-0 mt-2 h-px border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-opacity-10 max-md:max-w-full" />
       <div className="flex gap-5 justify-between px-6 py-3 mt-2 text-base leading-6 rounded-3xl text-neutral-600 max-md:flex-wrap max-md:px-5 max-md:max-w-full">
-        <div className="justify-center bg-white">Bank</div>
+        <div className="justify-center bg-white">Petty Cash</div>
         <div className="text-ellipsis">
-          Pay Salary
+          Pay Smart TV Screen for developer presentations
         </div>
         <div className="justify-center font-semibold whitespace-nowrap bg-white">
-          $3,120
+          $1,120
         </div>
         <div className="justify-center font-semibold whitespace-nowrap bg-white">
-          $3,120
+          $1,120
+        </div>
+      </div>
+      <div className="shrink-0 mt-2 h-px border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-opacity-10 max-md:max-w-full" />
+      <div className="flex gap-5 justify-between px-6 py-3 mt-2 text-base leading-6 rounded-3xl text-neutral-600 max-md:flex-wrap max-md:px-5 max-md:max-w-full">
+        <div className="justify-center bg-white">Petty Cash</div>
+        <div className="text-ellipsis">
+          Pay Smart TV Screen for developer presentations
+        </div>
+        <div className="justify-center font-semibold whitespace-nowrap bg-white">
+          $1,120
+        </div>
+        <div className="justify-center font-semibold whitespace-nowrap bg-white">
+          $1,120
+        </div>
+      </div>
+      <div className="shrink-0 mt-2 h-px border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-opacity-10 max-md:max-w-full" />
+      <div className="flex gap-5 justify-between px-6 py-3 mt-2 text-base leading-6 rounded-3xl text-neutral-600 max-md:flex-wrap max-md:px-5 max-md:max-w-full">
+        <div className="justify-center bg-white">Petty Cash</div>
+        <div className="text-ellipsis">
+          Pay Smart TV Screen for developer presentations
+        </div>
+        <div className="justify-center font-semibold whitespace-nowrap bg-white">
+          $1,120
+        </div>
+        <div className="justify-center font-semibold whitespace-nowrap bg-white">
+          $1,120
+        </div>
+      </div>
+      <div className="shrink-0 mt-2 h-px border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-opacity-10 max-md:max-w-full" />
+      <div className="flex gap-5 justify-between px-6 py-3 mt-2 text-base leading-6 rounded-3xl text-neutral-600 max-md:flex-wrap max-md:px-5 max-md:max-w-full">
+        <div className="justify-center bg-white">Petty Cash</div>
+        <div className="text-ellipsis">
+          Pay Smart TV Screen for developer presentations
+        </div>
+        <div className="justify-center font-semibold whitespace-nowrap bg-white">
+          $1,120
+        </div>
+        <div className="justify-center font-semibold whitespace-nowrap bg-white">
+          $1,120
+        </div>
+      </div>
+      <div className="shrink-0 mt-2 h-px border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-opacity-10 max-md:max-w-full" />
+      <div className="flex gap-5 justify-between px-6 py-3 mt-2 text-base leading-6 rounded-3xl text-neutral-600 max-md:flex-wrap max-md:px-5 max-md:max-w-full">
+        <div className="justify-center bg-white">Petty Cash</div>
+        <div className="text-ellipsis">
+          Pay Smart TV Screen for developer presentations
+        </div>
+        <div className="justify-center font-semibold whitespace-nowrap bg-white">
+          $1,120
+        </div>
+        <div className="justify-center font-semibold whitespace-nowrap bg-white">
+          $1,120
         </div>
       </div>
       <div className="shrink-0 mt-2 h-px border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-opacity-10 max-md:max-w-full" />
