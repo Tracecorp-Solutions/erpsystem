@@ -215,12 +215,12 @@ const TrialBalance = () => {
       </div>
       <div className="shrink-0 mt-2 h-px border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-opacity-10 max-md:max-w-full" />
       <div className="flex gap-5 justify-between px-6 py-3 mt-2 text-base leading-6 rounded-3xl text-neutral-600 max-md:flex-wrap max-md:px-5 max-md:max-w-full">
-        <div className="justify-center bg-white">Petty Cash</div>
+        <div className="justify-center bg-white">Bank Deposit</div>
         <div className="text-ellipsis">
-          Pay Smart TV Screen for developer presentations
+          Pay for meals for developer presentations
         </div>
         <div className="justify-center font-semibold whitespace-nowrap bg-white">
-          $1,120
+          $3,120
         </div>
         <div className="justify-center font-semibold whitespace-nowrap bg-white">
           $1,120
@@ -228,12 +228,38 @@ const TrialBalance = () => {
       </div>
       <div className="shrink-0 mt-2 h-px border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-opacity-10 max-md:max-w-full" />
       <div className="flex gap-5 justify-between px-6 py-3 mt-2 text-base leading-6 rounded-3xl text-neutral-600 max-md:flex-wrap max-md:px-5 max-md:max-w-full">
-        <div className="justify-center bg-white">Petty Cash</div>
+        <div className="justify-center bg-white">Bank Deposit</div>
         <div className="text-ellipsis">
-          Pay Smart TV Screen for developer presentations
+          Pay for stationery for developer presentations
         </div>
         <div className="justify-center font-semibold whitespace-nowrap bg-white">
-          $1,120
+          $3,000
+        </div>
+        <div className="justify-center font-semibold whitespace-nowrap bg-white">
+          $3,000
+        </div>
+      </div>
+      <div className="shrink-0 mt-2 h-px border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-opacity-10 max-md:max-w-full" />
+      <div className="flex gap-5 justify-between px-6 py-3 mt-2 text-base leading-6 rounded-3xl text-neutral-600 max-md:flex-wrap max-md:px-5 max-md:max-w-full">
+        <div className="justify-center bg-white">Petty Cash</div>
+        <div className="text-ellipsis">
+          Pay digital TV Screen for developer presentations
+        </div>
+        <div className="justify-center font-semibold whitespace-nowrap bg-white">
+          $9,020
+        </div>
+        <div className="justify-center font-semibold whitespace-nowrap bg-white">
+          $9,020
+        </div>
+      </div>
+      <div className="shrink-0 mt-2 h-px border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-opacity-10 max-md:max-w-full" />
+      <div className="flex gap-5 justify-between px-6 py-3 mt-2 text-base leading-6 rounded-3xl text-neutral-600 max-md:flex-wrap max-md:px-5 max-md:max-w-full">
+        <div className="justify-center bg-white">Bank Deposit</div>
+        <div className="text-ellipsis">
+          Pay employee salary  for developer presentations
+        </div>
+        <div className="justify-center font-semibold whitespace-nowrap bg-white">
+          $2,120
         </div>
         <div className="justify-center font-semibold whitespace-nowrap bg-white">
           $1,120
@@ -241,33 +267,7 @@ const TrialBalance = () => {
       </div>
       <div className="shrink-0 mt-2 h-px border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-opacity-10 max-md:max-w-full" />
       <div className="flex gap-5 justify-between px-6 py-3 mt-2 text-base leading-6 rounded-3xl text-neutral-600 max-md:flex-wrap max-md:px-5 max-md:max-w-full">
-        <div className="justify-center bg-white">Petty Cash</div>
-        <div className="text-ellipsis">
-          Pay Smart TV Screen for developer presentations
-        </div>
-        <div className="justify-center font-semibold whitespace-nowrap bg-white">
-          $1,120
-        </div>
-        <div className="justify-center font-semibold whitespace-nowrap bg-white">
-          $1,120
-        </div>
-      </div>
-      <div className="shrink-0 mt-2 h-px border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-opacity-10 max-md:max-w-full" />
-      <div className="flex gap-5 justify-between px-6 py-3 mt-2 text-base leading-6 rounded-3xl text-neutral-600 max-md:flex-wrap max-md:px-5 max-md:max-w-full">
-        <div className="justify-center bg-white">Petty Cash</div>
-        <div className="text-ellipsis">
-          Pay Smart TV Screen for developer presentations
-        </div>
-        <div className="justify-center font-semibold whitespace-nowrap bg-white">
-          $1,120
-        </div>
-        <div className="justify-center font-semibold whitespace-nowrap bg-white">
-          $1,120
-        </div>
-      </div>
-      <div className="shrink-0 mt-2 h-px border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-opacity-10 max-md:max-w-full" />
-      <div className="flex gap-5 justify-between px-6 py-3 mt-2 text-base leading-6 rounded-3xl text-neutral-600 max-md:flex-wrap max-md:px-5 max-md:max-w-full">
-        <div className="justify-center bg-white">Petty Cash</div>
+        <div className="justify-center bg-white">Bank deposit</div>
         <div className="text-ellipsis">
           Pay Smart TV Screen for developer presentations
         </div>
