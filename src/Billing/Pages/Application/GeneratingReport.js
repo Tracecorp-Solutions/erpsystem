@@ -28,7 +28,7 @@ const GeneratingReport = ({ record, generatePDF }) => {
             <div className="flex flex-col justify-center px-8 py-6 text-base max-w-[550px] max-md:px-5">
               <div className="flex flex-col items-center py-4 text-white bg-slate-500 leading-[160%] max-md:max-w-full">
                 <div className="self-stretch text-2xl font-semibold text-center max-md:max-w-full">
-                  Ogun State Water Corporation
+                  Trace ERP Water Corporation
                 </div>
                 <div className="mt-4 text-center">Location: Abeokuta</div>
                 <div className="mt-1">
