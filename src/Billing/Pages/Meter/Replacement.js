@@ -148,8 +148,11 @@ function Replacement() {
             Meter Replacement
           </div>
         </div>
-        <div className="justify-center px-6 py-4 bg-white rounded-lg max-md:px-5">
-          Approve Requests
+        <div  onClick={() => handleNavigate("history")}
+            className="justify-center px-6 py-4 rounded-lg bg-stone-100 text-slate-500 max-md:px-5"
+            role="button">
+          Meter History
+    
         </div>
       </div>
       <div className="shrink-0 mt-4 h-px border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-opacity-10 max-md:max-w-full" />
