@@ -1,25 +1,13 @@
-import React from "react";
+import React,{useEffect} from "react";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 
 const GeneratingReport = ({ record, generatePDF }) => {
-  const handlePrint = () => {
-    const input = document.getElementById("pdf-content");
 
-    html2canvas(input)
-      .then((canvas) => {
-        const imgData = canvas.toDataURL("image/png");
-        const pdf = new jsPDF();
-        const pdfWidth = pdf.internal.pageSize.getWidth();
-        const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
-        pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
-        pdf.save("download.pdf");
-      })
-      .catch((error) => {
-        console.error("Error generating PDF:", error);
-      });
-  };
-
+    useEffect(()=>{
+        record = sessionStorage.getItem("setrecord");
+        console.log("set record",record);
+    },[]);
   return (
     <div id="pdf-content" className="flex items-center justify-center">
       {record ? (
