@@ -196,25 +196,6 @@ function SideNav() {
             <div className="pt-3">
               <div
                 className={`flex gap-2 py-3 mt-2 whitespace-nowrap rounded-xl ${
-                  location.state?.dropdown === "billing"
-                    ? "bg-active-green txt-color-blue font-semibold px-4"
-                    : "bg-none"
-                }`}
-              >
-                <Minus className="shrink-0 self-start w-6 aspect-square" />
-                <button
-                   onClick={() =>
-                    handleNavigation("/billingdashboard", {
-                      dropdown: "billing",
-                      screen: "billing",
-                    })
-                  }
-                >
-                  Billing Cycle
-                </button>
-              </div>
-              <div
-                className={`flex gap-2 py-3 mt-2 whitespace-nowrap rounded-xl ${
                   location.state?.dropdown === "adjustment"
                     ? "bg-active-green txt-color-blue font-semibold px-4"
                     : "bg-none"
@@ -357,9 +338,28 @@ function SideNav() {
                       })
                     }
                   >
-                    Customers to Bill
+                   Connected  Customers
                   </button>
                 </div>
+                <div
+                className={`flex gap-2 py-3 mt-2 whitespace-nowrap rounded-xl ${
+                  location.state?.dropdown === "billing"
+                    ? "bg-active-green txt-color-blue font-semibold px-4"
+                    : "bg-none"
+                }`}
+              >
+                <Minus className="shrink-0 self-start w-6 aspect-square" />
+                <button
+                   onClick={() =>
+                    handleNavigation("/billingdashboard", {
+                      dropdown: "billing",
+                      screen: "billing",
+                    })
+                  }
+                >
+                 Custmoner Bills
+                </button>
+              </div>
             </div>
           )}
           <div className="mt-3 py-3 w-full">
