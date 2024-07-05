@@ -149,7 +149,7 @@ function Replacement() {
           </div>
         </div>
         <div  onClick={() => handleNavigate("history")}
-            className="justify-center px-6 py-4 rounded-lg bg-stone-200 text-slate-500 max-md:px-5"
+            className="justify-center px-6 py-4 rounded-lg bg-stone-100 text-slate-500 max-md:px-5"
             role="button">
           Meter History
     
