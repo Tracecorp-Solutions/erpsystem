@@ -13,65 +13,8 @@ import BulkSms from "./Actions/BulkSms";
 import axios from "axios";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
-
-function MyComponent({ payments }) {
-  return (
-    <div className="flex items-center justify-center ">
-      <div className="flex flex-col justify-center px-8 py-6 text-base max-w-[550px] max-md:px-5">
-        {payments.map((payment) => (
-          <div key={payment.customerBillId} className="mb-8">
-            <div className="flex flex-col items-center py-4 text-white bg-slate-500 leading-[160%] max-md:max-w-full">
-              <div className="self-stretch text-2xl font-semibold text-center max-md:max-w-full">
-                Ogun State Water Corporation
-              </div>
-              <div className="mt-4 text-center">Location: Abeokuta</div>
-              <div className="mt-1">
-                Phone: 08031230137 / 08139936865
-              </div>
-              <div className="mt-1">
-                Email: ogunwater2018@yahoo.com
-              </div>
-              <div className="mt-1 text-center">
-                Website: http://ogunwater.org.ng
-              </div>
-            </div>
-            <div className="mt-6 leading-7 text-neutral-600 max-md:max-w-full">
-              <span className="font-semibold">Customer Information:</span> <br />
-              ----------------------------------------------------------------- <br />
-              Customer Name: {payment.customerName} <br />
-              Account Number: {payment.customerRef} <br />
-              Service Address: {payment.customer.application.streetAddress} <br />
-              Billing Date: {new Date(payment.billDate).toLocaleDateString()} <br />
-              Due Date: {new Date(payment.paymentDate).toLocaleDateString()}
-              ----------------------------------------------------------------- <br />
-              <span className="font-semibold">Water Usage Details: </span> <br />
-              ----------------------------------------------------------------- <br />
-              Meter Number: {payment.meterNumber} <br />
-              Previous Reading (June 1, 2024): {payment.previousReading} m³ <br />
-              Current Reading (July 1, 2024): {payment.currentReading} m³ <br />
-              Usage: {payment.consuption} m³ Rate per m³: ₦{payment.customer.customerTarrif.tarrifAmount} <br />
-              Usage Charge: ₦{payment.amount}
-              ----------------------------------------------------------------- <br />
-              <span className="font-semibold">Bill Summary: </span> <br />
-              ----------------------------------------------------------------- <br />
-              Previous Balance: ₦{payment.previousBalance} <br />
-              Payments Received: ₦{payment.totalAmountPaid} <br />
-              Adjustments: ₦{payment.adjustments} <br />
-              Balance Forward: ₦{payment.amount} <br />
-              <span className="font-semibold">Current Charges: </span> <br />
-              - Water Usage Charge: ₦{payment.amount} <br />
-              - Service Charge: ₦{payment.amount} <br />
-              - Other Charges: ₦{payment.amount} <br />
-              Total Current Charges: ₦{payment.amount} <br />
-              <span className="font-semibold">Total Amount Due: ₦{payment.amount} </span>
-              -----------------------------------------------------------------
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
+import html2canvas from "html2canvas";
+import GeneratingReport from "./GeneratingReport";
 
 const BillingCycle = () => {
   const [showPaymentForm, setShowPaymentForm] = useState(false);
@@ -85,6 +28,7 @@ const BillingCycle = () => {
   const [customerRef, setCustomerRef] = useState("");
   const [showBulkSms, setShowBulkSms] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
+  const [selectedRecord, setSelectedRecord] = useState(null); // State to hold selected record
   const pageSize = 4;
 
   const navigate = useNavigate();
@@ -181,36 +125,10 @@ const BillingCycle = () => {
   const endIndex = startIndex + pageSize;
   const currentDisplayData = filteredPayments.slice(startIndex, endIndex);
 
-  const generatePDF = () => {
-    // Initialize jsPDF
+  const generatePDF = (record) => {
     const doc = new jsPDF();
-
-    // Define columns for the table
-    const columns = [
-      { title: "Customer Ref", dataKey: "customerRef" },
-      { title: "Customer Name", dataKey: "customerName" },
-      { title: "Payment Ref", dataKey: "paymntReference" },
-      { title: "Amount", dataKey: "amount" },
-      { title: "Payment Date", dataKey: "paymentDate" },
-    ];
-
-    // Prepare rows from filteredPayments
-    const rows = filteredPayments.map((payment) => ({
-      customerRef: payment.customerRef,
-      customerName: payment.customerName,
-      paymntReference: payment.paymntReference,
-      amount: payment.amount,
-      paymentDate: new Date(payment.paymentDate).toLocaleDateString(),
-    }));
-
-    // AutoTable plugin to generate table
-    doc.autoTable({
-      head: [columns.map((col) => col.title)],
-      body: rows.map((row) => Object.values(row)),
-      startY: 20, // Position from top
-    });
-
-    // Download the PDF
+    console.log("Generating PDF for record:", record);
+    // Customize PDF generation based on the selected record
     doc.save("billing_data.pdf");
   };
 
@@ -226,12 +144,13 @@ const BillingCycle = () => {
   );
 
   const handleDropdownMenuClick = (record, e) => {
+    console.log("Clicked record:", record);
     switch (e.key) {
       case "view":
         handleShowBillingCustomer(record.customerRef);
         break;
       case "generate":
-        generatePDF(); // Call generatePDF function
+        setSelectedRecord(record); // Set selected record for PDF generation
         break;
       case "print":
         // Handle print application
@@ -296,8 +215,6 @@ const BillingCycle = () => {
     },
   ];
 
-  console.log("payments payments", payments);
-
   return (
     <div className="md:px-6 md:py-5 rounded-3xl bg-stone-100">
       <div className="mb-6 md:flex md:justify-between md:items-center md:mb-6 font-semibold text-4xl text-neutral-600">
@@ -329,7 +246,7 @@ const BillingCycle = () => {
         </div>
         <div className="p-6 overflow-x-auto">
           <Table
-            dataSource={payments}
+            dataSource={currentDisplayData}
             columns={columns}
             rowKey="customerBillId"
             pagination={false}
@@ -369,8 +286,8 @@ const BillingCycle = () => {
         handleCancelBulkSms={handleCancelBulkSms}
       />
 
-      {/* Display MyComponent below the Table */}
-      <MyComponent payments={payments} />
+      {/* Pass selectedRecord and generatePDF function to GeneratingReport */}
+      <GeneratingReport record={selectedRecord} generatePDF={generatePDF} />
     </div>
   );
 };
