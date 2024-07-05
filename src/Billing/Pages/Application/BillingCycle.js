@@ -126,11 +126,22 @@ const BillingCycle = () => {
   const currentDisplayData = filteredPayments.slice(startIndex, endIndex);
 
   const generatePDF = (record) => {
-    const doc = new jsPDF();
-    console.log("Generating PDF for record:", record);
-    // Customize PDF generation based on the selected record
-    doc.save("billing_data.pdf");
+    const input = document.getElementById("pdf-content");
+  
+    html2canvas(input)
+      .then((canvas) => {
+        const imgData = canvas.toDataURL("image/png");
+        const pdf = new jsPDF();
+        const pdfWidth = pdf.internal.pageSize.getWidth();
+        const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+        pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+        pdf.save("billing_data.pdf");
+      })
+      .catch((error) => {
+        console.error("Error generating PDF:", error);
+      });
   };
+  
 
   const actionMenu = (record) => (
     <Menu onClick={(e) => handleDropdownMenuClick(record, e)}>
@@ -150,7 +161,8 @@ const BillingCycle = () => {
         handleShowBillingCustomer(record.customerRef);
         break;
       case "generate":
-        setSelectedRecord(record); // Set selected record for PDF generation
+        setSelectedRecord(record);
+        generatePDF(record);
         break;
       case "print":
         // Handle print application
@@ -168,6 +180,7 @@ const BillingCycle = () => {
         break;
     }
   };
+  
 
   const renderActions = (text, record) => (
     <Dropdown
