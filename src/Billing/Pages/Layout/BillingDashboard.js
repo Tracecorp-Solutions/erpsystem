@@ -32,6 +32,8 @@ import CustomerBills from "../Customer/CustomerBills";
 import CustomerTransactions from "../Customer/CustomerTransactions";
 import DashboardBilling from "../Dashboard/DashboardBilling";
 import History from "../Meter/History";
+import CustomerTariffStructure from "../Application/CustomerTariffStructure";
+import CustomerStatement from "../Application/CustomerStatement";
 
 const BillingDashboard = () => {
   const location = useLocation();
@@ -90,6 +92,8 @@ const BillingDashboard = () => {
                 {screen === "servicing" && <Servicing />}
                 {screen === "replacement" && <Replacement />}
                 {screen === "connectedcustomers" && <ConnectedCustomers/>}
+                {screen === "tariffs" && <CustomerTariffStructure/>}
+                {screen === "customer-statement" && <CustomerStatement/>}
               </div>
             </div>
           </div>
