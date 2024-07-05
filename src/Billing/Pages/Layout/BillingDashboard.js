@@ -31,6 +31,7 @@ import CustomerReadings from "../Customer/CustomerReadings";
 import CustomerBills from "../Customer/CustomerBills";
 import CustomerTransactions from "../Customer/CustomerTransactions";
 import DashboardBilling from "../Dashboard/DashboardBilling";
+import History from "../Meter/History";
 
 const BillingDashboard = () => {
   const location = useLocation();
@@ -84,7 +85,7 @@ const BillingDashboard = () => {
               {screen === "customer-readings" && <CustomerReadings/>}
               {screen === "customer-bills" && <CustomerBills/>}
               {screen === "customer-transactions" && <CustomerTransactions/>}
-
+                {screen === "history" && <History/>}
                 {screen === "bulk" && <Bulk />}
                 {screen === "servicing" && <Servicing />}
                 {screen === "replacement" && <Replacement />}
