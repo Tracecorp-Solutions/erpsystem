@@ -36,6 +36,8 @@ function SideNav() {
     { to: "/settings", label: "Settings" },
   ];
 
+  const hoverColor = "#9ec137";
+
   useEffect(() => {
     const handleResize = () => {
       setIsSmallScreen(window.innerWidth <= 1080);
