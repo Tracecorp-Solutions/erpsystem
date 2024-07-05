@@ -6,40 +6,38 @@ import {
   DownOutlined,
   EllipsisOutlined,
 } from "@ant-design/icons";
-import { useNavigate } from "react-router-dom";
-import PaymentDetails from "./Actions/PaymentDetails";
-import BillingCustomer from "./Actions/BillingCustomer";
-import BulkSms from "./Actions/BulkSms";
 import axios from "axios";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
+import html2canvas from "html2canvas";
+
+// Import your components here
+import GeneratingReport from "./GeneratingReport";
+import BillingCustomer from "./Actions/BillingCustomer";
+import BulkSms from "./Actions/BulkSms"; // Assuming these components are in separate files
 
 const BillingCycle = () => {
-  const [showPaymentForm, setShowPaymentForm] = useState(false);
   const [payments, setPayments] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [selectedRows, setSelectedRows] = useState([]);
-  const [customerBills, setCustomerBills] = useState([]);
-  const [searchText, setSearchText] = useState("");
   const [filteredPayments, setFilteredPayments] = useState([]);
+  const [searchText, setSearchText] = useState("");
   const [showBillingCustomer, setShowBillingCustomer] = useState(false);
   const [customerRef, setCustomerRef] = useState("");
   const [showBulkSms, setShowBulkSms] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
+  const [selectedRecord, setSelectedRecord] = useState(null); // State to hold selected record
   const pageSize = 4;
-
-  const navigate = useNavigate();
+  const [{isgeneratepdf,selectedRecord2},setIsGeneratePdf] =useState(false,null);
 
   useEffect(() => {
     const fetchData = async () => {
+      sessionStorage.removeItem("setrecord");
       setLoading(true);
       try {
         const response = await axios.get(
           `${process.env.REACT_APP_API_URL}/GetCustomerBills`
         );
-        setCustomerBills(response.data);
-        const data = response.data;
-        const formattedData = data.map((item, index) => ({
+        const data = response.data.map((item) => ({
           ...item,
           key: item.customerBillId,
           customerRef: item.customer.customerRef,
@@ -50,8 +48,8 @@ const BillingCycle = () => {
           paymentDate: item.billDate,
           paymentMethod: item.paymentMethod,
         }));
-        setPayments(formattedData);
-        setFilteredPayments(formattedData);
+        setPayments(data);
+        setFilteredPayments(data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -60,14 +58,6 @@ const BillingCycle = () => {
 
     fetchData();
   }, []);
-
-  const handleShowPaymentForm = () => {
-    setShowPaymentForm(true);
-  };
-
-  const handleCancelPayment = () => {
-    setShowPaymentForm(false);
-  };
 
   const handleShowBillingCustomer = (value) => {
     setCustomerRef(value);
@@ -90,8 +80,8 @@ const BillingCycle = () => {
     setSearchText(value);
     const lowerCaseValue = value.toLowerCase();
 
-    const filteredData = payments.filter((payment) => {
-      return Object.keys(payment).some((key) => {
+    const filteredData = payments.filter((payment) =>
+      Object.keys(payment).some((key) => {
         if (key === "paymentDate") {
           return new Date(payment[key])
             .toLocaleDateString()
@@ -107,8 +97,8 @@ const BillingCycle = () => {
           }
           return false;
         }
-      });
-    });
+      })
+    );
 
     setFilteredPayments(filteredData);
     setCurrentPage(1);
@@ -118,51 +108,26 @@ const BillingCycle = () => {
     setCurrentPage(page);
   };
 
-  const startIndex = (currentPage - 1) * pageSize;
-  const endIndex = startIndex + pageSize;
-  const currentDisplayData = filteredPayments.slice(startIndex, endIndex);
+  const generatePDF = (record) => {
+    const input = document.getElementById("pdf-content");
 
-  const generatePDF = () => {
-    // Initialize jsPDF
-    const doc = new jsPDF();
-
-    // Define columns for the table
-    const columns = [
-      { title: "Customer Ref", dataKey: "customerRef" },
-      { title: "Customer Name", dataKey: "customerName" },
-      { title: "Payment Ref", dataKey: "paymntReference" },
-      { title: "Amount", dataKey: "amount" },
-      { title: "Payment Date", dataKey: "paymentDate" },
-    ];
-
-    // Prepare rows from filteredPayments
-    const rows = filteredPayments.map((payment) => ({
-      customerRef: payment.customerRef,
-      customerName: payment.customerName,
-      paymntReference: payment.paymntReference,
-      amount: payment.amount,
-      paymentDate: new Date(payment.paymentDate).toLocaleDateString(),
-    }));
-
-    // AutoTable plugin to generate table
-    doc.autoTable({
-      head: [columns.map((col) => col.title)],
-      body: rows.map((row) => Object.values(row)),
-      startY: 20, // Position from top
+    html2canvas(input).then((canvas) => {
+      const imgData = canvas.toDataURL("image/png");
+      const pdf = new jsPDF();
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+      pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+      pdf.save("billing_data.pdf");
+    }).catch((error) => {
+      console.error("Error generating PDF:", error);
     });
-
-    // Download the PDF
-    doc.save("billing_data.pdf");
   };
 
   const actionMenu = (record) => (
     <Menu onClick={(e) => handleDropdownMenuClick(record, e)}>
       <Menu.Item key="view">View Details</Menu.Item>
       <Menu.Item key="generate">Generate Bill</Menu.Item>
-      <Menu.Item key="print">Print Bill</Menu.Item>
-      <Menu.Item key="contact">Contact Customer</Menu.Item>
-      <Menu.Item key="approve">Approve Payment</Menu.Item>
-      <Menu.Item key="assign">Assign Surveyor</Menu.Item>
+      {/* Add other menu items as needed */}
     </Menu>
   );
 
@@ -172,20 +137,15 @@ const BillingCycle = () => {
         handleShowBillingCustomer(record.customerRef);
         break;
       case "generate":
-        generatePDF(); // Call generatePDF function
+        sessionStorage.setItem("setrecord",record);
+        setSelectedRecord(record);
+        console.log(sessionStorage.getItem("setrecord"));
+        setIsGeneratePdf(true,record);
+        //sessionStorage.removeItem("setrecord");
+        //setSelectedRecord(record);
+        generatePDF(record);
         break;
-      case "print":
-        // Handle print application
-        break;
-      case "contact":
-        // Handle contact applicant
-        break;
-      case "approve":
-        // Handle approve application
-        break;
-      case "assign":
-        // Handle assign surveyor
-        break;
+      // Handle other menu item clicks
       default:
         break;
     }
@@ -240,7 +200,7 @@ const BillingCycle = () => {
   return (
     <div className="md:px-6 md:py-5 rounded-3xl bg-stone-100">
       <div className="mb-6 md:flex md:justify-between md:items-center md:mb-6 font-semibold text-4xl text-neutral-600">
-        <div className="mb-4 md:mb-0">Billing</div>
+        <div className="mb-4 md:mb-0">Customer Bills</div>
         <Dropdown overlay={actionMenu} trigger={["click"]}>
           <button className="flex items-center gap-1 bg-slate-500 py-3 rounded-full text-white px-5 border-none outline-none">
             <span className="text-xl">Actions</span>{" "}
@@ -268,15 +228,10 @@ const BillingCycle = () => {
         </div>
         <div className="p-6 overflow-x-auto">
           <Table
-            dataSource={payments}
+            dataSource={filteredPayments}
             columns={columns}
-            rowKey="customerBillId"
+            rowKey="key"
             pagination={false}
-            rowSelection={{
-              type: "checkbox",
-              selectedRowKeys: selectedRows,
-              onChange: (selectedRowKeys) => setSelectedRows(selectedRowKeys),
-            }}
           />
         </div>
         <div className="flex justify-end p-6">
@@ -289,12 +244,7 @@ const BillingCycle = () => {
         </div>
       </div>
 
-      <PaymentDetails
-        handleShowPaymentForm={handleShowPaymentForm}
-        handleCancelPayment={handleCancelPayment}
-        showPaymentForm={showPaymentForm}
-      />
-
+      {/* Render modals or components for additional actions */}
       {showBillingCustomer && (
         <BillingCustomer
           custRef={customerRef}
@@ -303,10 +253,14 @@ const BillingCycle = () => {
         />
       )}
 
-      <BulkSms
-        showBulkSms={showBulkSms}
-        handleCancelBulkSms={handleCancelBulkSms}
-      />
+      {showBulkSms && (
+        <BulkSms
+          showBulkSms={showBulkSms}
+          handleCancelBulkSms={handleCancelBulkSms}
+        />
+      )}
+      {(sessionStorage.getItem("setrecord") !=null) && <GeneratingReport record={selectedRecord} generatePDF={generatePDF} />}
+      
     </div>
   );
 };

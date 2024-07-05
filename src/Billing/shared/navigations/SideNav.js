@@ -176,24 +176,6 @@ function SideNav() {
                     View Applications
                   </button>
                 </div>
-                <div
-                  className={`flex gap-2 py-3 mt-2 whitespace-nowrap rounded-xl ${
-                    location.pathname === "/accounts"
-                      ? "bg-active-green txt-color-blue font-semibold px-4 mt-3"
-                      : "bg-none"
-                  }`}
-                >
-                  <Minus className="shrink-0 self-start w-6 aspect-square" />
-                  <button
-                    onClick={() =>
-                      navigate("/billingdashboard", {
-                        state: { screen: "connectedcustomers" },
-                      })
-                    }
-                  >
-                    Customer Profile
-                  </button>
-                </div>
               </div>
             )}
           </div>
@@ -212,25 +194,6 @@ function SideNav() {
           </div>
           {openDropdown === "billing" && (
             <div className="pt-3">
-              <div
-                className={`flex gap-2 py-3 mt-2 whitespace-nowrap rounded-xl ${
-                  location.state?.dropdown === "billing"
-                    ? "bg-active-green txt-color-blue font-semibold px-4"
-                    : "bg-none"
-                }`}
-              >
-                <Minus className="shrink-0 self-start w-6 aspect-square" />
-                <button
-                   onClick={() =>
-                    handleNavigation("/billingdashboard", {
-                      dropdown: "billing",
-                      screen: "billing",
-                    })
-                  }
-                >
-                  Billing Cycle
-                </button>
-              </div>
               <div
                 className={`flex gap-2 py-3 mt-2 whitespace-nowrap rounded-xl ${
                   location.state?.dropdown === "adjustment"
@@ -360,24 +323,45 @@ function SideNav() {
                   Payments
                 </button>
               </div>
+              <div
+                  className={`flex gap-2 py-3 mt-2 whitespace-nowrap rounded-xl ${
+                    location.pathname === "/accounts"
+                      ? "bg-active-green txt-color-blue font-semibold px-4 mt-3"
+                      : "bg-none"
+                  }`}
+                >
+                  <Minus className="shrink-0 self-start w-6 aspect-square" />
+                  <button
+                    onClick={() =>
+                      navigate("/billingdashboard", {
+                        state: { screen: "connectedcustomers" },
+                      })
+                    }
+                  >
+                   Connected  Customers
+                  </button>
+                </div>
+                <div
+                className={`flex gap-2 py-3 mt-2 whitespace-nowrap rounded-xl ${
+                  location.state?.dropdown === "billing"
+                    ? "bg-active-green txt-color-blue font-semibold px-4"
+                    : "bg-none"
+                }`}
+              >
+                <Minus className="shrink-0 self-start w-6 aspect-square" />
+                <button
+                   onClick={() =>
+                    handleNavigation("/billingdashboard", {
+                      dropdown: "billing",
+                      screen: "billing",
+                    })
+                  }
+                >
+                 Custmoner Bills
+                </button>
+              </div>
             </div>
           )}
-          <div
-            className={`flex gap-2 py-3 mt-2 whitespace-nowrap rounded-xl ${
-              location.pathname === "/customer"
-                ? "bg-active-green txt-color-blue font-semibold px-4"
-                : "bg-none"
-            }`}
-          >
-            <Users className="shrink-0 self-start w-6 aspect-square" />
-            <button
-              onClick={() =>
-                navigate("/billingdashboard", { state: { screen: "customer" } })
-              }
-            >
-              Billing & Invoice
-            </button>
-          </div>
           <div className="mt-3 py-3 w-full">
             <button className="flex justify-between w-full" onClick={() => toggleDropdown("documents")}>
               <span className="flex gap-2">
