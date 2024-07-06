@@ -633,6 +633,56 @@ namespace Trace.Controllers
             }
         }
 
+        [HttpPost("/AddTransactionCode")]
+        public async Task<IActionResult> AddTransactionCode([FromBody] TransactionCodeDto dto) 
+        {
+            try
+            {
+                await _billingConfigurationRepository.AddTransactionCode(dto);
+                return Ok("Transaction Code Added Successfully");
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
+        }
+
+        [HttpGet("/GetTransactionCodes")]
+        public async Task<IActionResult> GetTransactionCodes()
+        {
+            try
+            {
+                var transactioncodes = await _billingConfigurationRepository.GetTransactionCodes();
+                return Ok(transactioncodes);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
+        }
+
+        [HttpPut("/EditTransactionCode")]
+        public async Task<IActionResult> EditTransactionCode([FromBody] TransactionCodeDto dto)
+        {
+            try
+            {
+                await _billingConfigurationRepository.EditTransactionCode(dto);
+                return Ok("Transaction Code Updated Successfully");
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
+        }
+
 
     }
 }

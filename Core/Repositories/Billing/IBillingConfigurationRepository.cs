@@ -61,5 +61,11 @@ namespace Core.Repositories.Billing
 
         Task EditBlock(BlockDto block);
         Task DeleteBlock(BlockDto block);
+
+        Task AddTransactionCode(TransactionCodeDto dto);
+
+        Task<IEnumerable<TransactionCodes>> GetTransactionCodes();
+
+        Task EditTransactionCode(TransactionCodeDto dto);
     }
 }

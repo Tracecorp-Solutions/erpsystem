@@ -320,6 +320,36 @@ namespace Services.Repositories.Billing
             await _context.SaveChangesAsync();
         }
 
+        public async Task AddTransactionCode(TransactionCodeDto dto)
+        {
+            var transcode = new TransactionCodes
+            {
+                TransactionCode = dto.TransactionCode,
+                Description = dto.Description
+            };
+
+            _context.TransactionCodes.Add(transcode);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<TransactionCodes>> GetTransactionCodes() 
+        {
+            var transcodes = await _context.TransactionCodes.ToListAsync();
+
+            return transcodes == null ? throw new ArgumentException("No Transaction Codes Found") : transcodes;
+        }
+
+        public async Task EditTransactionCode(TransactionCodeDto dto)
+        {
+            var transcode = await _context.TransactionCodes.FindAsync(dto.TransactionCode);
+            if (transcode == null)
+                throw new ArgumentException("Transaction Code Not Found");
+
+            transcode.TransactionCode = dto.TransactionCode;
+            transcode.Description = dto.Description;
+            await _context.SaveChangesAsync();
+        }
+
         
     }
 }

@@ -16,7 +16,7 @@ namespace Core.DTOs.Billing
         public string AdjustmentStatus { get; set; }
         public string EvidenceFilePath { get; set; }
 
-        public string TransactionCode { get; set; }
+        public int TransactionCode { get; set; }
 
         public DateTime EffectiveDate { get; set; }
 
