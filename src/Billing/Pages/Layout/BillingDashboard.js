@@ -25,6 +25,8 @@ import Servicing from "../Meter/Servicing";
 import AddMeter from "../Application/AddMeter";
 import MeterDetails from "../Application/MeterDetails";
 import EditDocketInitiation from "../Application/EditDocketInitiation";
+import BillPeriodSetup from "../Application/BillPeriodSetup";
+import BillProduction from "../Application/BillProduction";
 import ConnectedCustomers from "../Customer/ConnectedCustomer";
 import CustomerDetails from "../Customer/CustomerDetails";
 import CustomerReadings from "../Customer/CustomerReadings";
@@ -82,6 +84,8 @@ const BillingDashboard = () => {
                 {screen === "add-meter" && <AddMeter />}
                 {screen === "report-details" && <MeterDetails />}
                 {screen === "edit-docket-initiation" && <EditDocketInitiation />}
+                {screen === "bill-period" && <BillPeriodSetup />}
+                {screen === "bill-production" && <BillProduction />}
                 {screen === "one" && <One />}
               {screen === "customer-details" && <CustomerDetails/>}
               {screen === "customer-readings" && <CustomerReadings/>}
