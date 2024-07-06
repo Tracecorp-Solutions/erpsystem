@@ -39,6 +39,15 @@ import AddMaterials from "./Billing/Pages/Application/Actions/AddMaterials";
 import ShowMaterials from "./Billing/Pages/Application/Actions/ShowMaterials";
 import ConfMaterials from "./Billing/Pages/Materials/ConfMaterials";
 import CreateMaterials from "./Billing/Pages/Materials/CreateMaterials";
+import Bulk from "./Billing/Pages/Meter/Bulk";
+import Replacement from "./Billing/Pages/Meter/Replacement";
+import One from "./Billing/Pages/Meter/One";
+import Servicing from "./Billing/Pages/Meter/Servicing";
+import CustomerDetails from "./Billing/Pages/Customer/CustomerDetails";
+import CustomerReadings from "./Billing/Pages/Customer/CustomerReadings";
+import CustomerBills from "./Billing/Pages/Customer/CustomerBills";
+import CustomerTransactions from "./Billing/Pages/Customer/CustomerTransactions";
+import History from "./Billing/Pages/Meter/History";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -113,6 +122,15 @@ function App() {
               <Route path="/show-materials" element={<ShowMaterials />} />
               <Route path="/conf-materials" element={<ConfMaterials />} />
               <Route path="/create-materials" element={<CreateMaterials />} />
+              <Route path="/one" element={<One />} />
+              <Route path="/replacement" element={<Replacement />} />
+              <Route path="/bulk" element={<Bulk />} />
+              <Route path="/servicing" element={<Servicing />} />
+              <Route path="/customer-details" element={<CustomerDetails />} />
+              <Route path="/customer-readings" element={<CustomerReadings />} />
+              <Route path="/customer-bills" element={<CustomerBills />} />
+              <Route path="/customer-transaction" element={<CustomerTransactions />} />
+              <Route path="/history" element={<History />} />
               {/* <Route path="/view-detail" element={<ApplicationDetail />} /> */}
               reconciliation
             </Routes>

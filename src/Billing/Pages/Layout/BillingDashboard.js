@@ -18,18 +18,30 @@ import AddMaterials from "../Application/Actions/AddMaterials";
 import ShowMaterials from "../Application/Actions/ShowMaterials";
 import ConfMaterials from "../Materials/ConfMaterials";
 import CreateMaterials from "../Materials/CreateMaterials";
+import One from "../Meter/One";
+import Replacement from "../Meter/Replacement";
+import Bulk from "../Meter/Bulk";
+import Servicing from "../Meter/Servicing";
 import AddMeter from "../Application/AddMeter";
 import MeterDetails from "../Application/MeterDetails";
 import EditDocketInitiation from "../Application/EditDocketInitiation";
 import BillPeriodSetup from "../Application/BillPeriodSetup";
 import BillProduction from "../Application/BillProduction";
+import ConnectedCustomers from "../Customer/ConnectedCustomer";
+import CustomerDetails from "../Customer/CustomerDetails";
+import CustomerReadings from "../Customer/CustomerReadings";
+import CustomerBills from "../Customer/CustomerBills";
+import CustomerTransactions from "../Customer/CustomerTransactions";
+import DashboardBilling from "../Dashboard/DashboardBilling";
+import History from "../Meter/History";
+import CustomerTariffStructure from "../Application/CustomerTariffStructure";
+import CustomerStatement from "../Application/CustomerStatement";
 
 const BillingDashboard = () => {
   const location = useLocation();
   const { state } = location;
   const screen = state?.screen || "billingdashboard";
   const navigate = useNavigate();
-  const [sidebarOpen, setSidebarOpen] = useState(false);
   useEffect(() => {
     if (sessionStorage.getItem("userid") == null) {
       navigate('/');
@@ -38,8 +50,9 @@ const BillingDashboard = () => {
   }, [navigate]);
 
   return (
-
     <div>
+      {console.log("***************")}
+      {console.log(screen)}
       {screen === "invoice-details" ? <InvoiceDetails /> :   <div className="flex flex-col md:flex-row w-full">
       
       <>
@@ -51,7 +64,8 @@ const BillingDashboard = () => {
           <div className="w-full flex justify-center">
             <div className="main-content bg-stone-100 pb-6 rounded-t-3xl">
               <div className="content px-4 sm:px-6 lg:px-8 group-container">
-                {console.log(screen)}
+                
+                {screen === "billingdashboard" && <DashboardBilling/>}
                 {screen === "new-application" && <NewApplicationForm />}
                 {screen === "application" && <ApplicationPage />}
                 {screen === "view-detail" && <ApplicationDetail />}
@@ -72,14 +86,23 @@ const BillingDashboard = () => {
                 {screen === "edit-docket-initiation" && <EditDocketInitiation />}
                 {screen === "bill-period" && <BillPeriodSetup />}
                 {screen === "bill-production" && <BillProduction />}
+                {screen === "one" && <One />}
+              {screen === "customer-details" && <CustomerDetails/>}
+              {screen === "customer-readings" && <CustomerReadings/>}
+              {screen === "customer-bills" && <CustomerBills/>}
+              {screen === "customer-transactions" && <CustomerTransactions/>}
+                {screen === "history" && <History/>}
+                {screen === "bulk" && <Bulk />}
+                {screen === "servicing" && <Servicing />}
+                {screen === "replacement" && <Replacement />}
+                {screen === "connectedcustomers" && <ConnectedCustomers/>}
+                {screen === "tariffs" && <CustomerTariffStructure/>}
+                {screen === "customer-statement" && <CustomerStatement/>}
               </div>
             </div>
           </div>
         </main>
       </>
-
-
-
     </div>}
     </div>
   

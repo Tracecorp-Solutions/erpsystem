@@ -1,10 +1,105 @@
-import React from 'react';
-import { Modal, Input, DatePicker, Select, Button } from 'antd';
-import { DownOutlined } from '@ant-design/icons';
+import React, { useState, useEffect } from "react";
+import { Modal, Input, DatePicker, message, Spin } from "antd";
+import axios from "axios";
+import moment from "moment";
 
-const { Option } = Select;
+const BillingCustomer = ({
+  custRef,
+  showBillingCustomer,
+  handleCancelBillingCustomer,
+}) => {
+  const [customerRef, setCustomerRef] = useState("");
+  const [customerDetails, setCustomerDetails] = useState({
+    fullName: "",
+    meterNumber: "",
+    meterType: "",
+    previousReading: "",
+  });
+  const [loading, setLoading] = useState(false);
+  const [billFrom, setBillFrom] = useState(null);
+  const [billTo, setBillTo] = useState(null);
 
-const BillingCustomer = ({ showBillingCustomer, handleCancelBillingCustomer }) => {
+  useEffect(() => {
+    const fetchCustomerByRef = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.get(
+          `${process.env.REACT_APP_API_URL}/ValidateCustomer/${custRef}`
+        );
+        setCustomerDetails(response.data);
+      } catch (error) {
+        console.error("Error fetching customer references:", error);
+        message.error("Failed to fetch customer references");
+      } finally {
+        setLoading(false);
+      }
+    };
+    if (custRef) {
+      fetchCustomerByRef();
+    }
+  }, [custRef]);
+
+  const fetchCustomerDetails = async () => {
+    if (!customerRef) {
+      message.error("Please enter a valid Customer Reference");
+      return;
+    }
+
+    try {
+      setLoading(true);
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}/ValidateCustomer/${custRef}`
+      );
+      setCustomerDetails(response.data);
+    } catch (error) {
+      console.error("Error fetching customer details:", error);
+      message.error("Failed to fetch customer details");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleBillCustomer = async (e) => {
+    e.preventDefault();
+    if (!custRef || !billFrom || !billTo) {
+      message.error("Please enter all required fields");
+      return;
+    }
+
+    const payload = {
+      customerRef: custRef,
+      billFrom: moment(billFrom).format("YYYY-MM-DD"),
+      billTo: moment(billTo).format("YYYY-MM-DD"),
+    };
+
+    try {
+      setLoading(true);
+      const response = await axios.post(
+        `${process.env.REACT_APP_API_URL}/BillCustomer`,
+        payload,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            accept: "*/*",
+          },
+        }
+      );
+      console.log("Bill Customer Response:", response.data);
+      message.success("Customer billed successfully!");
+      handleCancelBillingCustomer();
+    } catch (error) {
+      console.error("Error billing customer:", error);
+      message.error("Failed to bill customer");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const onSelectCustomer = (value) => {
+    setCustomerRef(value);
+    fetchCustomerDetails();
+  };
+
   return (
     <Modal visible={showBillingCustomer} closable={false} footer={null}>
       <div className="flex flex-col items-center text-base font-semibold leading-6 max-w-[820px] text-neutral-600">
@@ -22,86 +117,71 @@ const BillingCustomer = ({ showBillingCustomer, handleCancelBillingCustomer }) =
           <div className="mt-6 w-full border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-opacity-10 min-h-[1px] max-md:max-w-full" />
         </div>
 
-        {/* Customer Reference */}
+        {/* Customer Reference Input */}
         <div className="mt-8 max-md:max-w-full">Customer Reference</div>
         <Input
           className="justify-center items-start px-4 py-4 mt-2 max-w-full whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 w-[500px] max-md:pr-5"
-          value=""
-          readOnly
+          value={custRef}
+          onChange={(e) => setCustomerRef(e.target.value)}
+          placeholder="Enter Customer Reference"
         />
 
         {/* Customer Name */}
         <div className="mt-4 max-md:max-w-full">Customer Name</div>
         <Input
           className="justify-center items-start px-4 py-4 mt-2 max-w-full rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 w-[500px] max-md:pr-5"
-          value=""
-          
+          value={customerDetails.name}
+          readOnly
         />
 
-        {/* Operation Area */}
-        <div className="mt-4 max-md:max-w-full">Operation Area</div>
-        <Select
-          className="flex gap-2 justify-between h-14 mt-2 max-w-full whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 w-[500px] max-md:flex-wrap"
-          placeholder="Select Operation Area"
-        >
-          <Option value="ogun">Ogun</Option>
-          <Option value="lagos">Lagos</Option>
-          <Option value="abuja">Abuja</Option>
-        </Select>
+        {/* Meter Number */}
+        <div className="mt-4 max-md:max-w-full">Meter Number</div>
+        <Input
+          className="justify-center items-start px-4 py-4 mt-2 max-w-full rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 w-[500px] max-md:pr-5"
+          value={customerDetails.meterNumber}
+          readOnly
+        />
 
-        {/* Branch */}
-        <div className="mt-4 max-md:max-w-full">Branch</div>
-        <Select
-          className="flex gap-2 justify-between h-14 mt-2 max-w-full whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 w-[500px] max-md:flex-wrap"
-          placeholder="Select Branch"
-        >
-          <Option value="ibara">Ibara</Option>
-          <Option value="ikeja">Ikeja</Option>
-          <Option value="wuse">Wuse</Option>
-        </Select>
+        {/* Meter Type */}
+        <div className="mt-4 max-md:max-w-full">Meter Type</div>
+        <Input
+          className="justify-center items-start px-4 py-4 mt-2 max-w-full rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 w-[500px] max-md:pr-5"
+          value={customerDetails.meterType}
+          readOnly
+        />
 
-        {/* Billing Period */}
-        <div className="mt-4 max-md:max-w-full">Billing Period</div>
-        <Select
-          className="flex gap-2 justify-between h-14 mt-2 max-w-full rounded-xl border border-solid border-neutral-500 border-opacity-30 text-neutral-400 w-[500px] max-md:flex-wrap"
-          placeholder="Choose Billing Period"
-        >
-          <Option value="monthly">Monthly</Option>
-          <Option value="quarterly">Quarterly</Option>
-          <Option value="yearly">Yearly</Option>
-        </Select>
+        {/* Previous Reading */}
+        <div className="mt-4 max-md:max-w-full">Previous Reading</div>
+        <Input
+          className="justify-center items-start px-4 py-4 mt-2 max-w-full rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 w-[500px] max-md:pr-5"
+          value={customerDetails.previousReading}
+          readOnly
+        />
 
-        {/* Bill From */}
+        {/* Bill From and Bill To */}
         <div className="mt-4 max-md:max-w-full">Bill From</div>
         <DatePicker
           className="flex gap-2 justify-between px-4 py-4 mt-2 max-w-full rounded-xl border border-solid border-neutral-500 border-opacity-30 text-neutral-400 w-[500px] max-md:flex-wrap"
           placeholder="Choose Billing Date"
+          value={billFrom}
+          onChange={(date) => setBillFrom(date)} // Use 'date' object directly for 'value'
         />
 
-        {/* Bill To */}
         <div className="mt-4 max-md:max-w-full">Bill To</div>
         <DatePicker
           className="flex gap-2 justify-between px-4 py-4 mt-2 max-w-full rounded-xl border border-solid border-neutral-500 border-opacity-30 text-neutral-400 w-[500px] max-md:flex-wrap"
           placeholder="Choose Billing Date"
-        />
-
-        {/* Scheduled Billing Date */}
-        <div className="mt-4 max-md:max-w-full">Scheduled Billing Date</div>
-        <DatePicker
-          className="flex gap-2 justify-between px-4 py-4 mt-2 max-w-full rounded-xl border border-solid border-neutral-500 border-opacity-30 text-neutral-400 w-[500px] max-md:flex-wrap"
-          placeholder="Choose Billing Date"
-        />
-
-        {/* Biller */}
-        <div className="mt-4 max-md:max-w-full">Biller</div>
-        <Input
-          className="flex gap-2 justify-between px-4 py-4 mt-2 max-w-full rounded-xl border border-solid border-neutral-500 border-opacity-30 text-neutral-400 w-[500px] max-md:flex-wrap"
-          placeholder="Choose Biller’s Name"
+          value={billTo}
+          onChange={(date) => setBillTo(date)}
         />
 
         {/* Bill Button */}
         <div className="flex justify-center items-center self-stretch px-16 py-6 mt-8 w-full text-white bg-stone-100 max-md:px-5 max-md:max-w-full">
-          <button type="primary" className="justify-center items-center px-8 py-4 max-w-full rounded-3xl bg-slate-500 w-[500px] max-md:px-5">
+          <button
+            type="submit"
+            className="justify-center items-center px-8 py-4 max-w-full rounded-3xl bg-slate-500 w-[500px] max-md:px-5"
+            onClick={handleBillCustomer}
+          >
             Bill this Customer
           </button>
         </div>

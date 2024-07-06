@@ -1,14 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AiOutlineClose } from 'react-icons/ai'; // Importing the X icon from React Icons
-
-function CreateMaterials() {
-  const [isUpdateModalVisible, setIsUpdateModalVisible] = useState(true); // Assuming the modal is visible initially
+import { Modal, message } from "antd";
+function CreateMaterials({isUpdateModalVisible, handleCloseModalVisible}) {
   const navigate = useNavigate();
-
-  const handleUpdateModalVisible = () => {
-    setIsUpdateModalVisible(!isUpdateModalVisible);
-  };
 
   const [materialName, setMaterialName] = useState('');
   const [materialUnitPrice, setMaterialUnitPrice] = useState('');
@@ -37,7 +32,7 @@ function CreateMaterials() {
       });
 
       if (response.ok) {
-        alert('Material added successfully');
+        message.success('Material added successfully');
         // Clear form
         setMaterialName('');
         setMaterialUnitPrice('');
@@ -45,8 +40,9 @@ function CreateMaterials() {
         setMaterialDescription('');
         setInvoiceable('true');
       } else {
-        alert('Failed to add material');
+        message.error('Failed to add material');
       }
+      handleCloseModalVisible();
     } catch (error) {
       console.error('Error:', error);
       alert('An error occurred');
@@ -58,14 +54,19 @@ function CreateMaterials() {
   }
 
   return (
-    <div className="flex flex-col items-start text-base leading-6 max-w-[920px] relative">
+    <Modal
+     visible={isUpdateModalVisible}
+     closable={false}
+     footer={null}
+    >
+      <div className="flex flex-col items-start text-base leading-6 max-w-[920px] relative">
       <div className="text-4xl font-semibold text-neutral-600 max-md:max-w-full text-left">
         Add Material Item
       </div>
       <button
         type="button"
         className="absolute top-4 right-4 text-gray-500"
-        onClick={handleUpdateModalVisible}
+        onClick={handleCloseModalVisible}
       >
         <AiOutlineClose size={24} />
       </button>
@@ -151,6 +152,7 @@ function CreateMaterials() {
         </div>
       </form>
     </div>
+    </Modal>
   );
 }
 

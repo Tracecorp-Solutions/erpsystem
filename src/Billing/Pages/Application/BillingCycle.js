@@ -1,43 +1,57 @@
-import React, { useState, useEffect } from 'react';
-import { Menu, Dropdown, Input, Pagination, Table } from 'antd';
-import { SearchOutlined, FilterOutlined, DownOutlined } from '@ant-design/icons';
-import { useNavigate } from 'react-router-dom';
-import PaymentDetails from './Actions/PaymentDetails';
-import BillingCustomer from './Actions/BillingCustomer';
-import BulkSms from './Actions/BulkSms';
+import React, { useState, useEffect } from "react";
+import { Menu, Dropdown, Input, Pagination, Table } from "antd";
+import {
+  SearchOutlined,
+  FilterOutlined,
+  DownOutlined,
+  EllipsisOutlined,
+} from "@ant-design/icons";
+import axios from "axios";
+import jsPDF from "jspdf";
+import "jspdf-autotable";
+import html2canvas from "html2canvas";
+
+// Import your components here
+import GeneratingReport from "./GeneratingReport";
+import BillingCustomer from "./Actions/BillingCustomer";
+import BulkSms from "./Actions/BulkSms"; // Assuming these components are in separate files
 
 const BillingCycle = () => {
-  const [showPaymentForm, setShowPaymentForm] = useState(false);
   const [payments, setPayments] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [selectedRows, setSelectedRows] = useState([]);
-  const [searchText, setSearchText] = useState('');
   const [filteredPayments, setFilteredPayments] = useState([]);
+  const [searchText, setSearchText] = useState("");
   const [showBillingCustomer, setShowBillingCustomer] = useState(false);
-  const [showBulkSms, SetShowBulkSms] = useState(false);
+  const [customerRef, setCustomerRef] = useState("");
+  const [showBulkSms, setShowBulkSms] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const pageSize = 10;
-
-  const navigate = useNavigate();
+  const [selectedRecord, setSelectedRecord] = useState(null); // State to hold selected record
+  const pageSize = 4;
+  const [{isgeneratepdf,selectedRecord2},setIsGeneratePdf] =useState(false,null);
 
   useEffect(() => {
     const fetchData = async () => {
+      sessionStorage.removeItem("setrecord");
       setLoading(true);
       try {
-        const response = await fetch(`${process.env.REACT_APP_API_URL}/GetAllPayments`, {
-          headers: {
-            Accept: 'application/json',
-          },
-        });
-        if (!response.ok) {
-          throw new Error('Failed to fetch data');
-        }
-        const data = await response.json();
-        const formattedData = data.map((item, index) => ({ ...item, key: item.paymentId }));
-        setPayments(formattedData);
-        setFilteredPayments(formattedData);
+        const response = await axios.get(
+          `${process.env.REACT_APP_API_URL}/GetCustomerBills`
+        );
+        const data = response.data.map((item) => ({
+          ...item,
+          key: item.customerBillId,
+          customerRef: item.customer.customerRef,
+          customerName: item.customer.application.fullName,
+          paymntReference: item.billPeriod,
+          vendor: item.vendor,
+          amount: item.totalBillAmount,
+          paymentDate: item.billDate,
+          paymentMethod: item.paymentMethod,
+        }));
+        setPayments(data);
+        setFilteredPayments(data);
       } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error("Error fetching data:", error);
       }
       setLoading(false);
     };
@@ -45,40 +59,47 @@ const BillingCycle = () => {
     fetchData();
   }, []);
 
-  const handleShowPaymentForm = () => {
-    setShowPaymentForm(true);
-  };
-
-  const handleCancelPayment = () => {
-    setShowPaymentForm(false);
-  };
-
-  const handleShowBillingCustomer = () => {
+  const handleShowBillingCustomer = (value) => {
+    setCustomerRef(value);
     setShowBillingCustomer(true);
-  }
+  };
 
   const handleCancelBillingCustomer = () => {
     setShowBillingCustomer(false);
-  }
+  };
 
   const handleShowBulkSms = () => {
-    SetShowBulkSms(true);
-  }
+    setShowBulkSms(true);
+  };
 
   const handleCancelBulkSms = () => {
-    SetShowBulkSms(false);
-
-  }
+    setShowBulkSms(false);
+  };
 
   const handleSearch = (value) => {
     setSearchText(value);
-    const filteredData = payments.filter(
-      (payment) =>
-        payment.customerRef.toLowerCase().includes(value.toLowerCase()) ||
-        payment.paymntReference.toLowerCase().includes(value.toLowerCase()) ||
-        payment.vendor.toLowerCase().includes(value.toLowerCase()) ||
-        payment.paymentMethod.toLowerCase().includes(value.toLowerCase())
+    const lowerCaseValue = value.toLowerCase();
+
+    const filteredData = payments.filter((payment) =>
+      Object.keys(payment).some((key) => {
+        if (key === "paymentDate") {
+          return new Date(payment[key])
+            .toLocaleDateString()
+            .toLowerCase()
+            .includes(lowerCaseValue);
+        } else {
+          const fieldValue = payment[key];
+          if (
+            typeof fieldValue === "string" ||
+            typeof fieldValue === "number"
+          ) {
+            return fieldValue.toString().toLowerCase().includes(lowerCaseValue);
+          }
+          return false;
+        }
+      })
     );
+
     setFilteredPayments(filteredData);
     setCurrentPage(1);
   };
@@ -87,108 +108,103 @@ const BillingCycle = () => {
     setCurrentPage(page);
   };
 
-  // Calculate pagination and display logic
-  const startIndex = (currentPage - 1) * pageSize;
-  const endIndex = startIndex + pageSize;
-  const currentDisplayData = filteredPayments.slice(startIndex, endIndex);
+  const generatePDF = (record) => {
+    const input = document.getElementById("pdf-content");
 
-  const handleMenuClick = (applicationNumber, action) => {
-    switch (action) {
-      case 'view':
-        navigate(`/billingdashboard`, { state: { screen: 'view-detail', applicationNumber } });
+    html2canvas(input).then((canvas) => {
+      const imgData = canvas.toDataURL("image/png");
+      const pdf = new jsPDF();
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+      pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+      pdf.save("billing_data.pdf");
+    }).catch((error) => {
+      console.error("Error generating PDF:", error);
+    });
+  };
+
+  const actionMenu = (record) => (
+    <Menu onClick={(e) => handleDropdownMenuClick(record, e)}>
+      <Menu.Item key="view">View Details</Menu.Item>
+      <Menu.Item key="generate">Generate Bill</Menu.Item>
+      {/* Add other menu items as needed */}
+    </Menu>
+  );
+
+  const handleDropdownMenuClick = (record, e) => {
+    switch (e.key) {
+      case "view":
+        handleShowBillingCustomer(record.customerRef);
         break;
-      case 'generate':
-        // Handle generate job card
+      case "generate":
+        sessionStorage.setItem("setrecord",record);
+        setSelectedRecord(record);
+        console.log(sessionStorage.getItem("setrecord"));
+        setIsGeneratePdf(true,record);
+        //sessionStorage.removeItem("setrecord");
+        //setSelectedRecord(record);
+        generatePDF(record);
         break;
-      case 'print':
-        // Handle print application
-        break;
-      case 'contact':
-        // Handle contact applicant
-        break;
-      case 'approve':
-        // Handle approve application
-        break;
-      case 'assign':
-        // Handle assign surveyor
-        break;
+      // Handle other menu item clicks
       default:
-        console.log('Unknown action:', action);
+        break;
     }
   };
 
-  const handleDropdownMenuClick = (e) => {
-    // Implement your logic based on the selected menu item
-    console.log('Clicked on menu item:', e.key);
-  };
-
-  const actionMenu = (
-    <Menu onClick={({ key }) => handleDropdownMenuClick(key)}>
-      <Menu.Item key="view" onClick={handleShowBillingCustomer}>Bill Customer</Menu.Item>
-      <Menu.Item key="generate">Download Bill</Menu.Item>
-      <Menu.Item key="print">Print Bill</Menu.Item>
-      <Menu.Item key="contact">View Bill</Menu.Item>
-      <Menu.Item key="bulkbilling" onClick={handleShowBulkSms}>Bulk Billing</Menu.Item>
-    </Menu>
+  const renderActions = (text, record) => (
+    <Dropdown
+      overlay={() => actionMenu(record)}
+      trigger={["click"]}
+      placement="bottomLeft"
+    >
+      <button className="ant-dropdown-link bg-transparent border-none outline-none">
+        <EllipsisOutlined style={{ fontSize: 20, color: "#1890ff" }} />
+      </button>
+    </Dropdown>
   );
 
   const columns = [
     {
-      title: 'Customer Ref',
-      dataIndex: 'customerRef',
-      key: 'customerRef',
+      title: "Customer Ref",
+      dataIndex: "customerRef",
+      key: "customerRef",
     },
     {
-      title: 'Customer Name',
-      dataIndex: 'customerName',
-      key: 'customerName',
+      title: "Customer Name",
+      dataIndex: "customerName",
+      key: "customerName",
     },
     {
-      title: 'Payment Ref',
-      dataIndex: 'paymntReference',
-      key: 'paymntReference',
+      title: "Payment Ref",
+      dataIndex: "paymntReference",
+      key: "paymntReference",
     },
     {
-      title: 'Vendor ID',
-      dataIndex: 'vendor',
-      key: 'vendor',
+      title: "Amount",
+      dataIndex: "amount",
+      key: "amount",
     },
     {
-      title: 'Amount',
-      dataIndex: 'amount',
-      key: 'amount',
-    },
-    {
-      title: 'Payment Date',
-      dataIndex: 'paymentDate',
-      key: 'paymentDate',
+      title: "Payment Date",
+      dataIndex: "paymentDate",
+      key: "paymentDate",
       render: (text) => new Date(text).toLocaleDateString(),
     },
     {
-      title: 'Payment Method',
-      dataIndex: 'paymentMethod',
-      key: 'paymentMethod',
-    },
-    {
-      title: 'Action',
-      key: 'action',
-      render: (text, record) => (
-        <Dropdown overlay={actionMenu} trigger={['click']} placement="bottomLeft">
-          <button className="ant-dropdown-link bg-transparent border-none outline-none">
-            Actions <DownOutlined />
-          </button>
-        </Dropdown>
-      ),
+      title: "Action",
+      key: "action",
+      render: renderActions,
     },
   ];
 
   return (
     <div className="md:px-6 md:py-5 rounded-3xl bg-stone-100">
       <div className="mb-6 md:flex md:justify-between md:items-center md:mb-6 font-semibold text-4xl text-neutral-600">
-        <div className="mb-4 md:mb-0">Billing</div>
-        <Dropdown overlay={actionMenu} trigger={['click']}>
+        <div className="mb-4 md:mb-0">Customer Bills</div>
+        <Dropdown overlay={actionMenu} trigger={["click"]}>
           <button className="flex items-center gap-1 bg-slate-500 py-3 rounded-full text-white px-5 border-none outline-none">
-            <span className="text-xl">Actions</span> <DownOutlined className="mt-2 text-xl" />
+            <span className="text-xl">Actions</span>{" "}
+            <DownOutlined className="mt-2 text-xl" />
           </button>
         </Dropdown>
       </div>
@@ -212,15 +228,10 @@ const BillingCycle = () => {
         </div>
         <div className="p-6 overflow-x-auto">
           <Table
-            dataSource={currentDisplayData}
+            dataSource={filteredPayments}
             columns={columns}
-            rowKey="paymentId"
+            rowKey="key"
             pagination={false}
-            rowSelection={{
-              type: 'checkbox',
-              selectedRowKeys: selectedRows,
-              onChange: (selectedRowKeys) => setSelectedRows(selectedRowKeys),
-            }}
           />
         </div>
         <div className="flex justify-end p-6">
@@ -232,13 +243,24 @@ const BillingCycle = () => {
           />
         </div>
       </div>
-      <PaymentDetails
-        handleShowPaymentForm={handleShowPaymentForm}
-        handleCancelPayment={handleCancelPayment}
-        showPaymentForm={showPaymentForm}
-      />
-      <BillingCustomer showBillingCustomer={showBillingCustomer} handleCancelBillingCustomer={handleCancelBillingCustomer} />
-      <BulkSms showBulkSms={showBulkSms} handleCancelBulkSms={handleCancelBulkSms} />
+
+      {/* Render modals or components for additional actions */}
+      {showBillingCustomer && (
+        <BillingCustomer
+          custRef={customerRef}
+          showBillingCustomer={showBillingCustomer}
+          handleCancelBillingCustomer={handleCancelBillingCustomer}
+        />
+      )}
+
+      {showBulkSms && (
+        <BulkSms
+          showBulkSms={showBulkSms}
+          handleCancelBulkSms={handleCancelBulkSms}
+        />
+      )}
+      {(sessionStorage.getItem("setrecord") !=null) && <GeneratingReport record={selectedRecord} generatePDF={generatePDF} />}
+      
     </div>
   );
 };
