@@ -22,5 +22,7 @@ namespace Core.Repositories.Billing
         Task AddBillAdjustmentRequest(IFormFile file,BillAdjustmentRequestDto billAdjustmentRequest);
 
         Task<IEnumerable<BillAdjustmentRequest>> GetBillAdjustmentRequests();
+
+        Task<BillAdjustmentRequest> GetBillAdjustmentRequestById(int id);
     }
 }

@@ -113,6 +113,24 @@ namespace Trace.Controllers
             }
         }
 
+        [HttpGet("/GetBillAdjustmentRequestById/{id}")]
+        public async Task<IActionResult> GetBillAdjustmentRequestById(int id)
+        {
+            try
+            {
+                var billAdjustment = await _billing.GetBillAdjustmentRequestById(id);
+                return Ok(billAdjustment);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
+        }
+
 
     }
 }

@@ -157,6 +157,18 @@ namespace Services.Repositories.Billing
             return billAdjustments;
         }
 
+        public async Task<BillAdjustmentRequest> GetBillAdjustmentRequestById(int id)
+        {
+            var billAdjustment = await _context.BillAdjustmentRequests.FirstOrDefaultAsync(x => x.Id == id);
+
+            if (billAdjustment == null)
+            {
+                throw new ArgumentException("Bill Adjustment Request not found.");
+            }
+
+            return billAdjustment;
+        }
+
 
     }
 }
