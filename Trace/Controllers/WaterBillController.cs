@@ -82,6 +82,37 @@ namespace Trace.Controllers
             }
         }
 
+        [HttpPost("/AddBillAdjustmentRequest")]
+        public async Task<IActionResult> AddBillAdjustmentRequest([FromForm] IFormFile file, [FromForm] BillAdjustmentRequestDto billAdjustmentRequest)
+        {
+            try
+            {
+                await _billing.AddBillAdjustmentRequest(file, billAdjustmentRequest);
+                return Ok("Bill Adjustment Request added successfully");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
+        }
+
+        [HttpGet("/GetBillAdjustmentRequests")]
+        public async Task<IActionResult> GetBillAdjustmentRequests()
+        {
+            try
+            {
+                var billAdjustments = await _billing.GetBillAdjustmentRequests();
+                return Ok(billAdjustments);
+            }catch(ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
+        }
+
 
     }
 }

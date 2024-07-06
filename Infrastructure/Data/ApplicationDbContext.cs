@@ -85,6 +85,8 @@ namespace Infrastructure.Data
 
         public DbSet<Block> Blocks { get; set; }
 
+        public DbSet<BillAdjustmentRequest> BillAdjustmentRequests { get; set; }
+
         #endregion
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

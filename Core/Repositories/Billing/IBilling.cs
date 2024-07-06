@@ -1,5 +1,6 @@
 ﻿using Core.DTOs.Billing;
 using Core.Models.Billing;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,5 +18,9 @@ namespace Core.Repositories.Billing
         Task<IEnumerable<CustomerBill>> GetCustomerBillsByCustRef(string custRef);
 
         Task<IEnumerable<CustomerBill>> GetCustomerBills();
+
+        Task AddBillAdjustmentRequest(IFormFile file,BillAdjustmentRequestDto billAdjustmentRequest);
+
+        Task<IEnumerable<BillAdjustmentRequest>> GetBillAdjustmentRequests();
     }
 }

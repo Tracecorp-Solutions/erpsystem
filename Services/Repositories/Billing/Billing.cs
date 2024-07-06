@@ -1,7 +1,9 @@
 ﻿using Core.DTOs.Billing;
 using Core.Models.Billing;
 using Core.Repositories.Billing;
+using Core.Repositories.Settings;
 using Infrastructure.Data;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -15,9 +17,12 @@ namespace Services.Repositories.Billing
     {
         private readonly ApplicationDbContext _context;
 
-        public Billing(ApplicationDbContext context)
+        private readonly ISettings _settings;
+
+        public Billing(ApplicationDbContext context, ISettings settings)
         {
             _context = context;
+            _settings = settings;
         }
 
         public async Task AddBillingRequest(BillingRequest billingRequest)
@@ -111,6 +116,45 @@ namespace Services.Repositories.Billing
             }
 
             return bills;
+        }
+
+        public async Task AddBillAdjustmentRequest(IFormFile file, BillAdjustmentRequestDto billAdjustmentRequest)
+        {
+
+            //check whether file is uploaded
+            if (file == null)
+                throw new Exception("Evidence file is required");
+
+            //save file to disk
+            string filepath = await _settings.SaveFileAndReturnPathAsync(file);
+
+            var billAdjustment = new BillAdjustmentRequest
+            {
+                CustRef = billAdjustmentRequest.CustRef,
+                DocumentNumber = billAdjustmentRequest.DocumentNumber,
+                AdjustmentType = billAdjustmentRequest.AdjustmentType,
+                AdjustmentReason = billAdjustmentRequest.AdjustmentReason,
+                AdjustmentStatus = billAdjustmentRequest.AdjustmentStatus,
+                EvidenceFilePath = filepath,
+                TransactionCode = billAdjustmentRequest.TransactionCode,
+                EffectiveDate = billAdjustmentRequest.EffectiveDate,
+                Amount = billAdjustmentRequest.Amount
+            };
+
+            await _context.BillAdjustmentRequests.AddAsync(billAdjustment);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<BillAdjustmentRequest>> GetBillAdjustmentRequests()
+        {
+            var billAdjustments = await _context.BillAdjustmentRequests.ToListAsync();
+
+            if (billAdjustments == null || billAdjustments.Count == 0)
+            {
+                throw new ArgumentException("No Bill Adjustment Request found.");
+            }
+
+            return billAdjustments;
         }
 
 
