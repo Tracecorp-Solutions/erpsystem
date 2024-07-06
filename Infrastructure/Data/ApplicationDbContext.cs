@@ -2,6 +2,7 @@
 using Core.Models.Billing;
 using Core.Models.UserManagement;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 
 namespace Infrastructure.Data
 {
@@ -81,6 +82,8 @@ namespace Infrastructure.Data
         public DbSet<NewMeterServicing> NewMeterServicings { get; set; }
 
         public DbSet<CustomerBill> CustomerBills { get; set; }
+
+        public DbSet<Block> Blocks { get; set; }
 
         #endregion
 
