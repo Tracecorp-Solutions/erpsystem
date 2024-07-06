@@ -367,6 +367,7 @@ namespace Services.Repositories.Billing
             application.CustomerType = connectionDto.ConnectionType;
             application.Status = "APPROVED FOR CONNECTION";
             application.CustomertarrifId = connectionDto.tariffId;
+            application.BlockId = connectionDto.BlockId;
             
 
             //save application log

@@ -78,6 +78,9 @@ namespace Core.Models.Billing
         public Territory? Territory { get; set; }
         public SubTerritory? SubTerritory { get; set; }
 
+        [ForeignKey("Block")]
+        public int BlockId { get; set; }
+
         public CustomerCategory? CustomerCategory { get; set; }
 
         public User? User { get; set; }
@@ -85,6 +88,8 @@ namespace Core.Models.Billing
         public CustomerType? CustType { get; set; }
 
         public CustomerTarrif? CustomerTarrif { get; set; }
+
+        public virtual Block Block { get; set; }
 
     }
 }

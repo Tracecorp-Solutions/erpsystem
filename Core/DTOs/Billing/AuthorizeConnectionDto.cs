@@ -14,5 +14,7 @@ namespace Core.DTOs.Billing
         public int tariffId { get; set; }
         public string AuthorizedBy { get; set; }
 
+        public int BlockId { get; set; }
+
     }
 }
