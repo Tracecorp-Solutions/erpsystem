@@ -566,6 +566,73 @@ namespace Trace.Controllers
             }
         }
 
+        [HttpPost("/AddBlocks")]
+        public async Task<IActionResult> AddBlocks([FromBody] BlockDto block) 
+        {
+            try
+            {
+                await _billingConfigurationRepository.AddBlocks(block);
+                return Ok("Block Added Successfully");
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
+        }
+
+        [HttpGet("/GetBlocks")]
+        public async Task<IActionResult> GetBlocks()
+        {
+            try
+            {
+                var blocks = await _billingConfigurationRepository.GetBlocks();
+                return Ok(blocks);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
+        }
+
+        [HttpPut("/EditBlock")]
+        public async Task<IActionResult> EditBlock([FromBody] BlockDto block) 
+        {
+            try
+            {
+                await _billingConfigurationRepository.EditBlock(block);
+                return Ok("Block Updated Successfully");
+            }catch(ArgumentException ex) 
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
+        }
+
+        [HttpDelete("/DeleteBlock")]
+        public async Task<IActionResult> DeleteBlock([FromBody] BlockDto block)
+        {
+            try
+            {
+                await _billingConfigurationRepository.DeleteBlock(block);
+                return Ok("Block Deleted Successfully");
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
+        }
+
 
     }
 }

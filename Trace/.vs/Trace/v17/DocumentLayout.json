@@ -9,7 +9,7 @@
       "AbsoluteMoniker": "D:0:0:{D0C5D151-D98C-46B1-A85E-DFAA22B5EE2F}|..\\Services\\Services.csproj|d:\\working directory\\erpsystem\\services\\repositories\\billing\\meterreadingrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A176F11F-4BEC-4DAC-9205-CF64F57D23C0}|..\\Core\\Core.csproj|d:\\working directory\\erpsystem\\core\\models\\billing\\blocks.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A176F11F-4BEC-4DAC-9205-CF64F57D23C0}|..\\Core\\Core.csproj|d:\\working directory\\erpsystem\\core\\models\\billing\\block.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{97CA6EF6-720A-4545-8A15-EBF2D4F20DA0}|Trace.csproj|d:\\working directory\\erpsystem\\trace\\controllers\\meterreadingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -82,7 +82,7 @@
               "RelativeDocumentMoniker": "..\\Infrastructure\\Data\\ApplicationDbContext.cs",
               "ToolTip": "D:\\working directory\\erpsystem\\Infrastructure\\Data\\ApplicationDbContext.cs",
               "RelativeToolTip": "..\\Infrastructure\\Data\\ApplicationDbContext.cs",
-              "ViewState": "AQIAADwAAAAAAAAAAAAuwEMAAAAAAAAA",
+              "ViewState": "AQIAAEkAAAAAAAAAAAAgwFYAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-07-06T17:42:49.223Z",
               "EditorCaption": ""
@@ -90,11 +90,11 @@
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "Blocks.cs",
-              "DocumentMoniker": "D:\\working directory\\erpsystem\\Core\\Models\\Billing\\Blocks.cs",
-              "RelativeDocumentMoniker": "..\\Core\\Models\\Billing\\Blocks.cs",
-              "ToolTip": "D:\\working directory\\erpsystem\\Core\\Models\\Billing\\Blocks.cs",
-              "RelativeToolTip": "..\\Core\\Models\\Billing\\Blocks.cs",
+              "Title": "Block.cs",
+              "DocumentMoniker": "D:\\working directory\\erpsystem\\Core\\Models\\Billing\\Block.cs",
+              "RelativeDocumentMoniker": "..\\Core\\Models\\Billing\\Block.cs",
+              "ToolTip": "D:\\working directory\\erpsystem\\Core\\Models\\Billing\\Block.cs",
+              "RelativeToolTip": "..\\Core\\Models\\Billing\\Block.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAAtAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-07-06T17:42:17.333Z",

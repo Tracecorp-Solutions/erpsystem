@@ -270,6 +270,56 @@ namespace Services.Repositories.Billing
             return metermakes == null ? throw new ArgumentException("No Meter Makes Found") : metermakes;
         }
 
+        public async Task AddBlocks(BlockDto block)
+        {
+            var blk = new Block
+            {
+                BlockName = block.BlockName,
+                BlockCode = block.BlockCode,
+                BranchId = block.BranchId,
+                TerritoryId = block.TerritoryId,
+                SubTerritoryId = block.SubTerritoryId,
+                OperationAreaId = block.OperationAreaId
+            };
+
+            _context.Blocks.Add(blk);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<Block>> GetBlocks()
+        {
+            var blocks = await _context.Blocks.ToListAsync();
+
+            return blocks == null ? throw new ArgumentException("No Blocks Found") : blocks;
+        }
+
+        public async Task EditBlock(BlockDto block)
+        {
+            var blk = await _context.Blocks.FindAsync(block.BlockName);
+            if (blk == null)
+                throw new ArgumentException("Block Not Found");
+
+            blk.BlockName = block.BlockName;
+            blk.BlockCode = block.BlockCode;
+            blk.BranchId = block.BranchId;
+            blk.TerritoryId = block.TerritoryId;
+            blk.SubTerritoryId = block.SubTerritoryId;
+            blk.OperationAreaId = block.OperationAreaId;
+
+            _context.Blocks.Update(blk);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task DeleteBlock(BlockDto block)
+        {
+            var blk = await _context.Blocks.FindAsync(block.BlockName);
+            if (blk == null)
+                throw new ArgumentException("Block Not Found");
+
+            _context.Blocks.Remove(blk);
+            await _context.SaveChangesAsync();
+        }
+
         
     }
 }

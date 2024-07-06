@@ -54,5 +54,12 @@ namespace Core.Repositories.Billing
 
         Task AddMeterMake(MeterMake meterMake);
         Task<IEnumerable<MeterMake>> GetMeterMakes();
+
+        Task AddBlocks(BlockDto block);
+
+        Task<IEnumerable<Block>> GetBlocks();
+
+        Task EditBlock(BlockDto block);
+        Task DeleteBlock(BlockDto block);
     }
 }
