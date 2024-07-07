@@ -275,11 +275,7 @@ namespace Services.Repositories.Billing
             var blk = new Block
             {
                 BlockName = block.BlockName,
-                BlockCode = block.BlockCode,
-                BranchId = block.BranchId,
-                TerritoryId = block.TerritoryId,
-                SubTerritoryId = block.SubTerritoryId,
-                OperationAreaId = block.OperationAreaId
+                BlockCode = block.BlockCode
             };
 
             _context.Blocks.Add(blk);
@@ -301,10 +297,7 @@ namespace Services.Repositories.Billing
 
             blk.BlockName = block.BlockName;
             blk.BlockCode = block.BlockCode;
-            blk.BranchId = block.BranchId;
-            blk.TerritoryId = block.TerritoryId;
-            blk.SubTerritoryId = block.SubTerritoryId;
-            blk.OperationAreaId = block.OperationAreaId;
+            
 
             _context.Blocks.Update(blk);
             await _context.SaveChangesAsync();

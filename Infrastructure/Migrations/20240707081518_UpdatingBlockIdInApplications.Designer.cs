@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240706192121_AdditionOfBlockIdToNewApplication")]
-    partial class AdditionOfBlockIdToNewApplication
+    [Migration("20240707081518_UpdatingBlockIdInApplications")]
+    partial class UpdatingBlockIdInApplications
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -386,7 +386,7 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int>("BlockId")
+                    b.Property<int?>("BlockId")
                         .HasColumnType("int");
 
                     b.Property<int>("BranchId")
@@ -670,27 +670,7 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int>("BranchId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("OperationAreaId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SubTerritoryId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TerritoryId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("BranchId");
-
-                    b.HasIndex("OperationAreaId");
-
-                    b.HasIndex("SubTerritoryId");
-
-                    b.HasIndex("TerritoryId");
 
                     b.ToTable("Blocks");
                 });
@@ -1655,9 +1635,7 @@ namespace Infrastructure.Migrations
 
                     b.HasOne("Core.Models.Billing.Block", "Block")
                         .WithMany()
-                        .HasForeignKey("BlockId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("BlockId");
 
                     b.HasOne("Core.Models.Billing.Branch", "Branch")
                         .WithMany()
@@ -1773,41 +1751,6 @@ namespace Infrastructure.Migrations
                     b.Navigation("Branch");
 
                     b.Navigation("OperationArea");
-                });
-
-            modelBuilder.Entity("Core.Models.Billing.Block", b =>
-                {
-                    b.HasOne("Core.Models.Billing.Branch", "Branch")
-                        .WithMany()
-                        .HasForeignKey("BranchId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Core.Models.Billing.OperationArea", "OperationArea")
-                        .WithMany()
-                        .HasForeignKey("OperationAreaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Core.Models.Billing.SubTerritory", "SubTerritory")
-                        .WithMany()
-                        .HasForeignKey("SubTerritoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Core.Models.Billing.Territory", "Territory")
-                        .WithMany()
-                        .HasForeignKey("TerritoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Branch");
-
-                    b.Navigation("OperationArea");
-
-                    b.Navigation("SubTerritory");
-
-                    b.Navigation("Territory");
                 });
 
             modelBuilder.Entity("Core.Models.Billing.Branch", b =>

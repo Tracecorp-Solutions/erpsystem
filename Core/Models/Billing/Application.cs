@@ -79,7 +79,7 @@ namespace Core.Models.Billing
         public SubTerritory? SubTerritory { get; set; }
 
         [ForeignKey("Block")]
-        public int BlockId { get; set; }
+        public int? BlockId { get; set; }
 
         public CustomerCategory? CustomerCategory { get; set; }
 
@@ -89,7 +89,7 @@ namespace Core.Models.Billing
 
         public CustomerTarrif? CustomerTarrif { get; set; }
 
-        public virtual Block Block { get; set; }
+        public Block? Block { get; set;}
 
     }
 }
