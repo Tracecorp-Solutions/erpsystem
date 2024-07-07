@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Modal, Select, message, Space } from "antd";
 import axios from "axios";
+import { getBlocks } from "../../../Apis/getBlocks";
 
 const { Option } = Select;
 
@@ -18,6 +19,8 @@ const UpdateAuthorizeModal = ({
     useState(null);
   const [customerTarrifs, setCustomerTarrifs] = useState([]);
   const [selectedTarrifId, setSelectedTarrifId] = useState(null);
+  const [blocks, setBlocks] = useState([]);
+  const [selectedBlockId, setSelectedBlockId] = useState(null);
 
   useEffect(() => {
     const fetchCustomerData = async () => {
@@ -26,6 +29,13 @@ const UpdateAuthorizeModal = ({
           axios.get(`${process.env.REACT_APP_API_URL}/GetCustomerCategories`),
           axios.get(`${process.env.REACT_APP_API_URL}/GetCustomerTypes`),
         ]);
+
+        try {
+          const blocksResponse = await getBlocks();
+          setBlocks(blocksResponse);
+        } catch (error) {
+          console.error("Error fetching customer blocks:", error);
+        }
 
         setCustomerCategories(categoriesResponse.data);
         setCustomerTypes(typesResponse.data);
@@ -40,17 +50,26 @@ const UpdateAuthorizeModal = ({
 
   const fetchCustomerTarrifs = async () => {
     try {
-      const response = await axios.get(`${process.env.REACT_APP_API_URL}/GetCustomerTarrifs`);
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}/GetCustomerTarrifs`
+      );
       setCustomerTarrifs(response.data); // Assuming response.data is the array of tariffs
     } catch (error) {
-      message.error('Error fetching customer tariffs');
-      console.error('Error fetching customer tariffs:', error);
+      message.error("Error fetching customer tariffs");
+      console.error("Error fetching customer tariffs:", error);
     }
   };
 
   const handleUpdateAndAuthorize = () => {
-    if (selectedConnectionType === null || selectedConnectionCategory === null || selectedTarrifId === null) {
-      message.error('Please select connection type, category, and tariff.');
+    if (
+      selectedConnectionType === null ||
+      selectedConnectionCategory === null ||
+      selectedTarrifId === null ||
+      selectedBlockId === null
+    ) {
+      message.error(
+        "Please select connection type, category, tariff, and block."
+      );
       return;
     }
 
@@ -60,6 +79,7 @@ const UpdateAuthorizeModal = ({
       connectionCategory: selectedConnectionCategory,
       tariffId: selectedTarrifId,
       authorizedBy: String(applicationData?.user?.id || ""),
+      blockId: selectedBlockId,
     };
 
     axios
@@ -172,6 +192,23 @@ const UpdateAuthorizeModal = ({
           {customerTarrifs.map((tarrif) => (
             <Option key={tarrif.id} value={tarrif.id}>
               {tarrif.tarrifName}
+            </Option>
+          ))}
+        </Select>
+
+        <div className="mt-4 text-base font-bold text-xl leading-6 text-neutral-600 max-md:max-w-full">
+          Select Block
+        </div>
+        <Select
+          value={selectedBlockId}
+          onChange={(value) => setSelectedBlockId(value)}
+          className="flex gap-2 justify-between h-14 mt-2 max-w-full text-base leading-6 bg-white rounded-xl border border-solid border-neutral-500 border-opacity-30 text-neutral-400 w-[500px] max-md:flex-wrap"
+          dropdownClassName="w-full"
+        >
+          <Space>Select Block</Space>
+          {blocks.map((block) => (
+            <Option key={block.id} value={block.id}>
+              {block.name}
             </Option>
           ))}
         </Select>
