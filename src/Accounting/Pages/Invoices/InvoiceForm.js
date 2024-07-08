@@ -4,8 +4,6 @@ import axios from "axios";
 import { ArrowLeftOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import SuccessMessageCard from "../../components/Shared/SuccessMessageCard";
-import TopNav from "../../shared/navigations/TopNav";
-import SideNav from "../../shared/navigations/SideNav";
 
 const InvoiceForm = () => {
   const [formData, setFormData] = useState({
@@ -139,9 +137,9 @@ const InvoiceForm = () => {
 
   return (
     <>
-      <SideNav />
+     
       <form onSubmit={handleSubmit} className="content">
-        <TopNav />
+       
         <div>
           <div className="sm:flex justify-between items-center mb-6">
             <h2
