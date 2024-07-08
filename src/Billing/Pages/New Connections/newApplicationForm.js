@@ -573,10 +573,10 @@ const NewApplicationForm = () => {
                         htmlFor="BranchId"
                         className="font-semibold text-gray-700 mb-2"
                       >
-                        Branch Name
+                        Area Name
                       </label>
                       <p className="text-gray-500 text-sm mt-1">
-                        Add the branch name
+                        Add the Area name
                       </p>
                       <select
                         name="BranchId"
@@ -589,7 +589,7 @@ const NewApplicationForm = () => {
                         }
                         className="border border-gray-300 rounded-md px-3 py-2 w-72"
                       >
-                        <option value="">Select Branch</option>
+                        <option value="">Select Area</option>
                         {branches.map((branch) => (
                           <option key={branch.id} value={branch.id}>
                             {branch.name}
@@ -602,10 +602,10 @@ const NewApplicationForm = () => {
                         htmlFor="operationAreaId"
                         className="font-semibold text-gray-700 mb-2"
                       >
-                        Operational Area Name
+                        Station Name
                       </label>
                       <p className="text-gray-500 text-sm mt-1">
-                        Add the Operational Area
+                        Add the Station Area
                       </p>
                       <select
                         name="OperationAreaId"
@@ -618,7 +618,7 @@ const NewApplicationForm = () => {
                         }
                         className="border border-gray-300 rounded-md px-3 py-2 w-72"
                       >
-                        <option value="">Select Operation Area</option>
+                        <option value="">Select Station Area</option>
                         {operationalAreas.map((area) => (
                           <option key={area.id} value={area.id}>
                             {area.name}
@@ -631,10 +631,10 @@ const NewApplicationForm = () => {
                         htmlFor="territoryId"
                         className="font-semibold text-gray-700 mb-2"
                       >
-                        Territory Name
+                        Municipality Name
                       </label>
                       <p className="text-gray-500 text-sm mt-1">
-                        Add the territory
+                        Add the Municipality
                       </p>
                       <select
                         name="TerritoryId"
@@ -647,7 +647,7 @@ const NewApplicationForm = () => {
                         }
                         className="border border-gray-300 rounded-md px-3 py-2 w-72"
                       >
-                        <option value="">Select Territory</option>
+                        <option value="">Select Municipality</option>
                         {territories.map((territory) => (
                           <option key={territory.id} value={territory.id}>
                             {territory.name}
@@ -661,10 +661,10 @@ const NewApplicationForm = () => {
                         htmlFor="subTerritoryId"
                         className="font-semibold text-gray-700 mb-2"
                       >
-                        SubTerritory
+                        Quarter
                       </label>
                       <p className="text-gray-500 text-sm mt-1">
-                        Add the sub-territory
+                        Add the Quarter
                       </p>
                       <select
                         name="SubTerritoryId"
@@ -672,7 +672,7 @@ const NewApplicationForm = () => {
                         onChange={handleChange}
                         className="border border-gray-300 rounded-md px-3 py-2 w-72"
                       >
-                        <option value="">Select SubTerritory</option>
+                        <option value="">Select Quarter</option>
                         {subTerritories.map((SubTerritory) => (
                           <option key={SubTerritory.id} value={SubTerritory.id}>
                             {SubTerritory.name}
