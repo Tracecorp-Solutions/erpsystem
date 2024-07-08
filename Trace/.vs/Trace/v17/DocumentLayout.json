@@ -1,23 +1,7 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "D:\\working directory\\erpsystem\\Trace\\",
-  "Documents": [
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\working directory\\erpsystem\\Infrastructure\\Migrations\\20240707081126_AdditionOfBlocks.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\working directory\\erpsystem\\Infrastructure\\Migrations\\20240707080404_AddingForeignKeyToBlockIdInApplication.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\working directory\\erpsystem\\Infrastructure\\Migrations\\20240707080149_RemovingBlockId.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\working directory\\erpsystem\\Infrastructure\\Migrations\\20240707075958_UpdatingBlockTable.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\working directory\\erpsystem\\Infrastructure\\Migrations\\20240707075428_ConfirmingAllTables.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    }
-  ],
+  "Documents": [],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -25,7 +9,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 6,
+          "SelectedChildIndex": -1,
           "Children": [
             {
               "$type": "Bookmark",
@@ -50,71 +34,6 @@
             {
               "$type": "Bookmark",
               "Name": "ST:130:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "20240707081126_AdditionOfBlocks.cs",
-              "DocumentMoniker": "D:\\working directory\\erpsystem\\Infrastructure\\Migrations\\20240707081126_AdditionOfBlocks.cs",
-              "RelativeDocumentMoniker": "..\\Infrastructure\\Migrations\\20240707081126_AdditionOfBlocks.cs",
-              "ToolTip": "D:\\working directory\\erpsystem\\Infrastructure\\Migrations\\20240707081126_AdditionOfBlocks.cs",
-              "RelativeToolTip": "..\\Infrastructure\\Migrations\\20240707081126_AdditionOfBlocks.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-07T08:11:26.477Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "20240707080404_AddingForeignKeyToBlockIdInApplication.cs",
-              "DocumentMoniker": "D:\\working directory\\erpsystem\\Infrastructure\\Migrations\\20240707080404_AddingForeignKeyToBlockIdInApplication.cs",
-              "RelativeDocumentMoniker": "..\\Infrastructure\\Migrations\\20240707080404_AddingForeignKeyToBlockIdInApplication.cs",
-              "ToolTip": "D:\\working directory\\erpsystem\\Infrastructure\\Migrations\\20240707080404_AddingForeignKeyToBlockIdInApplication.cs",
-              "RelativeToolTip": "..\\Infrastructure\\Migrations\\20240707080404_AddingForeignKeyToBlockIdInApplication.cs",
-              "ViewState": "AQIAAAkAAAAAAAAAAAAAAA0AAAAeAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-07T08:04:04.582Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "20240707080149_RemovingBlockId.cs",
-              "DocumentMoniker": "D:\\working directory\\erpsystem\\Infrastructure\\Migrations\\20240707080149_RemovingBlockId.cs",
-              "RelativeDocumentMoniker": "..\\Infrastructure\\Migrations\\20240707080149_RemovingBlockId.cs",
-              "ToolTip": "D:\\working directory\\erpsystem\\Infrastructure\\Migrations\\20240707080149_RemovingBlockId.cs",
-              "RelativeToolTip": "..\\Infrastructure\\Migrations\\20240707080149_RemovingBlockId.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-07T08:01:49.134Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "20240707075958_UpdatingBlockTable.cs",
-              "DocumentMoniker": "D:\\working directory\\erpsystem\\Infrastructure\\Migrations\\20240707075958_UpdatingBlockTable.cs",
-              "RelativeDocumentMoniker": "..\\Infrastructure\\Migrations\\20240707075958_UpdatingBlockTable.cs",
-              "ToolTip": "D:\\working directory\\erpsystem\\Infrastructure\\Migrations\\20240707075958_UpdatingBlockTable.cs",
-              "RelativeToolTip": "..\\Infrastructure\\Migrations\\20240707075958_UpdatingBlockTable.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-07T07:59:58.994Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "20240707075428_ConfirmingAllTables.cs",
-              "DocumentMoniker": "D:\\working directory\\erpsystem\\Infrastructure\\Migrations\\20240707075428_ConfirmingAllTables.cs",
-              "RelativeDocumentMoniker": "..\\Infrastructure\\Migrations\\20240707075428_ConfirmingAllTables.cs",
-              "ToolTip": "D:\\working directory\\erpsystem\\Infrastructure\\Migrations\\20240707075428_ConfirmingAllTables.cs",
-              "RelativeToolTip": "..\\Infrastructure\\Migrations\\20240707075428_ConfirmingAllTables.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-07T07:54:28.405Z",
-              "EditorCaption": ""
             }
           ]
         }

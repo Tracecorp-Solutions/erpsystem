@@ -125,6 +125,10 @@ namespace Services.Repositories.Billing
             if (file == null)
                 throw new Exception("Evidence file is required");
 
+            //check adjustment type
+            if (billAdjustmentRequest.AdjustmentType != "+" && billAdjustmentRequest.AdjustmentType != "-")
+                throw new Exception("Invalid Adjustment Type. Type should be a + or -");
+
             //save file to disk
             string filepath = await _settings.SaveFileAndReturnPathAsync(file);
 
@@ -134,7 +138,7 @@ namespace Services.Repositories.Billing
                 DocumentNumber = billAdjustmentRequest.DocumentNumber,
                 AdjustmentType = billAdjustmentRequest.AdjustmentType,
                 AdjustmentReason = billAdjustmentRequest.AdjustmentReason,
-                AdjustmentStatus = billAdjustmentRequest.AdjustmentStatus,
+                AdjustmentStatus = "PENDING",
                 EvidenceFilePath = filepath,
                 TransactionCode = billAdjustmentRequest.TransactionCode,
                 EffectiveDate = billAdjustmentRequest.EffectiveDate,

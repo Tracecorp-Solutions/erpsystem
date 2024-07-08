@@ -13,7 +13,6 @@ namespace Core.DTOs.Billing
         public string AdjustmentType { get; set; }
 
         public string AdjustmentReason { get; set; }
-        public string AdjustmentStatus { get; set; }
         public string EvidenceFilePath { get; set; }
 
         public int TransactionCode { get; set; }
