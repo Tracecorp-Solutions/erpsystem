@@ -1,67 +1,168 @@
-import * as React from "react";
+import React, { useState,useEffect } from "react";
+import { useLocation } from "react-router-dom";
+import { Table, Dropdown, Menu, Button, message } from "antd";
+import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
+import PaymentDetails from "./PaymentDetails";
+import ReconcileInvoice from "./ReconcileInvoice";
+import axios from "axios";
 
-function Payslip() {
+const Payslip = () => {
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isReconcileInvoice, setIsReconcileInvoice] = useState(false);
+  const [invoices,setInvoices] = useState([]);
+
+  const location = useLocation();
+  const { state } = location;
+  const application = state?.applicationNumber;
+
+  const handleOk = () => {
+    setIsModalVisible(false);
+    // Logic to handle saving payment details
+  };
+
+  const CanceReconcileInvoice = () => {
+    setIsReconcileInvoice(false);
+  };
+
+  useEffect(()=>{
+    getCustomerInvoices();
+  },[]);
+
+  const handleMenuClick = (applicationNumber, key) => {
+    // Handle menu item clicks here
+    console.log(`Clicked on ${key} for application ${applicationNumber}`);
+  };
+
+  const showModal = () => {
+    setIsModalVisible(true);
+  };
+
+  const getCustomerInvoices = async ()=>{
+    try{
+      const resp = await axios.get(`${process.env.REACT_APP_API_URL}/GetAllInvoices`);
+      message.success("Successfully fetched invoice items");
+      setInvoices(resp.data);
+    }catch(error){
+      message.error(error.response);
+    }
+  };
+
+  const columns = [
+    {
+      title: "Application No.",
+      dataIndex: "applicationNumber",
+      key: "applicationNumber",
+    },
+    {
+      title: "Payment Ref.",
+      dataIndex: "invoiceNumber",
+      key: "invoiceNumber",
+    },
+    {
+      title: "Invoice Amount",
+      dataIndex: "invoiceAmount",
+      key: "invoiceAmount",
+    },
+    {
+      title: "Creation Date",
+      dataIndex: "date",
+      key: "date",
+    },
+    {
+      title: "Status",
+      dataIndex: "status",
+      key: "status",
+    },
+    {
+      title: "Action",
+      key: "action",
+      render: (text, record) => (
+        <Dropdown
+          overlay={
+            <Menu onClick={({ key }) => handleMenuClick(record.applicationNo, key)}>
+              <Menu.Item key="view">View Details</Menu.Item>
+            </Menu>
+          }
+          trigger={["click"]}
+        >
+          <EllipsisVerticalIcon className="h-6" />
+        </Dropdown>
+      ),
+    },
+  ];
+
+  const data = [
+    {
+      key: "1",
+      applicationNo: "AB/00/22022022/1",
+      paymentRef: "NC009",
+      amountPaid: "400,000",
+      balance: "0",
+      paymentDate: "20/04/2024",
+      status: "Paid",
+    },
+    {
+      key: "2",
+      applicationNo: "AB/00/22022022/2",
+      paymentRef: "NC009",
+      amountPaid: "93,000",
+      balance: "0",
+      paymentDate: "20/04/2024",
+      status: "Deposit",
+    },
+  ];
+
+  const paginationConfig = {
+    pageSize: 10,
+    total: data.length,
+    };
+
   return (
-    <div className="flex flex-col items-center max-w-[820px] text-neutral-600">
-      <div className="flex flex-col self-stretch pt-6 w-full text-4xl font-semibold leading-[57.6px] max-md:max-w-full">
-        <div className="flex gap-5 justify-between self-center px-5 w-full max-w-screen-sm max-md:flex-wrap max-md:max-w-full">
-          <div>Generate Payslips</div>
-          <img
-            loading="lazy"
-            src="https://cdn.builder.io/api/v1/image/assets/TEMP/9cb4c3a052fc4ce0311e93e84c7d1ec0d87c500974fc2472887163b10b65c326?apiKey=5bf51c3fc9cb49b480a07670cbcd768f&"
-            className="shrink-0 my-auto w-8 aspect-square"
-          />
+    <div className="flex flex-col justify-center items-center py-6 font-semibold rounded-3xl bg-stone-100 leading-[160%]">
+      {/* Applications Section */}
+      <div className="flex gap-2 items-center self-stretch px-6 text-base text-neutral-600 max-md:flex-wrap max-md:px-5">
+        <div className="self-stretch my-auto">Applications</div>
+        <img
+          loading="lazy"
+          src="https://cdn.builder.io/api/v1/image/assets/TEMP/d86f4adfe62571b3a93bdc441d8816afef791164dcc95e442522025a86a279bf?apiKey=5bf51c3fc9cb49b480a07670cbcd768f&"
+          className="shrink-0 self-stretch my-auto w-6 aspect-square"
+          alt="Application Icon"
+        />
+        <div className="justify-center self-stretch px-4 py-1 whitespace-nowrap bg-white rounded-2xl">
+          {application}
         </div>
-        <div className="mt-6 w-full border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-opacity-10 min-h-[1px] max-md:max-w-full" />
-      </div>
-      <div className="flex gap-4 justify-between px-5 py-4 mt-4 max-w-full text-base leading-6 w-[500px] max-md:flex-wrap">
-        <div className="flex flex-col">
-          <div className="font-semibold">Application Number</div>
-          <div className="mt-2">APP567890</div>
-        </div>
-        <div className="flex flex-col">
-          <div className="font-semibold">Applicant Name</div>
-          <div className="mt-2">Grace Eze</div>
-        </div>
-        <div className="flex flex-col">
-          <div className="font-semibold">Surveyor’s Name</div>
-          <div className="mt-2">Nowembabazi Nickson</div>
+        <img
+          loading="lazy"
+          src="https://cdn.builder.io/api/v1/image/assets/TEMP/d86f4adfe62571b3a93bdc441d8816afef791164dcc95e442522025a86a279bf?apiKey=5bf51c3fc9cb49b480a07670cbcd768f&"
+          className="shrink-0 self-stretch my-auto w-6 aspect-square"
+          alt="Payment Reference Icon"
+        />
+        <div className="self-stretch my-auto max-md:max-w-full">
+          Payment References
         </div>
       </div>
-      <div className="shrink-0 mt-4 max-w-full h-px border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-opacity-10 w-[500px]" />
-      <div className="mt-4 text-base font-semibold leading-6 max-md:max-w-full">
-        New Connection Fee
+
+      <div className="w-full max-w-[1088px] mt-6">
+        <div className="text-4xl text-neutral-600 px-5">Customer Invoices</div>
+        <Table
+          columns={columns}
+          dataSource={invoices}
+          pagination={paginationConfig}
+          className="mt-4"
+        />
       </div>
-      <div className="mt-1 text-sm text-neutral-400 max-md:max-w-full">
-        This is the sum of the total costing of all the materials on the
-        customer invoice
-      </div>
-      <div className="justify-center items-start px-4 py-4 mt-2 max-w-full text-base leading-6 whitespace-nowrap bg-white rounded-xl border border-solid border-neutral-500 border-opacity-30 w-[500px] max-md:pr-5">
-        240,000
-      </div>
-      <div className="mt-4 text-base font-semibold leading-6 max-md:max-w-full">
-        Deposit Fee
-      </div>
-      <div className="mt-1 text-sm text-neutral-400 w-[500px] max-md:max-w-full">
-        This is the required amount that every customer should pay but can be
-        updated according to the user’s discretion
-      </div>
-      <div className="justify-center items-start px-4 py-4 mt-2 max-w-full text-base leading-6 whitespace-nowrap bg-white rounded-xl border border-solid border-neutral-500 border-opacity-30 w-[500px] max-md:pr-5">
-        100,000
-      </div>
-      <div className="flex gap-2 justify-between px-5 pb-4 mt-8 max-w-full font-semibold w-[500px] max-md:flex-wrap">
-        <div className="my-auto text-base leading-6">Total Amount</div>
-        <div className="justify-center px-4 py-3.5 text-2xl capitalize whitespace-nowrap rounded-xl bg-stone-100 max-md:px-5">
-          340,000
-        </div>
-      </div>
-      <div className="flex justify-center items-center self-stretch px-16 py-6 mt-44 w-full text-base font-semibold leading-6 text-white bg-stone-100 max-md:px-5 max-md:mt-10 max-md:max-w-full">
-        <div className="justify-center items-center px-8 py-4 max-w-full rounded-3xl bg-slate-500 w-[500px] max-md:px-5">
-          Confirm and Generate Payslips
-        </div>
-      </div>
+
+      <PaymentDetails
+        isModalVisible={isModalVisible}
+        handleOk={handleOk}
+        handleCancel={handleOk}
+      />
+      <ReconcileInvoice
+        isReconcileInvoice={isReconcileInvoice}
+        CanceReconcileInvoice={CanceReconcileInvoice}
+      />
     </div>
   );
-}
+};
 
 export default Payslip;

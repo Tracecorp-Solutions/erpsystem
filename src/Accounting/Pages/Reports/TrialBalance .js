@@ -172,9 +172,182 @@ const TrialBalance = () => {
           onChange={paginate}
         />
       </div> */}
-      <h1 className="text-center text-xl">Coming Soon!</h1>
+      <div className="flex flex-col p-6 bg-white rounded-3xl max-md:px-5">
+      <div className="flex gap-2 justify-between w-full text-base leading-6 whitespace-nowrap max-md:flex-wrap max-md:max-w-full">
+        <div className="flex gap-2 px-6 py-3 rounded-3xl border border-solid border-neutral-500 border-opacity-30 text-neutral-400 max-md:px-5">
+          <img
+            loading="lazy"
+            src="https://cdn.builder.io/api/v1/image/assets/TEMP/3f02b79592faed7d699dd0b3b194f3c1ae722683f5fba56d39d1ae55c28f9d41?apiKey=5bf51c3fc9cb49b480a07670cbcd768f&"
+            className="shrink-0 self-start w-6 aspect-square"
+          />
+          <div>Filter</div>
+        </div>
+        <div className="flex gap-2 px-6 py-3 font-semibold text-white rounded-3xl bg-slate-500 max-md:px-5">
+          <img
+            loading="lazy"
+            src="https://cdn.builder.io/api/v1/image/assets/TEMP/2db10bbbfea74ab4d6421f41550d261f3b0fc63c181014f826d06ba56fed8a5c?apiKey=5bf51c3fc9cb49b480a07670cbcd768f&"
+            className="shrink-0 self-start w-6 aspect-square"
+          />
+          <div>Export</div>
+        </div>
+      </div>
+      <div className="flex gap-5 justify-between px-6 py-4 mt-4 w-full text-xs font-medium tracking-wide uppercase whitespace-nowrap rounded-3xl bg-stone-100 text-neutral-400 max-md:flex-wrap max-md:px-5 max-md:max-w-full">
+        <div className="flex gap-5 justify-between">
+          <div>Account</div>
+          <div>description</div>
+        </div>
+        <div className="flex gap-5 justify-between">
+          <div>credit</div>
+          <div>debit</div>
+        </div>
+      </div>
+      <div className="flex gap-5 justify-between px-6 py-3 mt-2 text-base leading-6 rounded-3xl text-neutral-600 max-md:flex-wrap max-md:px-5 max-md:max-w-full">
+        <div className="justify-center bg-white">Petty Cash</div>
+        <div className="text-ellipsis">
+          Pay Smart TV Screen for developer presentations
+        </div>
+        <div className="justify-center font-semibold whitespace-nowrap bg-white">
+          $1,120
+        </div>
+        <div className="justify-center font-semibold whitespace-nowrap bg-white">
+          $1,120
+        </div>
+      </div>
+      <div className="shrink-0 mt-2 h-px border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-opacity-10 max-md:max-w-full" />
+      <div className="flex gap-5 justify-between px-6 py-3 mt-2 text-base leading-6 rounded-3xl text-neutral-600 max-md:flex-wrap max-md:px-5 max-md:max-w-full">
+        <div className="justify-center bg-white">Bank Deposit</div>
+        <div className="text-ellipsis">
+          Pay for meals for developer presentations
+        </div>
+        <div className="justify-center font-semibold whitespace-nowrap bg-white">
+          $3,120
+        </div>
+        <div className="justify-center font-semibold whitespace-nowrap bg-white">
+          $3,120
+        </div>
+      </div>
+      <div className="shrink-0 mt-2 h-px border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-opacity-10 max-md:max-w-full" />
+      <div className="flex gap-5 justify-between px-6 py-3 mt-2 text-base leading-6 rounded-3xl text-neutral-600 max-md:flex-wrap max-md:px-5 max-md:max-w-full">
+        <div className="justify-center bg-white">Bank Deposit</div>
+        <div className="text-ellipsis">
+          Pay for stationery for developer presentations
+        </div>
+        <div className="justify-center font-semibold whitespace-nowrap bg-white">
+          $3,000
+        </div>
+        <div className="justify-center font-semibold whitespace-nowrap bg-white">
+          $3,000
+        </div>
+      </div>
+      <div className="shrink-0 mt-2 h-px border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-opacity-10 max-md:max-w-full" />
+      <div className="flex gap-5 justify-between px-6 py-3 mt-2 text-base leading-6 rounded-3xl text-neutral-600 max-md:flex-wrap max-md:px-5 max-md:max-w-full">
+        <div className="justify-center bg-white">Petty Cash</div>
+        <div className="text-ellipsis">
+          Pay digital TV Screen for developer presentations
+        </div>
+        <div className="justify-center font-semibold whitespace-nowrap bg-white">
+          $9,020
+        </div>
+        <div className="justify-center font-semibold whitespace-nowrap bg-white">
+          $9,020
+        </div>
+      </div>
+      <div className="shrink-0 mt-2 h-px border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-opacity-10 max-md:max-w-full" />
+      <div className="flex gap-5 justify-between px-6 py-3 mt-2 text-base leading-6 rounded-3xl text-neutral-600 max-md:flex-wrap max-md:px-5 max-md:max-w-full">
+        <div className="justify-center bg-white">Bank Deposit</div>
+        <div className="text-ellipsis">
+          Pay employee salary  for developer presentations
+        </div>
+        <div className="justify-center font-semibold whitespace-nowrap bg-white">
+          $2,120
+        </div>
+        <div className="justify-center font-semibold whitespace-nowrap bg-white">
+          $1,120
+        </div>
+      </div>
+      <div className="shrink-0 mt-2 h-px border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-opacity-10 max-md:max-w-full" />
+      <div className="flex gap-5 justify-between px-6 py-3 mt-2 text-base leading-6 rounded-3xl text-neutral-600 max-md:flex-wrap max-md:px-5 max-md:max-w-full">
+        <div className="justify-center bg-white">Bank deposit</div>
+        <div className="text-ellipsis">
+          Pay Smart TV Screen for developer presentations
+        </div>
+        <div className="justify-center font-semibold whitespace-nowrap bg-white">
+          $1,120
+        </div>
+        <div className="justify-center font-semibold whitespace-nowrap bg-white">
+          $1,120
+        </div>
+      </div>
+      <div className="shrink-0 mt-2 h-px border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-opacity-10 max-md:max-w-full" />
+      <div className="flex gap-5 justify-between px-6 py-3 mt-2 text-base leading-6 rounded-3xl text-neutral-600 max-md:flex-wrap max-md:px-5 max-md:max-w-full">
+        <div className="justify-center bg-white">Petty Cash</div>
+        <div className="text-ellipsis">
+          Pay Smart TV Screen for developer presentations
+        </div>
+        <div className="justify-center font-semibold whitespace-nowrap bg-white">
+          $1,120
+        </div>
+        <div className="justify-center font-semibold whitespace-nowrap bg-white">
+          $1,120
+        </div>
+      </div>
+      <div className="shrink-0 mt-2 h-px border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-opacity-10 max-md:max-w-full" />
+      <div className="flex gap-5 justify-between px-6 py-3 mt-2 text-base leading-6 rounded-3xl text-neutral-600 max-md:flex-wrap max-md:px-5 max-md:max-w-full">
+        <div className="justify-center bg-white">Petty Cash</div>
+        <div className="text-ellipsis">
+          Pay Smart TV Screen for developer presentations
+        </div>
+        <div className="justify-center font-semibold whitespace-nowrap bg-white">
+          $1,120
+        </div>
+        <div className="justify-center font-semibold whitespace-nowrap bg-white">
+          $1,120
+        </div>
+      </div>
+      <div className="shrink-0 mt-2 h-px border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-opacity-10 max-md:max-w-full" />
+      <div className="flex gap-2 justify-between mt-2 w-full bg-white max-md:flex-wrap max-md:max-w-full">
+        <div className="my-auto text-base leading-6 text-neutral-400">
+          Showing 1 - 10 of 150
+        </div>
+        <div className="flex gap-2">
+          <div className="flex justify-center items-center px-4 w-12 h-12 rounded-3xl bg-stone-100">
+            <img
+              loading="lazy"
+              src="https://cdn.builder.io/api/v1/image/assets/TEMP/ff1835eab83aaba4b3b28c08f4efdfa5b5b13efe57cf4ba87e34e28be72ba65d?apiKey=5bf51c3fc9cb49b480a07670cbcd768f&"
+              className="w-6 aspect-square"
+            />
+          </div>
+          <div className="justify-center items-center px-4 w-12 h-12 text-base font-semibold leading-6 text-white whitespace-nowrap rounded-3xl bg-slate-500 max-md:px-5">
+            1
+          </div>
+          <div className="justify-center items-start px-4 py-3 text-base font-semibold leading-6 whitespace-nowrap rounded-3xl border border-solid border-neutral-500 border-opacity-10 text-neutral-400">
+            2
+          </div>
+          <div className="flex justify-center items-center px-4 py-3 rounded-3xl border border-solid border-neutral-500 border-opacity-10">
+            <img
+              loading="lazy"
+              src="https://cdn.builder.io/api/v1/image/assets/TEMP/c19c09b34073900dfacfc3a10ceab301e637c63c0b80eb00f201bc01a698a5ef?apiKey=5bf51c3fc9cb49b480a07670cbcd768f&"
+              className="w-6 aspect-square"
+            />
+          </div>
+          <div className="justify-center px-4 py-3 text-base font-semibold leading-6 whitespace-nowrap rounded-3xl border border-solid border-neutral-500 border-opacity-10 text-neutral-400">
+            9
+          </div>
+          <div className="flex justify-center items-center px-4 w-12 h-12 rounded-3xl bg-stone-100">
+            <img
+              loading="lazy"
+              src="https://cdn.builder.io/api/v1/image/assets/TEMP/5638cce5b32f789274ceeb5d277945e2b48f65a50c7c69d40aaa318a0cb3751a?apiKey=5bf51c3fc9cb49b480a07670cbcd768f&"
+              className="w-6 aspect-square"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
     </div>
   );
 };
 
 export default TrialBalance;
+
+
+

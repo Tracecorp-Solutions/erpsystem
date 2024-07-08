@@ -3,7 +3,7 @@ import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Dashboard from "./Billing/Components/shared/Dashboard";
 import Dashboardlayout from "./Accounting/Pages/layout/DashboardLayout";
-import GroupAccountSetUp from "./Accounting/Pages/Group/GroupAccountSetUp";
+import NewApplicationForm from "./Billing/Pages/New Connections/newApplicationForm";
 import SubGroupSetup from "./Accounting/Pages/Subgroup/SubGroupSetup";
 import AccountSetup from "./Accounting/Pages/Accounts/AccountSetup";
 import Transactions from "./Accounting/Pages/Transaction/Transactions";
@@ -33,7 +33,21 @@ import ApplicationPage from "./Billing/Pages/Application/ApplicationPage";
 import BillingDashboard from "./Billing/Pages/Layout/BillingDashboard";
 import ApplicationDetail from "./Billing/Pages/Application/ApplicationDetail";
 import UpdateInvoice from "./Billing/Pages/Application/Actions/UpdateInvoice";
+import Reconcillations from "./Billing/Pages/Application/Reconcillations";
 import InvoiceDetails from "./Billing/Pages/Application/Actions/InvoiceDetails";
+import AddMaterials from "./Billing/Pages/Application/Actions/AddMaterials";
+import ShowMaterials from "./Billing/Pages/Application/Actions/ShowMaterials";
+import ConfMaterials from "./Billing/Pages/Materials/ConfMaterials";
+import CreateMaterials from "./Billing/Pages/Materials/CreateMaterials";
+import Bulk from "./Billing/Pages/Meter/Bulk";
+import Replacement from "./Billing/Pages/Meter/Replacement";
+import One from "./Billing/Pages/Meter/One";
+import Servicing from "./Billing/Pages/Meter/Servicing";
+import CustomerDetails from "./Billing/Pages/Customer/CustomerDetails";
+import CustomerReadings from "./Billing/Pages/Customer/CustomerReadings";
+import CustomerBills from "./Billing/Pages/Customer/CustomerBills";
+import CustomerTransactions from "./Billing/Pages/Customer/CustomerTransactions";
+import History from "./Billing/Pages/Meter/History";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -65,7 +79,7 @@ function App() {
                 path="/verify"
                 element={<VerifyUser onVerify={handleVerify} />}
               />
-              <Route path="/groups" element={<GroupAccountSetUp />} />
+              <Route path="/new-application" element={<NewApplicationForm />} />
               <Route path="/sub-group" element={<SubGroupSetup />} />
               <Route path="/accounts" element={<AccountSetup />} />
               <Route path="/vendors" element={<VendorSetup />} />
@@ -74,6 +88,7 @@ function App() {
               <Route path="/signup" element={<Signup />} />
               <Route path="/verify" element={<VerifyUser />} />
               <Route path="/reset" element={<SetPassword />} />
+              <Route path="/billingdashboard" element={<BillingDashboard />} />
               {/* <Route path="/forgot" element={<Forgot />} /> */}
               <Route path="/Dashboardlayout" element={<Dashboardlayout />} />
               <Route path="/billingdashboard" element={<BillingDashboard />} />
@@ -101,8 +116,23 @@ function App() {
               <Route path="/user-activity" element={<UserActivity />} />
               <Route path="/application" element={<ApplicationPage />} />
               <Route path="/update-invoice" element={<UpdateInvoice />} />
+              <Route path="/reconciliation" element={<Reconcillations />} />
               <Route path="/invoice-details" element={<InvoiceDetails />} />
+              <Route path="/add-materials" element={<AddMaterials />} />
+              <Route path="/show-materials" element={<ShowMaterials />} />
+              <Route path="/conf-materials" element={<ConfMaterials />} />
+              <Route path="/create-materials" element={<CreateMaterials />} />
+              <Route path="/one" element={<One />} />
+              <Route path="/replacement" element={<Replacement />} />
+              <Route path="/bulk" element={<Bulk />} />
+              <Route path="/servicing" element={<Servicing />} />
+              <Route path="/customer-details" element={<CustomerDetails />} />
+              <Route path="/customer-readings" element={<CustomerReadings />} />
+              <Route path="/customer-bills" element={<CustomerBills />} />
+              <Route path="/customer-transaction" element={<CustomerTransactions />} />
+              <Route path="/history" element={<History />} />
               {/* <Route path="/view-detail" element={<ApplicationDetail />} /> */}
+              reconciliation
             </Routes>
           </div>
           <Routes>
