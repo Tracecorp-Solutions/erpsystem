@@ -101,9 +101,7 @@ function App() {
                 path="view-bill/:billId"
                 element={<ViewBill />}
               />
-              <Route path="/customer" element={<Customer />} />
-              <Route path="/create-bills" element={<BillsForm />} />
-              <Route path="/create-invoice" element={<InvoiceForm />} />
+              <Route path="/customer" element={<Customer />} /> 
               <Route path="/edit-invoice/:id" element={<EditInvoiceForm />} />
               <Route path="/invoice" element={<Invoice />} />
               <Route path="/billing" element={<Billing />} />

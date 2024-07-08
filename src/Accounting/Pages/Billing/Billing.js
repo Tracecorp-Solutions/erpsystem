@@ -74,7 +74,7 @@ const Billing = () => {
   }, []);
 
   const handleCreateInvoice = () => {
-    navigate("/create-bills");
+    navigate(`/Dashboardlayout`, { state: { screen: "billsform" } });
   };
 
   const handleViewBill = (id) => {

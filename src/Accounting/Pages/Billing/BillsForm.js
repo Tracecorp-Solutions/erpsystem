@@ -4,8 +4,6 @@ import axios from "axios";
 import { ArrowLeftOutlined } from "@ant-design/icons";
 // import SlideInCard from "./SlideInCard ";
 import { useNavigate } from "react-router-dom";
-import TopNav from "../../shared/navigations/TopNav";
-import SideNav from "../../shared/navigations/SideNav";
 import SuccessMessageCard from "../../components/Shared/SuccessMessageCard";
 
 const BillsForm = () => {
@@ -155,9 +153,9 @@ const BillsForm = () => {
 
   return (
     <>
-      <SideNav />
+     
       <form onSubmit={handleSubmit} className="content">
-        <TopNav />
+      
         <div>
           <div className="sm:flex justify-between items-center mb-4">
             <h2
@@ -399,7 +397,7 @@ const BillsForm = () => {
                 marginTop: "15px",
               }}
             >
-              Create Invoice Item
+              Create Bill Item
             </h2>
             <div>
               <label
@@ -462,7 +460,7 @@ const BillsForm = () => {
                   marginBottom: "5px",
                 }}
               >
-                Enter the cost of each invoice item
+                Enter the cost of each bill item
               </p>
               <input
                 type="number"
@@ -494,7 +492,7 @@ const BillsForm = () => {
                   marginBottom: "5px",
                 }}
               >
-                Describe what you are being paid for
+                Describe what you are paying for
               </p>
               <textarea
                 id="description"
