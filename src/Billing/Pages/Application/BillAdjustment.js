@@ -25,28 +25,13 @@ const BillAdjustment = () => {
   const [activeTab, setActiveTab] = useState("adjustmentRequest");
   const [drawerVisible, setDrawerVisible] = useState(false);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Handle form submission logic here
-    console.log("Form submitted!");
-  };
-
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    setAttachment(file);
-  };
-
-  const toggleTab = (tab) => {
-    setActiveTab(tab);
-  };
+  const apiUrl = `${process.env.REACT_APP_API_URL}/ValidateCustomer/${customerRef}`;
 
   const validateCustomer = () => {
     if (!customerRef) {
       alert("Please enter a customer reference.");
       return;
     }
-
-    const apiUrl = `${process.env.REACT_APP_API_URL}/ValidateCustomer/${customerRef}`;
 
     axios
       .get(apiUrl, {
@@ -61,6 +46,20 @@ const BillAdjustment = () => {
       .catch((error) => {
         console.error("Validation Error:", error);
       });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("Form submitted!");
+  };
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    setAttachment(file);
+  };
+
+  const toggleTab = (tab) => {
+    setActiveTab(tab);
   };
 
   const data = [
