@@ -208,7 +208,7 @@ const UpdateAuthorizeModal = ({
           <Space>Select Block</Space>
           {blocks.map((block) => (
             <Option key={block.id} value={block.id}>
-              {block.name}
+              {block.blockName}
             </Option>
           ))}
         </Select>
