@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 import {
   DatePicker,
   Input,
@@ -15,15 +16,14 @@ const { Option } = Select;
 
 const BillAdjustment = () => {
   const [customerRef, setCustomerRef] = useState("");
+  const [customerName, setCustomerName] = useState("");
   const [transactionCode, setTransactionCode] = useState("");
   const [effectiveDate, setEffectiveDate] = useState(null);
   const [amount, setAmount] = useState(0);
   const [attachment, setAttachment] = useState(null);
   const [adjustmentReason, setAdjustmentReason] = useState("");
   const [activeTab, setActiveTab] = useState("adjustmentRequest");
-
   const [drawerVisible, setDrawerVisible] = useState(false);
-
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -40,6 +40,29 @@ const BillAdjustment = () => {
     setActiveTab(tab);
   };
 
+  const validateCustomer = () => {
+    if (!customerRef) {
+      alert("Please enter a customer reference.");
+      return;
+    }
+
+    const apiUrl = `${process.env.REACT_APP_API_URL}/ValidateCustomer/${customerRef}`;
+
+    axios
+      .get(apiUrl, {
+        headers: {
+          accept: "*/*",
+        },
+      })
+      .then((response) => {
+        console.log("Validation Response:", response.data);
+        setCustomerName(response.data.name);
+      })
+      .catch((error) => {
+        console.error("Validation Error:", error);
+      });
+  };
+
   const data = [
     {
       key: "1",
@@ -51,7 +74,6 @@ const BillAdjustment = () => {
       vat: "0.00",
       total: "-20,000",
     },
-    // Add more data entries as needed
   ];
 
   const columns = [
@@ -125,7 +147,7 @@ const BillAdjustment = () => {
       <div className="text-4xl font-semibold text-neutral-600 max-md:max-w-full">
         Adjust Bill
       </div>
-      <div className="bg-white  w-full  mt-6">
+      <div className="bg-white w-full mt-6">
         <div className="flex flex-wrap justify-start space-x-2 px-6 py-4 text-slate-500">
           {/* Toggle Tabs */}
           <button
@@ -153,8 +175,6 @@ const BillAdjustment = () => {
         </div>
         {activeTab === "adjustmentRequest" && (
           <form onSubmit={handleSubmit} className="flex flex-col p-6 text-base">
-            {/* Adjustment tabs and separator lines omitted for brevity */}
-
             <div className="mt-8 font-semibold text-neutral-600 max-w-full">
               Customer Reference
             </div>
@@ -169,10 +189,7 @@ const BillAdjustment = () => {
                   />
                   <button
                     type="button"
-                    onClick={() => {
-                      /* Add validation logic here */
-                      console.log("Validate Customer clicked!");
-                    }}
+                    onClick={validateCustomer}
                     className="cursor-pointer justify-center px-8 py-3 font-semibold text-white rounded-lg bg-slate-500 max-w-[50%] md:w-[25%] md:ml-2"
                   >
                     Validate Customer
@@ -181,15 +198,13 @@ const BillAdjustment = () => {
               </div>
             </div>
 
-            {/* Separator line and other sections omitted for brevity */}
-
             <div className="flex gap-4 mt-4 max-md:flex-wrap">
               <div className="flex flex-col w-full">
                 <div className="font-semibold text-neutral-600 w-full">
                   Customer Name
                 </div>
                 <Input
-                  value={"Customer's Full Name"}
+                  value={customerName}
                   disabled
                   className="justify-center items-start px-4 py-4 mt-2 rounded-xl border border-solid border-neutral-500 border-opacity-30 text-neutral-400 max-md:pr-5 max-md:max-w-full"
                 />
@@ -264,88 +279,51 @@ const BillAdjustment = () => {
                 name="attachment"
                 className="flex flex-col w-full"
                 valuePropName="fileList"
-                getValueFromEvent={(e) => e && e.fileList}
+                getValueFromEvent={(e) => handleFileChange(e)}
               >
-                <h6 className="font-semibold text-sm">
-                  {" "}
-                  Attach Document (as evidence)
-                </h6>
-                <div className="flex gap-4 py-2 mt-2 rounded-xl border border-solid border-neutral-500 border-opacity-30 max-md:flex-wrap w-full">
-                  <label
-                    htmlFor="fileInput"
-                    className="cursor-pointer justify-center items-center px-16 py-2 whitespace-nowrap rounded-md bg-stone-100 text-neutral-600 max-md:px-5"
-                  >
-                    Browse
-                  </label>
-                  <div className="my-auto text-neutral-400">
-                    {attachment ? attachment.name : "No file selected"}
-                  </div>
-                  <input
-                    id="fileInput"
-                    type="file"
-                    onChange={handleFileChange}
-                    style={{ display: "none" }}
-                  />
+                <div className="font-semibold text-neutral-600 w-full">
+                  Attach File
                 </div>
+                <input
+                  type="file"
+                  className="px-4 py-3 mt-2 rounded-xl border border-solid border-neutral-500 border-opacity-30 text-neutral-400 max-md:pr-5"
+                />
               </Form.Item>
+
               <div className="flex flex-col w-full">
                 <div className="font-semibold text-neutral-600 w-full">
-                  Reason to Adjust
+                  Adjustment Reason
                 </div>
-                <Input.TextArea
+                <Input
                   value={adjustmentReason}
                   onChange={(e) => setAdjustmentReason(e.target.value)}
-                  className="justify-center items-start mt-2 rounded-xl border border-solid border-neutral-500 border-opacity-30 text-neutral-400 max-md:pr-5 max-md:max-w-full"
-                  placeholder="Add a comment ..."
+                  placeholder="Enter adjustment reason"
+                  className="px-4 py-3 mt-2 rounded-xl border border-solid border-neutral-500 border-opacity-30 text-neutral-400 max-md:pr-5"
                 />
               </div>
             </div>
 
-            <div className="flex flex-col pt-2 mt-4 font-semibold bg-white max-md:max-w-full">
-              <div className="shrink-0 h-px border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-opacity-10 max-md:max-w-full" />
-              <div className="flex gap-4 self-end mt-4 max-w-full w-[498px] max-md:flex-wrap">
-                <button
-                  type="button"
-                  className="justify-center items-center px-8 py-2 whitespace-nowrap rounded-full border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 max-md:px-5"
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  className="justify-center px-8 text-white rounded-full bg-slate-500 "
-                >
-                  Submit Request
-                </button>
-              </div>
+            <div className="flex justify-end mt-8 max-md:flex-wrap">
+              <button
+                type="submit"
+                className="px-8 py-3 font-semibold text-white rounded-lg bg-slate-500 max-w-[50%] md:w-[25%] md:ml-2"
+              >
+                Submit Adjustment
+              </button>
             </div>
           </form>
         )}
+
+        {activeTab === "viewAdjustments" && (
+          <Table dataSource={data} columns={columns} />
+        )}
+
+        {/* Drawer for Viewing Adjustment Details */}
+        <BillAdjustmentDrawer
+          visible={drawerVisible}
+          onClose={() => setDrawerVisible(false)}
+        />
       </div>
-      {activeTab === "viewAdjustments" && (
-  <div className="p-6 bg-white">
-    <div className="shrink-0 mt-4 h-px border border-solid bg-white border-neutral-500 border-opacity-10 max-md:max-w-full" />
-    <div className="mt-8 overflow-x-auto max-w-full">
-      <Table
-        dataSource={data}
-        columns={columns}
-        pagination={false}
-        rowClassName={() => "text-neutral-600"}
-        scroll={{ x: true }}
-      />
-    </div>
-    <div className="flex justify-end">
-      <button
-        type="button"
-        className="justify-center self-end px-6 py-3 mt-8 text-base font-semibold leading-6 text-white rounded-3xl bg-slate-500 max-md:px-5"
-      >
-        Print List
-      </button>
-    </div>
-  </div>
-)}
-
-<BillAdjustmentDrawer setDrawerVisible={setDrawerVisible} drawerVisible={drawerVisible} />
-
     </div>
   );
 };
