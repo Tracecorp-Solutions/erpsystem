@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { DatePicker, Input, Select, Button, Dropdown, Menu, Table } from "antd";
+import { DatePicker, Input, Select, Button, Dropdown, Menu, Table, message } from "antd";
 import { EllipsisOutlined } from "@ant-design/icons";
 import BillAdjustmentDrawer from "./Actions/BillAdjustmentDrawer";
 
@@ -12,12 +12,31 @@ const BillAdjustment = () => {
   const [transactionCode, setTransactionCode] = useState("");
   const [effectiveDate, setEffectiveDate] = useState(null);
   const [amount, setAmount] = useState(0);
-  const [attachment, setAttachment] = useState(null); // State to hold selected file
+  const [attachment, setAttachment] = useState(null);
   const [adjustmentReason, setAdjustmentReason] = useState("");
-  const [adjustmentType, setAdjustmentType] = useState(""); // State for adjustment type (+ or -)
+  const [adjustmentType, setAdjustmentType] = useState("");
   const [activeTab, setActiveTab] = useState("adjustmentRequest");
   const [drawerVisible, setDrawerVisible] = useState(false);
   const [documentNumber, setDocumentNumber] = useState("");
+
+  const [transactionCodes, setTransactionCodes] = useState([]);
+
+  useEffect(() => {
+    const fetchTransactionCodes = async () => {
+      try {
+        const response = await axios.get(
+          `${process.env.REACT_APP_API_URL}/GetTransactionCodes`
+        );
+        console.log("Transaction Codes:", response.data);
+        setTransactionCodes(response.data);
+      } catch (error) {
+        console.error("Error fetching transaction codes:", error);
+      }
+    };
+
+    fetchTransactionCodes();
+  }, []);
+
 
   const apiUrl = `${process.env.REACT_APP_API_URL}/ValidateCustomer/${customerRef}`;
 
@@ -45,13 +64,11 @@ const BillAdjustment = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
   
-    // Validate that AdjustmentType is selected
     if (!adjustmentType) {
       alert("Please select an adjustment type (+ or -).");
       return;
     }
   
-    // Calculate adjusted amount based on adjustment type
     let adjustedAmount = 0;
     if (adjustmentType === "+") {
       adjustedAmount = amount;
@@ -59,7 +76,6 @@ const BillAdjustment = () => {
       adjustedAmount = -amount;
     }
   
-    // Calculate total amount based on the adjusted amount
     const totalAmount = adjustedAmount;
   
     const formData = new FormData();
@@ -90,10 +106,10 @@ const BillAdjustment = () => {
         }
       )
       .then((response) => {
-        console.log("Adjustment Request Successful:", response.data);
+        message.success("Adjustment request submitted successfully!");
       })
       .catch((error) => {
-        console.error("Adjustment Request Error:", error);
+        message.error("Adjustment Request Error:", error);
       });
   };
   
@@ -185,6 +201,8 @@ const BillAdjustment = () => {
     },
   ];
 
+  console.log("transactionCodes transactionCodes", transactionCodes);
+
   return (
     <div className="flex flex-col flex-wrap justify-center content-start px-8 pt-6 rounded-3xl bg-stone-100 leading-[160%] max-md:px-5">
       <div className="text-4xl font-semibold text-neutral-600 max-w-full">
@@ -261,9 +279,11 @@ const BillAdjustment = () => {
                   className="flex gap-2 justify-between h-14 mt-2 rounded-xl border border-solid border-neutral-500 border-opacity-30 text-neutral-400 max-md:flex-wrap max-md:max-w-full"
                 >
                   <Option value="">Select Code</Option>
-                  <Option value="1">Code 1</Option>
-                  <Option value="2">Code 2</Option>
-                  <Option value="3">Code 3</Option>
+                  {transactionCodes.map((code) => (
+                    <Option key={code.id} value={code.id}>
+                      {code.description}
+                    </Option>
+                  ))}
                 </Select>
               </div>
             </div>
