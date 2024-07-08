@@ -333,7 +333,7 @@ const NewApplicationForm = () => {
                         name="Title"
                         value={application.Title}
                         onChange={handleChange}
-                        className="border border-gray-300 rounded-md px-3 py-2 w-72"
+                        className="border border-gray-300 rounded-md px-3 py-2 w-96"
                       />
                     </div>
                     <div>
@@ -348,7 +348,7 @@ const NewApplicationForm = () => {
                         name="FullName"
                         value={application.FullName}
                         onChange={handleChange}
-                        className="border border-gray-300 rounded-md px-3 py-2 w-72"
+                        className="border border-gray-300 rounded-md px-3 py-2 w-96"
                       />
                     </div>
                     <div>
@@ -363,7 +363,7 @@ const NewApplicationForm = () => {
                         name="DateOfBirth"
                         value={application.DateOfBirth}
                         onChange={handleChange}
-                        className="border border-gray-300 rounded-md px-3 py-2 w-72"
+                        className="border border-gray-300 rounded-md px-3 py-2 w-96"
                       />
                     </div>
                     <div>
@@ -377,7 +377,7 @@ const NewApplicationForm = () => {
                         name="Gender"
                         value={application.Gender}
                         onChange={handleChange}
-                        className="border border-gray-200 rounded-md px-3 py-2 w-72" // Adjust h-10 to increase height
+                        className="border border-gray-200 rounded-md px-3 py-2 w-96" // Adjust h-10 to increase height
                       >
                         <option value="select gender">
                           Select your gender
@@ -400,7 +400,7 @@ const NewApplicationForm = () => {
                         name="EmailAddress"
                         value={application.EmailAddress}
                         onChange={handleChange}
-                        className="border border-gray-300 rounded-md px-3 py-2 w-72"
+                        className="border border-gray-300 rounded-md px-3 py-2 w-96"
                       />
                     </div>
                     <div>
@@ -415,7 +415,7 @@ const NewApplicationForm = () => {
                         name="PhoneNumber"
                         value={application.PhoneNumber}
                         onChange={handleChange}
-                        className="border border-gray-300 rounded-md px-3 py-2 w-72"
+                        className="border border-gray-300 rounded-md px-3 py-2 w-96"
                       />
                     </div>
                     <div>
@@ -431,7 +431,7 @@ const NewApplicationForm = () => {
                         name="IdNumber"
                         value={application.IdNumber}
                         onChange={handleChange}
-                        className="border border-gray-300 rounded-md px-3 py-2 w-72"
+                        className="border border-gray-300 rounded-md px-3 py-2 w-96"
                       />
                     </div>
                   </div>
@@ -558,7 +558,7 @@ const NewApplicationForm = () => {
                             StateId: e.target.value,
                           })
                         }
-                        className="border border-gray-300 rounded-md px-3 py-2 w-72"
+                        className="border border-gray-300 rounded-md px-3 py-2 w-96"
                       >
                         <option value="">Select State</option>
                         {states.map((state) => (
@@ -573,10 +573,10 @@ const NewApplicationForm = () => {
                         htmlFor="BranchId"
                         className="font-semibold text-gray-700 mb-2"
                       >
-                        Area Name
+                        Branch Name
                       </label>
                       <p className="text-gray-500 text-sm mt-1">
-                        Add the Area name
+                        Add the branch name
                       </p>
                       <select
                         name="BranchId"
@@ -587,9 +587,9 @@ const NewApplicationForm = () => {
                             BranchId: e.target.value,
                           })
                         }
-                        className="border border-gray-300 rounded-md px-3 py-2 w-72"
+                        className="border border-gray-300 rounded-md px-3 py-2 w-96"
                       >
-                        <option value="">Select Area</option>
+                        <option value="">Select Branch</option>
                         {branches.map((branch) => (
                           <option key={branch.id} value={branch.id}>
                             {branch.name}
@@ -602,10 +602,10 @@ const NewApplicationForm = () => {
                         htmlFor="operationAreaId"
                         className="font-semibold text-gray-700 mb-2"
                       >
-                        Station Name
+                        Operational Area Name
                       </label>
                       <p className="text-gray-500 text-sm mt-1">
-                        Add the Station Area
+                        Add the Operational Area
                       </p>
                       <select
                         name="OperationAreaId"
@@ -616,9 +616,9 @@ const NewApplicationForm = () => {
                             OperationAreaId: e.target.value,
                           })
                         }
-                        className="border border-gray-300 rounded-md px-3 py-2 w-72"
+                        className="border border-gray-300 rounded-md px-3 py-2 w-96"
                       >
-                        <option value="">Select Station Area</option>
+                        <option value="">Select Operation Area</option>
                         {operationalAreas.map((area) => (
                           <option key={area.id} value={area.id}>
                             {area.name}
@@ -631,10 +631,10 @@ const NewApplicationForm = () => {
                         htmlFor="territoryId"
                         className="font-semibold text-gray-700 mb-2"
                       >
-                        Municipality Name
+                        Territory Name
                       </label>
                       <p className="text-gray-500 text-sm mt-1">
-                        Add the Municipality
+                        Add the territory
                       </p>
                       <select
                         name="TerritoryId"
@@ -645,9 +645,9 @@ const NewApplicationForm = () => {
                             TerritoryId: e.target.value,
                           })
                         }
-                        className="border border-gray-300 rounded-md px-3 py-2 w-72"
+                        className="border border-gray-300 rounded-md px-3 py-2 w-96"
                       >
-                        <option value="">Select Municipality</option>
+                        <option value="">Select Territory</option>
                         {territories.map((territory) => (
                           <option key={territory.id} value={territory.id}>
                             {territory.name}
@@ -661,18 +661,18 @@ const NewApplicationForm = () => {
                         htmlFor="subTerritoryId"
                         className="font-semibold text-gray-700 mb-2"
                       >
-                        Quarter
+                        SubTerritory
                       </label>
                       <p className="text-gray-500 text-sm mt-1">
-                        Add the Quarter
+                        Add the sub-territory
                       </p>
                       <select
                         name="SubTerritoryId"
                         value={application.SubTerritoryId}
                         onChange={handleChange}
-                        className="border border-gray-300 rounded-md px-3 py-2 w-72"
+                        className="border border-gray-300 rounded-md px-3 py-2 w-96"
                       >
-                        <option value="">Select Quarter</option>
+                        <option value="">Select SubTerritory</option>
                         {subTerritories.map((SubTerritory) => (
                           <option key={SubTerritory.id} value={SubTerritory.id}>
                             {SubTerritory.name}
@@ -692,7 +692,7 @@ const NewApplicationForm = () => {
                         name="StreetAddress"
                         value={application.StreetAddress}
                         onChange={handleChange}
-                        className="border border-gray-300 rounded-md px-3 py-2 w-72"
+                        className="border border-gray-300 rounded-md px-3 py-2 w-96"
                       />
                     </div>
                     <div>
@@ -707,7 +707,7 @@ const NewApplicationForm = () => {
                         name="PlotNumber"
                         value={application.PlotNumber}
                         onChange={handleChange}
-                        className="border border-gray-300 rounded-md px-3 py-2"
+                        className="border border-gray-300 rounded-md px-3 py-2 w-96"
                       />
                     </div>
                     <div>
@@ -722,7 +722,7 @@ const NewApplicationForm = () => {
                         name="NearestLandMark"
                         value={application.NearestLandMark}
                         onChange={handleChange}
-                        className="border border-gray-300 rounded-md px-3 py-2 w-72"
+                        className="border border-gray-300 rounded-md px-3 py-2 w-96"
                       />
                     </div>
                   </div>
@@ -851,7 +851,7 @@ const NewApplicationForm = () => {
                         name="CustomerType"
                         value={application.CustomerType}
                         onChange={handleChange}
-                        className="border border-gray-300 rounded-md px-3 py-2 w-72"
+                        className="border border-gray-300 rounded-md px-3 py-2 w-96"
                       >
                         <option value="">Select customer type</option>
                         {types.map((type) => (
@@ -877,7 +877,7 @@ const NewApplicationForm = () => {
                         name="BillDeliveryMethod"
                         value={application.BillDeliveryMethod}
                         onChange={handleChange}
-                        className="border border-gray-300 rounded-md px-3 py-2 w-72"
+                        className="border border-gray-300 rounded-md px-3 py-2 w-96"
                       >
                         <option value="">Select bill delivery method</option>
                         {billDeliveryMethods.map((bill) => (
@@ -902,7 +902,7 @@ const NewApplicationForm = () => {
                         name="CustomerCategory"
                         value={application.CustomerCategory}
                         onChange={handleChange}
-                        className="border border-gray-300 rounded-md px-3 py-2 w-72"
+                        className="border border-gray-300 rounded-md px-3 py-2 w-96"
                       >
                         <option value="">Select customer category</option>
                         {categories.map((category) => (
