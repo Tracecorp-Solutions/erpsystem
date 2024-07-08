@@ -44,31 +44,40 @@ const BillAdjustment = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
+  
+    // Validate that AdjustmentType is selected
+    if (!adjustmentType) {
+      alert("Please select an adjustment type (+ or -).");
+      return;
+    }
+  
+    // Calculate adjusted amount based on adjustment type
+    let adjustedAmount = 0;
+    if (adjustmentType === "+") {
+      adjustedAmount = amount;
+    } else if (adjustmentType === "-") {
+      adjustedAmount = -amount;
+    }
+  
+    // Calculate total amount based on the adjusted amount
+    const totalAmount = adjustedAmount;
+  
     const formData = new FormData();
     formData.append("CustRef", customerRef);
     formData.append("DocumentNumber", documentNumber);
     formData.append("TransactionCode", transactionCode);
     formData.append("Name", customerName);
     formData.append("AdjustmentReason", adjustmentReason);
-
-    // Determine adjustment type (+ or -)
-    if (adjustmentType === "+") {
-      formData.append("Amount", amount);
-    } else if (adjustmentType === "-") {
-      formData.append("Amount", -amount);
-    } else {
-      alert("Please select an adjustment type (+ or -).");
-      return;
-    }
-
+    formData.append("AdjustmentType", adjustmentType);
+    formData.append("Amount", adjustedAmount);
+  
     if (attachment) {
       formData.append("file", attachment);
-      formData.append("EvidenceFilePath", attachment.name); // Assuming this is how you want to send file name
+      formData.append("EvidenceFilePath", attachment.name);
     } else {
-      formData.append("EvidenceFilePath", ""); // Adjust as per your API requirements
+      formData.append("EvidenceFilePath", "");
     }
-
+  
     axios
       .post(
         `${process.env.REACT_APP_API_URL}/AddBillAdjustmentRequest`,
@@ -87,7 +96,7 @@ const BillAdjustment = () => {
         console.error("Adjustment Request Error:", error);
       });
   };
-
+  
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     setAttachment(file);
@@ -298,13 +307,6 @@ const BillAdjustment = () => {
                     <Option value="+">+</Option>
                     <Option value="-">-</Option>
                   </Select>
-                  <Input
-                    type="number"
-                    value={amount}
-                    onChange={(e) => setAmount(e.target.value)}
-                    placeholder="Enter amount"
-                    className="px-4 py-3 flex-1 rounded-xl border border-solid border-neutral-500 border-opacity-30 text-neutral-400 max-md:pr-5"
-                  />
                 </div>
               </div>
               <div className="flex flex-col w-full">
@@ -313,6 +315,7 @@ const BillAdjustment = () => {
                 </div>
                 <Input
                   value={amount}
+                  onChange={(e) => setAmount(e.target.value)}
                   className="px-4 py-3 mt-2 rounded-xl border border-solid border-neutral-500 border-opacity-30 text-neutral-400 max-md:pr-5"
                 />
               </div>
