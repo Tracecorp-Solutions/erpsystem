@@ -1,17 +1,9 @@
 import React, { useState } from "react";
 import axios from "axios";
-import {
-  DatePicker,
-  Input,
-  Select,
-  Form,
-  Table,
-  Button,
-  Dropdown,
-  Menu,
-} from "antd";
+import { DatePicker, Input, Select, Button, Dropdown, Menu, Table } from "antd";
 import { EllipsisOutlined } from "@ant-design/icons";
 import BillAdjustmentDrawer from "./Actions/BillAdjustmentDrawer";
+
 const { Option } = Select;
 
 const BillAdjustment = () => {
@@ -20,10 +12,12 @@ const BillAdjustment = () => {
   const [transactionCode, setTransactionCode] = useState("");
   const [effectiveDate, setEffectiveDate] = useState(null);
   const [amount, setAmount] = useState(0);
-  const [attachment, setAttachment] = useState(null);
+  const [attachment, setAttachment] = useState(null); // State to hold selected file
   const [adjustmentReason, setAdjustmentReason] = useState("");
+  const [adjustmentType, setAdjustmentType] = useState(""); // State for adjustment type (+ or -)
   const [activeTab, setActiveTab] = useState("adjustmentRequest");
   const [drawerVisible, setDrawerVisible] = useState(false);
+  const [documentNumber, setDocumentNumber] = useState("");
 
   const apiUrl = `${process.env.REACT_APP_API_URL}/ValidateCustomer/${customerRef}`;
 
@@ -50,7 +44,48 @@ const BillAdjustment = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Form submitted!");
+
+    const formData = new FormData();
+    formData.append("CustRef", customerRef);
+    formData.append("DocumentNumber", documentNumber);
+    formData.append("TransactionCode", transactionCode);
+    formData.append("Name", customerName);
+    formData.append("AdjustmentReason", adjustmentReason);
+
+    // Determine adjustment type (+ or -)
+    if (adjustmentType === "+") {
+      formData.append("Amount", amount);
+    } else if (adjustmentType === "-") {
+      formData.append("Amount", -amount);
+    } else {
+      alert("Please select an adjustment type (+ or -).");
+      return;
+    }
+
+    if (attachment) {
+      formData.append("file", attachment);
+      formData.append("EvidenceFilePath", attachment.name); // Assuming this is how you want to send file name
+    } else {
+      formData.append("EvidenceFilePath", ""); // Adjust as per your API requirements
+    }
+
+    axios
+      .post(
+        `${process.env.REACT_APP_API_URL}/AddBillAdjustmentRequest`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            accept: "*/*",
+          },
+        }
+      )
+      .then((response) => {
+        console.log("Adjustment Request Successful:", response.data);
+      })
+      .catch((error) => {
+        console.error("Adjustment Request Error:", error);
+      });
   };
 
   const handleFileChange = (e) => {
@@ -143,12 +178,11 @@ const BillAdjustment = () => {
 
   return (
     <div className="flex flex-col flex-wrap justify-center content-start px-8 pt-6 rounded-3xl bg-stone-100 leading-[160%] max-md:px-5">
-      <div className="text-4xl font-semibold text-neutral-600 max-md:max-w-full">
+      <div className="text-4xl font-semibold text-neutral-600 max-w-full">
         Adjust Bill
       </div>
       <div className="bg-white w-full mt-6">
         <div className="flex flex-wrap justify-start space-x-2 px-6 py-4 text-slate-500">
-          {/* Toggle Tabs */}
           <button
             type="button"
             onClick={() => toggleTab("adjustmentRequest")}
@@ -218,9 +252,9 @@ const BillAdjustment = () => {
                   className="flex gap-2 justify-between h-14 mt-2 rounded-xl border border-solid border-neutral-500 border-opacity-30 text-neutral-400 max-md:flex-wrap max-md:max-w-full"
                 >
                   <Option value="">Select Code</Option>
-                  <Option value="code1">Code 1</Option>
-                  <Option value="code2">Code 2</Option>
-                  <Option value="code3">Code 3</Option>
+                  <Option value="1">Code 1</Option>
+                  <Option value="2">Code 2</Option>
+                  <Option value="3">Code 3</Option>
                 </Select>
               </div>
             </div>
@@ -231,8 +265,8 @@ const BillAdjustment = () => {
                   Document Number
                 </div>
                 <Input
-                  value={customerRef}
-                  onChange={(e) => setCustomerRef(e.target.value)}
+                  value={documentNumber}
+                  onChange={(e) => setDocumentNumber(e.target.value)}
                   placeholder="Enter Document Number"
                   className="justify-center items-start px-4 py-4 mt-2 rounded-xl border border-solid border-neutral-500 border-opacity-30 text-neutral-400 max-md:pr-5 max-md:max-w-full"
                 />
@@ -254,13 +288,24 @@ const BillAdjustment = () => {
                 <div className="font-semibold text-neutral-600 w-full">
                   Amount (-/+)
                 </div>
-                <Input
-                  type="number"
-                  value={amount}
-                  onChange={(e) => setAmount(e.target.value)}
-                  placeholder="Enter amount to add or subtract"
-                  className="px-4 py-3 mt-2 rounded-xl border border-solid border-neutral-500 border-opacity-30 text-neutral-400 max-md:pr-5"
-                />
+                <div className="flex gap-2 items-center mt-2">
+                  <Select
+                    value={adjustmentType}
+                    onChange={(value) => setAdjustmentType(value)}
+                    className="flex gap-2 justify-between h-14 rounded-xl border border-solid border-neutral-500 border-opacity-30 text-neutral-400 max-md:flex-wrap max-md:max-w-full"
+                  >
+                    <Option value="">Select Adjustment Type</Option>
+                    <Option value="+">+</Option>
+                    <Option value="-">-</Option>
+                  </Select>
+                  <Input
+                    type="number"
+                    value={amount}
+                    onChange={(e) => setAmount(e.target.value)}
+                    placeholder="Enter amount"
+                    className="px-4 py-3 flex-1 rounded-xl border border-solid border-neutral-500 border-opacity-30 text-neutral-400 max-md:pr-5"
+                  />
+                </div>
               </div>
               <div className="flex flex-col w-full">
                 <div className="font-semibold text-neutral-600 w-full">
@@ -274,21 +319,16 @@ const BillAdjustment = () => {
             </div>
 
             <div className="flex gap-4 mt-4 max-md:flex-wrap">
-              <Form.Item
-                name="attachment"
-                className="flex flex-col w-full"
-                valuePropName="fileList"
-                getValueFromEvent={(e) => handleFileChange(e)}
-              >
+              <div className="flex flex-col w-full">
                 <div className="font-semibold text-neutral-600 w-full">
                   Attach File
                 </div>
                 <input
                   type="file"
+                  onChange={handleFileChange} // Capture file change event
                   className="px-4 py-3 mt-2 rounded-xl border border-solid border-neutral-500 border-opacity-30 text-neutral-400 max-md:pr-5"
                 />
-              </Form.Item>
-
+              </div>
               <div className="flex flex-col w-full">
                 <div className="font-semibold text-neutral-600 w-full">
                   Adjustment Reason
@@ -317,7 +357,6 @@ const BillAdjustment = () => {
           <Table dataSource={data} columns={columns} />
         )}
 
-        {/* Drawer for Viewing Adjustment Details */}
         <BillAdjustmentDrawer
           visible={drawerVisible}
           onClose={() => setDrawerVisible(false)}
