@@ -3,6 +3,38 @@
   "WorkspaceRootPath": "D:\\working directory\\erpsystem\\Trace\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{7735A439-FAA5-47B0-AAB7-17DB1C05A2D8}|..\\Infrastructure\\Infrastructure.csproj|d:\\working directory\\erpsystem\\infrastructure\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A176F11F-4BEC-4DAC-9205-CF64F57D23C0}|..\\Core\\Core.csproj|d:\\working directory\\erpsystem\\core\\models\\billing\\billingrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A176F11F-4BEC-4DAC-9205-CF64F57D23C0}|..\\Core\\Core.csproj|d:\\working directory\\erpsystem\\core\\models\\billing\\billingperiod.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D0C5D151-D98C-46B1-A85E-DFAA22B5EE2F}|..\\Services\\Services.csproj|d:\\working directory\\erpsystem\\services\\repositories\\billing\\meterreadingrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{97CA6EF6-720A-4545-8A15-EBF2D4F20DA0}|Trace.csproj|d:\\working directory\\erpsystem\\trace\\controllers\\meterreadingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{97CA6EF6-720A-4545-8A15-EBF2D4F20DA0}|Trace.csproj|solutionrelative:controllers\\meterreadingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A176F11F-4BEC-4DAC-9205-CF64F57D23C0}|..\\Core\\Core.csproj|d:\\working directory\\erpsystem\\core\\repositories\\billing\\imeterreadingrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A176F11F-4BEC-4DAC-9205-CF64F57D23C0}|..\\Core\\Core.csproj|d:\\working directory\\erpsystem\\core\\dtos\\billing\\bulkreadingdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A176F11F-4BEC-4DAC-9205-CF64F57D23C0}|..\\Core\\Core.csproj|d:\\working directory\\erpsystem\\core\\models\\billing\\bulkreading.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{97CA6EF6-720A-4545-8A15-EBF2D4F20DA0}|Trace.csproj|d:\\working directory\\erpsystem\\trace\\controllers\\metermanagementcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{97CA6EF6-720A-4545-8A15-EBF2D4F20DA0}|Trace.csproj|solutionrelative:controllers\\metermanagementcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A176F11F-4BEC-4DAC-9205-CF64F57D23C0}|..\\Core\\Core.csproj|d:\\working directory\\erpsystem\\core\\repositories\\billing\\imetermanagementrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{97CA6EF6-720A-4545-8A15-EBF2D4F20DA0}|Trace.csproj|d:\\working directory\\erpsystem\\trace\\controllers\\waterbillcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{97CA6EF6-720A-4545-8A15-EBF2D4F20DA0}|Trace.csproj|solutionrelative:controllers\\waterbillcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -31,8 +63,99 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 10,
+          "SelectedChildIndex": 3,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "BillingPeriod.cs",
+              "DocumentMoniker": "D:\\working directory\\erpsystem\\Core\\Models\\Billing\\BillingPeriod.cs",
+              "RelativeDocumentMoniker": "..\\Core\\Models\\Billing\\BillingPeriod.cs",
+              "ToolTip": "D:\\working directory\\erpsystem\\Core\\Models\\Billing\\BillingPeriod.cs",
+              "RelativeToolTip": "..\\Core\\Models\\Billing\\BillingPeriod.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAAeAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-09T08:17:17.506Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "BillingRequest.cs",
+              "DocumentMoniker": "D:\\working directory\\erpsystem\\Core\\Models\\Billing\\BillingRequest.cs",
+              "RelativeDocumentMoniker": "..\\Core\\Models\\Billing\\BillingRequest.cs",
+              "ToolTip": "D:\\working directory\\erpsystem\\Core\\Models\\Billing\\BillingRequest.cs",
+              "RelativeToolTip": "..\\Core\\Models\\Billing\\BillingRequest.cs",
+              "ViewState": "AQIAAAsAAAAAAAAAAAAAwBIAAAAiAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-09T08:03:37.872Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "MeterReadingRepository.cs",
+              "DocumentMoniker": "D:\\working directory\\erpsystem\\Services\\Repositories\\Billing\\MeterReadingRepository.cs",
+              "RelativeDocumentMoniker": "..\\Services\\Repositories\\Billing\\MeterReadingRepository.cs",
+              "ToolTip": "D:\\working directory\\erpsystem\\Services\\Repositories\\Billing\\MeterReadingRepository.cs",
+              "RelativeToolTip": "..\\Services\\Repositories\\Billing\\MeterReadingRepository.cs",
+              "ViewState": "AQIAAHwAAAAAAAAAAAD4v3wAAAANAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-09T08:05:25.571Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "ApplicationDbContext.cs",
+              "DocumentMoniker": "D:\\working directory\\erpsystem\\Infrastructure\\Data\\ApplicationDbContext.cs",
+              "RelativeDocumentMoniker": "..\\Infrastructure\\Data\\ApplicationDbContext.cs",
+              "ToolTip": "D:\\working directory\\erpsystem\\Infrastructure\\Data\\ApplicationDbContext.cs*",
+              "RelativeToolTip": "..\\Infrastructure\\Data\\ApplicationDbContext.cs*",
+              "ViewState": "AQIAAFMAAAAAAAAAAAA0wF0AAAAzAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-09T08:04:11.289Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "BulkReading.cs",
+              "DocumentMoniker": "D:\\working directory\\erpsystem\\Core\\Models\\Billing\\BulkReading.cs",
+              "RelativeDocumentMoniker": "..\\Core\\Models\\Billing\\BulkReading.cs",
+              "ToolTip": "D:\\working directory\\erpsystem\\Core\\Models\\Billing\\BulkReading.cs",
+              "RelativeToolTip": "..\\Core\\Models\\Billing\\BulkReading.cs",
+              "ViewState": "AQIAAAMAAAAAAAAAAAAtwA4AAAAIAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-09T08:01:55.65Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "BulkReadingDto.cs",
+              "DocumentMoniker": "D:\\working directory\\erpsystem\\Core\\DTOs\\Billing\\BulkReadingDto.cs",
+              "RelativeDocumentMoniker": "..\\Core\\DTOs\\Billing\\BulkReadingDto.cs",
+              "ToolTip": "D:\\working directory\\erpsystem\\Core\\DTOs\\Billing\\BulkReadingDto.cs",
+              "RelativeToolTip": "..\\Core\\DTOs\\Billing\\BulkReadingDto.cs",
+              "ViewState": "AQIAAAYAAAAAAAAAAAAAAAoAAAAIAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-09T07:56:03.569Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "IMeterReadingRepository.cs",
+              "DocumentMoniker": "D:\\working directory\\erpsystem\\Core\\Repositories\\Billing\\IMeterReadingRepository.cs",
+              "RelativeDocumentMoniker": "..\\Core\\Repositories\\Billing\\IMeterReadingRepository.cs",
+              "ToolTip": "D:\\working directory\\erpsystem\\Core\\Repositories\\Billing\\IMeterReadingRepository.cs",
+              "RelativeToolTip": "..\\Core\\Repositories\\Billing\\IMeterReadingRepository.cs",
+              "ViewState": "AQIAAAcAAAAAAAAAAAAAABIAAABGAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-09T07:49:51.409Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Bookmark",
               "Name": "ST:129:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
@@ -59,18 +182,56 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 4,
+              "Title": "MeterReadingController.cs",
+              "DocumentMoniker": "D:\\working directory\\erpsystem\\Trace\\Controllers\\MeterReadingController.cs",
+              "RelativeDocumentMoniker": "Controllers\\MeterReadingController.cs",
+              "ToolTip": "D:\\working directory\\erpsystem\\Trace\\Controllers\\MeterReadingController.cs",
+              "RelativeToolTip": "Controllers\\MeterReadingController.cs",
+              "ViewState": "AQIAAFcAAAAAAAAAAAAwwGQAAAA0AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-09T07:46:21.63Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "IMeterManagementRepository.cs",
+              "DocumentMoniker": "D:\\working directory\\erpsystem\\Core\\Repositories\\Billing\\IMeterManagementRepository.cs",
+              "RelativeDocumentMoniker": "..\\Core\\Repositories\\Billing\\IMeterManagementRepository.cs",
+              "ToolTip": "D:\\working directory\\erpsystem\\Core\\Repositories\\Billing\\IMeterManagementRepository.cs",
+              "RelativeToolTip": "..\\Core\\Repositories\\Billing\\IMeterManagementRepository.cs",
+              "ViewState": "AQIAAAQAAAAAAAAAAAD4vxIAAAAIAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-09T07:46:39.528Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "MeterManagementController.cs",
+              "DocumentMoniker": "D:\\working directory\\erpsystem\\Trace\\Controllers\\MeterManagementController.cs",
+              "RelativeDocumentMoniker": "Controllers\\MeterManagementController.cs",
+              "ToolTip": "D:\\working directory\\erpsystem\\Trace\\Controllers\\MeterManagementController.cs",
+              "RelativeToolTip": "Controllers\\MeterManagementController.cs",
+              "ViewState": "AQIAABAAAAAAAAAAAAAQwDUAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-09T07:46:23.64Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
               "Title": "TaskAwaiter.cs",
               "DocumentMoniker": "C:\\Users\\ngobi\\AppData\\Local\\SourceServer\\2a64c3c67ced4f823470dedae0ace1a13ba403a19addf9039de8ede5a44f396d\\src\\libraries\\System.Private.CoreLib\\src\\System\\Runtime\\CompilerServices\\TaskAwaiter.cs",
               "ToolTip": "C:\\Users\\ngobi\\AppData\\Local\\SourceServer\\2a64c3c67ced4f823470dedae0ace1a13ba403a19addf9039de8ede5a44f396d\\src\\libraries\\System.Private.CoreLib\\src\\System\\Runtime\\CompilerServices\\TaskAwaiter.cs",
               "ViewState": "AQIAAAQBAAAAAAAAAAAlwBYBAAAYAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-08T13:29:38.277Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-08T13:29:38.277Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 13,
               "Title": "AuthenticationController.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Trace\\Controllers\\AuthenticationController.cs",
               "RelativeDocumentMoniker": "Controllers\\AuthenticationController.cs",
@@ -78,12 +239,11 @@
               "RelativeToolTip": "Controllers\\AuthenticationController.cs",
               "ViewState": "AQIAAB4AAAAAAAAAAAAlwCoAAAAQAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-08T12:56:27.297Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-08T12:56:27.297Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 11,
               "Title": "Billing.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Services\\Repositories\\Billing\\Billing.cs",
               "RelativeDocumentMoniker": "..\\Services\\Repositories\\Billing\\Billing.cs",
@@ -91,12 +251,11 @@
               "RelativeToolTip": "..\\Services\\Repositories\\Billing\\Billing.cs",
               "ViewState": "AQIAAHsAAAAAAAAAAAAlwIYAAAAwAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-08T10:11:12.946Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-08T10:11:12.946Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 14,
               "Title": "BillAdjustmentRequestDto.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Core\\DTOs\\Billing\\BillAdjustmentRequestDto.cs",
               "RelativeDocumentMoniker": "..\\Core\\DTOs\\Billing\\BillAdjustmentRequestDto.cs",
@@ -108,20 +267,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 10,
               "Title": "WaterBillController.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Trace\\Controllers\\WaterBillController.cs",
               "RelativeDocumentMoniker": "Controllers\\WaterBillController.cs",
               "ToolTip": "D:\\working directory\\erpsystem\\Trace\\Controllers\\WaterBillController.cs",
               "RelativeToolTip": "Controllers\\WaterBillController.cs",
-              "ViewState": "AQIAAE8AAAAAAAAAAAAUwFkAAAAQAAAA",
+              "ViewState": "AQIAAFoAAAAAAAAAAAAcwFkAAAAQAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-07-08T10:10:24.758Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 15,
               "Title": "BillController.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Trace\\Controllers\\BillController.cs",
               "RelativeDocumentMoniker": "Controllers\\BillController.cs",

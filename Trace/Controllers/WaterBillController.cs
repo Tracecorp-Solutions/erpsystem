@@ -131,6 +131,37 @@ namespace Trace.Controllers
             }
         }
 
+        [HttpPost("/AddBillingPeriod")]
+        public async Task<IActionResult> AddBillingPeriod([FromBody] BillingPeriodDto billingPeriod)
+        {
+            try
+            {
+                await _billing.AddBillingPeriod(billingPeriod);
+                return Ok("Billing Period added successfully");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
+        }
+
+        [HttpGet("/GetBillingPeriods")]
+        public async Task<IActionResult> GetBillingPeriods()
+        {
+            try
+            {
+                var periods = await _billing.GetBillingPeriods();
+                return Ok(periods);
+            }catch(ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
+        }
+
 
     }
 }

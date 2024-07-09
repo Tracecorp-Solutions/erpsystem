@@ -24,5 +24,10 @@ namespace Core.Repositories.Billing
         Task<IEnumerable<BillAdjustmentRequest>> GetBillAdjustmentRequests();
 
         Task<BillAdjustmentRequest> GetBillAdjustmentRequestById(int id);
+
+        Task AddBillingPeriod(BillingPeriodDto billingPeriod);
+
+        Task<IEnumerable<BillingPeriod>> GetBillingPeriods();
+
     }
 }

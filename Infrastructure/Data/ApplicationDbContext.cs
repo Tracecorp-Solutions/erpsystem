@@ -91,6 +91,8 @@ namespace Infrastructure.Data
 
         public DbSet<BulkReading> BulkReadings { get; set; }
 
+        public DbSet<BillingPeriod> BillingPeriod { get; set; }
+
         #endregion
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

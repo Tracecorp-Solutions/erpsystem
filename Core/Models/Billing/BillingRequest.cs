@@ -16,6 +16,8 @@ namespace Core.Models.Billing
 
         [ForeignKey("Branch")]
         public int BranchId { get; set; }
+
+        [ForeignKey("BillingPeriod")]
         public int BillingPeriodId { get; set; }
         public DateOnly ScheduledBillingDate { get; set; }
         public int Biller { get; set; }
@@ -23,5 +25,7 @@ namespace Core.Models.Billing
         public OperationArea? OperationArea { get; set; }
 
         public Branch? Branch { get; set; }
+
+        public BillingPeriod? BillingPeriod { get; set; }
     }
 }

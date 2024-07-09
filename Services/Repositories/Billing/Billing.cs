@@ -173,6 +173,33 @@ namespace Services.Repositories.Billing
             return billAdjustment;
         }
 
+        public async Task AddBillingPeriod(BillingPeriodDto billingPeriod)
+        {
+            var period = new BillingPeriod
+            {
+                Name = billingPeriod.Name,
+                StartDate = billingPeriod.StartDate,
+                EndDate = billingPeriod.EndDate,
+                IsCompleted = false,
+                
+            };
+
+            await _context.BillingPeriod.AddAsync(period);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<BillingPeriod>> GetBillingPeriods()
+        {
+            var periods = await _context.BillingPeriod.ToListAsync();
+
+            if (periods == null || periods.Count == 0)
+            {
+                throw new ArgumentException("No Billing Period found.");
+            }
+
+            return periods;
+        }
+
 
     }
 }
