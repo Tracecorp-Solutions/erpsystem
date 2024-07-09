@@ -5,7 +5,9 @@ import { XMarkIcon } from "@heroicons/react/24/outline";
 export default function BillAdjustmentDrawer({
   setDrawerVisible,
   drawerVisible,
+  adjustmentDetails
 }) {
+
   return (
     <Drawer
       placement="right"
@@ -44,7 +46,7 @@ export default function BillAdjustmentDrawer({
                 Customer Reference
               </div>
               <div className="mt-1 text-base font-semibold leading-6 text-neutral-600">
-                21310001
+                {adjustmentDetails.custRef}
               </div>
             </div>
             <div className="flex flex-col items-start px-6 py-4 rounded-lg bg-stone-100 max-md:px-5">
@@ -52,7 +54,7 @@ export default function BillAdjustmentDrawer({
                 Transaction Code
               </div>
               <div className="mt-1 text-base font-semibold leading-6 text-neutral-600">
-                312
+                {adjustmentDetails.transactionCode}
               </div>
             </div>
 
@@ -61,7 +63,7 @@ export default function BillAdjustmentDrawer({
                 Document Number
               </div>
               <div className="mt-1 text-base font-semibold leading-6 text-neutral-600">
-                12345
+                {adjustmentDetails.documentNumber}
               </div>
             </div>
             <div className="flex flex-col items-start px-6 py-4 rounded-lg bg-stone-100 max-md:px-5">
@@ -69,7 +71,7 @@ export default function BillAdjustmentDrawer({
                 Effective Date
               </div>
               <div className="mt-1 text-base font-semibold leading-6 text-neutral-600">
-                03/10/2024
+                {adjustmentDetails.effectiveDate}
               </div>
             </div>
 
@@ -78,32 +80,32 @@ export default function BillAdjustmentDrawer({
                 Amount
               </div>
               <div className="mt-1 text-base font-semibold leading-6 text-neutral-600">
-                -20,000
+                {adjustmentDetails.amount}
               </div>
             </div>
             <div className="flex flex-col items-start px-6 py-4 rounded-lg bg-stone-100 max-md:px-5">
               <div className="text-xs font-medium tracking-wide uppercase text-neutral-400">
-                VAT
+              Total Amount
               </div>
               <div className="mt-1 text-base font-semibold leading-6 text-neutral-600">
-                0.00
+              {adjustmentDetails.amount}
               </div>
             </div>
 
-            <div className="flex flex-col items-start px-6 py-4 rounded-lg bg-stone-100 max-md:px-5 col-span-2">
+            {/* <div className="flex flex-col items-start px-6 py-4 rounded-lg bg-stone-100 max-md:px-5 col-span-2">
               <div className="text-xs font-medium tracking-wide uppercase text-neutral-400">
                 Total Amount
               </div>
               <div className="mt-1 text-base font-semibold leading-6 text-neutral-600">
-                0.00
+              {adjustmentDetails.amount}
               </div>
-            </div>
+            </div> */}
             <div className="flex flex-col px-6 py-4 rounded-lg bg-stone-100 max-md:pl-5 col-span-2">
               <div className="text-xs font-medium tracking-wide uppercase text-neutral-400">
                 Reason
               </div>
               <div className="mt-1 text-base leading-6 text-neutral-600">
-                Customer erroneously billed
+                {adjustmentDetails.adjustmentReason}
               </div>
             </div>
           </div>

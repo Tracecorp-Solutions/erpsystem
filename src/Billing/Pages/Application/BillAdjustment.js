@@ -1,6 +1,14 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { DatePicker, Input, Select, Button, Dropdown, Menu, message } from "antd";
+import {
+  DatePicker,
+  Input,
+  Select,
+  Button,
+  Dropdown,
+  Menu,
+  message,
+} from "antd";
 import { EllipsisOutlined } from "@ant-design/icons";
 import BillAdjustmentDrawer from "./Actions/BillAdjustmentDrawer";
 
@@ -20,6 +28,7 @@ const BillAdjustment = () => {
   const [documentNumber, setDocumentNumber] = useState("");
   const [dataItem, setDataItem] = useState([]);
   const [transactionCodes, setTransactionCodes] = useState([]);
+  const [adjustmentDetails, setAdjustmentDetails] = useState(null);
 
   useEffect(() => {
     const fetchTransactionCodes = async () => {
@@ -41,7 +50,7 @@ const BillAdjustment = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "http://3.216.182.63:8095/TestApi/GetBillAdjustmentRequests"
+          `${process.env.REACT_APP_API_URL}/GetBillAdjustmentRequests`
         );
         console.log("Fetched data:", response.data);
         setDataItem(response.data);
@@ -138,11 +147,21 @@ const BillAdjustment = () => {
     setActiveTab(tab);
   };
 
-  const handleViewAdjustment = () => {
-    setDrawerVisible(true);
+  const handleViewAdjustment = (itemId) => {
+    axios
+      .get(
+        `${process.env.REACT_APP_API_URL}/GetBillAdjustmentRequestById/${itemId}`
+      )
+      .then((response) => {
+        console.log("Adjustment Details:", response.data);
+        setAdjustmentDetails(response.data);
+        setDrawerVisible(true);
+      })
+      .catch((error) => {
+        console.error("Error fetching adjustment details:", error);
+        message.error("Failed to fetch adjustment details.");
+      });
   };
-
-  console.log("dataItem dataItem", dataItem);
 
   return (
     <div className="flex flex-col flex-wrap justify-center content-start px-8 pt-6 rounded-3xl bg-stone-100 leading-[160%] max-md:px-5">
@@ -327,7 +346,6 @@ const BillAdjustment = () => {
                   <th className="py-4 px-6">Doc No.</th>
                   <th className="py-4 px-6">Effective Date</th>
                   <th className="py-4 px-6">Amount</th>
-                  <th className="py-4 px-6">VAT</th>
                   <th className="py-4 px-6">Total</th>
                   <th className="py-4 px-6">Action</th>
                 </tr>
@@ -340,13 +358,15 @@ const BillAdjustment = () => {
                     <td className="py-4 px-6">{item.documentNumber}</td>
                     <td className="py-4 px-6">{item.effectiveDate}</td>
                     <td className="py-4 px-6">{item.amount}</td>
-                    <td className="py-4 px-6">{item.vat}</td>
                     <td className="py-4 px-6">{item.amount}</td>
                     <td className="py-4 px-6">
                       <Dropdown
                         overlay={
                           <Menu>
-                            <Menu.Item key="1" onClick={handleViewAdjustment}>
+                            <Menu.Item
+                              key="1"
+                              onClick={() => handleViewAdjustment(item.id)}
+                            >
                               View Adjustment
                             </Menu.Item>
                             <Menu.Item key="2">
@@ -376,6 +396,7 @@ const BillAdjustment = () => {
         <BillAdjustmentDrawer
           setDrawerVisible={setDrawerVisible}
           drawerVisible={drawerVisible}
+          adjustmentDetails={adjustmentDetails}
         />
       </div>
     </div>
