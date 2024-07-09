@@ -181,6 +181,7 @@ namespace Services.Repositories.Billing
                 StartDate = billingPeriod.StartDate,
                 EndDate = billingPeriod.EndDate,
                 IsCompleted = false,
+                Period = billingPeriod.Period,
                 
             };
 
