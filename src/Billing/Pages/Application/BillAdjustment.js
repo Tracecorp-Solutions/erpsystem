@@ -1,15 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import {
-  DatePicker,
-  Input,
-  Select,
-  Button,
-  Dropdown,
-  Menu,
-  Table,
-  message,
-} from "antd";
+import { DatePicker, Input, Select, Button, Dropdown, Menu, message } from "antd";
 import { EllipsisOutlined } from "@ant-design/icons";
 import BillAdjustmentDrawer from "./Actions/BillAdjustmentDrawer";
 
@@ -27,7 +18,7 @@ const BillAdjustment = () => {
   const [activeTab, setActiveTab] = useState("adjustmentRequest");
   const [drawerVisible, setDrawerVisible] = useState(false);
   const [documentNumber, setDocumentNumber] = useState("");
-
+  const [dataItem, setDataItem] = useState([]);
   const [transactionCodes, setTransactionCodes] = useState([]);
 
   useEffect(() => {
@@ -44,6 +35,23 @@ const BillAdjustment = () => {
     };
 
     fetchTransactionCodes();
+  }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          "http://3.216.182.63:8095/TestApi/GetBillAdjustmentRequests"
+        );
+        console.log("Fetched data:", response.data);
+        setDataItem(response.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        message.error("Failed to fetch data.");
+      }
+    };
+
+    fetchData();
   }, []);
 
   const apiUrl = `${process.env.REACT_APP_API_URL}/ValidateCustomer/${customerRef}`;
@@ -134,86 +142,7 @@ const BillAdjustment = () => {
     setDrawerVisible(true);
   };
 
-  const data = [
-    {
-      key: "1",
-      customerRef: "21310001",
-      transCode: "312",
-      docNo: "12345",
-      effectiveDate: "05/31/2024",
-      amount: "-20,000",
-      vat: "0.00",
-      total: "-20,000",
-    },
-  ];
-
-  const columns = [
-    {
-      title: "Customer Ref",
-      dataIndex: "customerRef",
-      key: "customerRef",
-    },
-    {
-      title: "Trans Code",
-      dataIndex: "transCode",
-      key: "transCode",
-    },
-    {
-      title: "Doc No.",
-      dataIndex: "docNo",
-      key: "docNo",
-    },
-    {
-      title: "Effective Date",
-      dataIndex: "effectiveDate",
-      key: "effectiveDate",
-    },
-    {
-      title: "Amount",
-      dataIndex: "amount",
-      key: "amount",
-    },
-    {
-      title: "VAT",
-      dataIndex: "vat",
-      key: "vat",
-    },
-    {
-      title: "Total",
-      dataIndex: "total",
-      key: "total",
-    },
-    {
-      title: "Action",
-      key: "action",
-      render: () => (
-        <Dropdown
-          overlay={
-            <Menu>
-              <Menu.Item key="1" onClick={handleViewAdjustment}>
-                View Adjustment
-              </Menu.Item>
-              <Menu.Item key="2">
-                <a href="#">Commit to Database</a>
-              </Menu.Item>
-            </Menu>
-          }
-          trigger={["click"]}
-        >
-          <Button
-            type="text"
-            icon={
-              <EllipsisOutlined
-                style={{ fontSize: "20px", color: "#1890ff" }}
-              />
-            }
-          />
-        </Dropdown>
-      ),
-    },
-  ];
-
-  console.log("transactionCodes transactionCodes", transactionCodes);
+  console.log("dataItem dataItem", dataItem);
 
   return (
     <div className="flex flex-col flex-wrap justify-center content-start px-8 pt-6 rounded-3xl bg-stone-100 leading-[160%] max-md:px-5">
@@ -389,7 +318,59 @@ const BillAdjustment = () => {
         )}
 
         {activeTab === "viewAdjustments" && (
-          <Table dataSource={data} columns={columns} />
+          <div className="overflow-x-auto">
+            <table className="min-w-full bg-white border border-solid border-neutral-500 border-opacity-30 rounded-xl mt-6">
+              <thead className="bg-stone-100 text-neutral-600">
+                <tr>
+                  <th className="py-4 px-6">Customer Ref</th>
+                  <th className="py-4 px-6">Trans Code</th>
+                  <th className="py-4 px-6">Doc No.</th>
+                  <th className="py-4 px-6">Effective Date</th>
+                  <th className="py-4 px-6">Amount</th>
+                  <th className="py-4 px-6">VAT</th>
+                  <th className="py-4 px-6">Total</th>
+                  <th className="py-4 px-6">Action</th>
+                </tr>
+              </thead>
+              <tbody className="text-slate-500">
+                {dataItem.map((item) => (
+                  <tr key={item.id}>
+                    <td className="py-4 px-6">{item.custRef}</td>
+                    <td className="py-4 px-6">{item.transactionCode}</td>
+                    <td className="py-4 px-6">{item.documentNumber}</td>
+                    <td className="py-4 px-6">{item.effectiveDate}</td>
+                    <td className="py-4 px-6">{item.amount}</td>
+                    <td className="py-4 px-6">{item.vat}</td>
+                    <td className="py-4 px-6">{item.amount}</td>
+                    <td className="py-4 px-6">
+                      <Dropdown
+                        overlay={
+                          <Menu>
+                            <Menu.Item key="1" onClick={handleViewAdjustment}>
+                              View Adjustment
+                            </Menu.Item>
+                            <Menu.Item key="2">
+                              <a href="#">Commit to Database</a>
+                            </Menu.Item>
+                          </Menu>
+                        }
+                        trigger={["click"]}
+                      >
+                        <Button
+                          type="text"
+                          icon={
+                            <EllipsisOutlined
+                              style={{ fontSize: "20px", color: "#1890ff" }}
+                            />
+                          }
+                        />
+                      </Dropdown>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         )}
 
         <BillAdjustmentDrawer
