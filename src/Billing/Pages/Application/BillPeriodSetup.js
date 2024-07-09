@@ -1,5 +1,15 @@
-import React, { useState } from "react";
-import { DatePicker, Select, Modal, Table, Button, Typography, Dropdown, Menu, message } from "antd";
+import React, { useState, useEffect } from "react";
+import {
+  DatePicker,
+  Select,
+  Modal,
+  Table,
+  Button,
+  Typography,
+  Dropdown,
+  Menu,
+  message,
+} from "antd";
 import { EllipsisOutlined } from "@ant-design/icons";
 import axios from "axios";
 import BillingDetailsPeriodsDrawer from "./Actions/BillingPeriodDetailsDrawer";
@@ -16,21 +26,24 @@ const BillPeriodSetup = () => {
     endDate: null,
   });
 
-  const [data, setData] = useState([
-    {
-      key: "1",
-      code: "213032024",
-      period: "032024",
-      cycle: "30",
-      startDate: "01/03/2024",
-      endDate: "31/03/2024",
-      isClosed: "No",
-      closedBy: "Ogun Billing",
-      isChecked: false,
-    },
-  ]);
+  const [data, setData] = useState([]);
 
   const [drawerVisible, setDrawerVisible] = useState(false);
+
+  useEffect(() => {
+    fetchBillingPeriods();
+  }, []);
+
+  const fetchBillingPeriods = async () => {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}/GetBillingPeriods`
+      );
+      setData(response.data);
+    } catch (error) {
+      console.error("Error fetching billing periods:", error);
+    }
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -154,12 +167,16 @@ const BillPeriodSetup = () => {
         <Dropdown overlay={renderMenu(record)} placement="bottomRight">
           <Button
             type="text"
-            icon={<EllipsisOutlined style={{ fontSize: 20, color: "#1890ff" }} />}
+            icon={
+              <EllipsisOutlined style={{ fontSize: 20, color: "#1890ff" }} />
+            }
           />
         </Dropdown>
       ),
     },
   ];
+
+  console.log("data data", data);
 
   return (
     <div className="flex flex-col flex-wrap justify-center content-start px-8 py-6 rounded-3xl bg-white leading-[160%] max-md:px-5">
@@ -263,21 +280,85 @@ const BillPeriodSetup = () => {
           </div>
         </form>
       ) : (
-        <div className="flex flex-col p-6 bg-white rounded-3xl w-full mt-10">
-          <div className="shrink-0 mt-4 h-px border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-10 w-full" />
-          <Table
-            columns={columns}
-            dataSource={data}
-            pagination={false}
-            className="mt-8"
-          />
+        <div className="flex flex-col p-6 bg-white rounded-3xl w-full">
+          <div>
+            <div className="shrink-0 mt-4 h-px border  bg-neutral-500 w-full" />
+            <div className="overflow-x-auto mt-10">
+              <table className="min-w-full divide-y divide-gray-200">
+                <thead className="bg-gray-50">
+                  <tr>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    >
+                      CODE
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    >
+                      PERIOD
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    >
+                      Start Date
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    >
+                      End Date
+                    </th>
+                    <th scope="col" className="relative px-6 py-3">
+                      <span className="sr-only">Actions</span>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200">
+                  {data.map((period) => (
+                    <tr key={period.id}>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        {period.name}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        {period.period}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        {new Date(period.startDate).toLocaleDateString()}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        {new Date(period.endDate).toLocaleDateString()}{" "}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                        <Dropdown
+                          overlay={renderMenu()}
+                          placement="bottomRight"
+                        >
+                          <Button
+                            type="text"
+                            icon={
+                              <EllipsisOutlined
+                                style={{ fontSize: 20, color: "#1890ff" }}
+                              />
+                            }
+                          />
+                        </Dropdown>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
           <BillingDetailsPeriodsDrawer
             visible={drawerVisible}
             onClose={() => setDrawerVisible(false)}
           />
         </div>
       )}
-        <Modal
+      <Modal
         visible={isModalVisible}
         onOk={handleCancel}
         onCancel={handleCancel}
