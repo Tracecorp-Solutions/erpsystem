@@ -2,10 +2,7 @@ import React from "react";
 import { Drawer } from "antd";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 
-export default function BillingDetailsPeriodsDrawer({
-  setDrawerVisible,
-  drawerVisible,
-}) {
+const BillingDetailsPeriodsDrawer = ({ drawerVisible, setDrawerVisible }) => {
   return (
     <Drawer
       placement="right"
@@ -111,4 +108,6 @@ export default function BillingDetailsPeriodsDrawer({
       </div>
     </Drawer>
   );
-}
+};
+
+export default BillingDetailsPeriodsDrawer;

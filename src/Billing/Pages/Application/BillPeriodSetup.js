@@ -3,7 +3,6 @@ import {
   DatePicker,
   Select,
   Modal,
-  Table,
   Button,
   Typography,
   Dropdown,
@@ -29,6 +28,7 @@ const BillPeriodSetup = () => {
   const [data, setData] = useState([]);
 
   const [drawerVisible, setDrawerVisible] = useState(false);
+  const [billingPeriodDetails, setBillingPeriodDetails] = useState({});
 
   useEffect(() => {
     fetchBillingPeriods();
@@ -94,15 +94,17 @@ const BillPeriodSetup = () => {
         startDate: null,
         endDate: null,
       });
+
+      fetchBillingPeriods(); // Update data after adding a new period
     } catch (error) {
       message.error(error);
     }
   };
 
-  const renderMenu = () => (
+  const renderMenu = (record) => (
     <Menu>
       <Menu.Item key="1">
-        <Button type="text" onClick={() => setDrawerVisible(true)}>
+        <Button type="text" onClick={() => handleOpenDrawer(record)}>
           View Periods Details
         </Button>
       </Menu.Item>
@@ -112,14 +114,14 @@ const BillPeriodSetup = () => {
     </Menu>
   );
 
+  const handleOpenDrawer = (record) => {
+    setBillingPeriodDetails(record);
+    setDrawerVisible(true);
+  };
+
   const columns = [
     {
-      title: (
-        <div className="flex gap-4 items-center">
-          <div className="w-5 h-5 bg-white rounded border-2 border-solid border-neutral-500 border-opacity-10" />
-          <div>Code</div>
-        </div>
-      ),
+      title: "Code",
       dataIndex: "code",
       key: "code",
       render: (text) => <Text>{text}</Text>,
@@ -164,19 +166,15 @@ const BillPeriodSetup = () => {
       title: "Action",
       key: "action",
       render: (_, record) => (
-        <Dropdown overlay={renderMenu(record)} placement="bottomRight">
+        <Dropdown overlay={() => renderMenu(record)} placement="bottomRight">
           <Button
             type="text"
-            icon={
-              <EllipsisOutlined style={{ fontSize: 20, color: "#1890ff" }} />
-            }
+            icon={<EllipsisOutlined style={{ fontSize: 20, color: "#1890ff" }} />}
           />
         </Dropdown>
       ),
     },
   ];
-
-  console.log("data data", data);
 
   return (
     <div className="flex flex-col flex-wrap justify-center content-start px-8 py-6 rounded-3xl bg-white leading-[160%] max-md:px-5">
@@ -218,6 +216,7 @@ const BillPeriodSetup = () => {
           <Select
             style={{ width: "100%" }}
             className="h-14 mt-2"
+            required
             onChange={(value) => handleChange("operationArea", value)}
             value={formData.operationArea}
           >
@@ -240,6 +239,7 @@ const BillPeriodSetup = () => {
               </label>
               <DatePicker
                 id="startDate"
+                required
                 className="flex gap-2 justify-between px-4 py-4 mt-2 rounded-xl border border-solid border-neutral-500 border-opacity-30 text-neutral-400 max-w-full"
                 onChange={(date) => handleChange("startDate", date)}
                 value={formData.startDate}
@@ -254,6 +254,7 @@ const BillPeriodSetup = () => {
               </label>
               <DatePicker
                 id="endDate"
+                required
                 className="flex gap-2 justify-between px-4 py-4 mt-2 rounded-xl border border-solid border-neutral-500 border-opacity-30 text-neutral-400 max-w-full"
                 onChange={(date) => handleChange("endDate", date)}
                 value={formData.endDate}
@@ -282,67 +283,48 @@ const BillPeriodSetup = () => {
       ) : (
         <div className="flex flex-col p-6 bg-white rounded-3xl w-full">
           <div>
-            <div className="shrink-0 mt-4 h-px border  bg-neutral-500 w-full" />
+            <div className="shrink-0 mt-4 h-px border bg-neutral-500 w-full" />
             <div className="overflow-x-auto mt-10">
               <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-gray-50">
+                <thead className="text-neutral-600">
                   <tr>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                    >
-                      CODE
+                    <th scope="col" className="px-6 py-3 text-left tracking-wider">
+                      Code
                     </th>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                    >
-                      PERIOD
+                    <th scope="col" className="px-6 py-3 text-left tracking-wider">
+                      Period
                     </th>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                    >
+                    <th scope="col" className="px-6 py-3 text-left tracking-wider">
                       Start Date
                     </th>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                    >
+                    <th scope="col" className="px-6 py-3 text-left tracking-wider">
                       End Date
                     </th>
-                    <th scope="col" className="relative px-6 py-3">
-                      <span className="sr-only">Actions</span>
+                    <th scope="col" className="px-12 py-3 text-end tracking-wider">
+                      Action
                     </th>
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
-                  {data.map((period) => (
-                    <tr key={period.id}>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        {period.name}
+                  {data.map((item) => (
+                    <tr key={item.id}>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="text-sm text-neutral-500">{item.name}</div>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        {period.period}
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="text-sm text-neutral-500">{item.period}</div>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        {new Date(period.startDate).toLocaleDateString()}
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="text-sm text-neutral-500">{item.startDate}</div>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        {new Date(period.endDate).toLocaleDateString()}{" "}
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="text-sm text-neutral-500">{item.endDate}</div>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                        <Dropdown
-                          overlay={renderMenu()}
-                          placement="bottomRight"
-                        >
+                      <td className="px-12 py-4 whitespace-nowrap text-right text-sm font-medium">
+                        <Dropdown overlay={() => renderMenu(item)} placement="bottomRight">
                           <Button
                             type="text"
-                            icon={
-                              <EllipsisOutlined
-                                style={{ fontSize: 20, color: "#1890ff" }}
-                              />
-                            }
+                            icon={<EllipsisOutlined style={{ fontSize: 20, color: "#1890ff" }} />}
                           />
                         </Dropdown>
                       </td>
@@ -353,63 +335,21 @@ const BillPeriodSetup = () => {
             </div>
           </div>
           <BillingDetailsPeriodsDrawer
-            visible={drawerVisible}
-            onClose={() => setDrawerVisible(false)}
+            drawerVisible={drawerVisible}
+            setDrawerVisible={setDrawerVisible}
+            billingPeriodDetails={billingPeriodDetails}
           />
         </div>
       )}
       <Modal
+        title="Add Period"
         visible={isModalVisible}
-        onOk={handleCancel}
+        onOk={handleAddPeriod}
         onCancel={handleCancel}
-        closable={false}
-        footer={null}
+        okText="Add Period"
+        cancelText="Cancel"
       >
-        <div className="flex flex-col pb-20 mt-10 leading-[160%] max-w-[700px] text-neutral-600">
-          <div className="flex flex-col pt-6 w-full text-4xl font-semibold max-md:max-w-full">
-            <div className="flex gap-5 justify-between self-center px-5 w-full max-w-screen-sm max-md:flex-wrap">
-              <div>Review Setup</div>
-              <img
-                loading="lazy"
-                src="https://cdn.builder.io/api/v1/image/assets/TEMP/9cb4c3a052fc4ce0311e93e84c7d1ec0d87c500974fc2472887163b10b65c326?apiKey=0d95acea82cc4b259a61e827c24c5c6c&"
-                className="shrink-0 my-auto w-8 aspect-square cursor-pointer"
-                onClick={handleCancel}
-                alt="Close"
-              />
-            </div>
-            <div className="mt-6 w-full border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-opacity-10 min-h-[1px] max-md:max-w-full" />
-          </div>
-          <div className="flex flex-col justify-center self-center px-12 pt-8 pb-10 mt-12 text-base rounded-3xl bg-stone-100 max-md:px-5 max-md:mt-10 max-md:max-w-full">
-            <div>Are you sure you want to save the Billing period?</div>
-            <div className="mt-6 font-semibold">
-              {formData.startDate
-                ? formData.startDate.format("YYYY-MM-DD")
-                : "--"}{" "}
-              -{" "}
-              {formData.endDate ? formData.endDate.format("YYYY-MM-DD") : "--"}
-            </div>
-          </div>
-          <div className="flex justify-center items-center px-16 py-6 mt-10 text-base leading-6 whitespace-nowrap bg-stone-100 max-w-[700px] max-md:px-5">
-            <div className="flex justify-between gap-6 w-full">
-              <button
-                type="button"
-                className="justify-center items-center px-8 py-4 rounded-3xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600"
-                style={{ width: "200px" }}
-                onClick={handleCancel}
-              >
-                No
-              </button>
-              <button
-                type="submit"
-                className="justify-center items-center px-8 py-4 font-semibold text-white rounded-3xl bg-slate-500"
-                style={{ width: "200px" }}
-                onClick={handleAddPeriod}
-              >
-                Yes
-              </button>
-            </div>
-          </div>
-        </div>
+        {/* Modal content */}
       </Modal>
     </div>
   );
