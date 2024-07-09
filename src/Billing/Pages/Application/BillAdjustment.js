@@ -341,13 +341,13 @@ const BillAdjustment = () => {
             <table className="min-w-full bg-white border border-solid border-neutral-500 border-opacity-30 rounded-xl mt-6">
               <thead className="bg-stone-100 text-neutral-600">
                 <tr>
-                  <th className="py-4 px-6">Customer Ref</th>
-                  <th className="py-4 px-6">Trans Code</th>
-                  <th className="py-4 px-6">Doc No.</th>
-                  <th className="py-4 px-6">Effective Date</th>
-                  <th className="py-4 px-6">Amount</th>
-                  <th className="py-4 px-6">Total</th>
-                  <th className="py-4 px-6">Action</th>
+                  <th className="py-4 px-6">CUSTOMER REF</th>
+                  <th className="py-4 px-6">TRANS CODE</th>
+                  <th className="py-4 px-6">DOC NO.</th>
+                  <th className="py-4 px-6">EFFECTIVE DATE</th>
+                  <th className="py-4 px-6">AMOUNT</th>
+                  <th className="py-4 px-6">TOTAL</th>
+                  <th className="py-4 px-6">ACTION</th>
                 </tr>
               </thead>
               <tbody className="text-slate-500">
@@ -390,6 +390,7 @@ const BillAdjustment = () => {
                 ))}
               </tbody>
             </table>
+            <div></div>
           </div>
         )}
 

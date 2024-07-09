@@ -1,17 +1,7 @@
 import React, { useState } from "react";
-import {
-  DatePicker,
-  Select,
-  Modal,
-  Table,
-  Space,
-  Typography,
-  Checkbox,
-  Dropdown,
-  Menu,
-  Button,
-} from "antd";
+import { DatePicker, Select, Modal, Table, Button, Typography, Dropdown, Menu, message } from "antd";
 import { EllipsisOutlined } from "@ant-design/icons";
+import axios from "axios";
 import BillingDetailsPeriodsDrawer from "./Actions/BillingPeriodDetailsDrawer";
 
 const { Option } = Select;
@@ -21,10 +11,11 @@ const BillPeriodSetup = () => {
   const [isFormVisible, setIsFormVisible] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [formData, setFormData] = useState({
-    operationArea: "Abeokuta",
+    operationArea: "",
     startDate: null,
     endDate: null,
   });
+
   const [data, setData] = useState([
     {
       key: "1",
@@ -39,7 +30,7 @@ const BillPeriodSetup = () => {
     },
   ]);
 
-  const [drawerVisible, setDrawerVisible] = useState(false)
+  const [drawerVisible, setDrawerVisible] = useState(false);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -50,7 +41,7 @@ const BillPeriodSetup = () => {
     setIsFormVisible(false);
     setIsModalVisible(false);
     setFormData({
-      operationArea: "Abeokuta",
+      operationArea: "",
       startDate: null,
       endDate: null,
     });
@@ -71,6 +62,30 @@ const BillPeriodSetup = () => {
     setIsFormVisible(false);
   };
 
+  const handleAddPeriod = async () => {
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_API_URL}/AddBillingPeriod`,
+        {
+          name: formData.operationArea,
+          startDate: formData.startDate.toISOString(),
+          endDate: formData.endDate.toISOString(),
+        }
+      );
+
+      message.success(response.data);
+
+      setIsModalVisible(false);
+      setFormData({
+        operationArea: "",
+        startDate: null,
+        endDate: null,
+      });
+    } catch (error) {
+      message.error(error);
+    }
+  };
+
   const renderMenu = () => (
     <Menu>
       <Menu.Item key="1">
@@ -79,13 +94,10 @@ const BillPeriodSetup = () => {
         </Button>
       </Menu.Item>
       <Menu.Item key="2">
-        <Button type="text">
-          Close Period
-        </Button>
+        <Button type="text">Close Period</Button>
       </Menu.Item>
     </Menu>
   );
-
 
   const columns = [
     {
@@ -142,9 +154,7 @@ const BillPeriodSetup = () => {
         <Dropdown overlay={renderMenu(record)} placement="bottomRight">
           <Button
             type="text"
-            icon={
-              <EllipsisOutlined style={{ fontSize: 20, color: "#1890ff" }} />
-            }
+            icon={<EllipsisOutlined style={{ fontSize: 20, color: "#1890ff" }} />}
           />
         </Dropdown>
       ),
@@ -189,12 +199,14 @@ const BillPeriodSetup = () => {
             Operation Area
           </div>
           <Select
-            defaultValue="Abeokuta"
             style={{ width: "100%" }}
             className="h-14 mt-2"
             onChange={(value) => handleChange("operationArea", value)}
             value={formData.operationArea}
           >
+            {formData.operationArea === "" && (
+              <Option value="">Please select</Option>
+            )}
             <Option value="Abeokuta">Abeokuta</Option>
             <Option value="Lagos">Lagos</Option>
             <Option value="Ibadan">Ibadan</Option>
@@ -259,9 +271,13 @@ const BillPeriodSetup = () => {
             pagination={false}
             className="mt-8"
           />
+          <BillingDetailsPeriodsDrawer
+            visible={drawerVisible}
+            onClose={() => setDrawerVisible(false)}
+          />
         </div>
       )}
-      <Modal
+        <Modal
         visible={isModalVisible}
         onOk={handleCancel}
         onCancel={handleCancel}
@@ -306,7 +322,7 @@ const BillPeriodSetup = () => {
                 type="submit"
                 className="justify-center items-center px-8 py-4 font-semibold text-white rounded-3xl bg-slate-500"
                 style={{ width: "200px" }}
-                onClick={handleSubmit}
+                onClick={handleAddPeriod}
               >
                 Yes
               </button>
@@ -314,7 +330,6 @@ const BillPeriodSetup = () => {
           </div>
         </div>
       </Modal>
-      <BillingDetailsPeriodsDrawer drawerVisible={drawerVisible} setDrawerVisible={setDrawerVisible} />
     </div>
   );
 };
