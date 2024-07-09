@@ -1,6 +1,15 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { DatePicker, Input, Select, Button, Dropdown, Menu, Table, message } from "antd";
+import {
+  DatePicker,
+  Input,
+  Select,
+  Button,
+  Dropdown,
+  Menu,
+  Table,
+  message,
+} from "antd";
 import { EllipsisOutlined } from "@ant-design/icons";
 import BillAdjustmentDrawer from "./Actions/BillAdjustmentDrawer";
 
@@ -37,7 +46,6 @@ const BillAdjustment = () => {
     fetchTransactionCodes();
   }, []);
 
-
   const apiUrl = `${process.env.REACT_APP_API_URL}/ValidateCustomer/${customerRef}`;
 
   const validateCustomer = () => {
@@ -63,21 +71,21 @@ const BillAdjustment = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-  
+
     if (!adjustmentType) {
       alert("Please select an adjustment type (+ or -).");
       return;
     }
-  
+
     let adjustedAmount = 0;
     if (adjustmentType === "+") {
       adjustedAmount = amount;
     } else if (adjustmentType === "-") {
       adjustedAmount = -amount;
     }
-  
+
     const totalAmount = adjustedAmount;
-  
+
     const formData = new FormData();
     formData.append("CustRef", customerRef);
     formData.append("DocumentNumber", documentNumber);
@@ -86,14 +94,14 @@ const BillAdjustment = () => {
     formData.append("AdjustmentReason", adjustmentReason);
     formData.append("AdjustmentType", adjustmentType);
     formData.append("Amount", adjustedAmount);
-  
+
     if (attachment) {
       formData.append("file", attachment);
       formData.append("EvidenceFilePath", attachment.name);
     } else {
       formData.append("EvidenceFilePath", "");
     }
-  
+
     axios
       .post(
         `${process.env.REACT_APP_API_URL}/AddBillAdjustmentRequest`,
@@ -112,7 +120,7 @@ const BillAdjustment = () => {
         message.error("Adjustment Request Error:", error);
       });
   };
-  
+
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     setAttachment(file);
@@ -120,6 +128,10 @@ const BillAdjustment = () => {
 
   const toggleTab = (tab) => {
     setActiveTab(tab);
+  };
+
+  const handleViewAdjustment = () => {
+    setDrawerVisible(true);
   };
 
   const data = [
@@ -178,7 +190,7 @@ const BillAdjustment = () => {
         <Dropdown
           overlay={
             <Menu>
-              <Menu.Item key="1" onClick={() => setDrawerVisible(true)}>
+              <Menu.Item key="1" onClick={handleViewAdjustment}>
                 View Adjustment
               </Menu.Item>
               <Menu.Item key="2">
@@ -381,8 +393,8 @@ const BillAdjustment = () => {
         )}
 
         <BillAdjustmentDrawer
-          visible={drawerVisible}
-          onClose={() => setDrawerVisible(false)}
+          setDrawerVisible={setDrawerVisible}
+          drawerVisible={drawerVisible}
         />
       </div>
     </div>

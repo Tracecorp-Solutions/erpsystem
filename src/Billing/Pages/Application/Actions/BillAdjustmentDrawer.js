@@ -37,7 +37,7 @@ export default function BillAdjustmentDrawer({
           <div className="mt-8 text-2xl text-start font-semibold leading-10 text-neutral-600 max-md:max-w-full">
             Bill Adjustment Details
           </div>
-          
+
           <div className="grid grid-cols-2 gap-4 mt-8">
             <div className="flex flex-col items-start px-6 py-4 rounded-lg bg-stone-100 max-md:px-5">
               <div className="text-xs text-start font-medium tracking-wide uppercase text-neutral-400">
