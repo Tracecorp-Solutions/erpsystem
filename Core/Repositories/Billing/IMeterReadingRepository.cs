@@ -1,4 +1,5 @@
 ﻿using Core.DTOs.Billing;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,5 +15,7 @@ namespace Core.Repositories.Billing
         Task<MeterReadingDto> GetMeterReading(int id);
         Task UpdateMeterReading(MeterReadingDto meterReadingDto);
         Task DeleteMeterReading(int id);
+
+        Task BulkMeterReading(IFormFile readings, );
     }
 }
