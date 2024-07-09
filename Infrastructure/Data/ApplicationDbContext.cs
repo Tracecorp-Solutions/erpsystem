@@ -89,6 +89,8 @@ namespace Infrastructure.Data
 
         public DbSet<TransactionCodes> TransactionCodes { get; set; }
 
+        public DbSet<BulkReading> BulkReadings { get; set; }
+
         #endregion
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

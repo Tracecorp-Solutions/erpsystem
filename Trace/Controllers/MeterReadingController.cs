@@ -92,5 +92,22 @@ namespace Trace.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
             }
         }
+
+        [HttpPost("/BulkMeterReading")]
+        public async Task<IActionResult> BulkMeterReading([FromForm] IFormFile readings, [FromForm] BulkReadingDto dto)
+        {
+            try
+            {
+                await _meterReadingRepository.BulkMeterReading(readings, dto);
+                return Ok("Bulk Meter Reading added successfully");
+            }catch(ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
+        }
     }
 }

@@ -6,17 +6,21 @@ using System.Threading.Tasks;
 using Core.DTOs.Billing;
 using Core.Models.Billing;
 using Core.Repositories.Billing;
+using Core.Repositories.Settings;
 using Infrastructure.Data;
+using Microsoft.AspNetCore.Http;
 
 namespace Services.Repositories.Billing
 {
     public class MeterReadingRepository : IMeterReadingRepository
     {
         public readonly ApplicationDbContext _context;
+        public readonly ISettings _settings;
 
-        public MeterReadingRepository(ApplicationDbContext context)
+        public MeterReadingRepository(ApplicationDbContext context, ISettings settings)
         {
             _context = context;
+            _settings = settings;
         }
         public async Task AddMeterReading(MeterReadingDto meterReadingDto)
         {
@@ -109,6 +113,32 @@ namespace Services.Repositories.Billing
 
             //update the model
             _context.MeterReadings.Update(meterreading);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task BulkMeterReading(IFormFile readings, BulkReadingDto dto)
+        {
+            // check file format of the readings to see if its a csv
+            if (readings.ContentType != "text/csv")
+            {
+                throw new ArgumentException("Invalid file format. Please upload a csv file");
+            }
+            //get file location
+            var fileLocation = await _settings.SaveFileAndReturnPathAsync(readings);
+
+            //map dto to model
+            var bulkReading = new BulkReading
+            {
+                OperationAreaId = dto.OperationAreaId,
+                BranchId = dto.BranchId,
+                BillingCycleId = dto.BillingCycleId,
+                ReadingDate = dto.ReadingDate,
+                MeterReaderId = dto.MeterReaderId,
+                filelocation = fileLocation
+            };
+
+            //add bulk reading to db
+            _context.BulkReadings.Add(bulkReading);
             await _context.SaveChangesAsync();
         }
     }

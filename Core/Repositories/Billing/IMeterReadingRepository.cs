@@ -16,6 +16,6 @@ namespace Core.Repositories.Billing
         Task UpdateMeterReading(MeterReadingDto meterReadingDto);
         Task DeleteMeterReading(int id);
 
-        Task BulkMeterReading(IFormFile readings, );
+        Task BulkMeterReading(IFormFile readings, BulkReadingDto dto );
     }
 }
