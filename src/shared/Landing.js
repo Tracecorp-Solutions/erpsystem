@@ -87,47 +87,49 @@ const SystemCard = ({ title, description, isActive, onClick }) => {
 const Landing = () => {
   return (
     <main className="flex flex-col justify-center items-center bg-stone-100">
-      <header className="flex justify-center items-center self-stretch px-16 w-full text-base leading-6 bg-white text-neutral-600 max-md:px-5 max-md:max-w-full">
+      <header className="fixed top-0 z-10 flex justify-center items-center self-stretch px-16 w-full text-base leading-6 bg-white text-neutral-600 max-md:px-5 max-md:max-w-full">
         <div className="flex gap-2.5 justify-between py-2 w-full max-w-[1200px] max-md:flex-wrap max-md:max-w-full">
           <img loading="lazy" src="https://cdn.builder.io/api/v1/image/assets/TEMP/408fafcebc6b68b9bb22a4c9f099c724596e89747ebf76a6651a94c7f3a08b5e?apiKey=a1e51d57a9bf4fb0a44541a454bc05bc&" className="shrink-0 aspect-[1.25] w-[87px]" alt="Company logo" />
           <div className="justify-center px-4 py-2 my-auto rounded-3xl bg-stone-100">
-          Welcome, {sessionStorage.getItem("fullname")}
+            Hello, {sessionStorage.getItem("fullname")}
           </div>
         </div>
       </header>
-      <section className="px-5 mt-8 text-left w-full max-w-[1200px] max-md:max-w-full">
-        <h1 className="mt-8 text-4xl font-semibold leading-[57.6px] text-neutral-600 max-md:max-w-full">
-          Welcome to the TRACE ERP
-        </h1>
-      </section>
-      <section className="px-5 mt-8 w-full max-w-[1200px] max-md:max-w-full">
-        <div className="flex gap-5 max-md:flex-col max-md:gap-0">
-          {systems.slice(0, 4).map((system, index) => (
-            <div key={index} className="flex flex-col w-3/12 max-md:ml-0 max-md:w-full">
-              <SystemCard
-                title={system.title}
-                description={system.description}
-                isActive={system.isActive}
-                onClick={() => console.log(`Loading ${system.title}`)}
-              />
-            </div>
-          ))}
-        </div>
-      </section>
-      <section className="px-5 mt-6 w-full max-w-[1200px] max-md:max-w-full">
-        <div className="flex gap-5 max-md:flex-col max-md:gap-0">
-          {systems.slice(4).map((system, index) => (
-            <div key={index} className="flex flex-col w-3/12 max-md:ml-0 max-md:w-full">
-              <SystemCard
-                title={system.title}
-                description={system.description}
-                isActive={system.isActive}
-                onClick={() => console.log(`Loading ${system.title}`)}
-              />
-            </div>
-          ))}
-        </div>
-      </section>
+      <div className="mt-[96px]">
+        <section className="px-5 mt-8 text-left w-full max-w-[1200px] max-md:max-w-full">
+          <h1 className="mt-8 text-4xl font-semibold leading-[57.6px] text-neutral-600 max-md:max-w-full">
+            Welcome to the TRACE ERP
+          </h1>
+        </section>
+        <section className="px-5 mt-8 w-full max-w-[1200px] max-md:max-w-full">
+          <div className="flex gap-5 max-md:flex-col max-md:gap-0">
+            {systems.slice(0, 4).map((system, index) => (
+              <div key={index} className="flex flex-col w-3/12 max-md:ml-0 max-md:w-full">
+                <SystemCard
+                  title={system.title}
+                  description={system.description}
+                  isActive={system.isActive}
+                  onClick={() => console.log(`Loading ${system.title}`)}
+                />
+              </div>
+            ))}
+          </div>
+        </section>
+        <section className="px-5 mt-6 w-full max-w-[1200px] max-md:max-w-full">
+          <div className="flex gap-5 max-md:flex-col max-md:gap-0">
+            {systems.slice(4).map((system, index) => (
+              <div key={index} className="flex flex-col w-3/12 max-md:ml-0 max-md:w-full">
+                <SystemCard
+                  title={system.title}
+                  description={system.description}
+                  isActive={system.isActive}
+                  onClick={() => console.log(`Loading ${system.title}`)}
+                />
+              </div>
+            ))}
+          </div>
+        </section>
+      </div>
       <footer className="flex justify-center items-center self-stretch px-16 mt-12 w-full text-base leading-6 border-t bg-stone-100 max-md:px-5 max-md:mt-10 max-md:max-w-full">
         <div className="flex gap-2.5 justify-between py-6 w-full max-w-[1200px] max-md:flex-wrap max-md:max-w-full">
           <div className="flex gap-5 justify-between">
