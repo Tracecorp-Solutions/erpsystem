@@ -35,6 +35,7 @@ function History() {
       <div className="shrink-0 mt-4 h-px border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-opacity-10 max-md:max-w-full" />
       <div className="mt-8 text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">
         Customer Reference
+        
       </div>
       <div className="flex gap-2 justify-between py-1 pr-1 pl-4 mt-2 text-base leading-6 bg-white rounded-xl border border-solid border-neutral-500 border-opacity-30 max-md:flex-wrap max-md:max-w-full">
         <div className="my-auto text-neutral-400">Enter Customer Ref</div>
