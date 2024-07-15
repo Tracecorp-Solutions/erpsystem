@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Core.Repositories.CRM;
 using Infrastructure.Data;
 using Core.Models.CRM;
+using Microsoft.EntityFrameworkCore;
 
 namespace Services.Repositories.CRM
 {
@@ -37,12 +38,14 @@ namespace Services.Repositories.CRM
 
         public async Task UpdateDepartment(Department department)
         {
-            //check if department exists
-            var departmentExists = await _context.Departments.FindAsync(department.Id);
-            if (departmentExists != null)
+            // Check if department exists in the database
+            var departmentExists = await _context.Departments.AsNoTracking().FirstOrDefaultAsync(d => d.Id == department.Id);
+            if (departmentExists == null)
                 throw new ArgumentException("Department does not exist");
 
-            _context.Departments.Update(department);
+            // Attach the updated entity and mark it as modified
+            _context.Entry(department).State = EntityState.Modified;
+
             await _context.SaveChangesAsync();
         }
 
