@@ -61,7 +61,6 @@ const BillAdjustment = () => {
   }, []);
 
   const validateCustomer = () => {
-    
     if (!customerRef) {
       alert("Please enter a customer reference.");
       return;
@@ -388,7 +387,11 @@ const BillAdjustment = () => {
                 ))}
               </tbody>
             </table>
-            <div></div>
+            <div className="my-10 flex justify-end mx-3">
+              <button type="button" className="justify-center px-6 py-3 text-base font-semibold leading-6 text-white rounded-3xl bg-slate-500">
+                Print List
+              </button>{" "}
+            </div>
           </div>
         )}
 
