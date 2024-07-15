@@ -44,7 +44,6 @@ const BillAdjustment = () => {
 
   const fetchData = async () => {
     try {
-      alert("Reached");
       const response = await axios.get(
         `${process.env.REACT_APP_API_URL}/GetBillAdjustmentRequests`
       );
@@ -57,16 +56,9 @@ const BillAdjustment = () => {
   };
 
   useEffect(() => {
-    
-
     fetchTransactionCodes();
     fetchData();
   }, []);
-
-
-
-
-  
 
   const validateCustomer = () => {
     
@@ -108,7 +100,7 @@ const BillAdjustment = () => {
     const totalAmount = adjustedAmount;
 
     const formData = new FormData();
-    // formData.append("CustRef", customerRef);
+    formData.append("CustRef", customerRef);
     formData.append("DocumentNumber", documentNumber);
     formData.append("TransactionCode", transactionCode);
     formData.append("Name", customerName);
@@ -357,7 +349,7 @@ const BillAdjustment = () => {
                 </tr>
               </thead>
               <tbody className="text-slate-500">
-                {/* {dataItem.map((item) => (
+                {dataItem.map((item) => (
                   <tr key={item.id}>
                     <td className="py-4 px-6">{item.custRef}</td>
                     <td className="py-4 px-6">{item.transactionCode}</td>
@@ -393,7 +385,7 @@ const BillAdjustment = () => {
                       </Dropdown>
                     </td>
                   </tr>
-                ))} */}
+                ))}
               </tbody>
             </table>
             <div></div>
