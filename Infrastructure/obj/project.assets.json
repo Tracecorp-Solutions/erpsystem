@@ -813,7 +813,7 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\ngobi\\.nuget\\packages\\": {}
+    "C:\\Users\\DanielNgobi\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
@@ -821,11 +821,11 @@
       "projectUniqueName": "D:\\working directory\\erpsystem\\Infrastructure\\Infrastructure.csproj",
       "projectName": "Infrastructure",
       "projectPath": "D:\\working directory\\erpsystem\\Infrastructure\\Infrastructure.csproj",
-      "packagesPath": "C:\\Users\\ngobi\\.nuget\\packages\\",
+      "packagesPath": "C:\\Users\\DanielNgobi\\.nuget\\packages\\",
       "outputPath": "D:\\working directory\\erpsystem\\Infrastructure\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\ngobi\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\DanielNgobi\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

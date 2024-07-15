@@ -1,5 +1,6 @@
 ﻿using Core.Models.Accounting;
 using Core.Models.Billing;
+using Core.Models.CRM;
 using Core.Models.UserManagement;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
@@ -94,6 +95,11 @@ namespace Infrastructure.Data
         public DbSet<BillingPeriod> BillingPeriod { get; set; }
 
         #endregion
+
+        #region CRM module
+        public DbSet<Department> Departments { get; set; }
+        #endregion
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

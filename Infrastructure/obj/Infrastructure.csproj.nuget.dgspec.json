@@ -10,11 +10,11 @@
         "projectUniqueName": "D:\\working directory\\erpsystem\\Core\\Core.csproj",
         "projectName": "Core",
         "projectPath": "D:\\working directory\\erpsystem\\Core\\Core.csproj",
-        "packagesPath": "C:\\Users\\ngobi\\.nuget\\packages\\",
+        "packagesPath": "C:\\Users\\DanielNgobi\\.nuget\\packages\\",
         "outputPath": "D:\\working directory\\erpsystem\\Core\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\ngobi\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\DanielNgobi\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -77,11 +77,11 @@
         "projectUniqueName": "D:\\working directory\\erpsystem\\Infrastructure\\Infrastructure.csproj",
         "projectName": "Infrastructure",
         "projectPath": "D:\\working directory\\erpsystem\\Infrastructure\\Infrastructure.csproj",
-        "packagesPath": "C:\\Users\\ngobi\\.nuget\\packages\\",
+        "packagesPath": "C:\\Users\\DanielNgobi\\.nuget\\packages\\",
         "outputPath": "D:\\working directory\\erpsystem\\Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\ngobi\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\DanielNgobi\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
