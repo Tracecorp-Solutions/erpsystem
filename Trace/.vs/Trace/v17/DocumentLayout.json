@@ -3,21 +3,14 @@
   "WorkspaceRootPath": "D:\\working directory\\erpsystem\\Trace\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{97CA6EF6-720A-4545-8A15-EBF2D4F20DA0}|Trace.csproj|d:\\working directory\\erpsystem\\trace\\controllers\\meterreadingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{97CA6EF6-720A-4545-8A15-EBF2D4F20DA0}|Trace.csproj|solutionrelative:controllers\\meterreadingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D0C5D151-D98C-46B1-A85E-DFAA22B5EE2F}|..\\Services\\Services.csproj|d:\\working directory\\erpsystem\\services\\repositories\\billing\\meterreadingrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{97CA6EF6-720A-4545-8A15-EBF2D4F20DA0}|Trace.csproj|d:\\working directory\\erpsystem\\trace\\controllers\\newconnectioncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{97CA6EF6-720A-4545-8A15-EBF2D4F20DA0}|Trace.csproj|solutionrelative:controllers\\newconnectioncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A176F11F-4BEC-4DAC-9205-CF64F57D23C0}|..\\Core\\Core.csproj|d:\\working directory\\erpsystem\\core\\dtos\\billing\\meterreadingdto.cs||{8B382828-6202-11D1-8870-0000F87579D2}"
+      "AbsoluteMoniker": "D:0:0:{D0C5D151-D98C-46B1-A85E-DFAA22B5EE2F}|..\\Services\\Services.csproj|d:\\working directory\\erpsystem\\services\\repositories\\billing\\newconnectionrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A176F11F-4BEC-4DAC-9205-CF64F57D23C0}|..\\Core\\Core.csproj|d:\\working directory\\erpsystem\\core\\repositories\\billing\\imeterreadingrepository.cs||{8B382828-6202-11D1-8870-0000F87579D2}"
+      "AbsoluteMoniker": "D:0:0:{A176F11F-4BEC-4DAC-9205-CF64F57D23C0}|..\\Core\\Core.csproj|d:\\working directory\\erpsystem\\core\\repositories\\billing\\inewconnectionrepository.cs||{8B382828-6202-11D1-8870-0000F87579D2}"
     }
   ],
   "DocumentGroupContainers": [
@@ -27,45 +20,19 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 8,
+          "SelectedChildIndex": 7,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "IMeterReadingRepository.cs",
-              "DocumentMoniker": "D:\\working directory\\erpsystem\\Core\\Repositories\\Billing\\IMeterReadingRepository.cs",
-              "RelativeDocumentMoniker": "..\\Core\\Repositories\\Billing\\IMeterReadingRepository.cs",
-              "ToolTip": "D:\\working directory\\erpsystem\\Core\\Repositories\\Billing\\IMeterReadingRepository.cs",
-              "RelativeToolTip": "..\\Core\\Repositories\\Billing\\IMeterReadingRepository.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-15T12:10:34.925Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "MeterReadingDto.cs",
-              "DocumentMoniker": "D:\\working directory\\erpsystem\\Core\\DTOs\\Billing\\MeterReadingDto.cs",
-              "RelativeDocumentMoniker": "..\\Core\\DTOs\\Billing\\MeterReadingDto.cs",
-              "ToolTip": "D:\\working directory\\erpsystem\\Core\\DTOs\\Billing\\MeterReadingDto.cs",
-              "RelativeToolTip": "..\\Core\\DTOs\\Billing\\MeterReadingDto.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-15T12:08:08.84Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "MeterReadingRepository.cs",
-              "DocumentMoniker": "D:\\working directory\\erpsystem\\Services\\Repositories\\Billing\\MeterReadingRepository.cs",
-              "RelativeDocumentMoniker": "..\\Services\\Repositories\\Billing\\MeterReadingRepository.cs",
-              "ToolTip": "D:\\working directory\\erpsystem\\Services\\Repositories\\Billing\\MeterReadingRepository.cs",
-              "RelativeToolTip": "..\\Services\\Repositories\\Billing\\MeterReadingRepository.cs",
-              "ViewState": "AQIAAEMAAAAAAAAAAAAtwEoAAAAyAAAA",
+              "Title": "NewConnectionRepository.cs",
+              "DocumentMoniker": "D:\\working directory\\erpsystem\\Services\\Repositories\\Billing\\NewConnectionRepository.cs",
+              "RelativeDocumentMoniker": "..\\Services\\Repositories\\Billing\\NewConnectionRepository.cs",
+              "ToolTip": "D:\\working directory\\erpsystem\\Services\\Repositories\\Billing\\NewConnectionRepository.cs",
+              "RelativeToolTip": "..\\Services\\Repositories\\Billing\\NewConnectionRepository.cs",
+              "ViewState": "AQIAAKoAAAAAAAAAAAAtwP0AAAAoAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-15T12:01:01.584Z",
+              "WhenOpened": "2024-07-15T12:30:06.777Z",
               "EditorCaption": ""
             },
             {
@@ -90,28 +57,28 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "MeterReadingController.cs",
-              "DocumentMoniker": "D:\\working directory\\erpsystem\\Trace\\Controllers\\MeterReadingController.cs",
-              "RelativeDocumentMoniker": "Controllers\\MeterReadingController.cs",
-              "ToolTip": "D:\\working directory\\erpsystem\\Trace\\Controllers\\MeterReadingController.cs",
-              "RelativeToolTip": "Controllers\\MeterReadingController.cs",
-              "ViewState": "AQIAADAAAAAAAAAAAAAAAEkAAAApAAAA",
+              "DocumentIndex": 2,
+              "Title": "INewConnectionRepository.cs",
+              "DocumentMoniker": "D:\\working directory\\erpsystem\\Core\\Repositories\\Billing\\INewConnectionRepository.cs",
+              "RelativeDocumentMoniker": "..\\Core\\Repositories\\Billing\\INewConnectionRepository.cs",
+              "ToolTip": "D:\\working directory\\erpsystem\\Core\\Repositories\\Billing\\INewConnectionRepository.cs",
+              "RelativeToolTip": "..\\Core\\Repositories\\Billing\\INewConnectionRepository.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-15T12:00:46.974Z",
+              "WhenOpened": "2024-07-15T12:31:10.833Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
               "Title": "NewConnectionController.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Trace\\Controllers\\NewConnectionController.cs",
               "RelativeDocumentMoniker": "Controllers\\NewConnectionController.cs",
               "ToolTip": "D:\\working directory\\erpsystem\\Trace\\Controllers\\NewConnectionController.cs",
               "RelativeToolTip": "Controllers\\NewConnectionController.cs",
-              "ViewState": "AQIAACEAAAAAAAAAAAAAAG4AAABHAAAA",
+              "ViewState": "AQIAAHUAAAAAAAAAAAAAAIoAAAAJAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-15T11:58:27.871Z",
+              "WhenOpened": "2024-07-15T12:29:58.574Z",
               "EditorCaption": ""
             }
           ]
