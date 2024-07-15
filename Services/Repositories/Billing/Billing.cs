@@ -165,7 +165,9 @@ namespace Services.Repositories.Billing
 
         public async Task<BillAdjustmentRequest> GetBillAdjustmentRequestById(int id)
         {
-            var billAdjustment = await _context.BillAdjustmentRequests.FirstOrDefaultAsync(x => x.Id == id);
+            var billAdjustment = await _context.BillAdjustmentRequests
+                .Include(adj => adj.TransactionCodes)
+                .FirstOrDefaultAsync(x => x.Id == id);
 
             if (billAdjustment == null)
             {
