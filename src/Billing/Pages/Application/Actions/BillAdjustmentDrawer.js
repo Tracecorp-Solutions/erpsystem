@@ -8,6 +8,8 @@ export default function BillAdjustmentDrawer({
   adjustmentDetails
 }) {
 
+  console.log("adjustmentDetails", adjustmentDetails);
+
   return (
     <Drawer
       placement="right"
@@ -46,7 +48,7 @@ export default function BillAdjustmentDrawer({
                 Customer Reference
               </div>
               <div className="mt-1 text-base font-semibold leading-6 text-neutral-600">
-                {/* {adjustmentDetails.custRef} */}
+                {adjustmentDetails?.custRef}
               </div>
             </div>
             <div className="flex flex-col items-start px-6 py-4 rounded-lg bg-stone-100 max-md:px-5">
@@ -54,7 +56,7 @@ export default function BillAdjustmentDrawer({
                 Transaction Code
               </div>
               <div className="mt-1 text-base font-semibold leading-6 text-neutral-600">
-                {/* {adjustmentDetails.transactionCode} */}
+                {adjustmentDetails?.transactionCode}
               </div>
             </div>
 
@@ -63,7 +65,7 @@ export default function BillAdjustmentDrawer({
                 Document Number
               </div>
               <div className="mt-1 text-base font-semibold leading-6 text-neutral-600">
-                {/* {adjustmentDetails.documentNumber} */}
+                {adjustmentDetails?.documentNumber}
               </div>
             </div>
             <div className="flex flex-col items-start px-6 py-4 rounded-lg bg-stone-100 max-md:px-5">
@@ -71,7 +73,7 @@ export default function BillAdjustmentDrawer({
                 Effective Date
               </div>
               <div className="mt-1 text-base font-semibold leading-6 text-neutral-600">
-                {/* {adjustmentDetails.effectiveDate} */}
+                {adjustmentDetails?.effectiveDate}
               </div>
             </div>
 
@@ -80,7 +82,7 @@ export default function BillAdjustmentDrawer({
                 Amount
               </div>
               <div className="mt-1 text-base font-semibold leading-6 text-neutral-600">
-                {/* {adjustmentDetails.amount} */}
+                {adjustmentDetails?.amount}
               </div>
             </div>
             <div className="flex flex-col items-start px-6 py-4 rounded-lg bg-stone-100 max-md:px-5">
@@ -88,7 +90,7 @@ export default function BillAdjustmentDrawer({
               Total Amount
               </div>
               <div className="mt-1 text-base font-semibold leading-6 text-neutral-600">
-              {/* {adjustmentDetails.amount} */}
+              {adjustmentDetails?.amount}
               </div>
             </div>
 
@@ -105,7 +107,7 @@ export default function BillAdjustmentDrawer({
                 Reason
               </div>
               <div className="mt-1 text-base leading-6 text-neutral-600">
-                {/* {adjustmentDetails.adjustmentReason} */}
+                {adjustmentDetails?.adjustmentReason}
               </div>
             </div>
           </div>
