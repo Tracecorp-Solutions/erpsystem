@@ -8,6 +8,8 @@ function History() {
   const [customerRef, setCustomerRef] = useState("");
   const [name, setName] = useState("");
   const [previousReadingDate, setPreviousReadingDate] = useState("");
+  const [streetAddress, setStreetAddress] = useState("");
+  const [meterReadingHistory, setMeterReadingHistory] = useState([]);
 
   const handleNavigate = (screen) => {
     navigate("/billingdashboard", { state: { screen } });
@@ -36,9 +38,22 @@ function History() {
       // Set previous reading date state
       setPreviousReadingDate(previousReadingDateResponse.data.previousReadingDate);
 
+      // Fetch street address from GetApplications endpoint using Axios
+      const streetAddressResponse = await axios.get(
+        `${process.env.REACT_APP_API_URL}/GetApplications`
+      );
+     
+      setStreetAddress(streetAddressResponse.data[0].streetAddress);
+
+      const meterReadingResponse = await axios.get(
+        `${process.env.REACT_APP_API_URL}/GetMeterReadingByCustomerRef/${customerRef}`
+      );
+    
+      setMeterReadingHistory(meterReadingResponse.data);
+
     } catch (error) {
       console.error("Error validating customer:", error);
-      // Handle error (e.g., show error message to user)
+      // Handle error 
     }
   };
 
@@ -83,7 +98,7 @@ function History() {
         />
         <div
           onClick={handleValidateCustomer}
-          className="justify-center px-8 py-3 font-semibold text-white rounded-lg bg-slate-500 cursor-pointer"
+          className="justify-center px-8 py-3 font-semibold text-white rounded-lg bg-blue-600 cursor-pointer"
         >
           Validate Customer
         </div>
@@ -98,15 +113,25 @@ function History() {
               <tbody>
                 <tr className="bg-white border border-solid border-neutral-500 border-opacity-30">
                   <td className="py-4 pr-1 pl-4 max-md:pr-5">Customer Name</td>
-                  <td className="py-4 pr-1 pl-4 whitespace-nowrap max-md:pr-5">{name}</td>
+                  <td className="py-4 pr-1 pl-4 whitespace-nowrap max-md:pr-5">
+                    {name}
+                  </td>
                 </tr>
                 <tr className="bg-white border border-solid border-neutral-500 border-opacity-30">
-                  <td className="py-4 pr-1 pl-4 max-md:pr-5">Customer Reference</td>
-                  <td className="py-4 pr-1 pl-4 whitespace-nowrap max-md:pr-5">{customerData.customerRef}</td>
+                  <td className="py-4 pr-1 pl-4 max-md:pr-5">
+                    Customer Reference
+                  </td>
+                  <td className="py-4 pr-1 pl-4 whitespace-nowrap max-md:pr-5">
+                    {customerData.customerRef}
+                  </td>
                 </tr>
                 <tr className="bg-white border border-solid border-neutral-500 border-opacity-30">
-                  <td className="py-4 pr-1 pl-4 max-md:pr-5">Service Address</td>
-                  <td className="py-4 pr-1 pl-4 whitespace-nowrap max-md:pr-5">{customerData.serviceAddress}</td>
+                  <td className="py-4 pr-1 pl-4 max-md:pr-5">
+                    Service Address
+                  </td>
+                  <td className="py-4 pr-1 pl-4 whitespace-nowrap max-md:pr-5">
+                    {streetAddress}
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -120,46 +145,100 @@ function History() {
               <tbody>
                 <tr className="bg-white border border-solid border-neutral-500 border-opacity-30">
                   <td className="py-4 pr-1 pl-4 max-md:pr-5">Meter Number</td>
-                  <td className="py-4 pr-1 pl-4 whitespace-nowrap max-md:pr-5">{customerData.meterNo}</td>
+                  <td className="py-4 pr-1 pl-4 whitespace-nowrap max-md:pr-5">
+                    {customerData.meterNo}
+                  </td>
                 </tr>
                 <tr className="bg-white border border-solid border-neutral-500 border-opacity-30">
-                  <td className="py-4 pr-1 pl-4 max-md:pr-5">Installation Date</td>
-                  <td className="py-4 pr-1 pl-4 max-md:pr-5">{customerData.dateOfInstallation}</td>
+                  <td className="py-4 pr-1 pl-4 max-md:pr-5">
+                    Installation Date
+                  </td>
+                  <td className="py-4 pr-1 pl-4 max-md:pr-5">
+                    {customerData.dateOfInstallation}
+                  </td>
                 </tr>
                 <tr className="bg-white border border-solid border-neutral-500 border-opacity-30">
-                  <td className="py-4 pr-1 pl-4 max-md:pr-5">Current Reading</td>
-                  <td className="py-4 pr-1 pl-4 max-md:pr-5">{customerData.initialReading}</td>
+                  <td className="py-4 pr-1 pl-4 max-md:pr-5">
+                    Current Reading
+                  </td>
+                  <td className="py-4 pr-1 pl-4 max-md:pr-5">
+                    {customerData.initialReading}
+                  </td>
                 </tr>
                 <tr className="bg-white border border-solid border-neutral-500 border-opacity-30">
-                  <td className="py-4 pr-1 pl-4 max-md:pr-5">Last Reading Date</td>
-                  <td className="py-4 pr-1 pl-4 max-md:pr-5">{previousReadingDate}</td>
+                  <td className="py-4 pr-1 pl-4 max-md:pr-5">
+                    Last Reading Date
+                  </td>
+                  <td className="py-4 pr-1 pl-4 max-md:pr-5">
+                    {previousReadingDate}
+                  </td>
                 </tr>
                 <tr className="bg-white border border-solid border-neutral-500 border-opacity-30">
                   <td className="py-4 pr-1 pl-4 max-md:pr-5">Installed by</td>
-                  <td className="py-4 pr-1 pl-4 max-md:pr-5">{customerData.installedBy}</td>
+                  <td className="py-4 pr-1 pl-4 max-md:pr-5">
+                    {customerData.installedBy}
+                  </td>
                 </tr>
-                {/* Add more meter overview fields as needed */}
+              
               </tbody>
             </table>
           </div>
 
-          {/* Example for Meter Reading History */}
-          {/* <div className="mt-8 text-2xl font-semibold leading-10 text-neutral-600 max-md:max-w-full">
+          <div className="mt-8 text-2xl font-semibold leading-10 text-neutral-600 max-md:max-w-full">
             Meter Reading History
           </div>
           <div className="flex gap-0 mt-4 text-base leading-6 text-neutral-400 max-md:flex-wrap max-md:max-w-full">
-            {customerData.readingHistory.map((entry, index) => (
-              <div className="flex flex-col flex-1" key={index}>
-                <div className="justify-center items-start py-4 pr-1 pl-4 font-semibold bg-white border border-solid border-neutral-500 border-opacity-30 text-neutral-600 max-md:pr-5">
-                  {entry.date}
+            <div className="flex flex-col flex-1 whitespace-nowrap">
+              <div className="justify-center items-start py-4 pr-1 pl-4 font-semibold bg-white border border-solid border-neutral-500 border-opacity-30 text-neutral-600 max-md:pr-5">
+                Date
+              </div>
+              {meterReadingHistory.map((reading, index) => (
+                <div key={index} className="justify-center items-start py-4 pr-1 pl-4 bg-white border-r border-b border-l border-solid border-neutral-500 border-opacity-30 max-md:pr-5">
+                  {reading.readingDate}
                 </div>
-                <div className="justify-center items-start py-4 pr-1 pl-4 bg-white border-r border-b border-l border-solid border-neutral-500 border-opacity-30 max-md:pr-5">
-                  {entry.previousReading}
+              ))}
+            </div>
+            <div className="flex flex-col flex-1">
+              <div className="justify-center items-start py-4 pr-1 pl-4 font-semibold bg-white border-t border-r border-b border-solid border-neutral-500 border-opacity-30 text-neutral-600 max-md:pr-5">
+                Previous Reading
+              </div>
+              {meterReadingHistory.map((reading, index) => (
+                <div key={index} className="justify-center items-start py-4 pr-1 pl-4 bg-white border-r border-b border-solid border-neutral-500 border-opacity-30 max-md:pr-5">
+                  {reading.previousReading}
                 </div>
-                {/* Add more fields */}
-          {/* </div>
-            ))}
-          </div> */}
+              ))}
+            </div>
+            <div className="flex flex-col flex-1">
+              <div className="justify-center items-start py-4 pr-1 pl-4 font-semibold bg-white border-t border-r border-b border-solid border-neutral-500 border-opacity-30 text-neutral-600 max-md:pr-5">
+                Current Reading
+              </div>
+              {meterReadingHistory.map((reading, index) => (
+                <div key={index} className="justify-center items-start py-4 pr-1 pl-4 bg-white border-r border-b border-solid border-neutral-500 border-opacity-30 max-md:pr-5">
+                  {reading.reading}
+                </div>
+              ))}
+            </div>
+            <div className="flex flex-col flex-1">
+              <div className="justify-center items-start py-4 pr-1 pl-4 font-semibold whitespace-nowrap bg-white border-t border-r border-b border-solid border-neutral-500 border-opacity-30 text-neutral-600 max-md:pr-5">
+                Consumption
+              </div>
+              {meterReadingHistory.map((reading, index) => (
+                <div key={index} className="justify-center items-start py-4 pr-1 pl-4 bg-white border-r border-b border-solid border-neutral-500 border-opacity-30 max-md:pr-5">
+                  {reading.consumption}ms
+                </div>
+              ))}
+            </div>
+            {/* <div className="flex flex-col flex-1">
+              <div className="justify-center items-start py-4 pr-1 pl-4 font-semibold whitespace-nowrap bg-white border-t border-r border-b border-solid border-neutral-500 border-opacity-30 text-neutral-600 max-md:pr-5">
+                Notes
+              </div>
+              {meterReadingHistory.map((reading, index) => (
+                <div key={index} className="justify-center items-start py-4 pr-1 pl-4 bg-white border-r border-b border-solid border-neutral-500 border-opacity-30 max-md:pr-5">
+                  {reading.notes}
+                </div>
+              ))}
+            </div> */}
+          </div>
         </>
       )}
     </div>
