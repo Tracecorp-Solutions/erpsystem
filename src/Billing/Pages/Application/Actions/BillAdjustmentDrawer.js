@@ -8,8 +8,6 @@ export default function BillAdjustmentDrawer({
   adjustmentDetails
 }) {
 
-  console.log("adjustmentDetails", adjustmentDetails);
-
   return (
     <Drawer
       placement="right"
@@ -56,7 +54,7 @@ export default function BillAdjustmentDrawer({
                 Transaction Code
               </div>
               <div className="mt-1 text-base font-semibold leading-6 text-neutral-600">
-                {adjustmentDetails?.transactionCode}
+                {adjustmentDetails?.transactionCodes.transactionCode}
               </div>
             </div>
 
@@ -73,7 +71,7 @@ export default function BillAdjustmentDrawer({
                 Effective Date
               </div>
               <div className="mt-1 text-base font-semibold leading-6 text-neutral-600">
-                {adjustmentDetails?.effectiveDate}
+              {new Date(adjustmentDetails?.effectiveDate).toLocaleDateString()}
               </div>
             </div>
 

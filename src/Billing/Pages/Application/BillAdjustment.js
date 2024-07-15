@@ -12,6 +12,8 @@ import {
 } from "antd";
 import { EllipsisOutlined } from "@ant-design/icons";
 import BillAdjustmentDrawer from "./Actions/BillAdjustmentDrawer";
+import jsPDF from "jspdf";
+import "jspdf-autotable";
 
 const { Option } = Select;
 
@@ -30,6 +32,12 @@ const BillAdjustment = () => {
   const [dataItem, setDataItem] = useState([]);
   const [transactionCodes, setTransactionCodes] = useState([]);
   const [adjustmentDetails, setAdjustmentDetails] = useState(null);
+  const [selectedItems, setSelectedItems] = useState([]);
+
+  useEffect(() => {
+    fetchTransactionCodes();
+    fetchData();
+  }, []);
 
   const fetchTransactionCodes = async () => {
     try {
@@ -55,11 +63,6 @@ const BillAdjustment = () => {
       message.error("Failed to fetch data.");
     }
   };
-
-  useEffect(() => {
-    fetchTransactionCodes();
-    fetchData();
-  }, []);
 
   const validateCustomer = () => {
     if (!customerRef) {
@@ -96,8 +99,6 @@ const BillAdjustment = () => {
     } else if (adjustmentType === "-") {
       adjustedAmount = -amount;
     }
-
-    const totalAmount = adjustedAmount;
 
     const formData = new FormData();
     formData.append("CustRef", customerRef);
@@ -157,6 +158,63 @@ const BillAdjustment = () => {
         console.error("Error fetching adjustment details:", error);
         message.error("Failed to fetch adjustment details.");
       });
+  };
+
+  const handleCheckboxChange = (item) => {
+    const selectedIndex = selectedItems.findIndex((i) => i.id === item.id);
+    if (selectedIndex === -1) {
+      setSelectedItems([...selectedItems, item]);
+    } else {
+      setSelectedItems(selectedItems.filter((i) => i.id !== item.id));
+    }
+  };
+
+  const handleSelectAll = () => {
+    if (selectedItems.length === dataItem.length) {
+      setSelectedItems([]);
+    } else {
+      setSelectedItems([...dataItem]);
+    }
+  };
+
+  const handlePrintList = () => {
+    const unit = "pt";
+    const size = "A4";
+    const orientation = "landscape";
+    const marginLeft = 40;
+    const doc = new jsPDF(orientation, unit, size);
+
+    const title = "Selected Bill Adjustment Requests";
+    const headers = [
+      [
+        "CUSTOMER REF",
+        "TRANS CODE",
+        "DOC NO.",
+        "EFFECTIVE DATE",
+        "AMOUNT",
+        "TOTAL",
+      ],
+    ];
+
+    const data = selectedItems.map((item) => [
+      item.custRef,
+      item.transactionCode,
+      item.documentNumber,
+      item.effectiveDate,
+      item.amount,
+      item.amount,
+    ]);
+
+    let content = {
+      startY: 50,
+      head: headers,
+      body: data,
+    };
+
+    doc.setFontSize(15);
+    doc.text(title, marginLeft, 40);
+    doc.autoTable(content);
+    doc.save("selected_bill_adjustment_requests.pdf");
   };
 
   console.log("dataItem dataItem", dataItem);
@@ -336,10 +394,27 @@ const BillAdjustment = () => {
 
         {activeTab === "viewAdjustments" && (
           <div className="overflow-x-auto">
+             <div className="flex justify-end mx-3">
+              <button
+                type="button"
+                onClick={handlePrintList}
+                className="justify-center px-6 py-3 text-base font-semibold leading-6 text-white rounded-3xl bg-slate-500"
+              >
+                Print List
+              </button>{" "}
+            </div>
             <table className="min-w-full bg-white border border-solid border-neutral-500 border-opacity-30 rounded-xl mt-6">
               <thead className="bg-stone-100 text-neutral-600">
                 <tr>
-                <th className="py-4 px-6"><Checkbox /></th>
+                  <th className="py-4 px-6">
+                    <Checkbox
+                      checked={
+                        selectedItems.length === dataItem.length &&
+                        dataItem.length !== 0
+                      }
+                      onChange={handleSelectAll}
+                    />
+                  </th>
                   <th className="py-4 px-6">CUSTOMER REF</th>
                   <th className="py-4 px-6">TRANS CODE</th>
                   <th className="py-4 px-6">DOC NO.</th>
@@ -353,12 +428,15 @@ const BillAdjustment = () => {
                 {dataItem.map((item) => (
                   <tr key={item.id}>
                     <td className="py-4 px-6">
-                      <Checkbox />
+                      <Checkbox
+                        checked={selectedItems.some((i) => i.id === item.id)}
+                        onChange={() => handleCheckboxChange(item)}
+                      />
                     </td>
                     <td className="py-4 px-6">{item.custRef}</td>
-                    <td className="py-4 px-6">{item.transactionCode}</td>
+                    <td className="py-4 px-6">{item.transactionCodes.transactionCode}</td>
                     <td className="py-4 px-6">{item.documentNumber}</td>
-                    <td className="py-4 px-6">{item.effectiveDate}</td>
+                    {new Date(item.effectiveDate).toLocaleDateString()}
                     <td className="py-4 px-6">{item.amount}</td>
                     <td className="py-4 px-6">{item.amount}</td>
                     <td className="py-4 px-6">
@@ -392,14 +470,6 @@ const BillAdjustment = () => {
                 ))}
               </tbody>
             </table>
-            <div className="my-10 flex justify-end mx-3">
-              <button
-                type="button"
-                className="justify-center px-6 py-3 text-base font-semibold leading-6 text-white rounded-3xl bg-slate-500"
-              >
-                Print List
-              </button>{" "}
-            </div>
           </div>
         )}
 
