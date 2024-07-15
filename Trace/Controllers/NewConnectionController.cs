@@ -172,7 +172,6 @@ namespace Trace.Controllers
             }
         }
 
-
         [HttpPost("/AuthorizeConnection")]
         public async Task<IActionResult> AuthorizeConnection(AuthorizeConnectionDto ApprovalDto) 
         {
