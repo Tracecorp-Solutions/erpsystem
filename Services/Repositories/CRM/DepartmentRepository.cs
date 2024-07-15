@@ -27,7 +27,8 @@ namespace Services.Repositories.CRM
 
         public async Task<Department> GetDepartment(int id)
         {
-            return await _context.Departments.FindAsync(id);
+            var departments = await _context.Departments.FindAsync(id);
+            return departments == null? throw new ArgumentException("No Department Found with that id") : departments;
         }
 
         public async Task<IEnumerable<Department>> GetDepartments()
