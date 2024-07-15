@@ -8,6 +8,7 @@ import {
   Dropdown,
   Menu,
   message,
+  Checkbox,
 } from "antd";
 import { EllipsisOutlined } from "@ant-design/icons";
 import BillAdjustmentDrawer from "./Actions/BillAdjustmentDrawer";
@@ -338,6 +339,7 @@ const BillAdjustment = () => {
             <table className="min-w-full bg-white border border-solid border-neutral-500 border-opacity-30 rounded-xl mt-6">
               <thead className="bg-stone-100 text-neutral-600">
                 <tr>
+                <th className="py-4 px-6"><Checkbox /></th>
                   <th className="py-4 px-6">CUSTOMER REF</th>
                   <th className="py-4 px-6">TRANS CODE</th>
                   <th className="py-4 px-6">DOC NO.</th>
@@ -350,6 +352,9 @@ const BillAdjustment = () => {
               <tbody className="text-slate-500">
                 {dataItem.map((item) => (
                   <tr key={item.id}>
+                    <td className="py-4 px-6">
+                      <Checkbox />
+                    </td>
                     <td className="py-4 px-6">{item.custRef}</td>
                     <td className="py-4 px-6">{item.transactionCode}</td>
                     <td className="py-4 px-6">{item.documentNumber}</td>
@@ -388,7 +393,10 @@ const BillAdjustment = () => {
               </tbody>
             </table>
             <div className="my-10 flex justify-end mx-3">
-              <button type="button" className="justify-center px-6 py-3 text-base font-semibold leading-6 text-white rounded-3xl bg-slate-500">
+              <button
+                type="button"
+                className="justify-center px-6 py-3 text-base font-semibold leading-6 text-white rounded-3xl bg-slate-500"
+              >
                 Print List
               </button>{" "}
             </div>
