@@ -23,5 +23,6 @@ namespace Core.DTOs.Billing
         public bool IsMeterReset { get; set; }
         public int ReadingBy { get; set; } // 1 = Customer, 2 = Staff, 3 = Others
         public DateTime ReadingDate { get; set; } // Date of Reading
+        public string? Consumption {  get; set; }
     }
 }

@@ -13,6 +13,7 @@ namespace Core.Repositories.Billing
         Task AddMeterReading(MeterReadingDto meterReadingDto);
         Task<List<MeterReadingDto>> GetMeterReadings();
         Task<MeterReadingDto> GetMeterReading(int id);
+        Task<IEnumerable<MeterReadingDto>> GetMeterReadingByCustomerRef(string customerref);
         Task UpdateMeterReading(MeterReadingDto meterReadingDto);
         Task DeleteMeterReading(int id);
 

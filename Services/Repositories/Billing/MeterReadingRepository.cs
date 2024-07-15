@@ -56,11 +56,13 @@ namespace Services.Repositories.Billing
             var meterreading = await _context.MeterReadings.FindAsync(id);
             var meterreadingDto = new MeterReadingDto
             {
+                ReadingDate = meterreading.ReadingDate,
+                PreviousReading = meterreading.PreviousReading,
+                Reading = meterreading.Reading,
+                Consumption = (meterreading.Reading- meterreading.PreviousReading).ToString(),
+                ReadingType = meterreading.ReadingType,
                 MeterNo = meterreading.MeterNo,
                 CustomerRef = meterreading.CustomerRef,
-                ReadingDate = meterreading.ReadingDate,
-                Reading = meterreading.Reading,
-                ReadingType = meterreading.ReadingType,
                 ReadingStatus = meterreading.ReadingStatus,
                 ReadingSource = meterreading.ReadingSource,
                 ReadingReason = meterreading.ReadingReason,
@@ -68,6 +70,38 @@ namespace Services.Repositories.Billing
             };
 
             return meterreadingDto;
+        }
+
+        public Task<IEnumerable<MeterReadingDto>> GetMeterReadingByCustomerRef(string customerref)
+        {
+            //get readings by customer reference and map it to dto
+            var meterreadings = _context.MeterReadings.Where(x => x.CustomerRef == customerref).ToList();
+
+            //check whether the customer has any readings
+            if (meterreadings.Count == 0)
+                throw new ArgumentException("No meter readings found for this customer");
+
+            var meterreadingDtos = new List<MeterReadingDto>();
+            foreach (var meterreading in meterreadings)
+            {
+                var meterreadingDto = new MeterReadingDto
+                {
+                    ReadingDate = meterreading.ReadingDate,
+                    PreviousReading = meterreading.PreviousReading,
+                    Reading = meterreading.Reading,
+                    Consumption = (meterreading.Reading - meterreading.PreviousReading).ToString(),
+                    ReadingType = meterreading.ReadingType,
+                    MeterNo = meterreading.MeterNo,
+                    CustomerRef = meterreading.CustomerRef,
+                    ReadingStatus = meterreading.ReadingStatus,
+                    ReadingSource = meterreading.ReadingSource,
+                    ReadingReason = meterreading.ReadingReason,
+                    ReadingBy = meterreading.ReadingBy
+                };
+                meterreadingDtos.Add(meterreadingDto);
+            }
+
+            return Task.FromResult(meterreadingDtos.AsEnumerable());
         }
 
         public Task<List<MeterReadingDto>> GetMeterReadings()

@@ -65,6 +65,24 @@ namespace Trace.Controllers
             }
         }
 
+        [HttpGet("/GetMeterReadingByCustomerRef/{customerref}")]
+        public async Task<IActionResult> GetMeterReadingByCustomerRef(string customerref)
+        {
+            try
+            {
+                var meterReadings = await _meterReadingRepository.GetMeterReadingByCustomerRef(customerref);
+                return Ok(meterReadings);
+            }
+            catch(ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
+        }
+
         [HttpPut("/UpdateMeterReading")]
         public async Task<IActionResult> UpdateMeterReading(MeterReadingDto meterReadingDto)
         {
