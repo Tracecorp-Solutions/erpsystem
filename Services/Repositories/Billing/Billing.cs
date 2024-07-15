@@ -151,7 +151,9 @@ namespace Services.Repositories.Billing
 
         public async Task<IEnumerable<BillAdjustmentRequest>> GetBillAdjustmentRequests()
         {
-            var billAdjustments = await _context.BillAdjustmentRequests.ToListAsync();
+            var billAdjustments = await _context.BillAdjustmentRequests
+                .Include(b => b.TransactionCodes)
+                .ToListAsync();
 
             if (billAdjustments == null || billAdjustments.Count == 0)
             {
