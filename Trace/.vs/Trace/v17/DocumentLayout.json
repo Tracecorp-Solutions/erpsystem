@@ -3,14 +3,30 @@
   "WorkspaceRootPath": "D:\\working directory\\erpsystem\\Trace\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{97CA6EF6-720A-4545-8A15-EBF2D4F20DA0}|Trace.csproj|d:\\working directory\\erpsystem\\trace\\controllers\\departmentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{97CA6EF6-720A-4545-8A15-EBF2D4F20DA0}|Trace.csproj|solutionrelative:controllers\\departmentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D0C5D151-D98C-46B1-A85E-DFAA22B5EE2F}|..\\Services\\Services.csproj|d:\\working directory\\erpsystem\\services\\repositories\\crm\\departmentrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A176F11F-4BEC-4DAC-9205-CF64F57D23C0}|..\\Core\\Core.csproj|d:\\working directory\\erpsystem\\core\\repositories\\crm\\idepartmentrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A176F11F-4BEC-4DAC-9205-CF64F57D23C0}|..\\Core\\Core.csproj|d:\\working directory\\erpsystem\\core\\models\\crm\\department.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7735A439-FAA5-47B0-AAB7-17DB1C05A2D8}|..\\Infrastructure\\Infrastructure.csproj|d:\\working directory\\erpsystem\\infrastructure\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A176F11F-4BEC-4DAC-9205-CF64F57D23C0}|..\\Core\\Core.csproj|d:\\working directory\\erpsystem\\core\\dtos\\billing\\billingperioddto.cs||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{D0C5D151-D98C-46B1-A85E-DFAA22B5EE2F}|..\\Services\\Services.csproj|d:\\working directory\\erpsystem\\services\\repositories\\billing\\billing.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{97CA6EF6-720A-4545-8A15-EBF2D4F20DA0}|Trace.csproj|d:\\working directory\\erpsystem\\trace\\controllers\\waterbillcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{97CA6EF6-720A-4545-8A15-EBF2D4F20DA0}|Trace.csproj|solutionrelative:controllers\\waterbillcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A176F11F-4BEC-4DAC-9205-CF64F57D23C0}|..\\Core\\Core.csproj|d:\\working directory\\erpsystem\\core\\dtos\\billing\\billingperioddto.cs||{8B382828-6202-11D1-8870-0000F87579D2}"
     }
   ],
   "DocumentGroupContainers": [
@@ -20,47 +36,8 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 6,
           "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Billing.cs",
-              "DocumentMoniker": "D:\\working directory\\erpsystem\\Services\\Repositories\\Billing\\Billing.cs",
-              "RelativeDocumentMoniker": "..\\Services\\Repositories\\Billing\\Billing.cs",
-              "ToolTip": "D:\\working directory\\erpsystem\\Services\\Repositories\\Billing\\Billing.cs",
-              "RelativeToolTip": "..\\Services\\Repositories\\Billing\\Billing.cs",
-              "ViewState": "AQIAAKwAAAAAAAAAAAASwLcAAAAuAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-09T09:42:16.741Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "BillingPeriodDto.cs",
-              "DocumentMoniker": "D:\\working directory\\erpsystem\\Core\\DTOs\\Billing\\BillingPeriodDto.cs",
-              "RelativeDocumentMoniker": "..\\Core\\DTOs\\Billing\\BillingPeriodDto.cs",
-              "ToolTip": "D:\\working directory\\erpsystem\\Core\\DTOs\\Billing\\BillingPeriodDto.cs",
-              "RelativeToolTip": "..\\Core\\DTOs\\Billing\\BillingPeriodDto.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-09T09:42:25.751Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "WaterBillController.cs",
-              "DocumentMoniker": "D:\\working directory\\erpsystem\\Trace\\Controllers\\WaterBillController.cs",
-              "RelativeDocumentMoniker": "Controllers\\WaterBillController.cs",
-              "ToolTip": "D:\\working directory\\erpsystem\\Trace\\Controllers\\WaterBillController.cs",
-              "RelativeToolTip": "Controllers\\WaterBillController.cs",
-              "ViewState": "AQIAAIIAAAAAAAAAAADwv4oAAAArAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-09T09:41:44.044Z",
-              "EditorCaption": ""
-            },
             {
               "$type": "Bookmark",
               "Name": "ST:129:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
@@ -84,6 +61,113 @@
             {
               "$type": "Bookmark",
               "Name": "ST:130:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "DepartmentController.cs",
+              "DocumentMoniker": "D:\\working directory\\erpsystem\\Trace\\Controllers\\DepartmentController.cs",
+              "RelativeDocumentMoniker": "Controllers\\DepartmentController.cs",
+              "ToolTip": "D:\\working directory\\erpsystem\\Trace\\Controllers\\DepartmentController.cs",
+              "RelativeToolTip": "Controllers\\DepartmentController.cs",
+              "ViewState": "AQIAAAoAAAAAAAAAAAAYwBcAAAAQAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-15T08:49:21.923Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "DepartmentRepository.cs",
+              "DocumentMoniker": "D:\\working directory\\erpsystem\\Services\\Repositories\\CRM\\DepartmentRepository.cs",
+              "RelativeDocumentMoniker": "..\\Services\\Repositories\\CRM\\DepartmentRepository.cs",
+              "ToolTip": "D:\\working directory\\erpsystem\\Services\\Repositories\\CRM\\DepartmentRepository.cs",
+              "RelativeToolTip": "..\\Services\\Repositories\\CRM\\DepartmentRepository.cs",
+              "ViewState": "AQIAACoAAAAAAAAAAAAtwDgAAAAJAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-15T08:41:52.919Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "IDepartmentRepository.cs",
+              "DocumentMoniker": "D:\\working directory\\erpsystem\\Core\\Repositories\\CRM\\IDepartmentRepository.cs",
+              "RelativeDocumentMoniker": "..\\Core\\Repositories\\CRM\\IDepartmentRepository.cs",
+              "ToolTip": "D:\\working directory\\erpsystem\\Core\\Repositories\\CRM\\IDepartmentRepository.cs",
+              "RelativeToolTip": "..\\Core\\Repositories\\CRM\\IDepartmentRepository.cs",
+              "ViewState": "AQIAAAIAAAAAAAAAAAAtwA8AAAANAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-15T08:39:57.824Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "ApplicationDbContext.cs",
+              "DocumentMoniker": "D:\\working directory\\erpsystem\\Infrastructure\\Data\\ApplicationDbContext.cs",
+              "RelativeDocumentMoniker": "..\\Infrastructure\\Data\\ApplicationDbContext.cs",
+              "ToolTip": "D:\\working directory\\erpsystem\\Infrastructure\\Data\\ApplicationDbContext.cs",
+              "RelativeToolTip": "..\\Infrastructure\\Data\\ApplicationDbContext.cs",
+              "ViewState": "AQIAAAEAAAAAAAAAAAAowGIAAAAIAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-15T08:38:03.016Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Department.cs",
+              "DocumentMoniker": "D:\\working directory\\erpsystem\\Core\\Models\\CRM\\Department.cs",
+              "RelativeDocumentMoniker": "..\\Core\\Models\\CRM\\Department.cs",
+              "ToolTip": "D:\\working directory\\erpsystem\\Core\\Models\\CRM\\Department.cs",
+              "RelativeToolTip": "..\\Core\\Models\\CRM\\Department.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAAoAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-15T08:25:04.035Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Billing.cs",
+              "DocumentMoniker": "D:\\working directory\\erpsystem\\Services\\Repositories\\Billing\\Billing.cs",
+              "RelativeDocumentMoniker": "..\\Services\\Repositories\\Billing\\Billing.cs",
+              "ToolTip": "D:\\working directory\\erpsystem\\Services\\Repositories\\Billing\\Billing.cs",
+              "RelativeToolTip": "..\\Services\\Repositories\\Billing\\Billing.cs",
+              "ViewState": "AQIAAKwAAAAAAAAAAAASwLcAAAAuAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-09T09:42:16.741Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "BillingPeriodDto.cs",
+              "DocumentMoniker": "D:\\working directory\\erpsystem\\Core\\DTOs\\Billing\\BillingPeriodDto.cs",
+              "RelativeDocumentMoniker": "..\\Core\\DTOs\\Billing\\BillingPeriodDto.cs",
+              "ToolTip": "D:\\working directory\\erpsystem\\Core\\DTOs\\Billing\\BillingPeriodDto.cs",
+              "RelativeToolTip": "..\\Core\\DTOs\\Billing\\BillingPeriodDto.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-09T09:42:25.751Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "WaterBillController.cs",
+              "DocumentMoniker": "D:\\working directory\\erpsystem\\Trace\\Controllers\\WaterBillController.cs",
+              "RelativeDocumentMoniker": "Controllers\\WaterBillController.cs",
+              "ToolTip": "D:\\working directory\\erpsystem\\Trace\\Controllers\\WaterBillController.cs",
+              "RelativeToolTip": "Controllers\\WaterBillController.cs",
+              "ViewState": "AQIAAIIAAAAAAAAAAADwv4oAAAArAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-09T09:41:44.044Z"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
             }
           ]
         }

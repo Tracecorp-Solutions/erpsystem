@@ -11,7 +11,9 @@ namespace Core.Repositories.CRM
     {
         Task<IEnumerable<Department>> GetDepartments();
         Task<Department> GetDepartment(int id);
-        Task<Department> AddDepartment(Department department);
+        Task AddDepartment(Department department);
+        Task DeleteDepartment(int id);
+        Task UpdateDepartment(Department department);
 
     }
 }

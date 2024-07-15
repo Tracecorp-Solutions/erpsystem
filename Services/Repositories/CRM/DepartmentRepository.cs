@@ -18,11 +18,10 @@ namespace Services.Repositories.CRM
             _context = context;
         }
 
-        public async Task<Department> AddDepartment(Department department)
+        public async Task AddDepartment(Department department)
         {
             _context.Departments.Add(department);
             await _context.SaveChangesAsync();
-            return department;
         }
 
         public async Task<Department> GetDepartment(int id)
@@ -34,6 +33,27 @@ namespace Services.Repositories.CRM
         public async Task<IEnumerable<Department>> GetDepartments()
         {
             return _context.Departments;
+        }
+
+        public async Task UpdateDepartment(Department department)
+        {
+            //check if department exists
+            var departmentExists = await _context.Departments.FindAsync(department.Id);
+            if (departmentExists != null)
+                throw new ArgumentException("Department does not exist");
+
+            _context.Departments.Update(department);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task DeleteDepartment(int id)
+        {
+            var department = await _context.Departments.FindAsync(id);
+            if (department == null)
+                throw new ArgumentException("Department does not exist");
+
+            _context.Departments.Remove(department);
+            await _context.SaveChangesAsync();
         }
 
     }

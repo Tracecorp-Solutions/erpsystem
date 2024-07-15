@@ -10,5 +10,6 @@ namespace Core.Models.CRM
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public bool Active { get; set; }
     }
 }
