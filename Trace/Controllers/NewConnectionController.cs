@@ -120,6 +120,24 @@ namespace Trace.Controllers
             }
         }
 
+        [HttpGet("/GetSurveyReportByApplicationNumber")]
+        public async Task<IActionResult> GetSurveyReportByApplicationNumber(string applicationNumber)
+        {
+            try
+            {
+                var surveyReport = await _newconnectionRepository.GetSurveyReportByApplicationNumber(applicationNumber);
+                return Ok(surveyReport);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
+        }
+
         [HttpPost("/ApproveOrRejectApplication")]
         public async Task<IActionResult> ApproveOrRejectApplication(ApplicationApprovalDto approvalDto) 
         {

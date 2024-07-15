@@ -53,6 +53,8 @@ namespace Core.Repositories.Billing
 
         Task<string> GetJobCardNumberByApplicationNumber(string applicationNumber);
 
+        Task<SurveyReport> GetSurveyReportByApplicationNumber(string applicationNumber);
+
 
     }
 }

@@ -251,6 +251,25 @@ namespace Services.Repositories.Billing
             return "Survey report submitted successfully";
         }
 
+        public async Task<SurveyReport> GetSurveyReportByApplicationNumber(string applicationNumber) 
+        {
+            // Get application by application Id
+            var application = await _context.Applications
+                .FirstOrDefaultAsync(a => a.ApplicationNumber == applicationNumber);
+
+            //check whether application exists
+            if (application == null)
+                throw new ArgumentException("No applications found");
+
+            // Get survey report by application Id
+            var surveyReport = await _context.surveyReports
+                .Include(s => s.Application)
+                .Include(s => s.Surveyor)
+                .FirstOrDefaultAsync(s => s.Application.ApplicationNumber == applicationNumber);
+
+            return surveyReport == null ? throw new ArgumentException("No survey report found") : surveyReport;
+        }
+
         public async Task<string> GetNewConnectionInvoice(string applicationNumber)
         {
             //check whetger application exists
