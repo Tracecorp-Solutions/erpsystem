@@ -28,7 +28,6 @@ const ApplicationDetail = () => {
   const [surveyorAssigned, setSurveyorAssigned] = useState(false);
   const [applicationStatus, setApplicationStatus] = useState(null);
 
-
   const location = useLocation();
   const navigate = useNavigate();
   const { state } = location;
@@ -62,13 +61,12 @@ const ApplicationDetail = () => {
       const response = await axios.get(
         `${process.env.REACT_APP_API_URL}/GetJobCardNumberByApplicationId?applicationNumber=${applicationNumber}`
       );
-      if (!response.ok)
-        setJobCardInfo(null);
+      if (!response.ok) setJobCardInfo(null);
 
       setJobCardInfo(response.data);
     } catch (error) {
-      console.log(error)
-    };
+      console.log(error);
+    }
   };
 
   const fetchApplicationById = (applicationNumber) => {
@@ -102,7 +100,6 @@ const ApplicationDetail = () => {
       });
   };
 
-
   const fetchApplicationData = async () => {
     try {
       const response = await fetch(
@@ -126,16 +123,16 @@ const ApplicationDetail = () => {
     }
   };
   const handleGenerateJobCard = () => {
-
     if (!applicationNumber || !userid) {
       console.error("Application number or userId is missing");
       return;
     }
 
-    const apiUrl = `${process.env.REACT_APP_API_URL
-      }/GenerateJobCard?applicationNumber=${encodeURIComponent(
-        applicationNumber
-      )}&userid=${encodeURIComponent(userid)}`;
+    const apiUrl = `${
+      process.env.REACT_APP_API_URL
+    }/GenerateJobCard?applicationNumber=${encodeURIComponent(
+      applicationNumber
+    )}&userid=${encodeURIComponent(userid)}`;
 
     axios
       .post(apiUrl, {
@@ -200,12 +197,19 @@ const ApplicationDetail = () => {
   const territory = applicationData?.territory?.name || "Not Available";
   const subTerritory = applicationData?.subTerritory?.name || "Not Available";
   const status = applicationData?.status || "Not Available";
+  const localAuthorizationDocument =
+    applicationData?.localAuthorizationDocument || "Not Available";
 
   if (!applicationData) {
     return <div>Loading...</div>;
   }
 
   const { assignedTo } = applicationData;
+
+  console.log(
+    "applicationData applicationData applicationData applicationData",
+    applicationData
+  );
 
   return (
     <div className="flex flex-wrap justify-center content-start items-center py-6 rounded-3xl bg-stone-100">
@@ -447,7 +451,7 @@ const ApplicationDetail = () => {
                 alt="Local Authority"
                 className="w-8 aspect-square"
               />
-              <div className="mt-2">Local Authority.PDF</div>
+              <div className="mt-2">{localAuthorizationDocument}</div>
             </div>
             <div className="flex justify-center items-center self-end px-2 mt-7 w-8 h-8 rounded-3xl bg-slate-500">
               <img
@@ -476,17 +480,20 @@ const ApplicationDetail = () => {
         </header>
         <div className="shrink-0 mt-4 h-px border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-opacity-10 max-md:max-w-full" />
         <div className="flex gap-5 justify-between mt-4 max-md:flex-wrap">
-          <div
-            className={`flex gap-2 justify-between px-6 py-4 rounded-xl ${surveyorAssigned ? "bg-green-100" : "bg-stone-100"
-              } max-md:flex-wrap max-md:px-5 max-md:max-w-full`}
-          >
-            <div className="flex flex-col justify-center text-center">
-              <div className="text-xs font-medium tracking-wide uppercase text-neutral-400">
+          <div className="flex gap-2 justify-between px-6 py-4 rounded-xl bg-stone-100 max-md:flex-wrap max-md:px-5 w-full">
+            <div className="flex flex-col justify-center text-center w-full">
+              <div className="text-xs text-start font-medium tracking-wide uppercase text-neutral-400">
                 Surveyor Assigned
               </div>
               {surveyorAssigned ? (
-                <div className="mt-2 text-base leading-6 text-green-600">
-                  Surveyor Name: {applicationData.user.fullName}
+                <div className="mt-2 text-base flex justify-between leading-6">
+                  <span>Surveyor Name: {applicationData.user.fullName}</span>
+                  <button
+                    type="button"
+                    className="justify-center w-2/4 self-start px-6 py-3 text-sm font-semibold text-white whitespace-nowrap bg-lime-400 rounded-3xl max-md:px-5"
+                  >
+                    Change Surveyor
+                  </button>
                 </div>
               ) : (
                 <div className="mt-2 text-base leading-6 text-neutral-600">
@@ -503,35 +510,35 @@ const ApplicationDetail = () => {
               </button>
             ) : null}
           </div>
-
-          <div>
-            <div
-              className={`flex gap-2 justify-between px-6 py-4 rounded-xl ${jobCardInfo ? "bg-green-100" : "bg-stone-100"
-                } max-md:flex-wrap max-md:px-5 max-md:max-w-full`}
-            >
-              <div className="flex flex-col justify-center text-center">
-                <div className="text-xs font-medium tracking-wide uppercase text-neutral-400">
-                  JOB CARD
-                </div>
-                {jobCardInfo ? (
-                  <div className="mt-2 text-base leading-6 text-green-600">
-                    Job card number: {jobCardInfo}
-                  </div>
-                ) : (
-                  <div className="mt-2 text-base leading-6 text-neutral-600">
-                    No job card generated yet
-                  </div>
-                )}
+          <div className="flex gap-2 justify-between px-6 py-4 rounded-xl bg-stone-100  max-md:px-5 w-full">
+            <div className="flex flex-col  text-center w-full">
+              <div className="text-xs text-start font-medium tracking-wide uppercase text-neutral-400">
+                JOB CARD
               </div>
-              {!jobCardInfo && (
-                <button
-                  className="justify-center self-start px-6 py-3 mt-2.5 text-sm font-semibold text-white rounded-3xl bg-slate-500 max-md:px-5"
-                  onClick={handleGenerateJobCard}
-                >
-                  Generate
-                </button>
+              {jobCardInfo ? (
+                <div className="mt-2 flex justify-between text-base leading-6 text-neutral-400 gap-4">
+                  <span className="">{jobCardInfo} is generated</span>
+                  <button
+                    type="button"
+                    className="justify-center w-2/4 self-start px-6 py-3 text-sm font-semibold text-white whitespace-nowrap bg-lime-400 rounded-3xl max-md:px-5"
+                  >
+                    Download
+                  </button>
+                </div>
+              ) : (
+                <div className="mt-2 text-base leading-6 text-neutral-400">
+                  No job card generated yet
+                </div>
               )}
             </div>
+            {!jobCardInfo && (
+              <button
+                className="justify-center self-start px-6 py-3 mt-2.5 text-sm font-semibold text-white rounded-3xl bg-slate-500 max-md:px-5"
+                onClick={handleGenerateJobCard}
+              >
+                Generate
+              </button>
+            )}
           </div>
         </div>
         {status === "PENDING JOB CARD" ? (
@@ -552,13 +559,19 @@ const ApplicationDetail = () => {
             </button>
           </div>
         ) : (
-          <div className="flex gap-2 justify-between px-6 py-4 mt-4 max-w-full rounded-xl bg-green-100 w-[270px] max-md:flex-wrap max-md:px-5">
-            <div className="flex flex-col justify-center text-center">
-              <div className="text-xs font-medium tracking-wide uppercase text-neutral-400">
-                STATUS
+          <div className="flex gap-2 justify-between px-6 py-4 mt-4 w-full rounded-xl bg-stone-100 max-md:flex-wrap max-md:px-5">
+            <div className="flex flex-col justify-center text-center w-full">
+              <div className="text-xs text-start font-medium tracking-wide uppercase text-neutral-400">
+                Surveyor report
               </div>
-              <div className="mt-2 text-base leading-6 text-green-600">
-                {applicationData.status}
+              <div className="mt-2 flex text-base w-full justify-between leading-6">
+                <span>{applicationData.status}</span>
+                <button
+                  type="button"
+                  className="justify-center w-1/4 self-start px-6 py-3 text-sm font-semibold text-white whitespace-nowrap bg-lime-400 rounded-3xl max-md:px-5"
+                >
+                  View Report
+                </button>
               </div>
             </div>{" "}
           </div>
@@ -596,17 +609,18 @@ const ApplicationDetail = () => {
               >
                 Update and Authorize Connection
               </button>
-            ) : <div className="flex gap-2 justify-between px-6 py-4 mt-4 max-w-full rounded-xl bg-green-100 max-md:flex-wrap max-md:px-5">
-              <div className="flex flex-col justify-center text-center">
-                <div className="text-xs font-medium tracking-wide uppercase text-neutral-400">
-                  STATUS
-                </div>
-                <div className="mt-2 text-base leading-6 text-green-600">
-                  {applicationData.status}
-                </div>
-              </div>{" "}
-            </div>}
-
+            ) : (
+              <div className="flex gap-2 justify-between px-6 py-4 mt-4 max-w-full rounded-xl bg-green-100 max-md:flex-wrap max-md:px-5">
+                <div className="flex flex-col justify-center text-center">
+                  <div className="text-xs font-medium tracking-wide uppercase text-neutral-400">
+                    STATUS
+                  </div>
+                  <div className="mt-2 text-base leading-6 text-neutral-400">
+                    {applicationData.status}
+                  </div>
+                </div>{" "}
+              </div>
+            )}
           </div>
         </div>
         <div className="mt-4 max-md:max-w-full">
@@ -632,27 +646,32 @@ const ApplicationDetail = () => {
                         className="grow justify-center px-4 py-3 mt-9 w-full text-sm font-semibold text-white whitespace-nowrap rounded-3xl bg-blue-400 max-md:px-5 max-md:mt-10"
                         onClick={() =>
                           navigate("/billingdashboard", {
-                            state: { screen: "update-invoice", applicationNumber, applicationData },
+                            state: {
+                              screen: "update-invoice",
+                              applicationNumber,
+                              applicationData,
+                            },
                           })
                         }
                       >
                         Generate invoice
                       </button>
                     </div>
-                  ) :
-                    <div className="flex gap-2 justify-between px-6 py-4 mt-4 max-w-full rounded-xl bg-green-100 max-md:flex-wrap max-md:px-5">
-                      <div className="flex flex-col justify-center text-center">
-                        <button onClick={() =>
-                          navigate("/billingdashboard", {
-                            state: { screen: "invoice-details", applicationNumber }
-                          })
-                        } className="mt-2 text-base leading-6 text-green-600">
+                  ) : (
+                        <button
+                          onClick={() =>
+                            navigate("/billingdashboard", {
+                              state: {
+                                screen: "invoice-details",
+                                applicationNumber,
+                              },
+                            })
+                          }
+                          className="justify-center w-1/4 self-start px-6 py-3 mt-4 text-sm font-semibold text-white whitespace-nowrap bg-lime-400 rounded-3xl max-md:px-5"
+                          >
                           See Details
                         </button>
-                      </div>{" "}
-                    </div>
-                  }
-
+                  )}
                 </div>
               </div>
             </div>
@@ -704,7 +723,7 @@ const ApplicationDetail = () => {
                           type="button"
                           className="justify-center px-6 py-3 mt-9 w-[200px] text-sm font-semibold text-white rounded-3xl max-md:mt-10"
                           style={{
-                            background: "#9EC137"
+                            background: "#9EC137",
                           }}
                           onClick={() =>
                             navigate(`/billingdashboard`, {

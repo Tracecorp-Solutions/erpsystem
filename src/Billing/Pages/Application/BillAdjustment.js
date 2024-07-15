@@ -30,47 +30,51 @@ const BillAdjustment = () => {
   const [transactionCodes, setTransactionCodes] = useState([]);
   const [adjustmentDetails, setAdjustmentDetails] = useState(null);
 
+  const fetchTransactionCodes = async () => {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}/GetTransactionCodes`
+      );
+      console.log("Transaction Codes:", response.data);
+      setTransactionCodes(response.data);
+    } catch (error) {
+      console.error("Error fetching transaction codes:", error);
+    }
+  };
+
+  const fetchData = async () => {
+    try {
+      alert("Reached");
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}/GetBillAdjustmentRequests`
+      );
+      console.log("Fetched data:", response.data);
+      setDataItem(response.data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      message.error("Failed to fetch data.");
+    }
+  };
+
   useEffect(() => {
-    const fetchTransactionCodes = async () => {
-      try {
-        const response = await axios.get(
-          `${process.env.REACT_APP_API_URL}/GetTransactionCodes`
-        );
-        console.log("Transaction Codes:", response.data);
-        setTransactionCodes(response.data);
-      } catch (error) {
-        console.error("Error fetching transaction codes:", error);
-      }
-    };
+    
 
     fetchTransactionCodes();
-  }, []);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          `${process.env.REACT_APP_API_URL}/GetBillAdjustmentRequests`
-        );
-        console.log("Fetched data:", response.data);
-        setDataItem(response.data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-        message.error("Failed to fetch data.");
-      }
-    };
-
     fetchData();
   }, []);
 
-  const apiUrl = `${process.env.REACT_APP_API_URL}/ValidateCustomer/${customerRef}`;
+
+
+
+  
 
   const validateCustomer = () => {
+    
     if (!customerRef) {
       alert("Please enter a customer reference.");
       return;
     }
-
+    const apiUrl = `${process.env.REACT_APP_API_URL}/ValidateCustomer/${customerRef}`;
     axios
       .get(apiUrl, {
         headers: {
@@ -104,7 +108,7 @@ const BillAdjustment = () => {
     const totalAmount = adjustedAmount;
 
     const formData = new FormData();
-    formData.append("CustRef", customerRef);
+    // formData.append("CustRef", customerRef);
     formData.append("DocumentNumber", documentNumber);
     formData.append("TransactionCode", transactionCode);
     formData.append("Name", customerName);
@@ -162,6 +166,8 @@ const BillAdjustment = () => {
         message.error("Failed to fetch adjustment details.");
       });
   };
+
+  console.log("dataItem dataItem", dataItem);
 
   return (
     <div className="flex flex-col flex-wrap justify-center content-start px-8 pt-6 rounded-3xl bg-stone-100 leading-[160%] max-md:px-5">
@@ -308,7 +314,7 @@ const BillAdjustment = () => {
                 </div>
                 <input
                   type="file"
-                  onChange={handleFileChange} // Capture file change event
+                  onChange={handleFileChange}
                   className="px-4 py-3 mt-2 rounded-xl border border-solid border-neutral-500 border-opacity-30 text-neutral-400 max-md:pr-5"
                 />
               </div>
@@ -351,7 +357,7 @@ const BillAdjustment = () => {
                 </tr>
               </thead>
               <tbody className="text-slate-500">
-                {dataItem.map((item) => (
+                {/* {dataItem.map((item) => (
                   <tr key={item.id}>
                     <td className="py-4 px-6">{item.custRef}</td>
                     <td className="py-4 px-6">{item.transactionCode}</td>
@@ -387,7 +393,7 @@ const BillAdjustment = () => {
                       </Dropdown>
                     </td>
                   </tr>
-                ))}
+                ))} */}
               </tbody>
             </table>
             <div></div>
