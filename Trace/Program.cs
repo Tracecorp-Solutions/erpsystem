@@ -13,6 +13,8 @@ using Services.Repositories.Accounting;
 using Services.Repositories.Billing;
 using Services.Repositories.Settings;
 using Services.Repositories.UserManagement;
+using Services.Repositories.CRM;
+using Core.Repositories.CRM;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -44,6 +46,8 @@ builder.Services.AddScoped<IBilling, Billing>();
 builder.Services.AddScoped<IMeterReadingRepository, MeterReadingRepository>();
 builder.Services.AddScoped<IConnectedCustomersRepository, ConnectedCustomersRepository>();
 builder.Services.AddScoped<IMeterManagementRepository, MeterManagementRepository>();
+builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
+
 
 builder.Services.AddControllers();
 builder.Services.AddCors(options =>
