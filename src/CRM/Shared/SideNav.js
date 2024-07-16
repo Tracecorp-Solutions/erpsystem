@@ -387,7 +387,7 @@ function SideNav() {
             </div>
           )}
          
-          <div className="mt-4 mb-44 py-3 w-full">
+          <div className="mt-4 mb-6 py-3 w-full">
             <button className="flex justify-between w-full" onClick={() => toggleDropdown("documents")}>
               <span className="flex gap-2">
                 <Settings className="shrink-0 self-start w-6 aspect-square" />
