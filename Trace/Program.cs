@@ -47,6 +47,7 @@ builder.Services.AddScoped<IMeterReadingRepository, MeterReadingRepository>();
 builder.Services.AddScoped<IConnectedCustomersRepository, ConnectedCustomersRepository>();
 builder.Services.AddScoped<IMeterManagementRepository, MeterManagementRepository>();
 builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
+builder.Services.AddScoped<ITicketCategoryRepository, TicketCategoryRepository>();
 
 
 builder.Services.AddControllers();
