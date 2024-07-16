@@ -3,10 +3,7 @@
   "WorkspaceRootPath": "D:\\working directory\\erpsystem\\Trace\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{D0C5D151-D98C-46B1-A85E-DFAA22B5EE2F}|..\\Services\\Services.csproj|d:\\working directory\\erpsystem\\services\\repositories\\crm\\ticketcategoryrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A176F11F-4BEC-4DAC-9205-CF64F57D23C0}|..\\Core\\Core.csproj|d:\\working directory\\erpsystem\\core\\dtos\\crm\\ticketcategorydto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\working directory\\erpsystem\\Infrastructure\\Migrations\\20240716170628_AdditionOfDescriptionForTicketCategory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -41,27 +38,14 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "TicketCategoryRepository.cs",
-              "DocumentMoniker": "D:\\working directory\\erpsystem\\Services\\Repositories\\CRM\\TicketCategoryRepository.cs",
-              "RelativeDocumentMoniker": "..\\Services\\Repositories\\CRM\\TicketCategoryRepository.cs",
-              "ToolTip": "D:\\working directory\\erpsystem\\Services\\Repositories\\CRM\\TicketCategoryRepository.cs",
-              "RelativeToolTip": "..\\Services\\Repositories\\CRM\\TicketCategoryRepository.cs",
-              "ViewState": "AQIAAA8AAAAAAAAAAAAAABMAAAAJAAAA",
+              "Title": "20240716170628_AdditionOfDescriptionForTicketCategory.cs",
+              "DocumentMoniker": "D:\\working directory\\erpsystem\\Infrastructure\\Migrations\\20240716170628_AdditionOfDescriptionForTicketCategory.cs",
+              "RelativeDocumentMoniker": "..\\Infrastructure\\Migrations\\20240716170628_AdditionOfDescriptionForTicketCategory.cs",
+              "ToolTip": "D:\\working directory\\erpsystem\\Infrastructure\\Migrations\\20240716170628_AdditionOfDescriptionForTicketCategory.cs",
+              "RelativeToolTip": "..\\Infrastructure\\Migrations\\20240716170628_AdditionOfDescriptionForTicketCategory.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-16T16:59:29.568Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "TicketCategoryDto.cs",
-              "DocumentMoniker": "D:\\working directory\\erpsystem\\Core\\DTOs\\CRM\\TicketCategoryDto.cs",
-              "RelativeDocumentMoniker": "..\\Core\\DTOs\\CRM\\TicketCategoryDto.cs",
-              "ToolTip": "D:\\working directory\\erpsystem\\Core\\DTOs\\CRM\\TicketCategoryDto.cs",
-              "RelativeToolTip": "..\\Core\\DTOs\\CRM\\TicketCategoryDto.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAAvAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-16T16:58:29.449Z",
+              "WhenOpened": "2024-07-16T17:06:28.817Z",
               "EditorCaption": ""
             }
           ]
