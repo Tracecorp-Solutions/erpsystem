@@ -43,7 +43,10 @@ namespace Services.Repositories.CRM
 
         public async Task<IEnumerable<Department>> GetDepartments()
         {
-            return _context.Departments;
+            var departments = await _context.Departments
+                .Include(d => d.User)
+                .ToListAsync();
+            return departments == null ? throw new ArgumentException("No Departments found"): departments;
         }
 
         public async Task UpdateDepartment(Department department)
