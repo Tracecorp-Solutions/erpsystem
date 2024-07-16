@@ -12,6 +12,7 @@ import AssignSurveyor from "./Actions/AssignSurveyor";
 import SurveyorReport from "./Actions/SurveyorReport";
 import UpdateAuthorizeModal from "./Actions/UpdateAuthorizeModal ";
 import Payslip from "./Actions/Payslip";
+import ViewSurveyorDetails from "./VeiwSurveyorDetails";
 
 const ApplicationDetail = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -22,11 +23,14 @@ const ApplicationDetail = () => {
   const [applicationData, setApplicationData] = useState(null);
   const [isUpdateModalVisible, setIsUpdateModalVisible] = useState(false);
   const [application, setApplication] = useState(null);
+  const [surveyReport, setSurveyReport] = useState(null);
 
   const [isVisible, setIsVisible] = useState(false);
   const [jobCardInfo, setJobCardInfo] = useState(null);
   const [surveyorAssigned, setSurveyorAssigned] = useState(false);
   const [applicationStatus, setApplicationStatus] = useState(null);
+  const [localAuthorizationDocumentUrl, setLocalAuthorizationDocumentUrl] = useState('');
+
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -54,6 +58,7 @@ const ApplicationDetail = () => {
     }
     fetchApplicationData();
     fetchJobCard(applicationNumber);
+    fetchSurveyReport();
   }, [applicationNumber]);
 
   const fetchJobCard = async (applicationNumber) => {
@@ -82,6 +87,7 @@ const ApplicationDetail = () => {
       .then((data) => {
         console.log("Fetched application data:", data);
         setApplicationData(data);
+        setLocalAuthorizationDocumentUrl(data.proofOfIdentity);
         // Check if surveyor is assigned and update state accordingly
         if (data && data.assignedTo) {
           setSurveyorAssigned(true);
@@ -150,6 +156,41 @@ const ApplicationDetail = () => {
       });
   };
 
+  const fetchSurveyReport = async () => {
+    try {
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/GetSurveyReportByApplicationNumber`, {
+        params: {
+          applicationNumber
+        }
+      });
+      setSurveyReport(response.data);
+    } catch (error) {
+      console.error('Error fetching survey report:', error);
+    }
+  };
+  
+  const handleDownloadDocument = () => {
+    console.log("localAuthorizationDocumentUrl", localAuthorizationDocumentUrl);
+    const url = localAuthorizationDocumentUrl;
+  
+    if (url) {
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', 'local_authorization_document.pdf');
+        
+        document.body.appendChild(link);
+        
+        console.log("Link appended to body:", link);
+        
+        link.click();
+        
+        document.body.removeChild(link);
+    } else {
+        console.error('No document URL available');
+    }
+};
+
+
   const handleApproveApplication = () => {
     setIsModalVisible(false);
   };
@@ -210,6 +251,8 @@ const ApplicationDetail = () => {
     "applicationData applicationData applicationData applicationData",
     applicationData
   );
+
+  console.log("applicationStatus applicationStatus applicationStatus", surveyReport);
 
   return (
     <div className="flex flex-wrap justify-center content-start items-center py-6 rounded-3xl bg-stone-100">
@@ -443,7 +486,7 @@ const ApplicationDetail = () => {
             />
           </div>
 
-          <div className="flex gap-2 justify-between px-4 py-5 mt-6 max-w-full rounded-xl bg-stone-100 w-[246px]">
+          <div className="flex gap-2 justify-between px-4 py-5 mt-6 max-w-full rounded-xl bg-stone-100 w-[646px]">
             <div className="flex flex-col text-sm text-center text-neutral-600">
               <img
                 loading="lazy"
@@ -458,7 +501,8 @@ const ApplicationDetail = () => {
                 loading="lazy"
                 src="https://cdn.builder.io/api/v1/image/assets/TEMP/e26c3fe38d1183a0ed31b3a41a00f1bbd67b7f3f4264dcf95c2481c813f84e09?apiKey=27ec22b9382040ef8580a5e340d3a921&"
                 alt=""
-                className="aspect-square w-[18px]"
+                className="aspect-square w-[18px] cursor-pointer"
+                onClick={handleDownloadDocument}
               />
             </div>
           </div>
@@ -490,6 +534,7 @@ const ApplicationDetail = () => {
                   <span>Surveyor Name: {applicationData.user.fullName}</span>
                   <button
                     type="button"
+                    onClick={() => setAssignSurveyorAction(true)}
                     className="justify-center w-2/4 self-start px-6 py-3 text-sm font-semibold text-white whitespace-nowrap bg-lime-400 rounded-3xl max-md:px-5"
                   >
                     Change Surveyor
@@ -568,6 +613,14 @@ const ApplicationDetail = () => {
                 <span>{applicationData.status}</span>
                 <button
                   type="button"
+                  onClick={() =>
+                    navigate(`/billingdashboard`, {
+                      state: {
+                        screen: "surveyor-details",
+                        surveyReport,
+                      },
+                    })
+                  }
                   className="justify-center w-1/4 self-start px-6 py-3 text-sm font-semibold text-white whitespace-nowrap bg-lime-400 rounded-3xl max-md:px-5"
                 >
                   View Report

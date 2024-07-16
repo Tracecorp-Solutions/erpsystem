@@ -36,6 +36,7 @@ import DashboardBilling from "../Dashboard/DashboardBilling";
 import History from "../Meter/History";
 import CustomerTariffStructure from "../Application/CustomerTariffStructure";
 import CustomerStatement from "../Application/CustomerStatement";
+import ViewSurveyorDetails from "../Application/VeiwSurveyorDetails";
 
 const BillingDashboard = () => {
   const location = useLocation();
@@ -98,6 +99,7 @@ const BillingDashboard = () => {
                 {screen === "connectedcustomers" && <ConnectedCustomers/>}
                 {screen === "tariffs" && <CustomerTariffStructure/>}
                 {screen === "customer-statement" && <CustomerStatement/>}
+                {screen === "surveyor-details" && <ViewSurveyorDetails />}
               </div>
             </div>
           </div>
