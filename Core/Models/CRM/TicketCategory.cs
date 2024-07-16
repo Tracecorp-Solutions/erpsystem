@@ -15,6 +15,8 @@ namespace Core.Models.CRM
         [ForeignKey("Department")]
         public int DepartmentId { get; set; }
 
+        public string Description { get; set; }
+
         public virtual Department Department { get; set; }
     }
 }

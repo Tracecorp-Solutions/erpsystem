@@ -24,7 +24,8 @@ namespace Services.Repositories.CRM
             var ticketCategory = new TicketCategory
             {
                 Name = dto.Name,
-                DepartmentId = dto.DepartmentId
+                DepartmentId = dto.DepartmentId,
+                Description = dto.Description
             };
 
             _context.TicketCategories.Add(ticketCategory);
