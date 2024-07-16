@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Core.Repositories.CRM;
 using Core.Models.CRM;
+using Core.DTOs.CRM;
 
 namespace Trace.Controllers
 {
@@ -17,7 +18,7 @@ namespace Trace.Controllers
         }
 
         [HttpPost("/AddDepartments")]
-        public async Task<IActionResult> AddDepartments(Department department)
+        public async Task<IActionResult> AddDepartments(DepartmentDto department)
         {
             try 
             {

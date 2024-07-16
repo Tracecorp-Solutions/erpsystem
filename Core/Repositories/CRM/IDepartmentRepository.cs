@@ -1,4 +1,5 @@
-﻿using Core.Models.CRM;
+﻿using Core.DTOs.CRM;
+using Core.Models.CRM;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace Core.Repositories.CRM
     {
         Task<IEnumerable<Department>> GetDepartments();
         Task<Department> GetDepartment(int id);
-        Task AddDepartment(Department department);
+        Task AddDepartment(DepartmentDto department);
         Task DeleteDepartment(int id);
         Task UpdateDepartment(Department department);
 

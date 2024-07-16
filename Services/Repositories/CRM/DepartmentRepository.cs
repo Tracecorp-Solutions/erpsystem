@@ -7,6 +7,7 @@ using Core.Repositories.CRM;
 using Infrastructure.Data;
 using Core.Models.CRM;
 using Microsoft.EntityFrameworkCore;
+using Core.DTOs.CRM;
 
 namespace Services.Repositories.CRM
 {
@@ -19,8 +20,17 @@ namespace Services.Repositories.CRM
             _context = context;
         }
 
-        public async Task AddDepartment(Department department)
+        public async Task AddDepartment(DepartmentDto dep)
         {
+            //map the dto to the model
+            var department = new Department
+            {
+                Name = dep.Name,
+                Description = dep.Description,
+                HeadDepactId = dep.HeadDepactId,
+                Active = true
+            };
+
             _context.Departments.Add(department);
             await _context.SaveChangesAsync();
         }
