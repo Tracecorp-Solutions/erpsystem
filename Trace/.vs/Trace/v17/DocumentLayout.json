@@ -1,7 +1,14 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "D:\\working directory\\erpsystem\\Trace\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{D0C5D151-D98C-46B1-A85E-DFAA22B5EE2F}|..\\Services\\Services.csproj|d:\\working directory\\erpsystem\\services\\repositories\\crm\\ticketcategoryrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A176F11F-4BEC-4DAC-9205-CF64F57D23C0}|..\\Core\\Core.csproj|d:\\working directory\\erpsystem\\core\\dtos\\crm\\ticketcategorydto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -9,7 +16,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": -1,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Bookmark",
@@ -30,6 +37,32 @@
             {
               "$type": "Bookmark",
               "Name": "ST:130:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "TicketCategoryRepository.cs",
+              "DocumentMoniker": "D:\\working directory\\erpsystem\\Services\\Repositories\\CRM\\TicketCategoryRepository.cs",
+              "RelativeDocumentMoniker": "..\\Services\\Repositories\\CRM\\TicketCategoryRepository.cs",
+              "ToolTip": "D:\\working directory\\erpsystem\\Services\\Repositories\\CRM\\TicketCategoryRepository.cs",
+              "RelativeToolTip": "..\\Services\\Repositories\\CRM\\TicketCategoryRepository.cs",
+              "ViewState": "AQIAAA8AAAAAAAAAAAAAABMAAAAJAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-16T16:59:29.568Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "TicketCategoryDto.cs",
+              "DocumentMoniker": "D:\\working directory\\erpsystem\\Core\\DTOs\\CRM\\TicketCategoryDto.cs",
+              "RelativeDocumentMoniker": "..\\Core\\DTOs\\CRM\\TicketCategoryDto.cs",
+              "ToolTip": "D:\\working directory\\erpsystem\\Core\\DTOs\\CRM\\TicketCategoryDto.cs",
+              "RelativeToolTip": "..\\Core\\DTOs\\CRM\\TicketCategoryDto.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAAvAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-16T16:58:29.449Z",
+              "EditorCaption": ""
             }
           ]
         }
