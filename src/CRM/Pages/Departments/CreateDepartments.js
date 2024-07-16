@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Modal, message, Input, Button, Select } from "antd";
 import axios from "axios";
+import { AiOutlineClose } from 'react-icons/ai'; 
 
 function CreateDepartments({
   isUpdateModalVisible,
@@ -56,10 +57,18 @@ function CreateDepartments({
 
   return (
     <Modal visible={isUpdateModalVisible} closable={false} footer={null}>
-      <div className="flex flex-col justify-center items-center pt-8 text-base leading-6 bg-white rounded-3xl max-w-[820px]">
-        <div className="text-4xl font-semibold text-neutral-600 max-md:max-w-full">
+      <div className="flex flex-col justify-center items-start pt-4 text-base leading-6 bg-white rounded-3xl max-w-[720px]">
+        <div className="text-2xl font-semibold text-neutral-600 max-md:max-w-full">
           New Department
+          
         </div>
+        <button
+        type="button"
+        className="absolute top-4 right-4 text-gray-500"
+        onClick={handleCloseModalVisible}
+      >
+        <AiOutlineClose size={24} />
+      </button>
         <div className="mt-4 font-semibold text-neutral-600 max-md:max-w-full">
           Department Name
         </div>
@@ -79,7 +88,7 @@ function CreateDepartments({
           onChange={handleChange}
           className="justify-center p-4 mt-2 max-w-full leading-7 bg-white rounded-xl border border-solid border-neutral-500 border-opacity-30 text-neutral-400 w-[500px] max-md:max-w-full"
           placeholder="Describe the department ..."
-          rows={4}
+          rows={2}
         />
         <div className="mt-4 font-semibold text-neutral-600 max-md:max-w-full">
           Assign head of department
@@ -87,7 +96,7 @@ function CreateDepartments({
         <Select
           placeholder="Select head of department"
           onChange={handleHeadDepactIdChange}
-          className="w-[500px] max-md:max-w-full"
+          className="w-[480px] h-[50px] mt-3 max-md:max-w-full"
         >
           {users.map((user) => (
             <Option key={user.id} value={user.id}>
@@ -95,15 +104,15 @@ function CreateDepartments({
             </Option>
           ))}
         </Select>
-        <div className="flex justify-center items-center self-stretch px-16 py-6 mt-32 w-full bg-stone-100 max-md:px-5 max-md:mt-10 max-md:max-w-full">
+        <div className="flex justify-center items-center self-stretch px-6 py-6 mt-12 w-full bg-stone-100 max-md:px-5 max-md:mt-10 max-md:max-w-full">
           <Button
-            className="justify-center items-center px-8 py-4 whitespace-nowrap rounded-3xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 max-md:px-5"
+            className="justify-center items-center px-8 py-4 mr-6 whitespace-nowrap rounded-3xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 max-md:px-5"
             onClick={handleCloseModalVisible}
           >
             Cancel
           </Button>
           <Button
-            className="justify-center px-8 py-4 font-semibold text-white rounded-3xl bg-slate-500 max-md:px-5"
+            className="justify-center px-8 py-4 font-semibold text-white rounded-3xl bg-blue-500 max-md:px-5"
             onClick={handleSubmit}
           >
             Add Department
