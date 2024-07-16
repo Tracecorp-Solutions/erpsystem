@@ -15,7 +15,7 @@ const systems = [
   {
     title: "Customer Relationship System (CRM)",
     description: "Enhance customer engagement and satisfaction.",
-    isActive: true
+    isActive: false
   },
   {
     title: "Human Resources System",
@@ -53,6 +53,8 @@ const SystemCard = ({ title, description, isActive, onClick }) => {
     try {
       if (title === "Water Billing System") {
         navigate("/billingdashboard");
+      } else if (title === "Customer Relationship System (CRM)") {
+        navigate("/crm");
       } else {
         navigate("/Dashboardlayout");
       }
@@ -72,7 +74,7 @@ const SystemCard = ({ title, description, isActive, onClick }) => {
       <p className="mt-4 mb-8 text-neutral-400">{description}</p>
       <button
         className={`justify-center px-8 py-3 mt-auto text-base leading-6 text-white rounded-3xl ${
-          buttonClicked ? "bg-blue-400 text-white" : title === "Accounting System" || title === "Water Billing System" ? "bg-dark-blue text-white" : "bg-gray-200 text-white"
+          buttonClicked ? "bg-blue-400 text-white" : title === "Accounting System" || title === "Water Billing System" || title === "Customer Relationship System (CRM)" ? "bg-dark-blue text-white" : "bg-gray-200 text-white"
         } max-md:px-5 max-md:mb-10`}
         disabled={isActive || buttonClicked}
         aria-label={`${title} - ${isActive ? "Contact Us" : "Load System"}`}
