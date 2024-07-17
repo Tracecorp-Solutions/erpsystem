@@ -1,4 +1,5 @@
-﻿using Core.Models.CRM;
+﻿using Core.DTOs.CRM;
+using Core.Models.CRM;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace Core.Repositories.CRM
 {
     public interface IEscalationMatrixRepository
     {
-        Task CreateEscalationMatrixAsync(EscalationMatrix matrix);
+        Task CreateEscalationMatrixAsync(EscatalationMatrixDto matrix);
         Task<IEnumerable<EscalationMatrix>> GetAllEscalationMatricesAsync();
         Task<EscalationMatrix> GetEscalationMatrixByDepartmentIdAsync(int departmentId);
     }

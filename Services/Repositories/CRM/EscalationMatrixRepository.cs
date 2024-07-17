@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Core.Repositories.CRM;
 using Infrastructure.Data;
 using Core.Models.CRM;
+using Core.DTOs.CRM;
 
 namespace Services.Repositories.CRM
 {
@@ -18,9 +19,16 @@ namespace Services.Repositories.CRM
             _context = context;
         }
 
-        public async Task CreateEscalationMatrixAsync(EscalationMatrix matrix)
+        public async Task CreateEscalationMatrixAsync(EscatalationMatrixDto matrix)
         {
-            _context.EscalationMatrices.Add(matrix);
+            //mapping dto to model
+            var escmatrix = new EscalationMatrix
+            {
+                DepartmentId = matrix.DepartmentId,
+                EscalationTime = matrix.EscalationTime
+            };
+
+            _context.EscalationMatrices.Add(escmatrix);
             await _context.SaveChangesAsync();
         }
 
