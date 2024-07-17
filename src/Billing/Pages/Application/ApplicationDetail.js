@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Dropdown, Menu, Modal, Button, message } from "antd";
 import { DownOutlined } from "@ant-design/icons";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
+import html2canvas from "html2canvas"; // Import html2canvas library
+import jsPDF from "jspdf";
 import ApplicantSection from "./ApplicantSection";
 import Document from "./Document";
 import ApplicationFormActions from "./Actions/ApplicationFormActions";
@@ -29,8 +31,10 @@ const ApplicationDetail = () => {
   const [jobCardInfo, setJobCardInfo] = useState(null);
   const [surveyorAssigned, setSurveyorAssigned] = useState(false);
   const [applicationStatus, setApplicationStatus] = useState(null);
-  const [localAuthorizationDocumentUrl, setLocalAuthorizationDocumentUrl] = useState('');
+  const [localAuthorizationDocumentUrl, setLocalAuthorizationDocumentUrl] =
+    useState("");
 
+  const pdfDownloadRef = useRef(null);
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -158,38 +162,40 @@ const ApplicationDetail = () => {
 
   const fetchSurveyReport = async () => {
     try {
-      const response = await axios.get(`${process.env.REACT_APP_API_URL}/GetSurveyReportByApplicationNumber`, {
-        params: {
-          applicationNumber
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}/GetSurveyReportByApplicationNumber`,
+        {
+          params: {
+            applicationNumber,
+          },
         }
-      });
+      );
       setSurveyReport(response.data);
     } catch (error) {
-      console.error('Error fetching survey report:', error);
+      console.error("Error fetching survey report:", error);
     }
   };
-  
+
   const handleDownloadDocument = () => {
     console.log("localAuthorizationDocumentUrl", localAuthorizationDocumentUrl);
     const url = localAuthorizationDocumentUrl;
-  
-    if (url) {
-        const link = document.createElement('a');
-        link.href = url;
-        link.setAttribute('download', 'local_authorization_document.pdf');
-        
-        document.body.appendChild(link);
-        
-        console.log("Link appended to body:", link);
-        
-        link.click();
-        
-        document.body.removeChild(link);
-    } else {
-        console.error('No document URL available');
-    }
-};
 
+    if (url) {
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", "local_authorization_document.pdf");
+
+      document.body.appendChild(link);
+
+      console.log("Link appended to body:", link);
+
+      link.click();
+
+      document.body.removeChild(link);
+    } else {
+      console.error("No document URL available");
+    }
+  };
 
   const handleApproveApplication = () => {
     setIsModalVisible(false);
@@ -252,10 +258,44 @@ const ApplicationDetail = () => {
     applicationData
   );
 
-  console.log("applicationStatus applicationStatus applicationStatus", surveyReport);
+  const handleDownloadPDF = () => {
+    const input = document.getElementById("pdf-content");
+
+    const originalDisplay = input.style.display;
+    input.style.display = "block";
+
+    html2canvas(input, { scrollY: -window.scrollY })
+      .then((canvas) => {
+        const imgData = canvas.toDataURL("image/png");
+        const pdf = new jsPDF("p", "mm", "a4");
+
+        const imgWidth = 210;
+        const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+        pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
+        pdf.save("download.pdf");
+
+        input.style.display = originalDisplay;
+      })
+      .catch((error) => {
+        console.error("Error generating PDF:", error);
+        input.style.display = originalDisplay;
+      });
+  };
 
   return (
     <div className="flex flex-wrap justify-center content-start items-center py-6 rounded-3xl bg-stone-100">
+      <a
+        ref={pdfDownloadRef}
+        href="#"
+        onClick={(e) => {
+          e.preventDefault();
+          handleDownloadPDF();
+        }}
+        style={{ display: "none" }}
+      >
+        Download PDF
+      </a>
       <header className="flex gap-2 items-center self-stretch px-6 text-base font-semibold leading-6 whitespace-nowrap text-neutral-600 max-md:flex-wrap max-md:px-5 w-full">
         <h1 className="self-stretch my-auto">Applications</h1>
         <img
@@ -565,6 +605,8 @@ const ApplicationDetail = () => {
                   <span className="">{jobCardInfo} is generated</span>
                   <button
                     type="button"
+                    ref={pdfDownloadRef}
+                    onClick={handleDownloadPDF}
                     className="justify-center w-2/4 self-start px-6 py-3 text-sm font-semibold text-white whitespace-nowrap bg-lime-400 rounded-3xl max-md:px-5"
                   >
                     Download
@@ -711,19 +753,19 @@ const ApplicationDetail = () => {
                       </button>
                     </div>
                   ) : (
-                        <button
-                          onClick={() =>
-                            navigate("/billingdashboard", {
-                              state: {
-                                screen: "invoice-details",
-                                applicationNumber,
-                              },
-                            })
-                          }
-                          className="justify-center w-1/4 self-start px-6 py-3 mt-4 text-sm font-semibold text-white whitespace-nowrap bg-lime-400 rounded-3xl max-md:px-5"
-                          >
-                          See Details
-                        </button>
+                    <button
+                      onClick={() =>
+                        navigate("/billingdashboard", {
+                          state: {
+                            screen: "invoice-details",
+                            applicationNumber,
+                          },
+                        })
+                      }
+                      className="justify-center w-1/4 self-start px-6 py-3 mt-4 text-sm font-semibold text-white whitespace-nowrap bg-lime-400 rounded-3xl max-md:px-5"
+                    >
+                      See Details
+                    </button>
                   )}
                 </div>
               </div>
@@ -813,6 +855,183 @@ const ApplicationDetail = () => {
           </div>
         </div>
       </section>
+      <div
+        id="pdf-content"
+        className="flex flex-col px-14 py-6 w-full bg-stone-100 max-w-[1200px] max-md:px-5 max-md:max-w-full"
+        style={{ display: "none" }}
+      >
+        <div className="flex justify-center items-center px-16 bg-white max-md:px-5">
+          <div className="flex flex-col px-14 py-6 w-full bg-stone-100 max-w-[1200px] max-md:px-5 max-md:max-w-full">
+            <div className="flex gap-5 justify-between text-4xl font-semibold leading-[57.6px] text-neutral-600 max-md:flex-wrap">
+              <img
+                loading="lazy"
+                srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/408fafcebc6b68b9bb22a4c9f099c724596e89747ebf76a6651a94c7f3a08b5e?apiKey=0d95acea82cc4b259a61e827c24c5c6c&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/408fafcebc6b68b9bb22a4c9f099c724596e89747ebf76a6651a94c7f3a08b5e?apiKey=0d95acea82cc4b259a61e827c24c5c6c&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/408fafcebc6b68b9bb22a4c9f099c724596e89747ebf76a6651a94c7f3a08b5e?apiKey=0d95acea82cc4b259a61e827c24c5c6c&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/408fafcebc6b68b9bb22a4c9f099c724596e89747ebf76a6651a94c7f3a08b5e?apiKey=0d95acea82cc4b259a61e827c24c5c6c&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/408fafcebc6b68b9bb22a4c9f099c724596e89747ebf76a6651a94c7f3a08b5e?apiKey=0d95acea82cc4b259a61e827c24c5c6c&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/408fafcebc6b68b9bb22a4c9f099c724596e89747ebf76a6651a94c7f3a08b5e?apiKey=0d95acea82cc4b259a61e827c24c5c6c&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/408fafcebc6b68b9bb22a4c9f099c724596e89747ebf76a6651a94c7f3a08b5e?apiKey=0d95acea82cc4b259a61e827c24c5c6c&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/408fafcebc6b68b9bb22a4c9f099c724596e89747ebf76a6651a94c7f3a08b5e?apiKey=0d95acea82cc4b259a61e827c24c5c6c&"
+                className="shrink-0 aspect-[1.25] w-[87px]"
+              />
+              <div className="my-auto max-md:max-w-full">
+                TraceCorp Solutions
+              </div>
+            </div>
+            <div className="flex flex-col px-6 pt-4 pb-5 mt-6 bg-white rounded-3xl max-md:px-5 max-md:max-w-full">
+              <div className="text-2xl font-semibold uppercase text-neutral-600 max-md:max-w-full">
+                Job card <span className="uppercase">#0967huy</span>
+              </div>
+              <div className="flex flex-col px-4 pt-2 pb-4 mt-6 rounded-lg bg-stone-100 max-md:max-w-full">
+                <div className="text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">
+                  Application Information
+                </div>
+                <div className="shrink-0 mt-4 h-px border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-opacity-10 max-md:max-w-full" />
+                <div className="flex flex-wrap gap-2 content-center mt-4">
+                  <div className="flex flex-col justify-center">
+                    <div className="text-xs font-medium tracking-wide uppercase text-neutral-400">
+                      Survey Date
+                    </div>
+                    <div className="mt-2 text-base leading-6 text-neutral-600">
+                      05 June 2024
+                    </div>
+                  </div>
+                  <div className="flex flex-col justify-center">
+                    <div className="text-xs font-medium tracking-wide uppercase text-neutral-400">
+                      Surveyor Name
+                    </div>
+                    <div className="mt-2 text-base leading-6 text-neutral-600">
+                      Nowembabazi Nickson
+                    </div>
+                  </div>
+                  <div className="flex flex-col justify-center">
+                    <div className="text-xs font-medium tracking-wide uppercase text-neutral-400">
+                      Applicant name
+                    </div>
+                    <div className="mt-2 text-base leading-6 text-neutral-600">
+                      Grace Eze
+                    </div>
+                  </div>
+                  <div className="flex flex-col justify-center">
+                    <div className="text-xs font-medium tracking-wide uppercase text-neutral-400">
+                      application no.
+                    </div>
+                    <div className="mt-2 text-base leading-6 text-neutral-600">
+                      APP567890
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="flex gap-2 mt-6 text-base font-semibold leading-7 text-neutral-600 max-md:flex-wrap">
+                <div className="flex-1 max-md:max-w-full">
+                  Distance of Premises from Main to be Tapped (in meters):
+                </div>
+                <div className="shrink-0 px-4 max-w-full h-12 bg-white rounded-xl border border-solid border-neutral-500 border-opacity-30 w-[400px]" />
+              </div>
+              <div className="flex gap-2 mt-6 text-base font-semibold leading-7 text-neutral-600 max-md:flex-wrap">
+                <div className="flex-1 max-md:max-w-full">
+                  Type of Land between Main and Premises:
+                </div>
+                <div className="shrink-0 px-4 max-w-full h-12 bg-white rounded-xl border border-solid border-neutral-500 border-opacity-30 w-[400px]" />
+              </div>
+              <div className="flex gap-2 mt-6 text-base font-semibold leading-7 text-neutral-600 max-md:flex-wrap">
+                <div className="flex-1 max-md:max-w-full">
+                  List any Obstructions between the Main and the Premises:
+                </div>
+                <div className="shrink-0 px-4 max-w-full h-12 bg-white rounded-xl border border-solid border-neutral-500 border-opacity-30 w-[400px]" />
+              </div>
+              <div className="flex gap-2 mt-6 text-base font-semibold leading-7 text-neutral-600 max-md:flex-wrap">
+                <div className="flex-1 max-md:max-w-full">
+                  Type and Size of Main to be Tapped (in inches):
+                </div>
+                <div className="shrink-0 px-4 max-w-full h-12 bg-white rounded-xl border border-solid border-neutral-500 border-opacity-30 w-[400px]" />
+              </div>
+              <div className="flex gap-2 mt-6 text-base font-semibold leading-7 text-neutral-600 max-md:flex-wrap">
+                <div className="flex-1 max-md:max-w-full">
+                  Size of the Service Pipe to be Laid (in inches):
+                </div>
+                <div className="shrink-0 px-4 max-w-full h-12 bg-white rounded-xl border border-solid border-neutral-500 border-opacity-30 w-[400px]" />
+              </div>
+              <div className="flex gap-2 mt-6 text-base font-semibold leading-7 text-neutral-600 max-md:flex-wrap">
+                <div className="flex-1 max-md:max-w-full">
+                  Length of the Service Pipe to be Laid (in meters):
+                </div>
+                <div className="shrink-0 px-4 max-w-full h-12 bg-white rounded-xl border border-solid border-neutral-500 border-opacity-30 w-[400px]" />
+              </div>
+              <div className="flex gap-2 mt-6 text-base font-semibold leading-7 text-neutral-600 max-md:flex-wrap">
+                <div className="flex-1 max-md:max-w-full">
+                  Ideal Connection Type for the Customer:
+                </div>
+                <div className="shrink-0 px-4 max-w-full h-12 bg-white rounded-xl border border-solid border-neutral-500 border-opacity-30 w-[400px]" />
+              </div>
+              <div className="flex gap-2 mt-6 text-base font-semibold leading-7 text-neutral-600 max-md:flex-wrap">
+                <div className="flex-1 max-md:max-w-full">
+                  Suggested Material for Service Pipe:
+                </div>
+                <div className="shrink-0 px-4 max-w-full h-12 bg-white rounded-xl border border-solid border-neutral-500 border-opacity-30 w-[400px]" />
+              </div>
+              <div className="flex gap-2 mt-6 text-base font-semibold leading-7 text-neutral-600 max-md:flex-wrap">
+                <div className="flex-1 max-md:max-w-full">
+                  Size of the Existing Main to be Tapped (in inches):
+                </div>
+                <div className="shrink-0 px-4 max-w-full h-12 bg-white rounded-xl border border-solid border-neutral-500 border-opacity-30 w-[400px]" />
+              </div>
+              <div className="flex gap-2 mt-6 text-base font-semibold leading-7 text-neutral-600 max-md:flex-wrap">
+                <div className="flex-1 max-md:max-w-full">
+                  Suggested Depth of the Service Pipe Below Ground Level (in
+                  feet):
+                </div>
+                <div className="shrink-0 px-4 max-w-full h-12 bg-white rounded-xl border border-solid border-neutral-500 border-opacity-30 w-[400px]" />
+              </div>
+              <div className="flex gap-2 mt-6 text-base font-semibold leading-7 text-neutral-600 max-md:flex-wrap">
+                <div className="flex-1 max-md:max-w-full">
+                  Is the Customer Connecting from Another Customer’s Existing
+                  Service Pipe?
+                </div>
+                <div className="shrink-0 px-4 max-w-full h-12 bg-white rounded-xl border border-solid border-neutral-500 border-opacity-30 w-[400px]" />
+              </div>
+              <div className="flex gap-2 mt-6 text-base font-semibold leading-7 text-neutral-600 max-md:flex-wrap">
+                <div className="flex-1 max-md:max-w-full">
+                  Does the Customer Have Another Connection with the
+                  Corporation?
+                </div>
+                <div className="shrink-0 px-4 max-w-full h-12 bg-white rounded-xl border border-solid border-neutral-500 border-opacity-30 w-[400px]" />
+              </div>
+              <div className="flex gap-2 mt-6 text-base font-semibold leading-7 text-neutral-600 max-md:flex-wrap">
+                <div className="flex-1 max-md:max-w-full">
+                  Bloc Map Number of the Property:
+                </div>
+                <div className="shrink-0 px-4 max-w-full h-12 bg-white rounded-xl border border-solid border-neutral-500 border-opacity-30 w-[400px]" />
+              </div>
+              <div className="flex gap-2 mt-6 text-base font-semibold leading-7 text-neutral-600 max-md:flex-wrap">
+                <div className="flex-1 max-md:max-w-full">
+                  Is There Any Nearby Customer? If Yes, Provide Customer Ref,
+                  Name, and Meter Number
+                </div>
+                <div className="shrink-0 self-start px-4 mt-1 max-w-full h-12 bg-white rounded-xl border border-solid border-neutral-500 border-opacity-30 w-[400px]" />
+              </div>
+              <div className="flex gap-2 mt-6 text-base font-semibold leading-7 text-neutral-600 max-md:flex-wrap">
+                <div className="flex-1 max-md:max-w-full">
+                  Distance of Premises from the Main to be Connected (in meters)
+                </div>
+                <div className="shrink-0 px-4 max-w-full h-12 bg-white rounded-xl border border-solid border-neutral-500 border-opacity-30 w-[400px]" />
+              </div>
+              <div className="flex gap-2 mt-6 text-base font-semibold leading-7 text-neutral-600 max-md:flex-wrap">
+                <div className="flex-1 max-md:max-w-full">
+                  Type and Size of Main to be Connected (in inches):
+                </div>
+                <div className="shrink-0 px-4 max-w-full h-12 bg-white rounded-xl border border-solid border-neutral-500 border-opacity-30 w-[400px]" />
+              </div>
+              <div className="flex gap-2 mt-6 text-base font-semibold leading-7 text-neutral-600 max-md:flex-wrap">
+                <div className="flex-1 max-md:max-w-full">
+                  Type of Road to be Affected and Its Width:
+                </div>
+                <div className="shrink-0 px-4 max-w-full h-12 bg-white rounded-xl border border-solid border-neutral-500 border-opacity-30 w-[400px]" />
+              </div>
+              <div className="flex flex-col px-4 pt-2 pb-4 mt-6 text-base font-semibold leading-6 rounded-lg bg-stone-100 text-neutral-600 max-md:max-w-full">
+                <div className="max-md:max-w-full">
+                  Surveyor Recommendations and Notes
+                </div>
+                <div className="shrink-0 mt-4 mb-16 h-px border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-opacity-10 max-md:mb-10 max-md:max-w-full" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
       <ApplicationFormActions
         isModalVisible={isModalVisible}
