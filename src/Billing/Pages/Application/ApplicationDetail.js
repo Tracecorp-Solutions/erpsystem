@@ -874,11 +874,7 @@ const ApplicationDetail = () => {
         <div className="flex justify-center items-center px-16 bg-white max-md:px-5">
           <div className="flex flex-col px-14 py-6 w-full bg-stone-100 max-w-[1200px] max-md:px-5 max-md:max-w-full">
             <div className="flex gap-5 justify-between text-4xl font-semibold leading-[57.6px] text-neutral-600 max-md:flex-wrap">
-              <img
-                loading="lazy"
-                srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/408fafcebc6b68b9bb22a4c9f099c724596e89747ebf76a6651a94c7f3a08b5e?apiKey=0d95acea82cc4b259a61e827c24c5c6c&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/408fafcebc6b68b9bb22a4c9f099c724596e89747ebf76a6651a94c7f3a08b5e?apiKey=0d95acea82cc4b259a61e827c24c5c6c&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/408fafcebc6b68b9bb22a4c9f099c724596e89747ebf76a6651a94c7f3a08b5e?apiKey=0d95acea82cc4b259a61e827c24c5c6c&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/408fafcebc6b68b9bb22a4c9f099c724596e89747ebf76a6651a94c7f3a08b5e?apiKey=0d95acea82cc4b259a61e827c24c5c6c&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/408fafcebc6b68b9bb22a4c9f099c724596e89747ebf76a6651a94c7f3a08b5e?apiKey=0d95acea82cc4b259a61e827c24c5c6c&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/408fafcebc6b68b9bb22a4c9f099c724596e89747ebf76a6651a94c7f3a08b5e?apiKey=0d95acea82cc4b259a61e827c24c5c6c&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/408fafcebc6b68b9bb22a4c9f099c724596e89747ebf76a6651a94c7f3a08b5e?apiKey=0d95acea82cc4b259a61e827c24c5c6c&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/408fafcebc6b68b9bb22a4c9f099c724596e89747ebf76a6651a94c7f3a08b5e?apiKey=0d95acea82cc4b259a61e827c24c5c6c&"
-                className="shrink-0 aspect-[1.25] w-[87px]"
-              />
+              <img src="../images/imagelogo.svg" className="shrink-0 aspect-[1.25] w-[87px]" />
               <div className="my-auto max-md:max-w-full">
                 TraceCorp Solutions
               </div>
