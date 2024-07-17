@@ -7,6 +7,7 @@ using Core.Repositories.CRM;
 using Infrastructure.Data;
 using Core.Models.CRM;
 using Core.DTOs.CRM;
+using Microsoft.EntityFrameworkCore;
 
 namespace Services.Repositories.CRM
 {
@@ -34,12 +35,19 @@ namespace Services.Repositories.CRM
 
         public async Task<IEnumerable<EscalationMatrix>> GetAllEscalationMatricesAsync()
         {
-            return await Task.FromResult(_context.EscalationMatrices);
+            var result = await _context.EscalationMatrices
+                .Include(esc => esc.Department)
+                .ToListAsync();
+
+            return result;
         }
 
         public async Task<EscalationMatrix> GetEscalationMatrixByDepartmentIdAsync(int departmentId)
         {
-            return await Task.FromResult(_context.EscalationMatrices.FirstOrDefault(x => x.DepartmentId == departmentId));
+            var matrices = await _context.EscalationMatrices
+                .Include(esc => esc.Department)
+                .FirstOrDefaultAsync(x => x.DepartmentId==departmentId);
+            return matrices == null ? throw new ArgumentException("No matrix for this department") : matrices ;
         }
 
 

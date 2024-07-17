@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Core.Repositories.CRM;
 using Core.Models.CRM;
+using Core.DTOs.CRM;
 
 namespace Trace.Controllers
 {
@@ -17,7 +18,7 @@ namespace Trace.Controllers
         }
 
         [HttpPost("/CreateEscalationMatrix")]
-        public async Task<IActionResult> CreateEscalationMatrix(EscalationMatrix matrix)
+        public async Task<IActionResult> CreateEscalationMatrix(EscatalationMatrixDto matrix)
         {
             try
             {
@@ -53,6 +54,9 @@ namespace Trace.Controllers
             {
                 var result = await _escalationMatrixRepository.GetEscalationMatrixByDepartmentIdAsync(departmentId);
                 return Ok(result);
+            }catch(ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
             }
             catch (Exception ex)
             {
