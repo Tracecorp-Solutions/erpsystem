@@ -27,7 +27,6 @@ const ApplicationDetail = () => {
   const [application, setApplication] = useState(null);
   const [surveyReport, setSurveyReport] = useState(null);
 
-  const [isVisible, setIsVisible] = useState(false);
   const [jobCardInfo, setJobCardInfo] = useState(null);
   const [surveyorAssigned, setSurveyorAssigned] = useState(false);
   const [applicationStatus, setApplicationStatus] = useState(null);
@@ -43,19 +42,6 @@ const ApplicationDetail = () => {
   const applicationNumber = state?.applicationNumber;
 
   const userid = sessionStorage.getItem("userid");
-
-  const handleClickModalVisible = () => {
-    setIsVisible(true);
-  };
-
-  const handleIsModalVisible = () => {
-    setIsModalVisible(true);
-  };
-
-  const handleHideModal = () => {
-    setIsModalVisible(false);
-    setIsVisible(false);
-  };
 
   useEffect(() => {
     if (applicationNumber) {
@@ -206,9 +192,6 @@ const ApplicationDetail = () => {
     setIsUpdateModalVisible(!isUpdateModalVisible);
   };
 
-  const handleShowModalVisible = () => {
-    setIsVisible(true);
-  };
 
   const menu = (
     <Menu>
