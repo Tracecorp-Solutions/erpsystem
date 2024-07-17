@@ -874,7 +874,7 @@ const ApplicationDetail = () => {
             </div>
             <div className="flex flex-col px-6 pt-4 pb-5 mt-6 bg-white rounded-3xl max-md:px-5 max-md:max-w-full">
               <div className="text-2xl font-semibold uppercase text-neutral-600 max-md:max-w-full">
-                Job card <span className="uppercase">#0967huy</span>
+                Job card <span className="uppercase">#{applicationNumberDisplay}</span>
               </div>
               <div className="flex flex-col px-4 pt-2 pb-4 mt-6 rounded-lg bg-stone-100 max-md:max-w-full">
                 <div className="text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">
