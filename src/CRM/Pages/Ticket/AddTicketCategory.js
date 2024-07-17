@@ -44,6 +44,8 @@ const AddTicketCategory = ({ isModalVisible, handleCancel }) => {
     }
   };
 
+  console.log("departments", departments);
+
   return (
     <Modal
       visible={isModalVisible}
