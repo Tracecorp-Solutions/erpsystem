@@ -5,6 +5,7 @@ import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import CrmDashboard from "../Dashboard/CrmDashboard";
 import Departments from "../Departments/Departments";
+import Escalation from "../Escalation/Escalation";
 
 const Crm = () => {
   const location = useLocation();
@@ -30,6 +31,7 @@ const Crm = () => {
             <div className="content px-4 sm:px-6 lg:px-8 group-container">
               {screen === "crm-dashboard" && <CrmDashboard />}
               {screen === "departments" && <Departments />}
+              {screen === "escalation" && <Escalation />}
         
             </div>
           </div>
