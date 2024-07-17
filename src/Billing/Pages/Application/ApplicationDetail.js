@@ -261,36 +261,43 @@ const ApplicationDetail = () => {
 
   const handleDownloadPDF = async () => {
     setIsGenerating(true);
-
+  
     const input = document.getElementById("pdf-content");
     input.style.display = "block";
-
-    await Promise.all(
-      Array.from(document.images).map((img) => {
-        if (!img.complete) {
-          return new Promise((resolve, reject) => {
-            img.onload = resolve;
-            img.onerror = reject;
-          });
-        }
-        return true;
-      })
-    );
-
-    html2canvas(input)
-      .then((canvas) => {
-        const imgData = canvas.toDataURL("image/png");
-        const pdf = new jsPDF("p", "mm", "a4");
-        const imgWidth = 210;
-        const imgHeight = (canvas.height * imgWidth) / canvas.width;
-        pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
-        pdf.save("download.pdf");
-      })
-      .finally(() => {
-        setIsGenerating(false);
-        input.style.display = "none";
-      });
+  
+    try {
+      await Promise.all(
+        Array.from(document.images).map((img) => {
+          if (!img.complete) {
+            return new Promise((resolve, reject) => {
+              img.onload = resolve;
+              img.onerror = reject;
+            });
+          }
+          return true;
+        })
+      );
+  
+      html2canvas(input)
+        .then((canvas) => {
+          const imgData = canvas.toDataURL("image/png");
+          const pdf = new jsPDF("p", "mm", "a4");
+          const imgWidth = 210;
+          const imgHeight = (canvas.height * imgWidth) / canvas.width;
+          pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
+          pdf.save("download.pdf");
+        })
+        .catch((error) => {
+          console.error("Error generating PDF:", error);
+        });
+    } catch (error) {
+      console.error("Error loading images:", error);
+    } finally {
+      setIsGenerating(false);
+      input.style.display = "none";
+    }
   };
+  
 
   console.log("applicationData applicationData", applicationData);
 
