@@ -33,6 +33,7 @@ const ApplicationDetail = () => {
   const [applicationStatus, setApplicationStatus] = useState(null);
   const [localAuthorizationDocumentUrl, setLocalAuthorizationDocumentUrl] =
     useState("");
+  const [isGenerating, setIsGenerating] = useState(false);
 
   const pdfDownloadRef = useRef(null);
 
@@ -258,30 +259,40 @@ const ApplicationDetail = () => {
     applicationData
   );
 
-  const handleDownloadPDF = () => {
-    const input = document.getElementById("pdf-content");
+  const handleDownloadPDF = async () => {
+    setIsGenerating(true);
 
-    const originalDisplay = input.style.display;
+    const input = document.getElementById("pdf-content");
     input.style.display = "block";
 
-    html2canvas(input, { scrollY: -window.scrollY })
+    await Promise.all(
+      Array.from(document.images).map((img) => {
+        if (!img.complete) {
+          return new Promise((resolve, reject) => {
+            img.onload = resolve;
+            img.onerror = reject;
+          });
+        }
+        return true;
+      })
+    );
+
+    html2canvas(input)
       .then((canvas) => {
         const imgData = canvas.toDataURL("image/png");
         const pdf = new jsPDF("p", "mm", "a4");
-
         const imgWidth = 210;
         const imgHeight = (canvas.height * imgWidth) / canvas.width;
-
         pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
         pdf.save("download.pdf");
-
-        input.style.display = originalDisplay;
       })
-      .catch((error) => {
-        console.error("Error generating PDF:", error);
-        input.style.display = originalDisplay;
+      .finally(() => {
+        setIsGenerating(false);
+        input.style.display = "none";
       });
   };
+
+  console.log("applicationData applicationData", applicationData);
 
   return (
     <div className="flex flex-wrap justify-center content-start items-center py-6 rounded-3xl bg-stone-100">
@@ -857,7 +868,7 @@ const ApplicationDetail = () => {
       </section>
       <div
         id="pdf-content"
-        className="flex flex-col px-14 py-6 w-full bg-stone-100 max-w-[1200px] max-md:px-5 max-md:max-w-full"
+        className="flex flex-col px-14 py-6 w-full max-w-[1200px] max-md:px-5 max-md:max-w-full"
         style={{ display: "none" }}
       >
         <div className="flex justify-center items-center px-16 bg-white max-md:px-5">
@@ -874,20 +885,20 @@ const ApplicationDetail = () => {
             </div>
             <div className="flex flex-col px-6 pt-4 pb-5 mt-6 bg-white rounded-3xl max-md:px-5 max-md:max-w-full">
               <div className="text-2xl font-semibold uppercase text-neutral-600 max-md:max-w-full">
-                Job card <span className="uppercase">#{applicationNumberDisplay}</span>
+                Job card <span className="uppercase">#{jobCardInfo}</span>
               </div>
               <div className="flex flex-col px-4 pt-2 pb-4 mt-6 rounded-lg bg-stone-100 max-md:max-w-full">
                 <div className="text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">
                   Application Information
                 </div>
                 <div className="shrink-0 mt-4 h-px border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-opacity-10 max-md:max-w-full" />
-                <div className="flex flex-wrap gap-2 content-center mt-4">
+                <div className="flex flex-wrap w-full justify-between gap-2 content-center mt-4">
                   <div className="flex flex-col justify-center">
                     <div className="text-xs font-medium tracking-wide uppercase text-neutral-400">
                       Survey Date
                     </div>
                     <div className="mt-2 text-base leading-6 text-neutral-600">
-                      05 June 2024
+                      {applicationData.applicationDate}
                     </div>
                   </div>
                   <div className="flex flex-col justify-center">
@@ -895,7 +906,7 @@ const ApplicationDetail = () => {
                       Surveyor Name
                     </div>
                     <div className="mt-2 text-base leading-6 text-neutral-600">
-                      Nowembabazi Nickson
+                      {applicationData.user.fullName}
                     </div>
                   </div>
                   <div className="flex flex-col justify-center">
@@ -903,7 +914,7 @@ const ApplicationDetail = () => {
                       Applicant name
                     </div>
                     <div className="mt-2 text-base leading-6 text-neutral-600">
-                      Grace Eze
+                      {fullName}
                     </div>
                   </div>
                   <div className="flex flex-col justify-center">
@@ -911,7 +922,7 @@ const ApplicationDetail = () => {
                       application no.
                     </div>
                     <div className="mt-2 text-base leading-6 text-neutral-600">
-                      APP567890
+                      {applicationNumberDisplay}
                     </div>
                   </div>
                 </div>
@@ -1022,7 +1033,7 @@ const ApplicationDetail = () => {
                 </div>
                 <div className="shrink-0 px-4 max-w-full h-12 bg-white rounded-xl border border-solid border-neutral-500 border-opacity-30 w-[400px]" />
               </div>
-              <div className="flex flex-col px-4 pt-2 pb-4 mt-6 text-base font-semibold leading-6 rounded-lg bg-stone-100 text-neutral-600 max-md:max-w-full">
+              <div className="flex flex-col px-4 pt-2 pb-10 mt-6 text-base font-semibold leading-6 rounded-lg bg-stone-100 text-neutral-600 max-md:max-w-full">
                 <div className="max-md:max-w-full">
                   Surveyor Recommendations and Notes
                 </div>
