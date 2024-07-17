@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Table, Button, Dropdown, Menu } from 'antd';
-import { PlusOutlined } from '@ant-design/icons';
+import { Table, Button, Dropdown, Menu } from "antd";
+import { PlusOutlined } from "@ant-design/icons";
 import AddTicketCategory from "./AddTicketCategory";
 
 const TicketPage = () => {
@@ -55,22 +55,20 @@ const TicketPage = () => {
       render: (text) => <div>{text}</div>,
     },
     {
-      title: 'Action',
-      key: 'action',
+      title: "Action",
+      key: "action",
       render: (text, record) => (
         <Dropdown
           overlay={
             <Menu>
               <Menu.Item key="edit" onClick={() => handleEdit(record)}>
-                Edit
+                Update Category
               </Menu.Item>
-              <Menu.Item key="delete">
-                Delete
-              </Menu.Item>
+              <Menu.Item key="delete">Disable Category</Menu.Item>
             </Menu>
           }
           placement="bottomLeft"
-          trigger={['click']}
+          trigger={["click"]}
         >
           <Button type="link">
             <img
@@ -110,15 +108,15 @@ const TicketPage = () => {
             className="flex gap-2 justify-center px-6 py-5 my-auto bg-slate-500 text-base rounded-3xl max-md:px-5"
             onClick={showModal}
           >
-           <PlusOutlined /> Add Category
+            <PlusOutlined /> Add Category
           </Button>
         </div>
-        <div className="mt-4">
+        <div className="mt-4 overflow-auto">
           <Table
             columns={columns}
             dataSource={ticketCategories}
-            rowKey={(record) => record.id}
             pagination={false}
+            scroll={{ x: true }}
           />
         </div>
       </div>
