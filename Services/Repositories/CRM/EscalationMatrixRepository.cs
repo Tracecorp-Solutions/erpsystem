@@ -25,6 +25,8 @@ namespace Services.Repositories.CRM
             //mapping dto to model
             var escmatrix = new EscalationMatrix
             {
+                LevelName = matrix.LevelName,
+                LevelDescription = matrix.LevelDescription,
                 DepartmentId = matrix.DepartmentId,
                 EscalationTime = matrix.EscalationTime
             };

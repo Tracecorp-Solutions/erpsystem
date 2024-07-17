@@ -10,7 +10,8 @@ namespace Core.Models.CRM
     public class EscalationMatrix
     {
         public int Id { get; set; }
-
+        public string LevelName { get; set; }
+        public string LevelDescription { get; set; }
         [ForeignKey("Department")]
         public int DepartmentId { get; set; }
         public TimeSpan EscalationTime { get; set; }

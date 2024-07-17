@@ -10,7 +10,10 @@ namespace Core.DTOs.CRM
 {
     public class EscatalationMatrixDto
     {
+        public string LevelName { get; set; }
+        public string LevelDescription { get; set; }
         public int DepartmentId { get; set; }
+
         public TimeSpan EscalationTime { get; set; }
     }
 }
