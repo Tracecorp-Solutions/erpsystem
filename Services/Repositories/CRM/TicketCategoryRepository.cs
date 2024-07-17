@@ -48,7 +48,8 @@ namespace Services.Repositories.CRM
             var ticketCategories = _context.TicketCategories.Select(x => new TicketCategoryDto
             {
                 Name = x.Name,
-                DepartmentId = x.DepartmentId
+                DepartmentId = x.DepartmentId,
+                Description = x.Description
             });
 
             return ticketCategories == null ? throw new ArgumentException("No ticket category found"): ticketCategories;
