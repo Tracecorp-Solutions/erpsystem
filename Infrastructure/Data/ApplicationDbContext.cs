@@ -99,6 +99,7 @@ namespace Infrastructure.Data
         #region CRM module
         public DbSet<Department> Departments { get; set; }
         public DbSet<TicketCategory> TicketCategories { get; set; }
+        public DbSet<EscalationMatrix> EscalationMatrices { get; set; }
         #endregion
 
 
