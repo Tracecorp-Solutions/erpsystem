@@ -55,7 +55,7 @@ namespace Services.Repositories.CRM
             return ticketCategories == null ? throw new ArgumentException("No ticket category found"): ticketCategories;
         }
 
-        public async Task UpdateTicketCategory(TicketCategory ticket)
+        public async Task UpdateTicketCategory(TicketCategoryDto ticket)
         {
             var ticketCategory = await _context.TicketCategories.FindAsync(ticket.Id);
             if (ticketCategory == null)
@@ -63,6 +63,7 @@ namespace Services.Repositories.CRM
 
             ticketCategory.Name = ticket.Name;
             ticketCategory.DepartmentId = ticket.DepartmentId;
+            ticketCategory.Description = ticket.Description;
 
             await _context.SaveChangesAsync();
         }

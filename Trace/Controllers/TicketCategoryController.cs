@@ -52,7 +52,7 @@ namespace Trace.Controllers
         }
 
         [HttpPut("/UpdateTicketCategory")]
-        public async Task<IActionResult> UpdateTicketCategory([FromBody] TicketCategory category)
+        public async Task<IActionResult> UpdateTicketCategory([FromBody] TicketCategoryDto category)
         {
             try
             {

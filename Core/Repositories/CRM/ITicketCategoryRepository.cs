@@ -11,7 +11,7 @@ namespace Core.Repositories.CRM
     public interface ITicketCategoryRepository
     {
         Task AddTicketCategory(TicketCategoryDto dto);
-        Task UpdateTicketCategory(TicketCategory ticket);
+        Task UpdateTicketCategory(TicketCategoryDto ticket);
         Task DeleteTicketCategory(int id);
         Task<IEnumerable<TicketCategoryDto>> GetTicketCategories();
     }
