@@ -4,7 +4,7 @@ import axios from "axios";
 
 const { Option } = Select;
 
-const AddTicketCategory = ({ isModalVisible, handleCancel, handleAddCategory }) => {
+const UpdateTicketCategory = ({ showUpdateTicketCategory, handleCancel, handleUpdateCategory, selectedCategory }) => {
   const [departments, setDepartments] = useState([]);
   const [selectedDepartment, setSelectedDepartment] = useState(null);
   const [name, setName] = useState("");
@@ -12,7 +12,12 @@ const AddTicketCategory = ({ isModalVisible, handleCancel, handleAddCategory }) 
 
   useEffect(() => {
     fetchDepartments();
-  }, []);
+    if (selectedCategory) {
+      setName(selectedCategory.name);
+      setSelectedDepartment(selectedCategory.departmentId);
+      setDescription(selectedCategory.description);
+    }
+  }, [selectedCategory]);
 
   const fetchDepartments = async () => {
     try {
@@ -27,19 +32,18 @@ const AddTicketCategory = ({ isModalVisible, handleCancel, handleAddCategory }) 
 
   const handleSaveCategory = async () => {
     const formData = {
+      id: selectedCategory.id,
       name: name,
       departmentId: selectedDepartment,
       description: description,
     };
 
-    handleAddCategory(formData); 
+    handleUpdateCategory(formData);
   };
-
-  console.log("departments", departments);
 
   return (
     <Modal
-      visible={isModalVisible}
+      visible={showUpdateTicketCategory}
       closable={false}
       footer={null}
       width={700}
@@ -48,7 +52,7 @@ const AddTicketCategory = ({ isModalVisible, handleCancel, handleAddCategory }) 
       <div className="flex flex-col justify-center items-center pt-8 text-base leading-6 bg-white rounded-3xl w-full">
         <div className="flex w-full justify-between">
           <div className="text-4xl font-semibold text-neutral-600 max-md:max-w-full">
-            New Ticket Category
+            Edit Ticket Category
           </div>
           <img
             loading="lazy"
@@ -106,7 +110,7 @@ const AddTicketCategory = ({ isModalVisible, handleCancel, handleAddCategory }) 
               onClick={handleSaveCategory}
               className="justify-center px-8 h-12 font-semibold rounded-3xl max-md:pr-7 bg-slate-500 max-md:pl-7"
             >
-              Save Category
+              Update Category
             </Button>
           </div>
         </div>
@@ -115,4 +119,4 @@ const AddTicketCategory = ({ isModalVisible, handleCancel, handleAddCategory }) 
   );
 };
 
-export default AddTicketCategory;
+export default UpdateTicketCategory;

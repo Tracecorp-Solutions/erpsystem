@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { Table, Button, Dropdown, Menu } from "antd";
+import { Table, Button, Dropdown, Menu, message } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
+import axios from "axios";
 import AddTicketCategory from "./AddTicketCategory";
+import UpdateTicketCategory from "./UpdateTicketCategory";
 
 const TicketPage = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [ticketCategories, setTicketCategories] = useState([]);
+  const [showUpdateTicketCategory, setShowUpdateTicketCategory] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState(null);
 
   useEffect(() => {
     fetchTicketCategories();
@@ -20,6 +23,7 @@ const TicketPage = () => {
       setTicketCategories(response.data);
     } catch (error) {
       console.error("Error fetching ticket categories:", error);
+      message.error("Failed to fetch ticket categories.");
     }
   };
 
@@ -27,41 +31,69 @@ const TicketPage = () => {
     setIsModalVisible(true);
   };
 
-  const handleOk = () => {
-    setIsModalVisible(false);
+  const showUpdateModal = (record) => {
+    setSelectedCategory(record);
+    setShowUpdateTicketCategory(true);
+  };
+
+  const handleCancelTicketCategory = () => {
+    setShowUpdateTicketCategory(false);
+    setSelectedCategory(null);
   };
 
   const handleCancel = () => {
     setIsModalVisible(false);
   };
 
+  const handleAddCategory = async (formData) => {
+    try {
+      await axios.post(
+        `${process.env.REACT_APP_API_URL}/AddTicketCategory`,
+        formData
+      );
+      message.success("Category added successfully");
+      setIsModalVisible(false);
+      fetchTicketCategories();
+    } catch (error) {
+      message.error("Error adding category:", error);
+    }
+  };
+
+  const handleUpdateCategory = async (formData) => {
+    try {
+      await axios.put(
+        `${process.env.REACT_APP_API_URL}/UpdateTicketCategory`,
+        formData
+      );
+      message.success("Category updated successfully");
+      setShowUpdateTicketCategory(false);
+      fetchTicketCategories();
+    } catch (error) {
+      message.error("Error updating category:", error);
+    }
+  };
+
   const columns = [
     {
-      title: "Category Name",
+      title: "CATEGORY NAME",
       dataIndex: "name",
       key: "name",
       render: (text) => <div>{text}</div>,
     },
     {
-      title: "Description",
+      title: "DESCRIPTION",
       dataIndex: "description",
       key: "description",
       render: (text) => <div>{text || "No description available"}</div>,
     },
     {
-      title: "Priority",
-      dataIndex: "priority",
-      key: "priority",
-      render: (text) => <div>{text}</div>,
-    },
-    {
-      title: "Action",
+      title: "ACTION",
       key: "action",
       render: (text, record) => (
         <Dropdown
           overlay={
             <Menu>
-              <Menu.Item key="edit" onClick={() => handleEdit(record)}>
+              <Menu.Item key="edit" onClick={() => showUpdateModal(record)}>
                 Update Category
               </Menu.Item>
               <Menu.Item key="delete">Disable Category</Menu.Item>
@@ -81,11 +113,6 @@ const TicketPage = () => {
       ),
     },
   ];
-
-  const handleEdit = (record) => {
-    console.log("Edit category:", record);
-    // Handle edit action, e.g., show edit modal
-  };
 
   return (
     <div className="flex flex-col flex-wrap justify-center content-start py-6 rounded-3xl bg-stone-100">
@@ -123,6 +150,13 @@ const TicketPage = () => {
       <AddTicketCategory
         isModalVisible={isModalVisible}
         handleCancel={handleCancel}
+        handleAddCategory={handleAddCategory}
+      />
+      <UpdateTicketCategory
+        showUpdateTicketCategory={showUpdateTicketCategory}
+        handleCancel={handleCancelTicketCategory}
+        handleUpdateCategory={handleUpdateCategory}
+        selectedCategory={selectedCategory}
       />
     </div>
   );
