@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Core.DTOs.CRM;
 using Core.Models.CRM;
 using Core.Repositories.CRM;
+using Microsoft.EntityFrameworkCore;
 
 namespace Services.Repositories.CRM
 {
@@ -43,16 +44,13 @@ namespace Services.Repositories.CRM
             await _context.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<TicketCategoryDto>> GetTicketCategories()
+        public async Task<IEnumerable<TicketCategory>> GetTicketCategories()
         {
-            var ticketCategories = _context.TicketCategories.Select(x => new TicketCategoryDto
-            {
-                Name = x.Name,
-                DepartmentId = x.DepartmentId,
-                Description = x.Description
-            });
+            var ticketcategories = await _context.TicketCategories
+                .Include(x => x.Department)
+                .ToListAsync();
 
-            return ticketCategories == null ? throw new ArgumentException("No ticket category found"): ticketCategories;
+            return ticketcategories == null ? throw new ArgumentException("No ticket category found"): ticketcategories;
         }
 
         public async Task UpdateTicketCategory(TicketCategoryDto ticket)
