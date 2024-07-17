@@ -251,14 +251,6 @@ const ApplicationDetail = () => {
   if (!applicationData) {
     return <div>Loading...</div>;
   }
-
-  const { assignedTo } = applicationData;
-
-  console.log(
-    "applicationData applicationData applicationData applicationData",
-    applicationData
-  );
-
   const handleDownloadPDF = async () => {
     setIsGenerating(true);
   
