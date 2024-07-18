@@ -41,7 +41,6 @@ namespace Services.Repositories.CRM
         {
             var result = await _context.EscalationMatrices
                 .Include(esc => esc.Department)
-                .Include(esc => esc.Department.User)
                 .Include(esc => esc.Priority)
                 .Include(esc => esc.TicketCategory)
                 .ToListAsync();
@@ -53,7 +52,6 @@ namespace Services.Repositories.CRM
         {
             var matrices = await _context.EscalationMatrices
                 .Include(esc => esc.Department)
-                .Include(esc => esc.Department.User)
                 .Include(esc => esc.Priority)
                 .Include(esc => esc.TicketCategory)
                 .FirstOrDefaultAsync(x => x.DepartmentId==departmentId);
