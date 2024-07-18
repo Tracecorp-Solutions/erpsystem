@@ -14,6 +14,8 @@ namespace Core.DTOs.CRM
         public string LevelDescription { get; set; }
         public int DepartmentId { get; set; }
 
+        public int TicketCategoryId { get; set; }
+
         public TimeSpan EscalationTime { get; set; }
         public int PriorityId { get; set; }
     }

@@ -30,6 +30,7 @@ namespace Services.Repositories.CRM
                 DepartmentId = matrix.DepartmentId,
                 EscalationTime = matrix.EscalationTime,
                 PriorityId = matrix.PriorityId,
+                TicketCategoryId = matrix.TicketCategoryId
             };
 
             _context.EscalationMatrices.Add(escmatrix);
