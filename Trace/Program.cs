@@ -49,6 +49,7 @@ builder.Services.AddScoped<IMeterManagementRepository, MeterManagementRepository
 builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
 builder.Services.AddScoped<ITicketCategoryRepository, TicketCategoryRepository>();
 builder.Services.AddScoped<IEscalationMatrixRepository, EscalationMatrixRepository>();
+builder.Services.AddScoped<IPriorityRepository, PriorityRepository>();
 
 
 builder.Services.AddControllers();
