@@ -100,6 +100,7 @@ namespace Infrastructure.Data
         public DbSet<Department> Departments { get; set; }
         public DbSet<TicketCategory> TicketCategories { get; set; }
         public DbSet<EscalationMatrix> EscalationMatrices { get; set; }
+        public DbSet<Priority> Priorities { get; set; }
         #endregion
 
 
