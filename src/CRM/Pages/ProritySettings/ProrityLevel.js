@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Table, Button, message } from "antd";
-import { PlusOutlined } from "@ant-design/icons";
+import { Table, Button, message, Dropdown, Menu } from "antd";
+import { PlusOutlined, VerticalEllipsisOutlined  } from "@ant-design/icons";
 import AddProrityLevel from "./AddProrityLevel";
 
 const PrioritySetting = () => {
@@ -62,27 +62,46 @@ const PrioritySetting = () => {
 
   const columns = [
     {
-      title: "Priority Level",
+      title: "PRORITY LEVEL",
       dataIndex: "priorityName",
       key: "priorityName",
     },
     {
-      title: "Description",
+      title: "DESCRIPTION",
       dataIndex: "priorityDescription",
       key: "priorityDescription",
     },
     {
-      title: "Color Code",
+      title: "COLOR CODE",
       dataIndex: "colorCode",
       key: "colorCode",
     },
     {
-      title: "Action",
+      title: "ACTION",
       key: "action",
       render: (text, record) => (
-        <Button type="link" onClick={() => handleAction(record.key)}>
-          View
-        </Button>
+        <Dropdown
+          overlay={
+            <Menu>
+              <Menu.Item key="1" onClick={() => handleAction(record.key)}>
+                Update Prority Level
+              </Menu.Item>
+              <Menu.Item key="2">
+                Disable Prority Level
+              </Menu.Item>
+            </Menu>
+          }
+          trigger={["click"]}
+          placement="bottomRight"
+        >
+          <Button type="link">
+            <img
+              loading="lazy"
+              src="https://cdn.builder.io/api/v1/image/assets/TEMP/7dbf8806e95bce2fbed7ce7b2f5db807a8837b3f5d8b859cf52ff980db0ec52c?apiKey=0d95acea82cc4b259a61e827c24c5c6c&"
+              className="w-5 aspect-square"
+            />
+          </Button>
+        </Dropdown>
       ),
     },
   ];
@@ -105,20 +124,20 @@ const PrioritySetting = () => {
         <div className="max-md:max-w-full">Priority Settings</div>
       </div>
       <div className="flex flex-col self-center p-6 mt-6 bg-white rounded-3xl  max-md:px-5 w-full">
-        <div className="flex gap-4 justify-between items-center font-semibold leading-[160%] max-md:flex-wrap max-md:max-w-full">
+        <div className="flex gap-4 justify-between items-center mb-6 font-semibold leading-[160%] max-md:flex-wrap max-md:max-w-full">
           <div className="text-4xl capitalize text-neutral-600">
             Priority Levels
           </div>
           <Button
             type="primary"
             onClick={showModal}
-            className="flex gap-2 justify-center items-center bg-slate-500 px-6 py-3 text-base rounded-3xl max-md:px-5"
+            className="flex gap-2 justify-center items-center bg-slate-500 px-6 py-5 text-base rounded-3xl max-md:px-5"
           >
             <PlusOutlined />
             Add Priority Level
           </Button>
         </div>
-        <Table dataSource={data} columns={columns} pagination={false} />
+        <Table dataSource={data} columns={columns} pagination={false} scroll={{ x: true }} />
       </div>
       <AddProrityLevel visible={visible} handleCancel={handleCancel} onFinish={onFinish} reloadData={fetchData} />
     </div>

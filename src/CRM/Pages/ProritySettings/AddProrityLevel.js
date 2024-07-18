@@ -35,7 +35,7 @@ const AddProrityLevel = ({ handleCancel, visible, onFinish, reloadData }) => {
             rules={[{ required: true, message: "Please enter level name!" }]}
             className="justify-center items-start mt-2 max-w-full bg-white rounded-xl text-neutral-400 w-[500px] max-md:pr-5"
           >
-            <Input placeholder="Enter Level Name" />
+            <Input placeholder="Enter Level Name" className="py-4" />
           </Form.Item>
           <div className="mt-4 text-start w-full">Color Code</div>
           <Form.Item
@@ -43,7 +43,7 @@ const AddProrityLevel = ({ handleCancel, visible, onFinish, reloadData }) => {
             rules={[{ required: true, message: "Please choose a color!" }]}
             className="justify-between mt-2 max-w-full bg-white rounded-xl text-neutral-400 w-[500px] max-md:flex-wrap"
           >
-            <Select placeholder="Choose Color" className="w-full">
+            <Select placeholder="Choose Color" className="w-full h-12">
               <Option value="Red">Red</Option>
               <Option value="Yellow">Yellow</Option>
               <Option value="Green">Green</Option>
