@@ -37,7 +37,7 @@ namespace Services.Repositories.CRM
         {
             var priority = await GetPriority(id);
 
-            if (priority != null)
+            if (priority == null)
                 throw new ArgumentException("Priority not found");
 
             _context.Priorities.Remove(priority);
