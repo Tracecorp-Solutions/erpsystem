@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Core.DTOs.CRM;
 
 namespace Services.Repositories.CRM
 {
@@ -18,8 +19,14 @@ namespace Services.Repositories.CRM
             _context = context;
         }
 
-        public async Task AddPriority(Priority priority)
+        public async Task AddPriority(PriorityDto dto)
         {
+            //map dto to model
+            var priority = new Priority
+            {
+                PriorityName = dto.PriorityName
+            };
+
             _context.Priorities.Add(priority);
             await _context.SaveChangesAsync();
         }

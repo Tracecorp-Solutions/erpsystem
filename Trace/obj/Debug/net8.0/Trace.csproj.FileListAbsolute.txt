@@ -266,3 +266,4 @@ D:\erpsystem\Trace\obj\Debug\net8.0\Trace.pdb
 D:\erpsystem\Trace\obj\Debug\net8.0\Trace.genruntimeconfig.cache
 D:\erpsystem\Trace\obj\Debug\net8.0\ref\Trace.dll
 D:\working directory\erpsystem\Trace\bin\Debug\net8.0\Newtonsoft.Json.dll
+D:\working directory\erpsystem\Trace\obj\Debug\net8.0\Trace.MvcApplicationPartsAssemblyInfo.cs
