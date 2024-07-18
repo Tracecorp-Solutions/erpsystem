@@ -3,6 +3,9 @@
   "WorkspaceRootPath": "D:\\working directory\\erpsystem\\Trace\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\working directory\\erpsystem\\Infrastructure\\Migrations\\20240718070437_AdditionOfPriority.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{D0C5D151-D98C-46B1-A85E-DFAA22B5EE2F}|..\\Services\\Services.csproj|d:\\working directory\\erpsystem\\services\\repositories\\crm\\priorityrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -60,7 +63,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 10,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Bookmark",
@@ -84,7 +87,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
+              "Title": "20240718070437_AdditionOfPriority.cs",
+              "DocumentMoniker": "D:\\working directory\\erpsystem\\Infrastructure\\Migrations\\20240718070437_AdditionOfPriority.cs",
+              "RelativeDocumentMoniker": "..\\Infrastructure\\Migrations\\20240718070437_AdditionOfPriority.cs",
+              "ToolTip": "D:\\working directory\\erpsystem\\Infrastructure\\Migrations\\20240718070437_AdditionOfPriority.cs",
+              "RelativeToolTip": "..\\Infrastructure\\Migrations\\20240718070437_AdditionOfPriority.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-18T07:04:37.87Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": "Program.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Trace\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
@@ -97,7 +113,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "MeterReadingController.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Trace\\Controllers\\MeterReadingController.cs",
               "RelativeDocumentMoniker": "Controllers\\MeterReadingController.cs",
@@ -110,7 +126,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "PaymentController.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Trace\\Controllers\\PaymentController.cs",
               "RelativeDocumentMoniker": "Controllers\\PaymentController.cs",
@@ -123,7 +139,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "PriorityController.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Trace\\Controllers\\PriorityController.cs",
               "RelativeDocumentMoniker": "Controllers\\PriorityController.cs",
@@ -136,7 +152,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 15,
               "Title": "ApplicationDbContext.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Infrastructure\\Data\\ApplicationDbContext.cs",
               "RelativeDocumentMoniker": "..\\Infrastructure\\Data\\ApplicationDbContext.cs",
@@ -149,20 +165,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "PriorityRepository.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Services\\Repositories\\CRM\\PriorityRepository.cs",
               "RelativeDocumentMoniker": "..\\Services\\Repositories\\CRM\\PriorityRepository.cs",
               "ToolTip": "D:\\working directory\\erpsystem\\Services\\Repositories\\CRM\\PriorityRepository.cs",
               "RelativeToolTip": "..\\Services\\Repositories\\CRM\\PriorityRepository.cs",
-              "ViewState": "AQIAAAoAAAAAAAAAAAAAABoAAAAvAAAA",
+              "ViewState": "AQIAAB8AAAAAAAAAAAAAAB8AAAAJAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-07-18T06:50:05.833Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 8,
               "Title": "PriorityDto.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Core\\DTOs\\CRM\\PriorityDto.cs",
               "RelativeDocumentMoniker": "..\\Core\\DTOs\\CRM\\PriorityDto.cs",
@@ -175,7 +191,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "IPriorityRepository.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Core\\Repositories\\CRM\\IPriorityRepository.cs",
               "RelativeDocumentMoniker": "..\\Core\\Repositories\\CRM\\IPriorityRepository.cs",
@@ -188,7 +204,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "Priority.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Core\\Models\\CRM\\Priority.cs",
               "RelativeDocumentMoniker": "..\\Core\\Models\\CRM\\Priority.cs",
@@ -201,7 +217,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 10,
               "Title": "EscalationMatrix.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Core\\Models\\CRM\\EscalationMatrix.cs",
               "RelativeDocumentMoniker": "..\\Core\\Models\\CRM\\EscalationMatrix.cs",
@@ -214,7 +230,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 9,
               "Title": "20240717115049_AdditionOfDeleteFlagOnTicketCategories.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Infrastructure\\Migrations\\20240717115049_AdditionOfDeleteFlagOnTicketCategories.cs",
               "RelativeDocumentMoniker": "..\\Infrastructure\\Migrations\\20240717115049_AdditionOfDeleteFlagOnTicketCategories.cs",
@@ -227,7 +243,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 12,
               "Title": "TicketCategoryRepository.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Services\\Repositories\\CRM\\TicketCategoryRepository.cs",
               "RelativeDocumentMoniker": "..\\Services\\Repositories\\CRM\\TicketCategoryRepository.cs",
@@ -239,7 +255,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 14,
               "Title": "TicketCategory.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Core\\Models\\CRM\\TicketCategory.cs",
               "RelativeDocumentMoniker": "..\\Core\\Models\\CRM\\TicketCategory.cs",
@@ -251,7 +267,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 13,
               "Title": "ITicketCategoryRepository.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Core\\Repositories\\CRM\\ITicketCategoryRepository.cs",
               "RelativeDocumentMoniker": "..\\Core\\Repositories\\CRM\\ITicketCategoryRepository.cs",
@@ -263,7 +279,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 11,
               "Title": "TicketCategoryController.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Trace\\Controllers\\TicketCategoryController.cs",
               "RelativeDocumentMoniker": "Controllers\\TicketCategoryController.cs",
