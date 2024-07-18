@@ -1,6 +1,10 @@
-import * as React from "react";
+import React, { useState, useEffect } from "react";
+import { Modal, message, Input, Button, Select } from "antd";
 
-function CreateEscalation() {
+function CreateEscalation({
+  isUpdateModalVisible,
+  handleCloseModalVisible,
+}) {
   const [currentStep, setCurrentStep] = React.useState(1);
 
   const handleSaveFirstForm = () => {
@@ -9,9 +13,10 @@ function CreateEscalation() {
 
   return (
     <>
-      {currentStep === 1 && (
-        <div className="flex flex-col justify-center items-center bg-white rounded-3xl max-w-[820px]">
-          <div className="flex flex-col self-stretch pt-6 w-full text-4xl font-semibold leading-[57.6px] text-neutral-600 max-md:max-w-full">
+     <Modal visible={isUpdateModalVisible} closable={false} footer={null}>
+     {currentStep === 1 && (
+       <div className="flex flex-col justify-center items-center bg-white rounded-3xl max-w-[720px] h-[calc(100vh - 100px)] overflow-y-auto">
+          <div className="flex flex-col self-stretch pt-6 w-full text-2xl font-semibold leading-[57.6px] text-neutral-600 max-md:max-w-full">
             <div className="flex gap-5 justify-between self-center px-5 w-full max-w-screen-sm max-md:flex-wrap max-md:max-w-full">
               <div>New Escalation Level</div>
               <img
@@ -26,7 +31,7 @@ function CreateEscalation() {
             <div className="flex gap-5 max-md:flex-col max-md:gap-0">
               <div className="flex flex-col w-3/12 max-md:ml-0 max-md:w-full">
                 <div className="flex flex-col grow font-semibold max-md:mt-4">
-                  <div className="justify-center items-center self-center px-5 w-12 h-12 text-base leading-6 text-white whitespace-nowrap rounded-3xl bg-slate-500 max-md:px-5">
+                  <div className="justify-center items-center self-center px-5 py-3 w-12 h-12 text-base leading-6 text-white whitespace-nowrap rounded-3xl bg-slate-500 max-md:px-5">
                     1
                   </div>
                   <div className="mt-2 text-sm text-center text-neutral-600">
@@ -43,7 +48,7 @@ function CreateEscalation() {
               </div>
               <div className="flex flex-col ml-5 w-3/12 max-md:ml-0 max-md:w-full">
                 <div className="flex flex-col grow text-neutral-400 max-md:mt-4">
-                  <div className="justify-center items-center self-center px-5 w-12 h-12 text-base font-semibold leading-6 whitespace-nowrap rounded-3xl bg-stone-100">
+                  <div className="justify-center items-center self-center px-5 py-3 w-12 h-12 text-base font-semibold leading-6 whitespace-nowrap rounded-3xl bg-stone-200">
                     2
                   </div>
                   <div className="mt-2 text-sm text-center">
@@ -52,6 +57,24 @@ function CreateEscalation() {
                 </div>
               </div>
             </div>
+          </div>
+          <div className="mt-4 text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">
+            Department
+          </div>
+          <div className="justify-center items-start px-4 py-4 mt-2 max-w-full text-base leading-6 bg-white rounded-xl border border-solid border-neutral-500 border-opacity-30 text-neutral-400 w-[500px] max-md:pr-5">
+            Chose the Department
+          </div>
+          <div className="mt-4 text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">
+            Ticket Catergory
+          </div>
+          <div className="justify-center items-start px-4 py-4 mt-2 max-w-full text-base leading-6 bg-white rounded-xl border border-solid border-neutral-500 border-opacity-30 text-neutral-400 w-[500px] max-md:pr-5">
+            Choose Catergory
+          </div>
+          <div className="mt-4 text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">
+            Priority
+          </div>
+          <div className="justify-center items-start px-4 py-4 mt-2 max-w-full text-base leading-6 bg-white rounded-xl border border-solid border-neutral-500 border-opacity-30 text-neutral-400 w-[500px] max-md:pr-5">
+            Assign priority
           </div>
           <div className="mt-4 text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">
             Level Name
@@ -76,7 +99,7 @@ function CreateEscalation() {
               className="shrink-0 self-start w-6 aspect-square"
             />
           </div>
-          <div className="flex justify-center items-center self-stretch px-16 py-6 mt-16 w-full text-base leading-6 bg-stone-100 max-md:px-5 max-md:mt-10 max-md:max-w-full">
+          <div className="flex justify-center items-center self-stretch px-8 py-6 mt-6 w-full text-base leading-6 bg-stone-100 max-md:px-5 max-md:mt-10 max-md:max-w-full">
             <div className="flex gap-4 max-w-full w-[496px] max-md:flex-wrap">
               <div className="justify-center items-center px-8 py-4 whitespace-nowrap rounded-3xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 max-md:px-5">
                 Cancel
@@ -130,7 +153,7 @@ function CreateEscalation() {
               </div>
               <div className="flex flex-col ml-5 w-3/12 max-md:ml-0 max-md:w-full">
                 <div className="flex flex-col grow font-semibold max-md:mt-4">
-                  <div className="justify-center items-center self-center px-5 w-12 h-12 text-base leading-6 text-white whitespace-nowrap rounded-3xl bg-slate-500">
+                  <div className="justify-center items-center self-center px-5 py-3 w-12 h-12 text-base leading-6 text-white whitespace-nowrap rounded-3xl bg-slate-500">
                     2
                   </div>
                   <div className="mt-2 text-sm text-center text-neutral-600">
@@ -183,6 +206,8 @@ function CreateEscalation() {
           </div>
         </div>
       )}
+     </Modal>
+     
     </>
   );
 }

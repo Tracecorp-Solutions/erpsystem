@@ -1,8 +1,22 @@
-import * as React from "react";
+import React, { useState, useEffect } from "react";
+import CreateEscalation from "./CreateEscalation";
 
 function Escalation() {
+
+  const [isUpdateModalVisible, setIsUpdateModalVisible] = useState(false);
+
+  const handleUpdateModalVisible = () => {
+    setIsUpdateModalVisible(true);
+  };
+
+  const handleCloseModalVisible = () => {
+    setIsUpdateModalVisible(false);
+   
+  };
+
 return (
-  <div className="flex flex-col flex-wrap justify-center content-start py-6 rounded-3xl bg-stone-100">
+  <>
+   <div className="flex flex-col flex-wrap justify-center content-start py-6 rounded-3xl bg-stone-100">
     <div className="flex gap-2 px-6 text-base leading-6 text-neutral-600 max-md:flex-wrap max-md:px-5">
       <div className="font-semibold">Configuration</div>
       <img
@@ -17,14 +31,14 @@ return (
         <div className="text-4xl capitalize text-neutral-600">
           Escalation Levels
         </div>
-        <div className="flex gap-2 justify-center px-6 py-3 my-auto text-base text-white rounded-3xl bg-slate-500 max-md:px-5">
-          <img
-            loading="lazy"
-            src="https://cdn.builder.io/api/v1/image/assets/TEMP/5a6fbf858a262ca173836b28ea1635646ad60c82456acd8cee2b922f3be3bea7?apiKey=5bf51c3fc9cb49b480a07670cbcd768f&"
-            className="shrink-0 self-start w-6 aspect-square"
-          />
-          <div>Add Escalation level</div>
-        </div>
+        <div className="flex gap-2 justify-center px-6 py-3 my-auto text-base text-white rounded-3xl max-md:px-5">
+              <button
+                className="justify-center self-start px-3 py-3 mt-2.5 text-sm font-semibold text-white whitespace-nowrap rounded-3xl bg-blue-400 max-md:px-5"
+                onClick={handleUpdateModalVisible}
+              >
+                 Add escalation level
+              </button>
+            </div>
       </div>
       <div className="flex gap-0 mt-4 max-md:flex-wrap max-md:max-w-full">
         <div className="flex flex-col text-base leading-6 text-neutral-400">
@@ -140,6 +154,14 @@ return (
       </div>
     </div>
   </div>
+  <CreateEscalation
+        isUpdateModalVisible={isUpdateModalVisible}
+        // editingDepartment={editingDepartment}
+        // handleSave={handleSave}
+        handleCloseModalVisible={handleCloseModalVisible}
+      />
+  </>
+  
 );
 }
 
