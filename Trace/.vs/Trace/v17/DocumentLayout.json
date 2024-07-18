@@ -3,17 +3,20 @@
   "WorkspaceRootPath": "D:\\working directory\\erpsystem\\Trace\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A176F11F-4BEC-4DAC-9205-CF64F57D23C0}|..\\Core\\Core.csproj|d:\\working directory\\erpsystem\\core\\models\\crm\\escalationmatrix.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\working directory\\erpsystem\\Infrastructure\\Migrations\\20240718102112_AdditionOfDescriptionAndColorCodeToPriority.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D0C5D151-D98C-46B1-A85E-DFAA22B5EE2F}|..\\Services\\Services.csproj|d:\\working directory\\erpsystem\\services\\repositories\\crm\\escalationmatrixrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D0C5D151-D98C-46B1-A85E-DFAA22B5EE2F}|..\\Services\\Services.csproj|d:\\working directory\\erpsystem\\services\\repositories\\crm\\priorityrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{97CA6EF6-720A-4545-8A15-EBF2D4F20DA0}|Trace.csproj|d:\\working directory\\erpsystem\\trace\\controllers\\escalationmatrixcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{97CA6EF6-720A-4545-8A15-EBF2D4F20DA0}|Trace.csproj|solutionrelative:controllers\\escalationmatrixcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{97CA6EF6-720A-4545-8A15-EBF2D4F20DA0}|Trace.csproj|d:\\working directory\\erpsystem\\trace\\controllers\\prioritycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{97CA6EF6-720A-4545-8A15-EBF2D4F20DA0}|Trace.csproj|solutionrelative:controllers\\prioritycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A176F11F-4BEC-4DAC-9205-CF64F57D23C0}|..\\Core\\Core.csproj|d:\\working directory\\erpsystem\\core\\dtos\\crm\\escatalationmatrixdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A176F11F-4BEC-4DAC-9205-CF64F57D23C0}|..\\Core\\Core.csproj|d:\\working directory\\erpsystem\\core\\dtos\\crm\\prioritydto.cs||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A176F11F-4BEC-4DAC-9205-CF64F57D23C0}|..\\Core\\Core.csproj|d:\\working directory\\erpsystem\\core\\models\\crm\\priority.cs||{8B382828-6202-11D1-8870-0000F87579D2}"
     }
   ],
   "DocumentGroupContainers": [
@@ -28,40 +31,27 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "EscalationMatrix.cs",
-              "DocumentMoniker": "D:\\working directory\\erpsystem\\Core\\Models\\CRM\\EscalationMatrix.cs",
-              "RelativeDocumentMoniker": "..\\Core\\Models\\CRM\\EscalationMatrix.cs",
-              "ToolTip": "D:\\working directory\\erpsystem\\Core\\Models\\CRM\\EscalationMatrix.cs",
-              "RelativeToolTip": "..\\Core\\Models\\CRM\\EscalationMatrix.cs",
-              "ViewState": "AQIAAAkAAAAAAAAAAAAAABoAAAAmAAAA",
+              "Title": "20240718102112_AdditionOfDescriptionAndColorCodeToPriority.cs",
+              "DocumentMoniker": "D:\\working directory\\erpsystem\\Infrastructure\\Migrations\\20240718102112_AdditionOfDescriptionAndColorCodeToPriority.cs",
+              "RelativeDocumentMoniker": "..\\Infrastructure\\Migrations\\20240718102112_AdditionOfDescriptionAndColorCodeToPriority.cs",
+              "ToolTip": "D:\\working directory\\erpsystem\\Infrastructure\\Migrations\\20240718102112_AdditionOfDescriptionAndColorCodeToPriority.cs",
+              "RelativeToolTip": "..\\Infrastructure\\Migrations\\20240718102112_AdditionOfDescriptionAndColorCodeToPriority.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-18T09:07:08.393Z",
+              "WhenOpened": "2024-07-18T10:21:12.672Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "EscalationMatrixRepository.cs",
-              "DocumentMoniker": "D:\\working directory\\erpsystem\\Services\\Repositories\\CRM\\EscalationMatrixRepository.cs",
-              "RelativeDocumentMoniker": "..\\Services\\Repositories\\CRM\\EscalationMatrixRepository.cs",
-              "ToolTip": "D:\\working directory\\erpsystem\\Services\\Repositories\\CRM\\EscalationMatrixRepository.cs",
-              "RelativeToolTip": "..\\Services\\Repositories\\CRM\\EscalationMatrixRepository.cs",
-              "ViewState": "AQIAAAwAAAAAAAAAAAASwBkAAAAlAAAA",
+              "Title": "PriorityRepository.cs",
+              "DocumentMoniker": "D:\\working directory\\erpsystem\\Services\\Repositories\\CRM\\PriorityRepository.cs",
+              "RelativeDocumentMoniker": "..\\Services\\Repositories\\CRM\\PriorityRepository.cs",
+              "ToolTip": "D:\\working directory\\erpsystem\\Services\\Repositories\\CRM\\PriorityRepository.cs",
+              "RelativeToolTip": "..\\Services\\Repositories\\CRM\\PriorityRepository.cs",
+              "ViewState": "AQIAAA4AAAAAAAAAAAASwCEAAAAJAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-18T09:06:57.569Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "EscatalationMatrixDto.cs",
-              "DocumentMoniker": "D:\\working directory\\erpsystem\\Core\\DTOs\\CRM\\EscatalationMatrixDto.cs",
-              "RelativeDocumentMoniker": "..\\Core\\DTOs\\CRM\\EscatalationMatrixDto.cs",
-              "ToolTip": "D:\\working directory\\erpsystem\\Core\\DTOs\\CRM\\EscatalationMatrixDto.cs",
-              "RelativeToolTip": "..\\Core\\DTOs\\CRM\\EscatalationMatrixDto.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABEAAAArAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-18T09:06:34.082Z",
+              "WhenOpened": "2024-07-18T10:18:33.102Z",
               "EditorCaption": ""
             },
             {
@@ -86,15 +76,41 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "EscalationMatrixController.cs",
-              "DocumentMoniker": "D:\\working directory\\erpsystem\\Trace\\Controllers\\EscalationMatrixController.cs",
-              "RelativeDocumentMoniker": "Controllers\\EscalationMatrixController.cs",
-              "ToolTip": "D:\\working directory\\erpsystem\\Trace\\Controllers\\EscalationMatrixController.cs",
-              "RelativeToolTip": "Controllers\\EscalationMatrixController.cs",
-              "ViewState": "AQIAAAkAAAAAAAAAAAAAABgAAABAAAAA",
+              "DocumentIndex": 4,
+              "Title": "Priority.cs",
+              "DocumentMoniker": "D:\\working directory\\erpsystem\\Core\\Models\\CRM\\Priority.cs",
+              "RelativeDocumentMoniker": "..\\Core\\Models\\CRM\\Priority.cs",
+              "ToolTip": "D:\\working directory\\erpsystem\\Core\\Models\\CRM\\Priority.cs",
+              "RelativeToolTip": "..\\Core\\Models\\CRM\\Priority.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-18T09:03:41.63Z",
+              "WhenOpened": "2024-07-18T10:19:12.393Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "PriorityDto.cs",
+              "DocumentMoniker": "D:\\working directory\\erpsystem\\Core\\DTOs\\CRM\\PriorityDto.cs",
+              "RelativeDocumentMoniker": "..\\Core\\DTOs\\CRM\\PriorityDto.cs",
+              "ToolTip": "D:\\working directory\\erpsystem\\Core\\DTOs\\CRM\\PriorityDto.cs",
+              "RelativeToolTip": "..\\Core\\DTOs\\CRM\\PriorityDto.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-18T10:18:48.497Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "PriorityController.cs",
+              "DocumentMoniker": "D:\\working directory\\erpsystem\\Trace\\Controllers\\PriorityController.cs",
+              "RelativeDocumentMoniker": "Controllers\\PriorityController.cs",
+              "ToolTip": "D:\\working directory\\erpsystem\\Trace\\Controllers\\PriorityController.cs",
+              "RelativeToolTip": "Controllers\\PriorityController.cs",
+              "ViewState": "AQIAACoAAAAAAAAAAAAAADYAAAAxAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-18T10:18:21.244Z",
               "EditorCaption": ""
             }
           ]
