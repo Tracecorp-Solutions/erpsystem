@@ -50,8 +50,9 @@ namespace Services.Repositories.CRM
         {
             var matrices = await _context.EscalationMatrices
                 .Include(esc => esc.Department)
+                .Include(esc => esc.Department.User)
                 .Include(esc => esc.Priority)
-
+                .Include(esc => esc.TicketCategory)
                 .FirstOrDefaultAsync(x => x.DepartmentId==departmentId);
             return matrices == null ? throw new ArgumentException("No matrix for this department") : matrices ;
         }
