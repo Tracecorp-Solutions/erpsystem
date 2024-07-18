@@ -67,5 +67,22 @@ namespace Trace.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+
+        [HttpDelete("/DeleteTicketCategory/{id}")]
+        public async Task<IActionResult> DeleteTicketCategory(int id)
+        {
+            try
+            {
+                await _ticketCategoryRepository.DeleteTicketCategory(id);
+                return Ok("Ticket Category deleted successfully");
+            }
+            catch(ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }catch(Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
     }
 }

@@ -17,6 +17,8 @@ namespace Core.Models.CRM
 
         public string Description { get; set; }
 
+        public bool IsDeleted { get; set; }
+
         public virtual Department Department { get; set; }
     }
 }

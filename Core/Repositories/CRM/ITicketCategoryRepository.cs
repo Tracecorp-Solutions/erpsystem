@@ -14,5 +14,6 @@ namespace Core.Repositories.CRM
         Task UpdateTicketCategory(TicketCategoryDto ticket);
         Task DeleteTicketCategory(int id);
         Task<IEnumerable<TicketCategory>> GetTicketCategories();
+        Task DisableTicketCategory(int id);
     }
 }

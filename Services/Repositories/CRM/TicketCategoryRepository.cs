@@ -26,7 +26,8 @@ namespace Services.Repositories.CRM
             {
                 Name = dto.Name,
                 DepartmentId = dto.DepartmentId,
-                Description = dto.Description
+                Description = dto.Description,
+                IsDeleted = false
             };
 
             _context.TicketCategories.Add(ticketCategory);
@@ -64,6 +65,19 @@ namespace Services.Repositories.CRM
             ticketCategory.Description = ticket.Description;
 
             await _context.SaveChangesAsync();
+        }
+
+        public async Task DisableTicketCategory(int id) 
+        {
+            //check whether category exists
+            var category = await _context.TicketCategories.FirstOrDefaultAsync(x => x.Id == id);
+
+            if (category == null)
+                throw new ArgumentException("Ticket Category not found");
+
+            category.IsDeleted = true;
+
+            await _context.SaveChangesAsync();  
         }
 
 
