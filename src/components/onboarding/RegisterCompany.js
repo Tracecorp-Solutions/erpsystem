@@ -107,6 +107,7 @@ const RegisterCompany = ({HandleSubmit, userData, setUserData, loading}) => {
                   style={{
                     padding: "10px"
                   }}
+                  required
                 />
               </div>
               <div className="mt-4" style={{}}>
@@ -142,6 +143,7 @@ const RegisterCompany = ({HandleSubmit, userData, setUserData, loading}) => {
                   style={{
                     padding: "10px"
                   }}
+                  required
                 >
                   <option value="">Select Country</option>
                   <option value="USA">USA</option>
@@ -215,8 +217,7 @@ const RegisterCompany = ({HandleSubmit, userData, setUserData, loading}) => {
                 fontFamily: "outFit, Sans-serif",
               }}
             >
-              Upload a profile picture to personalize your account and help
-              others recognize you within the app.
+             Upload a company logo to customize the experience.
             </p>
             <input
               type="file"
@@ -224,6 +225,7 @@ const RegisterCompany = ({HandleSubmit, userData, setUserData, loading}) => {
               ref={fileInputRef}
               style={{ display: "none" }}
               onChange={handleFileChange}
+              required
             />
             <button
               type="button"
@@ -265,7 +267,7 @@ const RegisterCompany = ({HandleSubmit, userData, setUserData, loading}) => {
             }}
             onClick={HandleSubmit}
           disabled={loading}>
-            {loading ? 'Saving company inforamtion...' : 'Save Company'}
+            {loading ? 'Saving company inforamtion......' : 'Save Company'}
           </button>
         </div>
       </div>

@@ -79,6 +79,7 @@ const ProfileCompletionForm = ({ HandleSubmit, userData, setUserData, loading })
                     className="border border-gray-300 rounded px-3 py-1 w-full"
                     style={{ padding: "10px", borderRadius: "12px" }}
                     placeholder="Enter your full name"
+                    required
                   />
                 </div>
                 <div className="mb-4">
@@ -101,6 +102,7 @@ const ProfileCompletionForm = ({ HandleSubmit, userData, setUserData, loading })
                     className="border border-gray-300 rounded px-3 py-1 w-full"
                     style={{ padding: "10px", borderRadius: "12px" }}
                     placeholder="Enter job title"
+                    required
                   />
                 </div>
                 <div className="mb-4">
@@ -121,6 +123,7 @@ const ProfileCompletionForm = ({ HandleSubmit, userData, setUserData, loading })
                     onChange={handleChange}
                     className="border border-gray-300 rounded px-3 py-1 w-full"
                     style={{ padding: "10px", borderRadius: "12px" }}
+                    required
                   >
                     <option value="">Select Gender</option>
                     <option value="male">Male</option>
@@ -172,6 +175,7 @@ const ProfileCompletionForm = ({ HandleSubmit, userData, setUserData, loading })
                     className="border border-gray-300 rounded px-3 py-1 w-full"
                     style={{ padding: "10px", borderRadius: "12px" }}
                     placeholder="Enter your phone number"
+                    required
                   />
                 </div>
                 <div className="mb-4">
@@ -193,6 +197,7 @@ const ProfileCompletionForm = ({ HandleSubmit, userData, setUserData, loading })
                     onChange={handleChange}
                     className="border border-gray-300 rounded px-3 py-1 w-full"
                     style={{ padding: "10px", borderRadius: "12px" }}
+                    required
                   />
                 </div>
               </div>
