@@ -22,8 +22,8 @@ namespace Core.Models.CRM
         [ForeignKey("Priority")]
         public int PriorityId { get; set; }
 
-        public virtual Department Department { get; set; }
-        public virtual Priority Priority { get; set; }
-        public virtual TicketCategory TicketCategory { get; set; }
+        public virtual Department? Department { get; set; }
+        public virtual Priority? Priority { get; set; }
+        public virtual TicketCategory? TicketCategory { get; set; }
     }
 }

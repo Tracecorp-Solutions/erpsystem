@@ -28,7 +28,8 @@ namespace Services.Repositories.CRM
                 LevelName = matrix.LevelName,
                 LevelDescription = matrix.LevelDescription,
                 DepartmentId = matrix.DepartmentId,
-                EscalationTime = matrix.EscalationTime
+                EscalationTime = matrix.EscalationTime,
+                PriorityId = matrix.PriorityId,
             };
 
             _context.EscalationMatrices.Add(escmatrix);

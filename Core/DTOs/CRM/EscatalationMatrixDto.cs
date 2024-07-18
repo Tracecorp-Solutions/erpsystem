@@ -15,5 +15,6 @@ namespace Core.DTOs.CRM
         public int DepartmentId { get; set; }
 
         public TimeSpan EscalationTime { get; set; }
+        public int PriorityId { get; set; }
     }
 }
