@@ -2,10 +2,13 @@ import React, { useState, useEffect } from "react";
 import { Table, Button, message, Dropdown, Menu } from "antd";
 import axios from 'axios';
 import AddProrityLevel from "./AddProrityLevel";
+import EditPriorityForm from "./UpdateProrityLevel";
 
 const PrioritySetting = () => {
   const [visible, setVisible] = useState(false);
   const [data, setData] = useState([]);
+  const [editModalVisible, setEditModalVisible] = useState(false); // Define editModalVisible state
+  const [selectedPriority, setSelectedPriority] = useState(null);
 
   useEffect(() => {
     fetchData();
@@ -28,8 +31,18 @@ const PrioritySetting = () => {
     setVisible(true);
   };
 
+  const showEditModal = (priority) => {
+    setSelectedPriority(priority);
+    setEditModalVisible(true); // Set editModalVisible to true when showing the edit modal
+  };
+
   const handleCancel = () => {
     setVisible(false);
+    setEditModalVisible(false); // Set editModalVisible to false when canceling the modal
+  };
+
+  const handleUpdatePriority = () => {
+    fetchData();
   };
 
   const onFinish = async (values, handleCancel, reloadData) => {
@@ -100,7 +113,7 @@ const PrioritySetting = () => {
         <Dropdown
           overlay={
             <Menu>
-              <Menu.Item key="1" onClick={() => handleAction('update', record.id)}>
+              <Menu.Item key="1" onClick={() => showEditModal(record)}>
                 Update Priority Level
               </Menu.Item>
               <Menu.Item key="2" onClick={() => handleAction('delete', record.id)}>
@@ -111,7 +124,7 @@ const PrioritySetting = () => {
           trigger={["click"]}
           placement="bottomRight"
         >
-            <Button type="link">
+          <Button type="link">
             <img
               loading="lazy"
               src="https://cdn.builder.io/api/v1/image/assets/TEMP/7dbf8806e95bce2fbed7ce7b2f5db807a8837b3f5d8b859cf52ff980db0ec52c?apiKey=0d95acea82cc4b259a61e827c24c5c6c&"
@@ -151,6 +164,12 @@ const PrioritySetting = () => {
         <Table dataSource={data} columns={columns} pagination={false} scroll={{ x: true }} />
       </div>
       <AddProrityLevel visible={visible} handleCancel={handleCancel} onFinish={onFinish} reloadData={fetchData} />
+      <EditPriorityForm
+        isModalVisible={editModalVisible} // Pass editModalVisible as isModalVisible
+        handleCancel={handleCancel}
+        handleUpdatePriority={handleUpdatePriority}
+        priorityData={selectedPriority}
+      />
     </div>
   );
 };
