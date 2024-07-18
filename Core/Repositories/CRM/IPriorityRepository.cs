@@ -14,5 +14,6 @@ namespace Core.Repositories.CRM
         Task<Priority> GetPriority(int id);
         Task AddPriority(PriorityDto priority);
         Task DeletePriority(int id);
+        Task UpdatePriority(PriorityDto priority);
     }
 }

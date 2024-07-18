@@ -75,6 +75,23 @@ namespace Trace.Controllers
             }
         }
 
+        [HttpPut("/UpdatePriority")]
+        public async Task<IActionResult> UpdatePriority(PriorityDto priority)
+        {
+            try
+            {
+                await _priorityRepository.UpdatePriority(priority);
+                return Ok("Priority updated successfully");
+            }catch (ArgumentException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
+        }
+
 
     }
 }

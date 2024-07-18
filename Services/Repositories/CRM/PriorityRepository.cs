@@ -53,5 +53,20 @@ namespace Services.Repositories.CRM
         {
             return _context.Priorities;
         }
+
+        public async Task UpdatePriority(PriorityDto dto)
+        {
+            var priority = await GetPriority(dto.Id.Value);
+
+            if (priority == null)
+                throw new ArgumentException("Priority not found");
+
+            //map dto to model
+            priority.PriorityName = dto.PriorityName;
+            priority.ColorCode = dto.ColorCode;
+            priority.PriorityDescription = dto.PriorityDescription;
+
+            await _context.SaveChangesAsync();
+        }
     }
 }
