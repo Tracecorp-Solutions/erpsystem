@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import CrmDashboard from "../Dashboard/CrmDashboard";
 import TicketPage from "../Ticket/TicketPage";
 import ProritySetting from "../ProritySettings/ProrityLevel";
+import ProrityCriteria from "../ProritySettings/ProrityCriteria";
 
 const Crm = () => {
   const location = useLocation();
@@ -33,6 +34,7 @@ const Crm = () => {
              
               {screen === "ticket" && <TicketPage />}
               {screen === "prority-setting" && <ProritySetting />}
+              {screen === "prority-criteria" && <ProrityCriteria />}
             </div>
           </div>
         </div>
