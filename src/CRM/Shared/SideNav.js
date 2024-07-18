@@ -409,6 +409,12 @@ function SideNav() {
                     Ticket Categories
                   </button>
                 </div>
+                <div className={`flex gap-2 py-3 mt-2 whitespace-nowrap rounded-xl ${location.pathname === "/prority-setting" ? "bg-active-green txt-color-blue font-semibold px-4 mt-3" : "bg-none"}`}>
+                  <Minus className="shrink-0 self-start w-6 aspect-square" />
+                  <button onClick={() => navigate("/crm", { state: { screen: "prority-setting" } })}>
+                    Prority Setting
+                  </button>
+                </div>
               </div>
             )}
           </div>
