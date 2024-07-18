@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Table, Button, message, Dropdown, Menu } from "antd";
-import { PlusOutlined, VerticalEllipsisOutlined  } from "@ant-design/icons";
+import axios from 'axios';
 import AddProrityLevel from "./AddProrityLevel";
 
 const PrioritySetting = () => {
@@ -60,6 +60,23 @@ const PrioritySetting = () => {
     }
   };
 
+  const handleAction = async (action, id) => {
+    try {
+      if (action === 'delete') {
+        const response = await axios.delete(`${process.env.REACT_APP_API_URL}/DeletePriority/${id}`);
+        if (response.status === 200) {
+          message.success("Priority deleted successfully!");
+          fetchData();
+        } else {
+          message.error("Failed to delete priority");
+        }
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      message.error('Error:', error.message);
+    }
+  };
+
   const columns = [
     {
       title: "PRORITY LEVEL",
@@ -83,18 +100,18 @@ const PrioritySetting = () => {
         <Dropdown
           overlay={
             <Menu>
-              <Menu.Item key="1" onClick={() => handleAction(record.key)}>
-                Update Prority Level
+              <Menu.Item key="1" onClick={() => handleAction('update', record.id)}>
+                Update Priority Level
               </Menu.Item>
-              <Menu.Item key="2">
-                Disable Prority Level
+              <Menu.Item key="2" onClick={() => handleAction('delete', record.id)}>
+                Disable Priority Level
               </Menu.Item>
             </Menu>
           }
           trigger={["click"]}
           placement="bottomRight"
         >
-          <Button type="link">
+            <Button type="link">
             <img
               loading="lazy"
               src="https://cdn.builder.io/api/v1/image/assets/TEMP/7dbf8806e95bce2fbed7ce7b2f5db807a8837b3f5d8b859cf52ff980db0ec52c?apiKey=0d95acea82cc4b259a61e827c24c5c6c&"
@@ -105,11 +122,6 @@ const PrioritySetting = () => {
       ),
     },
   ];
-
-  const handleAction = (key) => {
-    // Implement action handler logic here
-    console.log(`Clicked action for item with key: ${key}`);
-  };
 
   return (
     <div className="flex flex-col justify-center content-start py-6 rounded-3xl bg-stone-100">
@@ -133,7 +145,6 @@ const PrioritySetting = () => {
             onClick={showModal}
             className="flex gap-2 justify-center items-center bg-slate-500 px-6 py-5 text-base rounded-3xl max-md:px-5"
           >
-            <PlusOutlined />
             Add Priority Level
           </Button>
         </div>
