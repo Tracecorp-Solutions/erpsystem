@@ -41,6 +41,9 @@ namespace Services.Repositories.CRM
         {
             var result = await _context.EscalationMatrices
                 .Include(esc => esc.Department)
+                .Include(esc => esc.Department.User)
+                .Include(esc => esc.Priority)
+                .Include(esc => esc.TicketCategory)
                 .ToListAsync();
 
             return result;
