@@ -1,78 +1,75 @@
-import React, { useState } from "react";
-import { Table, Button } from "antd";
+import React, { useState, useEffect } from "react";
+import { Table, Button, message } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import AddProrityLevel from "./AddProrityLevel";
 
 const PrioritySetting = () => {
   const [visible, setVisible] = useState(false);
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/GetPriorities`);
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const jsonData = await response.json();
+      setData(jsonData);
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
 
   const showModal = () => {
     setVisible(true);
-  };
-
-  const handleOk = () => {
-    setVisible(false);
   };
 
   const handleCancel = () => {
     setVisible(false);
   };
 
-  const dataSource = [
-    {
-      key: "1",
-      priorityLevel: "High",
-      description: "Critical issues",
-      colorCode: "Red",
-      action: (
-        <img
-          loading="lazy"
-          src="https://cdn.builder.io/api/v1/image/assets/TEMP/49cb2a2ae5958328284b4cf43a7edcbd1950f0d96e98aaa141a18245dd06024e?apiKey=0d95acea82cc4b259a61e827c24c5c6c"
-          className="w-5 aspect-square"
-          alt="Action"
-        />
-      ),
-    },
-    {
-      key: "2",
-      priorityLevel: "Medium",
-      description: "Important but not urgent",
-      colorCode: "Yellow",
-      action: (
-        <img
-          loading="lazy"
-          src="https://cdn.builder.io/api/v1/image/assets/TEMP/49cb2a2ae5958328284b4cf43a7edcbd1950f0d96e98aaa141a18245dd06024e?apiKey=0d95acea82cc4b259a61e827c24c5c6c"
-          className="w-5 aspect-square"
-          alt="Action"
-        />
-      ),
-    },
-    {
-      key: "3",
-      priorityLevel: "Low",
-      description: "Minor issues",
-      colorCode: "Green",
-      action: (
-        <img
-          loading="lazy"
-          src="https://cdn.builder.io/api/v1/image/assets/TEMP/49cb2a2ae5958328284b4cf43a7edcbd1950f0d96e98aaa141a18245dd06024e?apiKey=0d95acea82cc4b259a61e827c24c5c6c"
-          className="w-5 aspect-square"
-          alt="Action"
-        />
-      ),
-    },
-  ];
+  const onFinish = async (values, handleCancel, reloadData) => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/AddPriority`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'accept': '*/*'
+        },
+        body: JSON.stringify({
+          priorityName: values.priorityLevelName,
+          colorCode: values.colorCode,
+          priorityDescription: values.description
+        })
+      });
+      
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      message.success("Priority added successfully!");
+      reloadData();
+      handleCancel();
+    } catch (error) {
+      console.error('Error:', error);
+      message.error('Error:', error);
+    }
+  };
 
   const columns = [
     {
       title: "Priority Level",
-      dataIndex: "priorityLevel",
-      key: "priorityLevel",
+      dataIndex: "priorityName",
+      key: "priorityName",
     },
     {
       title: "Description",
-      dataIndex: "description",
-      key: "description",
+      dataIndex: "priorityDescription",
+      key: "priorityDescription",
     },
     {
       title: "Color Code",
@@ -81,7 +78,6 @@ const PrioritySetting = () => {
     },
     {
       title: "Action",
-      dataIndex: "action",
       key: "action",
       render: (text, record) => (
         <Button type="link" onClick={() => handleAction(record.key)}>
@@ -122,9 +118,9 @@ const PrioritySetting = () => {
             Add Priority Level
           </Button>
         </div>
-        <Table dataSource={dataSource} columns={columns} pagination={false} />
+        <Table dataSource={data} columns={columns} pagination={false} />
       </div>
-      <AddProrityLevel visible={visible} handleCancel={handleCancel} />
+      <AddProrityLevel visible={visible} handleCancel={handleCancel} onFinish={onFinish} reloadData={fetchData} />
     </div>
   );
 };
