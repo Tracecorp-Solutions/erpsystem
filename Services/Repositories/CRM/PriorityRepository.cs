@@ -24,7 +24,9 @@ namespace Services.Repositories.CRM
             //map dto to model
             var priority = new Priority
             {
-                PriorityName = dto.PriorityName
+                PriorityName = dto.PriorityName,
+                ColorCode = dto.ColorCode,
+                PriorityDescription = dto.PriorityDescription
             };
 
             _context.Priorities.Add(priority);
