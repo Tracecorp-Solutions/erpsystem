@@ -116,8 +116,8 @@ function CreateEscalation({
       )}
 
       {currentStep === 2 && (
-        <div className="flex flex-col items-center pb-16 max-w-[820px]">
-          <div className="flex flex-col self-stretch pt-6 w-full text-4xl font-semibold leading-[57.6px] text-neutral-600 max-md:max-w-full">
+        <div className="flex flex-col items-center pb-16 max-w-[720px]">
+          <div className="flex flex-col self-stretch pt-6 w-full text-2xl font-semibold leading-[57.6px] text-neutral-600 max-md:max-w-full">
             <div className="flex gap-5 justify-between self-center px-5 w-full max-w-screen-sm max-md:flex-wrap max-md:max-w-full">
               <div>New Escalation Level</div>
               <img
@@ -191,8 +191,8 @@ function CreateEscalation({
           <div className="justify-center p-4 mt-2 max-w-full text-base leading-7 bg-white rounded-xl border border-solid border-neutral-500 border-opacity-30 text-neutral-600 w-[500px] max-md:max-w-full">
             A ticket has been escalated to Level 2. Immediate attention is required.
           </div>
-          <div className="flex justify-center items-center self-stretch px-16 py-6 mt-16 w-full text-base leading-6 bg-stone-100 max-md:px-5 max-md:mt-10 max-md:max-w-full">
-            <div className="flex gap-4 max-w-full w-[496px] max-md:flex-wrap">
+          <div className="flex justify-center items-center self-stretch px-8 py-6 mt-8 w-full text-base leading-6 bg-stone-100 max-md:px-5 max-md:mt-10 max-md:max-w-full">
+            <div className="flex gap-8 max-w-full w-[496px] max-md:flex-wrap">
               <div className="justify-center items-center px-8 py-4 whitespace-nowrap rounded-3xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 max-md:px-5">
                 Cancel
               </div>
