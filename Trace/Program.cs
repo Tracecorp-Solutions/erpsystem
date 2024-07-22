@@ -50,6 +50,7 @@ builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
 builder.Services.AddScoped<ITicketCategoryRepository, TicketCategoryRepository>();
 builder.Services.AddScoped<IEscalationMatrixRepository, EscalationMatrixRepository>();
 builder.Services.AddScoped<IPriorityRepository, PriorityRepository>();
+builder.Services.AddScoped<ITicketRepository, TicketRepository>();
 
 
 builder.Services.AddControllers();

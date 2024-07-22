@@ -77,9 +77,7 @@ namespace Services.Repositories.CRM
                 .FirstOrDefaultAsync(t => t.Id == ticketId);
 
             if (ticket == null)
-            {
-                return null; // or handle the case where ticket with given Id is not found
-            }
+                throw new ArgumentException("Ticket not found");
 
             var ticketAuditTrail = await _context.TicketAuditTrails
                 .Where(t => t.TicketId == ticketId)
