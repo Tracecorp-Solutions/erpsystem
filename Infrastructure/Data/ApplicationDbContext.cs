@@ -101,6 +101,8 @@ namespace Infrastructure.Data
         public DbSet<TicketCategory> TicketCategories { get; set; }
         public DbSet<EscalationMatrix> EscalationMatrices { get; set; }
         public DbSet<Priority> Priorities { get; set; }
+        public DbSet<Ticket> Tickets { get; set; }
+        public DbSet<TicketAuditTrail> TicketAuditTrails { get; set; }
         #endregion
 
 
