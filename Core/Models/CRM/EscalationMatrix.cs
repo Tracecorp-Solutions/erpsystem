@@ -25,5 +25,11 @@ namespace Core.Models.CRM
         public virtual Department? Department { get; set; }
         public virtual Priority? Priority { get; set; }
         public virtual TicketCategory? TicketCategory { get; set; }
+
+        public string NotificationType { get; set; }
+
+        public int DepartmentLevel { get; set; }
+
+        public string EmailTemplate { get; set; }
     }
 }

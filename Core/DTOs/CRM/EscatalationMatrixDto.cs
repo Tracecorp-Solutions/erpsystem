@@ -18,5 +18,11 @@ namespace Core.DTOs.CRM
 
         public TimeSpan EscalationTime { get; set; }
         public int PriorityId { get; set; }
+
+        public string NotificationType { get; set; }
+
+        public int DepartmentLevel { get; set; }
+
+        public string EmailTemplate { get; set; }
     }
 }
