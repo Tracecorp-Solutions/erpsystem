@@ -1,23 +1,66 @@
 import React, { useState } from "react";
-import { Modal, Steps, Input, Select } from "antd";
+import { Modal, Steps, Input, Select, Button } from "antd";
+import axios from "axios";
 
 const { Step } = Steps;
 const { Option } = Select;
 
 const AddTicket = ({ isModalVisible, handleCancel }) => {
-  const [currentStep, setCurrentStep] = useState(0);
+    const [currentStep, setCurrentStep] = useState(0);
+    const [customerReference, setCustomerReference] = useState("");
+    const [customerDetails, setCustomerDetails] = useState(null);
+    const [customerName, setCustomerName] = useState("");
+  
+    const fetchCustomerDetails = async (reference) => {
+      try {
+        const response = await axios.get(
+          `http://3.216.182.63:8095/TestApi/ValidateCustomer/${reference}`
+        );
+        setCustomerDetails(response.data);
+        setCustomerName(response.data.name);
+      } catch (error) {
+        console.error("Error fetching customer details:", error);
+      }
+    };
+  
+    const handleCustomerReferenceChange = (value) => {
+      setCustomerReference(value);
+      setCustomerDetails(null);
+      setCustomerName("");
+    };
+  
+    const handleFetchCustomerDetails = () => {
+      if (customerReference) {
+        fetchCustomerDetails(customerReference);
+      }
+    };
+  
+    const handleBack = () => {
+      setCurrentStep(currentStep - 1);
+    };
+  
+    const handleSubmit = () => {
+      const formData = {
+        customerName: customerName,
+        // Add other fields as needed
+      };
+      
+      axios.post('http://example.com/saveCustomerDetails', formData)
+        .then(response => {
+          console.log('Data successfully saved:', response.data);
+          handleCancel();
+        })
+        .catch(error => {
+          console.error('Error saving data:', error);
+        });
+    };
+  
+    const nextStep = () => {
+      setCurrentStep(currentStep + 1);
+    };
+  
 
-  const handleBack = () => {
-    setCurrentStep(currentStep - 1);
-  };
-
-  const handleSubmit = () => {
-    handleCancel();
-  };
-
-  const nextStep = () => {
-    setCurrentStep(currentStep + 1);
-  };
+  console.log("customerDetails customerDetails", customerDetails);
 
   return (
     <Modal
@@ -43,16 +86,13 @@ const AddTicket = ({ isModalVisible, handleCancel }) => {
           <div className="mt-6 w-full border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-opacity-10 min-h-[1px] max-md:max-w-full" />
         </div>
 
-        {/* Steps Indicator */}
         <Steps current={currentStep} className="w-full mt-4">
           <Step title="Customer Details" />
           <Step title="Ticket Details" />
         </Steps>
 
-        {/* Step 1 - Customer Details */}
         {currentStep === 0 && (
           <div className="flex flex-col items-center pb-16 w-full">
-            {/* Customer Type - Select */}
             <div className="mt-4 text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">
               Customer Type
             </div>
@@ -66,26 +106,38 @@ const AddTicket = ({ isModalVisible, handleCancel }) => {
               <Option value="organization">None Registered Customer</Option>
             </Select>
 
-            {/* Customer Name - Input */}
             <div className="mt-4 text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">
               Customer Reference
             </div>
             <Input
-              placeholder="Enter customer name"
+              placeholder="Enter customer reference"
               className="p-3"
               style={{ width: "80%", marginTop: "8px" }}
+              value={customerReference}
+              onChange={(e) => handleCustomerReferenceChange(e.target.value)}
             />
-
-            {/* Customer Name - Input */}
-            <div className="mt-4 text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">
-              Customer Name
-            </div>
-            <Input
-              placeholder="Enter customer name"
-              className="p-3"
-              style={{ width: "80%", marginTop: "8px" }}
-            />
-            {/* Area - Select */}
+            <Button
+              type="primary"
+              className="ml-3"
+              onClick={handleFetchCustomerDetails}
+            >
+              Fetch Details
+            </Button>
+            {customerDetails && (
+              <>
+                <div className="mt-4 text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">
+                  Customer Name:
+                </div>
+                <Input
+                  placeholder="Enter customer name"
+                  className="p-3"
+                  style={{ width: "80%", marginTop: "8px" }}
+                  value={customerName}
+                  onChange={(e) => setCustomerName(e.target.value)}
+                />
+                {/* Display other customer details as needed */}
+              </>
+            )}
             <div className="mt-4 text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">
               Area
             </div>
@@ -99,7 +151,6 @@ const AddTicket = ({ isModalVisible, handleCancel }) => {
               <Option value="area2">Area 2</Option>
             </Select>
 
-            {/* Branch - Select */}
             <div className="mt-4 text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">
               Branch
             </div>
@@ -113,7 +164,6 @@ const AddTicket = ({ isModalVisible, handleCancel }) => {
               <Option value="branch2">Branch 2</Option>
             </Select>
 
-            {/* Territory - Input */}
             <div className="mt-4 text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">
               Territory
             </div>
@@ -123,7 +173,6 @@ const AddTicket = ({ isModalVisible, handleCancel }) => {
               style={{ width: "80%", marginTop: "8px" }}
             />
 
-            {/* Phone Number - Input */}
             <div className="mt-4 text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">
               Phone Number
             </div>
@@ -133,7 +182,6 @@ const AddTicket = ({ isModalVisible, handleCancel }) => {
               style={{ width: "80%", marginTop: "8px" }}
             />
 
-            {/* Address - Input */}
             <div className="mt-4 text-base text-start font-semibold leading-6 text-neutral-600">
               Address
             </div>
@@ -145,6 +193,7 @@ const AddTicket = ({ isModalVisible, handleCancel }) => {
           </div>
         )}
 
+        {/* Step 2 - Ticket Details */}
         {currentStep === 1 && (
           <div className="flex flex-col items-center pb-16 w-full">
             <div className="mt-4 text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">
@@ -209,34 +258,20 @@ const AddTicket = ({ isModalVisible, handleCancel }) => {
 
         {/* Navigation Buttons */}
         <div className="flex justify-center items-center self-stretch px-16 py-6 mt-16 w-full text-base leading-6 bg-stone-100 max-md:px-5 max-md:mt-10 max-md:max-w-full">
-          <div className="flex justify-between max-w-full w-full max-md:flex-wrap border">
+          <div className="flex justify-between max-w-full w-full max-md:max-w-full">
             {currentStep > 0 && (
-              <button
-                type="button"
-                className="justify-center items-center px-8 py-4 whitespace-nowrap rounded-3xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 max-md:px-5"
-                onClick={handleBack}
-              >
+              <Button onClick={handleBack} className="mr-4">
                 Back
-              </button>
+              </Button>
             )}
-            {currentStep < 1 && (
-              <button
-                type="button"
-                className="justify-center items-center px-8 py-4 font-semibold text-white rounded-3xl bg-slate-500 max-md:px-5"
-                onClick={nextStep}
-              >
-                Save Complainant
-              </button>
-            )}
-            {currentStep === 1 && (
-              <button
-                type="submit"
-                className="justify-cente
-                r items-center px-8 py-4 font-semibold text-white rounded-3xl bg-slate-500 max-md:px-5"
-                onClick={handleSubmit}
-              >
-                Save Ticket
-              </button>
+            {currentStep < 1 ? (
+              <Button type="primary" onClick={nextStep}>
+                Next
+              </Button>
+            ) : (
+              <Button type="primary" onClick={handleSubmit}>
+                Save
+              </Button>
             )}
           </div>
         </div>
