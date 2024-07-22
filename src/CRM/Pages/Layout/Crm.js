@@ -7,6 +7,7 @@ import CrmDashboard from "../Dashboard/CrmDashboard";
 import TicketPage from "../Ticket/TicketPage";
 import ProritySetting from "../ProritySettings/ProrityLevel";
 import ProrityCriteria from "../ProritySettings/ProrityCriteria";
+import Ticket from "../Ticket/Ticket";
 
 const Crm = () => {
   const location = useLocation();
@@ -33,6 +34,7 @@ const Crm = () => {
               {screen === "crm-dashboard" && <CrmDashboard />}
              
               {screen === "ticket" && <TicketPage />}
+              {screen === "ticket-page" && <Ticket />}
               {screen === "prority-setting" && <ProritySetting />}
               {screen === "prority-criteria" && <ProrityCriteria />}
             </div>
