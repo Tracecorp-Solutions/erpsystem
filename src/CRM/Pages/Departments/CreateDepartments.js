@@ -23,7 +23,7 @@ function CreateDepartments({
   const fetchUsers = async () => {
     try {
       const response = await axios.get(
-        "http://3.216.182.63:8095/TestApi/GetAllUsers"
+        `${process.env.REACT_APP_API_URL}/GetAllUsers`
       );
       setUsers(response.data);
     } catch (error) {
@@ -43,7 +43,7 @@ function CreateDepartments({
   const handleSubmit = async () => {
     try {
       await axios.post(
-        "http://3.216.182.63:8095/TestApi/AddDepartments",
+        `${process.env.REACT_APP_API_URL}/AddDepartments`,
         departmentData
       );
       message.success("Department added successfully");
