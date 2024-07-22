@@ -5,17 +5,14 @@ const { Step } = Steps;
 const { Option } = Select;
 
 const AddTicket = ({ isModalVisible, handleCancel }) => {
-  const [currentStep, setCurrentStep] = useState(0); // Start from 0 for Ant Design Steps
+  const [currentStep, setCurrentStep] = useState(0);
 
   const handleBack = () => {
     setCurrentStep(currentStep - 1);
   };
 
   const handleSubmit = () => {
-    // Implement submit functionality here
-    // This function should save or process the ticket data
-    // Once done, you might want to close the modal or reset the form
-    handleCancel(); // Example: Close the modal after submit
+    handleCancel();
   };
 
   const nextStep = () => {
@@ -61,12 +58,23 @@ const AddTicket = ({ isModalVisible, handleCancel }) => {
             </div>
             <Select
               style={{ width: "80%", marginTop: "8px" }}
+              className="h-12"
               placeholder="Select customer type"
-              onChange={(value) => console.log(value)} // Handle change as needed
+              onChange={(value) => console.log(value)}
             >
-              <Option value="individual">Individual</Option>
-              <Option value="organization">Organization</Option>
+              <Option value="registered">Registered Customer</Option>
+              <Option value="organization">None Registered Customer</Option>
             </Select>
+
+            {/* Customer Name - Input */}
+            <div className="mt-4 text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">
+              Customer Reference
+            </div>
+            <Input
+              placeholder="Enter customer name"
+              className="p-3"
+              style={{ width: "80%", marginTop: "8px" }}
+            />
 
             {/* Customer Name - Input */}
             <div className="mt-4 text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">
@@ -74,15 +82,16 @@ const AddTicket = ({ isModalVisible, handleCancel }) => {
             </div>
             <Input
               placeholder="Enter customer name"
+              className="p-3"
               style={{ width: "80%", marginTop: "8px" }}
             />
-
             {/* Area - Select */}
             <div className="mt-4 text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">
               Area
             </div>
             <Select
               style={{ width: "80%", marginTop: "8px" }}
+              className="h-12"
               placeholder="Select area"
               onChange={(value) => console.log(value)}
             >
@@ -96,6 +105,7 @@ const AddTicket = ({ isModalVisible, handleCancel }) => {
             </div>
             <Select
               style={{ width: "80%", marginTop: "8px" }}
+              className="h-12"
               placeholder="Select branch"
               onChange={(value) => console.log(value)}
             >
@@ -109,6 +119,7 @@ const AddTicket = ({ isModalVisible, handleCancel }) => {
             </div>
             <Input
               placeholder="Enter territory"
+              className="p-3"
               style={{ width: "80%", marginTop: "8px" }}
             />
 
@@ -118,15 +129,16 @@ const AddTicket = ({ isModalVisible, handleCancel }) => {
             </div>
             <Input
               placeholder="Enter phone number"
+              className="p-3"
               style={{ width: "80%", marginTop: "8px" }}
             />
 
             {/* Address - Input */}
-            <div className="mt-4 text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">
+            <div className="mt-4 text-base text-start font-semibold leading-6 text-neutral-600">
               Address
             </div>
             <Input.TextArea
-              rows={4}
+              rows={2}
               placeholder="Enter address"
               style={{ width: "80%", marginTop: "8px" }}
             />
@@ -135,88 +147,96 @@ const AddTicket = ({ isModalVisible, handleCancel }) => {
 
         {currentStep === 1 && (
           <div className="flex flex-col items-center pb-16 w-full">
-          <div className="mt-4 text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">
-            Ticket Subject
-          </div>
-          <Input
-            placeholder="Enter ticket subject"
-            style={{ width: "80%", marginTop: "8px" }}
-          />
+            <div className="mt-4 text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">
+              Ticket Subject
+            </div>
+            <Input
+              className="p-3"
+              placeholder="Enter ticket subject"
+              style={{ width: "80%", marginTop: "8px" }}
+            />
 
-          <div className="mt-4 text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">
-            Ticket Category
-          </div>
-          <Select
-            style={{ width: "80%", marginTop: "8px" }}
-            placeholder="Select ticket category"
-            onChange={(value) => console.log(value)}
-          >
-            <Option value="category1">Category 1</Option>
-            <Option value="category2">Category 2</Option>
-          </Select>
+            <div className="mt-4 text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">
+              Ticket Category
+            </div>
+            <Select
+              style={{ width: "80%", marginTop: "8px" }}
+              className="h-12"
+              placeholder="Select ticket category"
+              onChange={(value) => console.log(value)}
+            >
+              <Option value="category1">Category 1</Option>
+              <Option value="category2">Category 2</Option>
+            </Select>
 
-          <div className="mt-4 text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">
-            Ticket Source
-          </div>
-          <Select
-            style={{ width: "80%", marginTop: "8px" }}
-            placeholder="Select ticket source"
-            onChange={(value) => console.log(value)} // Handle change as needed
-          >
-            <Option value="source1">Source 1</Option>
-            <Option value="source2">Source 2</Option>
-          </Select>
+            <div className="mt-4 text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">
+              Ticket Source
+            </div>
+            <Select
+              style={{ width: "80%", marginTop: "8px" }}
+              className="h-12"
+              placeholder="Select ticket source"
+              onChange={(value) => console.log(value)}
+            >
+              <Option value="source1">Source 1</Option>
+              <Option value="source2">Source 2</Option>
+            </Select>
 
-          <div className="mt-4 text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">
-            Assign Priority
-          </div>
-          <Select
-            style={{ width: "80%", marginTop: "8px" }}
-            placeholder="Select priority"
-            onChange={(value) => console.log(value)} // Handle change as needed
-          >
-            <Option value="high">High</Option>
-            <Option value="medium">Medium</Option>
-            <Option value="low">Low</Option>
-          </Select>
+            <div className="mt-4 text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">
+              Assign Priority
+            </div>
+            <Select
+              style={{ width: "80%", marginTop: "8px" }}
+              className="h-12"
+              placeholder="Select priority"
+              onChange={(value) => console.log(value)}
+            >
+              <Option value="high">High</Option>
+              <Option value="medium">Medium</Option>
+              <Option value="low">Low</Option>
+            </Select>
 
-          <div className="mt-4 text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">
-            Description
+            <div className="mt-4 text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">
+              Description
+            </div>
+            <Input.TextArea
+              rows={2}
+              placeholder="Enter ticket details"
+              style={{ width: "80%", marginTop: "8px" }}
+            />
           </div>
-          <Input.TextArea
-            rows={4}
-            placeholder="Enter ticket details"
-            style={{ width: "80%", marginTop: "8px" }}
-          />
-        </div>
         )}
 
         {/* Navigation Buttons */}
         <div className="flex justify-center items-center self-stretch px-16 py-6 mt-16 w-full text-base leading-6 bg-stone-100 max-md:px-5 max-md:mt-10 max-md:max-w-full">
-          <div className="flex gap-4 max-w-full w-[496px] max-md:flex-wrap">
+          <div className="flex justify-between max-w-full w-full max-md:flex-wrap border">
             {currentStep > 0 && (
-              <div
+              <button
+                type="button"
                 className="justify-center items-center px-8 py-4 whitespace-nowrap rounded-3xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 max-md:px-5"
                 onClick={handleBack}
               >
                 Back
-              </div>
+              </button>
             )}
             {currentStep < 1 && (
-              <div
+              <button
+                type="button"
                 className="justify-center items-center px-8 py-4 font-semibold text-white rounded-3xl bg-slate-500 max-md:px-5"
                 onClick={nextStep}
               >
-                Next
-              </div>
+                Save Complainant
+              </button>
             )}
             {currentStep === 1 && (
-              <div
-                className="justify-center items-center px-8 py-4 font-semibold text-white rounded-3xl bg-slate-500 max-md:px-5"
+              <button
+                type="submit"
+                className="justify-cente
+                r items-center px-8 py-4 font-semibold text-white rounded-3xl bg-slate-500 max-md:px-5"
                 onClick={handleSubmit}
               >
-                Submit
-              </div>
+                Save Ticket
+              </button>
             )}
           </div>
         </div>
