@@ -12,18 +12,21 @@ const AddTicket = ({ isModalVisible, handleCancel }) => {
   const [customerName, setCustomerName] = useState("");
   const [operationalAreas, setOperationalAreas] = useState([]);
   const [branches, setBranches] = useState([]);
-  const [teritory, setTeritory] = useState([]);
+  const [territory, setTerritory] = useState([]);
+  const [customerType, setCustomerType] = useState(null);
+  const [ticketCateory, setTicketCategory] = useState([]);
 
   useEffect(() => {
     fetchOperationalAreas();
     fetchBranches();
-    fetchTeritory();
+    fetchTerritory();
+    fetchTicketCategory();
   }, []);
 
   const fetchOperationalAreas = async () => {
     try {
       const response = await axios.get(
-        "http://3.216.182.63:8095/TestApi/GetOperationAreas"
+        `${process.env.REACT_APP_API_URL}/GetOperationAreas`
       );
       setOperationalAreas(response.data);
     } catch (error) {
@@ -34,29 +37,40 @@ const AddTicket = ({ isModalVisible, handleCancel }) => {
   const fetchBranches = async () => {
     try {
       const response = await axios.get(
-        "http://3.216.182.63:8095/TestApi/GetBranches"
+        `${process.env.REACT_APP_API_URL}/GetBranches`
       );
       setBranches(response.data);
     } catch (error) {
-      console.error("Error fetching operational areas:", error);
+      console.error("Error fetching branches:", error);
     }
   };
 
-  const fetchTeritory = async () => {
+  const fetchTerritory = async () => {
     try {
       const response = await axios.get(
-        "http://3.216.182.63:8095/TestApi/GetTerritories"
+        `${process.env.REACT_APP_API_URL}/GetTerritories`
       );
-      setTeritory(response.data);
+      setTerritory(response.data);
     } catch (error) {
-      console.error("Error fetching operational areas:", error);
+      console.error("Error fetching territories:", error);
+    }
+  };
+
+  const fetchTicketCategory = async () => {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}/GetTicketCategories`
+      );
+      setTicketCategory(response.data);
+    } catch (error) {
+      console.error("Error fetching territories:", error);
     }
   };
 
   const fetchCustomerDetails = async (reference) => {
     try {
       const response = await axios.get(
-        `http://3.216.182.63:8095/TestApi/ValidateCustomer/${reference}`
+        `${process.env.REACT_APP_API_URL}/ValidateCustomer/${reference}`
       );
       setCustomerDetails(response.data);
       setCustomerName(response.data.name);
@@ -142,44 +156,49 @@ const AddTicket = ({ isModalVisible, handleCancel }) => {
               style={{ width: "80%", marginTop: "8px" }}
               className="h-12"
               placeholder="Select customer type"
-              onChange={(value) => console.log(value)}
+              onChange={(value) => setCustomerType(value)}
             >
               <Option value="registered">Registered Customer</Option>
               <Option value="organization">None Registered Customer</Option>
             </Select>
 
-            <div className="mt-4 text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">
-              Customer Reference
-            </div>
-            <Input
-              placeholder="Enter customer reference"
-              className="p-3"
-              style={{ width: "80%", marginTop: "8px" }}
-              value={customerReference}
-              onChange={(e) => handleCustomerReferenceChange(e.target.value)}
-            />
-            <Button
-              type="primary"
-              className="ml-3"
-              onClick={handleFetchCustomerDetails}
-            >
-              Fetch Details
-            </Button>
-            {customerDetails && (
+            {customerType === "registered" && (
               <>
                 <div className="mt-4 text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">
-                  Customer Name:
+                  Customer Reference
                 </div>
                 <Input
-                  placeholder="Enter customer name"
+                  placeholder="Enter customer reference"
                   className="p-3"
                   style={{ width: "80%", marginTop: "8px" }}
-                  value={customerName}
-                  onChange={(e) => setCustomerName(e.target.value)}
+                  value={customerReference}
+                  onChange={(e) => handleCustomerReferenceChange(e.target.value)}
                 />
-                {/* Display other customer details as needed */}
+                <Button
+                  type="primary"
+                  className="ml-3"
+                  onClick={handleFetchCustomerDetails}
+                >
+                  Fetch Details
+                </Button>
+                {customerDetails && (
+                  <>
+                    <div className="mt-4 text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">
+                      Customer Name:
+                    </div>
+                    <Input
+                      placeholder="Enter customer name"
+                      className="p-3"
+                      style={{ width: "80%", marginTop: "8px" }}
+                      value={customerName}
+                      onChange={(e) => setCustomerName(e.target.value)}
+                    />
+                    {/* Display other customer details as needed */}
+                  </>
+                )}
               </>
             )}
+
             <div className="mt-4 text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">
               Area
             </div>
@@ -213,15 +232,15 @@ const AddTicket = ({ isModalVisible, handleCancel }) => {
             </Select>
 
             <div className="mt-4 text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">
-              Teritory
+              Territory
             </div>
             <Select
               style={{ width: "80%", marginTop: "8px" }}
               className="h-12"
-              placeholder="Chooose teritory"
+              placeholder="Choose territory"
               onChange={(value) => console.log(value)}
             >
-              {teritory.map((ter) => (
+              {territory.map((ter) => (
                 <Option key={ter.id} value={ter.id}>
                   {ter.name}
                 </Option>
@@ -266,11 +285,14 @@ const AddTicket = ({ isModalVisible, handleCancel }) => {
             <Select
               style={{ width: "80%", marginTop: "8px" }}
               className="h-12"
-              placeholder="Select ticket category"
+              placeholder="Choose territory"
               onChange={(value) => console.log(value)}
-            >
-              <Option value="category1">Category 1</Option>
-              <Option value="category2">Category 2</Option>
+            >  
+              {ticketCateory.map((ter) => (
+                <Option key={ter.id} value={ter.id}>
+                  {ter.name}
+                </Option>
+              ))}
             </Select>
 
             <div className="mt-4 text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">
