@@ -5,6 +5,8 @@ import axios from "axios";
 function Escalation() {
   const [isUpdateModalVisible, setIsUpdateModalVisible] = useState(false);
   const [escalationData, setEscalationData] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   const handleUpdateModalVisible = () => {
     setIsUpdateModalVisible(true);
@@ -15,14 +17,20 @@ function Escalation() {
   };
 
   useEffect(() => {
-    axios
-      .get("http://3.216.182.63:8095/TestApi/GetAllEscalationMatrices")
-      .then((response) => {
+    const fetchEscalationData = async () => {
+      setIsLoading(true);
+      try {
+        const apiUrl = `${process.env.REACT_APP_API_URL}/GetAllEscalationMatrices`;
+        const response = await axios.get(apiUrl);
         setEscalationData(response.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching the escalation data", error);
-      });
+      } catch (error) {
+        setError(error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchEscalationData();
   }, []);
 
   return (
@@ -51,64 +59,41 @@ function Escalation() {
               </button>
             </div>
           </div>
-          <div className="flex gap-0 mt-4 max-md:flex-wrap max-md:max-w-full">
-            <div className="flex flex-col text-base leading-6 text-neutral-400">
-              <div className="justify-center items-start py-5 pr-1 pl-4 text-xs font-medium tracking-wide uppercase bg-stone-100 text-neutral-400 max-md:pr-5">
-                level name
-              </div>
-              {escalationData.map((item, index) => (
-                <div
-                  key={index}
-                  className="justify-center items-start py-4 pr-1 pl-4 bg-white border-b border-solid border-neutral-500 border-opacity-10 max-md:pr-5"
-                >
-                  {item.levelName}
-                </div>
-              ))}
-            </div>
-            <div className="flex flex-col flex-1 text-base leading-6 text-neutral-400 max-md:max-w-full">
-              <div className="justify-center items-start py-5 pr-1 pl-4 text-xs font-medium tracking-wide uppercase whitespace-nowrap bg-stone-100 max-md:pr-5 max-md:max-w-full">
-                description
-              </div>
-              {escalationData.map((item, index) => (
-                <div
-                  key={index}
-                  className="justify-center py-4 pr-1 pl-4 bg-white border-b border-solid border-neutral-500 border-opacity-10 max-md:max-w-full"
-                >
-                  {item.levelDescription}
-                </div>
-              ))}
-            </div>
-            <div className="flex flex-col text-base leading-6 text-neutral-400">
-              <div className="justify-center items-start py-5 pr-1 pl-4 text-xs font-medium tracking-wide uppercase whitespace-nowrap bg-stone-100 max-md:pr-5">
-                Escalation time
-              </div>
-              {escalationData.map((item, index) => (
-                <div
-                  key={index}
-                  className="justify-center items-start py-4 pr-1 pl-4 bg-white border-b border-solid border-neutral-500 border-opacity-10 max-md:pr-5"
-                >
-                  {item.escalationTime.ticks} ticks
-                </div>
-              ))}
-            </div>
-            <div className="flex flex-col">
-              <div className="justify-center px-14 py-5 text-xs font-medium tracking-wide uppercase whitespace-nowrap bg-stone-100 text-neutral-400 max-md:px-5">
-                action
-              </div>
-              {escalationData.map((item, index) => (
-                <div
-                  key={index}
-                  className="flex flex-col justify-center px-14 py-3 bg-white border-b border-solid border-neutral-500 border-opacity-10 max-md:px-5"
-                >
-                  <div className="flex justify-center items-center px-1.5 w-8 h-8 rounded-3xl bg-stone-100">
-                    <img
-                      loading="lazy"
-                      src="https://cdn.builder.io/api/v1/image/assets/TEMP/42a5d3f78babd3069a71e10613168804eab1586a963c62ad0e2851d7f0c22f93?apiKey=5bf51c3fc9cb49b480a07670cbcd768f&"
-                      className="w-5 aspect-square"
-                    />
-                  </div>
-                </div>
-              ))}
+          <div className="flex flex-col mt-4 max-md:flex-wrap max-md:max-w-full">
+            <div className="overflow-x-auto">
+              <table className="min-w-full bg-white">
+                <thead className="bg-stone-100">
+                  <tr>
+                    <th className="py-2 px-4 text-xs font-medium tracking-wide uppercase text-neutral-600">Level Name</th>
+                    <th className="py-2 px-4 text-xs font-medium tracking-wide uppercase text-neutral-600">Description</th>
+                    <th className="py-2 px-4 text-xs font-medium tracking-wide uppercase text-neutral-600">Department ID</th>
+                    <th className="py-2 px-4 text-xs font-medium tracking-wide uppercase text-neutral-600">Ticket Category ID</th>
+                    <th className="py-2 px-4 text-xs font-medium tracking-wide uppercase text-neutral-600">Priority ID</th>
+                    <th className="py-2 px-4 text-xs font-medium tracking-wide uppercase text-neutral-600">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {escalationData.map((item, index) => (
+                    <tr key={index} className="border-b border-neutral-200">
+                      <td className="py-2 px-4 text-neutral-600">{item.levelName}</td>
+                      <td className="py-2 px-4 text-neutral-600">{item.levelDescription}</td>
+                      <td className="py-2 px-4 text-neutral-600">{item.department.name}</td>
+                      <td className="py-2 px-4 text-neutral-600">{item.ticketCategory.name}</td>
+                      
+                      <td className="py-2 px-4 text-neutral-600">{item.priority.priorityName}</td>
+                      <td className="py-2 px-4 text-neutral-600">
+                        <div className="flex justify-center items-center w-8 h-8 rounded-3xl bg-stone-100 cursor-pointer">
+                          <img
+                            loading="lazy"
+                            src="https://cdn.builder.io/api/v1/image/assets/TEMP/42a5d3f78babd3069a71e10613168804eab1586a963c62ad0e2851d7f0c22f93?apiKey=5bf51c3fc9cb49b480a07670cbcd768f&"
+                            className="w-5 aspect-square"
+                          />
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
