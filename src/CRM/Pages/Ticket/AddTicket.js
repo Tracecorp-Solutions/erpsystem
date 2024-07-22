@@ -149,7 +149,7 @@ const AddTicket = ({ isModalVisible, handleCancel }) => {
           <Select
             style={{ width: "80%", marginTop: "8px" }}
             placeholder="Select ticket category"
-            onChange={(value) => console.log(value)} // Handle change as needed
+            onChange={(value) => console.log(value)}
           >
             <Option value="category1">Category 1</Option>
             <Option value="category2">Category 2</Option>
