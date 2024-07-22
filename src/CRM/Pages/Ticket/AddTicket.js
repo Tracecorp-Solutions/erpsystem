@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Modal, Steps, Input, Select, Button } from "antd";
 import axios from "axios";
 
@@ -6,59 +6,101 @@ const { Step } = Steps;
 const { Option } = Select;
 
 const AddTicket = ({ isModalVisible, handleCancel }) => {
-    const [currentStep, setCurrentStep] = useState(0);
-    const [customerReference, setCustomerReference] = useState("");
-    const [customerDetails, setCustomerDetails] = useState(null);
-    const [customerName, setCustomerName] = useState("");
-  
-    const fetchCustomerDetails = async (reference) => {
-      try {
-        const response = await axios.get(
-          `http://3.216.182.63:8095/TestApi/ValidateCustomer/${reference}`
-        );
-        setCustomerDetails(response.data);
-        setCustomerName(response.data.name);
-      } catch (error) {
-        console.error("Error fetching customer details:", error);
-      }
+  const [currentStep, setCurrentStep] = useState(0);
+  const [customerReference, setCustomerReference] = useState("");
+  const [customerDetails, setCustomerDetails] = useState(null);
+  const [customerName, setCustomerName] = useState("");
+  const [operationalAreas, setOperationalAreas] = useState([]);
+  const [branches, setBranches] = useState([]);
+  const [teritory, setTeritory] = useState([]);
+
+  useEffect(() => {
+    fetchOperationalAreas();
+    fetchBranches();
+    fetchTeritory();
+  }, []);
+
+  const fetchOperationalAreas = async () => {
+    try {
+      const response = await axios.get(
+        "http://3.216.182.63:8095/TestApi/GetOperationAreas"
+      );
+      setOperationalAreas(response.data);
+    } catch (error) {
+      console.error("Error fetching operational areas:", error);
+    }
+  };
+
+  const fetchBranches = async () => {
+    try {
+      const response = await axios.get(
+        "http://3.216.182.63:8095/TestApi/GetBranches"
+      );
+      setBranches(response.data);
+    } catch (error) {
+      console.error("Error fetching operational areas:", error);
+    }
+  };
+
+  const fetchTeritory = async () => {
+    try {
+      const response = await axios.get(
+        "http://3.216.182.63:8095/TestApi/GetTerritories"
+      );
+      setTeritory(response.data);
+    } catch (error) {
+      console.error("Error fetching operational areas:", error);
+    }
+  };
+
+  const fetchCustomerDetails = async (reference) => {
+    try {
+      const response = await axios.get(
+        `http://3.216.182.63:8095/TestApi/ValidateCustomer/${reference}`
+      );
+      setCustomerDetails(response.data);
+      setCustomerName(response.data.name);
+    } catch (error) {
+      console.error("Error fetching customer details:", error);
+    }
+  };
+
+  const handleCustomerReferenceChange = (value) => {
+    setCustomerReference(value);
+    setCustomerDetails(null);
+    setCustomerName("");
+  };
+
+  const handleFetchCustomerDetails = () => {
+    if (customerReference) {
+      fetchCustomerDetails(customerReference);
+    }
+  };
+
+  const handleBack = () => {
+    setCurrentStep(currentStep - 1);
+  };
+
+  const handleSubmit = () => {
+    const formData = {
+      customerName: customerName,
+      // Add other fields as needed
     };
-  
-    const handleCustomerReferenceChange = (value) => {
-      setCustomerReference(value);
-      setCustomerDetails(null);
-      setCustomerName("");
-    };
-  
-    const handleFetchCustomerDetails = () => {
-      if (customerReference) {
-        fetchCustomerDetails(customerReference);
-      }
-    };
-  
-    const handleBack = () => {
-      setCurrentStep(currentStep - 1);
-    };
-  
-    const handleSubmit = () => {
-      const formData = {
-        customerName: customerName,
-        // Add other fields as needed
-      };
-      
-      axios.post('http://example.com/saveCustomerDetails', formData)
-        .then(response => {
-          console.log('Data successfully saved:', response.data);
-          handleCancel();
-        })
-        .catch(error => {
-          console.error('Error saving data:', error);
-        });
-    };
-  
-    const nextStep = () => {
-      setCurrentStep(currentStep + 1);
-    };
-  
+
+    axios
+      .post("http://example.com/saveCustomerDetails", formData)
+      .then((response) => {
+        console.log("Data successfully saved:", response.data);
+        handleCancel();
+      })
+      .catch((error) => {
+        console.error("Error saving data:", error);
+      });
+  };
+
+  const nextStep = () => {
+    setCurrentStep(currentStep + 1);
+  };
 
   console.log("customerDetails customerDetails", customerDetails);
 
@@ -144,11 +186,14 @@ const AddTicket = ({ isModalVisible, handleCancel }) => {
             <Select
               style={{ width: "80%", marginTop: "8px" }}
               className="h-12"
-              placeholder="Select area"
+              placeholder="Select operational area"
               onChange={(value) => console.log(value)}
             >
-              <Option value="area1">Area 1</Option>
-              <Option value="area2">Area 2</Option>
+              {operationalAreas.map((area) => (
+                <Option key={area.id} value={area.id}>
+                  {area.name}
+                </Option>
+              ))}
             </Select>
 
             <div className="mt-4 text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">
@@ -160,18 +205,28 @@ const AddTicket = ({ isModalVisible, handleCancel }) => {
               placeholder="Select branch"
               onChange={(value) => console.log(value)}
             >
-              <Option value="branch1">Branch 1</Option>
-              <Option value="branch2">Branch 2</Option>
+              {branches.map((branch) => (
+                <Option key={branch.id} value={branch.id}>
+                  {branch.name}
+                </Option>
+              ))}
             </Select>
 
             <div className="mt-4 text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">
-              Territory
+              Teritory
             </div>
-            <Input
-              placeholder="Enter territory"
-              className="p-3"
+            <Select
               style={{ width: "80%", marginTop: "8px" }}
-            />
+              className="h-12"
+              placeholder="Chooose teritory"
+              onChange={(value) => console.log(value)}
+            >
+              {teritory.map((ter) => (
+                <Option key={ter.id} value={ter.id}>
+                  {ter.name}
+                </Option>
+              ))}
+            </Select>
 
             <div className="mt-4 text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">
               Phone Number
