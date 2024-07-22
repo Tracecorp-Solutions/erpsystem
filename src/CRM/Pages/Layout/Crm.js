@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import CrmDashboard from "../Dashboard/CrmDashboard";
 import Departments from "../Departments/Departments";
 import Escalation from "../Escalation/Escalation";
+import CrmReport from "../Reports/CrmReport";
 
 const Crm = () => {
   const location = useLocation();
@@ -32,6 +33,7 @@ const Crm = () => {
               {screen === "crm-dashboard" && <CrmDashboard />}
               {screen === "departments" && <Departments />}
               {screen === "escalation" && <Escalation />}
+              {screen === "crm-report" && <CrmReport />}
         
             </div>
           </div>
