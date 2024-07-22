@@ -133,22 +133,62 @@ const AddTicket = ({ isModalVisible, handleCancel }) => {
           </div>
         )}
 
-        {/* Step 2 - Ticket Details */}
         {currentStep === 1 && (
-          <div className="flex flex-col items-center pb-16 max-w-[820px]">
-            <div className="text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">
-              Ticket Details
-            </div>
-            <div className="flex gap-2 justify-between px-4 py-4 mt-2 max-w-full text-base leading-6 bg-white rounded-xl border border-solid border-neutral-500 border-opacity-30 text-neutral-400 w-[500px] max-md:flex-wrap">
-              <div>Choose area</div>
-              <img
-                loading="lazy"
-                src="https://cdn.builder.io/api/v1/image/assets/TEMP/a8721aa8c44b81e6b2348dce4fb02570aeacf025a99ab01d6575684f8de43c45?apiKey=0d95acea82cc4b259a61e827c24c5c6c&"
-                className="shrink-0 self-start w-6 aspect-square"
-              />
-            </div>
-            {/* Add more fields as needed for Ticket Details */}
+          <div className="flex flex-col items-center pb-16 w-full">
+          <div className="mt-4 text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">
+            Ticket Subject
           </div>
+          <Input
+            placeholder="Enter ticket subject"
+            style={{ width: "80%", marginTop: "8px" }}
+          />
+
+          <div className="mt-4 text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">
+            Ticket Category
+          </div>
+          <Select
+            style={{ width: "80%", marginTop: "8px" }}
+            placeholder="Select ticket category"
+            onChange={(value) => console.log(value)} // Handle change as needed
+          >
+            <Option value="category1">Category 1</Option>
+            <Option value="category2">Category 2</Option>
+          </Select>
+
+          <div className="mt-4 text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">
+            Ticket Source
+          </div>
+          <Select
+            style={{ width: "80%", marginTop: "8px" }}
+            placeholder="Select ticket source"
+            onChange={(value) => console.log(value)} // Handle change as needed
+          >
+            <Option value="source1">Source 1</Option>
+            <Option value="source2">Source 2</Option>
+          </Select>
+
+          <div className="mt-4 text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">
+            Assign Priority
+          </div>
+          <Select
+            style={{ width: "80%", marginTop: "8px" }}
+            placeholder="Select priority"
+            onChange={(value) => console.log(value)} // Handle change as needed
+          >
+            <Option value="high">High</Option>
+            <Option value="medium">Medium</Option>
+            <Option value="low">Low</Option>
+          </Select>
+
+          <div className="mt-4 text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">
+            Description
+          </div>
+          <Input.TextArea
+            rows={4}
+            placeholder="Enter ticket details"
+            style={{ width: "80%", marginTop: "8px" }}
+          />
+        </div>
         )}
 
         {/* Navigation Buttons */}
