@@ -10,11 +10,22 @@ const AddTicket = ({ isModalVisible, handleCancel }) => {
   const [customerReference, setCustomerReference] = useState("");
   const [customerDetails, setCustomerDetails] = useState(null);
   const [customerName, setCustomerName] = useState("");
+  const [operationalAreaId, setOperationalAreaId] = useState(null);
+  const [branchId, setBranchId] = useState(null);
+  const [territoryId, setTerritoryId] = useState(null);
+  const [customerType, setCustomerType] = useState(null);
+  const [ticketCategoryId, setTicketCategoryId] = useState(null);
+  const [ticketSource, setTicketSource] = useState(null);
+  const [priorityId, setPriorityId] = useState(null);
+  const [description, setDescription] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [address, setAddress] = useState("");
+
   const [operationalAreas, setOperationalAreas] = useState([]);
   const [branches, setBranches] = useState([]);
   const [territory, setTerritory] = useState([]);
-  const [customerType, setCustomerType] = useState(null);
-  const [ticketCateory, setTicketCategory] = useState([]);
+  const [ticketCategory, setTicketCategory] = useState([]);
+  const [complaintSubject, setComplaintSubject] = useState("");
 
   useEffect(() => {
     fetchOperationalAreas();
@@ -63,7 +74,7 @@ const AddTicket = ({ isModalVisible, handleCancel }) => {
       );
       setTicketCategory(response.data);
     } catch (error) {
-      console.error("Error fetching territories:", error);
+      console.error("Error fetching ticket categories:", error);
     }
   };
 
@@ -96,13 +107,27 @@ const AddTicket = ({ isModalVisible, handleCancel }) => {
   };
 
   const handleSubmit = () => {
+    const priorityIdToSend = priorityId || 0;
+
     const formData = {
+      customerType: customerType,
+      customerRef: customerReference,
       customerName: customerName,
-      // Add other fields as needed
+      operationAreaId: operationalAreaId,
+      branchId: branchId,
+      territoryId: territoryId,
+      phoneNumber: phoneNumber,
+      address: address,
+      ticketCategoryId: ticketCategoryId,
+      ticketSource: ticketSource,
+      priorityId: priorityIdToSend,
+      description: description,
+      complaintSubject: complaintSubject,
+      recordedBy: "YourName",
     };
 
     axios
-      .post("http://example.com/saveCustomerDetails", formData)
+      .post(`${process.env.REACT_APP_API_URL}/CreateTicket`, formData)
       .then((response) => {
         console.log("Data successfully saved:", response.data);
         handleCancel();
@@ -115,8 +140,6 @@ const AddTicket = ({ isModalVisible, handleCancel }) => {
   const nextStep = () => {
     setCurrentStep(currentStep + 1);
   };
-
-  console.log("customerDetails customerDetails", customerDetails);
 
   return (
     <Modal
@@ -142,11 +165,13 @@ const AddTicket = ({ isModalVisible, handleCancel }) => {
           <div className="mt-6 w-full border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-opacity-10 min-h-[1px] max-md:max-w-full" />
         </div>
 
+        {/* Steps */}
         <Steps current={currentStep} className="w-full mt-4">
           <Step title="Customer Details" />
           <Step title="Ticket Details" />
         </Steps>
 
+        {/* Step 1 - Customer Details */}
         {currentStep === 0 && (
           <div className="flex flex-col items-center pb-16 w-full">
             <div className="mt-4 text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">
@@ -162,6 +187,7 @@ const AddTicket = ({ isModalVisible, handleCancel }) => {
               <Option value="organization">None Registered Customer</Option>
             </Select>
 
+            {/* Customer Reference */}
             {customerType === "registered" && (
               <>
                 <div className="mt-4 text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">
@@ -172,7 +198,9 @@ const AddTicket = ({ isModalVisible, handleCancel }) => {
                   className="p-3"
                   style={{ width: "80%", marginTop: "8px" }}
                   value={customerReference}
-                  onChange={(e) => handleCustomerReferenceChange(e.target.value)}
+                  onChange={(e) =>
+                    handleCustomerReferenceChange(e.target.value)
+                  }
                 />
                 <Button
                   type="primary"
@@ -199,6 +227,7 @@ const AddTicket = ({ isModalVisible, handleCancel }) => {
               </>
             )}
 
+            {/* Operational Area */}
             <div className="mt-4 text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">
               Area
             </div>
@@ -206,7 +235,7 @@ const AddTicket = ({ isModalVisible, handleCancel }) => {
               style={{ width: "80%", marginTop: "8px" }}
               className="h-12"
               placeholder="Select operational area"
-              onChange={(value) => console.log(value)}
+              onChange={(value) => setOperationalAreaId(value)}
             >
               {operationalAreas.map((area) => (
                 <Option key={area.id} value={area.id}>
@@ -215,6 +244,7 @@ const AddTicket = ({ isModalVisible, handleCancel }) => {
               ))}
             </Select>
 
+            {/* Branch */}
             <div className="mt-4 text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">
               Branch
             </div>
@@ -222,7 +252,7 @@ const AddTicket = ({ isModalVisible, handleCancel }) => {
               style={{ width: "80%", marginTop: "8px" }}
               className="h-12"
               placeholder="Select branch"
-              onChange={(value) => console.log(value)}
+              onChange={(value) => setBranchId(value)}
             >
               {branches.map((branch) => (
                 <Option key={branch.id} value={branch.id}>
@@ -231,6 +261,7 @@ const AddTicket = ({ isModalVisible, handleCancel }) => {
               ))}
             </Select>
 
+            {/* Territory */}
             <div className="mt-4 text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">
               Territory
             </div>
@@ -238,7 +269,7 @@ const AddTicket = ({ isModalVisible, handleCancel }) => {
               style={{ width: "80%", marginTop: "8px" }}
               className="h-12"
               placeholder="Choose territory"
-              onChange={(value) => console.log(value)}
+              onChange={(value) => setTerritoryId(value)}
             >
               {territory.map((ter) => (
                 <Option key={ter.id} value={ter.id}>
@@ -247,6 +278,7 @@ const AddTicket = ({ isModalVisible, handleCancel }) => {
               ))}
             </Select>
 
+            {/* Phone Number */}
             <div className="mt-4 text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">
               Phone Number
             </div>
@@ -254,8 +286,11 @@ const AddTicket = ({ isModalVisible, handleCancel }) => {
               placeholder="Enter phone number"
               className="p-3"
               style={{ width: "80%", marginTop: "8px" }}
+              value={phoneNumber}
+              onChange={(e) => setPhoneNumber(e.target.value)}
             />
 
+            {/* Address */}
             <div className="mt-4 text-base text-start font-semibold leading-6 text-neutral-600">
               Address
             </div>
@@ -263,6 +298,8 @@ const AddTicket = ({ isModalVisible, handleCancel }) => {
               rows={2}
               placeholder="Enter address"
               style={{ width: "80%", marginTop: "8px" }}
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
             />
           </div>
         )}
@@ -277,24 +314,28 @@ const AddTicket = ({ isModalVisible, handleCancel }) => {
               className="p-3"
               placeholder="Enter ticket subject"
               style={{ width: "80%", marginTop: "8px" }}
+              value={complaintSubject}
+              onChange={(e) => setComplaintSubject(e.target.value)}
             />
 
+            {/* Ticket Category */}
             <div className="mt-4 text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">
               Ticket Category
             </div>
             <Select
               style={{ width: "80%", marginTop: "8px" }}
               className="h-12"
-              placeholder="Choose territory"
-              onChange={(value) => console.log(value)}
-            >  
-              {ticketCateory.map((ter) => (
-                <Option key={ter.id} value={ter.id}>
-                  {ter.name}
+              placeholder="Choose ticket category"
+              onChange={(value) => setTicketCategoryId(value)}
+            >
+              {ticketCategory.map((category) => (
+                <Option key={category.id} value={category.id}>
+                  {category.name}
                 </Option>
               ))}
             </Select>
 
+            {/* Ticket Source */}
             <div className="mt-4 text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">
               Ticket Source
             </div>
@@ -302,12 +343,13 @@ const AddTicket = ({ isModalVisible, handleCancel }) => {
               style={{ width: "80%", marginTop: "8px" }}
               className="h-12"
               placeholder="Select ticket source"
-              onChange={(value) => console.log(value)}
+              onChange={(value) => setTicketSource(value)}
             >
               <Option value="source1">Source 1</Option>
               <Option value="source2">Source 2</Option>
             </Select>
 
+            {/* Priority */}
             <div className="mt-4 text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">
               Assign Priority
             </div>
@@ -315,13 +357,14 @@ const AddTicket = ({ isModalVisible, handleCancel }) => {
               style={{ width: "80%", marginTop: "8px" }}
               className="h-12"
               placeholder="Select priority"
-              onChange={(value) => console.log(value)}
+              onChange={(value) => setPriorityId(value)}
             >
-              <Option value="high">High</Option>
-              <Option value="medium">Medium</Option>
-              <Option value="low">Low</Option>
+              <Option value="1">High</Option>
+              <Option value="2">Medium</Option>
+              <Option value="3">Low</Option>
             </Select>
 
+            {/* Description */}
             <div className="mt-4 text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">
               Description
             </div>
@@ -329,6 +372,8 @@ const AddTicket = ({ isModalVisible, handleCancel }) => {
               rows={2}
               placeholder="Enter ticket details"
               style={{ width: "80%", marginTop: "8px" }}
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
             />
           </div>
         )}
