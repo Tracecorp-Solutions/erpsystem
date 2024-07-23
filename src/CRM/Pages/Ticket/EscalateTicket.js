@@ -38,20 +38,20 @@ const EscalateTicket = ({ handleEscalateCancel }) => {
       <div className="mt-4 text-start w-full my-2">Comments</div>
         <Input.TextArea rows={4} placeholder="Leave your comment here ..." />
       <div className="flex justify-between mt-10 w-full max-w-[496px] max-md:flex-wrap max-md:max-w-full">
-        <button
+        <Button
           type="button"
           onClick={handleEscalateCancel}
           className="px-8 py-4 whitespace-nowrap rounded-3xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 max-md:px-5"
         >
           Cancel
-        </button>
-        <button
+        </Button>
+        <Button
           type="submit"
           onClick={handleFormSubmit}
           className="px-8 py-4 font-semibold text-white rounded-3xl bg-slate-500 max-md:px-6"
         >
           Escalate Ticket
-        </button>
+        </Button>
       </div>
     </div>
   );

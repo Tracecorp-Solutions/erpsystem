@@ -5,12 +5,14 @@ import axios from "axios";
 import AddTicket from "./AddTicket";
 import EscalateTicket from "./EscalateTicket";
 import UpdateStatus from "./UpdateStatus";
+import ResolveTicket from "./ResolveTicket"; // Import ResolveTicket component
 
 const Ticket = () => {
   const [tickets, setTickets] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [escalateModalVisible, setEscalateModalVisible] = useState(false);
   const [updateStatusModalVisible, setUpdateStatusModalVisible] = useState(false);
+  const [resolveModalVisible, setResolveModalVisible] = useState(false); // State for ResolveTicket modal
 
   useEffect(() => {
     fetchTickets();
@@ -48,6 +50,9 @@ const Ticket = () => {
       case "3":
         setUpdateStatusModalVisible(true);
         break;
+      case "4":
+        setResolveModalVisible(true);
+        break;
       default:
         break;
     }
@@ -59,6 +64,10 @@ const Ticket = () => {
 
   const handleUpdateStatusCancel = () => {
     setUpdateStatusModalVisible(false);
+  };
+
+  const handleResolveCancel = () => {
+    setResolveModalVisible(false);
   };
 
   const columns = [
@@ -131,6 +140,16 @@ const Ticket = () => {
         footer={null}
       >
         <UpdateStatus handleUpdateStatusCancel={handleUpdateStatusCancel} />
+      </Modal>
+
+      {/* Resolve Ticket Modal */}
+      <Modal
+        visible={resolveModalVisible}
+        onCancel={handleResolveCancel}
+        closable={false}
+        footer={null}
+      >
+        <ResolveTicket handleResolveCancel={handleResolveCancel} />
       </Modal>
     </div>
   );
