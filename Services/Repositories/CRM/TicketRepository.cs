@@ -62,7 +62,15 @@ namespace Services.Repositories.CRM
 
         public async Task<IEnumerable<Ticket>> GetAllTicketsAsync()
         {
-            return await _context.Tickets.ToListAsync();
+            return await _context.Tickets
+                .Include(t=>t.Priority)
+                .Include(t=>t.TicketCategory)
+                .Include(t=>t.Territory)
+                .Include(t=>t.Branch)
+                .Include(t=>t.OperationArea)
+                .Include(t=>t.EscalationMatrix)
+                    .ThenInclude(em=>em.Department)
+                .ToListAsync();
         }
 
         public async Task<FetchTicketDto> GetTicketByIdAsync(int ticketId)
