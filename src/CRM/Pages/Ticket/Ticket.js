@@ -72,19 +72,19 @@ const Ticket = () => {
 
   const columns = [
     { title: "ID", dataIndex: "id", key: "id" },
-    { title: "Customer Name", dataIndex: "customerName", key: "customerName" },
-    { title: "Complaint Subject", dataIndex: "complaintSubject", key: "complaintSubject" },
-    { title: "Status", dataIndex: "status", key: "status" },
+    { title: "SUBJECT", dataIndex: "customerName", key: "customerName" },
+    { title: "COMPLAINT SUBJECT", dataIndex: "complaintSubject", key: "complaintSubject" },
+    { title: "STATUS", dataIndex: "status", key: "status" },
     { 
-      title: "Creation Date", 
+      title: "CREATION DATE", 
       dataIndex: "creationDate", 
       key: "creationDate",
       render: (text) => <span>{text}</span>
     },
-    { title: "Priority", dataIndex: "priority", key: "priority" },
-    { title: "Ticket Category", dataIndex: "ticketCategory", key: "ticketCategory" },
+    { title: "PRIORITY", dataIndex: ["priority", "priorityName"], key: "priority" },
+    { title: "Ticket Category", dataIndex: ["ticketCategory", "name"], key: "ticketCategory" },
     {
-      title: "Actions",
+      title: "ACTION",
       key: "actions",
       render: (text, record) => (
         <Dropdown
@@ -106,6 +106,8 @@ const Ticket = () => {
       ),
     },
   ];
+
+  console.log("tickets", tickets);
 
   return (
     <div>
@@ -149,7 +151,10 @@ const Ticket = () => {
         closable={false}
         footer={null}
       >
-        <ResolveTicket handleResolveCancel={handleResolveCancel} />
+        <ResolveTicket
+          ticket={tickets.find((ticket) => ticket.id === resolveModalVisible)}
+          handleResolveCancel={handleResolveCancel}
+        />
       </Modal>
     </div>
   );
