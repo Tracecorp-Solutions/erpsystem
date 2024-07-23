@@ -52,7 +52,8 @@ namespace Services.Repositories.CRM
                 Status = "Created",
                 AssignedTo = escalationMatrix?.DepartmentId ?? 0, // Ensure to handle null case for escalationMatrix
                 RecordedBy = ticket.RecordedBy,
-                RecordedAt = DateTime.Now
+                RecordedAt = DateTime.Now,
+                ReasonOfEscalation="Normal"
             };
 
             await _context.TicketAuditTrails.AddAsync(ticketAuditTrail);

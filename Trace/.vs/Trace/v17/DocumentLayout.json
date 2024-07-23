@@ -3,40 +3,20 @@
   "WorkspaceRootPath": "D:\\working directory\\erpsystem\\Trace\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\working directory\\erpsystem\\Infrastructure\\Migrations\\20240722075739_additionofticket.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{97CA6EF6-720A-4545-8A15-EBF2D4F20DA0}|Trace.csproj|d:\\working directory\\erpsystem\\trace\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{97CA6EF6-720A-4545-8A15-EBF2D4F20DA0}|Trace.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D0C5D151-D98C-46B1-A85E-DFAA22B5EE2F}|..\\Services\\Services.csproj|d:\\working directory\\erpsystem\\services\\repositories\\crm\\ticketrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{97CA6EF6-720A-4545-8A15-EBF2D4F20DA0}|Trace.csproj|d:\\working directory\\erpsystem\\trace\\controllers\\ticketcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{97CA6EF6-720A-4545-8A15-EBF2D4F20DA0}|Trace.csproj|solutionrelative:controllers\\ticketcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D0C5D151-D98C-46B1-A85E-DFAA22B5EE2F}|..\\Services\\Services.csproj|d:\\working directory\\erpsystem\\services\\repositories\\crm\\ticketrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A176F11F-4BEC-4DAC-9205-CF64F57D23C0}|..\\Core\\Core.csproj|d:\\working directory\\erpsystem\\core\\repositories\\crm\\icrmdashboard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A176F11F-4BEC-4DAC-9205-CF64F57D23C0}|..\\Core\\Core.csproj|d:\\working directory\\erpsystem\\core\\dtos\\crm\\fetchticketdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A176F11F-4BEC-4DAC-9205-CF64F57D23C0}|..\\Core\\Core.csproj|d:\\working directory\\erpsystem\\core\\dtos\\crm\\ticketstatussummarydto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A176F11F-4BEC-4DAC-9205-CF64F57D23C0}|..\\Core\\Core.csproj|d:\\working directory\\erpsystem\\core\\models\\crm\\ticketaudittrail.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{7735A439-FAA5-47B0-AAB7-17DB1C05A2D8}|..\\Infrastructure\\Infrastructure.csproj|d:\\working directory\\erpsystem\\infrastructure\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{97CA6EF6-720A-4545-8A15-EBF2D4F20DA0}|Trace.csproj|d:\\working directory\\erpsystem\\trace\\controllers\\escalationmatrixcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{97CA6EF6-720A-4545-8A15-EBF2D4F20DA0}|Trace.csproj|solutionrelative:controllers\\escalationmatrixcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A176F11F-4BEC-4DAC-9205-CF64F57D23C0}|..\\Core\\Core.csproj|d:\\working directory\\erpsystem\\core\\repositories\\crm\\iticketrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A176F11F-4BEC-4DAC-9205-CF64F57D23C0}|..\\Core\\Core.csproj|d:\\working directory\\erpsystem\\core\\dtos\\crm\\ticketdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A176F11F-4BEC-4DAC-9205-CF64F57D23C0}|..\\Core\\Core.csproj|d:\\working directory\\erpsystem\\core\\models\\crm\\ticket.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A176F11F-4BEC-4DAC-9205-CF64F57D23C0}|..\\Core\\Core.csproj|d:\\working directory\\erpsystem\\core\\dtos\\crm\\ticketstatisticsdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -71,144 +51,64 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "20240722075739_additionofticket.cs",
-              "DocumentMoniker": "D:\\working directory\\erpsystem\\Infrastructure\\Migrations\\20240722075739_additionofticket.cs",
-              "RelativeDocumentMoniker": "..\\Infrastructure\\Migrations\\20240722075739_additionofticket.cs",
-              "ToolTip": "D:\\working directory\\erpsystem\\Infrastructure\\Migrations\\20240722075739_additionofticket.cs",
-              "RelativeToolTip": "..\\Infrastructure\\Migrations\\20240722075739_additionofticket.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-22T07:57:39.892Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Program.cs",
-              "DocumentMoniker": "D:\\working directory\\erpsystem\\Trace\\Program.cs",
-              "RelativeDocumentMoniker": "Program.cs",
-              "ToolTip": "D:\\working directory\\erpsystem\\Trace\\Program.cs",
-              "RelativeToolTip": "Program.cs",
-              "ViewState": "AQIAADMAAAAAAAAAAAAAADQAAABCAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-22T07:56:43.605Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "TicketController.cs",
-              "DocumentMoniker": "D:\\working directory\\erpsystem\\Trace\\Controllers\\TicketController.cs",
-              "RelativeDocumentMoniker": "Controllers\\TicketController.cs",
-              "ToolTip": "D:\\working directory\\erpsystem\\Trace\\Controllers\\TicketController.cs",
-              "RelativeToolTip": "Controllers\\TicketController.cs",
-              "ViewState": "AQIAABYAAAAAAAAAAAAiwEgAAAAJAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-22T07:55:39.488Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "FetchTicketDto.cs",
-              "DocumentMoniker": "D:\\working directory\\erpsystem\\Core\\DTOs\\CRM\\FetchTicketDto.cs",
-              "RelativeDocumentMoniker": "..\\Core\\DTOs\\CRM\\FetchTicketDto.cs",
-              "ToolTip": "D:\\working directory\\erpsystem\\Core\\DTOs\\CRM\\FetchTicketDto.cs",
-              "RelativeToolTip": "..\\Core\\DTOs\\CRM\\FetchTicketDto.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA0AAAA+AAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-22T07:47:35.634Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "TicketAuditTrail.cs",
-              "DocumentMoniker": "D:\\working directory\\erpsystem\\Core\\Models\\CRM\\TicketAuditTrail.cs",
-              "RelativeDocumentMoniker": "..\\Core\\Models\\CRM\\TicketAuditTrail.cs",
-              "ToolTip": "D:\\working directory\\erpsystem\\Core\\Models\\CRM\\TicketAuditTrail.cs",
-              "RelativeToolTip": "..\\Core\\Models\\CRM\\TicketAuditTrail.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABUAAAA6AAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-22T07:29:03.778Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
               "Title": "TicketRepository.cs",
               "DocumentMoniker": "D:\\working directory\\erpsystem\\Services\\Repositories\\CRM\\TicketRepository.cs",
               "RelativeDocumentMoniker": "..\\Services\\Repositories\\CRM\\TicketRepository.cs",
               "ToolTip": "D:\\working directory\\erpsystem\\Services\\Repositories\\CRM\\TicketRepository.cs",
               "RelativeToolTip": "..\\Services\\Repositories\\CRM\\TicketRepository.cs",
-              "ViewState": "AQIAAEAAAAAAAAAAAAAAAE8AAABAAAAA",
+              "ViewState": "AQIAACYAAAAAAAAAAAArwDcAAAAqAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-22T07:26:35.986Z",
+              "WhenOpened": "2024-07-23T09:38:32.239Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "ITicketRepository.cs",
-              "DocumentMoniker": "D:\\working directory\\erpsystem\\Core\\Repositories\\CRM\\ITicketRepository.cs",
-              "RelativeDocumentMoniker": "..\\Core\\Repositories\\CRM\\ITicketRepository.cs",
-              "ToolTip": "D:\\working directory\\erpsystem\\Core\\Repositories\\CRM\\ITicketRepository.cs",
-              "RelativeToolTip": "..\\Core\\Repositories\\CRM\\ITicketRepository.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAAMAAAA",
+              "DocumentIndex": 1,
+              "Title": "TicketController.cs",
+              "DocumentMoniker": "D:\\working directory\\erpsystem\\Trace\\Controllers\\TicketController.cs",
+              "RelativeDocumentMoniker": "Controllers\\TicketController.cs",
+              "ToolTip": "D:\\working directory\\erpsystem\\Trace\\Controllers\\TicketController.cs",
+              "RelativeToolTip": "Controllers\\TicketController.cs",
+              "ViewState": "AQIAAA8AAAAAAAAAAAAAABcAAAA1AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-22T07:24:40.087Z",
+              "WhenOpened": "2024-07-23T09:37:26.35Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "TicketDto.cs",
-              "DocumentMoniker": "D:\\working directory\\erpsystem\\Core\\DTOs\\CRM\\TicketDto.cs",
-              "RelativeDocumentMoniker": "..\\Core\\DTOs\\CRM\\TicketDto.cs",
-              "ToolTip": "D:\\working directory\\erpsystem\\Core\\DTOs\\CRM\\TicketDto.cs",
-              "RelativeToolTip": "..\\Core\\DTOs\\CRM\\TicketDto.cs",
-              "ViewState": "AQIAAAQAAAAAAAAAAAAiwAwAAAAFAAAA",
+              "DocumentIndex": 3,
+              "Title": "TicketStatusSummaryDto.cs",
+              "DocumentMoniker": "D:\\working directory\\erpsystem\\Core\\DTOs\\CRM\\TicketStatusSummaryDto.cs",
+              "RelativeDocumentMoniker": "..\\Core\\DTOs\\CRM\\TicketStatusSummaryDto.cs",
+              "ToolTip": "D:\\working directory\\erpsystem\\Core\\DTOs\\CRM\\TicketStatusSummaryDto.cs",
+              "RelativeToolTip": "..\\Core\\DTOs\\CRM\\TicketStatusSummaryDto.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAAKAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-22T07:23:23.249Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-22T12:16:38.294Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "ApplicationDbContext.cs",
-              "DocumentMoniker": "D:\\working directory\\erpsystem\\Infrastructure\\Data\\ApplicationDbContext.cs",
-              "RelativeDocumentMoniker": "..\\Infrastructure\\Data\\ApplicationDbContext.cs",
-              "ToolTip": "D:\\working directory\\erpsystem\\Infrastructure\\Data\\ApplicationDbContext.cs",
-              "RelativeToolTip": "..\\Infrastructure\\Data\\ApplicationDbContext.cs",
-              "ViewState": "AQIAAAwAAAAAAAAAAAAAAGgAAABGAAAA",
+              "DocumentIndex": 4,
+              "Title": "TicketStatisticsDto.cs",
+              "DocumentMoniker": "D:\\working directory\\erpsystem\\Core\\DTOs\\CRM\\TicketStatisticsDto.cs",
+              "RelativeDocumentMoniker": "..\\Core\\DTOs\\CRM\\TicketStatisticsDto.cs",
+              "ToolTip": "D:\\working directory\\erpsystem\\Core\\DTOs\\CRM\\TicketStatisticsDto.cs",
+              "RelativeToolTip": "..\\Core\\DTOs\\CRM\\TicketStatisticsDto.cs",
+              "ViewState": "AQIAAAgAAAAAAAAAAAAAAA0AAAA4AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-22T07:22:45.244Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-22T12:00:05.921Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "Ticket.cs",
-              "DocumentMoniker": "D:\\working directory\\erpsystem\\Core\\Models\\CRM\\Ticket.cs",
-              "RelativeDocumentMoniker": "..\\Core\\Models\\CRM\\Ticket.cs",
-              "ToolTip": "D:\\working directory\\erpsystem\\Core\\Models\\CRM\\Ticket.cs",
-              "RelativeToolTip": "..\\Core\\Models\\CRM\\Ticket.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAAIAAAA",
+              "DocumentIndex": 2,
+              "Title": "ICrmDashboard.cs",
+              "DocumentMoniker": "D:\\working directory\\erpsystem\\Core\\Repositories\\CRM\\ICrmDashboard.cs",
+              "RelativeDocumentMoniker": "..\\Core\\Repositories\\CRM\\ICrmDashboard.cs",
+              "ToolTip": "D:\\working directory\\erpsystem\\Core\\Repositories\\CRM\\ICrmDashboard.cs",
+              "RelativeToolTip": "..\\Core\\Repositories\\CRM\\ICrmDashboard.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA8AAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-22T06:55:46.533Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "EscalationMatrixController.cs",
-              "DocumentMoniker": "D:\\working directory\\erpsystem\\Trace\\Controllers\\EscalationMatrixController.cs",
-              "RelativeDocumentMoniker": "Controllers\\EscalationMatrixController.cs",
-              "ToolTip": "D:\\working directory\\erpsystem\\Trace\\Controllers\\EscalationMatrixController.cs",
-              "RelativeToolTip": "Controllers\\EscalationMatrixController.cs",
-              "ViewState": "AQIAAA0AAAAAAAAAAAAqwBkAAAA0AAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-22T06:53:01.76Z",
+              "WhenOpened": "2024-07-22T11:59:29.636Z",
               "EditorCaption": ""
             }
           ]
