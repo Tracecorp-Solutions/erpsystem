@@ -4,11 +4,13 @@ import { EllipsisOutlined } from "@ant-design/icons";
 import axios from "axios";
 import AddTicket from "./AddTicket";
 import EscalateTicket from "./EscalateTicket";
+import UpdateStatus from "./UpdateStatus";
 
 const Ticket = () => {
   const [tickets, setTickets] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [escalateModalVisible, setEscalateModalVisible] = useState(false); // State for escalate modal
+  const [escalateModalVisible, setEscalateModalVisible] = useState(false);
+  const [updateStatusModalVisible, setUpdateStatusModalVisible] = useState(false);
 
   useEffect(() => {
     fetchTickets();
@@ -19,9 +21,9 @@ const Ticket = () => {
       const response = await axios.get(
         `${process.env.REACT_APP_API_URL}/GetAllTickets`
       );
-      const formattedTickets = response.data.map(ticket => ({
+      const formattedTickets = response.data.map((ticket) => ({
         ...ticket,
-        creationDate: new Date(ticket.creationDate).toLocaleDateString()
+        creationDate: new Date(ticket.creationDate).toLocaleDateString(),
       }));
       setTickets(formattedTickets);
     } catch (error) {
@@ -39,15 +41,24 @@ const Ticket = () => {
 
   const handleMenuClick = (record, e) => {
     console.log("Clicked on menu item", e.key, "for record", record);
-    if (e.key === "2") {
-      // If "Escalate Ticket" is clicked
-      setEscalateModalVisible(true); // Show escalate modal
+    switch (e.key) {
+      case "2":
+        setEscalateModalVisible(true);
+        break;
+      case "3":
+        setUpdateStatusModalVisible(true);
+        break;
+      default:
+        break;
     }
-    // Handle other menu actions as needed
   };
 
   const handleEscalateCancel = () => {
-    setEscalateModalVisible(false); // Hide escalate modal
+    setEscalateModalVisible(false);
+  };
+
+  const handleUpdateStatusCancel = () => {
+    setUpdateStatusModalVisible(false);
   };
 
   const columns = [
@@ -72,14 +83,14 @@ const Ticket = () => {
             <Menu onClick={(e) => handleMenuClick(record, e)}>
               <Menu.Item key="1">Update Ticket</Menu.Item>
               <Menu.Item key="2">Escalate Ticket</Menu.Item>
-              <Menu.Item key="3">Change Status</Menu.Item>
+              <Menu.Item key="3">Update Status</Menu.Item>
               <Menu.Item key="4">Resolve Ticket</Menu.Item>
             </Menu>
           }
           trigger={['click']}
           placement="bottomRight"
         >
-          <Button type="link" size="small" onClick={e => e.preventDefault()}>
+          <Button type="link" size="small" onClick={(e) => e.preventDefault()}>
             <EllipsisOutlined />
           </Button>
         </Dropdown>
@@ -110,6 +121,16 @@ const Ticket = () => {
         footer={null}
       >
         <EscalateTicket handleEscalateCancel={handleEscalateCancel} />
+      </Modal>
+
+      {/* Update Status Modal */}
+      <Modal
+        visible={updateStatusModalVisible}
+        onCancel={handleUpdateStatusCancel}
+        closable={false}
+        footer={null}
+      >
+        <UpdateStatus handleUpdateStatusCancel={handleUpdateStatusCancel} />
       </Modal>
     </div>
   );
