@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { Table, Button, Menu, Dropdown } from "antd";
+import { Table, Button, Menu, Dropdown, Modal } from "antd";
 import { EllipsisOutlined } from "@ant-design/icons";
 import axios from "axios";
 import AddTicket from "./AddTicket";
+import EscalateTicket from "./EscalateTicket";
 
 const Ticket = () => {
   const [tickets, setTickets] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [escalateModalVisible, setEscalateModalVisible] = useState(false); // State for escalate modal
 
   useEffect(() => {
     fetchTickets();
@@ -37,6 +39,15 @@ const Ticket = () => {
 
   const handleMenuClick = (record, e) => {
     console.log("Clicked on menu item", e.key, "for record", record);
+    if (e.key === "2") {
+      // If "Escalate Ticket" is clicked
+      setEscalateModalVisible(true); // Show escalate modal
+    }
+    // Handle other menu actions as needed
+  };
+
+  const handleEscalateCancel = () => {
+    setEscalateModalVisible(false); // Hide escalate modal
   };
 
   const columns = [
@@ -90,6 +101,16 @@ const Ticket = () => {
       </div>
       <Table dataSource={tickets} columns={columns} pagination={false} />
       <AddTicket isModalVisible={isModalVisible} handleCancel={handleCancel} />
+
+      {/* Escalate Ticket Modal */}
+      <Modal
+        visible={escalateModalVisible}
+        onCancel={handleEscalateCancel}
+        closable={false}
+        footer={null}
+      >
+        <EscalateTicket handleEscalateCancel={handleEscalateCancel} />
+      </Modal>
     </div>
   );
 };
