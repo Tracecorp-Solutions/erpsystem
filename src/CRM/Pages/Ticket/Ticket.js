@@ -1,9 +1,31 @@
-import React, { useState } from "react";
-import { Table, Button, Modal } from "antd";
+import React, { useState, useEffect } from "react";
+import { Table, Button, Menu, Dropdown } from "antd";
+import { EllipsisOutlined } from "@ant-design/icons";
+import axios from "axios";
 import AddTicket from "./AddTicket";
 
 const Ticket = () => {
+  const [tickets, setTickets] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
+
+  useEffect(() => {
+    fetchTickets();
+  }, []);
+
+  const fetchTickets = async () => {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}/GetAllTickets`
+      );
+      const formattedTickets = response.data.map(ticket => ({
+        ...ticket,
+        creationDate: new Date(ticket.creationDate).toLocaleDateString()
+      }));
+      setTickets(formattedTickets);
+    } catch (error) {
+      console.error("Error fetching tickets:", error);
+    }
+  };
 
   const showModal = () => {
     setIsModalVisible(true);
@@ -13,70 +35,45 @@ const Ticket = () => {
     setIsModalVisible(false);
   };
 
-  const data = [
-    {
-      key: "1",
-      ticket: "TICKET-001",
-      title: "Sample Ticket 1",
-      category: "Bug",
-      priority: "High",
-      status: "Open",
-      created: "2023-07-22",
-    },
-    {
-      key: "2",
-      ticket: "TICKET-002",
-      title: "Sample Ticket 2",
-      category: "Feature Request",
-      priority: "Medium",
-      status: "In Progress",
-      created: "2023-07-23",
-    },
-    {
-      key: "3",
-      ticket: "TICKET-003",
-      title: "Sample Ticket 3",
-      category: "Enhancement",
-      priority: "Low",
-      status: "Closed",
-      created: "2023-07-24",
-    },
-    {
-      key: "4",
-      ticket: "TICKET-004",
-      title: "Sample Ticket 4",
-      category: "Bug",
-      priority: "High",
-      status: "Open",
-      created: "2023-07-25",
-    },
-    {
-      key: "5",
-      ticket: "TICKET-005",
-      title: "Sample Ticket 5",
-      category: "Feature Request",
-      priority: "Low",
-      status: "Closed",
-      created: "2023-07-26",
-    },
-    {
-      key: "6",
-      ticket: "TICKET-006",
-      title: "Sample Ticket 6",
-      category: "Enhancement",
-      priority: "Medium",
-      status: "In Progress",
-      created: "2023-07-27",
-    },
-  ];
+  const handleMenuClick = (record, e) => {
+    console.log("Clicked on menu item", e.key, "for record", record);
+  };
 
   const columns = [
-    { title: "Ticket", dataIndex: "ticket", key: "ticket" },
-    { title: "Title", dataIndex: "title", key: "title" },
-    { title: "Category", dataIndex: "category", key: "category" },
-    { title: "Priority", dataIndex: "priority", key: "priority" },
+    { title: "ID", dataIndex: "id", key: "id" },
+    { title: "Customer Name", dataIndex: "customerName", key: "customerName" },
+    { title: "Complaint Subject", dataIndex: "complaintSubject", key: "complaintSubject" },
     { title: "Status", dataIndex: "status", key: "status" },
-    { title: "Date Created", dataIndex: "created", key: "created" },
+    { 
+      title: "Creation Date", 
+      dataIndex: "creationDate", 
+      key: "creationDate",
+      render: (text) => <span>{text}</span>
+    },
+    { title: "Priority", dataIndex: "priority", key: "priority" },
+    { title: "Ticket Category", dataIndex: "ticketCategory", key: "ticketCategory" },
+    {
+      title: "Actions",
+      key: "actions",
+      render: (text, record) => (
+        <Dropdown
+          overlay={
+            <Menu onClick={(e) => handleMenuClick(record, e)}>
+              <Menu.Item key="1">Update Ticket</Menu.Item>
+              <Menu.Item key="2">Escalate Ticket</Menu.Item>
+              <Menu.Item key="3">Change Status</Menu.Item>
+              <Menu.Item key="4">Resolve Ticket</Menu.Item>
+            </Menu>
+          }
+          trigger={['click']}
+          placement="bottomRight"
+        >
+          <Button type="link" size="small" onClick={e => e.preventDefault()}>
+            <EllipsisOutlined />
+          </Button>
+        </Dropdown>
+      ),
+    },
   ];
 
   return (
@@ -91,7 +88,7 @@ const Ticket = () => {
           Create Ticket
         </Button>
       </div>
-      <Table dataSource={data} columns={columns} pagination={false} />
+      <Table dataSource={tickets} columns={columns} pagination={false} />
       <AddTicket isModalVisible={isModalVisible} handleCancel={handleCancel} />
     </div>
   );

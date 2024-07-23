@@ -123,7 +123,7 @@ const AddTicket = ({ isModalVisible, handleCancel }) => {
       priorityId: priorityIdToSend,
       description: description,
       complaintSubject: complaintSubject,
-      recordedBy: "YourName",
+      recordedBy: "AN",
     };
 
     axios
