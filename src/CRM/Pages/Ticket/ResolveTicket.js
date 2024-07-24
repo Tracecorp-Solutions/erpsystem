@@ -1,21 +1,52 @@
 import React, { useState } from "react";
-import { Button, Modal } from "antd";
+import { Button, message, Upload } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
+import axios from "axios";
 
-const ResolveTickets = ({ handleResolveCancel }) => {
-  const [file, setFile] = useState(null);
+const ResolveTickets = ({ handleResolveCancel, ticketId, recordedBy }) => {
+  const [fileList, setFileList] = useState([]);
   const [resolutionSummary, setResolutionSummary] = useState("");
 
-  const handleFileChange = (e) => {
-    const selectedFile = e.target.files[0];
-    setFile(selectedFile);
+  const handleFileChange = (info) => {
+    let newFileList = [...info.fileList];
+    newFileList = newFileList.slice(-1); // Limit to only one file
+    setFileList(newFileList);
   };
 
-  const handleSubmit = () => {
-    console.log("File:", file);
-    console.log("Resolution Summary:", resolutionSummary);
+  const handleSubmit = async () => {
+    const file = fileList[0]; // Get the first (and only) file from fileList
 
-    handleResolveCancel();
+    if (!file) {
+      message.error("Please upload a file.");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("FileName", file.originFileObj); // Append the actual file object
+    formData.append("ReasonOfEscalation", resolutionSummary);
+    formData.append("ticketId", ticketId);
+    formData.append("recordedBy", recordedBy);
+
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_API_URL}/ResolveTicket`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Accept: "application/json",
+          },
+        }
+      );
+
+      console.log("Resolve Ticket successful:", response.data);
+      message.success("Ticket resolved successfully!");
+
+      handleResolveCancel();
+    } catch (error) {
+      console.error("Error resolving ticket:", error);
+      message.error("Failed to resolve ticket. Please try again later.");
+    }
   };
 
   return (
@@ -33,26 +64,16 @@ const ResolveTickets = ({ handleResolveCancel }) => {
         </div>
         <div className="mt-6 w-full border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-opacity-10 min-h-[1px] max-md:max-w-full" />
       </div>
-      <div className="mt-8 text-neutral-600 text-start w-full">
-        Attach Job Card
-      </div>
-      <div className="flex gap-4 py-2 pr-4 mt-2 max-w-full rounded-xl border border-solid border-neutral-500 border-opacity-30 w-[500px] max-md:flex-wrap">
-        <label htmlFor="fileInput" className="px-16 py-2 rounded-md bg-stone-100 text-neutral-600 max-md:px-5 cursor-pointer">
-          <UploadOutlined /> Browse File
-        </label>
-        <input
-          type="file"
-          id="fileInput"
-          style={{ display: "none" }}
-          onChange={handleFileChange}
-        />
-        <div className="my-auto text-neutral-400">
-          {file ? file.name : "No file selected"}
-        </div>
-      </div>
-      <div className="mt-4 text-neutral-600 text-start w-full">
-        Resolution Summary
-      </div>
+      <div className="mt-8 text-neutral-600 text-start w-full">Attach Job Card</div>
+      <Upload
+        fileList={fileList}
+        onChange={handleFileChange}
+        beforeUpload={() => false} // Prevent automatic upload
+        className="py-2 pr-4 mt-2 max-w-full rounded-xl border border-solid border-neutral-500 border-opacity-30 w-[500px] max-md:flex-wrap"
+      >
+        <Button icon={<UploadOutlined />}>Browse File</Button>
+      </Upload>
+      <div className="mt-4 text-neutral-600 text-start w-full">Resolution Summary</div>
       <textarea
         className="p-4 mt-2 w-full leading-7 bg-white rounded-xl border border-solid border-neutral-500 border-opacity-30 max-w-[500px] text-neutral-400 max-md:max-w-full"
         value={resolutionSummary}
@@ -61,10 +82,18 @@ const ResolveTickets = ({ handleResolveCancel }) => {
         rows={3}
       />
       <div className="flex justify-between mt-5 w-full max-w-[496px] max-md:flex-wrap max-md:max-w-full">
-        <Button type="ghost" onClick={handleResolveCancel} className="px-8 py-4 whitespace-nowrap rounded-3xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 max-md:px-5">
+        <Button
+          type="ghost"
+          onClick={handleResolveCancel}
+          className="px-8 py-4 whitespace-nowrap rounded-3xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 max-md:px-5"
+        >
           Cancel
         </Button>
-        <Button type="primary" onClick={handleSubmit} className="px-8 py-4 font-semibold text-white rounded-3xl bg-slate-500 max-md:px-6" >
+        <Button
+          type="primary"
+          onClick={handleSubmit}
+          className="px-8 py-4 font-semibold text-white rounded-3xl bg-slate-500 max-md:px-6"
+        >
           Resolve Ticket
         </Button>
       </div>

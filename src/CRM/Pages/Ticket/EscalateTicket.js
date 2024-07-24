@@ -4,25 +4,10 @@ import axios from "axios";
 
 const { Option } = Select;
 
-const EscalateTicket = ({ handleEscalateCancel, ticketId, recordedBy }) => {
-  const [departments, setDepartments] = useState([]);
+const EscalateTicket = ({ handleEscalateCancel, ticketId, recordedBy, departments }) => {
   const [selectedLevel, setSelectedLevel] = useState(null);
   const [comments, setComments] = useState("");
 
-  useEffect(() => {
-    fetchDepartments();
-  }, []);
-
-  const fetchDepartments = async () => {
-    try {
-      const response = await axios.get(
-        `${process.env.REACT_APP_API_URL}/GetAllDepartments`
-      );
-      setDepartments(response.data);
-    } catch (error) {
-      console.error("Error fetching departments:", error);
-    }
-  };
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();

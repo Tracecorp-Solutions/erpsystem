@@ -16,20 +16,28 @@ const Ticket = () => {
   const [updateStatusModalVisible, setUpdateStatusModalVisible] = useState(false);
   const [resolveModalVisible, setResolveModalVisible] = useState(false);
   const [selectedTicketId, setSelectedTicketId] = useState(null);
-
+  const [departments, setDepartments] = useState([]);
+  const [ticketDetails, setTicketDetails] = useState(null); // State to store fetched ticket details
+  const [loading, setLoading] = useState(false); // State for loading indicator
   const name = sessionStorage.getItem("fullname");
- 
-  console.log("name name", name);
 
   useEffect(() => {
     fetchTickets();
+    fetchDepartments();
   }, []);
+
+  const fetchDepartments = async () => {
+    try {
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/GetAllDepartments`);
+      setDepartments(response.data);
+    } catch (error) {
+      console.error("Error fetching departments:", error);
+    }
+  };
 
   const fetchTickets = async () => {
     try {
-      const response = await axios.get(
-        `${process.env.REACT_APP_API_URL}/GetAllTickets`
-      );
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/GetAllTickets`);
       const formattedTickets = response.data.map((ticket) => ({
         ...ticket,
         creationDate: new Date(ticket.creationDate).toLocaleDateString(),
@@ -37,6 +45,20 @@ const Ticket = () => {
       setTickets(formattedTickets);
     } catch (error) {
       console.error("Error fetching tickets:", error);
+    }
+  };
+
+  // Function to fetch ticket details by ID
+  const fetchTicketById = async (id) => {
+    setLoading(true); // Set loading state to true
+    try {
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/GetTicketById/${id}`);
+      setTicketDetails(response.data);
+    } catch (error) {
+      console.error("Error fetching ticket details:", error);
+      // Handle error, show message or retry option
+    } finally {
+      setLoading(false); // Set loading state back to false
     }
   };
 
@@ -48,11 +70,12 @@ const Ticket = () => {
     setIsModalVisible(false);
   };
 
-  const handleMenuClick = (record, e) => {
+  const handleMenuClick = async (record, e) => {
     console.log("Clicked on menu item", e.key, "for record", record);
     switch (e.key) {
       case "1":
-        navigate("/crm", { state: { screen: "update-ticket" } });
+        setSelectedTicketId(record.id);
+        navigate(`/crm`, { state: { screen: "update-ticket", record, ticketId: record.id } });
         break;
       case "2":
         setEscalateModalVisible(true);
@@ -63,6 +86,7 @@ const Ticket = () => {
         break;
       case "4":
         setResolveModalVisible(true);
+        setSelectedTicketId(record.id);
         break;
       default:
         break;
@@ -118,8 +142,6 @@ const Ticket = () => {
     },
   ];
 
-  console.log("tickets", tickets);
-
   return (
     <div>
       <div className="flex gap-4 justify-between items-center mb-6 font-semibold leading-[160%] max-md:flex-wrap max-md:max-w-full">
@@ -142,7 +164,7 @@ const Ticket = () => {
         closable={false}
         footer={null}
       >
-        <EscalateTicket handleEscalateCancel={handleEscalateCancel} recordedBy ={name}  ticketId={selectedTicketId} />
+        <EscalateTicket handleEscalateCancel={handleEscalateCancel} recordedBy={name} departments={departments} ticketId={selectedTicketId} />
       </Modal>
 
       {/* Update Status Modal */}
@@ -152,7 +174,7 @@ const Ticket = () => {
         closable={false}
         footer={null}
       >
-        <UpdateStatus handleUpdateStatusCancel={handleUpdateStatusCancel} />
+        <UpdateStatus handleUpdateStatusCancel={handleUpdateStatusCancel} ticketId={selectedTicketId} />
       </Modal>
 
       {/* Resolve Ticket Modal */}
@@ -162,10 +184,7 @@ const Ticket = () => {
         closable={false}
         footer={null}
       >
-        <ResolveTicket
-          ticket={tickets.find((ticket) => ticket.id === resolveModalVisible)}
-          handleResolveCancel={handleResolveCancel}
-        />
+        <ResolveTicket handleResolveCancel={handleResolveCancel} recordedBy={name} departments={departments} ticketId={selectedTicketId} />
       </Modal>
     </div>
   );
