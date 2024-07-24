@@ -1,4 +1,11 @@
-import * as React from "react";
+import React from "react";
+import { Select, Input, Button } from "antd";
+import {
+  PlusOutlined,
+  EllipsisOutlined,
+} from "@ant-design/icons";
+
+const { Option } = Select;
 
 const NewTicketSubcategory = ({ handleCancel }) => {
   return (
@@ -12,50 +19,51 @@ const NewTicketSubcategory = ({ handleCancel }) => {
           src="https://cdn.builder.io/api/v1/image/assets/TEMP/4ca01bd141ef3c6838d235f4d5f39236da6fb968e5e8a926fc57ed376a1cf296?apiKey=0d95acea82cc4b259a61e827c24c5c6c&&apiKey=0d95acea82cc4b259a61e827c24c5c6c"
           className="z-10 self-end mr-12 w-8 aspect-square max-md:mr-2.5 cursor-pointer"
           onClick={handleCancel}
+          alt="Close Icon"
         />
       </div>
-      <div className="mt-4 font-semibold text-neutral-600 max-md:max-w-full">
+      <div className="mt-4 font-semibold my-2 text-start text-neutral-600 w-full">
         Department
       </div>
-      <div className="flex gap-2 justify-between px-4 py-4 mt-2 max-w-full bg-white rounded-xl border border-solid border-neutral-500 border-opacity-30 text-neutral-400 w-[500px] max-md:flex-wrap">
-        <div>Choose Department</div>
-        <img
-          loading="lazy"
-          src="https://cdn.builder.io/api/v1/image/assets/TEMP/a8721aa8c44b81e6b2348dce4fb02570aeacf025a99ab01d6575684f8de43c45?apiKey=0d95acea82cc4b259a61e827c24c5c6c&&apiKey=0d95acea82cc4b259a61e827c24c5c6c"
-          className="shrink-0 self-start w-6 aspect-square"
-        />
-      </div>
-      <div className="mt-4 font-semibold text-neutral-600 max-md:max-w-full">
+        <Select defaultValue="Choose Department" style={{ width: "100%" }} className="h-12">
+          <Option value="Technical">Technical</Option>
+          <Option value="Maintenance">Maintenance</Option>
+          <Option value="Billing">Billing</Option>
+          <Option value="Payments">Payments</Option>
+        </Select>
+      <div className="mt-4 font-semibold my-2 text-start text-neutral-600 w-full">
         Parent Category
       </div>
-      <div className="flex gap-2 justify-between px-4 py-4 mt-2 max-w-full bg-white rounded-xl border border-solid border-neutral-500 border-opacity-30 text-neutral-400 w-[500px] max-md:flex-wrap">
-        <div>Choose Category</div>
-        <img
-          loading="lazy"
-          src="https://cdn.builder.io/api/v1/image/assets/TEMP/a8721aa8c44b81e6b2348dce4fb02570aeacf025a99ab01d6575684f8de43c45?apiKey=0d95acea82cc4b259a61e827c24c5c6c&&apiKey=0d95acea82cc4b259a61e827c24c5c6c"
-          className="shrink-0 self-start w-6 aspect-square"
-        />
-      </div>
-      <div className="mt-4 font-semibold text-neutral-600 max-md:max-w-full">
+        <Select defaultValue="Choose Category" style={{ width: "100%" }} className="h-12">
+          <Option value="Billing Issue">Billing Issue</Option>
+          <Option value="Service Request">Service Request</Option>
+          <Option value="Maintenance">Maintenance</Option>
+          <Option value="IT Support">IT Support</Option>
+          <Option value="General Inquiry">General Inquiry</Option>
+        </Select>
+      <div className="mt-4 font-semibold my-2 text-start text-neutral-600 w-full">
         Subcategory Name
       </div>
-      <div className="px-4 py-4 mt-2 max-w-full bg-white rounded-xl border border-solid border-neutral-500 border-opacity-30 text-neutral-400 w-[500px] max-md:pr-5">
-        Enter Subcategory Name
-      </div>
-      <div className="mt-4 font-semibold text-neutral-600 max-md:max-w-full">
+        <Input placeholder="Enter Subcategory Name" className="py-3" />
+      <div className="mt-4 text-start my-2 font-semibold text-neutral-600 w-full">
         Description
       </div>
-      <div className="p-4 mt-2 max-w-full leading-7 bg-white rounded-xl border border-solid border-neutral-500 border-opacity-30 text-neutral-400 w-[500px] max-md:max-w-full">
-        Describe the subcategory ...
-      </div>
-      <div className="flex justify-center items-center self-stretch px-16 py-6 mt-40 w-full bg-stone-100 max-md:px-5 max-md:mt-10 max-md:max-w-full">
-        <div className="flex gap-4 max-w-full w-[496px] max-md:flex-wrap">
-          <div className="px-8 py-4 whitespace-nowrap rounded-3xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 max-md:px-5">
+        <Input.TextArea placeholder="Describe the subcategory ..." rows={4} />
+      <div className="flex justify-center items-center self-stretch px-16 py-6 mt-10 w-full bg-stone-100 max-md:px-5 max-md:mt-10 max-md:max-w-full">
+        <div className="flex justify-between w-full max-md:flex-wrap">
+          <Button
+            type="default"
+            className="px-8 py-4 whitespace-nowrap rounded-3xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 max-md:px-5"
+            onClick={handleCancel}
+          >
             Cancel
-          </div>
-          <div className="px-8 py-4 font-semibold text-white rounded-3xl bg-slate-500 max-md:px-5">
+          </Button>
+          <Button
+            type="primary"
+            className="px-8 py-4 font-semibold rounded-3xl bg-slate-500 max-md:px-5"
+          >
             Save Subcategory
-          </div>
+          </Button>
         </div>
       </div>
     </div>

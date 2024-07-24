@@ -124,7 +124,7 @@ const TicketSubcategory = () => {
         />
         <div className="max-md:max-w-full">Ticket Subcategories</div>
       </div>
-      <div className="flex flex-col self-center p-6 mt-6 w-full bg-white rounded-3xl max-w-[1088px] max-md:px-5 max-md:max-w-full">
+      <div className="flex flex-col self-center p-6 mt-6 w-full bg-white rounded-3xl max-md:px-5 w-full">
         <div className="flex gap-4 justify-between w-full font-semibold leading-[160%] max-md:flex-wrap max-md:max-w-full">
           <div className="text-4xl capitalize text-neutral-600">
             Ticket Subcategories
@@ -139,7 +139,7 @@ const TicketSubcategory = () => {
           </Button>
         </div>
         <div className="mt-4">
-          <Table columns={columns} dataSource={data} />
+          <Table columns={columns} dataSource={data}  pagination={false} />
         </div>
       </div>
       
@@ -149,7 +149,7 @@ const TicketSubcategory = () => {
         onCancel={handleCancel}
         closable={false}
         footer={null}
-        width={800}
+        width={600}
       >
         <NewTicketSubcategory handleCancel={handleCancel} />
       </Modal>
