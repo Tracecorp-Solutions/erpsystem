@@ -38,7 +38,7 @@ const UpdateTicket = () => {
       dataIndex: "id",
       key: "id",
       render: (text) => (
-        <div className="py-4 pr-1 pl-4 whitespace-nowrap bg-white border-b border-neutral-500 border-opacity-10 max-md:pr-5">
+        <div className="py-4 pr-1 pl-4 whitespace-nowrap max-md:pr-5">
           {text}
         </div>
       ),
@@ -48,7 +48,7 @@ const UpdateTicket = () => {
       dataIndex: "recordedBy",
       key: "recordedBy",
       render: (text) => (
-        <div className="py-4 pr-1 pl-4 whitespace-nowrap bg-white border-b border-neutral-500 border-opacity-10 max-md:pr-5">
+        <div className="py-4 pr-1 pl-4 whitespace-nowrap max-md:pr-5">
           {text}
         </div>
       ),
@@ -58,7 +58,7 @@ const UpdateTicket = () => {
       dataIndex: "resolutionDetails",
       key: "resolutionDetails",
       render: (text) => (
-        <div className="py-4 pr-1 pl-4 whitespace-nowrap bg-white border-b border-neutral-500 border-opacity-10 max-md:pr-5">
+        <div className="py-4 pr-1 pl-4 whitespace-nowrap max-md:pr-5">
           {text}
         </div>
       ),
@@ -68,7 +68,7 @@ const UpdateTicket = () => {
       dataIndex: "assignedTo",
       key: "assignedTo",
       render: (text) => (
-        <div className="py-4 pr-1 pl-4 whitespace-nowrap bg-white border-b border-neutral-500 border-opacity-10 max-md:pr-5">
+        <div className="py-4 pr-1 pl-4 whitespace-nowrap  max-md:pr-5">
           {text}
         </div>
       ),
@@ -78,7 +78,7 @@ const UpdateTicket = () => {
       dataIndex: "status",
       key: "status",
       render: (text) => (
-        <div className="py-4 pr-1 pl-4 whitespace-nowrap bg-white border-b border-neutral-500 border-opacity-10 max-md:pr-5">
+        <div className="py-4 pr-1 pl-4 whitespace-nowrap max-md:pr-5">
           {text}
         </div>
       ),
@@ -88,7 +88,7 @@ const UpdateTicket = () => {
       dataIndex: "dateResolved",
       key: "dateResolved",
       render: (text) => (
-        <div className="py-4 pr-1 pl-4 whitespace-nowrap bg-white border-b border-neutral-500 border-opacity-10 max-md:pr-5">
+        <div className="py-4 pr-1 pl-4 whitespace-nowrap  max-md:pr-5">
           {text}
         </div>
       ),
