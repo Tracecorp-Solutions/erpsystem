@@ -48,19 +48,6 @@ const Ticket = () => {
     }
   };
 
-  // Function to fetch ticket details by ID
-  const fetchTicketById = async (id) => {
-    setLoading(true); // Set loading state to true
-    try {
-      const response = await axios.get(`${process.env.REACT_APP_API_URL}/GetTicketById/${id}`);
-      setTicketDetails(response.data);
-    } catch (error) {
-      console.error("Error fetching ticket details:", error);
-      // Handle error, show message or retry option
-    } finally {
-      setLoading(false); // Set loading state back to false
-    }
-  };
 
   const showModal = () => {
     setIsModalVisible(true);

@@ -15,8 +15,8 @@ const UpdateTicket = () => {
   useEffect(() => {
     const fetchTicketDetails = async () => {
       try {
-        const response = await axios.get(`http://3.216.182.63:8095/TestApi/GetTicketById/${ticketId}`);
-        console.log("API response:", response.data); // Log response data
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/GetTicketById/${ticketId}`);
+        console.log("API response:", response.data);
         setTicketDetails(response.data);
         setLoading(false);
       } catch (error) {
