@@ -1,11 +1,22 @@
-import React from "react";
-import { Table, Space, Button, Dropdown, Menu } from "antd";
+import React, { useState } from "react";
+import { Table, Space, Button, Dropdown, Menu, Modal } from "antd";
 import {
   PlusOutlined,
   EllipsisOutlined,
 } from "@ant-design/icons";
+import NewTicketSubcategory from "./NewTicketSubcategory";
 
 const TicketSubcategory = () => {
+  const [visible, setVisible] = useState(false);
+
+  const showModal = () => {
+    setVisible(true);
+  };
+
+  const handleCancel = () => {
+    setVisible(false);
+  };
+
   const data = [
     {
       key: "1",
@@ -48,12 +59,12 @@ const TicketSubcategory = () => {
     <Menu>
       <Menu.Item key="view">
         <Button type="text" onClick={() => handleView(record)}>
-          Update Subcategory
+          View Subcategory
         </Button>
       </Menu.Item>
       <Menu.Item key="edit">
         <Button type="text" onClick={() => handleEdit(record)}>
-          Disable Subcategory
+          Edit Subcategory
         </Button>
       </Menu.Item>
     </Menu>
@@ -99,9 +110,7 @@ const TicketSubcategory = () => {
 
   const handleEdit = (record) => {
     console.log("Edit action for:", record);
-    // Implement edit action logic here
   };
-
 
   return (
     <div className="flex flex-col flex-wrap justify-center content-start py-6 rounded-3xl bg-stone-100">
@@ -124,6 +133,7 @@ const TicketSubcategory = () => {
             type="primary"
             icon={<PlusOutlined />}
             className="flex gap-2 justify-center px-6 py-3 my-auto text-base text-white rounded-3xl bg-slate-500 max-md:px-5"
+            onClick={showModal}
           >
             Add Subcategory
           </Button>
@@ -132,6 +142,17 @@ const TicketSubcategory = () => {
           <Table columns={columns} dataSource={data} />
         </div>
       </div>
+      
+      {/* Modal for adding new ticket subcategory */}
+      <Modal
+        visible={visible}
+        onCancel={handleCancel}
+        closable={false}
+        footer={null}
+        width={800}
+      >
+        <NewTicketSubcategory handleCancel={handleCancel} />
+      </Modal>
     </div>
   );
 };
