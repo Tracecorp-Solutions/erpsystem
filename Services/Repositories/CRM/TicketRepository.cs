@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Core.DTOs.CRM;
+using Core.DTOs.UserManagement;
 using Core.Models.CRM;
 using Core.Repositories.CRM;
 using Infrastructure.Data;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 
 namespace Services.Repositories.CRM
@@ -40,6 +42,7 @@ namespace Services.Repositories.CRM
                 PriorityId = ticket.PriorityId,
                 Description = ticket.Description,
                 EscalationMatrixId = (int)(escalationMatrix?.Id),
+                AssignedTo = escalationMatrix?.DepartmentId ?? 0, // Ensure to handle null case for escalationMatrix
                 Status = "Open",
                 CreationDate = DateTime.Now
             };
@@ -106,6 +109,64 @@ namespace Services.Repositories.CRM
             return await _context.Tickets
                 .Where(t => t.BranchId == branchId)
                 .ToListAsync();
+        }
+
+        public async Task EscalateTicket(EscalateTicketDto dto) 
+        {
+            var ticket = await _context.Tickets
+                .Include(t => t.EscalationMatrix)
+                .FirstOrDefaultAsync(t => t.Id == dto.TicketId);
+
+            if (ticket == null)
+                throw new ArgumentException("Ticket not found");
+
+            var escalationMatrix = await _context.EscalationMatrices
+                .FirstOrDefaultAsync(e => e.PriorityId == ticket.PriorityId && e.TicketCategoryId == ticket.TicketCategoryId);
+
+            if (escalationMatrix == null)
+                throw new ArgumentException("Escalation matrix not found");
+
+            var ticketAuditTrail = new TicketAuditTrail
+            {
+                TicketId = ticket.Id,
+                Status = "Escalated",
+                AssignedTo = dto.DepartmentId,
+                RecordedBy = dto.RecordedBy,
+                RecordedAt = DateTime.Now,
+                ReasonOfEscalation = dto.ReasonOfEscalation
+            };
+
+            ticket.AssignedTo = dto.DepartmentId;
+            ticket.Status= "Escalated";
+            ticket.EscalationMatrixId = escalationMatrix.Id;
+
+            await _context.TicketAuditTrails.AddAsync(ticketAuditTrail);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task ResolveTicket(IFormFile file, EscalateTicketDto dto)
+        {
+            var ticket = await _context.Tickets
+                .Include(t => t.EscalationMatrix)
+                .FirstOrDefaultAsync(t => t.Id == dto.TicketId);
+
+            if (ticket == null)
+                throw new ArgumentException("Ticket not found");
+
+            var ticketAuditTrail = new TicketAuditTrail
+            {
+                TicketId = ticket.Id,
+                Status = "Resolved",
+                AssignedTo = dto.DepartmentId,
+                RecordedBy = dto.RecordedBy,
+                RecordedAt = DateTime.Now,
+                ReasonOfEscalation = dto.ReasonOfEscalation
+            };
+
+            ticket.Status = "Resolved";
+
+            await _context.TicketAuditTrails.AddAsync(ticketAuditTrail);
+            await _context.SaveChangesAsync();
         }
     }
 }

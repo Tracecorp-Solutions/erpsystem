@@ -71,5 +71,33 @@ namespace Trace.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+
+        [HttpPost("/EscalateTicket")]
+        public async Task<IActionResult> EscalateTicket(EscalateTicketDto dto)
+        {
+            try
+            {
+                await _ticketRepository.EscalateTicket(dto);
+                return Ok("Ticket escalated successfully");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
+        [HttpPost("/ResolveTicket")]
+        public async Task<IActionResult> ResolveTicket([FromForm] IFormFile file, [FromForm] EscalateTicketDto dto)
+        {
+            try
+            {
+                await _ticketRepository.ResolveTicket(file, dto);
+                return Ok("Ticket resolved successfully");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
     }
 }

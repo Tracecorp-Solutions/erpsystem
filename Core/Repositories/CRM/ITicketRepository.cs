@@ -1,5 +1,6 @@
 ﻿using Core.DTOs.CRM;
 using Core.Models.CRM;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,5 +18,9 @@ namespace Core.Repositories.CRM
         Task<FetchTicketDto> GetTicketByIdAsync(int ticketId);
 
         Task<IEnumerable<Ticket>> GetTicketsByBranchIdAsync(int branchId);
+
+        Task EscalateTicket(EscalateTicketDto dto);
+
+        Task ResolveTicket(IFormFile file, EscalateTicketDto dto);
     }
 }
