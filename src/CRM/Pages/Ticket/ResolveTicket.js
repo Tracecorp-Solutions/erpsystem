@@ -1,31 +1,50 @@
-import React, { useState } from "react";
-import { Button, message, Upload } from "antd";
-import { UploadOutlined } from "@ant-design/icons";
+import React, { useState, useEffect } from "react";
+import { Button, message } from "antd";
 import axios from "axios";
 
 const ResolveTickets = ({ handleResolveCancel, ticketId, recordedBy }) => {
-  const [fileList, setFileList] = useState([]);
+  const [file, setFile] = useState(null);
   const [resolutionSummary, setResolutionSummary] = useState("");
+  const [ticketDetails, setTicketDetails] = useState(null);
 
-  const handleFileChange = (info) => {
-    let newFileList = [...info.fileList];
-    newFileList = newFileList.slice(-1); // Limit to only one file
-    setFileList(newFileList);
+  useEffect(() => {
+    const fetchTicketDetails = async () => {
+      try {
+        const response = await axios.get(
+          `${process.env.REACT_APP_API_URL}/GetTicketById/${ticketId}`
+        );
+        console.log("API response:", response.data);
+        setTicketDetails(response.data);
+      } catch (error) {
+        console.error("Error fetching ticket details:", error);
+      }
+    };
+
+    if (ticketId) {
+      fetchTicketDetails();
+    }
+  }, [ticketId]);
+
+  const handleFileChange = (e) => {
+    const selectedFile = e.target.files[0];
+    setFile(selectedFile);
   };
 
   const handleSubmit = async () => {
-    const file = fileList[0]; // Get the first (and only) file from fileList
-
     if (!file) {
       message.error("Please upload a file.");
       return;
     }
 
     const formData = new FormData();
-    formData.append("FileName", file.originFileObj); // Append the actual file object
+    formData.append("file", file);
     formData.append("ReasonOfEscalation", resolutionSummary);
     formData.append("ticketId", ticketId);
     formData.append("recordedBy", recordedBy);
+    formData.append(
+      "DepartmentId",
+      ticketDetails?.ticket?.escalationMatrix?.department?.id
+    );
 
     try {
       const response = await axios.post(
@@ -65,14 +84,11 @@ const ResolveTickets = ({ handleResolveCancel, ticketId, recordedBy }) => {
         <div className="mt-6 w-full border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-opacity-10 min-h-[1px] max-md:max-w-full" />
       </div>
       <div className="mt-8 text-neutral-600 text-start w-full">Attach Job Card</div>
-      <Upload
-        fileList={fileList}
+      <input
+        type="file"
         onChange={handleFileChange}
-        beforeUpload={() => false} // Prevent automatic upload
         className="py-2 pr-4 mt-2 max-w-full rounded-xl border border-solid border-neutral-500 border-opacity-30 w-[500px] max-md:flex-wrap"
-      >
-        <Button icon={<UploadOutlined />}>Browse File</Button>
-      </Upload>
+      />
       <div className="mt-4 text-neutral-600 text-start w-full">Resolution Summary</div>
       <textarea
         className="p-4 mt-2 w-full leading-7 bg-white rounded-xl border border-solid border-neutral-500 border-opacity-30 max-w-[500px] text-neutral-400 max-md:max-w-full"
