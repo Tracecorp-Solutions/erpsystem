@@ -30,7 +30,7 @@ const Crm = () => {
         <div className="w-full flex justify-center">
           <div className="main-content bg-stone-100 pb-6 rounded-t-3xl">
             <div className="content px-4 sm:px-6 lg:px-8 group-container">
-              {screen === "crm-dashboard" && <CrmDashboard />}
+              {screen === "crm" && <CrmDashboard />}
               {screen === "departments" && <Departments />}
               {screen === "escalation" && <Escalation />}
               {screen === "crm-report" && <CrmReport />}
