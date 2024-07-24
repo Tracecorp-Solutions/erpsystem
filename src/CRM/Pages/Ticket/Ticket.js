@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Table, Button, Dropdown, Menu, Modal } from "antd";
+import { Table, Button, Dropdown, Menu, Modal, Spin } from "antd";
 import { EllipsisOutlined } from "@ant-design/icons";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -13,11 +13,12 @@ const Ticket = () => {
   const [tickets, setTickets] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [escalateModalVisible, setEscalateModalVisible] = useState(false);
-  const [updateStatusModalVisible, setUpdateStatusModalVisible] = useState(false);
+  const [updateStatusModalVisible, setUpdateStatusModalVisible] =
+    useState(false);
   const [resolveModalVisible, setResolveModalVisible] = useState(false);
   const [selectedTicketId, setSelectedTicketId] = useState(null);
   const [departments, setDepartments] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loadingTickets, setLoadingTickets] = useState(false); // State for loading tickets
   const name = sessionStorage.getItem("fullname");
 
   useEffect(() => {
@@ -27,7 +28,9 @@ const Ticket = () => {
 
   const fetchDepartments = async () => {
     try {
-      const response = await axios.get(`${process.env.REACT_APP_API_URL}/GetAllDepartments`);
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}/GetAllDepartments`
+      );
       setDepartments(response.data);
     } catch (error) {
       console.error("Error fetching departments:", error);
@@ -35,8 +38,11 @@ const Ticket = () => {
   };
 
   const fetchTickets = async () => {
+    setLoadingTickets(true); // Start loading indicator
     try {
-      const response = await axios.get(`${process.env.REACT_APP_API_URL}/GetAllTickets`);
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}/GetAllTickets`
+      );
       const formattedTickets = response.data.map((ticket) => ({
         ...ticket,
         creationDate: new Date(ticket.creationDate).toLocaleDateString(),
@@ -44,9 +50,10 @@ const Ticket = () => {
       setTickets(formattedTickets);
     } catch (error) {
       console.error("Error fetching tickets:", error);
+    } finally {
+      setLoadingTickets(false); // Stop loading indicator
     }
   };
-
 
   const showModal = () => {
     setIsModalVisible(true);
@@ -61,7 +68,9 @@ const Ticket = () => {
     switch (e.key) {
       case "1":
         setSelectedTicketId(record.id);
-        navigate(`/crm`, { state: { screen: "update-ticket", record, ticketId: record.id } });
+        navigate(`/crm`, {
+          state: { screen: "update-ticket", record, ticketId: record.id },
+        });
         break;
       case "2":
         setEscalateModalVisible(true);
@@ -94,16 +103,28 @@ const Ticket = () => {
   const columns = [
     { title: "ID", dataIndex: "id", key: "id" },
     { title: "SUBJECT", dataIndex: "customerName", key: "customerName" },
-    { title: "COMPLAINT SUBJECT", dataIndex: "complaintSubject", key: "complaintSubject" },
-    { title: "STATUS", dataIndex: "status", key: "status" },
-    { 
-      title: "CREATION DATE", 
-      dataIndex: "creationDate", 
-      key: "creationDate",
-      render: (text) => <span>{text}</span>
+    {
+      title: "COMPLAINT SUBJECT",
+      dataIndex: "complaintSubject",
+      key: "complaintSubject",
     },
-    { title: "PRIORITY", dataIndex: ["priority", "priorityName"], key: "priority" },
-    { title: "Ticket Category", dataIndex: ["ticketCategory", "name"], key: "ticketCategory" },
+    { title: "STATUS", dataIndex: "status", key: "status" },
+    {
+      title: "CREATION DATE",
+      dataIndex: "creationDate",
+      key: "creationDate",
+      render: (text) => <span>{text}</span>,
+    },
+    {
+      title: "PRIORITY",
+      dataIndex: ["priority", "priorityName"],
+      key: "priority",
+    },
+    {
+      title: "Ticket Category",
+      dataIndex: ["ticketCategory", "name"],
+      key: "ticketCategory",
+    },
     {
       title: "ACTION",
       key: "actions",
@@ -117,7 +138,7 @@ const Ticket = () => {
               <Menu.Item key="4">Resolve Ticket</Menu.Item>
             </Menu>
           }
-          trigger={['click']}
+          trigger={["click"]}
           placement="bottomRight"
         >
           <Button type="link" size="small" onClick={(e) => e.preventDefault()}>
@@ -140,7 +161,23 @@ const Ticket = () => {
           Create Ticket
         </Button>
       </div>
-      <Table dataSource={tickets} columns={columns} pagination={false} />
+
+      {loadingTickets ? (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            minHeight: "60vh",
+          }}
+          className="w-full"
+        >
+          <Spin size="large" />
+        </div>
+      ) : (
+        <Table dataSource={tickets} columns={columns} pagination={false} />
+      )}
+
       <AddTicket isModalVisible={isModalVisible} handleCancel={handleCancel} />
 
       {/* Escalate Ticket Modal */}
@@ -150,7 +187,12 @@ const Ticket = () => {
         closable={false}
         footer={null}
       >
-        <EscalateTicket handleEscalateCancel={handleEscalateCancel} recordedBy={name} departments={departments} ticketId={selectedTicketId} />
+        <EscalateTicket
+          handleEscalateCancel={handleEscalateCancel}
+          recordedBy={name}
+          departments={departments}
+          ticketId={selectedTicketId}
+        />
       </Modal>
 
       {/* Update Status Modal */}
@@ -160,7 +202,10 @@ const Ticket = () => {
         closable={false}
         footer={null}
       >
-        <UpdateStatus handleUpdateStatusCancel={handleUpdateStatusCancel} ticketId={selectedTicketId} />
+        <UpdateStatus
+          handleUpdateStatusCancel={handleUpdateStatusCancel}
+          ticketId={selectedTicketId}
+        />
       </Modal>
 
       {/* Resolve Ticket Modal */}
@@ -170,7 +215,12 @@ const Ticket = () => {
         closable={false}
         footer={null}
       >
-        <ResolveTicket handleResolveCancel={handleResolveCancel} recordedBy={name} departments={departments} ticketId={selectedTicketId} />
+        <ResolveTicket
+          handleResolveCancel={handleResolveCancel}
+          recordedBy={name}
+          departments={departments}
+          ticketId={selectedTicketId}
+        />
       </Modal>
     </div>
   );
