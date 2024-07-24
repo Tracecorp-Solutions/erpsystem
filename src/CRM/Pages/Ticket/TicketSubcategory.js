@@ -138,8 +138,13 @@ const TicketSubcategory = () => {
             Add Subcategory
           </Button>
         </div>
-        <div className="mt-4">
-          <Table columns={columns} dataSource={data}  pagination={false} />
+        <div className="mt-4" style={{ overflowX: "auto" }}>
+          <Table
+            columns={columns}
+            dataSource={data}
+            pagination={false}
+            scroll={{ x: "max-content" }}
+          />
         </div>
       </div>
       
