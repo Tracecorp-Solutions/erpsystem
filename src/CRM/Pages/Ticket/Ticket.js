@@ -17,8 +17,7 @@ const Ticket = () => {
   const [resolveModalVisible, setResolveModalVisible] = useState(false);
   const [selectedTicketId, setSelectedTicketId] = useState(null);
   const [departments, setDepartments] = useState([]);
-  const [ticketDetails, setTicketDetails] = useState(null); // State to store fetched ticket details
-  const [loading, setLoading] = useState(false); // State for loading indicator
+  const [loading, setLoading] = useState(false);
   const name = sessionStorage.getItem("fullname");
 
   useEffect(() => {
