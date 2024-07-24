@@ -8,6 +8,7 @@ import TicketPage from "../Ticket/TicketPage";
 import ProritySetting from "../ProritySettings/ProrityLevel";
 import ProrityCriteria from "../ProritySettings/ProrityCriteria";
 import Ticket from "../Ticket/Ticket";
+import UpdateTicket from "../Ticket/UpdateTicket";
 
 const Crm = () => {
   const location = useLocation();
@@ -37,6 +38,7 @@ const Crm = () => {
               {screen === "ticket-page" && <Ticket />}
               {screen === "prority-setting" && <ProritySetting />}
               {screen === "prority-criteria" && <ProrityCriteria />}
+              {screen === "update-ticket" && <UpdateTicket />}
             </div>
           </div>
         </div>

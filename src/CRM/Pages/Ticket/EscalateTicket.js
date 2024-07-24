@@ -1,12 +1,64 @@
-import React from "react";
-import { Select, Button, Input } from "antd";
+import React, { useEffect, useState } from "react";
+import { Select, Button, Input, message } from "antd";
+import axios from "axios";
 
 const { Option } = Select;
 
-const EscalateTicket = ({ handleEscalateCancel }) => {
-  const handleFormSubmit = (e) => {
+const EscalateTicket = ({ handleEscalateCancel, ticketId, recordedBy }) => {
+  const [departments, setDepartments] = useState([]);
+  const [selectedLevel, setSelectedLevel] = useState(null);
+  const [comments, setComments] = useState("");
+
+  useEffect(() => {
+    fetchDepartments();
+  }, []);
+
+  const fetchDepartments = async () => {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}/GetAllDepartments`
+      );
+      setDepartments(response.data);
+    } catch (error) {
+      console.error("Error fetching departments:", error);
+    }
+  };
+
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form submitted");
+    
+    if (!selectedLevel) {
+      message.error("Please select a department to escalate to.");
+      return;
+    }
+
+    const escalateData = {
+      departmentId: selectedLevel,
+      reasonOfEscalation: comments,
+      ticketId: ticketId,
+      recordedBy: recordedBy
+    };
+
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_API_URL}/EscalateTicket`,
+        escalateData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+        }
+      );
+
+      console.log("Escalation successful:", response.data);
+      message.success("Ticket escalated successfully!");
+
+      handleEscalateCancel();
+    } catch (error) {
+      console.error("Error escalating ticket:", error);
+      message.error("Failed to escalate ticket. Please try again later.");
+    }
   };
 
   return (
@@ -25,18 +77,25 @@ const EscalateTicket = ({ handleEscalateCancel }) => {
         <div className="mt-6 w-full border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-opacity-10 min-h-[1px] max-md:max-w-full" />
       </div>
       <div className="mt-8 text-start w-full my-2">Escalate To</div>
-        <Select
-          defaultValue="Select level"
-          style={{ width: "100%" }}
-          className="h-12"
-          onChange={(value) => console.log(`Selected level: ${value}`)}
-        >
-          <Option value="level1">Level 1</Option>
-          <Option value="level2">Level 2</Option>
-          <Option value="level3">Level 3</Option>
-        </Select>
+      <Select
+        defaultValue="Select department"
+        style={{ width: "100%" }}
+        className="h-12"
+        onChange={(value) => setSelectedLevel(value)}
+      >
+        {departments.map((dept) => (
+          <Option key={dept.id} value={dept.id}>
+            {dept.name}
+          </Option>
+        ))}
+      </Select>
       <div className="mt-4 text-start w-full my-2">Comments</div>
-        <Input.TextArea rows={4} placeholder="Leave your comment here ..." />
+      <Input.TextArea
+        rows={4}
+        placeholder="Leave your comment here ..."
+        value={comments}
+        onChange={(e) => setComments(e.target.value)}
+      />
       <div className="flex justify-between mt-10 w-full max-w-[496px] max-md:flex-wrap max-md:max-w-full">
         <Button
           type="button"

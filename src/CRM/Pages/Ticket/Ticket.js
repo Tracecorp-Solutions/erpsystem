@@ -1,18 +1,25 @@
 import React, { useState, useEffect } from "react";
-import { Table, Button, Menu, Dropdown, Modal } from "antd";
+import { Table, Button, Dropdown, Menu, Modal } from "antd";
 import { EllipsisOutlined } from "@ant-design/icons";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import AddTicket from "./AddTicket";
 import EscalateTicket from "./EscalateTicket";
 import UpdateStatus from "./UpdateStatus";
-import ResolveTicket from "./ResolveTicket"; // Import ResolveTicket component
+import ResolveTicket from "./ResolveTicket";
 
 const Ticket = () => {
+  const navigate = useNavigate();
   const [tickets, setTickets] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [escalateModalVisible, setEscalateModalVisible] = useState(false);
   const [updateStatusModalVisible, setUpdateStatusModalVisible] = useState(false);
-  const [resolveModalVisible, setResolveModalVisible] = useState(false); // State for ResolveTicket modal
+  const [resolveModalVisible, setResolveModalVisible] = useState(false);
+  const [selectedTicketId, setSelectedTicketId] = useState(null);
+
+  const name = sessionStorage.getItem("fullname");
+ 
+  console.log("name name", name);
 
   useEffect(() => {
     fetchTickets();
@@ -44,8 +51,12 @@ const Ticket = () => {
   const handleMenuClick = (record, e) => {
     console.log("Clicked on menu item", e.key, "for record", record);
     switch (e.key) {
+      case "1":
+        navigate("/crm", { state: { screen: "update-ticket" } });
+        break;
       case "2":
         setEscalateModalVisible(true);
+        setSelectedTicketId(record.id);
         break;
       case "3":
         setUpdateStatusModalVisible(true);
@@ -131,7 +142,7 @@ const Ticket = () => {
         closable={false}
         footer={null}
       >
-        <EscalateTicket handleEscalateCancel={handleEscalateCancel} />
+        <EscalateTicket handleEscalateCancel={handleEscalateCancel} recordedBy ={name}  ticketId={selectedTicketId} />
       </Modal>
 
       {/* Update Status Modal */}
