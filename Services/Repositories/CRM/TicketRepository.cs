@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Core.DTOs.CRM;
@@ -172,18 +173,22 @@ namespace Services.Repositories.CRM
         public async Task<IEnumerable<TicketStatusSummaryDto>> GetTicketStatusSummaryAsync()
         {
             var result = await _context.Tickets
-                .GroupBy(t => t.CreationDate.ToString("MMMM"))
+                .ToListAsync(); // Fetch all tickets from the database
+
+            var summary = result
+                .GroupBy(t => t.CreationDate.Month) // Group by month number
                 .Select(g => new TicketStatusSummaryDto
                 {
-                    Month = g.Key,
+                    Month = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(g.Key),
                     OpenTickets = g.Count(t => t.Status == "Open"),
                     TicketsInProgress = g.Count(t => t.Status == "In Progress"),
                     TicketsResolved = g.Count(t => t.Status == "Resolved")
                 })
-                .ToListAsync();
+                .ToList(); // Perform grouping in memory
 
-            return result;
+            return summary;
         }
+
 
         public async Task<TicketStatisticsDto> GetTicketStatisticsAsync()
         {
