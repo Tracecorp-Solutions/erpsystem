@@ -168,5 +168,34 @@ namespace Services.Repositories.CRM
             await _context.TicketAuditTrails.AddAsync(ticketAuditTrail);
             await _context.SaveChangesAsync();
         }
+
+        public async Task<IEnumerable<TicketStatusSummaryDto>> GetTicketStatusSummaryAsync()
+        {
+            var result = await _context.Tickets
+                .GroupBy(t => t.CreationDate.ToString("MMMM"))
+                .Select(g => new TicketStatusSummaryDto
+                {
+                    Month = g.Key,
+                    OpenTickets = g.Count(t => t.Status == "Open"),
+                    TicketsInProgress = g.Count(t => t.Status == "In Progress"),
+                    TicketsResolved = g.Count(t => t.Status == "Resolved")
+                })
+                .ToListAsync();
+
+            return result;
+        }
+
+        public async Task<TicketStatisticsDto> GetTicketStatisticsAsync()
+        {
+            var result = new TicketStatisticsDto
+            {
+                TotalTickets = await _context.Tickets.CountAsync(),
+                OpenTickets = await _context.Tickets.CountAsync(t => t.Status == "Open"),
+                ResolvedTickets = await _context.Tickets.CountAsync(t => t.Status == "Resolved"),
+                OpenHighPriorityTickets = await _context.Tickets.CountAsync(t => t.Status == "Open" && t.Priority.PriorityName == "High")
+            };
+
+            return result;
+        }
     }
 }

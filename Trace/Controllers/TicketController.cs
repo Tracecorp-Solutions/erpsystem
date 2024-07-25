@@ -99,5 +99,19 @@ namespace Trace.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+
+        [HttpGet("/GetTicketStatistics")]
+        public async Task<IActionResult> GetTicketStatistics()
+        {
+            try
+            {
+                var result = await _ticketRepository.GetTicketStatisticsAsync();
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
     }
 }

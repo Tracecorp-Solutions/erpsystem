@@ -22,5 +22,11 @@ namespace Core.Repositories.CRM
         Task EscalateTicket(EscalateTicketDto dto);
 
         Task ResolveTicket(IFormFile file, EscalateTicketDto dto);
+
+        Task<IEnumerable<TicketStatusSummaryDto>> GetTicketStatusSummaryAsync();
+
+        Task<TicketStatisticsDto> GetTicketStatisticsAsync();
+
+
     }
 }
