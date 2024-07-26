@@ -73,6 +73,7 @@ const ProrityCriteria = () => {
 
   return (
     <div className="flex flex-col justify-center content-start py-6 rounded-3xl bg-stone-100">
+      
       <div className="flex gap-2 px-6 text-base leading-6 text-neutral-600 max-md:flex-wrap max-md:px-5">
         <div className="font-semibold">Configuration</div>
         <img

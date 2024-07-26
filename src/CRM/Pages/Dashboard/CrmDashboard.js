@@ -4,6 +4,7 @@ import * as React from "react";
 function CrmDashboard() {
 return (
   <div className="flex flex-col flex-wrap content-start py-6 rounded-3xl bg-stone-100">
+    
     <div className="flex flex-col items-start px-6 w-full max-md:px-5 max-md:max-w-full">
       <div className="text-xs font-medium tracking-wide uppercase text-neutral-400">
         3rd May, 2024

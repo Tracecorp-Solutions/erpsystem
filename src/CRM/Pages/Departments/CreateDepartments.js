@@ -44,7 +44,9 @@ function CreateDepartments({ isUpdateModalVisible, handleCloseModalVisible }) {
         departmentData
       );
       message.success("Department added successfully");
+      fetchUsers();
       handleCloseModalVisible();
+
     } catch (error) {
       console.error("Error adding department:", error);
       message.error("Failed to add department");
@@ -99,7 +101,7 @@ function CreateDepartments({ isUpdateModalVisible, handleCloseModalVisible }) {
         >
           {users.map((user) => (
             <Option key={user.id} value={user.id}>
-              {user.name}
+              {user.fullName}
             </Option>
           ))}
         </Select>

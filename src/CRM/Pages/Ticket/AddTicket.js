@@ -196,6 +196,8 @@ const AddTicket = ({ isModalVisible, handleCancel, recordedBy }) => {
                       Validate Customer
                     </Button>
                   </div>
+                </>
+              )}
                   <div className="mt-4 text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">Customer Name:</div>
                   <Input
                     placeholder="Enter customer name"
@@ -204,8 +206,6 @@ const AddTicket = ({ isModalVisible, handleCancel, recordedBy }) => {
                     value={customerName}
                     onChange={(e) => setCustomerName(e.target.value)}
                   />
-                </>
-              )}
 
               <SelectField label="Area" value={operationalAreaId} options={operationalAreas} onChange={setOperationalAreaId} />
               <SelectField label="Branch" value={branchId} options={branches} onChange={setBranchId} />
