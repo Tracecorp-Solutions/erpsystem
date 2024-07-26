@@ -200,7 +200,7 @@ function CreateEscalation({ isUpdateModalVisible, handleCloseModalVisible }) {
             >
               {priorities.map((priority) => (
                 <Option key={priority.id} value={priority.id}>
-                  {priority.name}
+                  {priority.priorityName}
                 </Option>
               ))}
             </Select>
