@@ -38,7 +38,6 @@ const ProrityCriteria = () => {
       dataIndex: "action",
       key: "action",
       render: () => (
-        <div className="flex justify-center items-center px-14 py-3 bg-white border-b border-solid border-neutral-500 border-opacity-10 max-md:px-5">
           <div className="flex justify-center items-center px-1.5 w-8 h-8 rounded-3xl bg-stone-100">
             <img
               loading="lazy"
@@ -47,7 +46,6 @@ const ProrityCriteria = () => {
               alt="Action"
             />
           </div>
-        </div>
       ),
     },
   ];

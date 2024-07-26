@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Modal, Steps, Input, Select, Button } from "antd";
+import { Modal, Steps, Input, Select, Button, message } from "antd";
 import axios from "axios";
 
 const { Step } = Steps;
 const { Option } = Select;
 
-const AddTicket = ({ isModalVisible, handleCancel }) => {
+const AddTicket = ({ isModalVisible, handleCancel, recordedBy }) => {
   const [currentStep, setCurrentStep] = useState(0);
   const [customerReference, setCustomerReference] = useState("");
   const [customerDetails, setCustomerDetails] = useState(null);
@@ -26,12 +26,14 @@ const AddTicket = ({ isModalVisible, handleCancel }) => {
   const [territory, setTerritory] = useState([]);
   const [ticketCategory, setTicketCategory] = useState([]);
   const [complaintSubject, setComplaintSubject] = useState("");
+  const [priorities, setPriorities] = useState([]);
 
   useEffect(() => {
     fetchOperationalAreas();
     fetchBranches();
     fetchTerritory();
     fetchTicketCategory();
+    fetchPriorities();
   }, []);
 
   const fetchOperationalAreas = async () => {
@@ -90,6 +92,17 @@ const AddTicket = ({ isModalVisible, handleCancel }) => {
     }
   };
 
+  const fetchPriorities = async () => {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}/GetPriorities`
+      );
+      setPriorities(response.data);
+    } catch (error) {
+      console.error("Error fetching priorities:", error);
+    }
+  };
+
   const handleCustomerReferenceChange = (value) => {
     setCustomerReference(value);
     setCustomerDetails(null);
@@ -123,17 +136,18 @@ const AddTicket = ({ isModalVisible, handleCancel }) => {
       priorityId: priorityIdToSend,
       description: description,
       complaintSubject: complaintSubject,
-      recordedBy: "AN",
+      recordedBy: recordedBy,
     };
 
     axios
       .post(`${process.env.REACT_APP_API_URL}/CreateTicket`, formData)
       .then((response) => {
-        console.log("Data successfully saved:", response.data);
+        message.success("Data successfully saved:");
         handleCancel();
       })
       .catch((error) => {
         console.error("Error saving data:", error);
+        message.error("Error saving data");
       });
   };
 
@@ -193,22 +207,28 @@ const AddTicket = ({ isModalVisible, handleCancel }) => {
                 <div className="mt-4 text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">
                   Customer Reference
                 </div>
-                <Input
-                  placeholder="Enter customer reference"
-                  className="p-3"
+
+                <div
+                  className="flex justify-between gap-4 pl-4"
                   style={{ width: "80%", marginTop: "8px" }}
-                  value={customerReference}
-                  onChange={(e) =>
-                    handleCustomerReferenceChange(e.target.value)
-                  }
-                />
-                <Button
-                  type="primary"
-                  className="ml-3"
-                  onClick={handleFetchCustomerDetails}
                 >
-                  Fetch Details
-                </Button>
+                  <Input
+                    placeholder="Enter customer reference"
+                    className="p-3"
+                    value={customerReference}
+                    classNames="border-none w-full"
+                    onChange={(e) =>
+                      handleCustomerReferenceChange(e.target.value)
+                    }
+                  />
+                  <button
+                    type="submit"
+                    onClick={handleFetchCustomerDetails}
+                    className="px-8 py-3 mt-1 font-semibold text-white whitespace-nowrap rounded-lg bg-slate-500 max-md:px-5"
+                  >
+                    Submit
+                  </button>
+                </div>
                 {customerDetails && (
                   <>
                     <div className="mt-4 text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">
@@ -345,8 +365,9 @@ const AddTicket = ({ isModalVisible, handleCancel }) => {
               placeholder="Select ticket source"
               onChange={(value) => setTicketSource(value)}
             >
-              <Option value="source1">Source 1</Option>
-              <Option value="source2">Source 2</Option>
+              <Option value="Phone call">Phone call</Option>
+              <Option value="walk-in">walk-in</Option>
+              <Option value="Social media">Social media</Option>
             </Select>
 
             {/* Priority */}
@@ -359,9 +380,11 @@ const AddTicket = ({ isModalVisible, handleCancel }) => {
               placeholder="Select priority"
               onChange={(value) => setPriorityId(value)}
             >
-              <Option value="1">High</Option>
-              <Option value="2">Medium</Option>
-              <Option value="3">Low</Option>
+              {priorities.map((priority) => (
+                <Option key={priority.id} value={priority.id}>
+                  {priority.priorityName}
+                </Option>
+              ))}
             </Select>
 
             {/* Description */}
@@ -382,17 +405,28 @@ const AddTicket = ({ isModalVisible, handleCancel }) => {
         <div className="flex justify-center items-center self-stretch px-16 py-6 mt-16 w-full text-base leading-6 bg-stone-100 max-md:px-5 max-md:mt-10 max-md:max-w-full">
           <div className="flex justify-between max-w-full w-full max-md:max-w-full">
             {currentStep > 0 && (
-              <Button onClick={handleBack} className="mr-4">
+              <Button
+                onClick={handleBack}
+                className="px-8 py-4 whitespace-nowrap rounded-3xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 max-md:px-5"
+              >
                 Back
               </Button>
             )}
             {currentStep < 1 ? (
-              <Button type="primary" onClick={nextStep}>
-                Next
+              <Button
+                type="primary"
+                onClick={nextStep}
+                className="px-8 py-4 font-semibold text-white rounded-3xl bg-slate-500 max-md:px-5"
+              >
+                Save Complainant
               </Button>
             ) : (
-              <Button type="primary" onClick={handleSubmit}>
-                Save
+              <Button
+                type="primary"
+                className="px-8 py-4 font-semibold text-white rounded-3xl bg-slate-500 max-md:px-5"
+                onClick={handleSubmit}
+              >
+                Save Complainant
               </Button>
             )}
           </div>

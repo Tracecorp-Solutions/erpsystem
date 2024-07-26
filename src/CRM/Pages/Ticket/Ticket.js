@@ -18,7 +18,7 @@ const Ticket = () => {
   const [resolveModalVisible, setResolveModalVisible] = useState(false);
   const [selectedTicketId, setSelectedTicketId] = useState(null);
   const [departments, setDepartments] = useState([]);
-  const [loadingTickets, setLoadingTickets] = useState(false); // State for loading tickets
+  const [loadingTickets, setLoadingTickets] = useState(false);
   const name = sessionStorage.getItem("fullname");
 
   useEffect(() => {
@@ -38,7 +38,7 @@ const Ticket = () => {
   };
 
   const fetchTickets = async () => {
-    setLoadingTickets(true); // Start loading indicator
+    setLoadingTickets(true);
     try {
       const response = await axios.get(
         `${process.env.REACT_APP_API_URL}/GetAllTickets`
@@ -51,7 +51,7 @@ const Ticket = () => {
     } catch (error) {
       console.error("Error fetching tickets:", error);
     } finally {
-      setLoadingTickets(false); // Stop loading indicator
+      setLoadingTickets(false);
     }
   };
 
@@ -121,7 +121,7 @@ const Ticket = () => {
       key: "priority",
     },
     {
-      title: "Ticket Category",
+      title: "TICKET CATEGORY",
       dataIndex: ["ticketCategory", "name"],
       key: "ticketCategory",
     },
@@ -134,16 +134,21 @@ const Ticket = () => {
             <Menu onClick={(e) => handleMenuClick(record, e)}>
               <Menu.Item key="1">Update Ticket</Menu.Item>
               <Menu.Item key="2">Escalate Ticket</Menu.Item>
-              <Menu.Item key="3">Update Status</Menu.Item>
               <Menu.Item key="4">Resolve Ticket</Menu.Item>
             </Menu>
           }
           trigger={["click"]}
           placement="bottomRight"
         >
-          <Button type="link" size="small" onClick={(e) => e.preventDefault()}>
-            <EllipsisOutlined />
-          </Button>
+          <div className="flex flex-col justify-center px-9 py-3  max-md:px-5" onClick={(e) => e.preventDefault()}>
+          <div className="flex justify-center items-center px-1.5 w-8 h-8 rounded-3xl bg-stone-100">
+            <img
+              loading="lazy"
+              src="https://cdn.builder.io/api/v1/image/assets/TEMP/8e208e19cb012f5bf1adcf62e6edbe433a5adc1a0f380b3a06e47e7ddfd71e8c?apiKey=0d95acea82cc4b259a61e827c24c5c6c&&apiKey=0d95acea82cc4b259a61e827c24c5c6c"
+              className="w-5 aspect-square"
+            />
+          </div>
+          </div>
         </Dropdown>
       ),
     },
@@ -178,7 +183,7 @@ const Ticket = () => {
         <Table dataSource={tickets} columns={columns} pagination={false} />
       )}
 
-      <AddTicket isModalVisible={isModalVisible} handleCancel={handleCancel} />
+      <AddTicket isModalVisible={isModalVisible} handleCancel={handleCancel} recordedBy={name} />
 
       {/* Escalate Ticket Modal */}
       <Modal

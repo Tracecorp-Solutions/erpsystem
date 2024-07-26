@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { Table, Tag } from "antd";
+import { Table, Spin } from "antd";
 import moment from "moment";
 import axios from "axios";
 
@@ -96,7 +96,13 @@ const UpdateTicket = () => {
   ];
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div style={{
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      minHeight: "60vh",
+    }}
+    className="w-full"><Spin /></div>;
   }
 
   if (!ticketDetails) {
@@ -107,8 +113,8 @@ const UpdateTicket = () => {
 
   const data = ticketDetails.ticketAuditTrails.map((item) => ({
     recordedBy: item.recordedBy,
-    resolutionDetails: item.resolutionDetails,
-    assignedTo: item.assignedTo,
+    resolutionDetails: item.reasonOfEscalation,
+    assignedTo: item.escalationMatrix?.department.name,
     status: item.status,
     id: item.id,
     dateResolved: moment(item.dateResolved).format("YYYY/MM/DD"),
@@ -198,7 +204,7 @@ const UpdateTicket = () => {
               </div>
             </div>
           </div>
-          <div className="flex gap-2 self-start mt-6 max-md:flex-wrap">
+          <div className="flex gap-4 self-start mt-6 max-md:flex-wrap">
             <div className="flex flex-col justify-center whitespace-nowrap">
               <div className="text-xs font-medium tracking-wide uppercase text-neutral-400">
                 department
@@ -209,10 +215,10 @@ const UpdateTicket = () => {
             </div>
             <div className="flex flex-col justify-center">
               <div className="text-xs font-medium tracking-wide uppercase text-neutral-400">
-                ticket subcategory
+                Subject
               </div>
               <div className="mt-2 text-base leading-6 text-neutral-600">
-                Plumbing
+                {ticketDetails.ticket.description}
               </div>
             </div>
           </div>
