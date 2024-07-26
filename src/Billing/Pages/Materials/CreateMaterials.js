@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { AiOutlineClose } from 'react-icons/ai'; // Importing the X icon from React Icons
+import { AiOutlineClose } from 'react-icons/ai'; 
 import { Modal, message } from "antd";
 function CreateMaterials({isUpdateModalVisible, handleCloseModalVisible}) {
   const navigate = useNavigate();
@@ -9,7 +9,7 @@ function CreateMaterials({isUpdateModalVisible, handleCloseModalVisible}) {
   const [materialUnitPrice, setMaterialUnitPrice] = useState('');
   const [unitOfMeasure, setUnitOfMeasure] = useState('');
   const [materialDescription, setMaterialDescription] = useState('');
-  const [invoiceable, setInvoiceable] = useState('true'); // Initializing invoiceable state
+  const [invoiceable, setInvoiceable] = useState('true'); 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -19,7 +19,7 @@ function CreateMaterials({isUpdateModalVisible, handleCloseModalVisible}) {
       materialUnitPrice: parseFloat(materialUnitPrice),
       unitOfMeasure,
       materialDescription,
-      invoiceable: invoiceable === 'true', // Converting to boolean
+      invoiceable: invoiceable === 'true', 
     };
 
     try {

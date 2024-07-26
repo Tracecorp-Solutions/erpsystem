@@ -62,6 +62,10 @@ function SideNav() {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  const navigateToCRMReport = () => {
+    navigate("/crm", { state: { screen: "crm-report" } });
+  };
+
   const handleNavigation = (path, state) => {
     if (state && state.dropdown) {
       setOpenDropdown(state.dropdown);
@@ -264,17 +268,37 @@ function SideNav() {
           {/* Payments section */}
 
           {/* Reports section */}
-          <div className="flex gap-2 py-3 mt-2 whitespace-nowrap justify-between rounded-xl">
-            <div className="flex">
+
+          <button
+            className="flex gap-2 py-3 mt-2 whitespace-nowrap justify-between rounded-xl"
+            onClick={navigateToCRMReport}
+          >
+            <div className="flex items-center">
+
               <Files className="shrink-0 self-start w-6 aspect-square" />
               <span>Reports</span>
             </div>
+            <ChevronDown className="shrink-0 self-start w-6 aspect-square ml-2" />
+          </button>
+
+          <div className="mt-4 py-3 w-full">
             <button
-              onClick={() => toggleDropdown("reports")}
-              className="flex items-center"
+              className="flex justify-between w-full"
+              onClick={() => toggleDropdown("documents")}
             >
-              <ChevronDown className="shrink-0 self-start w-6 aspect-square ml-2" />
+              <span className="flex gap-2">
+                <Settings className="shrink-0 self-start w-6 aspect-square" />
+                <span>Configuration</span>
+              </span>
+              <ChevronDown className="shrink-0 self-start w-6 aspect-square" />
             </button>
+
+            {openDropdown === "documents" && (
+              <div className="pt-3">
+                <div
+                  className={`flex gap-2 py-3 mt-2 whitespace-nowrap rounded-xl ${
+                    location.pathname === "/billing"
+
           </div>
           {openDropdown === "reports" && (
             <div className="pt-3">
@@ -440,29 +464,46 @@ function SideNav() {
                 <div
                   className={`flex gap-2 py-3 mt-2 whitespace-nowrap rounded-xl ${
                     location.pathname === "/prority-setting"
+
                       ? "bg-active-green txt-color-blue font-semibold px-4 mt-3"
                       : "bg-none"
                   }`}
                 >
-                  <Minus className="shrink-0 self-start w-6 aspect-square" />
+                  <ReceiptText className="shrink-0 self-start w-6 aspect-square" />
                   <button
                     onClick={() =>
+
+                      navigate("/crm", { state: { screen: "departments" } })
+                    }
+                  >
+                    Departments
+
                       navigate("/crm", { state: { screen: "prority-setting" } })
                     }
                   >
                     Priority Setting
+
                   </button>
                 </div>
                 <div
                   className={`flex gap-2 py-3 mt-2 whitespace-nowrap rounded-xl ${
+
+
                     location.pathname === "/prority-criteria"
+
                       ? "bg-active-green txt-color-blue font-semibold px-4 mt-3"
                       : "bg-none"
                   }`}
                 >
-                  <Minus className="shrink-0 self-start w-6 aspect-square" />
+                  <ReceiptText className="shrink-0 self-start w-6 aspect-square" />
                   <button
                     onClick={() =>
+
+                      navigate("/crm", { state: { screen: "escalation" } })
+                    }
+                  >
+                    Escalation Matrix
+
                       navigate("/crm", {
                         state: { screen: "prority-criteria" },
                       })
@@ -485,6 +526,7 @@ function SideNav() {
                     }
                   >
                     Ticket
+
                   </button>
                 </div>
               </div>

@@ -49,6 +49,7 @@ import CustomerBills from "./Billing/Pages/Customer/CustomerBills";
 import CustomerTransactions from "./Billing/Pages/Customer/CustomerTransactions";
 import History from "./Billing/Pages/Meter/History";
 import Crm from "./CRM/Pages/Layout/Crm";
+import CrmReport from "./CRM/Pages/Reports/CrmReport";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -91,7 +92,7 @@ function App() {
               <Route path="/reset" element={<SetPassword />} />
               <Route path="/billingdashboard" element={<BillingDashboard />} />
               <Route path="/crm" element={<Crm />} />
-
+              <Route path="/crm-report" element={<CrmReport />} />
               {/* <Route path="/forgot" element={<Forgot />} /> */}
               <Route path="/Dashboardlayout" element={<Dashboardlayout />} />
               <Route path="/billingdashboard" element={<BillingDashboard />} />
