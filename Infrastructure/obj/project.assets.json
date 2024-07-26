@@ -735,19 +735,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\ngobi\\.nuget\\packages\\": {}
+    "C:\\Users\\DanielNgobi\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\working directory\\erpsystem\\Infrastructure\\Infrastructure.csproj",
+      "projectUniqueName": "D:\\erpsystem\\Infrastructure\\Infrastructure.csproj",
       "projectName": "Infrastructure",
-      "projectPath": "D:\\working directory\\erpsystem\\Infrastructure\\Infrastructure.csproj",
-      "packagesPath": "C:\\Users\\ngobi\\.nuget\\packages\\",
-      "outputPath": "D:\\working directory\\erpsystem\\Infrastructure\\obj\\",
+      "projectPath": "D:\\erpsystem\\Infrastructure\\Infrastructure.csproj",
+      "packagesPath": "C:\\Users\\DanielNgobi\\.nuget\\packages\\",
+      "outputPath": "D:\\erpsystem\\Infrastructure\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\ngobi\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\DanielNgobi\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -762,8 +762,8 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "D:\\working directory\\erpsystem\\Core\\Core.csproj": {
-              "projectPath": "D:\\working directory\\erpsystem\\Core\\Core.csproj"
+            "D:\\erpsystem\\Core\\Core.csproj": {
+              "projectPath": "D:\\erpsystem\\Core\\Core.csproj"
             }
           }
         }

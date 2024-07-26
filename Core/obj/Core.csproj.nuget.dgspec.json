@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\working directory\\erpsystem\\Core\\Core.csproj": {}
+    "D:\\erpsystem\\Core\\Core.csproj": {}
   },
   "projects": {
-    "D:\\working directory\\erpsystem\\Core\\Core.csproj": {
+    "D:\\erpsystem\\Core\\Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\working directory\\erpsystem\\Core\\Core.csproj",
+        "projectUniqueName": "D:\\erpsystem\\Core\\Core.csproj",
         "projectName": "Core",
-        "projectPath": "D:\\working directory\\erpsystem\\Core\\Core.csproj",
-        "packagesPath": "C:\\Users\\ngobi\\.nuget\\packages\\",
-        "outputPath": "D:\\working directory\\erpsystem\\Core\\obj\\",
+        "projectPath": "D:\\erpsystem\\Core\\Core.csproj",
+        "packagesPath": "C:\\Users\\DanielNgobi\\.nuget\\packages\\",
+        "outputPath": "D:\\erpsystem\\Core\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\ngobi\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\DanielNgobi\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
