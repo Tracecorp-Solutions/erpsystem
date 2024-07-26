@@ -1,16 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Modal, message, Input, Button, Select } from "antd";
 import axios from "axios";
-import { AiOutlineClose } from 'react-icons/ai'; 
+import { AiOutlineClose } from "react-icons/ai";
 
-function CreateDepartments({
-  isUpdateModalVisible,
-  handleCloseModalVisible,
-}) {
+function CreateDepartments({ isUpdateModalVisible, handleCloseModalVisible }) {
   const [departmentData, setDepartmentData] = useState({
     name: "",
     description: "",
-    headDepactId: "", // Updated to store selected headDepactId
+    headDepactId: "", // Stores selected headDepactId
   });
 
   const [users, setUsers] = useState([]);
@@ -36,8 +33,8 @@ function CreateDepartments({
     setDepartmentData({ ...departmentData, [name]: value });
   };
 
-  const handleHeadDepactIdChange = (value) => {
-    setDepartmentData({ ...departmentData, headDepactId: value });
+  const handleHeadDepactIdChange = (selectedId) => {
+    setDepartmentData({ ...departmentData, headDepactId: selectedId });
   };
 
   const handleSubmit = async () => {
@@ -48,27 +45,28 @@ function CreateDepartments({
       );
       message.success("Department added successfully");
       handleCloseModalVisible();
-      // Optionally, you can refresh the department list in the parent component
     } catch (error) {
       console.error("Error adding department:", error);
       message.error("Failed to add department");
     }
   };
 
+  // Find the selected user object based on headDepactId
+  const selectedUser = users.find(user => user.id === departmentData.headDepactId);
+
   return (
     <Modal visible={isUpdateModalVisible} closable={false} footer={null}>
       <div className="flex flex-col justify-center items-start pt-4 text-base leading-6 bg-white rounded-3xl max-w-[720px]">
         <div className="text-2xl font-semibold text-neutral-600 max-md:max-w-full">
           New Department
-          
         </div>
         <button
-        type="button"
-        className="absolute top-4 right-4 text-gray-500"
-        onClick={handleCloseModalVisible}
-      >
-        <AiOutlineClose size={24} />
-      </button>
+          type="button"
+          className="absolute top-4 right-4 text-gray-500"
+          onClick={handleCloseModalVisible}
+        >
+          <AiOutlineClose size={24} />
+        </button>
         <div className="mt-4 font-semibold text-neutral-600 max-md:max-w-full">
           Department Name
         </div>
@@ -96,6 +94,7 @@ function CreateDepartments({
         <Select
           placeholder="Select head of department"
           onChange={handleHeadDepactIdChange}
+          value={departmentData.headDepactId} // Ensure the Select reflects the current selection
           className="w-[480px] h-[50px] mt-3 max-md:max-w-full"
         >
           {users.map((user) => (
@@ -104,6 +103,8 @@ function CreateDepartments({
             </Option>
           ))}
         </Select>
+
+
         <div className="flex justify-center items-center self-stretch px-6 py-6 mt-12 w-full bg-stone-100 max-md:px-5 max-md:mt-10 max-md:max-w-full">
           <Button
             className="justify-center items-center px-8 py-4 mr-6 whitespace-nowrap rounded-3xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 max-md:px-5"
