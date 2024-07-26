@@ -50,7 +50,7 @@ const AddTicket = ({ isModalVisible, handleCancel, recordedBy }) => {
     fetchPriorities();
   }, []);
 
-  const handleCustomerTypeChange=(e)=>{
+  const handleCustomerTypeChange = (e) => {
     setCustomerType(e);
   }
 
@@ -180,18 +180,14 @@ const AddTicket = ({ isModalVisible, handleCancel, recordedBy }) => {
                       Validate Customer
                     </Button>
                   </div>
-                  {customerDetails && (
-                    <>
-                      <div className="mt-4 text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">Customer Name:</div>
-                      <Input
-                        placeholder="Enter customer name"
-                        className="p-3"
-                        style={{ width: "80%", marginTop: "8px" }}
-                        value={customerName}
-                        onChange={(e) => setCustomerName(e.target.value)}
-                      />
-                    </>
-                  )}
+                  <div className="mt-4 text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">Customer Name:</div>
+                  <Input
+                    placeholder="Enter customer name"
+                    className="p-3"
+                    style={{ width: "100%", marginTop: "8px" }}
+                    value={customerName}
+                    onChange={(e) => setCustomerName(e.target.value)}
+                  />
                 </>
               )}
 
