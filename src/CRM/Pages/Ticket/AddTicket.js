@@ -50,9 +50,6 @@ const AddTicket = ({ isModalVisible, handleCancel, recordedBy }) => {
     fetchPriorities();
   }, []);
 
-  const handleCustomerTypeChange = (e) => {
-    setCustomerType(e);
-  }
 
   const fetchData = async (url, setState) => {
     setLoading(true);
@@ -66,11 +63,30 @@ const AddTicket = ({ isModalVisible, handleCancel, recordedBy }) => {
     }
   };
 
+
   const fetchOperationalAreas = () => fetchData('/GetOperationAreas', setOperationalAreas);
   const fetchBranches = () => fetchData('/GetBranches', setBranches);
   const fetchTerritories = () => fetchData('/GetTerritories', setTerritories);
   const fetchTicketCategories = () => fetchData('/GetTicketCategories', setTicketCategories);
-  const fetchPriorities = () => fetchData('/GetPriorities', setPriorities);
+  // const fetchPriorities = () => fetchData('/GetPriorities', setPriorities);
+
+  const fetchPriorities = async () => {
+    setLoading(true);
+    try {
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/GetPriorities`);
+      const transformedarray = response.data.map(item => ({
+        id : item.id,
+        name: item.priorityName,
+        prioritydescription : item.priorityDescription
+      }));
+      setPriorities(transformedarray);
+  
+    } catch (error) {
+      console.error(`Error fetching data from }:`, error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const fetchCustomerDetails = async (reference) => {
     setLoading(true);
