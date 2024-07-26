@@ -17,7 +17,7 @@ import TicketSubcategory from "../Ticket/TicketSubcategory";
 const Crm = () => {
   const location = useLocation();
   const { state } = location;
-  const screen = state?.screen || "crm";
+  const screen = state?.screen || "crm-dashboard";
   const navigate = useNavigate();
   useEffect(() => {
     if (sessionStorage.getItem("userid") == null) {

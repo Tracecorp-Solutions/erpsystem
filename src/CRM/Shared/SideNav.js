@@ -143,7 +143,7 @@ function SideNav() {
           <div className="mt-3 py-3 w-full">
             <button
               className="flex justify-between w-full"
-              onClick={() => toggleDropdown("chartOfAccounts")}
+              onClick={() => toggleDropdown("customercare")}
             >
               <span className="flex gap-2">
                 <Files className="shrink-0 self-start w-6 aspect-square" />
@@ -151,7 +151,7 @@ function SideNav() {
               </span>
               <ChevronDown className="shrink-0 self-start w-6 aspect-square" />
             </button>
-            {openDropdown === "chartOfAccounts" && (
+            {openDropdown === "customercare" && (
               <div className="pt-3">
                 <div
                   className={`flex gap-2 py-3 mt-2 whitespace-nowrap rounded-xl ${
@@ -163,30 +163,12 @@ function SideNav() {
                   <Minus className="shrink-0 self-start w-6 aspect-square" />
                   <button
                     onClick={() =>
-                      navigate("/billingDashboard", {
-                        state: { screen: "new-application" },
+                      navigate("/Crm", {
+                        state: { screen: "ticket-page" },
                       })
                     }
                   >
-                    New Connections
-                  </button>
-                </div>
-                <div
-                  className={`flex gap-2 py-3 mt-2 whitespace-nowrap rounded-xl ${
-                    location.pathname === "/application"
-                      ? "bg-active-green text-blue-600 font-semibold px-4 mt-3"
-                      : "bg-none"
-                  }`}
-                >
-                  <Minus className="shrink-0 self-start w-6 aspect-square" />
-                  <button
-                    onClick={() =>
-                      navigate("/billingDashboard", {
-                        state: { screen: "application" },
-                      })
-                    }
-                  >
-                    View Applications
+                    Tickets/Complaints
                   </button>
                 </div>
               </div>
