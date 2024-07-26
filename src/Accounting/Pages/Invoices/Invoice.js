@@ -83,7 +83,7 @@ const Invoice = () => {
   };
 
   const handleCreateInvoice = () => {
-    navigate("/create-invoice");
+    navigate(`/Dashboardlayout`, { state: { screen: "invoiceform" } }); 
   };
 
   const handleEditInvoice = (id) => {
