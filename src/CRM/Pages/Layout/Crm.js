@@ -36,12 +36,12 @@ const Crm = () => {
         <div className="w-full flex justify-center">
           <div className="main-content bg-stone-100 pb-6 rounded-t-3xl">
             <div className="content px-4 sm:px-6 lg:px-8 group-container">
-              {screen === "crm" && <CrmDashboard />}
+              {screen === "crm-dashboard" && <CrmDashboard />}
               {screen === "departments" && <Departments />}
               {screen === "escalation" && <Escalation />}
-              {screen === "crm-report" && <CrmReport />
-              {screen === "ticket" && <TicketPage />}
-              {screen === "ticket-page" && <Ticket />}
+              {screen === "crm-report" && <CrmReport />}
+              {screen === "ticket" && <TicketPage />} 
+              {screen === "ticket-page" && <Ticket />} 
               {screen === "prority-setting" && <ProritySetting />}
               {screen === "prority-criteria" && <ProrityCriteria />}
               {screen === "update-ticket" && <UpdateTicket />}

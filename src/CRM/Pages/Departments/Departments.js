@@ -77,7 +77,7 @@ function Departments() {
       title: <span className="text-gray-500">Actions</span>,
       render: (text, record) => (
         <Button type="link" onClick={() => handleEdit(record)}>
-          Edit
+          ...
         </Button>
       ),
     },
