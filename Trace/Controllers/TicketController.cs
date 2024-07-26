@@ -23,6 +23,9 @@ namespace Trace.Controllers
             {
                 await _ticketRepository.CreateTicketAsync(ticket);
                 return Ok("Ticket created successfully");
+            }catch(ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
             }
             catch (Exception ex)
             {

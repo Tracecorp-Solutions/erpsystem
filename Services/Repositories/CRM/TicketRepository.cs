@@ -27,6 +27,9 @@ namespace Services.Repositories.CRM
             var escalationMatrix = await _context.EscalationMatrices
                 .FirstOrDefaultAsync(e => e.PriorityId == ticket.PriorityId && e.TicketCategoryId == ticket.TicketCategoryId);
 
+            if(escalationMatrix == null)
+                throw new ArgumentException("Priority and TicketCategory not set in the Escalation Matrix");
+
             var newTicket = new Ticket
             {
                 CustomerType = ticket.CustomerType,
