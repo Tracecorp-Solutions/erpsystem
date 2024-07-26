@@ -4,6 +4,12 @@ import TopNav from "../../Shared/TopNav";
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import CrmDashboard from "../Dashboard/CrmDashboard";
+import TicketPage from "../Ticket/TicketPage";
+import ProritySetting from "../ProritySettings/ProrityLevel";
+import ProrityCriteria from "../ProritySettings/ProrityCriteria";
+import Ticket from "../Ticket/Ticket";
+import UpdateTicket from "../Ticket/UpdateTicket";
+import TicketSubcategory from "../Ticket/TicketSubcategory";
 
 const Crm = () => {
   const location = useLocation();
@@ -29,7 +35,12 @@ const Crm = () => {
             <div className="content px-4 sm:px-6 lg:px-8 group-container">
               {screen === "crm-dashboard" && <CrmDashboard />}
              
-        
+              {screen === "ticket" && <TicketPage />}
+              {screen === "ticket-page" && <Ticket />}
+              {screen === "prority-setting" && <ProritySetting />}
+              {screen === "prority-criteria" && <ProrityCriteria />}
+              {screen === "update-ticket" && <UpdateTicket />}
+              {screen === "ticket-subcategory" && <TicketSubcategory />}
             </div>
           </div>
         </div>

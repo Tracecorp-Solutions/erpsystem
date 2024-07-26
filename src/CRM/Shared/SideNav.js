@@ -9,7 +9,6 @@ import {
   FolderClosed,
   Settings,
   ChevronDown,
-
   Minus,
   Menu,
 } from "lucide-react";
@@ -157,7 +156,13 @@ function SideNav() {
                   }`}
                 >
                   <Minus className="shrink-0 self-start w-6 aspect-square" />
-                  <button onClick={() => navigate("/billingDashboard", { state: { screen: "new-application" } })}>
+                  <button
+                    onClick={() =>
+                      navigate("/billingDashboard", {
+                        state: { screen: "new-application" },
+                      })
+                    }
+                  >
                     New Connections
                   </button>
                 </div>
@@ -182,8 +187,8 @@ function SideNav() {
               </div>
             )}
           </div>
-            {/* Billing & Invoicing */}
-            <div className="flex gap-2 py-3 mt-2 whitespace-nowrap justify-between rounded-xl">
+          {/* Billing & Invoicing */}
+          <div className="flex gap-2 py-3 mt-2 whitespace-nowrap justify-between rounded-xl">
             <div className="flex">
               <ArrowRightLeft className="shrink-0 self-start w-6 aspect-square" />
               <span>Job Cards</span>
@@ -257,12 +262,12 @@ function SideNav() {
             </div>
           )}
           {/* Payments section */}
-         
+
           {/* Reports section */}
           <div className="flex gap-2 py-3 mt-2 whitespace-nowrap justify-between rounded-xl">
             <div className="flex">
-            <Files className="shrink-0 self-start w-6 aspect-square" />
-            <span>Reports</span>
+              <Files className="shrink-0 self-start w-6 aspect-square" />
+              <span>Reports</span>
             </div>
             <button
               onClick={() => toggleDropdown("reports")}
@@ -282,7 +287,7 @@ function SideNav() {
               >
                 <Minus className="shrink-0 self-start w-6 aspect-square" />
                 <button
-                   onClick={() =>
+                  onClick={() =>
                     handleNavigation("/billingdashboard", {
                       dropdown: "customer-invoice",
                       screen: "customer-invoice",
@@ -312,60 +317,60 @@ function SideNav() {
                 </button>
               </div>
               <div
-                  className={`flex gap-2 py-3 mt-2 whitespace-nowrap rounded-xl ${
-                    location.pathname === "/accounts"
-                      ? "bg-active-green txt-color-blue font-semibold px-4 mt-3"
-                      : "bg-none"
-                  }`}
+                className={`flex gap-2 py-3 mt-2 whitespace-nowrap rounded-xl ${
+                  location.pathname === "/accounts"
+                    ? "bg-active-green txt-color-blue font-semibold px-4 mt-3"
+                    : "bg-none"
+                }`}
+              >
+                <Minus className="shrink-0 self-start w-6 aspect-square" />
+                <button
+                  onClick={() =>
+                    navigate("/billingdashboard", {
+                      state: { screen: "connectedcustomers" },
+                    })
+                  }
                 >
-                  <Minus className="shrink-0 self-start w-6 aspect-square" />
-                  <button
-                    onClick={() =>
-                      navigate("/billingdashboard", {
-                        state: { screen: "connectedcustomers" },
-                      })
-                    }
-                  >
-                   Connected  Customers
-                  </button>
-                </div>
-                <div
-                  className={`flex gap-2 py-3 mt-2 whitespace-nowrap rounded-xl ${
-                    location.pathname === "/accounts"
-                      ? "bg-active-green txt-color-blue font-semibold px-4 mt-3"
-                      : "bg-none"
-                  }`}
+                  Connected Customers
+                </button>
+              </div>
+              <div
+                className={`flex gap-2 py-3 mt-2 whitespace-nowrap rounded-xl ${
+                  location.pathname === "/accounts"
+                    ? "bg-active-green txt-color-blue font-semibold px-4 mt-3"
+                    : "bg-none"
+                }`}
+              >
+                <Minus className="shrink-0 self-start w-6 aspect-square" />
+                <button
+                  onClick={() =>
+                    navigate("/billingdashboard", {
+                      state: { screen: "customer-statement" },
+                    })
+                  }
                 >
-                  <Minus className="shrink-0 self-start w-6 aspect-square" />
-                  <button
-                    onClick={() =>
-                      navigate("/billingdashboard", {
-                        state: { screen: "customer-statement" },
-                      })
-                    }
-                  >
-                   Customer Statement
-                  </button>
-                </div>
-                <div
-                  className={`flex gap-2 py-3 mt-2 whitespace-nowrap rounded-xl ${
-                    location.pathname === "/accounts"
-                      ? "bg-active-green txt-color-blue font-semibold px-4 mt-3"
-                      : "bg-none"
-                  }`}
+                  Customer Statement
+                </button>
+              </div>
+              <div
+                className={`flex gap-2 py-3 mt-2 whitespace-nowrap rounded-xl ${
+                  location.pathname === "/accounts"
+                    ? "bg-active-green txt-color-blue font-semibold px-4 mt-3"
+                    : "bg-none"
+                }`}
+              >
+                <Minus className="shrink-0 self-start w-6 aspect-square" />
+                <button
+                  onClick={() =>
+                    navigate("/billingdashboard", {
+                      state: { screen: "tariffs" },
+                    })
+                  }
                 >
-                  <Minus className="shrink-0 self-start w-6 aspect-square" />
-                  <button
-                    onClick={() =>
-                      navigate("/billingdashboard", {
-                        state: { screen: "tariffs" },
-                      })
-                    }
-                  >
-                    Customer Tariffs
-                  </button>
-                </div>
-                <div
+                  Customer Tariffs
+                </button>
+              </div>
+              <div
                 className={`flex gap-2 py-3 mt-2 whitespace-nowrap rounded-xl ${
                   location.state?.dropdown === "billing"
                     ? "bg-active-green txt-color-blue font-semibold px-4"
@@ -374,21 +379,24 @@ function SideNav() {
               >
                 <Minus className="shrink-0 self-start w-6 aspect-square" />
                 <button
-                   onClick={() =>
+                  onClick={() =>
                     handleNavigation("/billingdashboard", {
                       dropdown: "billing",
                       screen: "billing",
                     })
                   }
                 >
-                 Customer Bills
+                  Customer Bills
                 </button>
               </div>
             </div>
           )}
-         
+
           <div className="mt-4 mb-44 py-3 w-full">
-            <button className="flex justify-between w-full" onClick={() => toggleDropdown("documents")}>
+            <button
+              className="flex justify-between w-full"
+              onClick={() => toggleDropdown("documents")}
+            >
               <span className="flex gap-2">
                 <Settings className="shrink-0 self-start w-6 aspect-square" />
                 <span>Configuration</span>
@@ -397,17 +405,92 @@ function SideNav() {
             </button>
             {openDropdown === "documents" && (
               <div className="pt-3">
-                <div className={`flex gap-2 py-3 mt-2 whitespace-nowrap rounded-xl ${location.pathname === "/billing" ? "bg-active-green txt-color-blue font-semibold px-4 mt-3" : "bg-none"}`}>
+                <div
+                  className={`flex gap-2 py-3 mt-2 whitespace-nowrap rounded-xl ${
+                    location.pathname === "/billing"
+                      ? "bg-active-green txt-color-blue font-semibold px-4 mt-3"
+                      : "bg-none"
+                  }`}
+                >
                   <ReceiptText className="shrink-0 self-start w-6 aspect-square" />
-                  <button onClick={() => navigate("/crm", { state: { screen: "departments" } })}>
+                  <button
+                    onClick={() =>
+                      navigate("/crm", { state: { screen: "departments" } })
+                    }
+                  >
                     Departments
+                  </button>
+                </div>
+                <div
+                  className={`flex gap-2 py-3 mt-2 whitespace-nowrap rounded-xl ${
+                    location.pathname === "/ticket"
+                      ? "bg-active-green txt-color-blue font-semibold px-4 mt-3"
+                      : "bg-none"
+                  }`}
+                >
+                  <Minus className="shrink-0 self-start w-6 aspect-square" />
+                  <button
+                    onClick={() =>
+                      navigate("/crm", { state: { screen: "ticket" } })
+                    }
+                  >
+                    Ticket Categories
+                  </button>
+                </div>
+                <div
+                  className={`flex gap-2 py-3 mt-2 whitespace-nowrap rounded-xl ${
+                    location.pathname === "/prority-setting"
+                      ? "bg-active-green txt-color-blue font-semibold px-4 mt-3"
+                      : "bg-none"
+                  }`}
+                >
+                  <Minus className="shrink-0 self-start w-6 aspect-square" />
+                  <button
+                    onClick={() =>
+                      navigate("/crm", { state: { screen: "prority-setting" } })
+                    }
+                  >
+                    Priority Setting
+                  </button>
+                </div>
+                <div
+                  className={`flex gap-2 py-3 mt-2 whitespace-nowrap rounded-xl ${
+                    location.pathname === "/prority-criteria"
+                      ? "bg-active-green txt-color-blue font-semibold px-4 mt-3"
+                      : "bg-none"
+                  }`}
+                >
+                  <Minus className="shrink-0 self-start w-6 aspect-square" />
+                  <button
+                    onClick={() =>
+                      navigate("/crm", {
+                        state: { screen: "prority-criteria" },
+                      })
+                    }
+                  >
+                    Priority Criteria
+                  </button>
+                </div>
+                <div
+                  className={`flex gap-2 py-3 mt-2 whitespace-nowrap rounded-xl ${
+                    location.pathname === "/ticket-page"
+                      ? "bg-active-green txt-color-blue font-semibold px-4 mt-3"
+                      : "bg-none"
+                  }`}
+                >
+                  <Minus className="shrink-0 self-start w-6 aspect-square" />
+                  <button
+                    onClick={() =>
+                      navigate("/crm", { state: { screen: "ticket-page" } })
+                    }
+                  >
+                    Ticket
                   </button>
                 </div>
               </div>
             )}
           </div>
         </div>
-
       </div>
     </>
   );
