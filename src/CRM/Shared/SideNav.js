@@ -426,6 +426,22 @@ function SideNav() {
                 </div>
                 <div
                   className={`flex gap-2 py-3 mt-2 whitespace-nowrap rounded-xl ${
+                    location.pathname === "/departments"
+                      ? "bg-active-green text-blue-600 font-semibold px-4 mt-3"
+                      : "bg-none"
+                  }`}
+                >
+                  <ReceiptText className="shrink-0 self-start w-6 aspect-square" />
+                  <button
+                    onClick={() =>
+                      navigate("/crm", { state: { screen: "escalation" } })
+                    }
+                  >
+                    Escalation Matrix
+                  </button>
+                </div>
+                <div
+                  className={`flex gap-2 py-3 mt-2 whitespace-nowrap rounded-xl ${
                     location.pathname === "/priority-setting"
                       ? "bg-active-green text-blue-600 font-semibold px-4 mt-3"
                       : "bg-none"
