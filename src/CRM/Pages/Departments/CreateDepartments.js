@@ -3,7 +3,11 @@ import { Modal, message, Input, Button, Select } from "antd";
 import axios from "axios";
 import { AiOutlineClose } from "react-icons/ai";
 
-function CreateDepartments({ isUpdateModalVisible, handleCloseModalVisible }) {
+function CreateDepartments({
+  isUpdateModalVisible,
+  handleCloseModalVisible,
+  editingDepartment,
+}) {
   const [departmentData, setDepartmentData] = useState({
     name: "",
     description: "",
@@ -16,6 +20,16 @@ function CreateDepartments({ isUpdateModalVisible, handleCloseModalVisible }) {
   useEffect(() => {
     fetchUsers();
   }, []);
+
+  useEffect(() => {
+    if (editingDepartment) {
+      setDepartmentData({
+        name: editingDepartment.name,
+        description: editingDepartment.description,
+        headDepactId: editingDepartment.headDepactId.toString(), // Assuming headDepactId is stored as a string
+      });
+    }
+  }, [editingDepartment]);
 
   const fetchUsers = async () => {
     try {
@@ -39,28 +53,38 @@ function CreateDepartments({ isUpdateModalVisible, handleCloseModalVisible }) {
 
   const handleSubmit = async () => {
     try {
-      await axios.post(
-        `${process.env.REACT_APP_API_URL}/AddDepartments`,
-        departmentData
-      );
-      message.success("Department added successfully");
+      if (editingDepartment) {
+        await axios.put(
+          `${process.env.REACT_APP_API_URL}/UpdateDepartment/${editingDepartment.id}`,
+          departmentData
+        );
+        message.success("Department updated successfully");
+      } else {
+        await axios.post(
+          `${process.env.REACT_APP_API_URL}/AddDepartments`,
+          departmentData
+        );
+        message.success("Department added successfully");
+      }
       fetchUsers();
       handleCloseModalVisible();
-
     } catch (error) {
-      console.error("Error adding department:", error);
-      message.error("Failed to add department");
+      console.error(
+        `Error ${editingDepartment ? "updating" : "adding"} department:`,
+        error
+      );
+      message.error(`Failed to ${editingDepartment ? "update" : "add"} department`);
     }
   };
 
   // Find the selected user object based on headDepactId
-  const selectedUser = users.find(user => user.id === departmentData.headDepactId);
+  const selectedUser = users.find((user) => user.id === departmentData.headDepactId);
 
   return (
     <Modal visible={isUpdateModalVisible} closable={false} footer={null}>
       <div className="flex flex-col justify-center items-start pt-4 text-base leading-6 bg-white rounded-3xl max-w-[720px]">
         <div className="text-2xl font-semibold text-neutral-600 max-md:max-w-full">
-          New Department
+          {editingDepartment ? "Edit Department" : "New Department"}
         </div>
         <button
           type="button"
@@ -106,7 +130,6 @@ function CreateDepartments({ isUpdateModalVisible, handleCloseModalVisible }) {
           ))}
         </Select>
 
-
         <div className="flex justify-center items-center self-stretch px-6 py-6 mt-12 w-full bg-stone-100 max-md:px-5 max-md:mt-10 max-md:max-w-full">
           <Button
             className="justify-center items-center px-8 py-4 mr-6 whitespace-nowrap rounded-3xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 max-md:px-5"
@@ -118,7 +141,7 @@ function CreateDepartments({ isUpdateModalVisible, handleCloseModalVisible }) {
             className="justify-center px-8 py-4 font-semibold text-white rounded-3xl bg-blue-500 max-md:px-5"
             onClick={handleSubmit}
           >
-            Add Department
+            {editingDepartment ? "Update Department" : "Add Department"}
           </Button>
         </div>
       </div>

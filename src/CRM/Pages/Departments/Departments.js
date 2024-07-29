@@ -3,7 +3,7 @@ import { Table, Button, message } from "antd";
 import axios from "axios";
 import CreateDepartments from "./CreateDepartments";
 
-function Departments() {
+const Departments = () => {
   const [departments, setDepartments] = useState([]);
   const [isUpdateModalVisible, setIsUpdateModalVisible] = useState(false);
   const [editingDepartment, setEditingDepartment] = useState(null);
@@ -33,11 +33,19 @@ function Departments() {
     setEditingDepartment(null);
   };
 
-  const handleEdit = (record) => {
-    setEditingDepartment(record);
-    setIsUpdateModalVisible(true);
+  const handleEdit = async (record) => {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}/GetDepartmentById/${record.id}`
+      );
+      setEditingDepartment(response.data); // Assuming response.data contains department details
+      setIsUpdateModalVisible(true);
+    } catch (error) {
+      console.error("Error fetching department:", error);
+      message.error("Failed to fetch department details");
+    }
   };
-
+  
   const handleSave = async (values) => {
     try {
       await axios.put(
@@ -123,6 +131,6 @@ function Departments() {
       />
     </>
   );
-}
+};
 
 export default Departments;
