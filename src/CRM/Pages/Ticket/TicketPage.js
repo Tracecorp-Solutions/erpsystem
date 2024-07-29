@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Table, Button, Dropdown, Menu, message } from "antd";
+import { Table, Button, Dropdown, Menu, message, Pagination } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import axios from "axios";
 import AddTicketCategory from "./AddTicketCategory";
@@ -8,8 +8,11 @@ import UpdateTicketCategory from "./UpdateTicketCategory";
 const TicketPage = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [ticketCategories, setTicketCategories] = useState([]);
-  const [showUpdateTicketCategory, setShowUpdateTicketCategory] = useState(false);
+  const [showUpdateTicketCategory, setShowUpdateTicketCategory] =
+    useState(false);
   const [selectedCategory, setSelectedCategory] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(10);
 
   useEffect(() => {
     fetchTicketCategories();
@@ -114,6 +117,20 @@ const TicketPage = () => {
     },
   ];
 
+  // Pagination logic
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = (currentPage - 1) * itemsPerPage;
+  const currentItems = ticketCategories.slice(
+    indexOfFirstItem,
+    indexOfLastItem
+  );
+
+  const totalItems = ticketCategories.length;
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
   return (
     <div className="flex flex-col flex-wrap justify-center content-start py-6 rounded-3xl bg-stone-100">
       <div className="flex gap-2 px-6 text-base leading-6 text-neutral-600 max-md:flex-wrap max-md:px-5">
@@ -138,13 +155,23 @@ const TicketPage = () => {
             <PlusOutlined /> Add Category
           </Button>
         </div>
-        <div className="mt-4 overflow-auto">
+        <div className="mt-4">
           <Table
             columns={columns}
-            dataSource={ticketCategories}
+            dataSource={currentItems}
             pagination={false}
             scroll={{ x: true }}
           />
+          <div className="flex justify-end">
+            <Pagination
+              current={currentPage}
+              total={totalItems}
+              pageSize={itemsPerPage}
+              onChange={handlePageChange}
+              showSizeChanger={false}
+              style={{ marginTop: 16, textAlign: "center" }}
+            />
+          </div>
         </div>
       </div>
       <AddTicketCategory

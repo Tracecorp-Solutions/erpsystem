@@ -21,7 +21,7 @@ const Ticket = () => {
   const [loadingTickets, setLoadingTickets] = useState(false);
   const name = sessionStorage.getItem("fullname");
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(2);
+  const [itemsPerPage] = useState(10);
 
   useEffect(() => {
     fetchTickets();
