@@ -29,13 +29,6 @@ function CreateDepartments({
         description: editingDepartment.description,
         headDepactId: editingDepartment.headDepactId.toString(), // Assuming headDepactId is stored as a string
       });
-    } else {
-      // Reset form fields when not editing
-      setDepartmentData({
-        name: "",
-        description: "",
-        headDepactId: "",
-      });
     }
   }, [editingDepartment]);
 
