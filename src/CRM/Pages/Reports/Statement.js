@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Button, Input, Select } from "antd";
+import { Button, Input, Select, Pagination } from "antd";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 import html2canvas from "html2canvas";
@@ -11,6 +11,8 @@ const Statement = () => {
   const [filteredEntries, setFilteredEntries] = useState([]);
   const [addressFilter, setAddressFilter] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(12);
   const tableRef = useRef(null);
 
   useEffect(() => {
@@ -58,12 +60,28 @@ const Statement = () => {
     }
 
     setFilteredEntries(filteredData);
+    setCurrentPage(1); // Reset to first page after filtering
   };
 
   const handleClearFilters = () => {
     setAddressFilter("");
     setCategoryFilter("");
     setFilteredEntries(statementEntries);
+    setCurrentPage(1); // Reset to first page after clearing filters
+  };
+
+  // Calculate pagination values
+  const indexOfLastItem = currentPage * pageSize;
+  const indexOfFirstItem = indexOfLastItem - pageSize;
+  const currentItems = filteredEntries.slice(indexOfFirstItem, indexOfLastItem);
+
+  const handlePageChange = (page, pageSize) => {
+    setCurrentPage(page);
+  };
+
+  const onShowSizeChange = (current, size) => {
+    setPageSize(size);
+    setCurrentPage(1); // Reset to first page when changing page size
   };
 
   return (
@@ -98,8 +116,8 @@ const Statement = () => {
         </div>
       </div>
       <Button onClick={handleDownloadPDF}>Download PDF</Button>
-      <div className="overflow-x-auto mt-4">
-        <table className="w-full mt-3" ref={tableRef}>
+      <div className="overflow-x-auto mt-4" ref={tableRef}>
+        <table className="w-full mt-3">
           <thead>
             <tr>
               <th className="px-6 py-3 text-gray-800 font-semibold">Complaint Subject</th>
@@ -110,8 +128,8 @@ const Statement = () => {
             </tr>
           </thead>
           <tbody>
-            {filteredEntries.length > 0 ? (
-              filteredEntries.map((entry, index) => (
+            {currentItems.length > 0 ? (
+              currentItems.map((entry, index) => (
                 <tr key={index} className={index % 2 === 0 ? "bg-gray-100" : ""}>
                   <td className="px-6 py-4">{entry.complaintSubject}</td>
                   <td className="px-4 py-4">{entry.description}</td>
@@ -130,6 +148,18 @@ const Statement = () => {
           </tbody>
         </table>
       </div>
+      <Pagination
+        className="mt-4"
+        current={currentPage}
+        pageSize={pageSize}
+        total={filteredEntries.length}
+        onChange={handlePageChange}
+        showSizeChanger
+        onShowSizeChange={onShowSizeChange}
+        showTotal={(total, range) =>
+          `${range[0]}-${range[1]} of ${total} items`
+        }
+      />
     </div>
   );
 };
