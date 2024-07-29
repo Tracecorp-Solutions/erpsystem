@@ -20,6 +20,7 @@ function CreateEscalation({ isUpdateModalVisible, handleCloseModalVisible }) {
     notificationType: "",
     departmentLevel: null,
     emailTemplate: "",
+    
   });
   const [departments, setDepartments] = useState([]);
   const [ticketCategories, setTicketCategories] = useState([]);

@@ -7,6 +7,7 @@ function CreateDepartments({
   isUpdateModalVisible,
   handleCloseModalVisible,
   editingDepartment,
+  fetchDepartments,
 }) {
   const [departmentData, setDepartmentData] = useState({
     name: "",
@@ -27,6 +28,13 @@ function CreateDepartments({
         name: editingDepartment.name,
         description: editingDepartment.description,
         headDepactId: editingDepartment.headDepactId.toString(), // Assuming headDepactId is stored as a string
+      });
+    } else {
+      // Reset form fields when not editing
+      setDepartmentData({
+        name: "",
+        description: "",
+        headDepactId: "",
       });
     }
   }, [editingDepartment]);
@@ -55,7 +63,7 @@ function CreateDepartments({
     try {
       if (editingDepartment) {
         await axios.put(
-          `${process.env.REACT_APP_API_URL}/UpdateDepartment/${editingDepartment.id}`,
+          `http://3.216.182.63:8095/TestApi/UpdateDepartment/${editingDepartment.id}`,
           departmentData
         );
         message.success("Department updated successfully");
@@ -67,6 +75,7 @@ function CreateDepartments({
         message.success("Department added successfully");
       }
       fetchUsers();
+      fetchDepartments();
       handleCloseModalVisible();
     } catch (error) {
       console.error(

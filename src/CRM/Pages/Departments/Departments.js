@@ -128,6 +128,7 @@ const Departments = () => {
         editingDepartment={editingDepartment}
         handleSave={handleSave}
         handleCloseModalVisible={handleCloseModalVisible}
+        fetchDepartments= {fetchDepartments}
       />
     </>
   );
