@@ -30,6 +30,7 @@ function Escalation() {
       }
     };
 
+
     fetchEscalationData();
   }, []);
 
@@ -101,6 +102,7 @@ function Escalation() {
       <CreateEscalation
         isUpdateModalVisible={isUpdateModalVisible}
         handleCloseModalVisible={handleCloseModalVisible}
+        // fetchEscalationData={fetchEscalationData}
       />
     </>
   );
