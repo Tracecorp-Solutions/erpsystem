@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Table, Button, Dropdown, Menu, Modal, Spin } from "antd";
+import { Table, Button, Dropdown, Menu, Modal, Spin, Pagination } from "antd";
 import { EllipsisOutlined } from "@ant-design/icons";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -20,6 +20,8 @@ const Ticket = () => {
   const [departments, setDepartments] = useState([]);
   const [loadingTickets, setLoadingTickets] = useState(false);
   const name = sessionStorage.getItem("fullname");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(2);
 
   useEffect(() => {
     fetchTickets();
@@ -140,19 +142,34 @@ const Ticket = () => {
           trigger={["click"]}
           placement="bottomRight"
         >
-          <div className="flex flex-col justify-center px-9 py-3  max-md:px-5" onClick={(e) => e.preventDefault()}>
-          <div className="flex justify-center items-center px-1.5 w-8 h-8 rounded-3xl bg-stone-100">
-            <img
-              loading="lazy"
-              src="https://cdn.builder.io/api/v1/image/assets/TEMP/8e208e19cb012f5bf1adcf62e6edbe433a5adc1a0f380b3a06e47e7ddfd71e8c?apiKey=0d95acea82cc4b259a61e827c24c5c6c&&apiKey=0d95acea82cc4b259a61e827c24c5c6c"
-              className="w-5 aspect-square"
-            />
-          </div>
+          <div
+            className="flex flex-col justify-center px-9 py-3  max-md:px-5"
+            onClick={(e) => e.preventDefault()}
+          >
+            <div className="flex justify-center items-center px-1.5 w-8 h-8 rounded-3xl bg-stone-100">
+              <img
+                loading="lazy"
+                src="https://cdn.builder.io/api/v1/image/assets/TEMP/8e208e19cb012f5bf1adcf62e6edbe433a5adc1a0f380b3a06e47e7ddfd71e8c?apiKey=0d95acea82cc4b259a61e827c24c5c6c&&apiKey=0d95acea82cc4b259a61e827c24c5c6c"
+                className="w-5 aspect-square"
+              />
+            </div>
           </div>
         </Dropdown>
       ),
     },
   ];
+
+  // Pagination logic
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = (currentPage - 1) * itemsPerPage;
+  const currentItems = tickets.slice(indexOfFirstItem, indexOfLastItem);
+
+  const totalItems = tickets.length;
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
 
   return (
     <div>
@@ -180,10 +197,31 @@ const Ticket = () => {
           <Spin size="large" />
         </div>
       ) : (
-        <Table dataSource={tickets} columns={columns} pagination={false} />
+        <>
+          <Table
+            dataSource={currentItems}
+            columns={columns}
+            pagination={false}
+          />
+          <div className="flex justify-end">
+            <Pagination
+              current={currentPage}
+              total={totalItems}
+              pageSize={itemsPerPage}
+              onChange={handlePageChange}
+              showSizeChanger={false}
+              style={{ marginTop: 16, textAlign: "center" }}
+            />
+          </div>
+        </>
       )}
 
-      <AddTicket isModalVisible={isModalVisible} handleCancel={handleCancel} recordedBy={name} fetchTickets={fetchTickets} />
+      <AddTicket
+        isModalVisible={isModalVisible}
+        handleCancel={handleCancel}
+        recordedBy={name}
+        fetchTickets={fetchTickets}
+      />
 
       {/* Escalate Ticket Modal */}
       <Modal
