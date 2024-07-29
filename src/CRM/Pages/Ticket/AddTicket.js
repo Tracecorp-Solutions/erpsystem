@@ -18,7 +18,7 @@ const optionsTicketSourch = [
   { id: 3, name: "Social media" }
 ];
 
-const AddTicket = ({ isModalVisible, handleCancel, recordedBy }) => {
+const AddTicket = ({ isModalVisible, handleCancel, recordedBy, fetchTickets }) => {
   const [currentStep, setCurrentStep] = useState(0);
   const [customerReference, setCustomerReference] = useState("");
   const [customerDetails, setCustomerDetails] = useState(null);
@@ -141,6 +141,7 @@ const AddTicket = ({ isModalVisible, handleCancel, recordedBy }) => {
       .post(`${process.env.REACT_APP_API_URL}/CreateTicket`, formData)
       .then((response) => {
         message.success("Data successfully saved");
+        fetchTickets();
         handleCancel();
       })
       .catch((error) => {
@@ -183,6 +184,7 @@ const AddTicket = ({ isModalVisible, handleCancel, recordedBy }) => {
             <div className="flex flex-col items-center pb-16 w-full">
               <SelectOption label="Customer type" value={customerType} options={options} onChange={setCustomerType} />
               {customerType === "Registered" && (
+
                 <>
                   <div className="mt-4 text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">Customer Reference</div>
                   <div className="flex justify-between gap-4" style={{ width: "100%", marginTop: "8px" }}>

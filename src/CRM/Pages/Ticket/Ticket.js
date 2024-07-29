@@ -183,7 +183,7 @@ const Ticket = () => {
         <Table dataSource={tickets} columns={columns} pagination={false} />
       )}
 
-      <AddTicket isModalVisible={isModalVisible} handleCancel={handleCancel} recordedBy={name} />
+      <AddTicket isModalVisible={isModalVisible} handleCancel={handleCancel} recordedBy={name} fetchTickets={fetchTickets} />
 
       {/* Escalate Ticket Modal */}
       <Modal
