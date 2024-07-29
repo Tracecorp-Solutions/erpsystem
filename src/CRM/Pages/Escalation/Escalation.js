@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from "react";
 import CreateEscalation from "./CreateEscalation";
 import axios from "axios";
+import { Pagination } from "antd"; // Import Pagination from Ant Design
 
 function Escalation() {
   const [isUpdateModalVisible, setIsUpdateModalVisible] = useState(false);
   const [escalationData, setEscalationData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1); // State for current page
+  const pageSize = 12; // Number of items per page
 
   const handleUpdateModalVisible = () => {
     setIsUpdateModalVisible(true);
@@ -16,22 +19,31 @@ function Escalation() {
     setIsUpdateModalVisible(false);
   };
 
-  useEffect(() => {
-    const fetchEscalationData = async () => {
-      setIsLoading(true);
-      try {
-        const apiUrl = `${process.env.REACT_APP_API_URL}/GetAllEscalationMatrices`;
-        const response = await axios.get(apiUrl);
-        setEscalationData(response.data);
-      } catch (error) {
-        setError(error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
+  const fetchEscalationData = async () => {
+    setIsLoading(true);
+    try {
+      const apiUrl = `${process.env.REACT_APP_API_URL}/GetAllEscalationMatrices`;
+      const response = await axios.get(apiUrl);
+      setEscalationData(response.data);
+    } catch (error) {
+      setError(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
+  useEffect(() => {
     fetchEscalationData();
   }, []);
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
+  // Calculate current items based on pagination
+  const indexOfLastItem = currentPage * pageSize;
+  const indexOfFirstItem = indexOfLastItem - pageSize;
+  const currentItems = escalationData.slice(indexOfFirstItem, indexOfLastItem);
 
   return (
     <>
@@ -73,13 +85,12 @@ function Escalation() {
                   </tr>
                 </thead>
                 <tbody>
-                  {escalationData.map((item, index) => (
+                  {currentItems.map((item, index) => (
                     <tr key={index} className="border-b border-neutral-200">
                       <td className="py-2 px-4 text-neutral-600">{item.levelName}</td>
                       <td className="py-2 px-4 text-neutral-600">{item.levelDescription}</td>
                       <td className="py-2 px-4 text-neutral-600">{item.department.name}</td>
                       <td className="py-2 px-4 text-neutral-600">{item.ticketCategory.name}</td>
-                      
                       <td className="py-2 px-4 text-neutral-600">{item.priority.priorityName}</td>
                       <td className="py-2 px-4 text-neutral-600">
                         <div className="flex justify-center items-center w-8 h-8 rounded-3xl bg-stone-100 cursor-pointer">
@@ -96,6 +107,14 @@ function Escalation() {
               </table>
             </div>
           </div>
+          {/* Pagination component */}
+          <Pagination
+            current={currentPage}
+            total={escalationData.length}
+            pageSize={pageSize}
+            onChange={handlePageChange}
+            className="mt-4"
+          />
         </div>
       </div>
       <CreateEscalation

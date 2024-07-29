@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Modal, Select, Input, Button } from "antd";
+import { Modal, Select, Input, Button, TimePicker, message } from "antd";
 import axios from "axios";
 import { AiOutlineClose } from 'react-icons/ai'; 
 
 const { Option } = Select;
 
-function CreateEscalation({ isUpdateModalVisible, handleCloseModalVisible }) {
+function CreateEscalation({ isUpdateModalVisible, handleCloseModalVisible, fetchEscalationData }) {
   const [currentStep, setCurrentStep] = useState(1);
   const [successMessage, setSuccessMessage] = useState(""); 
   const [errorMessage, setErrorMessage] = useState('');
@@ -15,13 +15,13 @@ function CreateEscalation({ isUpdateModalVisible, handleCloseModalVisible }) {
     levelDescription: "",
     departmentId: null,
     ticketCategoryId: null,
-    escalationTime: 0,
+    escalationTime: null, // Updated to null for time value
     priorityId: null,
     notificationType: "",
     departmentLevel: null,
     emailTemplate: "",
-    
   });
+
   const [departments, setDepartments] = useState([]);
   const [ticketCategories, setTicketCategories] = useState([]);
   const [priorities, setPriorities] = useState([]);
@@ -74,6 +74,10 @@ function CreateEscalation({ isUpdateModalVisible, handleCloseModalVisible }) {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  const handleTimeChange = (time, timeString) => {
+    setFormData((prev) => ({ ...prev, escalationTime: timeString }));
+  };
+
   const handleSaveFirstForm = () => {
     setCurrentStep(2); // Move to the second step when the first form is saved
   };
@@ -101,12 +105,12 @@ function CreateEscalation({ isUpdateModalVisible, handleCloseModalVisible }) {
       setErrorMessage("Failed to create escalation. Please try again.");
       setTimeout(() => setErrorMessage(""), 5000);
     }
+    fetchEscalationData();
   };
-  
 
   return (
     <Modal visible={isUpdateModalVisible} closable={false} footer={null}>
-       {successMessage && (
+      {successMessage && (
         <div className="text-center text-white bg-green-500 p-4 mb-4 rounded">
           {successMessage}
         </div>
@@ -226,11 +230,11 @@ function CreateEscalation({ isUpdateModalVisible, handleCloseModalVisible }) {
             <div className="mt-4 text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">
               Time Threshold
             </div>
-            <Input
-              name="escalationTime"
-              placeholder="Choose Time period"
+            <TimePicker
               className="w-full mt-2"
-              onChange={handleInputChange}
+              format="HH:mm:ss"
+              placeholder="Select Time"
+              onChange={handleTimeChange}
             />
             <div className="flex ml-8 gap-3 mt-4">
               <Button

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Table, Button, message } from "antd";
+import { Table, Button, message, Pagination } from "antd";
 import axios from "axios";
 import CreateDepartments from "./CreateDepartments";
 
@@ -7,6 +7,7 @@ const Departments = () => {
   const [departments, setDepartments] = useState([]);
   const [isUpdateModalVisible, setIsUpdateModalVisible] = useState(false);
   const [editingDepartment, setEditingDepartment] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     fetchDepartments();
@@ -14,9 +15,7 @@ const Departments = () => {
 
   const fetchDepartments = async () => {
     try {
-      const response = await axios.get(
-        `${process.env.REACT_APP_API_URL}/GetAllDepartments`
-      );
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/GetAllDepartments`);
       setDepartments(response.data);
     } catch (error) {
       console.error("Error fetching departments:", error);
@@ -35,9 +34,7 @@ const Departments = () => {
 
   const handleEdit = async (record) => {
     try {
-      const response = await axios.get(
-        `${process.env.REACT_APP_API_URL}/GetDepartmentById/${record.id}`
-      );
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/GetDepartmentById/${record.id}`);
       setEditingDepartment(response.data); // Assuming response.data contains department details
       setIsUpdateModalVisible(true);
     } catch (error) {
@@ -45,13 +42,10 @@ const Departments = () => {
       message.error("Failed to fetch department details");
     }
   };
-  
+
   const handleSave = async (values) => {
     try {
-      await axios.put(
-        `${process.env.REACT_APP_API_URL}/UpdateDepartment/${editingDepartment.id}`,
-        values
-      );
+      await axios.put(`${process.env.REACT_APP_API_URL}/UpdateDepartment/${editingDepartment.id}`, values);
       fetchDepartments(); // Refresh departments after update
       handleCloseModalVisible();
       message.success("Department updated successfully");
@@ -91,6 +85,16 @@ const Departments = () => {
     },
   ];
 
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
+  const getCurrentPageData = () => {
+    const startIndex = (currentPage - 1) * 12;
+    const endIndex = startIndex + 12;
+    return departments.slice(startIndex, endIndex);
+  };
+
   return (
     <>
       <div className="flex flex-col flex-wrap justify-center content-start ml-4 py-6 rounded-3xl bg-stone-100">
@@ -116,10 +120,17 @@ const Departments = () => {
             </div>
           </div>
           <Table
-            dataSource={departments}
+            dataSource={getCurrentPageData()}
             columns={columns}
             pagination={false}
             className="mt-4"
+          />
+          <Pagination
+            current={currentPage}
+            pageSize={12}
+            total={departments.length}
+            onChange={handlePageChange}
+            className="mt-4 self-center"
           />
         </div>
       </div>
@@ -128,7 +139,7 @@ const Departments = () => {
         editingDepartment={editingDepartment}
         handleSave={handleSave}
         handleCloseModalVisible={handleCloseModalVisible}
-        fetchDepartments= {fetchDepartments}
+        fetchDepartments={fetchDepartments}
       />
     </>
   );

@@ -24,7 +24,7 @@ const Cards = ({
         }`}
       >
         <div className="bg-white rounded p-4 text-center">
-          Account Statements
+          Ticket Reports
         </div>
       </button>
     
