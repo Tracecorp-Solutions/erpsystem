@@ -148,6 +148,7 @@ const Statement = () => {
           </tbody>
         </table>
       </div>
+      
       <Pagination
         className="mt-4"
         current={currentPage}
