@@ -94,10 +94,6 @@ const ProfileLayout = () => {
     <div>
       {currentStep <= maxSteps && <Header userData={userData} />}
       <div
-        style={{
-          justifyContent: "space-between",
-          display: "flex"
-        }}
       >
         <ProfileSidebar currentStep={currentStep} maxSteps={maxSteps} />
         <div

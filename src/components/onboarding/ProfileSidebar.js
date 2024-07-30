@@ -14,7 +14,6 @@ const ProfileSidebar = ({ currentStep, maxSteps }) => {
                 position: "relative",
                 left: "1px",
                 background: "#fff",
-                height: "100vh",
               }}
             >
               <ol
