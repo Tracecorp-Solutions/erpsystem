@@ -34,7 +34,7 @@ const RegisterCompany = ({
   };
 
   return (
-    <div className="flex justify-center">
+    <div className="flex justify-center bg-gray">
       <div className="w-full max-w-4xl p-6 bg-white rounded-lg">
         <h1 className="text-3xl font-semibold text-gray-700 mb-6">
           Register Company
