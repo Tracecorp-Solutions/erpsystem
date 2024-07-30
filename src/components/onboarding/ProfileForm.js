@@ -1,9 +1,9 @@
 import React, { useState, useRef } from "react";
 
 const ProfileCompletionForm = ({ HandleSubmit, userData, setUserData, loading }) => {
-  
   const [imagePreview, setImagePreview] = useState(null);
   const fileInputRef = useRef(null);
+
   const handleButtonClick = () => {
     fileInputRef.current.click();
   };
@@ -26,6 +26,17 @@ const ProfileCompletionForm = ({ HandleSubmit, userData, setUserData, loading })
     });
   };
 
+  const handlePhoneNumberChange = (e) => {
+    // Allow only numeric values and set the phone number state
+    const { value } = e.target;
+    if (/^\d*$/.test(value)) {
+      setUserData({
+        ...userData,
+        phoneNumber: value,
+      });
+    }
+  };
+
   return (
     <div style={{ marginRight: "10px", marginTop: "20px" }}>
       <div
@@ -43,9 +54,7 @@ const ProfileCompletionForm = ({ HandleSubmit, userData, setUserData, loading })
             width: "70%",
           }}
         >
-          <div className="" style={{
-            width: "100%"
-          }}>
+          <div style={{ width: "100%" }}>
             <h2
               className="text-lg font-semibold mb-2"
               style={{
@@ -96,7 +105,7 @@ const ProfileCompletionForm = ({ HandleSubmit, userData, setUserData, loading })
                   <input
                     type="text"
                     name="jobTitle"
-                    value={userData.JobTitle}
+                    value={userData.jobTitle}
                     onChange={handleChange}
                     required
                     className="border border-gray-300 rounded px-3 py-1 w-full"
@@ -146,14 +155,15 @@ const ProfileCompletionForm = ({ HandleSubmit, userData, setUserData, loading })
                   </label>
                   <input
                     type="email"
-                    name="Email"
+                    name="email"
                     value={userData.email}
                     required
                     onChange={handleChange}
                     className="border border-gray-300 rounded px-3 py-1 w-full"
                     style={{ padding: "10px", borderRadius: "12px" }}
-                    placeholder="Enter your emaill dresses"
-                  disabled/>
+                    placeholder="Enter your email address"
+                    disabled
+                  />
                 </div>
                 <div className="mb-4">
                   <label
@@ -171,7 +181,7 @@ const ProfileCompletionForm = ({ HandleSubmit, userData, setUserData, loading })
                     type="tel"
                     name="phoneNumber"
                     value={userData.phoneNumber}
-                    onChange={handleChange}
+                    onChange={handlePhoneNumberChange}
                     required
                     className="border border-gray-300 rounded px-3 py-1 w-full"
                     style={{ padding: "10px", borderRadius: "12px" }}
@@ -183,7 +193,7 @@ const ProfileCompletionForm = ({ HandleSubmit, userData, setUserData, loading })
                     className="font-semibold"
                     style={{
                       color: "#505050",
-                      fontFamily: "outFit, San-serif",
+                      fontFamily: "outFit, Sans-serif",
                       fontSize: "16px",
                       fontWeight: "600",
                     }}
@@ -312,9 +322,9 @@ const ProfileCompletionForm = ({ HandleSubmit, userData, setUserData, loading })
               marginTop: "10px",
             }}
             onClick={HandleSubmit}
-          disabled={loading}>
+            disabled={loading}
+          >
             {loading ? 'Saving Profile...' : 'Save Profile'}
-            
           </button>
         </div>
       </div>
