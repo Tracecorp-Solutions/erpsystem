@@ -1,7 +1,11 @@
 import React, { useState, useRef } from "react";
 
-const ProfileCompletionForm = ({ HandleSubmit, userData, setUserData, loading }) => {
-  
+const ProfileCompletionForm = ({
+  HandleSubmit,
+  userData,
+  setUserData,
+  loading,
+}) => {
   const [imagePreview, setImagePreview] = useState(null);
   const fileInputRef = useRef(null);
   const handleButtonClick = () => {
@@ -27,7 +31,7 @@ const ProfileCompletionForm = ({ HandleSubmit, userData, setUserData, loading })
   };
 
   return (
-    <div style={{ marginRight: "10px", marginTop: "20px" }}>
+    <div style={{ marginRight: "10px", marginTop: "20px", background: "#fff" }}>
       <div
         style={{
           display: "flex",
@@ -43,9 +47,12 @@ const ProfileCompletionForm = ({ HandleSubmit, userData, setUserData, loading })
             width: "100%",
           }}
         >
-          <div className="" style={{
-            width: "100%"
-          }}>
+          <div
+            className=""
+            style={{
+              width: "100%",
+            }}
+          >
             <h2
               className="text-lg font-semibold mb-2"
               style={{
@@ -150,7 +157,8 @@ const ProfileCompletionForm = ({ HandleSubmit, userData, setUserData, loading })
                     className="border border-gray-300 rounded px-3 py-1 w-full"
                     style={{ padding: "10px", borderRadius: "12px" }}
                     placeholder="Enter your emaill dresses"
-                  disabled/>
+                    disabled
+                  />
                 </div>
                 <div className="mb-4">
                   <label
@@ -205,7 +213,7 @@ const ProfileCompletionForm = ({ HandleSubmit, userData, setUserData, loading })
           display: "flex",
           justifyContent: "center",
           borderRadius: "14px",
-          marginTop: "20px",
+          marginTop: "5px",
         }}
       >
         <div
@@ -219,7 +227,7 @@ const ProfileCompletionForm = ({ HandleSubmit, userData, setUserData, loading })
         >
           <div
             style={{
-              marginBottom: "10px",
+              marginBottom: "5px",
             }}
           >
             <h2
@@ -307,9 +315,9 @@ const ProfileCompletionForm = ({ HandleSubmit, userData, setUserData, loading })
               marginTop: "10px",
             }}
             onClick={HandleSubmit}
-          disabled={loading}>
-            {loading ? 'Saving Profile...' : 'Save Profile'}
-            
+            disabled={loading}
+          >
+            {loading ? "Saving Profile..." : "Save Profile"}
           </button>
         </div>
       </div>
