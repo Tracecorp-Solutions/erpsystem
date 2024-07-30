@@ -108,7 +108,7 @@ const ProfileLayout = () => {
             margin: "0 auto",
             background: "#fff",
             borderRadius: "24px",
-            paddingBottom: "10px"
+            paddingBottom: "10px",
           }}
         >
           <ProfileSidebar currentStep={currentStep} maxSteps={maxSteps} />

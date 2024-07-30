@@ -1,11 +1,7 @@
 import React, { useState, useRef } from "react";
 
-const ProfileCompletionForm = ({
-  HandleSubmit,
-  userData,
-  setUserData,
-  loading,
-}) => {
+const ProfileCompletionForm = ({ HandleSubmit, userData, setUserData, loading }) => {
+  
   const [imagePreview, setImagePreview] = useState(null);
   const fileInputRef = useRef(null);
   const handleButtonClick = () => {
@@ -31,7 +27,7 @@ const ProfileCompletionForm = ({
   };
 
   return (
-    <div style={{ marginRight: "10px", marginTop: "20px", background: "#fff" }}>
+    <div style={{ marginRight: "10px", marginTop: "20px" }}>
       <div
         style={{
           display: "flex",
@@ -44,15 +40,12 @@ const ProfileCompletionForm = ({
             background: "#fff",
             padding: "10px",
             borderRadius: "24px",
-            width: "100%",
+            width: "70%",
           }}
         >
-          <div
-            className=""
-            style={{
-              width: "100%",
-            }}
-          >
+          <div className="" style={{
+            width: "100%"
+          }}>
             <h2
               className="text-lg font-semibold mb-2"
               style={{
@@ -105,6 +98,7 @@ const ProfileCompletionForm = ({
                     name="jobTitle"
                     value={userData.JobTitle}
                     onChange={handleChange}
+                    required
                     className="border border-gray-300 rounded px-3 py-1 w-full"
                     style={{ padding: "10px", borderRadius: "12px" }}
                     placeholder="Enter job title"
@@ -126,6 +120,7 @@ const ProfileCompletionForm = ({
                     name="gender"
                     value={userData.gender}
                     onChange={handleChange}
+                    required
                     className="border border-gray-300 rounded px-3 py-1 w-full"
                     style={{ padding: "10px", borderRadius: "12px" }}
                   >
@@ -153,12 +148,12 @@ const ProfileCompletionForm = ({
                     type="email"
                     name="Email"
                     value={userData.email}
+                    required
                     onChange={handleChange}
                     className="border border-gray-300 rounded px-3 py-1 w-full"
                     style={{ padding: "10px", borderRadius: "12px" }}
                     placeholder="Enter your emaill dresses"
-                    disabled
-                  />
+                  disabled/>
                 </div>
                 <div className="mb-4">
                   <label
@@ -177,6 +172,7 @@ const ProfileCompletionForm = ({
                     name="phoneNumber"
                     value={userData.phoneNumber}
                     onChange={handleChange}
+                    required
                     className="border border-gray-300 rounded px-3 py-1 w-full"
                     style={{ padding: "10px", borderRadius: "12px" }}
                     placeholder="Enter your phone number"
@@ -196,6 +192,7 @@ const ProfileCompletionForm = ({
                   </label>
                   <input
                     type="date"
+                    required
                     name="dateOfBirth"
                     value={userData.dateOfBirth}
                     onChange={handleChange}
@@ -213,7 +210,7 @@ const ProfileCompletionForm = ({
           display: "flex",
           justifyContent: "center",
           borderRadius: "14px",
-          marginTop: "5px",
+          marginTop: "20px",
         }}
       >
         <div
@@ -222,12 +219,12 @@ const ProfileCompletionForm = ({
             justifyContent: "start",
             borderRadius: "14px",
             background: "#fff",
-            width: "100%",
+            width: "70%",
           }}
         >
           <div
             style={{
-              marginBottom: "5px",
+              marginBottom: "10px",
             }}
           >
             <h2
@@ -315,9 +312,9 @@ const ProfileCompletionForm = ({
               marginTop: "10px",
             }}
             onClick={HandleSubmit}
-            disabled={loading}
-          >
-            {loading ? "Saving Profile..." : "Save Profile"}
+          disabled={loading}>
+            {loading ? 'Saving Profile...' : 'Save Profile'}
+            
           </button>
         </div>
       </div>
