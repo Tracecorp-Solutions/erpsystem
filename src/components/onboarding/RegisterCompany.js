@@ -1,8 +1,14 @@
 import React, { useState, useRef } from "react";
 
-const RegisterCompany = ({HandleSubmit, userData, setUserData, loading}) => {
+const RegisterCompany = ({
+  HandleSubmit,
+  goBack,
+  userData,
+  setUserData,
+  loading,
+  handleGoBack
+}) => {
   const [imagePreview, setImagePreview] = useState(null);
- 
   const fileInputRef = useRef(null);
 
   const handleButtonClick = () => {
@@ -28,250 +34,112 @@ const RegisterCompany = ({HandleSubmit, userData, setUserData, loading}) => {
   };
 
   return (
-   <div className="flex justify-center">
-     <div
-      style={{
-        marginRight: "15px",
-        marginTop: "15px",
-        width: "70%"
-      }}
-    >
-      <h1
-        style={{
-          width: "80%",
-          fontSize: "36px",
-          color: "#505050",
-          fontFamily: "outFit, Sans-serif",
-          fontWeight: "600",
-          textAlign: "start",
-        }}
-      >
-        Register Company
-      </h1>
-      <div>
-        <div
-          style={{
-            background: "#fff",
-            padding: "10px",
-            borderRadius: "24px",
-            paddingBottom: "30px",
-          }}
-        >
-          <div>
-            <h2
-              className="text-lg font-semibold mb-2"
-              style={{
-                fontSize: "24px",
-                fontWeight: "600",
-                fontFamily: "outFit, Sans-serif",
-                color: "#505050",
-              }}
-            >
-              Basic Information
-            </h2>
-            <div className="flex flex-col md:flex-row justify-between">
-              <div
-                className="mt-4"
-                style={{
-                  marginRight: "10px",
-                }}
+    <div className="flex justify-center">
+      <div className="w-full max-w-4xl p-6 bg-white rounded-lg shadow-lg">
+        <h1 className="text-3xl font-semibold text-gray-700 mb-6">
+          Register Company
+        </h1>
+
+        <div className="bg-gray-100 p-6 rounded-lg mb-6">
+          <h2 className="text-2xl font-semibold text-gray-700 mb-4">
+            Basic Information
+          </h2>
+          <div className="flex flex-col md:flex-row gap-4">
+            <div className="flex-1">
+              <label className="block text-gray-700 font-semibold mb-2">
+                Company Name
+              </label>
+              <p className="text-gray-500 text-sm mb-4">
+                To personalize your experience and communicate with you
+              </p>
+              <input
+                type="text"
+                name="OrganizationName"
+                placeholder="Company Name"
+                required
+                value={userData.OrganizationName}
+                onChange={handleChange}
+                className="border border-gray-300 rounded px-3 py-2 w-full"
+              />
+            </div>
+
+            <div className="flex-1">
+              <label className="block text-gray-700 font-semibold mb-2">
+                Country of Operation
+              </label>
+              <p className="text-gray-500 text-sm mb-4">
+                Helps us tailor certain aspects of the app according to your
+                preferences
+              </p>
+              <select
+                name="CountryOfOperation"
+                value={userData.CountryOfOperation}
+                onChange={handleChange}
+                className="border border-gray-300 rounded px-3 py-2 w-full"
+                required
               >
-                <label
-                  className="font-semibold"
-                  style={{
-                    color: "#505050",
-                    fontFamily: "outFit, Sans-serif",
-                    fontSize: "16px",
-                    fontWeight: "600",
-                  }}
-                >
-                  Company Name
-                </label>
-                <br />
-                <p
-                  style={{
-                    marginRight: "10px",
-                    fontSize: "14px",
-                    fontFamily: "outFit, Sans-serif",
-                    fontWeight: "400",
-                    marginBottom: "10px"
-                  }}
-                >
-                  To personalize your experience and communicate with you
-                </p>
-                <input
-                  type="text"
-                  name="OrganizationName"
-                  placeholder="Company Name"
-                  value={userData.OrganizationName}
-                  onChange={handleChange}
-                  className="border border-gray-300 rounded px-3 py-1 w-full md:w-300 mb-4 md:mb-0 mr-0 md:mr-4"
-                  style={{
-                    padding: "10px"
-                  }}
-                />
-              </div>
-              <div className="mt-4" style={{}}>
-                <label
-                  className="font-semibold"
-                  style={{
-                    color: "#505050",
-                    fontFamily: "outFit, Sans-serif",
-                    fontSize: "16px",
-                    fontWeight: "600",
-                  }}
-                >
-                  Country of Operation
-                </label>
-                <br />
-                <p
-                  style={{
-                    // marginRight: "10px",
-                    fontSize: "14px",
-                    fontFamily: "outFit, Sans-serif",
-                    fontWeight: "400",
-                    marginBottom: "10px"
-                  }}
-                >
-                  Helps us tailor certain aspects of the app according to your
-                  preferences
-                </p>
-                <select
-                  name="CountryOfOperation"
-                  value={userData.CountryOfOperation}
-                  onChange={handleChange}
-                  className="border border-gray-300 rounded px-3 py-1 w-full md:w-300 mb-4 md:mb-0 mr-0 md:mr-4"
-                  style={{
-                    padding: "10px"
-                  }}
-                >
-                  <option value="">Select Country</option>
-                  <option value="USA">USA</option>
-                  <option value="UK">UK</option>
-                  <option value="Canada">Canada</option>
-                  <option value="Australia">Australia</option>
-                  <option value="Germany">Germany</option>
-                  <option value="Uganda">Uganda</option>
-                </select>
-              </div>
+                <option value="">Select Country</option>
+                <option value="USA">USA</option>
+                <option value="UK">UK</option>
+                <option value="Canada">Canada</option>
+                <option value="Australia">Australia</option>
+                <option value="Germany">Germany</option>
+                <option value="Uganda">Uganda</option>
+              </select>
             </div>
           </div>
         </div>
-      </div>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          borderRadius: "14px",
-        }}
-      >
-        <div
-          style={{
-            marginTop: "30px",
-            display: "flex",
-            justifyContent: "start",
-            borderRadius: "14px",
-            background: "#fff",
-            marginBottom: "15px",
-            width: "100%"
-          }}
-        >
-          <div
-            style={{
-              marginBottom: "10px",
-            }}
-          >
-            <h2
-              className="text-center"
-              style={{
-                fontSize: "24px",
-                fontWeight: "600",
-                fontFamily: "outFit, Sans-serif",
-                color: "#505050",
-                marginTop: "10px",
-                marginLeft: "10px",
-              }}
-            >
-              Company Logo
-            </h2>
-            <div
-              className="w-20 h-20 md:w-32 md:h-32 bg-gray-300 rounded-full mr-4"
-              style={{
-                backgroundImage: `url(${imagePreview || "placeholder.jpg"})`,
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-                marginLeft: "10px",
-              }}
-            ></div>
-          </div>
-          <div
-            style={{
-              marginTop: "100px",
-            }}
-          >
-            <p
-              style={{
-                color: "#a1a1a1",
-                fontWeight: "400",
-                fontSize: "16px",
-                fontFamily: "outFit, Sans-serif",
-              }}
-            >
-              Upload a company logo to customize the experience
-            </p>
-            <input
-              type="file"
-              accept="image/*"
-              ref={fileInputRef}
-              style={{ display: "none" }}
-              onChange={handleFileChange}
-            />
-            <button
-              type="button"
-              style={{
-                padding: "7px 15px 7px 15px",
-                background: "#4467a1",
-                borderRadius: "28px",
-                color: "#fff",
-                marginTop: "5px",
-              }}
-              onClick={handleButtonClick}
-            >
-              Upload Logo
-            </button>
+        <div className="max-w-[500px]">
+          <div className="flex gap-5 max-md:flex-col">
+            <div className="flex flex-col w-[79%] max-md:ml-0 max-md:w-full">
+              <div className="flex flex-col self-stretch px-5 my-auto max-md:mt-10">
+                <div className="text-base font-semibold leading-6 text-neutral-600">
+                  Company Logo
+                </div>
+                <div className="mt-1 text-sm text-neutral-400">
+                  Upload a company logo to customize the experience
+                </div>
+              </div>
+            </div>
+            <div className="flex flex-col ml-5 w-[21%] max-md:ml-0 max-md:w-full">
+              <div
+                className="w-20 h-20 bg-gray-300 rounded-full mb-4"
+                style={{
+                  backgroundImage: `url(${imagePreview || "/placeholder.jpg"})`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                }}
+                onClick={handleButtonClick}
+              ></div>
+              <input
+                type="file"
+                accept="image/*"
+                ref={fileInputRef}
+                style={{ display: "none" }}
+                onChange={handleFileChange}
+              />
+            </div>
           </div>
         </div>
-      </div>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-        }}
-      >
-        <div
-          style={{
-            width: "80%",
-            display: "flex",
-            justifyContent: "end",
-          }}
-        >
+        <div className="flex justify-between">
           <button
             type="button"
-            style={{
-              padding: "7px 20px 7px 20px",
-              background: "#4467a1",
-              borderRadius: "28px",
-              color: "#fff",
-              marginBottom: "10px",
-            }}
+            className="px-6 py-2 bg-gray-400 text-white rounded-lg"
+            onClick={handleGoBack}
+          >
+            Back
+          </button>
+          <button
+            type="button"
+            className="px-6 py-2 bg-blue-600 text-white rounded-lg"
             onClick={HandleSubmit}
-          disabled={loading}>
-            {loading ? 'Saving company inforamtion...' : 'Save Company'}
+            disabled={loading}
+          >
+            {loading ? "Saving company information..." : "Save Company"}
           </button>
         </div>
       </div>
     </div>
-   </div>
   );
 };
 

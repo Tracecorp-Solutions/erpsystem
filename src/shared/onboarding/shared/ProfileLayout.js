@@ -87,10 +87,16 @@ const ProfileLayout = () => {
           },
         }
       );
-      setloading(false); // reset the state to false
+      setloading(false);
       moveToNextStep();
     } catch (error) {
       console.error("Error creating user:", error.data);
+    }
+  };
+
+  const moveToPreviousStep = () => {
+    if (currentStep > 1) {
+      setCurrentStep(currentStep - 1);
     }
   };
 
@@ -129,6 +135,7 @@ const ProfileLayout = () => {
               userData={userData}
               setUserData={setUserData}
               loading={loading}
+              handleGoBack={moveToPreviousStep}
             />
           )}
           {currentStep === 3 && (
