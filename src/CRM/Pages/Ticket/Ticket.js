@@ -7,6 +7,7 @@ import AddTicket from "./AddTicket";
 import EscalateTicket from "./EscalateTicket";
 import UpdateStatus from "./UpdateStatus";
 import ResolveTicket from "./ResolveTicket";
+import UpdateTicketForm from "./UpdateTicketForm";
 
 const Ticket = () => {
   const navigate = useNavigate();
@@ -19,6 +20,8 @@ const Ticket = () => {
   const [selectedTicketId, setSelectedTicketId] = useState(null);
   const [departments, setDepartments] = useState([]);
   const [loadingTickets, setLoadingTickets] = useState(false);
+  const [updateTicketForm, setUpdateTicketForm] = useState(false);
+
   const name = sessionStorage.getItem("fullname");
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(10);
@@ -57,6 +60,14 @@ const Ticket = () => {
     }
   };
 
+  const showEscalateModal = () => {
+    setEscalateModalVisible(true);
+  }
+
+  const hanndleCancelEscalateModal = () => {
+    setEscalateModalVisible(false);
+  }
+
   const showModal = () => {
     setIsModalVisible(true);
   };
@@ -71,7 +82,7 @@ const Ticket = () => {
       case "1":
         setSelectedTicketId(record.id);
         navigate(`/crm`, {
-          state: { screen: "update-ticket", record, ticketId: record.id },
+          state: { screen: "update-ticket", record, ticketId: record.id, showEscalateModal },
         });
         break;
       case "2":
@@ -84,6 +95,9 @@ const Ticket = () => {
       case "4":
         setResolveModalVisible(true);
         setSelectedTicketId(record.id);
+        break;
+        case "5":
+        setUpdateTicketForm(true);
         break;
       default:
         break;
@@ -134,9 +148,10 @@ const Ticket = () => {
         <Dropdown
           overlay={
             <Menu onClick={(e) => handleMenuClick(record, e)}>
-              <Menu.Item key="1">Update Ticket</Menu.Item>
+              <Menu.Item key="1">View Ticket</Menu.Item>
               <Menu.Item key="2">Escalate Ticket</Menu.Item>
               <Menu.Item key="4">Resolve Ticket</Menu.Item>
+              <Menu.Item key="5">Update Ticket</Menu.Item>
             </Menu>
           }
           trigger={["click"]}
@@ -237,6 +252,9 @@ const Ticket = () => {
           ticketId={selectedTicketId}
         />
       </Modal>
+
+    
+       <UpdateTicketForm updateTicketForm={updateTicketForm} hanndleCancelEscalateModal={hanndleCancelEscalateModal} />
 
       {/* Update Status Modal */}
       <Modal

@@ -3,6 +3,9 @@ import { useLocation } from "react-router-dom";
 import { Table, Spin } from "antd";
 import moment from "moment";
 import axios from "axios";
+import { Dropdown, Menu } from "antd";
+import { DownOutlined } from "@ant-design/icons";
+import { useNavigate } from "react-router-dom";
 
 const UpdateTicket = () => {
   const [ticketDetails, setTicketDetails] = useState(null);
@@ -11,6 +14,9 @@ const UpdateTicket = () => {
   const location = useLocation();
   const { state } = location;
   const ticketId = state?.ticketId;
+  const showEscalateTicket = state?.showEscalateModal;
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchTicketDetails = async () => {
@@ -96,13 +102,19 @@ const UpdateTicket = () => {
   ];
 
   if (loading) {
-    return <div style={{
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-      minHeight: "60vh",
-    }}
-    className="w-full"><Spin /></div>;
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          minHeight: "60vh",
+        }}
+        className="w-full"
+      >
+        <Spin />
+      </div>
+    );
   }
 
   if (!ticketDetails) {
@@ -120,10 +132,28 @@ const UpdateTicket = () => {
     dateResolved: moment(item.dateResolved).format("YYYY/MM/DD"),
   }));
 
+  const actionsMenu = (
+    <Menu>
+      <Menu.Item key="1" onClick={showEscalateTicket}>
+        Escalate Ticket
+      </Menu.Item>
+      <Menu.Item key="2">Resolve Ticket</Menu.Item>
+    </Menu>
+  );
+
+  const handleNavigation = () => {
+    navigate("/crm", {
+      state: { screen: "ticket-page" },
+    });
+  };
+
   return (
     <div className="flex flex-col flex-wrap justify-center content-start py-6 rounded-3xl bg-stone-100">
       <div className="flex gap-2 justify-between items-center px-6 w-full max-md:flex-wrap max-md:px-5 max-md:max-w-full">
-        <div className="flex gap-2 items-center self-stretch my-auto text-base font-semibold leading-6 whitespace-nowrap text-neutral-600">
+        <div
+          onClick={handleNavigation}
+          className="flex gap-2 cursor-pointer items-center self-stretch my-auto text-base font-semibold leading-6 whitespace-nowrap text-neutral-600"
+        >
           <div className="self-stretch my-auto">Tickets</div>
           <img
             loading="lazy"
@@ -142,14 +172,12 @@ const UpdateTicket = () => {
             {ticketDetails.ticket.status}
           </div>
         </div>
-        <div className="flex gap-2 justify-center self-stretch py-3 pr-4 pl-6 my-auto text-base font-semibold leading-6 text-white whitespace-nowrap rounded-3xl bg-slate-500">
-          <div>Actions</div>
-          <img
-            loading="lazy"
-            src="https://cdn.builder.io/api/v1/image/assets/TEMP/d9e9fb3b6e4fe1a5ddbd4d8754a42f4070d9010e315230bdfecd57661bc397bf?apiKey=0d95acea82cc4b259a61e827c24c5c6c&&apiKey=0d95acea82cc4b259a61e827c24c5c6c"
-            className="shrink-0 self-start w-6 aspect-square"
-          />
-        </div>
+        <Dropdown overlay={actionsMenu} trigger={["click"]}>
+          <div className="flex gap-2 justify-center self-stretch py-3 pr-4 pl-6 my-auto text-base font-semibold leading-6 text-white whitespace-nowrap rounded-3xl bg-slate-500 cursor-pointer">
+            <div>Actions</div>
+            <DownOutlined className="self-center text-white" />
+          </div>
+        </Dropdown>
       </div>
       <div className="flex flex-col self-center px-6 pt-4 pb-6 mt-6 w-full bg-white rounded-3xl max-w-[1088px] max-md:px-5 max-md:max-w-full">
         <div className="flex gap-5 justify-between w-full font-semibold max-md:flex-wrap max-md:max-w-full">
