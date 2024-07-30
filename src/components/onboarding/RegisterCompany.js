@@ -28,10 +28,12 @@ const RegisterCompany = ({HandleSubmit, userData, setUserData, loading}) => {
   };
 
   return (
-    <div
+   <div className="flex justify-center">
+     <div
       style={{
         marginRight: "15px",
-        marginTop: "15px"
+        marginTop: "15px",
+        width: "70%"
       }}
     >
       <h1
@@ -215,8 +217,7 @@ const RegisterCompany = ({HandleSubmit, userData, setUserData, loading}) => {
                 fontFamily: "outFit, Sans-serif",
               }}
             >
-              Upload a profile picture to personalize your account and help
-              others recognize you within the app.
+              Upload a company logo to customize the experience
             </p>
             <input
               type="file"
@@ -270,6 +271,7 @@ const RegisterCompany = ({HandleSubmit, userData, setUserData, loading}) => {
         </div>
       </div>
     </div>
+   </div>
   );
 };
 
