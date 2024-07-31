@@ -93,17 +93,6 @@ const InviteUser = ({ moveToNextStep,loading }) => {
               padding: "5px",
             }}
           >
-            <h2
-              style={{
-                fontSize: "24px",
-                color: "#505050",
-                fontFamily: "outFit, Sans-serif",
-                fontWeight: "600",
-                padding: "5px",
-              }}
-            >
-              Create Users
-            </h2>
             <div
               className="flex flex-col mb-4 w-full sm:flex-row sm:items-center"
               style={{

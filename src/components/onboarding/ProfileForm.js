@@ -27,7 +27,6 @@ const ProfileCompletionForm = ({ HandleSubmit, userData, setUserData, loading })
   };
 
   const handlePhoneNumberChange = (e) => {
-    // Allow only numeric values and set the phone number state
     const { value } = e.target;
     if (/^\d*$/.test(value)) {
       setUserData({
@@ -36,6 +35,11 @@ const ProfileCompletionForm = ({ HandleSubmit, userData, setUserData, loading })
       });
     }
   };
+
+  // Calculate the minimum date for the date of birth (18 years ago from today)
+  const today = new Date();
+  const minDate = new Date(today.setFullYear(today.getFullYear() - 18));
+  const minDateString = minDate.toISOString().split('T')[0]; // YYYY-MM-DD format
 
   return (
     <div style={{ marginRight: "10px", marginTop: "20px" }}>
@@ -206,6 +210,7 @@ const ProfileCompletionForm = ({ HandleSubmit, userData, setUserData, loading })
                     name="dateOfBirth"
                     value={userData.dateOfBirth}
                     onChange={handleChange}
+                    min={minDateString}
                     className="border border-gray-300 rounded px-3 py-1 w-full"
                     style={{ padding: "10px", borderRadius: "12px" }}
                   />
