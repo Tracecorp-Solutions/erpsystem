@@ -1,7 +1,8 @@
-import { message } from "antd";
+import { message, DatePicker } from "antd";
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import moment from "moment"; 
 
 function Bulk() {
   const navigate = useNavigate();
@@ -16,6 +17,11 @@ function Bulk() {
   //states to handle drop downs
   const [operationAreas, setOperationAreas] = useState([]);
   const [branches, setBranches] = useState([]);
+   // State for current reading date
+
+  const handleDateChange = (date, dateString) => {
+    setCurrentReadingDate(dateString); // Set the current reading date in the state
+  };
 
   const handleNavigate = (screen) => {
     navigate("/billingdashboard", { state: { screen } });
@@ -24,7 +30,9 @@ function Bulk() {
   //fetch operation areas
   const GetOperationAreas = async () => {
     try {
-      const resp = await axios.get(`${process.env.REACT_APP_API_URL}/GetOperationAreas`);
+      const resp = await axios.get(
+        `${process.env.REACT_APP_API_URL}/GetOperationAreas`
+      );
       setOperationAreas(resp.data);
     } catch (error) {
       message.error(error.response);
@@ -34,7 +42,9 @@ function Bulk() {
   //fetch branches
   const GetBranches = async () => {
     try {
-      const resp = await axios.get(`${process.env.REACT_APP_API_URL}/GetBranches`);
+      const resp = await axios.get(
+        `${process.env.REACT_APP_API_URL}/GetBranches`
+      );
       setBranches(resp.data);
     } catch (error) {
       message.error(error.response);
@@ -109,7 +119,10 @@ function Bulk() {
           </div>
           <div className="flex gap-4 max-md:flex-wrap w-full">
             <div className="flex flex-col px-5 flex-1">
-              <label htmlFor="operationalArea" className="font-semibold text-neutral-600 w-full">
+              <label
+                htmlFor="operationalArea"
+                className="font-semibold text-neutral-600 w-full"
+              >
                 Operational Area
               </label>
               <select
@@ -127,7 +140,10 @@ function Bulk() {
               </select>
             </div>
             <div className="flex flex-col px-5 flex-1">
-              <label htmlFor="branchZone" className="font-semibold text-neutral-600 w-full">
+              <label
+                htmlFor="branchZone"
+                className="font-semibold text-neutral-600 w-full"
+              >
                 Branch/Zone
               </label>
               <select
@@ -147,7 +163,10 @@ function Bulk() {
           </div>
           <div className="flex gap-4 mt-4 max-md:flex-wrap w-full">
             <div className="flex flex-col px-5 flex-1">
-              <label htmlFor="currentPeriod" className="font-semibold text-neutral-600 w-full">
+              <label
+                htmlFor="currentPeriod"
+                className="font-semibold text-neutral-600 w-full"
+              >
                 Current Period
               </label>
               <input
@@ -160,22 +179,31 @@ function Bulk() {
               />
             </div>
             <div className="flex flex-col px-5 flex-1">
-              <label htmlFor="currentReadingDate" className="font-semibold text-neutral-600 w-full">
+              <label
+                htmlFor="currentReadingDate"
+                className="font-semibold text-neutral-600 w-full"
+              >
                 Current Reading Date
               </label>
-              <input
-                type="text"
+              <DatePicker
                 id="currentReadingDate"
-                value={currentReadingDate}
-                placeholder="Enter current date"
-                onChange={(e) => setCurrentReadingDate(e.target.value)}
+                value={
+                  currentReadingDate
+                    ? moment(currentReadingDate, "YYYY-MM-DD")
+                    : null
+                } // Convert date string to moment object
+                placeholder="Select current date"
+                onChange={handleDateChange}
                 className="justify-center items-start px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 w-full"
               />
             </div>
           </div>
           <div className="flex gap-4 mt-4 max-md:flex-wrap w-full">
             <div className="flex flex-col px-5 flex-1">
-              <label htmlFor="meterReader" className="font-semibold text-neutral-600 w-full">
+              <label
+                htmlFor="meterReader"
+                className="font-semibold text-neutral-600 w-full"
+              >
                 Meter Reader
               </label>
               <input
@@ -188,7 +216,10 @@ function Bulk() {
               />
             </div>
             <div className="flex flex-col px-5 flex-1">
-              <label htmlFor="fileHasHeader" className="font-semibold text-neutral-600 w-full">
+              <label
+                htmlFor="fileHasHeader"
+                className="font-semibold text-neutral-600 w-full"
+              >
                 Does this file have a header?
               </label>
               <input
