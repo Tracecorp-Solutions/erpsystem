@@ -5,7 +5,7 @@ import { AiOutlineClose } from 'react-icons/ai';
 
 const { Option } = Select;
 
-function CreateEscalation({ isUpdateModalVisible, handleCloseModalVisible, fetchEscalationData }) {
+function CreateEscalation({ isUpdateModalVisible, handleCloseModalVisible }) {
   const [currentStep, setCurrentStep] = useState(1);
   const [successMessage, setSuccessMessage] = useState(""); 
   const [errorMessage, setErrorMessage] = useState('');
@@ -105,7 +105,7 @@ function CreateEscalation({ isUpdateModalVisible, handleCloseModalVisible, fetch
       setErrorMessage("Failed to create escalation. Please try again.");
       setTimeout(() => setErrorMessage(""), 5000);
     }
-    fetchEscalationData();
+  
   };
 
   return (

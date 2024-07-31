@@ -1,22 +1,26 @@
 import React, { useState, useEffect } from "react";
 import CreateEscalation from "./CreateEscalation";
+// import EditEscalation from "./EditEscalation";
 import axios from "axios";
-import { Pagination } from "antd"; // Import Pagination from Ant Design
+import { Pagination, Button, message } from "antd";
 
 function Escalation() {
   const [isUpdateModalVisible, setIsUpdateModalVisible] = useState(false);
   const [escalationData, setEscalationData] = useState([]);
+  const [editingEscalation, setEditingEscalation] = useState(null); 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [currentPage, setCurrentPage] = useState(1); // State for current page
-  const pageSize = 12; // Number of items per page
+  const pageSize = 12; 
 
   const handleUpdateModalVisible = () => {
     setIsUpdateModalVisible(true);
+    setEditingEscalation(null);
   };
 
   const handleCloseModalVisible = () => {
     setIsUpdateModalVisible(false);
+    setEditingEscalation(null);
   };
 
   const fetchEscalationData = async () => {
@@ -45,6 +49,36 @@ function Escalation() {
   const indexOfFirstItem = indexOfLastItem - pageSize;
   const currentItems = escalationData.slice(indexOfFirstItem, indexOfLastItem);
 
+  const handleEdit = async (record) => {
+    try {
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/GetEscalationById/${record.id}`);
+      setEditingEscalation(response.data); // Assuming response.data contains escalation details
+      setIsUpdateModalVisible(true);
+    } catch (error) {
+      console.error("Error fetching escalation:", error);
+      message.error("Failed to fetch escalation details");
+    }
+  };
+
+  const handleSave = async (values) => {
+    try {
+      if (editingEscalation) {
+        // Update existing escalation
+        await axios.put(`${process.env.REACT_APP_API_URL}/UpdateEscalation/${editingEscalation.id}`, values);
+        message.success("Escalation level updated successfully");
+      } else {
+        // Create new escalation
+        await axios.post(`${process.env.REACT_APP_API_URL}/CreateEscalation`, values);
+        message.success("Escalation level created successfully");
+      }
+      fetchEscalationData(); 
+      handleCloseModalVisible();
+    } catch (error) {
+      console.error("Error updating escalation:", error);
+      message.error("Failed to update escalation level");
+    }
+  };
+
   return (
     <>
       <div className="flex flex-col flex-wrap justify-center content-start py-6 rounded-3xl bg-stone-100">
@@ -63,12 +97,12 @@ function Escalation() {
               Escalation Levels
             </div>
             <div className="flex gap-2 justify-center px-6 py-3 my-auto text-base text-white rounded-3xl max-md:px-5">
-              <button
-                className="justify-center self-start px-3 py-3 mt-2.5 text-sm font-semibold text-white whitespace-nowrap rounded-3xl bg-blue-400 max-md:px-5"
+              <Button
+                type="primary"
                 onClick={handleUpdateModalVisible}
               >
                 Add escalation level
-              </button>
+              </Button>
             </div>
           </div>
           <div className="flex flex-col mt-4 max-md:flex-wrap max-md:max-w-full">
@@ -93,13 +127,9 @@ function Escalation() {
                       <td className="py-2 px-4 text-neutral-600">{item.ticketCategory.name}</td>
                       <td className="py-2 px-4 text-neutral-600">{item.priority.priorityName}</td>
                       <td className="py-2 px-4 text-neutral-600">
-                        <div className="flex justify-center items-center w-8 h-8 rounded-3xl bg-stone-100 cursor-pointer">
-                          <img
-                            loading="lazy"
-                            src="https://cdn.builder.io/api/v1/image/assets/TEMP/42a5d3f78babd3069a71e10613168804eab1586a963c62ad0e2851d7f0c22f93?apiKey=5bf51c3fc9cb49b480a07670cbcd768f&"
-                            className="w-5 aspect-square"
-                          />
-                        </div>
+                        <Button type="link" onClick={() => handleEdit(item)}>
+                          ...
+                        </Button>
                       </td>
                     </tr>
                   ))}
@@ -117,10 +147,20 @@ function Escalation() {
           />
         </div>
       </div>
+      {/* CreateEscalation and EditEscalation modals */}
       <CreateEscalation
-        isUpdateModalVisible={isUpdateModalVisible}
+        isUpdateModalVisible={isUpdateModalVisible && !editingEscalation}
         handleCloseModalVisible={handleCloseModalVisible}
+        handleSave={handleSave}
       />
+      {/* {editingEscalation && (
+        <EditEscalation
+          isUpdateModalVisible={isUpdateModalVisible}
+          editingEscalation={editingEscalation}
+          handleCloseModalVisible={handleCloseModalVisible}
+          handleSave={handleSave}
+        />
+      )} */}
     </>
   );
 }
