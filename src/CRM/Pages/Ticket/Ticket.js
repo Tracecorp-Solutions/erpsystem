@@ -82,7 +82,7 @@ const Ticket = () => {
       case "1":
         setSelectedTicketId(record.id);
         navigate(`/crm`, {
-          state: { screen: "update-ticket", record, ticketId: record.id, showEscalateModal },
+          state: { screen: "update-ticket", record, ticketId: record.id },
         });
         break;
       case "2":

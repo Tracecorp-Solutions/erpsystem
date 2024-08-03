@@ -182,16 +182,17 @@ const UpdateTicket = () => {
       <div className="flex flex-col self-center px-6 pt-4 pb-6 mt-6 w-full bg-white rounded-3xl max-w-[1088px] max-md:px-5 max-md:max-w-full">
         <div className="flex gap-5 justify-between w-full font-semibold max-md:flex-wrap max-md:max-w-full">
           <div className="text-3xl capitalize text-neutral-600">
-            {ticketDetails.ticket.complaintSubject}
+            {/* {ticketDetails.ticket.complaintSubject} */}
+            Water Leakage Issue
           </div>
-          <div className="flex gap-2 my-auto text-base leading-6 text-slate-500">
+          {/* <div className="flex gap-2 my-auto text-base leading-6 text-slate-500">
             <img
               loading="lazy"
               src="https://cdn.builder.io/api/v1/image/assets/TEMP/2198e70221ffacf809da97fcee817d02ff0b027edb9275bc4d15791b393739f9?apiKey=0d95acea82cc4b259a61e827c24c5c6c&&apiKey=0d95acea82cc4b259a61e827c24c5c6c"
               className="shrink-0 self-start w-6 aspect-square"
             />
             <div className="underline">Update Ticket</div>
-          </div>
+          </div> */}
         </div>
         <div className="flex flex-col px-4 pt-2 pb-4 mt-6 rounded-lg bg-stone-100 max-md:max-w-full">
           <div className="text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">
@@ -331,9 +332,12 @@ const UpdateTicket = () => {
             </div>
           </div>
         </div>
+        <h2 style={{
+          fontSize: "17px",
+          margin: "5px"
+        }}>Audit Trail</h2>
         <Table
           columns={columns}
-          className="mt-10"
           dataSource={data}
           rowKey={(record) => record.id}
           pagination={false}
