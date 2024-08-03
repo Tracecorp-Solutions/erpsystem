@@ -76,6 +76,38 @@ const TicketPage = () => {
     }
   };
 
+  const handleDisableCategory = async (category) => {
+    try {
+      await axios.put(
+        `${process.env.REACT_APP_API_URL}/UpdateTicketCategory`,
+        { ...category, isDeleted: true } // Set isDeleted to true
+      );
+      message.success("Category disabled successfully");
+      fetchTicketCategories();
+    } catch (error) {
+      message.error("Error disabling category:", error);
+    }
+  };
+
+  // Filter categories to exclude deleted ones
+  const filteredCategories = ticketCategories.filter(
+    (category) => !category.isDeleted
+  );
+
+  // Pagination logic
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = (currentPage - 1) * itemsPerPage;
+  const currentItems = filteredCategories.slice(
+    indexOfFirstItem,
+    indexOfLastItem
+  );
+
+  const totalItems = filteredCategories.length;
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
   const columns = [
     {
       title: "CATEGORY NAME",
@@ -99,7 +131,9 @@ const TicketPage = () => {
               <Menu.Item key="edit" onClick={() => showUpdateModal(record)}>
                 Update Category
               </Menu.Item>
-              <Menu.Item key="delete">Disable Category</Menu.Item>
+              <Menu.Item key="delete" onClick={() => handleDisableCategory(record)}>
+                Disable Category
+              </Menu.Item>
             </Menu>
           }
           placement="bottomLeft"
@@ -116,20 +150,6 @@ const TicketPage = () => {
       ),
     },
   ];
-
-  // Pagination logic
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = (currentPage - 1) * itemsPerPage;
-  const currentItems = ticketCategories.slice(
-    indexOfFirstItem,
-    indexOfLastItem
-  );
-
-  const totalItems = ticketCategories.length;
-
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
-  };
 
   return (
     <div className="flex flex-col flex-wrap justify-center content-start py-6 rounded-3xl bg-stone-100">

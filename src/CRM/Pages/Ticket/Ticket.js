@@ -112,6 +112,10 @@ const Ticket = () => {
     setUpdateStatusModalVisible(false);
   };
 
+  const handleUpdateTicketCancel = () => {
+    setUpdateTicketForm(false);
+  }
+
   const handleResolveCancel = () => {
     setResolveModalVisible(false);
   };
@@ -254,7 +258,7 @@ const Ticket = () => {
       </Modal>
 
     
-       <UpdateTicketForm updateTicketForm={updateTicketForm} hanndleCancelEscalateModal={hanndleCancelEscalateModal} />
+       <UpdateTicketForm updateTicketForm={updateTicketForm} handleUpdateTicketCancel={handleUpdateTicketCancel} />
 
       {/* Update Status Modal */}
       <Modal
