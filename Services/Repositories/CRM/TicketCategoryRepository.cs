@@ -63,6 +63,7 @@ namespace Services.Repositories.CRM
             ticketCategory.Name = ticket.Name;
             ticketCategory.DepartmentId = ticket.DepartmentId;
             ticketCategory.Description = ticket.Description;
+            ticketCategory.IsDeleted = ticket.IsDisabled ?? false;
 
             await _context.SaveChangesAsync();
         }
