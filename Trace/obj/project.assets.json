@@ -3138,11 +3138,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\erpsystem\\Trace\\Trace.csproj",
+      "projectUniqueName": "D:\\working directory\\erpsystem\\Trace\\Trace.csproj",
       "projectName": "Trace",
-      "projectPath": "D:\\erpsystem\\Trace\\Trace.csproj",
+      "projectPath": "D:\\working directory\\erpsystem\\Trace\\Trace.csproj",
       "packagesPath": "C:\\Users\\DanielNgobi\\.nuget\\packages\\",
-      "outputPath": "D:\\erpsystem\\Trace\\obj\\",
+      "outputPath": "D:\\working directory\\erpsystem\\Trace\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\DanielNgobi\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -3160,14 +3160,14 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "D:\\erpsystem\\Core\\Core.csproj": {
-              "projectPath": "D:\\erpsystem\\Core\\Core.csproj"
+            "D:\\working directory\\erpsystem\\Core\\Core.csproj": {
+              "projectPath": "D:\\working directory\\erpsystem\\Core\\Core.csproj"
             },
-            "D:\\erpsystem\\Infrastructure\\Infrastructure.csproj": {
-              "projectPath": "D:\\erpsystem\\Infrastructure\\Infrastructure.csproj"
+            "D:\\working directory\\erpsystem\\Infrastructure\\Infrastructure.csproj": {
+              "projectPath": "D:\\working directory\\erpsystem\\Infrastructure\\Infrastructure.csproj"
             },
-            "D:\\erpsystem\\Services\\Services.csproj": {
-              "projectPath": "D:\\erpsystem\\Services\\Services.csproj"
+            "D:\\working directory\\erpsystem\\Services\\Services.csproj": {
+              "projectPath": "D:\\working directory\\erpsystem\\Services\\Services.csproj"
             }
           }
         }

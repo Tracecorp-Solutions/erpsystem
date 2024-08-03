@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\erpsystem\\Services\\Services.csproj": {}
+    "D:\\working directory\\erpsystem\\Services\\Services.csproj": {}
   },
   "projects": {
-    "D:\\erpsystem\\Core\\Core.csproj": {
+    "D:\\working directory\\erpsystem\\Core\\Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\erpsystem\\Core\\Core.csproj",
+        "projectUniqueName": "D:\\working directory\\erpsystem\\Core\\Core.csproj",
         "projectName": "Core",
-        "projectPath": "D:\\erpsystem\\Core\\Core.csproj",
+        "projectPath": "D:\\working directory\\erpsystem\\Core\\Core.csproj",
         "packagesPath": "C:\\Users\\DanielNgobi\\.nuget\\packages\\",
-        "outputPath": "D:\\erpsystem\\Core\\obj\\",
+        "outputPath": "D:\\working directory\\erpsystem\\Core\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\DanielNgobi\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -65,14 +65,14 @@
         }
       }
     },
-    "D:\\erpsystem\\Services\\Services.csproj": {
+    "D:\\working directory\\erpsystem\\Services\\Services.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\erpsystem\\Services\\Services.csproj",
+        "projectUniqueName": "D:\\working directory\\erpsystem\\Services\\Services.csproj",
         "projectName": "Services",
-        "projectPath": "D:\\erpsystem\\Services\\Services.csproj",
+        "projectPath": "D:\\working directory\\erpsystem\\Services\\Services.csproj",
         "packagesPath": "C:\\Users\\DanielNgobi\\.nuget\\packages\\",
-        "outputPath": "D:\\erpsystem\\Services\\obj\\",
+        "outputPath": "D:\\working directory\\erpsystem\\Services\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\DanielNgobi\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -90,8 +90,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "D:\\erpsystem\\Core\\Core.csproj": {
-                "projectPath": "D:\\erpsystem\\Core\\Core.csproj"
+              "D:\\working directory\\erpsystem\\Core\\Core.csproj": {
+                "projectPath": "D:\\working directory\\erpsystem\\Core\\Core.csproj"
               }
             }
           }

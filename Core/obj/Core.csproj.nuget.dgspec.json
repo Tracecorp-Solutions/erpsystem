@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\erpsystem\\Core\\Core.csproj": {}
+    "D:\\working directory\\erpsystem\\Core\\Core.csproj": {}
   },
   "projects": {
-    "D:\\erpsystem\\Core\\Core.csproj": {
+    "D:\\working directory\\erpsystem\\Core\\Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\erpsystem\\Core\\Core.csproj",
+        "projectUniqueName": "D:\\working directory\\erpsystem\\Core\\Core.csproj",
         "projectName": "Core",
-        "projectPath": "D:\\erpsystem\\Core\\Core.csproj",
+        "projectPath": "D:\\working directory\\erpsystem\\Core\\Core.csproj",
         "packagesPath": "C:\\Users\\DanielNgobi\\.nuget\\packages\\",
-        "outputPath": "D:\\erpsystem\\Core\\obj\\",
+        "outputPath": "D:\\working directory\\erpsystem\\Core\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\DanielNgobi\\AppData\\Roaming\\NuGet\\NuGet.Config",
