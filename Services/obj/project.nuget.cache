@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "J1yfQeJffWQ=",
+  "dgSpecHash": "3bu90macqg4=",
   "success": true,
-  "projectFilePath": "D:\\erpsystem\\Services\\Services.csproj",
+  "projectFilePath": "D:\\working directory\\erpsystem\\Services\\Services.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\DanielNgobi\\.nuget\\packages\\microsoft.aspnet.identity.core\\2.2.4\\microsoft.aspnet.identity.core.2.2.4.nupkg.sha512",
     "C:\\Users\\DanielNgobi\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\8.0.5\\microsoft.aspnetcore.cryptography.internal.8.0.5.nupkg.sha512",

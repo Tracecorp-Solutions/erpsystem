@@ -1,4 +1,5 @@
 ﻿using Core.DTOs.CRM;
+using Core.Models.CRM;
 using Core.Repositories.CRM;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -124,6 +125,23 @@ namespace Trace.Controllers
             {
                 var result = await _ticketRepository.GetTicketStatusSummaryAsync();
                 return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
+        [HttpPut("/UpdateTicket")]
+        public async Task<IActionResult> UpdateTicket(UpdateTicketDto ticket)
+        {
+            try
+            {
+                await _ticketRepository.UpdateTicket(ticket);
+                return Ok("Ticket updated successfully");
+            }catch(ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
             }
             catch (Exception ex)
             {

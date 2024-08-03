@@ -205,5 +205,43 @@ namespace Services.Repositories.CRM
 
             return result;
         }
+
+        // Update ticket
+        public async Task UpdateTicket(UpdateTicketDto ticket)
+        {
+            var existingTicket = await _context.Tickets
+                .FirstOrDefaultAsync(t => t.Id == ticket.Id);
+
+            if (existingTicket == null)
+                throw new ArgumentException("Ticket not found");
+
+
+            existingTicket.CustomerType = ticket.CustomerType;
+            existingTicket.CustomerRef = ticket.CustomerRef;
+            existingTicket.CustomerName = ticket.CustomerName;
+            existingTicket.OperationAreaId = ticket.OperationAreaId;
+            existingTicket.BranchId = ticket.BranchId;
+            existingTicket.TerritoryId = ticket.TerritoryId;
+            existingTicket.PhoneNumber = ticket.PhoneNumber;
+            existingTicket.Address = ticket.Address;
+            existingTicket.ComplaintSubject = ticket.ComplaintSubject;
+            existingTicket.TicketCategoryId = ticket.TicketCategoryId;
+            existingTicket.TicketSource = ticket.TicketSource;
+            existingTicket.PriorityId = ticket.PriorityId;
+            existingTicket.Description = ticket.Description;
+
+            //record trail for ticket update
+            var ticketAuditTrail = new TicketAuditTrail
+            {
+                TicketId = existingTicket.Id,
+                Status = "Updated",
+                AssignedTo = existingTicket.AssignedTo,
+                RecordedBy = "",
+                RecordedAt = DateTime.Now,
+                ReasonOfEscalation = "Normal"
+            };
+
+            await _context.SaveChangesAsync();
+        }
     }
 }

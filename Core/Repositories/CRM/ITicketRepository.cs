@@ -27,6 +27,8 @@ namespace Core.Repositories.CRM
 
         Task<TicketStatisticsDto> GetTicketStatisticsAsync();
 
+        Task UpdateTicket(UpdateTicketDto updateTicketDto);
+
 
     }
 }
