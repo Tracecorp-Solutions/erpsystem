@@ -1,7 +1,12 @@
-import React, { useState } from "react";
-import { Modal, Form, Input, Select, Button, Spin, Row, Col } from "antd";
+import React, { useState, useEffect } from "react";
+import { Modal, Steps, Input, Select, Button, message, Spin } from "antd";
+import axios from "axios";
+import SelectOption from "../../components/SelectOption";
+import SelectField from "../../components/SelectField";
+import TextAreaField from "../../components/TextAreaField";
+import InputField from "../../components/TextInput";
 
-const { Option } = Select;
+const { Step } = Steps;
 
 const options = [
   { id: 1, name: "Registered" },
@@ -13,9 +18,122 @@ const optionsTicketSource = [
   { id: 3, name: "Social Media" },
 ];
 
-const UpdateTicketForm = ({ updateTicketForm, handleUpdateTicketCancel }) => {
-  const [form] = Form.useForm();
+const UpdateTicketForm = ({
+  updateTicketForm,
+  handleUpdateTicketCancel,
+  ticketDetails,
+}) => {
   const [currentStep, setCurrentStep] = useState(0);
+  const [customerReference, setCustomerReference] = useState("");
+  const [customerDetails, setCustomerDetails] = useState(null);
+  const [customerName, setCustomerName] = useState("");
+  const [operationalAreaId, setOperationalAreaId] = useState(null);
+  const [branchId, setBranchId] = useState(null);
+  const [territoryId, setTerritoryId] = useState(null);
+  const [customerType, setCustomerType] = useState(null);
+  const [ticketCategoryId, setTicketCategoryId] = useState(null);
+  const [ticketSource, setTicketSource] = useState(null);
+  const [priorityId, setPriorityId] = useState(null);
+  const [description, setDescription] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [address, setAddress] = useState("");
+  const [complaintSubject, setComplaintSubject] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const [operationalAreas, setOperationalAreas] = useState([]);
+  const [branches, setBranches] = useState([]);
+  const [territories, setTerritories] = useState([]);
+  const [ticketCategories, setTicketCategories] = useState([]);
+  const [priorities, setPriorities] = useState([]);
+
+  useEffect(() => {
+    fetchOperationalAreas();
+    fetchBranches();
+    fetchTerritories();
+    fetchTicketCategories();
+    fetchPriorities();
+
+    if (ticketDetails) {
+      // Populate form with ticketDetails
+      setCustomerReference(ticketDetails.customerRef || "");
+      setCustomerName(ticketDetails.customerName || "");
+      setOperationalAreaId(ticketDetails.operationAreaId || null);
+      setBranchId(ticketDetails.branchId || null);
+      setTerritoryId(ticketDetails.territoryId || null);
+      setPhoneNumber(ticketDetails.phoneNumber || "");
+      setAddress(ticketDetails.address || "");
+      setTicketCategoryId(ticketDetails.ticketCategoryId || null);
+      setTicketSource(ticketDetails.ticketSource || null);
+      setPriorityId(ticketDetails.priorityId || null);
+      setDescription(ticketDetails.description || "");
+      setComplaintSubject(ticketDetails.complaintSubject || "");
+    }
+  }, [ticketDetails]);
+
+  const fetchData = async (url, setState) => {
+    setLoading(true);
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}${url}`
+      );
+      setState(response.data);
+    } catch (error) {
+      console.error(`Error fetching data from ${url}:`, error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchOperationalAreas = () =>
+    fetchData("/GetOperationAreas", setOperationalAreas);
+  const fetchBranches = () => fetchData("/GetBranches", setBranches);
+  const fetchTerritories = () => fetchData("/GetTerritories", setTerritories);
+  const fetchTicketCategories = () =>
+    fetchData("/GetTicketCategories", setTicketCategories);
+  const fetchPriorities = () => fetchData("/GetPriorities", setPriorities);
+
+  const handleSubmit = () => {
+    if (
+      !customerName ||
+      !operationalAreaId ||
+      !branchId ||
+      !territoryId ||
+      !complaintSubject ||
+      !description
+    ) {
+      message.error("Please fill all required fields");
+      return;
+    }
+
+    const formData = {
+      customerName,
+      operationAreaId: operationalAreaId,
+      branchId,
+      territoryId,
+      phoneNumber,
+      address,
+      ticketCategoryId,
+      ticketSource,
+      priorityId: priorityId || 0,
+      description,
+      complaintSubject,
+      ticketId: ticketDetails.id, // Assuming `ticketDetails` contains the ticket ID
+      customerRef: customerReference, // Include reference in the form data
+    };
+
+    setLoading(true);
+    axios
+      .put(`${process.env.REACT_APP_API_URL}/UpdateTicket`, formData)
+      .then((response) => {
+        message.success("Ticket successfully updated");
+        handleUpdateTicketCancel();
+      })
+      .catch((error) => {
+        console.error("Error updating ticket:", error);
+        message.error("Error updating ticket");
+      })
+      .finally(() => setLoading(false));
+  };
 
   return (
     <Modal
@@ -25,7 +143,7 @@ const UpdateTicketForm = ({ updateTicketForm, handleUpdateTicketCancel }) => {
       width={700}
       bodyStyle={{ padding: 0 }}
     >
-      <Spin spinning={false}>
+      <Spin spinning={loading}>
         <div className="flex flex-col justify-center items-center bg-white rounded-3xl max-w-[820px]">
           <div className="flex flex-col self-stretch pt-6 w-full text-4xl font-semibold leading-[57.6px] text-neutral-600 max-md:max-w-full">
             <div className="flex gap-5 justify-between self-center px-5 w-full max-w-screen-sm max-md:flex-wrap max-md:max-w-full">
@@ -41,133 +159,132 @@ const UpdateTicketForm = ({ updateTicketForm, handleUpdateTicketCancel }) => {
             <div className="mt-6 w-full border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-opacity-10 min-h-[1px] max-md:max-w-full" />
           </div>
 
-          <Form
-            form={form}
-            layout="vertical"
-            className="w-full px-5 py-6"
-          >
-            <Row gutter={16}>
-              <Col span={12}>
-                <Form.Item
-                  label="Customer Type"
-                  name="customerType"
-                  rules={[{ required: true, message: 'Please select a customer type!' }]}
-                >
-                  <Select>
-                    {options.map(option => (
-                      <Option key={option.id} value={option.id}>
-                        {option.name}
-                      </Option>
-                    ))}
-                  </Select>
-                </Form.Item>
-              </Col>
-              <Col span={12}>
-                <Form.Item
-                  label="Customer Reference"
-                  name="customerReference"
-                  rules={[{ required: true, message: 'Please enter customer reference!' }]}
-                >
-                  <Input placeholder="Enter customer reference" />
-                </Form.Item>
-              </Col>
-            </Row>
+          <Steps current={currentStep} className="w-full mt-4">
+            <Step title="Customer Details" />
+            <Step title="Ticket Details" />
+          </Steps>
 
-            <Row gutter={16}>
-              <Col span={12}>
-                <Form.Item
-                  label="Customer Name"
-                  name="customerName"
-                  rules={[{ required: true, message: 'Please enter customer name!' }]}
-                >
-                  <Input placeholder="Enter customer name" />
-                </Form.Item>
-              </Col>
-              <Col span={12}>
-                <Form.Item
-                  label="Phone Number"
-                  name="phoneNumber"
-                >
-                  <Input placeholder="Enter phone number" />
-                </Form.Item>
-              </Col>
-            </Row>
+          {currentStep === 0 && (
+            <div className="flex flex-col items-center pb-16 w-full">
+              <SelectField
+                label="Customer Type"
+                value={customerType}
+                options={options}
+                onChange={setCustomerType}
+              />
+              <div className="mt-4 text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">
+                Customer Reference:
+              </div>
+              <Input
+                placeholder="Enter customer reference"
+                className="p-3"
+                style={{ width: "100%", marginTop: "8px" }}
+                value={customerReference}
+                onChange={(e) => setCustomerReference(e.target.value)}
+              />
+              <div className="mt-4 text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">
+                Customer Name:
+              </div>
+              <Input
+                placeholder="Enter customer name"
+                className="p-3"
+                style={{ width: "100%", marginTop: "8px" }}
+                value={customerName}
+                onChange={(e) => setCustomerName(e.target.value)}
+              />
+              <SelectField
+                label="Area"
+                value={operationalAreaId}
+                options={operationalAreas}
+                onChange={setOperationalAreaId}
+              />
+              <SelectField
+                label="Branch"
+                value={branchId}
+                options={branches}
+                onChange={setBranchId}
+              />
+              <SelectField
+                label="Territory"
+                value={territoryId}
+                options={territories}
+                onChange={setTerritoryId}
+              />
+              <InputField
+                label="Phone Number"
+                value={phoneNumber}
+                onChange={setPhoneNumber}
+              />
+              <TextAreaField
+                label="Address"
+                value={address}
+                onChange={setAddress}
+              />
+            </div>
+          )}
 
-            <Form.Item
-              label="Address"
-              name="address"
-            >
-              <Input.TextArea rows={4} placeholder="Enter address" />
-            </Form.Item>
+          {currentStep === 1 && (
+            <div className="flex flex-col items-center pb-16 w-full">
+              <InputField
+                label="Ticket Subject"
+                value={complaintSubject}
+                onChange={setComplaintSubject}
+              />
+              <SelectField
+                label="Ticket Category"
+                value={ticketCategoryId}
+                options={ticketCategories}
+                onChange={setTicketCategoryId}
+              />
+              <SelectOption
+                label="Ticket Source"
+                value={ticketSource}
+                options={optionsTicketSource}
+                onChange={setTicketSource}
+              />
+              <SelectField
+                label="Assign Priority"
+                value={priorityId}
+                options={priorities}
+                onChange={setPriorityId}
+              />
+              <TextAreaField
+                label="Description"
+                value={description}
+                onChange={setDescription}
+              />
+            </div>
+          )}
 
-            <Row gutter={16}>
-              <Col span={12}>
-                <Form.Item
-                  label="Ticket Subject"
-                  name="complaintSubject"
-                  rules={[{ required: true, message: 'Please enter ticket subject!' }]}
+          <div className="flex justify-center items-center self-stretch px-16 py-6 mt-16 w-full text-base leading-6 bg-stone-100 max-md:px-5 max-md:mt-10 max-md:max-w-full">
+            <div className="flex justify-between max-w-full w-full max-md:max-w-full">
+              {currentStep > 0 && (
+                <Button
+                  onClick={() => setCurrentStep(currentStep - 1)}
+                  className="px-8 py-4 whitespace-nowrap rounded-3xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 max-md:px-5"
                 >
-                  <Input placeholder="Enter ticket subject" />
-                </Form.Item>
-              </Col>
-              <Col span={12}>
-                <Form.Item
-                  label="Ticket Category"
-                  name="ticketCategoryId"
-                >
-                  <Select>
-                    {/* Add options for Ticket Category */}
-                  </Select>
-                </Form.Item>
-              </Col>
-            </Row>
-
-            <Row gutter={16}>
-              <Col span={12}>
-                <Form.Item
-                  label="Ticket Source"
-                  name="ticketSource"
-                >
-                  <Select>
-                    {optionsTicketSource.map(option => (
-                      <Option key={option.id} value={option.id}>
-                        {option.name}
-                      </Option>
-                    ))}
-                  </Select>
-                </Form.Item>
-              </Col>
-              <Col span={12}>
-                <Form.Item
-                  label="Assign Priority"
-                  name="priorityId"
-                >
-                  <Select>
-                    {/* Add options for Priority */}
-                  </Select>
-                </Form.Item>
-              </Col>
-            </Row>
-
-            <Form.Item
-              label="Description"
-              name="description"
-            >
-              <Input.TextArea rows={4} placeholder="Enter description" />
-            </Form.Item>
-
-            <Form.Item>
-              <div className="flex justify-center items-center">
+                  Back
+                </Button>
+              )}
+              {currentStep < 1 ? (
                 <Button
                   type="primary"
-                  onClick={() => { /* Handle Submit */ }}
-                  className="px-8 py-4 font-semibold text-white rounded-3xl bg-slate-500"
+                  onClick={() => setCurrentStep(currentStep + 1)}
+                  className="px-8 py-4 font-semibold text-white rounded-3xl bg-slate-500 max-md:px-5"
                 >
-                  Save Complainant
+                  Next
                 </Button>
-              </div>
-            </Form.Item>
-          </Form>
+              ) : (
+                <Button
+                  type="primary"
+                  onClick={handleSubmit}
+                  className="px-8 py-4 font-semibold text-white rounded-3xl bg-slate-500 max-md:px-5"
+                >
+                  Save Changes
+                </Button>
+              )}
+            </div>
+          </div>
         </div>
       </Spin>
     </Modal>

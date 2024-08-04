@@ -14,13 +14,12 @@ const Ticket = () => {
   const [tickets, setTickets] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [escalateModalVisible, setEscalateModalVisible] = useState(false);
-  const [updateStatusModalVisible, setUpdateStatusModalVisible] =
-    useState(false);
+  const [updateStatusModalVisible, setUpdateStatusModalVisible] = useState(false);
   const [resolveModalVisible, setResolveModalVisible] = useState(false);
-  const [selectedTicketId, setSelectedTicketId] = useState(null);
+  const [updateTicketForm, setUpdateTicketForm] = useState(false);
+  const [selectedTicket, setSelectedTicket] = useState(null); // Track selected ticket details
   const [departments, setDepartments] = useState([]);
   const [loadingTickets, setLoadingTickets] = useState(false);
-  const [updateTicketForm, setUpdateTicketForm] = useState(false);
 
   const name = sessionStorage.getItem("fullname");
   const [currentPage, setCurrentPage] = useState(1);
@@ -33,9 +32,7 @@ const Ticket = () => {
 
   const fetchDepartments = async () => {
     try {
-      const response = await axios.get(
-        `${process.env.REACT_APP_API_URL}/GetAllDepartments`
-      );
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/GetAllDepartments`);
       setDepartments(response.data);
     } catch (error) {
       console.error("Error fetching departments:", error);
@@ -45,9 +42,7 @@ const Ticket = () => {
   const fetchTickets = async () => {
     setLoadingTickets(true);
     try {
-      const response = await axios.get(
-        `${process.env.REACT_APP_API_URL}/GetAllTickets`
-      );
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/GetAllTickets`);
       const formattedTickets = response.data.map((ticket) => ({
         ...ticket,
         creationDate: new Date(ticket.creationDate).toLocaleDateString(),
@@ -62,11 +57,11 @@ const Ticket = () => {
 
   const showEscalateModal = () => {
     setEscalateModalVisible(true);
-  }
+  };
 
-  const hanndleCancelEscalateModal = () => {
+  const handleCancelEscalateModal = () => {
     setEscalateModalVisible(false);
-  }
+  };
 
   const showModal = () => {
     setIsModalVisible(true);
@@ -77,26 +72,27 @@ const Ticket = () => {
   };
 
   const handleMenuClick = async (record, e) => {
-    console.log("Clicked on menu item", e.key, "for record", record);
     switch (e.key) {
       case "1":
-        setSelectedTicketId(record.id);
+        setSelectedTicket(record);
         navigate(`/crm`, {
           state: { screen: "update-ticket", record, ticketId: record.id },
         });
         break;
       case "2":
-        setEscalateModalVisible(true);
-        setSelectedTicketId(record.id);
+        setSelectedTicket(record);
+        showEscalateModal();
         break;
       case "3":
+        setSelectedTicket(record);
         setUpdateStatusModalVisible(true);
         break;
       case "4":
+        setSelectedTicket(record);
         setResolveModalVisible(true);
-        setSelectedTicketId(record.id);
         break;
-        case "5":
+      case "5":
+        setSelectedTicket(record); // Set selected ticket details
         setUpdateTicketForm(true);
         break;
       default:
@@ -114,7 +110,8 @@ const Ticket = () => {
 
   const handleUpdateTicketCancel = () => {
     setUpdateTicketForm(false);
-  }
+    setSelectedTicket(null); // Clear selected ticket details
+  };
 
   const handleResolveCancel = () => {
     setResolveModalVisible(false);
@@ -162,7 +159,7 @@ const Ticket = () => {
           placement="bottomRight"
         >
           <div
-            className="flex flex-col justify-center px-9 py-3  max-md:px-5"
+            className="flex flex-col justify-center px-9 py-3 max-md:px-5"
             onClick={(e) => e.preventDefault()}
           >
             <div className="flex justify-center items-center px-1.5 w-8 h-8 rounded-3xl bg-stone-100">
@@ -178,7 +175,6 @@ const Ticket = () => {
     },
   ];
 
-  // Pagination logic
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = (currentPage - 1) * itemsPerPage;
   const currentItems = tickets.slice(indexOfFirstItem, indexOfLastItem);
@@ -242,25 +238,26 @@ const Ticket = () => {
         fetchTickets={fetchTickets}
       />
 
-      {/* Escalate Ticket Modal */}
       <Modal
         visible={escalateModalVisible}
-        onCancel={handleEscalateCancel}
+        onCancel={handleCancelEscalateModal}
         closable={false}
         footer={null}
       >
         <EscalateTicket
-          handleEscalateCancel={handleEscalateCancel}
+          handleEscalateCancel={handleCancelEscalateModal}
           recordedBy={name}
           departments={departments}
-          ticketId={selectedTicketId}
+          ticketId={selectedTicket?.id}
         />
       </Modal>
 
-    
-       <UpdateTicketForm updateTicketForm={updateTicketForm} handleUpdateTicketCancel={handleUpdateTicketCancel} />
+      <UpdateTicketForm
+        updateTicketForm={updateTicketForm}
+        handleUpdateTicketCancel={handleUpdateTicketCancel}
+        ticketDetails={selectedTicket} // Pass selected ticket details
+      />
 
-      {/* Update Status Modal */}
       <Modal
         visible={updateStatusModalVisible}
         onCancel={handleUpdateStatusCancel}
@@ -269,11 +266,10 @@ const Ticket = () => {
       >
         <UpdateStatus
           handleUpdateStatusCancel={handleUpdateStatusCancel}
-          ticketId={selectedTicketId}
+          ticketId={selectedTicket?.id}
         />
       </Modal>
 
-      {/* Resolve Ticket Modal */}
       <Modal
         visible={resolveModalVisible}
         onCancel={handleResolveCancel}
@@ -284,7 +280,7 @@ const Ticket = () => {
           handleResolveCancel={handleResolveCancel}
           recordedBy={name}
           departments={departments}
-          ticketId={selectedTicketId}
+          ticketId={selectedTicket?.id}
         />
       </Modal>
     </div>
