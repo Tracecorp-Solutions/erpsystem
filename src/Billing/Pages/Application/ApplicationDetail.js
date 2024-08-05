@@ -11,7 +11,6 @@ import ContactApplicantFormAction from "./Actions/ContactApplicantForm";
 import AssignSurveyor from "./Actions/AssignSurveyor";
 import SurveyorReport from "./Actions/SurveyorReport";
 import UpdateAuthorizeModal from "./Actions/UpdateAuthorizeModal ";
-import Payslip from "./Actions/Payslip";
 
 const ApplicationDetail = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -26,7 +25,9 @@ const ApplicationDetail = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [jobCardInfo, setJobCardInfo] = useState(null);
   const [surveyorAssigned, setSurveyorAssigned] = useState(false);
+  const [surveyorAssignedData, setSurveyorAssignedData] = useState(null);
   const [applicationStatus, setApplicationStatus] = useState(null);
+  const [assignedData, setAssignedData] = useState(surveyorAssignedData);
 
 
   const location = useLocation();
@@ -55,20 +56,20 @@ const ApplicationDetail = () => {
     }
     fetchApplicationData();
     fetchJobCard(applicationNumber);
-  }, [applicationNumber]);
+    setAssignedData(surveyorAssignedData);
+  }, [applicationNumber, surveyorAssignedData]);
 
   const fetchJobCard = async (applicationNumber) => {
     try {
       const response = await axios.get(
         `${process.env.REACT_APP_API_URL}/GetJobCardNumberByApplicationId?applicationNumber=${applicationNumber}`
       );
-      if (!response.ok)
-        setJobCardInfo(null);
+      if (!response.ok) setJobCardInfo(null);
 
       setJobCardInfo(response.data);
     } catch (error) {
-      console.log(error)
-    };
+      console.log(error);
+    }
   };
 
   const fetchApplicationById = (applicationNumber) => {
@@ -84,7 +85,9 @@ const ApplicationDetail = () => {
       .then((data) => {
         console.log("Fetched application data:", data);
         setApplicationData(data);
-        // Check if surveyor is assigned and update state accordingly
+        const {assignedTo} = data
+        setSurveyorAssignedData(assignedTo);
+        // Chek if surveyor is assigned and update state accordingly
         if (data && data.assignedTo) {
           setSurveyorAssigned(true);
         } else {
@@ -102,7 +105,6 @@ const ApplicationDetail = () => {
       });
   };
 
-
   const fetchApplicationData = async () => {
     try {
       const response = await fetch(
@@ -115,27 +117,23 @@ const ApplicationDetail = () => {
           },
         }
       );
-      if (response.ok) {
-        const data = await response.json();
-        setApplication(data);
-      } else {
-        console.error("Failed to fetch application data");
-      }
+      const data = await response.json();
+      setApplication(data);
     } catch (error) {
       console.error("Error fetching application data:", error);
     }
   };
   const handleGenerateJobCard = () => {
-
     if (!applicationNumber || !userid) {
       console.error("Application number or userId is missing");
       return;
     }
 
-    const apiUrl = `${process.env.REACT_APP_API_URL
-      }/GenerateJobCard?applicationNumber=${encodeURIComponent(
-        applicationNumber
-      )}&userid=${encodeURIComponent(userid)}`;
+    const apiUrl = `${
+      process.env.REACT_APP_API_URL
+    }/GenerateJobCard?applicationNumber=${encodeURIComponent(
+      applicationNumber
+    )}&userid=${encodeURIComponent(userid)}`;
 
     axios
       .post(apiUrl, {
@@ -161,8 +159,8 @@ const ApplicationDetail = () => {
     setIsUpdateModalVisible(!isUpdateModalVisible);
   };
 
-  const handleShowModalVisible = () => {
-    setIsVisible(true);
+  const handleAssign = () => {
+    setAssignSurveyorAction(true)
   };
 
   const menu = (
@@ -206,6 +204,8 @@ const ApplicationDetail = () => {
   }
 
   const { assignedTo } = applicationData;
+
+  console.log("surveyorAssignedData surveyorAssignedData", assignedData);
 
   return (
     <div className="flex flex-wrap justify-center content-start items-center py-6 rounded-3xl bg-stone-100">
@@ -477,16 +477,18 @@ const ApplicationDetail = () => {
         <div className="shrink-0 mt-4 h-px border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-opacity-10 max-md:max-w-full" />
         <div className="flex gap-5 justify-between mt-4 max-md:flex-wrap">
           <div
-            className={`flex gap-2 justify-between px-6 py-4 rounded-xl ${surveyorAssigned ? "bg-green-100" : "bg-stone-100"
-              } max-md:flex-wrap max-md:px-5 max-md:max-w-full`}
+            className={`flex gap-2 justify-between px-6 py-4 rounded-xl ${
+              surveyorAssigned ? "bg-green-100" : "bg-stone-100"
+            } max-md:flex-wrap max-md:px-5 max-md:max-w-full`}
           >
             <div className="flex flex-col justify-center text-center">
               <div className="text-xs font-medium tracking-wide uppercase text-neutral-400">
                 Surveyor Assigned
               </div>
-              {surveyorAssigned ? (
+              {assignedData ? (
                 <div className="mt-2 text-base leading-6 text-green-600">
-                  Surveyor Name: {applicationData.user.fullName}
+                  Surveyor Name:{" "}
+                  {applicationData.user?.fullName || "Not Available"}
                 </div>
               ) : (
                 <div className="mt-2 text-base leading-6 text-neutral-600">
@@ -494,20 +496,21 @@ const ApplicationDetail = () => {
                 </div>
               )}
             </div>
-            {!surveyorAssigned ? (
+            {!assignedData && (
               <button
                 className="justify-center self-start px-6 py-3 mt-2.5 text-sm font-semibold text-white rounded-3xl bg-slate-500 max-md:px-5"
-                onClick={() => setAssignSurveyorAction(true)}
+                onClick={handleAssign}
               >
                 Assign Surveyor
               </button>
-            ) : null}
+            )}
           </div>
 
           <div>
             <div
-              className={`flex gap-2 justify-between px-6 py-4 rounded-xl ${jobCardInfo ? "bg-green-100" : "bg-stone-100"
-                } max-md:flex-wrap max-md:px-5 max-md:max-w-full`}
+              className={`flex gap-2 justify-between px-6 py-4 rounded-xl ${
+                jobCardInfo ? "bg-green-100" : "bg-stone-100"
+              } max-md:flex-wrap max-md:px-5 max-md:max-w-full`}
             >
               <div className="flex flex-col justify-center text-center">
                 <div className="text-xs font-medium tracking-wide uppercase text-neutral-400">
@@ -596,17 +599,18 @@ const ApplicationDetail = () => {
               >
                 Update and Authorize Connection
               </button>
-            ) : <div className="flex gap-2 justify-between px-6 py-4 mt-4 max-w-full rounded-xl bg-green-100 max-md:flex-wrap max-md:px-5">
-              <div className="flex flex-col justify-center text-center">
-                <div className="text-xs font-medium tracking-wide uppercase text-neutral-400">
-                  STATUS
-                </div>
-                <div className="mt-2 text-base leading-6 text-green-600">
-                  {applicationData.status}
-                </div>
-              </div>{" "}
-            </div>}
-
+            ) : (
+              <div className="flex gap-2 justify-between px-6 py-4 mt-4 max-w-full rounded-xl bg-green-100 max-md:flex-wrap max-md:px-5">
+                <div className="flex flex-col justify-center text-center">
+                  <div className="text-xs font-medium tracking-wide uppercase text-neutral-400">
+                    STATUS
+                  </div>
+                  <div className="mt-2 text-base leading-6 text-green-600">
+                    {applicationData.status}
+                  </div>
+                </div>{" "}
+              </div>
+            )}
           </div>
         </div>
         <div className="mt-4 max-md:max-w-full">
@@ -632,27 +636,36 @@ const ApplicationDetail = () => {
                         className="grow justify-center px-4 py-3 mt-9 w-full text-sm font-semibold text-white whitespace-nowrap rounded-3xl bg-blue-400 max-md:px-5 max-md:mt-10"
                         onClick={() =>
                           navigate("/billingdashboard", {
-                            state: { screen: "update-invoice", applicationNumber, applicationData },
+                            state: {
+                              screen: "update-invoice",
+                              applicationNumber,
+                              applicationData,
+                            },
                           })
                         }
                       >
                         Generate invoice
                       </button>
                     </div>
-                  ) :
+                  ) : (
                     <div className="flex gap-2 justify-between px-6 py-4 mt-4 max-w-full rounded-xl bg-green-100 max-md:flex-wrap max-md:px-5">
                       <div className="flex flex-col justify-center text-center">
-                        <button onClick={() =>
-                          navigate("/billingdashboard", {
-                            state: { screen: "invoice-details", applicationNumber }
-                          })
-                        } className="mt-2 text-base leading-6 text-green-600">
+                        <button
+                          onClick={() =>
+                            navigate("/billingdashboard", {
+                              state: {
+                                screen: "invoice-details",
+                                applicationNumber,
+                              },
+                            })
+                          }
+                          className="mt-2 text-base leading-6 text-green-600"
+                        >
                           See Details
                         </button>
                       </div>{" "}
                     </div>
-                  }
-
+                  )}
                 </div>
               </div>
             </div>
@@ -704,7 +717,7 @@ const ApplicationDetail = () => {
                           type="button"
                           className="justify-center px-6 py-3 mt-9 w-[200px] text-sm font-semibold text-white rounded-3xl max-md:mt-10"
                           style={{
-                            background: "#9EC137"
+                            background: "#9EC137",
                           }}
                           onClick={() =>
                             navigate(`/billingdashboard`, {
@@ -759,6 +772,7 @@ const ApplicationDetail = () => {
         applicationId={applicationNumber}
         assignSurveyorAction={assignSurveyorAction}
         setAssignSurveyorAction={setAssignSurveyorAction}
+        fetchApplicationById={fetchApplicationById}
       />
       <SurveyorReport
         surveyorReport={surveyorReport}

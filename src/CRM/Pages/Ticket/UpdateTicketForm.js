@@ -22,10 +22,10 @@ const UpdateTicketForm = ({
   updateTicketForm,
   handleUpdateTicketCancel,
   ticketDetails,
+  recordedBy
 }) => {
   const [currentStep, setCurrentStep] = useState(0);
   const [customerReference, setCustomerReference] = useState("");
-  const [customerDetails, setCustomerDetails] = useState(null);
   const [customerName, setCustomerName] = useState("");
   const [operationalAreaId, setOperationalAreaId] = useState(null);
   const [branchId, setBranchId] = useState(null);
@@ -39,7 +39,8 @@ const UpdateTicketForm = ({
   const [address, setAddress] = useState("");
   const [complaintSubject, setComplaintSubject] = useState("");
   const [loading, setLoading] = useState(false);
-
+  const [escalationMatrixId, setEscalationMatrixId] = useState(null);
+  const [status, setStatus] = useState(null);
   const [operationalAreas, setOperationalAreas] = useState([]);
   const [branches, setBranches] = useState([]);
   const [territories, setTerritories] = useState([]);
@@ -67,6 +68,8 @@ const UpdateTicketForm = ({
       setPriorityId(ticketDetails.priorityId || null);
       setDescription(ticketDetails.description || "");
       setComplaintSubject(ticketDetails.complaintSubject || "");
+      setEscalationMatrixId(ticketDetails.escalationMatrixId || null);
+      setStatus(ticketDetails.status || null);
     }
   }, [ticketDetails]);
 
@@ -117,8 +120,10 @@ const UpdateTicketForm = ({
       priorityId: priorityId || 0,
       description,
       complaintSubject,
-      ticketId: ticketDetails.id, // Assuming `ticketDetails` contains the ticket ID
-      customerRef: customerReference, // Include reference in the form data
+      customerRef: customerReference,
+      escalationMatrixId,
+      recordedBy,
+      status
     };
 
     setLoading(true);

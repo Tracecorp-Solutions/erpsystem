@@ -256,6 +256,7 @@ const Ticket = () => {
         updateTicketForm={updateTicketForm}
         handleUpdateTicketCancel={handleUpdateTicketCancel}
         ticketDetails={selectedTicket} // Pass selected ticket details
+        recordedBy={name}
       />
 
       <Modal
