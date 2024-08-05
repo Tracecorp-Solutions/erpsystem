@@ -8,14 +8,23 @@ import InputField from "../../components/TextInput";
 
 const { Step } = Steps;
 
-const options = [
+const optionsCustomerType = [
   { id: 1, name: "Registered" },
   { id: 2, name: "Non Registered" },
 ];
+
 const optionsTicketSource = [
   { id: 1, name: "Phone Call" },
   { id: 2, name: "Walk-in" },
   { id: 3, name: "Social Media" },
+];
+
+const statusOptions = [
+  { id: 1, name: "Open" },
+  { id: 2, name: "In Progress" },
+  { id: 3, name: "Resolved" },
+  { id: 4, name: "Closed" },
+  { id: 5, name: "Escalated" }
 ];
 
 const UpdateTicketForm = ({
@@ -46,6 +55,9 @@ const UpdateTicketForm = ({
   const [territories, setTerritories] = useState([]);
   const [ticketCategories, setTicketCategories] = useState([]);
   const [priorities, setPriorities] = useState([]);
+  const [assignedTo, setAssignedTo] = useState(null);
+  const [ticketId, setTicketId] = useState(null);
+  const [dateCreated, setDateCreated] = useState(null);
 
   useEffect(() => {
     fetchOperationalAreas();
@@ -70,6 +82,10 @@ const UpdateTicketForm = ({
       setComplaintSubject(ticketDetails.complaintSubject || "");
       setEscalationMatrixId(ticketDetails.escalationMatrixId || null);
       setStatus(ticketDetails.status || null);
+      setCustomerType(ticketDetails.customerType || null);
+      setAssignedTo(ticketDetails.assignedTo || null);
+      setTicketId(ticketDetails.id || null);
+      setDateCreated(ticketDetails.creationDate || null);
     }
   }, [ticketDetails]);
 
@@ -122,8 +138,11 @@ const UpdateTicketForm = ({
       complaintSubject,
       customerRef: customerReference,
       escalationMatrixId,
-      recordedBy,
-      status
+      status,
+      customerType,
+      assignedTo,
+      dateCreated,
+      id: ticketId
     };
 
     setLoading(true);
@@ -174,7 +193,7 @@ const UpdateTicketForm = ({
               <SelectField
                 label="Customer Type"
                 value={customerType}
-                options={options}
+                options={optionsCustomerType}
                 onChange={setCustomerType}
               />
               <div className="mt-4 text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">
@@ -257,6 +276,12 @@ const UpdateTicketForm = ({
                 label="Description"
                 value={description}
                 onChange={setDescription}
+              />
+              <SelectField
+                label="Status"
+                value={status}
+                options={statusOptions}
+                onChange={setStatus}
               />
             </div>
           )}
