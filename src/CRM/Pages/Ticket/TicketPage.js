@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Table, Button, Dropdown, Menu, message } from "antd";
+import { Table, Button, Dropdown, Menu, message, Pagination } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import axios from "axios";
 import AddTicketCategory from "./AddTicketCategory";
@@ -8,8 +8,11 @@ import UpdateTicketCategory from "./UpdateTicketCategory";
 const TicketPage = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [ticketCategories, setTicketCategories] = useState([]);
-  const [showUpdateTicketCategory, setShowUpdateTicketCategory] = useState(false);
+  const [showUpdateTicketCategory, setShowUpdateTicketCategory] =
+    useState(false);
   const [selectedCategory, setSelectedCategory] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(10);
 
   useEffect(() => {
     fetchTicketCategories();
@@ -73,6 +76,38 @@ const TicketPage = () => {
     }
   };
 
+  const handleDisableCategory = async (category) => {
+    try {
+      await axios.put(
+        `${process.env.REACT_APP_API_URL}/UpdateTicketCategory`,
+        { ...category, isDeleted: true } // Set isDeleted to true
+      );
+      message.success("Category disabled successfully");
+      fetchTicketCategories();
+    } catch (error) {
+      message.error("Error disabling category:", error);
+    }
+  };
+
+  // Filter categories to exclude deleted ones
+  const filteredCategories = ticketCategories.filter(
+    (category) => !category.isDeleted
+  );
+
+  // Pagination logic
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = (currentPage - 1) * itemsPerPage;
+  const currentItems = filteredCategories.slice(
+    indexOfFirstItem,
+    indexOfLastItem
+  );
+
+  const totalItems = filteredCategories.length;
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
   const columns = [
     {
       title: "CATEGORY NAME",
@@ -96,7 +131,9 @@ const TicketPage = () => {
               <Menu.Item key="edit" onClick={() => showUpdateModal(record)}>
                 Update Category
               </Menu.Item>
-              <Menu.Item key="delete">Disable Category</Menu.Item>
+              <Menu.Item key="delete" onClick={() => handleDisableCategory(record)}>
+                Disable Category
+              </Menu.Item>
             </Menu>
           }
           placement="bottomLeft"
@@ -138,13 +175,23 @@ const TicketPage = () => {
             <PlusOutlined /> Add Category
           </Button>
         </div>
-        <div className="mt-4 overflow-auto">
+        <div className="mt-4">
           <Table
             columns={columns}
-            dataSource={ticketCategories}
+            dataSource={currentItems}
             pagination={false}
             scroll={{ x: true }}
           />
+          <div className="flex justify-end">
+            <Pagination
+              current={currentPage}
+              total={totalItems}
+              pageSize={itemsPerPage}
+              onChange={handlePageChange}
+              showSizeChanger={false}
+              style={{ marginTop: 16, textAlign: "center" }}
+            />
+          </div>
         </div>
       </div>
       <AddTicketCategory

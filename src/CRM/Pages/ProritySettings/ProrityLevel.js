@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { Table, Button, message, Dropdown, Menu } from "antd";
-import axios from 'axios';
+import { Table, Button, message, Dropdown, Menu, Pagination } from "antd";
+import axios from "axios";
 import AddProrityLevel from "./AddProrityLevel";
 import EditPriorityForm from "./UpdateProrityLevel";
 
 const PrioritySetting = () => {
   const [visible, setVisible] = useState(false);
   const [data, setData] = useState([]);
-  const [editModalVisible, setEditModalVisible] = useState(false); // Define editModalVisible state
+  const [editModalVisible, setEditModalVisible] = useState(false);
   const [selectedPriority, setSelectedPriority] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(10);
 
   useEffect(() => {
     fetchData();
@@ -16,14 +18,16 @@ const PrioritySetting = () => {
 
   const fetchData = async () => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/GetPriorities`);
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/GetPriorities`
+      );
       if (!response.ok) {
-        throw new Error('Network response was not ok');
+        throw new Error("Network response was not ok");
       }
       const jsonData = await response.json();
       setData(jsonData);
     } catch (error) {
-      console.error('Error:', error);
+      console.error("Error:", error);
     }
   };
 
@@ -33,12 +37,12 @@ const PrioritySetting = () => {
 
   const showEditModal = (priority) => {
     setSelectedPriority(priority);
-    setEditModalVisible(true); // Set editModalVisible to true when showing the edit modal
+    setEditModalVisible(true);
   };
 
   const handleCancel = () => {
     setVisible(false);
-    setEditModalVisible(false); // Set editModalVisible to false when canceling the modal
+    setEditModalVisible(false);
   };
 
   const handleUpdatePriority = () => {
@@ -47,36 +51,41 @@ const PrioritySetting = () => {
 
   const onFinish = async (values, handleCancel, reloadData) => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/AddPriority`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'accept': '*/*'
-        },
-        body: JSON.stringify({
-          priorityName: values.priorityLevelName,
-          colorCode: values.colorCode,
-          priorityDescription: values.description
-        })
-      });
-      
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/AddPriority`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            accept: "*/*",
+          },
+          body: JSON.stringify({
+            priorityName: values.priorityLevelName,
+            colorCode: values.colorCode,
+            priorityDescription: values.description,
+          }),
+        }
+      );
+
       if (!response.ok) {
-        throw new Error('Network response was not ok');
+        throw new Error("Network response was not ok");
       }
 
       message.success("Priority added successfully!");
       reloadData();
       handleCancel();
     } catch (error) {
-      console.error('Error:', error);
-      message.error('Error:', error);
+      console.error("Error:", error);
+      message.error("Error:", error.message);
     }
   };
 
   const handleAction = async (action, id) => {
     try {
-      if (action === 'delete') {
-        const response = await axios.delete(`${process.env.REACT_APP_API_URL}/DeletePriority/${id}`);
+      if (action === "delete") {
+        const response = await axios.delete(
+          `${process.env.REACT_APP_API_URL}/DeletePriority/${id}`
+        );
         if (response.status === 200) {
           message.success("Priority deleted successfully!");
           fetchData();
@@ -85,8 +94,8 @@ const PrioritySetting = () => {
         }
       }
     } catch (error) {
-      console.error('Error:', error);
-      message.error('Error:', error.message);
+      console.error("Error:", error);
+      message.error("Error:", error.message);
     }
   };
 
@@ -116,7 +125,10 @@ const PrioritySetting = () => {
               <Menu.Item key="1" onClick={() => showEditModal(record)}>
                 Update Priority Level
               </Menu.Item>
-              <Menu.Item key="2" onClick={() => handleAction('delete', record.id)}>
+              <Menu.Item
+                key="2"
+                onClick={() => handleAction("delete", record.id)}
+              >
                 Disable Priority Level
               </Menu.Item>
             </Menu>
@@ -136,6 +148,16 @@ const PrioritySetting = () => {
     },
   ];
 
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = (currentPage - 1) * itemsPerPage;
+  const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
+
+  const totalItems = data.length;
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
   return (
     <div className="flex flex-col justify-center content-start py-6 rounded-3xl bg-stone-100">
       <div className="flex gap-2 px-6 text-base leading-6 text-neutral-600 max-md:flex-wrap max-md:px-5">
@@ -148,7 +170,7 @@ const PrioritySetting = () => {
         />
         <div className="max-md:max-w-full">Priority Settings</div>
       </div>
-      <div className="flex flex-col self-center p-6 mt-6 bg-white rounded-3xl  max-md:px-5 w-full">
+      <div className="flex flex-col self-center p-6 mt-6 bg-white rounded-3xl max-md:px-5 w-full">
         <div className="flex gap-4 justify-between items-center mb-6 font-semibold leading-[160%] max-md:flex-wrap max-md:max-w-full">
           <div className="text-4xl capitalize text-neutral-600">
             Priority Levels
@@ -161,11 +183,31 @@ const PrioritySetting = () => {
             Add Priority Level
           </Button>
         </div>
-        <Table dataSource={data} columns={columns} pagination={false} scroll={{ x: true }} />
+        <Table
+          dataSource={currentItems}
+          columns={columns}
+          pagination={false}
+          scroll={{ x: true }}
+        />
+        <div className="flex justify-end">
+          <Pagination
+            current={currentPage}
+            total={totalItems}
+            pageSize={itemsPerPage}
+            onChange={handlePageChange}
+            showSizeChanger={false}
+            style={{ marginTop: 16, textAlign: "center" }}
+          />
+        </div>
       </div>
-      <AddProrityLevel visible={visible} handleCancel={handleCancel} onFinish={onFinish} reloadData={fetchData} />
+      <AddProrityLevel
+        visible={visible}
+        handleCancel={handleCancel}
+        onFinish={onFinish}
+        reloadData={fetchData}
+      />
       <EditPriorityForm
-        isModalVisible={editModalVisible} // Pass editModalVisible as isModalVisible
+        isModalVisible={editModalVisible}
         handleCancel={handleCancel}
         handleUpdatePriority={handleUpdatePriority}
         priorityData={selectedPriority}

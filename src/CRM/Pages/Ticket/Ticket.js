@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Table, Button, Dropdown, Menu, Modal, Spin } from "antd";
+import { Table, Button, Dropdown, Menu, Modal, Spin, Pagination } from "antd";
 import { EllipsisOutlined } from "@ant-design/icons";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -7,19 +7,23 @@ import AddTicket from "./AddTicket";
 import EscalateTicket from "./EscalateTicket";
 import UpdateStatus from "./UpdateStatus";
 import ResolveTicket from "./ResolveTicket";
+import UpdateTicketForm from "./UpdateTicketForm";
 
 const Ticket = () => {
   const navigate = useNavigate();
   const [tickets, setTickets] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [escalateModalVisible, setEscalateModalVisible] = useState(false);
-  const [updateStatusModalVisible, setUpdateStatusModalVisible] =
-    useState(false);
+  const [updateStatusModalVisible, setUpdateStatusModalVisible] = useState(false);
   const [resolveModalVisible, setResolveModalVisible] = useState(false);
-  const [selectedTicketId, setSelectedTicketId] = useState(null);
+  const [updateTicketForm, setUpdateTicketForm] = useState(false);
+  const [selectedTicket, setSelectedTicket] = useState(null); // Track selected ticket details
   const [departments, setDepartments] = useState([]);
   const [loadingTickets, setLoadingTickets] = useState(false);
+
   const name = sessionStorage.getItem("fullname");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(10);
 
   useEffect(() => {
     fetchTickets();
@@ -28,9 +32,7 @@ const Ticket = () => {
 
   const fetchDepartments = async () => {
     try {
-      const response = await axios.get(
-        `${process.env.REACT_APP_API_URL}/GetAllDepartments`
-      );
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/GetAllDepartments`);
       setDepartments(response.data);
     } catch (error) {
       console.error("Error fetching departments:", error);
@@ -40,9 +42,7 @@ const Ticket = () => {
   const fetchTickets = async () => {
     setLoadingTickets(true);
     try {
-      const response = await axios.get(
-        `${process.env.REACT_APP_API_URL}/GetAllTickets`
-      );
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/GetAllTickets`);
       const formattedTickets = response.data.map((ticket) => ({
         ...ticket,
         creationDate: new Date(ticket.creationDate).toLocaleDateString(),
@@ -55,6 +55,14 @@ const Ticket = () => {
     }
   };
 
+  const showEscalateModal = () => {
+    setEscalateModalVisible(true);
+  };
+
+  const handleCancelEscalateModal = () => {
+    setEscalateModalVisible(false);
+  };
+
   const showModal = () => {
     setIsModalVisible(true);
   };
@@ -64,24 +72,28 @@ const Ticket = () => {
   };
 
   const handleMenuClick = async (record, e) => {
-    console.log("Clicked on menu item", e.key, "for record", record);
     switch (e.key) {
       case "1":
-        setSelectedTicketId(record.id);
+        setSelectedTicket(record);
         navigate(`/crm`, {
           state: { screen: "update-ticket", record, ticketId: record.id },
         });
         break;
       case "2":
-        setEscalateModalVisible(true);
-        setSelectedTicketId(record.id);
+        setSelectedTicket(record);
+        showEscalateModal();
         break;
       case "3":
+        setSelectedTicket(record);
         setUpdateStatusModalVisible(true);
         break;
       case "4":
+        setSelectedTicket(record);
         setResolveModalVisible(true);
-        setSelectedTicketId(record.id);
+        break;
+      case "5":
+        setSelectedTicket(record); // Set selected ticket details
+        setUpdateTicketForm(true);
         break;
       default:
         break;
@@ -94,6 +106,11 @@ const Ticket = () => {
 
   const handleUpdateStatusCancel = () => {
     setUpdateStatusModalVisible(false);
+  };
+
+  const handleUpdateTicketCancel = () => {
+    setUpdateTicketForm(false);
+    setSelectedTicket(null); // Clear selected ticket details
   };
 
   const handleResolveCancel = () => {
@@ -132,27 +149,42 @@ const Ticket = () => {
         <Dropdown
           overlay={
             <Menu onClick={(e) => handleMenuClick(record, e)}>
-              <Menu.Item key="1">Update Ticket</Menu.Item>
+              <Menu.Item key="1">View Ticket</Menu.Item>
               <Menu.Item key="2">Escalate Ticket</Menu.Item>
               <Menu.Item key="4">Resolve Ticket</Menu.Item>
+              <Menu.Item key="5">Update Ticket</Menu.Item>
             </Menu>
           }
           trigger={["click"]}
           placement="bottomRight"
         >
-          <div className="flex flex-col justify-center px-9 py-3  max-md:px-5" onClick={(e) => e.preventDefault()}>
-          <div className="flex justify-center items-center px-1.5 w-8 h-8 rounded-3xl bg-stone-100">
-            <img
-              loading="lazy"
-              src="https://cdn.builder.io/api/v1/image/assets/TEMP/8e208e19cb012f5bf1adcf62e6edbe433a5adc1a0f380b3a06e47e7ddfd71e8c?apiKey=0d95acea82cc4b259a61e827c24c5c6c&&apiKey=0d95acea82cc4b259a61e827c24c5c6c"
-              className="w-5 aspect-square"
-            />
-          </div>
+          <div
+            className="flex flex-col justify-center px-9 py-3 max-md:px-5"
+            onClick={(e) => e.preventDefault()}
+          >
+            <div className="flex justify-center items-center px-1.5 w-8 h-8 rounded-3xl bg-stone-100">
+              <img
+                loading="lazy"
+                src="https://cdn.builder.io/api/v1/image/assets/TEMP/8e208e19cb012f5bf1adcf62e6edbe433a5adc1a0f380b3a06e47e7ddfd71e8c?apiKey=0d95acea82cc4b259a61e827c24c5c6c&&apiKey=0d95acea82cc4b259a61e827c24c5c6c"
+                className="w-5 aspect-square"
+              />
+            </div>
           </div>
         </Dropdown>
       ),
     },
   ];
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = (currentPage - 1) * itemsPerPage;
+  const currentItems = tickets.slice(indexOfFirstItem, indexOfLastItem);
+
+  const totalItems = tickets.length;
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
 
   return (
     <div>
@@ -180,27 +212,54 @@ const Ticket = () => {
           <Spin size="large" />
         </div>
       ) : (
-        <Table dataSource={tickets} columns={columns} pagination={false} />
+        <>
+          <Table
+            dataSource={currentItems}
+            columns={columns}
+            pagination={false}
+          />
+          <div className="flex justify-end">
+            <Pagination
+              current={currentPage}
+              total={totalItems}
+              pageSize={itemsPerPage}
+              onChange={handlePageChange}
+              showSizeChanger={false}
+              style={{ marginTop: 16, textAlign: "center" }}
+            />
+          </div>
+        </>
       )}
 
-      <AddTicket isModalVisible={isModalVisible} handleCancel={handleCancel} recordedBy={name} fetchTickets={fetchTickets} />
+      <AddTicket
+        isModalVisible={isModalVisible}
+        handleCancel={handleCancel}
+        recordedBy={name}
+        fetchTickets={fetchTickets}
+      />
 
-      {/* Escalate Ticket Modal */}
       <Modal
         visible={escalateModalVisible}
-        onCancel={handleEscalateCancel}
+        onCancel={handleCancelEscalateModal}
         closable={false}
         footer={null}
       >
         <EscalateTicket
-          handleEscalateCancel={handleEscalateCancel}
+          handleEscalateCancel={handleCancelEscalateModal}
           recordedBy={name}
           departments={departments}
-          ticketId={selectedTicketId}
+          ticketId={selectedTicket?.id}
         />
       </Modal>
 
-      {/* Update Status Modal */}
+      <UpdateTicketForm
+        updateTicketForm={updateTicketForm}
+        handleUpdateTicketCancel={handleUpdateTicketCancel}
+        ticketDetails={selectedTicket} // Pass selected ticket details
+        recordedBy={name}
+        fetchTickets={fetchTickets}
+      />
+
       <Modal
         visible={updateStatusModalVisible}
         onCancel={handleUpdateStatusCancel}
@@ -209,11 +268,10 @@ const Ticket = () => {
       >
         <UpdateStatus
           handleUpdateStatusCancel={handleUpdateStatusCancel}
-          ticketId={selectedTicketId}
+          ticketId={selectedTicket?.id}
         />
       </Modal>
 
-      {/* Resolve Ticket Modal */}
       <Modal
         visible={resolveModalVisible}
         onCancel={handleResolveCancel}
@@ -224,7 +282,7 @@ const Ticket = () => {
           handleResolveCancel={handleResolveCancel}
           recordedBy={name}
           departments={departments}
-          ticketId={selectedTicketId}
+          ticketId={selectedTicket?.id}
         />
       </Modal>
     </div>

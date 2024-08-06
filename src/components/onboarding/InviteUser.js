@@ -1,10 +1,8 @@
-// Imports section
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-// End of imports
 
-const InviteUser = ({ moveToNextStep,loading }) => {
-    // State management
+const InviteUser = ({ moveToNextStep, loading, handleGoBack }) => {
+  // State management
   const [formData, setFormData] = useState({
     emails: [],
     roleId: "",
@@ -13,9 +11,7 @@ const InviteUser = ({ moveToNextStep,loading }) => {
 
   const [roles, setRoles] = useState([]);
 
-  // End of state management
-
-
+  // Fetch roles on component mount
   useEffect(() => {
     axios
       .get(`${process.env.REACT_APP_API_URL}/GetRoles`)
@@ -27,15 +23,15 @@ const InviteUser = ({ moveToNextStep,loading }) => {
       });
   }, []);
 
+  // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
-  
+
     if (!formData.emails.length || !formData.roleId) {
       console.error("Email and roleId are required.");
       return;
     }
 
-   
     axios
       .post(`${process.env.REACT_APP_API_URL}/InviteUsers`, {
         emails: formData.emails,
@@ -50,250 +46,75 @@ const InviteUser = ({ moveToNextStep,loading }) => {
         console.error("Error sending invitation:", error);
       });
   };
-  
-  
+
   return (
-    <div
-      style={{
-        marginRight: "10px",
-        marginTop: "15px",
-      }}
-    >
-      <h2
-        style={{
-          fontSize: "24px",
-          color: "#505050",
-          fontFamily: "outFit, Sans-serif",
-          fontWeight: "600",
-          padding: "5px",
-          marginTop: "10px",
-        }}
-      >
+    <div className="flex flex-col items-center rounded-3xl h-screen max-w-[700px] overflow-hidden p-6">
+      <h2 className="text-2xl font-semibold text-neutral-600 mb-4">
         Invite Users
       </h2>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          borderRadius: "14px",
-          marginTop: "20px",
-        }}
-      >
-        <div
-          style={{
-            borderRadius: "14px",
-            background: "#fff",
-            width: "100%",
-            padding: "15px",
-          }}
-        >
-          <div
-            style={{
-              marginBottom: "10px",
-              padding: "5px",
-            }}
-          >
-            <h2
-              style={{
-                fontSize: "24px",
-                color: "#505050",
-                fontFamily: "outFit, Sans-serif",
-                fontWeight: "600",
-                padding: "5px",
-              }}
+      <div className="flex flex-col bg-white rounded-xl p-6 w-full">
+        <div className="flex flex-col sm:flex-row sm:items-center mb-4">
+          <div className="sm:w-1/2 sm:mr-4">
+            <label className="block text-base font-semibold text-neutral-600 mb-1">
+              Email Address
+            </label>
+            <p className="text-sm text-neutral-400 mb-2">
+              Email addresses of the users you want to invite, separated by
+              commas.
+            </p>
+            <input
+              type="text"
+              className="border border-gray-300 px-3 py-2 rounded-md w-full text-neutral-600"
+              placeholder="Enter email addresses"
+              value={formData.emails.join(", ")}
+              onChange={(e) =>
+                setFormData({
+                  ...formData,
+                  emails: e.target.value.split(",").map((email) => email.trim())
+                })
+              }
+            />
+          </div>
+          <div className="sm:w-1/2 mt-4 sm:mt-0">
+            <label className="block text-base font-semibold text-neutral-600 mb-1">
+              User Group Permissions
+            </label>
+            <p className="text-sm text-neutral-400 mb-2">
+              Assign specific permissions to this group to control access and
+              functionality.
+            </p>
+            <select
+              className="border border-gray-300 px-3 py-2 rounded-md w-full text-neutral-600"
+              value={formData.roleId}
+              onChange={(e) =>
+                setFormData({ ...formData, roleId: e.target.value })
+              }
             >
-              Create Users
-            </h2>
-            <div
-              className="flex flex-col mb-4 w-full sm:flex-row sm:items-center"
-              style={{
-                width: "100%",
-              }}
-            >
-              <div className="mt-4 sm:w-1/2 sm:mr-4">
-                <label
-                  className="font-semibold mr-2"
-                  style={{
-                    fontSize: "16px",
-                    fontWeight: "600",
-                    color: "#505050",
-                    fontFamily: "outFit, Sans-serif",
-                  }}
-                >
-                  Email Address
-                </label>
-                <br />
-                <p
-                  style={{
-                    color: "#a1a1a1",
-                    fontFamily: "outFit, Sans-serif",
-                    fontSize: "14px",
-                    fontWeight: "400",
-                    marginTop: "10px",
-                    marginBottom: "10px",
-                  }}
-                >
-                  Email addresses of the users you want to invite, separated by commas.
-                </p>
-                <input
-                  type="text"
-                  className="border border-gray-300 px-2 py-1 rounded-md w-full"
-                  placeholder="Enter email addresses"
-                  style={{
-                    padding: "10px",
-                  }}
-                  value={formData.emails.join(", ")}
-                  onChange={(e) =>
-                    setFormData({ ...formData, emails: e.target.value.split(",").map(email => email.trim()) })
-                  }
-                />
-              </div>
-              <div className="mt-4 sm:w-1/2">
-                <label
-                  className="font-semibold mr-2"
-                  style={{
-                    fontSize: "16px",
-                    fontWeight: "600",
-                    color: "#505050",
-                    fontFamily: "outFit, Sans-serif",
-                  }}
-                >
-                  User Group Permissions
-                </label>
-                <br />
-                <p
-                  style={{
-                    color: "#a1a1a1",
-                    fontFamily: "outFit, Sans-serif",
-                    fontSize: "14px",
-                    fontWeight: "400",
-                    marginTop: "10px",
-                    marginBottom: "10px",
-                  }}
-                >
-                  Assign specific permissions to this group to control access
-                  and functionality
-                </p>
-                <select
-                  className="border border-gray-300 px-2 py-1 rounded-md w-full"
-                  style={{
-                    padding: "10px",
-                  }}
-                  value={formData.roleId}
-                  onChange={(e) =>
-                    setFormData({ ...formData, roleId: e.target.value })
-                  }
-                >
-                  <option value="">Choose Permission</option>
-                  {roles.map((role) => (
-                    <option key={role.id} value={role.id}>
-                      {role.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </div>
+              <option value="">Choose Permission</option>
+              {roles.map((role) => (
+                <option key={role.id} value={role.id}>
+                  {role.name}
+                </option>
+              ))}
+            </select>
           </div>
         </div>
       </div>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-        }}
-      >
-        <div
-          style={{
-            width: "100%",
-            display: "flex",
-            justifyContent: "end",
-            marginTop: "10px",
-            marginBottom: "20px"
-          }}
-        >
+      <div className="flex flex-col items-center w-full mt-8">
+        <div className="flex gap-4 w-full max-w-md">
           <button
-            type="submit"
-            style={{
-              padding: "7px 20px 7px 20px",
-              background: "#4467a1",
-              borderRadius: "28px",
-              color: "#fff",
-            }}
-            onClick={handleSubmit}
-          disabled={loading}>
-            { loading? "Inviting users .." : "Invite Users"}
-            
+            className="px-8 py-3 bg-stone-100 text-neutral-600 rounded-3xl border border-stone-300 font-semibold hover:bg-stone-200"
+            onClick={handleGoBack}
+          >
+            Review Company
           </button>
-        </div>
-      </div>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-        }}
-      >
-        <div
-          className="flex justify-center"
-          style={{
-            background: "#fff",
-            padding: "15px",
-            borderRadius: "24px",
-            width: "100%",
-            marginTop: "10px",
-          }}
-        >
-          <table style={{ width: "100%", borderCollapse: "collapse" }}>
-            <thead>
-              <tr>
-                <th
-                  style={{
-                    backgroundColor: "#F3F4F6",
-                    padding: "10px",
-                    textAlign: "left",
-                    borderBottom: "2px solid #E5E7EB",
-                  }}
-                >
-                  USER GROUP
-                </th>
-                <th
-                  style={{
-                    backgroundColor: "#F3F4F6",
-                    padding: "10px",
-                    textAlign: "left",
-                    borderBottom: "2px solid #E5E7EB",
-                  }}
-                >
-                  PERMISSION
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td
-                  style={{ padding: "10px", borderBottom: "1px solid #E5E7EB" }}
-                >
-                  Example Group 1
-                </td>
-                <td
-                  style={{ padding: "10px", borderBottom: "1px solid #E5E7EB" }}
-                >
-                  Example Permission 1
-                </td>
-              </tr>
-              <tr>
-                <td
-                  style={{ padding: "10px", borderBottom: "1px solid #E5E7EB" }}
-                >
-                  Example Group 2
-                </td>
-                <td
-                  style={{ padding: "10px", borderBottom: "1px solid #E5E7EB" }}
-                >
-                  Example Permission 2
-                </td>
-              </tr>
-            </tbody>
-          </table>
+          <button
+            className="px-8 py-3 bg-blue-600 text-white rounded-3xl border border-blue-700 font-semibold hover:bg-blue-700"
+            onClick={handleSubmit}
+            disabled={loading}
+          >
+            {loading ? "Inviting users..." : "Invite Users"}
+          </button>
         </div>
       </div>
     </div>

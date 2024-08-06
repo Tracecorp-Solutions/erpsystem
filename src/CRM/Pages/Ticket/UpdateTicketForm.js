@@ -5,28 +5,37 @@ import SelectOption from "../../components/SelectOption";
 import SelectField from "../../components/SelectField";
 import TextAreaField from "../../components/TextAreaField";
 import InputField from "../../components/TextInput";
+import SelectFields2 from "../../components/SelectedFields2";
 
 const { Step } = Steps;
-const { Option } = Select;
-const options = [
+
+const optionsCustomerType = [
   { id: 1, name: "Registered" },
   { id: 2, name: "Non Registered" },
 ];
-const optionsTicketSourch = [
+
+const optionsTicketSource = [
   { id: 1, name: "Phone Call" },
-  { id: 2, name: "walk-in" },
-  { id: 3, name: "Social media" },
+  { id: 2, name: "Walk-in" },
+  { id: 3, name: "Social Media" },
 ];
 
-const AddTicket = ({
-  isModalVisible,
-  handleCancel,
-  recordedBy,
-  fetchTickets,
+const statusOptions = [
+  { id: 1, name: "Open" },
+  { id: 2, name: "In Progress" },
+  { id: 3, name: "Resolved" },
+  { id: 4, name: "Closed" },
+  { id: 5, name: "Escalated" },
+];
+
+const UpdateTicketForm = ({
+  updateTicketForm,
+  handleUpdateTicketCancel,
+  ticketDetails,
+  fetchTickets
 }) => {
   const [currentStep, setCurrentStep] = useState(0);
   const [customerReference, setCustomerReference] = useState("");
-  const [customerDetails, setCustomerDetails] = useState(null);
   const [customerName, setCustomerName] = useState("");
   const [operationalAreaId, setOperationalAreaId] = useState(null);
   const [branchId, setBranchId] = useState(null);
@@ -39,13 +48,17 @@ const AddTicket = ({
   const [phoneNumber, setPhoneNumber] = useState("");
   const [address, setAddress] = useState("");
   const [complaintSubject, setComplaintSubject] = useState("");
-
+  const [loading, setLoading] = useState(false);
+  const [escalationMatrixId, setEscalationMatrixId] = useState(null);
+  const [status, setStatus] = useState(null);
   const [operationalAreas, setOperationalAreas] = useState([]);
   const [branches, setBranches] = useState([]);
   const [territories, setTerritories] = useState([]);
   const [ticketCategories, setTicketCategories] = useState([]);
   const [priorities, setPriorities] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [assignedTo, setAssignedTo] = useState(null);
+  const [ticketId, setTicketId] = useState(null);
+  const [dateCreated, setDateCreated] = useState(null);
 
   useEffect(() => {
     fetchOperationalAreas();
@@ -53,7 +66,29 @@ const AddTicket = ({
     fetchTerritories();
     fetchTicketCategories();
     fetchPriorities();
-  }, []);
+
+    if (ticketDetails) {
+      // Populate form with ticketDetails
+      setCustomerReference(ticketDetails.customerRef || "");
+      setCustomerName(ticketDetails.customerName || "");
+      setOperationalAreaId(ticketDetails.operationAreaId || null);
+      setBranchId(ticketDetails.branchId || null);
+      setTerritoryId(ticketDetails.territoryId || null);
+      setPhoneNumber(ticketDetails.phoneNumber || "");
+      setAddress(ticketDetails.address || "");
+      setTicketCategoryId(ticketDetails.ticketCategoryId || null);
+      setTicketSource(ticketDetails.ticketSource || null);
+      setPriorityId(ticketDetails.priorityId || null);
+      setDescription(ticketDetails.description || "");
+      setComplaintSubject(ticketDetails.complaintSubject || "");
+      setEscalationMatrixId(ticketDetails.escalationMatrixId || null);
+      setStatus(ticketDetails.status || null);
+      setCustomerType(ticketDetails.customerType || null);
+      setAssignedTo(ticketDetails.assignedTo || null);
+      setTicketId(ticketDetails.id || null);
+      setDateCreated(ticketDetails.creationDate || null);
+    }
+  }, [ticketDetails]);
 
   const fetchData = async (url, setState) => {
     setLoading(true);
@@ -75,53 +110,7 @@ const AddTicket = ({
   const fetchTerritories = () => fetchData("/GetTerritories", setTerritories);
   const fetchTicketCategories = () =>
     fetchData("/GetTicketCategories", setTicketCategories);
-  // const fetchPriorities = () => fetchData('/GetPriorities', setPriorities);
-
-  const fetchPriorities = async () => {
-    setLoading(true);
-    try {
-      const response = await axios.get(
-        `${process.env.REACT_APP_API_URL}/GetPriorities`
-      );
-      const transformedarray = response.data.map((item) => ({
-        id: item.id,
-        name: item.priorityName,
-        prioritydescription: item.priorityDescription,
-      }));
-      setPriorities(transformedarray);
-    } catch (error) {
-      console.error(`Error fetching data from }:`, error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const fetchCustomerDetails = async (reference) => {
-    setLoading(true);
-    try {
-      const response = await axios.get(
-        `${process.env.REACT_APP_API_URL}/ValidateCustomer/${reference}`
-      );
-      setCustomerDetails(response.data);
-      setCustomerName(response.data.name);
-    } catch (error) {
-      console.error("Error fetching customer details:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleCustomerReferenceChange = (value) => {
-    setCustomerReference(value);
-    setCustomerDetails(null);
-    setCustomerName("");
-  };
-
-  const handleFetchCustomerDetails = () => {
-    if (customerReference) {
-      fetchCustomerDetails(customerReference);
-    }
-  };
+  const fetchPriorities = () => fetchData("/GetPriorities", setPriorities);
 
   const handleSubmit = () => {
     if (
@@ -137,8 +126,6 @@ const AddTicket = ({
     }
 
     const formData = {
-      customerType,
-      customerRef: customerReference,
       customerName,
       operationAreaId: operationalAreaId,
       branchId,
@@ -150,27 +137,33 @@ const AddTicket = ({
       priorityId: priorityId || 0,
       description,
       complaintSubject,
-      recordedBy,
+      customerRef: customerReference,
+      escalationMatrixId,
+      status,
+      customerType,
+      assignedTo,
+      dateCreated,
+      id: ticketId,
     };
 
     setLoading(true);
     axios
-      .post(`${process.env.REACT_APP_API_URL}/CreateTicket`, formData)
+      .put(`${process.env.REACT_APP_API_URL}/UpdateTicket`, formData)
       .then((response) => {
-        message.success("Data successfully saved");
+        message.success("Ticket successfully updated");
         fetchTickets();
-        handleCancel();
+        handleUpdateTicketCancel();
       })
       .catch((error) => {
-        console.error("Error saving data:", error);
-        message.error("Error saving data");
+        console.error("Error updating ticket:", error);
+        message.error("Error updating ticket");
       })
       .finally(() => setLoading(false));
   };
 
   return (
     <Modal
-      visible={isModalVisible}
+      visible={updateTicketForm}
       closable={false}
       footer={null}
       width={500}
@@ -180,12 +173,12 @@ const AddTicket = ({
         <div className="flex flex-col justify-center items-center bg-white rounded-3xl max-w-[820px]">
           <div className="flex flex-col self-stretch pt-6 w-full text-4xl font-semibold leading-[57.6px] text-neutral-600 max-md:max-w-full">
             <div className="flex gap-5 justify-between self-center px-5 w-full max-w-screen-sm max-md:flex-wrap max-md:max-w-full">
-              <div>New Ticket</div>
+              <div>Update Ticket</div>
               <img
                 loading="lazy"
                 src="https://cdn.builder.io/api/v1/image/assets/TEMP/9cb4c3a052fc4ce0311e93e84c7d1ec0d87c500974fc2472887163b10b65c326?apiKey=0d95acea82cc4b259a61e827c24c5c6c&"
                 className="shrink-0 my-auto w-8 aspect-square cursor-pointer"
-                onClick={handleCancel}
+                onClick={handleUpdateTicketCancel}
                 alt="Cancel"
               />
             </div>
@@ -199,39 +192,22 @@ const AddTicket = ({
 
           {currentStep === 0 && (
             <div className="flex flex-col items-center pb-16 w-full">
-              <SelectOption
-                label="Customer type"
+              <SelectField
+                label="Customer Type"
                 value={customerType}
-                options={options}
+                options={optionsCustomerType}
                 onChange={setCustomerType}
               />
-              {customerType === "Registered" && (
-                <>
-                  <div className="mt-4 text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">
-                    Customer Reference
-                  </div>
-                  <div
-                    className="flex justify-between gap-4"
-                    style={{ width: "100%", marginTop: "8px" }}
-                  >
-                    <Input
-                      placeholder="Enter customer reference"
-                      className="p-3"
-                      value={customerReference}
-                      onChange={(e) =>
-                        handleCustomerReferenceChange(e.target.value)
-                      }
-                    />
-                    <Button
-                      type="primary"
-                      onClick={handleFetchCustomerDetails}
-                      className="mt-1"
-                    >
-                      Validate Customer
-                    </Button>
-                  </div>
-                </>
-              )}
+              <div className="mt-4 text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">
+                Customer Reference:
+              </div>
+              <Input
+                placeholder="Enter customer reference"
+                className="p-3"
+                style={{ width: "100%", marginTop: "8px" }}
+                value={customerReference}
+                onChange={(e) => setCustomerReference(e.target.value)}
+              />
               <div className="mt-4 text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">
                 Customer Name:
               </div>
@@ -242,7 +218,6 @@ const AddTicket = ({
                 value={customerName}
                 onChange={(e) => setCustomerName(e.target.value)}
               />
-
               <SelectField
                 label="Area"
                 value={operationalAreaId}
@@ -290,10 +265,10 @@ const AddTicket = ({
               <SelectOption
                 label="Ticket Source"
                 value={ticketSource}
-                options={optionsTicketSourch}
+                options={optionsTicketSource}
                 onChange={setTicketSource}
               />
-              <SelectField
+              <SelectFields2
                 label="Assign Priority"
                 value={priorityId}
                 options={priorities}
@@ -303,6 +278,12 @@ const AddTicket = ({
                 label="Description"
                 value={description}
                 onChange={setDescription}
+              />
+              <SelectField
+                label="Status"
+                value={status}
+                options={statusOptions}
+                onChange={setStatus}
               />
             </div>
           )}
@@ -318,14 +299,14 @@ const AddTicket = ({
                 </Button>
               )}
               {currentStep < 1 ? (
-                <div className="flex justify-center w-full">
+                <div className="w-full flex justify-center">
                   <Button
-                  type="primary"
-                  onClick={() => setCurrentStep(currentStep + 1)}
-                  className="px-8 py-4 font-semibold text-white rounded-3xl bg-slate-500 w-full max-md:px-5"
-                >
-                  Next
-                </Button>
+                    type="primary"
+                    onClick={() => setCurrentStep(currentStep + 1)}
+                    className="px-8 py-4 font-semibold text-white rounded-3xl bg-slate-500 max-md:px-5 w-full"
+                  >
+                    Next
+                  </Button>
                 </div>
               ) : (
                 <Button
@@ -333,7 +314,7 @@ const AddTicket = ({
                   onClick={handleSubmit}
                   className="px-8 py-4 font-semibold text-white rounded-3xl bg-slate-500 max-md:px-5"
                 >
-                  Save Complainant
+                  Save Changes
                 </Button>
               )}
             </div>
@@ -344,4 +325,4 @@ const AddTicket = ({
   );
 };
 
-export default AddTicket;
+export default UpdateTicketForm;
