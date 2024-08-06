@@ -104,7 +104,9 @@ const ProfileLayout = () => {
   return (
     <div
       style={{
+        background: "#A1A1A1",
       }}
+      className="h-screen"
     >
       {currentStep <= maxSteps && <Header userData={userData} />}
       <div>
