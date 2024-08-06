@@ -65,8 +65,7 @@ const ProfileLayout = () => {
     setCurrentStep(currentStep + 1);
   };
 
-  const HandleSubmit = async (e) => {
-    e.preventDefault();
+  const HandleSubmit = async () => { // No 'e' parameter
     setloading(true);
     try {
       const formData = new FormData();
@@ -90,9 +89,11 @@ const ProfileLayout = () => {
       setloading(false);
       moveToNextStep();
     } catch (error) {
-      console.error("Error creating user:", error.data);
+      console.error("Error creating user:", error);
+      setloading(false);
     }
   };
+  
 
   const moveToPreviousStep = () => {
     if (currentStep > 1) {
