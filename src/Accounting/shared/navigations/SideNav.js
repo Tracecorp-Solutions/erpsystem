@@ -234,7 +234,7 @@ function SideNav() {
                   <ReceiptText className="shrink-0 self-start w-6 aspect-square" />
                   <button
                     className="hover:bg-green-300"
-                    onClick={() => navigate("/", { state: { screen: "general-ledger" } })}
+                    onClick={() => navigate("/Dashboardlayout", { state: { screen: "ledger" } })}
                   >
                     General Ledger
                   </button>
