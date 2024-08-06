@@ -1,4 +1,5 @@
 import * as React from "react";
+import { LineChart } from "./LineChart";
 
 function CrmDashboard() {
 return (
@@ -126,12 +127,13 @@ return (
       </div>
       <div className="flex flex-col justify-center px-8 py-9 mt-5 bg-white rounded-3xl max-md:px-5 max-md:max-w-full">
         <div className="flex relative flex-col pb-11 min-h-[373px] max-md:max-w-full">
-          <img
+          <LineChart/>
+          {/* <img
             loading="lazy"
             srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/64a27504-4291-4e02-9c3c-23aaa0ceb5be?apiKey=0d95acea82cc4b259a61e827c24c5c6c&&apiKey=0d95acea82cc4b259a61e827c24c5c6c&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/64a27504-4291-4e02-9c3c-23aaa0ceb5be?apiKey=0d95acea82cc4b259a61e827c24c5c6c&&apiKey=0d95acea82cc4b259a61e827c24c5c6c&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/64a27504-4291-4e02-9c3c-23aaa0ceb5be?apiKey=0d95acea82cc4b259a61e827c24c5c6c&&apiKey=0d95acea82cc4b259a61e827c24c5c6c&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/64a27504-4291-4e02-9c3c-23aaa0ceb5be?apiKey=0d95acea82cc4b259a61e827c24c5c6c&&apiKey=0d95acea82cc4b259a61e827c24c5c6c&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/64a27504-4291-4e02-9c3c-23aaa0ceb5be?apiKey=0d95acea82cc4b259a61e827c24c5c6c&&apiKey=0d95acea82cc4b259a61e827c24c5c6c&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/64a27504-4291-4e02-9c3c-23aaa0ceb5be?apiKey=0d95acea82cc4b259a61e827c24c5c6c&&apiKey=0d95acea82cc4b259a61e827c24c5c6c&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/64a27504-4291-4e02-9c3c-23aaa0ceb5be?apiKey=0d95acea82cc4b259a61e827c24c5c6c&&apiKey=0d95acea82cc4b259a61e827c24c5c6c&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/64a27504-4291-4e02-9c3c-23aaa0ceb5be?apiKey=0d95acea82cc4b259a61e827c24c5c6c&&apiKey=0d95acea82cc4b259a61e827c24c5c6c"
             className="object-cover absolute inset-0 size-full"
           />
-          <div className="relative shrink-0 bg-white h-[331px] max-md:max-w-full" />
+          <div className="relative shrink-0 bg-white h-[331px] max-md:max-w-full" /> */}
         </div>
       </div>
       <div className="mt-5 max-md:max-w-full">
