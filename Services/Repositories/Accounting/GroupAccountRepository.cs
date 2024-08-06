@@ -38,6 +38,7 @@ namespace Services.Repositories.Accounting
                 Name = grpView.Name,
                 Behaviour = grpView.Behaviour,
                 Description = grpView.Description,
+                GroupCode = grpView.GroupCode
             };
             _context.GroupAccounts.Add(groupAccount);
             await _context.SaveChangesAsync();

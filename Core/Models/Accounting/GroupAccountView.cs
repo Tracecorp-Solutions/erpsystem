@@ -10,6 +10,8 @@ namespace Core.Models.Accounting
     {
         public string Name { get; set; }
 
+        public string? GroupCode { get; set; }
+
         public string Behaviour { get; set; } // Debit or Credit
 
         public string Description { get; set; }

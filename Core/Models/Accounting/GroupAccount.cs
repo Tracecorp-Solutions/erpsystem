@@ -9,6 +9,8 @@ namespace Core.Models.Accounting
         public int Id { get; set; }
         public string Name { get; set; }
 
+        public string? GroupCode { get; set; }
+
         public string Behaviour { get; set; } // Debit or Credit
 
         public string Description { get; set; }
