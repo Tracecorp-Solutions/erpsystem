@@ -48,7 +48,7 @@ const InviteUser = ({ moveToNextStep, loading, handleGoBack }) => {
   };
 
   return (
-    <div className="flex flex-col items-center rounded-3xl max-w-[700px] overflow-hidden p-6">
+    <div className="flex flex-col items-center rounded-3xl h-screen max-w-[700px] overflow-hidden p-6">
       <h2 className="text-2xl font-semibold text-neutral-600 mb-4">
         Invite Users
       </h2>

@@ -104,7 +104,6 @@ const ProfileLayout = () => {
   return (
     <div
       style={{
-        background: "#A1A1A1",
       }}
     >
       {currentStep <= maxSteps && <Header userData={userData} />}
