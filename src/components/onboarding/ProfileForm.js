@@ -2,6 +2,7 @@ import React, { useState, useRef } from "react";
 
 const ProfileCompletionForm = ({ HandleSubmit, userData, setUserData, loading }) => {
   const [imagePreview, setImagePreview] = useState(null);
+  const [errors, setErrors] = useState({});
   const fileInputRef = useRef(null);
 
   const handleButtonClick = () => {
@@ -10,12 +11,44 @@ const ProfileCompletionForm = ({ HandleSubmit, userData, setUserData, loading })
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
-    const imageUrl = URL.createObjectURL(file);
-    setUserData({
-      ...userData,
-      file: file,
-    });
-    setImagePreview(imageUrl);
+    if (file) {
+      const imageUrl = URL.createObjectURL(file);
+      setUserData({
+        ...userData,
+        file: file,
+      });
+      setImagePreview(imageUrl);
+    }
+  };
+
+  const validate = () => {
+    const newErrors = {};
+    if (!userData.fullName) newErrors.fullName = "Full Name is required.";
+    if (!userData.jobTitle) newErrors.jobTitle = "Job Title is required.";
+    if (!userData.email) {
+      newErrors.email = "Email is required.";
+    } else if (!/\S+@\S+\.\S+/.test(userData.email)) {
+      newErrors.email = "Email address is invalid.";
+    }
+    if (!userData.phoneNumber) {
+      newErrors.phoneNumber = "Phone Number is required.";
+    } else if (!/^\d{10}$/.test(userData.phoneNumber)) {
+      newErrors.phoneNumber = "Phone Number must be 10 digits.";
+    }
+    if (!userData.dateOfBirth) newErrors.dateOfBirth = "Date of Birth is required.";
+    else if (new Date(userData.dateOfBirth) > new Date()) {
+      newErrors.dateOfBirth = "Date of Birth cannot be in the future.";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (validate()) {
+      HandleSubmit(e);
+    }
   };
 
   const handleChange = (e) => {
@@ -93,6 +126,7 @@ const ProfileCompletionForm = ({ HandleSubmit, userData, setUserData, loading })
                     style={{ padding: "10px", borderRadius: "12px" }}
                     placeholder="Enter your full name"
                   />
+                  {errors.fullName && <p style={{ color: 'red' }}>{errors.fullName}</p>}
                 </div>
                 <div className="mb-4">
                   <label
@@ -116,6 +150,7 @@ const ProfileCompletionForm = ({ HandleSubmit, userData, setUserData, loading })
                     style={{ padding: "10px", borderRadius: "12px" }}
                     placeholder="Enter job title"
                   />
+                  {errors.jobTitle && <p style={{ color: 'red' }}>{errors.jobTitle}</p>}
                 </div>
                 <div className="mb-4">
                   <label
@@ -168,6 +203,7 @@ const ProfileCompletionForm = ({ HandleSubmit, userData, setUserData, loading })
                     placeholder="Enter your email address"
                     disabled
                   />
+                  {errors.email && <p style={{ color: 'red' }}>{errors.email}</p>}
                 </div>
                 <div className="mb-4">
                   <label
@@ -191,6 +227,7 @@ const ProfileCompletionForm = ({ HandleSubmit, userData, setUserData, loading })
                     style={{ padding: "10px", borderRadius: "12px" }}
                     placeholder="Enter your phone number"
                   />
+                  {errors.phoneNumber && <p style={{ color: 'red' }}>{errors.phoneNumber}</p>}
                 </div>
                 <div className="mb-4">
                   <label
@@ -214,6 +251,7 @@ const ProfileCompletionForm = ({ HandleSubmit, userData, setUserData, loading })
                     className="border border-gray-300 rounded px-3 py-1 w-full"
                     style={{ padding: "10px", borderRadius: "12px" }}
                   />
+                  {errors.dateOfBirth && <p style={{ color: 'red' }}>{errors.dateOfBirth}</p>}
                 </div>
               </div>
             </div>
@@ -326,7 +364,7 @@ const ProfileCompletionForm = ({ HandleSubmit, userData, setUserData, loading })
               color: "#fff",
               marginTop: "10px",
             }}
-            onClick={HandleSubmit}
+            onClick={handleSubmit}
             disabled={loading}
           >
             {loading ? 'Saving Profile...' : 'Save Profile'}

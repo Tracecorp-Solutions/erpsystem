@@ -1,4 +1,5 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
+import axios from "axios";
 
 const RegisterCompany = ({
   HandleSubmit,
@@ -9,7 +10,23 @@ const RegisterCompany = ({
   handleGoBack
 }) => {
   const [imagePreview, setImagePreview] = useState(null);
+  const [countries, setCountries] = useState([]);
   const fileInputRef = useRef(null);
+
+  useEffect(() => {
+    // Fetch list of countries from the API
+    const fetchCountries = async () => {
+      try {
+        const response = await axios.get("https://restcountries.com/v3.1/all");
+        const countryList = response.data.map((country) => country.name.common);
+        setCountries(countryList.sort());
+      } catch (error) {
+        console.error("Error fetching countries:", error);
+      }
+    };
+
+    fetchCountries();
+  }, []);
 
   const handleButtonClick = () => {
     fileInputRef.current.click();
@@ -35,7 +52,7 @@ const RegisterCompany = ({
 
   return (
     <div className="flex justify-center bg-gray">
-      <div className="w-full max-w-4xl p-6 bg-white rounded-lg">
+      <div className="w-full max-w-4xl bg-white rounded-lg">
         <h1 className="text-3xl font-semibold text-gray-700 mb-6">
           Register Company
         </h1>
@@ -79,12 +96,11 @@ const RegisterCompany = ({
                 required
               >
                 <option value="">Select Country</option>
-                <option value="USA">USA</option>
-                <option value="UK">UK</option>
-                <option value="Canada">Canada</option>
-                <option value="Australia">Australia</option>
-                <option value="Germany">Germany</option>
-                <option value="Uganda">Uganda</option>
+                {countries.map((country) => (
+                  <option key={country} value={country}>
+                    {country}
+                  </option>
+                ))}
               </select>
             </div>
           </div>
