@@ -10,15 +10,20 @@ const { Step } = Steps;
 const { Option } = Select;
 const options = [
   { id: 1, name: "Registered" },
-  { id: 2, name: "Non Registered" }
+  { id: 2, name: "Non Registered" },
 ];
 const optionsTicketSourch = [
   { id: 1, name: "Phone Call" },
   { id: 2, name: "walk-in" },
-  { id: 3, name: "Social media" }
+  { id: 3, name: "Social media" },
 ];
 
-const AddTicket = ({ isModalVisible, handleCancel, recordedBy, fetchTickets }) => {
+const AddTicket = ({
+  isModalVisible,
+  handleCancel,
+  recordedBy,
+  fetchTickets,
+}) => {
   const [currentStep, setCurrentStep] = useState(0);
   const [customerReference, setCustomerReference] = useState("");
   const [customerDetails, setCustomerDetails] = useState(null);
@@ -50,11 +55,12 @@ const AddTicket = ({ isModalVisible, handleCancel, recordedBy, fetchTickets }) =
     fetchPriorities();
   }, []);
 
-
   const fetchData = async (url, setState) => {
     setLoading(true);
     try {
-      const response = await axios.get(`${process.env.REACT_APP_API_URL}${url}`);
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}${url}`
+      );
       setState(response.data);
     } catch (error) {
       console.error(`Error fetching data from ${url}:`, error);
@@ -63,24 +69,26 @@ const AddTicket = ({ isModalVisible, handleCancel, recordedBy, fetchTickets }) =
     }
   };
 
-
-  const fetchOperationalAreas = () => fetchData('/GetOperationAreas', setOperationalAreas);
-  const fetchBranches = () => fetchData('/GetBranches', setBranches);
-  const fetchTerritories = () => fetchData('/GetTerritories', setTerritories);
-  const fetchTicketCategories = () => fetchData('/GetTicketCategories', setTicketCategories);
+  const fetchOperationalAreas = () =>
+    fetchData("/GetOperationAreas", setOperationalAreas);
+  const fetchBranches = () => fetchData("/GetBranches", setBranches);
+  const fetchTerritories = () => fetchData("/GetTerritories", setTerritories);
+  const fetchTicketCategories = () =>
+    fetchData("/GetTicketCategories", setTicketCategories);
   // const fetchPriorities = () => fetchData('/GetPriorities', setPriorities);
 
   const fetchPriorities = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(`${process.env.REACT_APP_API_URL}/GetPriorities`);
-      const transformedarray = response.data.map(item => ({
-        id : item.id,
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}/GetPriorities`
+      );
+      const transformedarray = response.data.map((item) => ({
+        id: item.id,
         name: item.priorityName,
-        prioritydescription : item.priorityDescription
+        prioritydescription: item.priorityDescription,
       }));
       setPriorities(transformedarray);
-  
     } catch (error) {
       console.error(`Error fetching data from }:`, error);
     } finally {
@@ -91,7 +99,9 @@ const AddTicket = ({ isModalVisible, handleCancel, recordedBy, fetchTickets }) =
   const fetchCustomerDetails = async (reference) => {
     setLoading(true);
     try {
-      const response = await axios.get(`${process.env.REACT_APP_API_URL}/ValidateCustomer/${reference}`);
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}/ValidateCustomer/${reference}`
+      );
       setCustomerDetails(response.data);
       setCustomerName(response.data.name);
     } catch (error) {
@@ -114,7 +124,14 @@ const AddTicket = ({ isModalVisible, handleCancel, recordedBy, fetchTickets }) =
   };
 
   const handleSubmit = () => {
-    if (!customerName || !operationalAreaId || !branchId || !territoryId || !complaintSubject || !description) {
+    if (
+      !customerName ||
+      !operationalAreaId ||
+      !branchId ||
+      !territoryId ||
+      !complaintSubject ||
+      !description
+    ) {
       message.error("Please fill all required fields");
       return;
     }
@@ -156,7 +173,7 @@ const AddTicket = ({ isModalVisible, handleCancel, recordedBy, fetchTickets }) =
       visible={isModalVisible}
       closable={false}
       footer={null}
-      width={700}
+      width={500}
       bodyStyle={{ padding: 0 }}
     >
       <Spin spinning={loading}>
@@ -182,64 +199,140 @@ const AddTicket = ({ isModalVisible, handleCancel, recordedBy, fetchTickets }) =
 
           {currentStep === 0 && (
             <div className="flex flex-col items-center pb-16 w-full">
-              <SelectOption label="Customer type" value={customerType} options={options} onChange={setCustomerType} />
+              <SelectOption
+                label="Customer type"
+                value={customerType}
+                options={options}
+                onChange={setCustomerType}
+              />
               {customerType === "Registered" && (
-
                 <>
-                  <div className="mt-4 text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">Customer Reference</div>
-                  <div className="flex justify-between gap-4" style={{ width: "100%", marginTop: "8px" }}>
+                  <div className="mt-4 text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">
+                    Customer Reference
+                  </div>
+                  <div
+                    className="flex justify-between gap-4"
+                    style={{ width: "100%", marginTop: "8px" }}
+                  >
                     <Input
                       placeholder="Enter customer reference"
                       className="p-3"
                       value={customerReference}
-                      onChange={(e) => handleCustomerReferenceChange(e.target.value)}
+                      onChange={(e) =>
+                        handleCustomerReferenceChange(e.target.value)
+                      }
                     />
-                    <Button type="primary" onClick={handleFetchCustomerDetails} className="mt-1">
+                    <Button
+                      type="primary"
+                      onClick={handleFetchCustomerDetails}
+                      className="mt-1"
+                    >
                       Validate Customer
                     </Button>
                   </div>
                 </>
               )}
-                  <div className="mt-4 text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">Customer Name:</div>
-                  <Input
-                    placeholder="Enter customer name"
-                    className="p-3"
-                    style={{ width: "100%", marginTop: "8px" }}
-                    value={customerName}
-                    onChange={(e) => setCustomerName(e.target.value)}
-                  />
+              <div className="mt-4 text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">
+                Customer Name:
+              </div>
+              <Input
+                placeholder="Enter customer name"
+                className="p-3"
+                style={{ width: "100%", marginTop: "8px" }}
+                value={customerName}
+                onChange={(e) => setCustomerName(e.target.value)}
+              />
 
-              <SelectField label="Area" value={operationalAreaId} options={operationalAreas} onChange={setOperationalAreaId} />
-              <SelectField label="Branch" value={branchId} options={branches} onChange={setBranchId} />
-              <SelectField label="Territory" value={territoryId} options={territories} onChange={setTerritoryId} />
-              <InputField label="Phone Number" value={phoneNumber} onChange={setPhoneNumber} />
-              <TextAreaField label="Address" value={address} onChange={setAddress} />
+              <SelectField
+                label="Area"
+                value={operationalAreaId}
+                options={operationalAreas}
+                onChange={setOperationalAreaId}
+              />
+              <SelectField
+                label="Branch"
+                value={branchId}
+                options={branches}
+                onChange={setBranchId}
+              />
+              <SelectField
+                label="Territory"
+                value={territoryId}
+                options={territories}
+                onChange={setTerritoryId}
+              />
+              <InputField
+                label="Phone Number"
+                value={phoneNumber}
+                onChange={setPhoneNumber}
+              />
+              <TextAreaField
+                label="Address"
+                value={address}
+                onChange={setAddress}
+              />
             </div>
           )}
 
           {currentStep === 1 && (
             <div className="flex flex-col items-center pb-16 w-full">
-              <InputField label="Ticket Subject" value={complaintSubject} onChange={setComplaintSubject} />
-              <SelectField label="Ticket Category" value={ticketCategoryId} options={ticketCategories} onChange={setTicketCategoryId} />
-              <SelectOption label="Ticket Source" value={ticketSource} options={optionsTicketSourch} onChange={setTicketSource} />
-              <SelectField label="Assign Priority" value={priorityId} options={priorities} onChange={setPriorityId} />
-              <TextAreaField label="Description" value={description} onChange={setDescription} />
+              <InputField
+                label="Ticket Subject"
+                value={complaintSubject}
+                onChange={setComplaintSubject}
+              />
+              <SelectField
+                label="Ticket Category"
+                value={ticketCategoryId}
+                options={ticketCategories}
+                onChange={setTicketCategoryId}
+              />
+              <SelectOption
+                label="Ticket Source"
+                value={ticketSource}
+                options={optionsTicketSourch}
+                onChange={setTicketSource}
+              />
+              <SelectField
+                label="Assign Priority"
+                value={priorityId}
+                options={priorities}
+                onChange={setPriorityId}
+              />
+              <TextAreaField
+                label="Description"
+                value={description}
+                onChange={setDescription}
+              />
             </div>
           )}
 
           <div className="flex justify-center items-center self-stretch px-16 py-6 mt-16 w-full text-base leading-6 bg-stone-100 max-md:px-5 max-md:mt-10 max-md:max-w-full">
             <div className="flex justify-between max-w-full w-full max-md:max-w-full">
               {currentStep > 0 && (
-                <Button onClick={() => setCurrentStep(currentStep - 1)} className="px-8 py-4 whitespace-nowrap rounded-3xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 max-md:px-5">
+                <Button
+                  onClick={() => setCurrentStep(currentStep - 1)}
+                  className="px-8 py-4 whitespace-nowrap rounded-3xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 max-md:px-5"
+                >
                   Back
                 </Button>
               )}
               {currentStep < 1 ? (
-                <Button type="primary" onClick={() => setCurrentStep(currentStep + 1)} className="px-8 py-4 font-semibold text-white rounded-3xl bg-slate-500 max-md:px-5">
+                <div className="flex justify-center w-full">
+                  <Button
+                  type="primary"
+                  onClick={() => setCurrentStep(currentStep + 1)}
+                  className="px-8 py-4 font-semibold text-white rounded-3xl bg-slate-500 w-full max-md:px-5"
+                >
                   Next
                 </Button>
+                </div>
               ) : (
-                <Button type="primary" onClick={handleSubmit} className="px-8 py-4 font-semibold text-white rounded-3xl bg-slate-500 max-md:px-5">
+                <Button
+                  type="primary"
+                  onClick={handleSubmit}
+                  className="px-8 py-4 font-semibold text-white rounded-3xl bg-slate-500 max-md:px-5"
+                >
                   Save Complainant
                 </Button>
               )}
@@ -250,6 +343,5 @@ const AddTicket = ({ isModalVisible, handleCancel, recordedBy, fetchTickets }) =
     </Modal>
   );
 };
-
 
 export default AddTicket;

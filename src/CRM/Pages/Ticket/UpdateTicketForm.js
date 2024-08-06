@@ -5,6 +5,7 @@ import SelectOption from "../../components/SelectOption";
 import SelectField from "../../components/SelectField";
 import TextAreaField from "../../components/TextAreaField";
 import InputField from "../../components/TextInput";
+import SelectFields2 from "../../components/SelectedFields2";
 
 const { Step } = Steps;
 
@@ -24,14 +25,14 @@ const statusOptions = [
   { id: 2, name: "In Progress" },
   { id: 3, name: "Resolved" },
   { id: 4, name: "Closed" },
-  { id: 5, name: "Escalated" }
+  { id: 5, name: "Escalated" },
 ];
 
 const UpdateTicketForm = ({
   updateTicketForm,
   handleUpdateTicketCancel,
   ticketDetails,
-  recordedBy
+  fetchTickets
 }) => {
   const [currentStep, setCurrentStep] = useState(0);
   const [customerReference, setCustomerReference] = useState("");
@@ -142,7 +143,7 @@ const UpdateTicketForm = ({
       customerType,
       assignedTo,
       dateCreated,
-      id: ticketId
+      id: ticketId,
     };
 
     setLoading(true);
@@ -150,6 +151,7 @@ const UpdateTicketForm = ({
       .put(`${process.env.REACT_APP_API_URL}/UpdateTicket`, formData)
       .then((response) => {
         message.success("Ticket successfully updated");
+        fetchTickets();
         handleUpdateTicketCancel();
       })
       .catch((error) => {
@@ -164,7 +166,7 @@ const UpdateTicketForm = ({
       visible={updateTicketForm}
       closable={false}
       footer={null}
-      width={700}
+      width={500}
       bodyStyle={{ padding: 0 }}
     >
       <Spin spinning={loading}>
@@ -266,7 +268,7 @@ const UpdateTicketForm = ({
                 options={optionsTicketSource}
                 onChange={setTicketSource}
               />
-              <SelectField
+              <SelectFields2
                 label="Assign Priority"
                 value={priorityId}
                 options={priorities}
@@ -297,13 +299,15 @@ const UpdateTicketForm = ({
                 </Button>
               )}
               {currentStep < 1 ? (
-                <Button
-                  type="primary"
-                  onClick={() => setCurrentStep(currentStep + 1)}
-                  className="px-8 py-4 font-semibold text-white rounded-3xl bg-slate-500 max-md:px-5"
-                >
-                  Next
-                </Button>
+                <div className="w-full flex justify-center">
+                  <Button
+                    type="primary"
+                    onClick={() => setCurrentStep(currentStep + 1)}
+                    className="px-8 py-4 font-semibold text-white rounded-3xl bg-slate-500 max-md:px-5 w-full"
+                  >
+                    Next
+                  </Button>
+                </div>
               ) : (
                 <Button
                   type="primary"
