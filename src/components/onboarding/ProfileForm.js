@@ -75,301 +75,151 @@ const ProfileCompletionForm = ({ HandleSubmit, userData, setUserData, loading })
   const minDateString = minDate.toISOString().split('T')[0]; // YYYY-MM-DD format
 
   return (
-    <div style={{ marginRight: "10px", marginTop: "20px" }}>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-        }}
-      >
-        <div
-          className="flex justify-center"
-          style={{
-            background: "#fff",
-            padding: "10px",
-            borderRadius: "24px",
-            width: "70%",
-          }}
-        >
-          <div style={{ width: "100%" }}>
-            <h2
-              className="text-lg font-semibold mb-2"
-              style={{
-                fontSize: "24px",
-                fontWeight: "600",
-                fontFamily: "outFit, Sans-serif",
-                color: "#505050",
-              }}
-            >
-              Personal Information
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <div className="mb-4">
-                  <label
-                    className="font-semibold"
-                    style={{
-                      color: "#505050",
-                      fontFamily: "outFit, Sans-serif",
-                      fontSize: "16px",
-                      fontWeight: "600",
-                    }}
-                  >
-                    Full Name
-                  </label>
-                  <input
-                    type="text"
-                    name="fullName"
-                    value={userData.fullName}
-                    onChange={handleChange}
-                    className="border border-gray-300 rounded px-3 py-1 w-full"
-                    style={{ padding: "10px", borderRadius: "12px" }}
-                    placeholder="Enter your full name"
-                  />
-                  {errors.fullName && <p style={{ color: 'red' }}>{errors.fullName}</p>}
-                </div>
-                <div className="mb-4">
-                  <label
-                    className="font-semibold"
-                    style={{
-                      color: "#505050",
-                      fontFamily: "outFit, Sans-serif",
-                      fontSize: "16px",
-                      fontWeight: "600",
-                    }}
-                  >
-                    Job Title
-                  </label>
-                  <input
-                    type="text"
-                    name="jobTitle"
-                    value={userData.jobTitle}
-                    onChange={handleChange}
-                    required
-                    className="border border-gray-300 rounded px-3 py-1 w-full"
-                    style={{ padding: "10px", borderRadius: "12px" }}
-                    placeholder="Enter job title"
-                  />
-                  {errors.jobTitle && <p style={{ color: 'red' }}>{errors.jobTitle}</p>}
-                </div>
-                <div className="mb-4">
-                  <label
-                    className="font-semibold"
-                    style={{
-                      color: "#505050",
-                      fontFamily: "outFit, Sans-serif",
-                      fontSize: "16px",
-                      fontWeight: "600",
-                    }}
-                  >
-                    Gender
-                  </label>
-                  <select
-                    name="gender"
-                    value={userData.gender}
-                    onChange={handleChange}
-                    required
-                    className="border border-gray-300 rounded px-3 py-1 w-full"
-                    style={{ padding: "10px", borderRadius: "12px" }}
-                  >
-                    <option value="">Select Gender</option>
-                    <option value="male">Male</option>
-                    <option value="female">Female</option>
-                    <option value="other">Other</option>
-                  </select>
-                </div>
-              </div>
-              <div>
-                <div className="mb-4">
-                  <label
-                    className="font-semibold"
-                    style={{
-                      color: "#505050",
-                      fontFamily: "outFit, Sans-serif",
-                      fontSize: "16px",
-                      fontWeight: "600",
-                    }}
-                  >
-                    Email Address
-                  </label>
-                  <input
-                    type="email"
-                    name="email"
-                    value={userData.email}
-                    required
-                    onChange={handleChange}
-                    className="border border-gray-300 rounded px-3 py-1 w-full"
-                    style={{ padding: "10px", borderRadius: "12px" }}
-                    placeholder="Enter your email address"
-                    disabled
-                  />
-                  {errors.email && <p style={{ color: 'red' }}>{errors.email}</p>}
-                </div>
-                <div className="mb-4">
-                  <label
-                    className="font-semibold"
-                    style={{
-                      color: "#505050",
-                      fontFamily: "outFit, Sans-serif",
-                      fontSize: "16px",
-                      fontWeight: "600",
-                    }}
-                  >
-                    Phone Number
-                  </label>
-                  <input
-                    type="tel"
-                    name="phoneNumber"
-                    value={userData.phoneNumber}
-                    onChange={handlePhoneNumberChange}
-                    required
-                    className="border border-gray-300 rounded px-3 py-1 w-full"
-                    style={{ padding: "10px", borderRadius: "12px" }}
-                    placeholder="Enter your phone number"
-                  />
-                  {errors.phoneNumber && <p style={{ color: 'red' }}>{errors.phoneNumber}</p>}
-                </div>
-                <div className="mb-4">
-                  <label
-                    className="font-semibold"
-                    style={{
-                      color: "#505050",
-                      fontFamily: "outFit, Sans-serif",
-                      fontSize: "16px",
-                      fontWeight: "600",
-                    }}
-                  >
-                    Date of Birth
-                  </label>
-                  <input
-                    type="date"
-                    required
-                    name="dateOfBirth"
-                    value={userData.dateOfBirth}
-                    onChange={handleChange}
-                    min={minDateString}
-                    className="border border-gray-300 rounded px-3 py-1 w-full"
-                    style={{ padding: "10px", borderRadius: "12px" }}
-                  />
-                  {errors.dateOfBirth && <p style={{ color: 'red' }}>{errors.dateOfBirth}</p>}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          borderRadius: "14px",
-          marginTop: "20px",
-        }}
-      >
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "start",
-            borderRadius: "14px",
-            background: "#fff",
-            width: "70%",
-          }}
-        >
-          <div
-            style={{
-              marginBottom: "10px",
-            }}
-          >
-            <h2
-              className="text-center"
-              style={{
-                fontSize: "24px",
-                fontWeight: "600",
-                fontFamily: "outFit, Sans-serif",
-                color: "#505050",
-                marginTop: "10px",
-                marginLeft: "10px",
-              }}
-            >
-              Profile Image
-            </h2>
-            <div
-              className="w-20 h-20 md:w-32 md:h-32 bg-gray-300 rounded-full mr-4"
-              style={{
-                backgroundImage: `url(${imagePreview || "placeholder.jpg"})`,
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-                marginLeft: "10px",
-              }}
-            ></div>
-          </div>
-          <div
-            style={{
-              marginTop: "100px",
-            }}
-          >
-            <p
-              style={{
-                color: "#a1a1a1",
-                fontWeight: "400",
-                fontSize: "16px",
-                fontFamily: "outFit, Sans-serif",
-              }}
-            >
-              Upload a profile picture to personalize your account and help
-              others recognize you within the app.
-            </p>
+    <div className="px-4 py-8 max-w-4xl mx-auto">
+      {/* Personal Information */}
+      <div className="bg-white p-6 rounded-2xl">
+        <h2 className="text-2xl font-semibold text-gray-700 mb-4">Personal Information</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {/* Full Name */}
+          <div className="mb-4">
+            <label className="block text-sm font-semibold text-gray-700 mb-1">
+              Full Name
+            </label>
             <input
-              type="file"
-              accept="image/*"
-              ref={fileInputRef}
-              style={{ display: "none" }}
-              onChange={handleFileChange}
+              type="text"
+              name="fullName"
+              value={userData.fullName}
+              onChange={handleChange}
+              className="border border-gray-300 rounded-lg px-3 py-2 w-full"
+              placeholder="Enter your full name"
             />
-            <button
-              type="button"
-              style={{
-                padding: "7px 15px 7px 15px",
-                background: "#4467a1",
-                borderRadius: "28px",
-                color: "#fff",
-                marginTop: "5px",
-              }}
-              onClick={handleButtonClick}
+            {errors.fullName && <p className="text-red-500 text-xs mt-1">{errors.fullName}</p>}
+          </div>
+
+          {/* Job Title */}
+          <div className="mb-4">
+            <label className="block text-sm font-semibold text-gray-700 mb-1">
+              Job Title
+            </label>
+            <input
+              type="text"
+              name="jobTitle"
+              value={userData.jobTitle}
+              onChange={handleChange}
+              className="border border-gray-300 rounded-lg px-3 py-2 w-full"
+              placeholder="Enter job title"
+            />
+            {errors.jobTitle && <p className="text-red-500 text-xs mt-1">{errors.jobTitle}</p>}
+          </div>
+
+          {/* Gender */}
+          <div className="mb-4">
+            <label className="block text-sm font-semibold text-gray-700 mb-1">
+              Gender
+            </label>
+            <select
+              name="gender"
+              value={userData.gender}
+              onChange={handleChange}
+              className="border border-gray-300 rounded-lg px-3 py-2 w-full"
             >
-              Upload image
-            </button>
+              <option value="">Select Gender</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+
+          {/* Email Address */}
+          <div className="mb-4">
+            <label className="block text-sm font-semibold text-gray-700 mb-1">
+              Email Address
+            </label>
+            <input
+              type="email"
+              name="email"
+              value={userData.email}
+              onChange={handleChange}
+              className="border border-gray-300 rounded-lg px-3 py-2 w-full"
+              placeholder="Enter your email address"
+              disabled
+            />
+            {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
+          </div>
+
+          {/* Phone Number */}
+          <div className="mb-4">
+            <label className="block text-sm font-semibold text-gray-700 mb-1">
+              Phone Number
+            </label>
+            <input
+              type="tel"
+              name="phoneNumber"
+              value={userData.phoneNumber}
+              onChange={handlePhoneNumberChange}
+              className="border border-gray-300 rounded-lg px-3 py-2 w-full"
+              placeholder="Enter your phone number"
+            />
+            {errors.phoneNumber && <p className="text-red-500 text-xs mt-1">{errors.phoneNumber}</p>}
+          </div>
+
+          {/* Date of Birth */}
+          <div className="mb-4">
+            <label className="block text-sm font-semibold text-gray-700 mb-1">
+              Date of Birth
+            </label>
+            <input
+              type="date"
+              name="dateOfBirth"
+              value={userData.dateOfBirth}
+              onChange={handleChange}
+              min={minDateString}
+              className="border border-gray-300 rounded-lg px-3 py-2 w-full"
+            />
+            {errors.dateOfBirth && <p className="text-red-500 text-xs mt-1">{errors.dateOfBirth}</p>}
           </div>
         </div>
       </div>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-        }}
-      >
-        <div
-          style={{
-            width: "80%",
-            display: "flex",
-            justifyContent: "end",
-          }}
-        >
+
+      {/* Profile Image */}
+      <div className="bg-white p-6 rounded-2xl mt-6 flex items-center">
+        <div className="flex-shrink-0 w-32 h-32 bg-gray-300 rounded-full mr-4">
+          <div
+            className="w-full h-full bg-cover bg-center rounded-full"
+            style={{ backgroundImage: `url(${imagePreview || "placeholder.jpg"})` }}
+          ></div>
+        </div>
+        <div className="flex-grow">
+          <p className="text-gray-500 text-sm mb-2">
+            Upload a profile picture to personalize your account and help others recognize you within the app.
+          </p>
+          <input
+            type="file"
+            accept="image/*"
+            ref={fileInputRef}
+            className="hidden"
+            onChange={handleFileChange}
+          />
           <button
-            type="submit"
-            style={{
-              padding: "7px 20px 7px 20px",
-              background: "#4467a1",
-              borderRadius: "28px",
-              color: "#fff",
-              marginTop: "10px",
-            }}
-            onClick={handleSubmit}
-            disabled={loading}
+            type="button"
+            className="bg-blue-600 text-white rounded-lg px-4 py-2"
+            onClick={handleButtonClick}
           >
-            {loading ? 'Saving Profile...' : 'Save Profile'}
+            Upload image
           </button>
         </div>
+      </div>
+
+      {/* Submit Button */}
+      <div className="flex justify-end mt-6">
+        <button
+          type="submit"
+          className="bg-blue-600 text-white rounded-lg px-6 py-2"
+          onClick={handleSubmit}
+          disabled={loading}
+        >
+          {loading ? 'Saving Profile...' : 'Save Profile'}
+        </button>
       </div>
     </div>
   );

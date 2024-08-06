@@ -104,7 +104,7 @@ const RegisterCompany = ({
   return (
     <div className="flex flex-col items-center pt-8 pb-36 max-w-[700px] max-md:pb-24">
       {/* Form Content */}
-      <div className="flex flex-col w-full max-w-[500px] bg-white rounded-xl shadow-md p-6">
+      <div className="flex flex-col w-full max-w-[500px] bg-white rounded-xl p-6">
         <div className="mb-6">
           <div className="text-base font-semibold text-neutral-600">Company Name</div>
           <div className="mt-1 text-sm text-neutral-400">
