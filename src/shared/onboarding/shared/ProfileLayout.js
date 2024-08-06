@@ -146,6 +146,7 @@ const ProfileLayout = () => {
               userData={userData}
               setUserData={setUserData}
               loading={loading}
+              handleGoBack={moveToPreviousStep}
             />
           )}
           {currentStep > maxSteps && <CongratulationsCard />}
