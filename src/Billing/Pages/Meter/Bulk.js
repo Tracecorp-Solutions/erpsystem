@@ -1,8 +1,8 @@
-
-import { message } from "antd";
+import { message, DatePicker } from "antd";
 import axios from "axios";
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import moment from "moment"; 
 
 function Bulk() {
   const navigate = useNavigate();
@@ -12,54 +12,83 @@ function Bulk() {
   const [currentReadingDate, setCurrentReadingDate] = useState("");
   const [meterReader, setMeterReader] = useState("");
   const [fileHasHeader, setFileHasHeader] = useState("");
+  const [file, setFile] = useState(null);
 
   //states to handle drop downs
-  const [operationAreas,setOperationAreas] = useState([]);
-  const [branches,setBranches] = useState([]);
+  const [operationAreas, setOperationAreas] = useState([]);
+  const [branches, setBranches] = useState([]);
+   // State for current reading date
 
+  const handleDateChange = (date, dateString) => {
+    setCurrentReadingDate(dateString); // Set the current reading date in the state
+  };
 
   const handleNavigate = (screen) => {
     navigate("/billingdashboard", { state: { screen } });
   };
 
   //fetch operation areas
-  const GetOperationAreas = async() =>{
-    try{
-      const resp = await axios.get(`${process.env.REACT_APP_API_URL}/GetOperationAreas`);
+  const GetOperationAreas = async () => {
+    try {
+      const resp = await axios.get(
+        `${process.env.REACT_APP_API_URL}/GetOperationAreas`
+      );
       setOperationAreas(resp.data);
-    }catch(error){
+    } catch (error) {
       message.error(error.response);
     }
   };
 
-  //fetch operation areas
-  const GetBranches = async() =>{
-    try{
-      const resp = await axios.get(`${process.env.REACT_APP_API_URL}/GetBranches`);
+  //fetch branches
+  const GetBranches = async () => {
+    try {
+      const resp = await axios.get(
+        `${process.env.REACT_APP_API_URL}/GetBranches`
+      );
       setBranches(resp.data);
-    }catch(error){
+    } catch (error) {
       message.error(error.response);
     }
   };
-  useEffect(()=>{
+
+  useEffect(() => {
     GetOperationAreas();
     GetBranches();
-  },[GetOperationAreas,GetBranches]);
+  }, []);
 
-  
+  const handleFileChange = (e) => {
+    setFile(e.target.files[0]);
+  };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    navigate("/billingdashboard", {
-      state: {
-        operationalArea,
-        branch,
-        currentPeriod,
-        currentReadingDate,
-        meterReader,
-        fileHasHeader,
-      },
-    });
+
+    const formData = new FormData();
+    formData.append("FileName", file?.name || "");
+    formData.append("MeterReaderId", meterReader);
+    formData.append("Name", ""); // Add appropriate value if necessary
+    formData.append("OperationAreaId", operationalArea);
+    formData.append("filelocation", ""); // Add appropriate value if necessary
+    formData.append("ContentType", file?.type || "");
+    formData.append("ReadingDate", currentReadingDate);
+    formData.append("BranchId", branch);
+    formData.append("ContentDisposition", ""); // Add appropriate value if necessary
+
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_API_URL}/BulkMeterReading`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      message.success("File uploaded successfully!");
+      navigate("/billingdashboard");
+    } catch (error) {
+      message.error("Failed to upload file. Please try again.");
+    }
   };
 
   return (
@@ -90,45 +119,54 @@ function Bulk() {
           </div>
           <div className="flex gap-4 max-md:flex-wrap w-full">
             <div className="flex flex-col px-5 flex-1">
-              <label htmlFor="operationalArea" className="font-semibold text-neutral-600 w-full">
+              <label
+                htmlFor="operationalArea"
+                className="font-semibold text-neutral-600 w-full"
+              >
                 Operational Area
               </label>
               <select
-              name="operationalArea"
-              value={operationalArea}
-              onChange={(e) => setOperationalArea(e.target.value)}
-              className="justify-center items-start px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 w-full"
-            >
-              <option value="">Select Operation Area..</option>
-              {operationAreas.map((operationarea) => (
-                <option key={operationarea.id} value={operationarea.id}>
-                  {operationarea.name}
-                </option>
-              ))}
-            </select>
+                name="operationalArea"
+                value={operationalArea}
+                onChange={(e) => setOperationalArea(e.target.value)}
+                className="justify-center items-start px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 w-full"
+              >
+                <option value="">Select Operation Area..</option>
+                {operationAreas.map((operationarea) => (
+                  <option key={operationarea.id} value={operationarea.id}>
+                    {operationarea.name}
+                  </option>
+                ))}
+              </select>
             </div>
             <div className="flex flex-col px-5 flex-1">
-              <label htmlFor="branchZone" className="font-semibold text-neutral-600 w-full">
+              <label
+                htmlFor="branchZone"
+                className="font-semibold text-neutral-600 w-full"
+              >
                 Branch/Zone
               </label>
               <select
-              name="branch"
-              value={branch}
-              onChange={(e) => setBranch(e.target.value)}
-              className="justify-center items-start px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 w-full"
-            >
-              <option value="">Select Branch..</option>
-              {branches.map((branch) => (
-                <option key={branch.id} value={branch.id}>
-                  {branch.name}
-                </option>
-              ))}
-            </select>
+                name="branch"
+                value={branch}
+                onChange={(e) => setBranch(e.target.value)}
+                className="justify-center items-start px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 w-full"
+              >
+                <option value="">Select Branch..</option>
+                {branches.map((branch) => (
+                  <option key={branch.id} value={branch.id}>
+                    {branch.name}
+                  </option>
+                ))}
+              </select>
             </div>
           </div>
           <div className="flex gap-4 mt-4 max-md:flex-wrap w-full">
             <div className="flex flex-col px-5 flex-1">
-              <label htmlFor="currentPeriod" className="font-semibold text-neutral-600 w-full">
+              <label
+                htmlFor="currentPeriod"
+                className="font-semibold text-neutral-600 w-full"
+              >
                 Current Period
               </label>
               <input
@@ -141,22 +179,31 @@ function Bulk() {
               />
             </div>
             <div className="flex flex-col px-5 flex-1">
-              <label htmlFor="currentReadingDate" className="font-semibold  text-neutral-600 w-full">
+              <label
+                htmlFor="currentReadingDate"
+                className="font-semibold text-neutral-600 w-full"
+              >
                 Current Reading Date
               </label>
-              <input
-                type="text"
+              <DatePicker
                 id="currentReadingDate"
-                value={currentReadingDate}
-                placeholder="Enter current date"
-                onChange={(e) => setCurrentReadingDate(e.target.value)}
+                value={
+                  currentReadingDate
+                    ? moment(currentReadingDate, "YYYY-MM-DD")
+                    : null
+                } // Convert date string to moment object
+                placeholder="Select current date"
+                onChange={handleDateChange}
                 className="justify-center items-start px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 w-full"
               />
             </div>
           </div>
           <div className="flex gap-4 mt-4 max-md:flex-wrap w-full">
             <div className="flex flex-col px-5 flex-1">
-              <label htmlFor="meterReader" className="font-semibold text-neutral-600 w-full">
+              <label
+                htmlFor="meterReader"
+                className="font-semibold text-neutral-600 w-full"
+              >
                 Meter Reader
               </label>
               <input
@@ -169,7 +216,10 @@ function Bulk() {
               />
             </div>
             <div className="flex flex-col px-5 flex-1">
-              <label htmlFor="fileHasHeader" className="font-semibold text-neutral-600 w-full">
+              <label
+                htmlFor="fileHasHeader"
+                className="font-semibold text-neutral-600 w-full"
+              >
                 Does this file have a header?
               </label>
               <input
@@ -185,32 +235,26 @@ function Bulk() {
           <div className="flex gap-4 mt-4 max-md:flex-wrap w-full">
             <div className="flex flex-col px-5 flex-1">
               <div className="font-semibold w-full">Browse File</div>
-              <div className="flex gap-2 justify-between px-4 py-2 mt-2 rounded-xl border border-solid border-neutral-500 border-opacity-30 text-neutral-400 w-full">
-                <div className="justify-center items-center px-12 py-2 whitespace-nowrap rounded-md bg-stone-200 text-neutral-600 max-md:px-5">
+              <div className="flex gap-2 justify-between px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-400 w-full">
+                <label htmlFor="file" className="cursor-pointer flex-1">
                   <input
                     type="file"
-                    accept=".csv,.xlsx"
-                    onChange={(e) => console.log(e.target.files[0])}
+                    id="file"
+                    onChange={handleFileChange}
                     className="hidden"
                   />
-                  <label htmlFor="file-upload" className="cursor-pointer">
-                    Browse
-                  </label>
-                </div>
-                <div className="my-auto text-neutral-400">No file selected</div>
+                  {file ? file.name : "Click to browse file"}
+                </label>
               </div>
             </div>
           </div>
-          <div className="flex flex-col pt-2 text-base font-semibold leading-6 whitespace-nowrap bg-white">
-            <div className="w-full border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-opacity-10 min-h-[1px] max-md:max-w-full" />
-            <div className="flex gap-4 self-end mt-4 max-w-full w-[496px] max-md:flex-wrap">
-              <div className="justify-center items-center px-12 py-4 rounded-3xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 max-md:px-5">
-                Cancel
-              </div>
-              <div className="justify-center items-center px-12 py-4 text-white rounded-3xl bg-blue-400 max-md:px-5">
-                Upload
-              </div>
-            </div>
+          <div className="flex items-center justify-center gap-2 p-4 mt-10 w-full">
+            <button
+              type="submit"
+              className="flex flex-1 items-center justify-center px-6 py-4 mt-6 text-lg font-semibold text-white bg-slate-700 rounded-lg leading-[160%]"
+            >
+              Upload
+            </button>
           </div>
         </div>
       </div>
