@@ -16,6 +16,7 @@ import { Tooltip } from "antd";
 
 const DocumentFile = ({ src, name, description }) => {
   const handleDownload = () => {
+    alert(src);
     const link = document.createElement("a");
     link.href = src;
     link.download = name;
@@ -449,23 +450,23 @@ const ApplicationDetail = () => {
           <div className="mt-4 max-md:max-w-full">
             <div className="flex gap-5 max-md:flex-col max-md:gap-0">
               <DocumentFile
-                src={applicationData.localAuthorizationDocumentURL}
+                src={applicationData.localAuthorizationDocument}
                 name="LocalAuthorizationDocument.pdf"
                 description="Local Authorization Document"
               />
               <DocumentFile
-                src={applicationData.proofOfIdentityURL}
+                src={applicationData.proofOfIdentity}
                 name="ProofOfIdentity.pdf"
                 description="Proof of Identity"
               />
               <DocumentFile
-                src={applicationData.proofOfInstallationSiteURL}
+                src={applicationData.proofOfInstallationSite}
                 name="ProofOfInstallationSite.pdf"
-                description="Proof of Installation Site"
+                description="ProofofInstallation Site"
               />
               <DocumentFile
-                src={applicationData.proofOfOwnerShipURL}
-                name="ProofOfOwnerShip.pdf"
+                src={applicationData.proofOfOwnerShip}
+                name="Proof Of OwnerShip.pdf"
                 description="Proof of Ownership"
               />
             </div>

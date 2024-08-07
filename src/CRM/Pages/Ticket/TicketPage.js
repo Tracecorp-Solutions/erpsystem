@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Table, Button, Dropdown, Menu, message, Pagination } from "antd";
-import { PlusOutlined } from "@ant-design/icons";
+import { PlusOutlined, DeleteOutlined } from "@ant-design/icons";
 import axios from "axios";
 import AddTicketCategory from "./AddTicketCategory";
 import UpdateTicketCategory from "./UpdateTicketCategory";
@@ -76,16 +76,18 @@ const TicketPage = () => {
     }
   };
 
-  const handleDisableCategory = async (category) => {
+  const handleDeleteCategory = async (categoryId) => {
     try {
-      await axios.put(
-        `${process.env.REACT_APP_API_URL}/UpdateTicketCategory`,
-        { ...category, isDeleted: true } // Set isDeleted to true
+      await axios.delete(
+        `${process.env.REACT_APP_API_URL}/DeleteTicketCategory/${categoryId}`,
+        {
+          headers: { accept: "*/*" }
+        }
       );
-      message.success("Category disabled successfully");
+      message.success("Category deleted successfully");
       fetchTicketCategories();
     } catch (error) {
-      message.error("Error disabling category:", error);
+      message.error("Error deleting category:", error);
     }
   };
 
@@ -113,13 +115,13 @@ const TicketPage = () => {
       title: "CATEGORY NAME",
       dataIndex: "name",
       key: "name",
-      render: (text) => <div>{text}</div>,
+      render: (text) => <div className="text-base">{text}</div>,
     },
     {
       title: "DESCRIPTION",
       dataIndex: "description",
       key: "description",
-      render: (text) => <div>{text || "No description available"}</div>,
+      render: (text) => <div className="text-sm text-gray-500">{text || "No description available"}</div>,
     },
     {
       title: "ACTION",
@@ -131,8 +133,8 @@ const TicketPage = () => {
               <Menu.Item key="edit" onClick={() => showUpdateModal(record)}>
                 Update Category
               </Menu.Item>
-              <Menu.Item key="delete" onClick={() => handleDisableCategory(record)}>
-                Disable Category
+              <Menu.Item key="delete" onClick={() => handleDeleteCategory(record.id)}>
+                 Delete Category
               </Menu.Item>
             </Menu>
           }
@@ -152,46 +154,41 @@ const TicketPage = () => {
   ];
 
   return (
-    <div className="flex flex-col flex-wrap justify-center content-start py-6 rounded-3xl bg-stone-100">
-      <div className="flex gap-2 px-6 text-base leading-6 text-neutral-600 max-md:flex-wrap max-md:px-5">
+    <div className="flex flex-col py-6 px-4 bg-stone-100 rounded-3xl">
+      <div className="flex items-center gap-2 text-base text-neutral-600">
         <div className="font-semibold">Configuration</div>
         <img
           loading="lazy"
           src="https://cdn.builder.io/api/v1/image/assets/TEMP/d86f4adfe62571b3a93bdc441d8816afef791164dcc95e442522025a86a279bf?apiKey=0d95acea82cc4b259a61e827c24c5c6c&"
-          className="shrink-0 self-start w-6 aspect-square"
+          className="w-6 aspect-square"
         />
-        <div className="max-md:max-w-full">Ticket Categories</div>
+        <div>Ticket Categories</div>
       </div>
-      <div className="flex flex-col self-center p-6 mt-6 w-full bg-white rounded-3xl max-md:px-5 w-full">
-        <div className="flex gap-4 justify-between w-full font-semibold leading-[160%] max-md:flex-wrap max-md:max-w-full">
-          <div className="text-4xl capitalize text-neutral-600">
-            Ticket Categories
-          </div>
+      <div className="flex flex-col mt-6 p-6 bg-white rounded-3xl">
+        <div className="flex justify-between items-center mb-4">
+          <div className="text-4xl font-semibold text-neutral-600">Ticket Categories</div>
           <Button
             type="primary"
-            className="flex gap-2 justify-center px-6 py-5 my-auto bg-slate-500 text-base rounded-3xl max-md:px-5"
+            className="bg-slate-500 text-base rounded-3xl"
             onClick={showModal}
           >
             <PlusOutlined /> Add Category
           </Button>
         </div>
-        <div className="mt-4">
-          <Table
-            columns={columns}
-            dataSource={currentItems}
-            pagination={false}
-            scroll={{ x: true }}
+        <Table
+          columns={columns}
+          dataSource={currentItems}
+          pagination={false}
+          scroll={{ x: true }}
+        />
+        <div className="flex justify-end mt-4">
+          <Pagination
+            current={currentPage}
+            total={totalItems}
+            pageSize={itemsPerPage}
+            onChange={handlePageChange}
+            showSizeChanger={false}
           />
-          <div className="flex justify-end">
-            <Pagination
-              current={currentPage}
-              total={totalItems}
-              pageSize={itemsPerPage}
-              onChange={handlePageChange}
-              showSizeChanger={false}
-              style={{ marginTop: 16, textAlign: "center" }}
-            />
-          </div>
         </div>
       </div>
       <AddTicketCategory
