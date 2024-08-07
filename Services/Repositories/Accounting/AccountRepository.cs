@@ -26,6 +26,17 @@ namespace Services.Repositories.Accounting
             if (groupAccount == null)
                 throw new ArgumentException("Invalid subgroup account id.");
 
+            //check whether account code is supplied
+            if (string.IsNullOrEmpty(account.AccountCode))
+                throw new ArgumentException("Please supply account code");
+
+            //check whether account code already exists
+            var accountCodeExists = await _context.Accounts
+                .FirstOrDefaultAsync(ac => ac.AccountCode == account.AccountCode);
+
+            if (accountCodeExists != null)
+                throw new ArgumentException("Account with this account code already exists");
+
             // Check if the AccountType is provided is valid
             if (account.AccountType != "Cash at hand" && account.AccountType != "Bank")
                 throw new ArgumentException("Please Account type should be Cash at hand or Bank");

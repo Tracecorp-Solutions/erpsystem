@@ -26,6 +26,17 @@ namespace Services.Repositories.Accounting
                 grpView.Behaviour.Equals("Credit", StringComparison.Ordinal)))
                 throw new ArgumentException("Please supply the behaviour of the account as Debit or Credit");
 
+            //check whether group code is supplied 
+            if (string.IsNullOrEmpty(grpView.GroupCode))
+                throw new ArgumentException("Please supply group code");
+
+            //check whether group code exists
+            var groupcodeexists = await _context.GroupAccounts
+                .FirstOrDefaultAsync(ga => ga.GroupCode == grpView.GroupCode);
+            if (groupcodeexists != null)
+                throw new ArgumentException("Group Account with this group code already exists");
+
+
             // check whether group account already exists with the same name
             var groupaccountexists = await _context.GroupAccounts
                 .FirstOrDefaultAsync(ga => ga.Name == grpView.Name);
@@ -55,6 +66,19 @@ namespace Services.Repositories.Accounting
         public async Task<SubGroupAccount> AddSubGroupAccount(SubGroupAccount subGroupAccount)
         {
             var groupaccountexists = await _context.GroupAccounts.FindAsync(subGroupAccount.GroupId);
+
+            //check whether sub group code is supplied
+            if (string.IsNullOrEmpty(subGroupAccount.SubGroupCode))
+                throw new ArgumentException("Please supply sub group code");
+
+            //check whether sub group code exists
+            var subgroupcodeexists = await _context.SubGroupAccounts
+                .FirstOrDefaultAsync(sg => sg.SubGroupCode == subGroupAccount.SubGroupCode);
+
+            //if it exists through an argument exception
+            if (subgroupcodeexists != null)
+                throw new ArgumentException("Sub Group Account with this sub group code already exists");
+
             if (groupaccountexists == null)
             {
                 throw new ArgumentException("Invalid group account id.");
