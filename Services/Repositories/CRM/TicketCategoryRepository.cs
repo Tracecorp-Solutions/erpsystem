@@ -38,7 +38,7 @@ namespace Services.Repositories.CRM
         {
 
             var ticketCategory = await _context.TicketCategories.FindAsync(id);
-            if (ticketCategory != null)
+            if (ticketCategory == null)
                 throw new ArgumentException("Ticket Category not found");
 
             _context.TicketCategories.Remove(ticketCategory);
