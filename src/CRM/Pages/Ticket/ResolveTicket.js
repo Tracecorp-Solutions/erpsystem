@@ -6,6 +6,7 @@ const ResolveTickets = ({ handleResolveCancel, ticketId, recordedBy, fetchTicket
   const [file, setFile] = useState(null);
   const [resolutionSummary, setResolutionSummary] = useState("");
   const [ticketDetails, setTicketDetails] = useState(null);
+  const [fileKey, setFileKey] = useState(Date.now());
 
   useEffect(() => {
     const fetchTicketDetails = async () => {
@@ -62,6 +63,11 @@ const ResolveTickets = ({ handleResolveCancel, ticketId, recordedBy, fetchTicket
       message.success("Ticket resolved successfully!");
       fetchTickets();
       handleResolveCancel();
+      
+      setFile(null);
+      setResolutionSummary("");
+      setTicketDetails(null);
+      setFileKey(Date.now());
     } catch (error) {
       console.error("Error resolving ticket:", error);
       message.error("Failed to resolve ticket. Please try again later.");
@@ -87,6 +93,7 @@ const ResolveTickets = ({ handleResolveCancel, ticketId, recordedBy, fetchTicket
       <input
         type="file"
         onChange={handleFileChange}
+        key={fileKey} // Key to force re-render
         className="py-2 pr-4 mt-2 max-w-full rounded-xl border border-solid border-neutral-500 border-opacity-30 w-[500px] max-md:flex-wrap"
       />
       <div className="mt-4 text-neutral-600 text-start w-full">Resolution Summary</div>
