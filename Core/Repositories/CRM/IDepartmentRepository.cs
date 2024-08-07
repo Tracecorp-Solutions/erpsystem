@@ -14,7 +14,7 @@ namespace Core.Repositories.CRM
         Task<Department> GetDepartment(int id);
         Task AddDepartment(DepartmentDto department);
         Task DeleteDepartment(int id);
-        Task UpdateDepartment(Department department);
+        Task UpdateDepartment(UpdateDepartmentDto department);
 
     }
 }

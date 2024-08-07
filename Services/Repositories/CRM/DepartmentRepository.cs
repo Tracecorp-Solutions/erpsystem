@@ -60,7 +60,12 @@ namespace Services.Repositories.CRM
             departmentExists.Name = department.Name;
             departmentExists.Description = department.Description;
             departmentExists.HeadDepactId = department.HeadDepactId;
-            departmentExists.Active = true;
+            departmentExists.Active = department.Active;
+
+            //update database in the database
+            _context.Departments.Update(departmentExists);
+
+
             // Attach the updated entity and mark it as modified
             //_context.Entry(department).State = EntityState.Modified;
 
