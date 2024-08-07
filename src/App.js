@@ -50,6 +50,8 @@ import CustomerTransactions from "./Billing/Pages/Customer/CustomerTransactions"
 import History from "./Billing/Pages/Meter/History";
 import Crm from "./CRM/Pages/Layout/Crm";
 import CrmReport from "./CRM/Pages/Reports/CrmReport";
+import SubStatement from "./Accounting/Pages/Ledger/Sub-Statement";
+import Ledger from "./Accounting/Pages/Ledger/Ledger";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -106,6 +108,7 @@ function App() {
                 element={<ViewBill />}
               />
               <Route path="/customer" element={<Customer />} /> 
+              <Route path="/sub-statement" element={<SubStatement />} /> 
               <Route path="/edit-invoice/:id" element={<EditInvoiceForm />} />
               <Route path="/invoice" element={<Invoice />} />
               <Route path="/billing" element={<Billing />} />
@@ -125,6 +128,7 @@ function App() {
               <Route path="/conf-materials" element={<ConfMaterials />} />
               <Route path="/create-materials" element={<CreateMaterials />} />
               <Route path="/one" element={<One />} />
+              <Route path="/ledger" element={<Ledger />} />
               <Route path="/replacement" element={<Replacement />} />
               <Route path="/bulk" element={<Bulk />} />
               <Route path="/servicing" element={<Servicing />} />

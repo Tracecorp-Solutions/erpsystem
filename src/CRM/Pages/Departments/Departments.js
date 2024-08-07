@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { Table, Button, message, Pagination } from "antd";
+import { Table, Button, message, Pagination, Dropdown, Menu } from "antd";
+import { MoreOutlined } from "@ant-design/icons";
 import axios from "axios";
-import CreateDepartments from "./CreateDepartments";
+import EditDepartmentModal from "./EditDepartmentModal";
+import CreateDepartmentModal from "./CreateDepartmentModal";
 
 const Departments = () => {
   const [departments, setDepartments] = useState([]);
   const [isUpdateModalVisible, setIsUpdateModalVisible] = useState(false);
+  const [isCreateModalVisible, setIsCreateModalVisible] = useState(false);
   const [editingDepartment, setEditingDepartment] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -23,15 +26,6 @@ const Departments = () => {
     }
   };
 
-  const handleUpdateModalVisible = () => {
-    setIsUpdateModalVisible(true);
-  };
-
-  const handleCloseModalVisible = () => {
-    setIsUpdateModalVisible(false);
-    setEditingDepartment(null);
-  };
-
   const handleEdit = async (record) => {
     try {
       const response = await axios.get(`${process.env.REACT_APP_API_URL}/GetDepartmentById/${record.id}`);
@@ -41,6 +35,23 @@ const Departments = () => {
       console.error("Error fetching department:", error);
       message.error("Failed to fetch department details");
     }
+  };
+
+  const handleDisable = async (record) => {
+    try {
+      await axios.put(`${process.env.REACT_APP_API_URL}/DisableDepartment/${record.id}`);
+      fetchDepartments(); // Refresh departments after disabling
+      message.success("Department disabled successfully");
+    } catch (error) {
+      console.error("Error disabling department:", error);
+      message.error("Failed to disable department");
+    }
+  };
+
+  const handleCloseModalVisible = () => {
+    setIsUpdateModalVisible(false);
+    setIsCreateModalVisible(false);
+    setEditingDepartment(null);
   };
 
   const handleSave = async (values) => {
@@ -77,11 +88,24 @@ const Departments = () => {
     },
     {
       title: <span className="text-gray-500">Actions</span>,
-      render: (text, record) => (
-        <Button type="link" onClick={() => handleEdit(record)}>
-          ...
-        </Button>
-      ),
+      render: (text, record) => {
+        const menu = (
+          <Menu>
+            <Menu.Item onClick={() => handleEdit(record)}>
+              Edit
+            </Menu.Item>
+            <Menu.Item onClick={() => handleDisable(record)}>
+              Disable
+            </Menu.Item>
+          </Menu>
+        );
+
+        return (
+          <Dropdown overlay={menu} trigger={['click']}>
+            <Button type="link" icon={<MoreOutlined />} />
+          </Dropdown>
+        );
+      },
     },
   ];
 
@@ -113,7 +137,7 @@ const Departments = () => {
             <div className="flex gap-2 justify-center px-6 py-3 my-auto text-base text-white rounded-3xl max-md:px-5">
               <button
                 className="justify-center self-start px-3 py-3 mt-2.5 text-sm font-semibold text-white whitespace-nowrap rounded-3xl bg-blue-400 max-md:px-5"
-                onClick={handleUpdateModalVisible}
+                onClick={() => setIsCreateModalVisible(true)}
               >
                 + Add department
               </button>
@@ -134,10 +158,14 @@ const Departments = () => {
           />
         </div>
       </div>
-      <CreateDepartments
+      <EditDepartmentModal
         isUpdateModalVisible={isUpdateModalVisible}
+        handleCloseModalVisible={handleCloseModalVisible}
         editingDepartment={editingDepartment}
         handleSave={handleSave}
+      />
+      <CreateDepartmentModal
+        isCreateModalVisible={isCreateModalVisible}
         handleCloseModalVisible={handleCloseModalVisible}
         fetchDepartments={fetchDepartments}
       />

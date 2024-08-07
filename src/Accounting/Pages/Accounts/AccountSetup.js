@@ -24,6 +24,7 @@ const AccountSetup = () => {
   const [subGroupAccounts, setSubGroupAccounts] = useState([]);
   const [newAccount, setNewAccount] = useState({
     name: "",
+    accountCode:"",
     subGroupAccountId: "",
     accountType: "",
     accountNumber: "",
@@ -83,6 +84,7 @@ const AccountSetup = () => {
     e.preventDefault();
     if (
       !newAccount.name ||
+      !newAccount.accountCode ||
       !newAccount.balance ||
       !newAccount.accountType ||
       !newAccount.subGroupAccountId ||
@@ -98,6 +100,7 @@ const AccountSetup = () => {
         `${process.env.REACT_APP_API_URL}/accounts`,
         {
           name: newAccount.name,
+          accountCode:newAccount.accountCode,
           balance: parseFloat(newAccount.balance),
           accountType: newAccount.accountType,
           subGroupAccountId: parseInt(newAccount.subGroupAccountId),
@@ -109,6 +112,7 @@ const AccountSetup = () => {
       setErrorMessage("");
       setNewAccount({
         name: "",
+        accountCode:"",
         subGroupAccountId: "",
         balance: 0,
         description: "",
@@ -225,7 +229,7 @@ const AccountSetup = () => {
         onClick={() => handleViewDetails(accountId)}
         icon={<EyeOutlined />}
       >
-        View
+        View CashBook
       </Menu.Item>
       <Menu.Item
         key="2"
@@ -427,6 +431,41 @@ const AccountSetup = () => {
               </div>
               <div className="mb-4">
                 <label
+                  htmlFor="name"
+                  className="block mb-1"
+                  style={{
+                    fontFamily: "outFit, Sans-serif",
+                    fontSize: "16px",
+                    fontWeight: "600",
+                  }}
+                >
+                  Account Code
+                </label>
+                <p
+                  className="text-gray-600 text-sm mb-1"
+                  style={{ fontFamily: "outFit, Sans-serif" }}
+                >
+                  Choose a unique code for your account that reflects its
+                  purpose
+                </p>
+                <input
+                  type="text"
+                  id="accountCode"
+                  name="accountCode"
+                  value={newAccount.accountCode}
+                  onChange={(e) =>
+                    setNewAccount({
+                      ...newAccount,
+                      accountCode: e.target.value,
+                    })
+                  }
+                  placeholder="Please enter account name..."
+                  className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                  style={{ borderRadius: "12px", padding: "15px" }}
+                />
+              </div>
+              <div className="mb-4">
+                <label
                   htmlFor="accountType"
                   className="block mb-1"
                   style={{
@@ -464,6 +503,7 @@ const AccountSetup = () => {
                 <div className="mb-4">
                   <label
                     htmlFor="bankName"
+
                     className="block mb-1"
                     style={{
                       fontFamily: "outFit, Sans-serif",
@@ -719,6 +759,12 @@ const AccountSetup = () => {
                       scope="col"
                       className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                     >
+                      Account Code
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    >
                       ACCOUNT NO
                     </th>
                     <th
@@ -763,6 +809,9 @@ const AccountSetup = () => {
                         />
                         <td className="px-3 py-4 whitespace-nowrap text-sm  text-gray-800">
                           {account.name}
+                        </td>
+                        <td className="px-3 py-4 whitespace-nowrap text-sm  text-gray-800">
+                          {account.accountCode}
                         </td>
                         <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-800">
                           {account.accountNumber}
