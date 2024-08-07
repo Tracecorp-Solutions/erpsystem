@@ -243,7 +243,7 @@ function SideNav() {
                   <ReceiptText className="shrink-0 self-start w-6 aspect-square" />
                   <button
                     className=""
-                    onClick={() => navigate("/Dashboardlayout", { state: { screen: "reports" } })}
+                    onClick={() => navigate("/Dashboardlayout", { state: { screen: "report" } })}
                   >
                     General Reports
                   </button>
