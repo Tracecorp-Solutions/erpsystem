@@ -229,7 +229,7 @@ const AccountSetup = () => {
         onClick={() => handleViewDetails(accountId)}
         icon={<EyeOutlined />}
       >
-        View
+        View CashBook
       </Menu.Item>
       <Menu.Item
         key="2"
@@ -503,7 +503,7 @@ const AccountSetup = () => {
                 <div className="mb-4">
                   <label
                     htmlFor="bankName"
-                    
+
                     className="block mb-1"
                     style={{
                       fontFamily: "outFit, Sans-serif",
