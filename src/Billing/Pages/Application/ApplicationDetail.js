@@ -51,7 +51,7 @@ const DocumentFile = ({ src, name, description }) => {
           {name}
         </div>
       </div>
-      <div className="mt-2 text-xs font-medium tracking-wide uppercase text-neutral-400">
+      <div className="mt-2 ml-2 text-xs font-medium tracking-wide uppercase text-neutral-400">
         {description}
       </div>
     </div>
