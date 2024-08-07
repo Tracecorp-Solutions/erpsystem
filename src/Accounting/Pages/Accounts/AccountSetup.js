@@ -503,6 +503,7 @@ const AccountSetup = () => {
                 <div className="mb-4">
                   <label
                     htmlFor="bankName"
+                    
                     className="block mb-1"
                     style={{
                       fontFamily: "outFit, Sans-serif",
