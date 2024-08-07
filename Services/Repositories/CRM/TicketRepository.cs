@@ -229,6 +229,7 @@ namespace Services.Repositories.CRM
             existingTicket.TicketSource = ticket.TicketSource;
             existingTicket.PriorityId = ticket.PriorityId;
             existingTicket.Description = ticket.Description;
+            existingTicket.AssignedTo = ticket.AssignedTo;
 
             //record trail for ticket update
             var ticketAuditTrail = new TicketAuditTrail
