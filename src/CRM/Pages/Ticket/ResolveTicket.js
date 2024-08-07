@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Button, message } from "antd";
 import axios from "axios";
 
-const ResolveTickets = ({ handleResolveCancel, ticketId, recordedBy }) => {
+const ResolveTickets = ({ handleResolveCancel, ticketId, recordedBy, fetchTickets }) => {
   const [file, setFile] = useState(null);
   const [resolutionSummary, setResolutionSummary] = useState("");
   const [ticketDetails, setTicketDetails] = useState(null);
@@ -60,7 +60,7 @@ const ResolveTickets = ({ handleResolveCancel, ticketId, recordedBy }) => {
 
       console.log("Resolve Ticket successful:", response.data);
       message.success("Ticket resolved successfully!");
-
+      fetchTickets();
       handleResolveCancel();
     } catch (error) {
       console.error("Error resolving ticket:", error);

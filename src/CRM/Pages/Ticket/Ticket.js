@@ -249,6 +249,7 @@ const Ticket = () => {
           recordedBy={name}
           departments={departments}
           ticketId={selectedTicket?.id}
+          fetchTickets={fetchTickets}
         />
       </Modal>
 
@@ -283,6 +284,7 @@ const Ticket = () => {
           recordedBy={name}
           departments={departments}
           ticketId={selectedTicket?.id}
+          fetchTickets={fetchTickets}
         />
       </Modal>
     </div>

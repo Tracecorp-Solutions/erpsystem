@@ -4,7 +4,7 @@ import axios from "axios";
 
 const { Option } = Select;
 
-const EscalateTicket = ({ handleEscalateCancel, ticketId, recordedBy, departments }) => {
+const EscalateTicket = ({ handleEscalateCancel, ticketId, recordedBy, departments, fetchTickets }) => {
   const [selectedLevel, setSelectedLevel] = useState(null);
   const [comments, setComments] = useState("");
 
@@ -38,7 +38,7 @@ const EscalateTicket = ({ handleEscalateCancel, ticketId, recordedBy, department
 
       console.log("Escalation successful:", response.data);
       message.success("Ticket escalated successfully!");
-
+      fetchTickets();
       handleEscalateCancel();
     } catch (error) {
       console.error("Error escalating ticket:", error);
