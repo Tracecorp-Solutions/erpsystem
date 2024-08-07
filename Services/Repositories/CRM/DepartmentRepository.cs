@@ -49,15 +49,20 @@ namespace Services.Repositories.CRM
             return departments == null ? throw new ArgumentException("No Departments found"): departments;
         }
 
-        public async Task UpdateDepartment(Department department)
+        public async Task UpdateDepartment(UpdateDepartmentDto department)
         {
             // Check if department exists in the database
             var departmentExists = await _context.Departments.AsNoTracking().FirstOrDefaultAsync(d => d.Id == department.Id);
             if (departmentExists == null)
                 throw new ArgumentException("Department does not exist");
 
+            //update department fetched from the database
+            departmentExists.Name = department.Name;
+            departmentExists.Description = department.Description;
+            departmentExists.HeadDepactId = department.HeadDepactId;
+            departmentExists.Active = true;
             // Attach the updated entity and mark it as modified
-            _context.Entry(department).State = EntityState.Modified;
+            //_context.Entry(department).State = EntityState.Modified;
 
             await _context.SaveChangesAsync();
         }

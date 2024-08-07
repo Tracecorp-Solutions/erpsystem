@@ -62,7 +62,7 @@ namespace Trace.Controllers
 
         //update department
         [HttpPut("/UpdateDepartment")]
-        public async Task<IActionResult> UpdateDepartment(Department department)
+        public async Task<IActionResult> UpdateDepartment(UpdateDepartmentDto department)
         {
             try
             {
