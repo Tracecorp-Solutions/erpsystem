@@ -4,6 +4,8 @@ import Statement from "./Sub-Statement";
 import BalanceSheets from "./AccountSheets";
 import TransactionReport from "./TransactionsReport";
 import UserActivity from "./UserActivity";
+import Transactions from "../Transaction/Transactions";
+import AccountSetup from "../Accounts/AccountSetup";
 
 const Ledger = () => {
   const [showStatement, setShowStatement] = useState(true);
@@ -54,8 +56,8 @@ const Ledger = () => {
         onTrialBalanceClick={handleTrialBalanceClick}
         onUserActivityClick={handleUserActivityClick}
       />
-      {showStatement && <Statement />}
-      {showBalanceSheets && <BalanceSheets />}
+      {showStatement && <AccountSetup />}
+      {showBalanceSheets && <Transactions />}
       {showTrialBalance && <TransactionReport />}
      
     </div>
