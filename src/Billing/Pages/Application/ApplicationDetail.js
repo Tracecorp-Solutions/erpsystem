@@ -11,6 +11,42 @@ import ContactApplicantFormAction from "./Actions/ContactApplicantForm";
 import AssignSurveyor from "./Actions/AssignSurveyor";
 import SurveyorReport from "./Actions/SurveyorReport";
 import UpdateAuthorizeModal from "./Actions/UpdateAuthorizeModal ";
+import { DownloadOutlined } from '@ant-design/icons';
+import { Tooltip } from 'antd';
+
+const DocumentFile = ({ src, name, description }) => {
+  const handleDownload = () => {
+    // Trigger download
+    const link = document.createElement('a');
+    link.href = src;
+    link.download = name;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  return (
+    <div className="document-file flex flex-col items-center p-4 bg-white shadow-md rounded-lg">
+      <img
+        src={src}
+        alt={description}
+        className="w-32 h-32 object-cover rounded-md mb-2"
+      />
+      <div className="document-info text-center">
+        <div className="font-medium text-lg">{name}</div>
+        <div className="text-sm text-gray-500">{description}</div>
+      </div>
+      <Tooltip title="Download">
+        <button
+          onClick={handleDownload}
+          className="mt-3 p-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 flex items-center justify-center"
+        >
+          <DownloadOutlined style={{ fontSize: '16px' }} />
+        </button>
+      </Tooltip>
+    </div>
+  );
+};
 
 const ApplicationDetail = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -22,13 +58,11 @@ const ApplicationDetail = () => {
   const [isUpdateModalVisible, setIsUpdateModalVisible] = useState(false);
   const [application, setApplication] = useState(null);
 
-  const [isVisible, setIsVisible] = useState(false);
   const [jobCardInfo, setJobCardInfo] = useState(null);
   const [surveyorAssigned, setSurveyorAssigned] = useState(false);
   const [surveyorAssignedData, setSurveyorAssignedData] = useState(null);
   const [applicationStatus, setApplicationStatus] = useState(null);
   const [assignedData, setAssignedData] = useState(surveyorAssignedData);
-
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -36,19 +70,6 @@ const ApplicationDetail = () => {
   const applicationNumber = state?.applicationNumber;
 
   const userid = sessionStorage.getItem("userid");
-
-  const handleClickModalVisible = () => {
-    setIsVisible(true);
-  };
-
-  const handleIsModalVisible = () => {
-    setIsModalVisible(true);
-  };
-
-  const handleHideModal = () => {
-    setIsModalVisible(false);
-    setIsVisible(false);
-  };
 
   useEffect(() => {
     if (applicationNumber) {
@@ -85,7 +106,7 @@ const ApplicationDetail = () => {
       .then((data) => {
         console.log("Fetched application data:", data);
         setApplicationData(data);
-        const {assignedTo} = data
+        const { assignedTo } = data;
         setSurveyorAssignedData(assignedTo);
         // Chek if surveyor is assigned and update state accordingly
         if (data && data.assignedTo) {
@@ -160,7 +181,7 @@ const ApplicationDetail = () => {
   };
 
   const handleAssign = () => {
-    setAssignSurveyorAction(true)
+    setAssignSurveyorAction(true);
   };
 
   const menu = (
@@ -205,7 +226,7 @@ const ApplicationDetail = () => {
 
   const { assignedTo } = applicationData;
 
-  console.log("surveyorAssignedData surveyorAssignedData", assignedData);
+  console.log("applicationData applicationData", applicationData);
 
   return (
     <div className="flex flex-wrap justify-center content-start items-center py-6 rounded-3xl bg-stone-100">
@@ -415,7 +436,7 @@ const ApplicationDetail = () => {
           />
         </header>
         <div className="shrink-0 mt-4 h-px border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-opacity-10 max-md:max-w-full" />
-        <div className="mt-4 max-md:max-w-full">
+        {/* <div className="mt-4 max-md:max-w-full">
           <div className="flex gap-5 max-md:flex-col max-md:gap-0">
             <Document
               src="https://cdn.builder.io/api/v1/image/assets/TEMP/e15c1d14b61ebe9160b96a514752c440bc2ed56b9365542b050e313b08bfb7a7?apiKey=27ec22b9382040ef8580a5e340d3a921&"
@@ -460,6 +481,33 @@ const ApplicationDetail = () => {
           </div>
           <div className="self-start mt-2 text-xs font-medium tracking-wide uppercase text-neutral-400">
             local authority permission
+          </div>
+        </div> */}
+
+        <div className="application-detail">
+          <div className="mt-4 max-md:max-w-full">
+            <div className="flex gap-5 max-md:flex-col max-md:gap-0">
+              <DocumentFile
+                src={applicationData.localAuthorizationDocumentURL}
+                name="LocalAuthorizationDocument.pdf"
+                description="Local Authorization Document"
+              />
+              <DocumentFile
+                src={applicationData.proofOfIdentityURL}
+                name="ProofOfIdentity.docx"
+                description="Proof of Identity"
+              />
+              <DocumentFile
+                src={applicationData.proofOfInstallationSiteURL}
+                name="ProofOfInstallationSite.jpeg"
+                description="Proof of Installation Site"
+              />
+              <DocumentFile
+                src={applicationData.proofOfOwnerShipURL}
+                name="ProofOfOwnerShip.docx"
+                description="Proof of Ownership"
+              />
+            </div>
           </div>
         </div>
       </section>
