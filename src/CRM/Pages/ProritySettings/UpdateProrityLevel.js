@@ -115,7 +115,7 @@ const EditPriorityForm = ({
               onClick={handleSavePriority}
               className="justify-center px-8 h-12 font-semibold rounded-3xl max-md:pr-7 bg-slate-500 max-md:pl-7"
             >
-              Save Priority
+              Update Priority
             </Button>
           </div>
         </div>

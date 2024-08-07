@@ -11,13 +11,12 @@ import ContactApplicantFormAction from "./Actions/ContactApplicantForm";
 import AssignSurveyor from "./Actions/AssignSurveyor";
 import SurveyorReport from "./Actions/SurveyorReport";
 import UpdateAuthorizeModal from "./Actions/UpdateAuthorizeModal ";
-import { DownloadOutlined } from '@ant-design/icons';
-import { Tooltip } from 'antd';
+import { DownloadOutlined } from "@ant-design/icons";
+import { Tooltip } from "antd";
 
 const DocumentFile = ({ src, name, description }) => {
   const handleDownload = () => {
-    // Trigger download
-    const link = document.createElement('a');
+    const link = document.createElement("a");
     link.href = src;
     link.download = name;
     document.body.appendChild(link);
@@ -26,24 +25,34 @@ const DocumentFile = ({ src, name, description }) => {
   };
 
   return (
-    <div className="document-file flex flex-col items-center p-4 bg-white shadow-md rounded-lg">
-      <img
-        src={src}
-        alt={description}
-        className="w-32 h-32 object-cover rounded-md mb-2"
-      />
-      <div className="document-info text-center">
-        <div className="font-medium text-lg">{name}</div>
-        <div className="text-sm text-gray-500">{description}</div>
+    <div className="w-full">
+      <div className="document-file w-full relative flex flex-col items-center p-4 bg-slate-100 rounded-lg">
+        <div className="w-full flex justify-between">
+          <div className="z-0 mt-2 text-sm text-center text-neutral-600">
+            <img
+              loading="lazy"
+              src="https://cdn.builder.io/api/v1/image/assets/TEMP/436b556cb2141c3ac828771e2f1656356dbc1929b702677a3124f09a284ccd1d?apiKey=0d95acea82cc4b259a61e827c24c5c6c&&apiKey=0d95acea82cc4b259a61e827c24c5c6c"
+              className="object-contain z-0 w-8 aspect-square"
+            />
+          </div>
+          <div className="flex justify-center items-center w-8 h-8 rounded-full bg-slate-500 mt-1">
+            <Tooltip title="Download">
+              <button
+                onClick={handleDownload}
+                className="flex items-center justify-center w-full h-full bg-blue-500 rounded-full hover:bg-blue-600 text-white"
+              >
+                <DownloadOutlined style={{ fontSize: "16px" }} />
+              </button>
+            </Tooltip>
+          </div>
+        </div>
+        <div className="mt-2 text-xs font-medium tracking-wide uppercase text-neutral-400">
+          {name}
+        </div>
       </div>
-      <Tooltip title="Download">
-        <button
-          onClick={handleDownload}
-          className="mt-3 p-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 flex items-center justify-center"
-        >
-          <DownloadOutlined style={{ fontSize: '16px' }} />
-        </button>
-      </Tooltip>
+      <div className="mt-2 text-xs font-medium tracking-wide uppercase text-neutral-400">
+        {description}
+      </div>
     </div>
   );
 };
@@ -436,54 +445,6 @@ const ApplicationDetail = () => {
           />
         </header>
         <div className="shrink-0 mt-4 h-px border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-opacity-10 max-md:max-w-full" />
-        {/* <div className="mt-4 max-md:max-w-full">
-          <div className="flex gap-5 max-md:flex-col max-md:gap-0">
-            <Document
-              src="https://cdn.builder.io/api/v1/image/assets/TEMP/e15c1d14b61ebe9160b96a514752c440bc2ed56b9365542b050e313b08bfb7a7?apiKey=27ec22b9382040ef8580a5e340d3a921&"
-              name="Profile pic.PNG"
-              description="passport photo"
-            />
-            <Document
-              src="https://cdn.builder.io/api/v1/image/assets/TEMP/c50aa64a000b557051f3507859ff49f84f225f25d8c449dbc2dd915d76344779?apiKey=27ec22b9382040ef8580a5e340d3a921&"
-              name="National ID.PNG"
-              description="national id"
-            />
-            <Document
-              src="https://cdn.builder.io/api/v1/image/assets/TEMP/47a8036c7569f00568d2dd568ab0c321a6ee6dd59b052a2313ca34056c95fbaa?apiKey=27ec22b9382040ef8580a5e340d3a921&"
-              name="Ownership.PDF"
-              description="proof of ownership"
-            />
-            <Document
-              src="https://cdn.builder.io/api/v1/image/assets/TEMP/f88971b08c1f19e72ce4982cf9837699cfe2b82778d0e77f5ccafffe88673fea?apiKey=27ec22b9382040ef8580a5e340d3a921&"
-              name="Sales.PDF"
-              description="land/sales agreement"
-            />
-          </div>
-
-          <div className="flex gap-2 justify-between px-4 py-5 mt-6 max-w-full rounded-xl bg-stone-100 w-[246px]">
-            <div className="flex flex-col text-sm text-center text-neutral-600">
-              <img
-                loading="lazy"
-                src="https://cdn.builder.io/api/v1/image/assets/TEMP/15bab7d3ee1870a044e0dfd0c115fc617faff32818483e187eb058feb34aa48a?apiKey=27ec22b9382040ef8580a5e340d3a921&"
-                alt="Local Authority"
-                className="w-8 aspect-square"
-              />
-              <div className="mt-2">Local Authority.PDF</div>
-            </div>
-            <div className="flex justify-center items-center self-end px-2 mt-7 w-8 h-8 rounded-3xl bg-slate-500">
-              <img
-                loading="lazy"
-                src="https://cdn.builder.io/api/v1/image/assets/TEMP/e26c3fe38d1183a0ed31b3a41a00f1bbd67b7f3f4264dcf95c2481c813f84e09?apiKey=27ec22b9382040ef8580a5e340d3a921&"
-                alt=""
-                className="aspect-square w-[18px]"
-              />
-            </div>
-          </div>
-          <div className="self-start mt-2 text-xs font-medium tracking-wide uppercase text-neutral-400">
-            local authority permission
-          </div>
-        </div> */}
-
         <div className="application-detail">
           <div className="mt-4 max-md:max-w-full">
             <div className="flex gap-5 max-md:flex-col max-md:gap-0">
@@ -494,17 +455,17 @@ const ApplicationDetail = () => {
               />
               <DocumentFile
                 src={applicationData.proofOfIdentityURL}
-                name="ProofOfIdentity.docx"
+                name="ProofOfIdentity.pdf"
                 description="Proof of Identity"
               />
               <DocumentFile
                 src={applicationData.proofOfInstallationSiteURL}
-                name="ProofOfInstallationSite.jpeg"
+                name="ProofOfInstallationSite.pdf"
                 description="Proof of Installation Site"
               />
               <DocumentFile
                 src={applicationData.proofOfOwnerShipURL}
-                name="ProofOfOwnerShip.docx"
+                name="ProofOfOwnerShip.pdf"
                 description="Proof of Ownership"
               />
             </div>

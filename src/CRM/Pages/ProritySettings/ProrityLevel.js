@@ -129,7 +129,7 @@ const PrioritySetting = () => {
                 key="2"
                 onClick={() => handleAction("delete", record.id)}
               >
-                Disable Priority Level
+                Delete
               </Menu.Item>
             </Menu>
           }
