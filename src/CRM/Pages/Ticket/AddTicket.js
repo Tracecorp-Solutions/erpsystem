@@ -350,7 +350,7 @@ const AddTicket = ({
                   onClick={handleSubmit}
                   className="px-8 py-4 font-semibold text-white rounded-3xl bg-slate-500 max-md:px-5"
                 >
-                  Save Complainant
+                  Save Complaint
                 </Button>
               )}
             </div>
