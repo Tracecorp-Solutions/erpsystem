@@ -15,6 +15,7 @@ namespace Core.Models.Accounting
         public string Description { get; set; }
         public string TranAccount { get; set; }
         public decimal Amount { get; set; }
+        public string AccountCode { get; set; }
 
         [NotMapped]
         public string RunningBalance { get; set; }

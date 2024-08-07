@@ -72,7 +72,8 @@ namespace Services.Repositories.Accounting
                     TranAccount = t.Account.Name,
                     TransactionReference = t.TransactionReference,
                     Narration = t.Narration,
-                    RunningBalance = GetRunningBalanceAsync(t.TranAccount, t.Id, t.RecordDate, _configuration).Result
+                    RunningBalance = GetRunningBalanceAsync(t.TranAccount, t.Id, t.RecordDate, _configuration).Result,
+                    AccountCode = t.Account.AccountCode
                 })
                 .ToListAsync();
         }
@@ -131,7 +132,8 @@ namespace Services.Repositories.Accounting
                 TransactionType = t.TransactionType,
                 TranAccount = t.Account.Name,
                 TransactionReference = t.TransactionReference,
-                Narration = t.Narration
+                Narration = t.Narration,
+                AccountCode = t.Account.AccountCode
             });
 
             return transactions == null ? throw new ArgumentException("No Transactions Found") : transactions;
@@ -179,7 +181,8 @@ namespace Services.Repositories.Accounting
                 TranAccount = t.Account.Name,
                 TransactionReference = t.TransactionReference,
                 Narration = t.Narration,
-                RunningBalance = GetRunningBalance(t.TranAccount, t.Id, t.RecordDate)
+                RunningBalance = GetRunningBalance(t.TranAccount, t.Id, t.RecordDate),
+                AccountCode = t.Account.AccountCode
             });
 
             return transaction == null ? throw new ArgumentException("No transaction found for that particular account") : transaction;
