@@ -31,10 +31,11 @@ function One() {
         const resp = await axios.get(`${process.env.REACT_APP_API_URL}/GetMeterReaders`);
         setMeterReaders(resp.data);
       } catch (error) {
-        message.error("Failed to fetch meter readers. Please try again.");
+        
+        console.error("Failed to fetch meter readers:", error);
       }
     };
-
+  
     fetchMeterReaders();
   }, []);
 
@@ -135,7 +136,7 @@ function One() {
       <div className="mt-8 font-semibold text-neutral-600 max-md:max-w-full">
         Customer Reference
       </div>
-      <div className="flex gap-2 justify-between py-1 pr-1 pl-4 mt-2 bg-white rounded-xl border border-neutral-500 border-opacity-30 max-md:flex-wrap max-md:max-w-full">
+      <div className=" ml-8 mr-8 flex gap-2 justify-between py-1 pr-1 pl-4 mt-2 bg-white rounded-xl border border-neutral-500 border-opacity-30 max-md:flex-wrap max-md:max-w-full">
         <input
           type="text"
           name="customerRef"
@@ -145,7 +146,7 @@ function One() {
         />
         <button
           onClick={handleValidateCustomer}
-          className="justify-center px-8 py-3 font-semibold text-white rounded-lg bg-blue-400 max-md:px-5"
+          className="justify-center px-6 py-3 font-semibold text-white rounded-lg bg-blue-400 max-md:px-5"
         >
           Validate Customer
         </button>

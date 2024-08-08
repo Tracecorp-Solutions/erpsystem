@@ -17,6 +17,9 @@ function Bulk() {
   // States to handle drop downs
   const [operationAreas, setOperationAreas] = useState([]);
   const [branches, setBranches] = useState([]);
+  const [meterReaders, setMeterReaders] = useState([
+  ]);
+
 
   // Handle date change for DatePicker
   const handleDateChange = (date, dateString) => {
@@ -36,7 +39,9 @@ function Bulk() {
       );
       setOperationAreas(resp.data);
     } catch (error) {
-      message.error(error.response?.data?.message || "Failed to fetch operation areas");
+      message.error(
+        error.response?.data?.message || "Failed to fetch operation areas"
+      );
     }
   };
 
@@ -48,7 +53,9 @@ function Bulk() {
       );
       setBranches(resp.data);
     } catch (error) {
-      message.error(error.response?.data?.message || "Failed to fetch branches");
+      message.error(
+        error.response?.data?.message || "Failed to fetch branches"
+      );
     }
   };
 
@@ -75,7 +82,10 @@ function Bulk() {
     formData.append("ContentType", file?.type || "");
     formData.append("ReadingDate", currentReadingDate);
     formData.append("BranchId", branch);
-    formData.append("ContentDisposition", `attachment; filename=${file?.name || ""}`);
+    formData.append(
+      "ContentDisposition",
+      `attachment; filename=${file?.name || ""}`
+    );
 
     try {
       const response = await axios.post(
@@ -209,15 +219,21 @@ function Bulk() {
               >
                 Meter Reader
               </label>
-              <input
-                type="text"
+              <select
                 id="meterReader"
                 value={meterReader}
-                placeholder="Enter meter reader"
                 onChange={(e) => setMeterReader(e.target.value)}
                 className="justify-center items-start px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 w-full"
-              />
+              >
+                <option value="">Select meter reader</option>
+                {meterReaders.map((reader) => (
+                  <option key={reader.id} value={reader.id}>
+                    {reader.name}
+                  </option>
+                ))}
+              </select>
             </div>
+
             <div className="flex flex-col px-5 flex-1">
               <label
                 htmlFor="fileHasHeader"
