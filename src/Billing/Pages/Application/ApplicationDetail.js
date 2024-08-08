@@ -16,7 +16,6 @@ import { Tooltip } from "antd";
 
 const DocumentFile = ({ src, name, description }) => {
   const handleDownload = () => {
-    alert(src);
     const link = document.createElement("a");
     link.href = src;
     link.download = name;
