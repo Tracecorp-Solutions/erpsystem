@@ -171,8 +171,7 @@ const ApplicationDetail = () => {
         userid: userid,
       })
       .then((response) => {
-        console.log("Job card generated successfully:", response.data);
-        message.success("Job card generated successfully", response.data);
+        message.success("Job card generated successfully");
         setJobCardInfo(response.data);
       })
       .catch((error) => {
@@ -233,9 +232,6 @@ const ApplicationDetail = () => {
     return <div>Loading...</div>;
   }
 
-  const { assignedTo } = applicationData;
-
-  console.log("applicationData applicationData", applicationData);
 
   return (
     <div className="flex flex-wrap justify-center content-start items-center py-6 rounded-3xl bg-stone-100">

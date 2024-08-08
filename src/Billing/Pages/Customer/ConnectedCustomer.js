@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Table, Menu, Dropdown, Input } from "antd";
-import { EllipsisOutlined } from "@ant-design/icons";
+import { EllipsisOutlined, SearchOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import PaymentDetails from "../Application/Actions/PaymentDetails";
 import BillingCustomer from "../Application/Actions/BillingCustomer";
-import { SearchOutlined } from "@ant-design/icons";
 
 const ConnectedCustomers = () => {
   const [customers, setConnectedCustomers] = useState([]);
@@ -30,7 +29,6 @@ const ConnectedCustomers = () => {
       setConnectedCustomers(resp.data);
     } catch (error) {
       console.error("Error fetching data:", error);
-      // Handle error if needed
     }
   };
 
@@ -187,7 +185,7 @@ const ConnectedCustomers = () => {
 
       {showBillingCustomer && (
         <BillingCustomer
-          customer={selectedCustomer}
+          custRef={customerRef}
           showBillingCustomer={showBillingCustomer}
           handleCancelBillingCustomer={handleCancelBillingCustomer}
         />
