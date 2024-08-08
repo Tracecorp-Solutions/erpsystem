@@ -6,7 +6,7 @@ import { getMeterTypes } from "../../Apis/getMeterTypes";
 import { getMeterSizes } from "../../Apis/getMeterSize";
 import { message } from "antd";
 
-function Replacement() {
+function Servicing() {
   const navigate = useNavigate();
   const [customerRef, setCustomerRef] = useState("");
   const [customerData, setCustomerData] = useState({
@@ -21,6 +21,9 @@ function Replacement() {
     meterType: "",
     meterMake: "",
   });
+
+  const [plumbers, setPlumbers] = useState([]);
+  const [selectedPlumber, setSelectedPlumber] = useState('');
 
   const [servicingData, setServicingData] = useState({
     meterNo: "",
@@ -43,6 +46,7 @@ function Replacement() {
     fetchMeterMakes();
     fetchMeterTypes();
     fetchMeterSizes();
+    fetchPlumbers();
   }, []);
 
   const fetchMeterMakes = async () => {
@@ -96,11 +100,20 @@ function Replacement() {
         meterType: data.meterType,
         meterMake: data.meterMake,
       });
-
     } catch (error) {
       console.error("Error occurred while fetching customer data:", error);
     }
   };
+
+  const fetchPlumbers = async () => {
+    try {
+      const resp = await axios.get(`${process.env.REACT_APP_API_URL}/GetPlumbers`);
+      setPlumbers(resp.data); // Assuming API returns an array of plumbers
+    } catch (error) {
+      console.error('Failed to fetch plumbers:', error);
+    }
+  };
+
 
   const handleSubmit = async () => {
     try {
@@ -115,12 +128,11 @@ function Replacement() {
           //manufactureDate: servicingData.manufactureDate,
           meterlifeDuration: servicingData.meterlifeDuration,
           initialReading: servicingData.initialReading,
-         // dateOfInstallation: servicingData.dateOfInstallation,
+          // dateOfInstallation: servicingData.dateOfInstallation,
           installedBy: servicingData.installedBy,
           isMeterServiced: true,
           meterMakes: servicingData.meterMakes,
         }
-
       );
       message.success(response.data);
     } catch (error) {
@@ -148,11 +160,12 @@ function Replacement() {
             Meter Replacement
           </div>
         </div>
-        <div  onClick={() => handleNavigate("history")}
-            className="justify-center px-6 py-4 rounded-lg bg-stone-100 text-slate-500 max-md:px-5"
-            role="button">
+        <div
+          onClick={() => handleNavigate("history")}
+          className="justify-center px-6 py-4 rounded-lg bg-stone-100 text-slate-500 max-md:px-5"
+          role="button"
+        >
           Meter History
-    
         </div>
       </div>
       <div className="shrink-0 mt-4 h-px border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-opacity-10 max-md:max-w-full" />
@@ -232,7 +245,9 @@ function Replacement() {
               type="text"
               className="px-4 py-4 mt-2 rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 w-full"
               value={customerData.meterType}
-              onChange={(e) => setCustomerData({ ...customerData, meterType: e.target.value })}
+              onChange={(e) =>
+                setCustomerData({ ...customerData, meterType: e.target.value })
+              }
             />
           </div>
         </div>
@@ -245,7 +260,12 @@ function Replacement() {
               type="text"
               className="px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 w-full"
               value={customerData.previousReading}
-              onChange={(e) => setCustomerData({ ...customerData, previousReading: e.target.value })}
+              onChange={(e) =>
+                setCustomerData({
+                  ...customerData,
+                  previousReading: e.target.value,
+                })
+              }
             />
           </div>
           <div className="flex flex-col px-5 flex-1">
@@ -256,7 +276,12 @@ function Replacement() {
               type="text"
               className="px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 w-full"
               value={customerData.applicationNo}
-              onChange={(e) => setCustomerData({ ...customerData, applicationNo: e.target.value })}
+              onChange={(e) =>
+                setCustomerData({
+                  ...customerData,
+                  applicationNo: e.target.value,
+                })
+              }
             />
           </div>
         </div>
@@ -267,7 +292,7 @@ function Replacement() {
       <div className="shrink-0 mt-2 h-px border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-opacity-10 max-md:max-w-full" />
       <div className="flex flex-col flex-wrap justify-center px-8 py-6 content-start pb-6 text-base leading-6 w-full">
         <div className="flex gap-4 max-md:flex-wrap w-full">
-        <div className="flex flex-col px-5 flex-1">
+          <div className="flex flex-col px-5 flex-1">
             <div className="font-semibold text-neutral-600 w-full">
               New Meter Initial Reading
             </div>
@@ -300,119 +325,9 @@ function Replacement() {
             />
           </div>
         </div>
-        {/* <div className="flex gap-4 mt-4 max-md:flex-wrap w-full">
-          <div className="flex flex-col px-5 flex-1">
-            <div className="font-semibold text-neutral-600 w-full">
-              Meter Type
-            </div>
-            <select
-              className="px-4 py-4 mt-2 rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 w-full"
-              value={servicingData.meterTypeId}
-              onChange={(e) =>
-                setServicingData({ ...servicingData, meterTypeId: e.target.value })
-              }
-            >
-              <option value="">Select Meter Type</option>
-              {meterTypes.map((type) => (
-                <option key={type.id} value={type.id}>
-                  {type.meterType}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div className="flex flex-col px-5 flex-1">
-            <div className="font-semibold text-neutral-600 w-full">
-              New Meter Size
-            </div>
-            <select
-              className="px-4 py-4 mt-2 rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 w-full"
-              value={servicingData.meterSizeId}
-              onChange={(e) =>
-                setServicingData({
-                  ...servicingData,
-                  meterSizeId: e.target.value,
-                })
-              }
-            >
-              <option value="">Select New Meter Size</option>
-              {meterSizes.map((size) => (
-                <option key={size.id} value={size.id}>
-                  {size.size}
-                </option>
-              ))}
-            </select>
-          </div>
-        </div> */}
-        {/* <div className="flex gap-4 mt-4 max-md:flex-wrap w-full">
-          <div className="flex flex-col px-5 flex-1">
-            <div className="font-semibold text-neutral-600 w-full">
-              New Meter Dials
-            </div>
-            <input
-              type="text"
-              className="px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 w-full"
-              value={servicingData.dials}
-              onChange={(e) =>
-                setServicingData({
-                  ...servicingData,
-                  dials: e.target.value,
-                })
-              }
-            />
-          </div>
-          <div className="flex flex-col px-5 flex-1">
-            <div className="font-semibold text-neutral-600 w-full">
-              New Meter Manufacture Date
-            </div>
-            <input
-              type="date"
-              className="px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 w-full"
-              value={servicingData.manufactureDate}
-              onChange={(e) =>
-                setServicingData({
-                  ...servicingData,
-                  manufactureDate: e.target.value,
-                })
-              }
-            />
-          </div>
-        </div> */}
-        {/* <div className="flex gap-4 mt-4 max-md:flex-wrap w-full">
-          <div className="flex flex-col px-5 flex-1">
-            <div className="font-semibold text-neutral-600 w-full">
-              New Meter Life Duration
-            </div>
-            <input
-              type="text"
-              className="px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 w-full"
-              value={servicingData.meterlifeDuration}
-              onChange={(e) =>
-                setServicingData({
-                  ...servicingData,
-                  meterlifeDuration: e.target.value,
-                })
-              }
-            />
-          </div>
-          <div className="flex flex-col px-5 flex-1">
-            <div className="font-semibold text-neutral-600 w-full">
-              New Meter Number
-            </div>
-            <input
-              type="text"
-              className="px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 w-full"
-              value={servicingData.meterNo}
-              onChange={(e) =>
-                setServicingData({
-                  ...servicingData,
-                  meterNo: e.target.value,
-                })
-              }
-            />
-          </div>
-        </div> */}
+
         <div className="flex gap-4 mt-4 max-md:flex-wrap w-full">
-        <div className="flex flex-col px-5 flex-1">
+          <div className="flex flex-col px-5 flex-1">
             <div className="font-semibold text-neutral-600 w-full">
               Meter Number
             </div>
@@ -429,48 +344,28 @@ function Replacement() {
             />
           </div>
           <div className="flex flex-col px-5 flex-1">
-            <div className="font-semibold text-neutral-600 w-full">
-              Installed By
-            </div>
-            <input
-              type="text"
+            <div className="font-semibold text-neutral-600 w-full">Installed By</div>
+            <select
               className="px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 w-full"
-              value={servicingData.installedBy}
-              onChange={(e) =>
+              value={selectedPlumber}
+              onChange={(e) => {
+                setSelectedPlumber(e.target.value);
                 setServicingData({
                   ...servicingData,
                   installedBy: e.target.value,
-                })
-              }
-            />
-          </div>
-
-          {/* <div className="flex flex-col px-5 flex-1">
-            <div className="font-semibold text-neutral-600 w-full">
-              Meter Make
-            </div>
-            <select
-              className="px-4 py-4 mt-2 rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 w-full"
-              value={servicingData.meterMakes}
-              onChange={(e) =>
-                setServicingData({
-                  ...servicingData,
-                  meterMakes: e.target.value,
-                })
-              }
+                });
+              }}
             >
-              <option value="">Select Meter Make</option>
-              {meterMakes.map((make) => (
-                <option key={make.id} value={make.id}>
-                  {make.make}
+              <option value="">Select a plumber</option>
+              {plumbers.map((plumber) => (
+                <option key={plumber.id} value={plumber.name}>
+                  {plumber.name}
                 </option>
               ))}
             </select>
-          </div> */}
+          </div>
         </div>
-        <div className="flex gap-4 mt-4 max-md:flex-wrap w-full">
-
-        </div>
+        <div className="flex gap-4 mt-4 max-md:flex-wrap w-full"></div>
         <div className="flex justify-end mt-8 gap-4 w-full max-md:flex-wrap">
           <div className="px-8 py-4 font-semibold text-white rounded-lg bg-gray-300 cursor-pointer max-md:px-5">
             Clear Form
@@ -481,12 +376,10 @@ function Replacement() {
           >
             Submit
           </div>
-
         </div>
-
       </div>
     </div>
   );
 }
 
-export default Replacement;
+export default Servicing;

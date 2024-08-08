@@ -228,16 +228,7 @@ function History() {
                 </div>
               ))}
             </div>
-            {/* <div className="flex flex-col flex-1">
-              <div className="justify-center items-start py-4 pr-1 pl-4 font-semibold whitespace-nowrap bg-white border-t border-r border-b border-solid border-neutral-500 border-opacity-30 text-neutral-600 max-md:pr-5">
-                Notes
-              </div>
-              {meterReadingHistory.map((reading, index) => (
-                <div key={index} className="justify-center items-start py-4 pr-1 pl-4 bg-white border-r border-b border-solid border-neutral-500 border-opacity-30 max-md:pr-5">
-                  {reading.notes}
-                </div>
-              ))}
-            </div> */}
+           
           </div>
         </>
       )}

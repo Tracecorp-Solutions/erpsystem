@@ -34,7 +34,9 @@ function Replacement() {
     installedBy: "",
     meterMakes: 0,
   });
-
+  
+  const [plumbers, setPlumbers] = useState([]);
+  const [selectedPlumber, setSelectedPlumber] = useState('');
   const [meterMakes, setMeterMakes] = useState([]);
   const [meterTypes, setMeterTypes] = useState([]);
   const [meterSizes, setMeterSizes] = useState([]);
@@ -43,6 +45,7 @@ function Replacement() {
     fetchMeterMakes();
     fetchMeterTypes();
     fetchMeterSizes();
+    fetchPlumbers();
   }, []);
 
   const fetchMeterMakes = async () => {
@@ -69,6 +72,15 @@ function Replacement() {
       setMeterSizes(sizes);
     } catch (error) {
       console.error("Error fetching meter sizes:", error);
+    }
+  };
+
+  const fetchPlumbers = async () => {
+    try {
+      const resp = await axios.get(`${process.env.REACT_APP_API_URL}/GetPlumbers`);
+      setPlumbers(resp.data); // Assuming API returns an array of plumbers
+    } catch (error) {
+      console.error('Failed to fetch plumbers:', error);
     }
   };
 
@@ -412,21 +424,26 @@ function Replacement() {
           </div>
         </div>
         <div className="flex gap-4 mt-4 max-md:flex-wrap w-full">
-          <div className="flex flex-col px-5 flex-1">
-            <div className="font-semibold text-neutral-600 w-full">
-              Installed By
-            </div>
-            <input
-              type="text"
+        <div className="flex flex-col px-5 flex-1">
+            <div className="font-semibold text-neutral-600 w-full">Installed By</div>
+            <select
               className="px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-600 w-full"
-              value={servicingData.installedBy}
-              onChange={(e) =>
+              value={selectedPlumber}
+              onChange={(e) => {
+                setSelectedPlumber(e.target.value);
                 setServicingData({
                   ...servicingData,
                   installedBy: e.target.value,
-                })
-              }
-            />
+                });
+              }}
+            >
+              <option value="">Select a plumber</option>
+              {plumbers.map((plumber) => (
+                <option key={plumber.id} value={plumber.name}>
+                  {plumber.name}
+                </option>
+              ))}
+            </select>
           </div>
           <div className="flex flex-col px-5 flex-1">
             <div className="font-semibold text-neutral-600 w-full">
