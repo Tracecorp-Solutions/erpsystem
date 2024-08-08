@@ -6,6 +6,11 @@ const EditForm = ({ editedGroupAccount, handleSubmitEdit, closeEditForm }) => {
       const { name, value } = e.target;
       setEditedAccount({ ...editedAccount, [name]: value });
     };
+
+    const handleCodeChange = (e) => {
+      const { groupCode, value } = e.target;
+      setEditedAccount({ ...editedAccount, [groupCode]: value });
+    };
   
     const handleBehaviorChange = (e) => {
       const { value } = e.target;
@@ -65,6 +70,33 @@ const EditForm = ({ editedGroupAccount, handleSubmitEdit, closeEditForm }) => {
                 "
                   value={editedAccount.name}
                   onChange={handleChange}
+                />
+              </div>
+              <div>
+                <label
+                  htmlFor="name"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Group code
+                </label>
+                <input
+                  type="text"
+                  onClick={(e) => e.stopPropagation()}
+                  id="name"
+                  name="name"
+                  className="
+                mt-1
+                p-4 block
+                w-full
+                sm:text-sm
+                rounded-md
+                text-input
+                focus:ring-indigo-500
+                focus:border-gray-400
+                focus-visible:border-indigo-500
+                "
+                  value={editedAccount.accountCode}
+                  onChange={handleCodeChange}
                 />
               </div>
               <div>
