@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Modal, Input, DatePicker, message, Spin } from "antd";
+import { Modal, Input, DatePicker, message } from "antd";
 import axios from "axios";
 import moment from "moment";
 
@@ -8,7 +8,6 @@ const BillingCustomer = ({
   showBillingCustomer,
   handleCancelBillingCustomer,
 }) => {
-  const [customerRef, setCustomerRef] = useState("");
   const [customerDetails, setCustomerDetails] = useState({
     fullName: "",
     meterNumber: "",
@@ -21,6 +20,8 @@ const BillingCustomer = ({
 
   useEffect(() => {
     const fetchCustomerByRef = async () => {
+      if (!custRef) return;
+
       try {
         setLoading(true);
         const response = await axios.get(
@@ -28,36 +29,15 @@ const BillingCustomer = ({
         );
         setCustomerDetails(response.data);
       } catch (error) {
-        console.error("Error fetching customer references:", error);
-        message.error("Failed to fetch customer references");
+        console.error("Error fetching customer details:", error);
+        message.error("Failed to fetch customer details");
       } finally {
         setLoading(false);
       }
     };
-    if (custRef) {
-      fetchCustomerByRef();
-    }
+
+    fetchCustomerByRef();
   }, [custRef]);
-
-  const fetchCustomerDetails = async () => {
-    if (!customerRef) {
-      message.error("Please enter a valid Customer Reference");
-      return;
-    }
-
-    try {
-      setLoading(true);
-      const response = await axios.get(
-        `${process.env.REACT_APP_API_URL}/ValidateCustomer/${custRef}`
-      );
-      setCustomerDetails(response.data);
-    } catch (error) {
-      console.error("Error fetching customer details:", error);
-      message.error("Failed to fetch customer details");
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const handleBillCustomer = async (e) => {
     e.preventDefault();
@@ -95,11 +75,7 @@ const BillingCustomer = ({
     }
   };
 
-  const onSelectCustomer = (value) => {
-    setCustomerRef(value);
-    fetchCustomerDetails();
-  };
-
+console.log("customerDetails customerDetails customerDetails", customerDetails);
   return (
     <Modal visible={showBillingCustomer} closable={false} footer={null}>
       <div className="flex flex-col items-center text-base font-semibold leading-6 max-w-[820px] text-neutral-600">
@@ -122,8 +98,7 @@ const BillingCustomer = ({
         <Input
           className="justify-center items-start px-4 py-4 mt-2 max-w-full whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 w-[500px] max-md:pr-5"
           value={custRef}
-          onChange={(e) => setCustomerRef(e.target.value)}
-          placeholder="Enter Customer Reference"
+          readOnly
         />
 
         {/* Customer Name */}
@@ -164,7 +139,7 @@ const BillingCustomer = ({
           className="flex gap-2 justify-between px-4 py-4 mt-2 max-w-full rounded-xl border border-solid border-neutral-500 border-opacity-30 text-neutral-400 w-[500px] max-md:flex-wrap"
           placeholder="Choose Billing Date"
           value={billFrom}
-          onChange={(date) => setBillFrom(date)} // Use 'date' object directly for 'value'
+          onChange={(date) => setBillFrom(date)}
         />
 
         <div className="mt-4 max-md:max-w-full">Bill To</div>

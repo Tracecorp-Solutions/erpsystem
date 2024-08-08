@@ -178,6 +178,24 @@ function SideNav() {
                     View Applications
                   </button>
                 </div>
+                <div
+                  className={`flex gap-2 py-3 mt-2 whitespace-nowrap rounded-xl ${
+                    location.pathname === "/accounts"
+                      ? "bg-active-green txt-color-blue font-semibold px-4 mt-3"
+                      : "bg-none"
+                  }`}
+                >
+                  <Minus className="shrink-0 self-start w-6 aspect-square" />
+                  <button
+                    onClick={() =>
+                      navigate("/billingdashboard", {
+                        state: { screen: "connectedcustomers" },
+                      })
+                    }
+                  >
+                   Connected  Customers
+                  </button>
+                </div>
               </div>
             )}
           </div>
@@ -363,24 +381,6 @@ function SideNav() {
                   Payments
                 </button>
               </div>
-              <div
-                  className={`flex gap-2 py-3 mt-2 whitespace-nowrap rounded-xl ${
-                    location.pathname === "/accounts"
-                      ? "bg-active-green txt-color-blue font-semibold px-4 mt-3"
-                      : "bg-none"
-                  }`}
-                >
-                  <Minus className="shrink-0 self-start w-6 aspect-square" />
-                  <button
-                    onClick={() =>
-                      navigate("/billingdashboard", {
-                        state: { screen: "connectedcustomers" },
-                      })
-                    }
-                  >
-                   Connected  Customers
-                  </button>
-                </div>
                 <div
                   className={`flex gap-2 py-3 mt-2 whitespace-nowrap rounded-xl ${
                     location.pathname === "/accounts"
