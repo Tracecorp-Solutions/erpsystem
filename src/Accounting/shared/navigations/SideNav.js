@@ -233,7 +233,7 @@ function SideNav() {
                 <div className={`flex gap-2 py-3 mt-2 whitespace-nowrap rounded-xl ${isActive("/")}`}>
                   <ReceiptText className="shrink-0 self-start w-6 aspect-square" />
                   <button
-                    className="hover:bg-green-300"
+                    className=""
                     onClick={() => navigate("/Dashboardlayout", { state: { screen: "ledger" } })}
                   >
                     General Ledger

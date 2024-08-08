@@ -2,7 +2,7 @@ import { message, DatePicker } from "antd";
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import moment from "moment"; 
+import moment from "moment";
 
 function Bulk() {
   const navigate = useNavigate();
@@ -14,20 +14,21 @@ function Bulk() {
   const [fileHasHeader, setFileHasHeader] = useState("");
   const [file, setFile] = useState(null);
 
-  //states to handle drop downs
+  // States to handle drop downs
   const [operationAreas, setOperationAreas] = useState([]);
   const [branches, setBranches] = useState([]);
-   // State for current reading date
 
+  // Handle date change for DatePicker
   const handleDateChange = (date, dateString) => {
-    setCurrentReadingDate(dateString); // Set the current reading date in the state
+    setCurrentReadingDate(dateString);
   };
 
+  // Handle navigation to different screens
   const handleNavigate = (screen) => {
     navigate("/billingdashboard", { state: { screen } });
   };
 
-  //fetch operation areas
+  // Fetch operation areas
   const GetOperationAreas = async () => {
     try {
       const resp = await axios.get(
@@ -35,11 +36,11 @@ function Bulk() {
       );
       setOperationAreas(resp.data);
     } catch (error) {
-      message.error(error.response);
+      message.error(error.response?.data?.message || "Failed to fetch operation areas");
     }
   };
 
-  //fetch branches
+  // Fetch branches
   const GetBranches = async () => {
     try {
       const resp = await axios.get(
@@ -47,7 +48,7 @@ function Bulk() {
       );
       setBranches(resp.data);
     } catch (error) {
-      message.error(error.response);
+      message.error(error.response?.data?.message || "Failed to fetch branches");
     }
   };
 
@@ -56,23 +57,25 @@ function Bulk() {
     GetBranches();
   }, []);
 
+  // Handle file change
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
   };
 
+  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const formData = new FormData();
     formData.append("FileName", file?.name || "");
     formData.append("MeterReaderId", meterReader);
-    formData.append("Name", ""); // Add appropriate value if necessary
+    formData.append("Name", file ? file.name : "");
     formData.append("OperationAreaId", operationalArea);
-    formData.append("filelocation", ""); // Add appropriate value if necessary
+    formData.append("filelocation", file ? file.name : "");
     formData.append("ContentType", file?.type || "");
     formData.append("ReadingDate", currentReadingDate);
     formData.append("BranchId", branch);
-    formData.append("ContentDisposition", ""); // Add appropriate value if necessary
+    formData.append("ContentDisposition", `attachment; filename=${file?.name || ""}`);
 
     try {
       const response = await axios.post(
@@ -191,7 +194,7 @@ function Bulk() {
                   currentReadingDate
                     ? moment(currentReadingDate, "YYYY-MM-DD")
                     : null
-                } // Convert date string to moment object
+                }
                 placeholder="Select current date"
                 onChange={handleDateChange}
                 className="justify-center items-start px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 w-full"
@@ -225,35 +228,36 @@ function Bulk() {
               <input
                 type="text"
                 id="fileHasHeader"
-                placeholder="does the file have a header"
+                placeholder="Does the file have a header"
                 value={fileHasHeader}
                 onChange={(e) => setFileHasHeader(e.target.value)}
                 className="flex gap-2 justify-between px-4 py-4 mt-2 rounded-xl border border-solid border-neutral-500 border-opacity-30 text-neutral-400 w-full"
               />
             </div>
           </div>
-          <div className="flex gap-4 mt-4 max-md:flex-wrap w-full">
+          <div className="flex gap-4 mt-4 w-full max-md:flex-wrap">
             <div className="flex flex-col px-5 flex-1">
-              <div className="font-semibold w-full">Browse File</div>
-              <div className="flex gap-2 justify-between px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 text-neutral-400 w-full">
-                <label htmlFor="file" className="cursor-pointer flex-1">
-                  <input
-                    type="file"
-                    id="file"
-                    onChange={handleFileChange}
-                    className="hidden"
-                  />
-                  {file ? file.name : "Click to browse file"}
-                </label>
-              </div>
+              <label
+                htmlFor="uploadFile"
+                className="font-semibold text-neutral-600 w-full"
+              >
+                Upload File
+              </label>
+              <input
+                type="file"
+                id="uploadFile"
+                accept=".xlsx,.xls"
+                onChange={handleFileChange}
+                className="justify-center items-start px-4 py-4 mt-2 whitespace-nowrap rounded-xl border border-solid bg-stone-100 border-neutral-500 border-opacity-30 w-full"
+              />
             </div>
           </div>
-          <div className="flex items-center justify-center gap-2 p-4 mt-10 w-full">
+          <div className="flex gap-4 mt-4 w-full max-md:flex-wrap">
             <button
               type="submit"
-              className="flex flex-1 items-center justify-center px-6 py-4 mt-6 text-lg font-semibold text-white bg-slate-700 rounded-lg leading-[160%]"
+              className="w-full text-center flex items-center justify-center cursor-pointer bg-blue-500 text-white rounded-xl px-5 py-4 mt-2"
             >
-              Upload
+              Submit
             </button>
           </div>
         </div>
