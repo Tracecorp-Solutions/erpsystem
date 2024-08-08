@@ -314,7 +314,7 @@ const UpdateTicketForm = ({
                   onClick={handleSubmit}
                   className="px-8 py-4 font-semibold text-white rounded-3xl bg-slate-500 max-md:px-5"
                 >
-                  Save Changes
+                  Update Ticket
                 </Button>
               )}
             </div>

@@ -183,7 +183,7 @@ const UpdateTicket = () => {
         <div className="flex gap-5 justify-between w-full font-semibold max-md:flex-wrap max-md:max-w-full">
           <div className="text-3xl capitalize text-neutral-600">
             {/* {ticketDetails.ticket.complaintSubject} */}
-            Water Leakage Issue
+            {ticketDetails.ticket.complaintSubject}
           </div>
           {/* <div className="flex gap-2 my-auto text-base leading-6 text-slate-500">
             <img

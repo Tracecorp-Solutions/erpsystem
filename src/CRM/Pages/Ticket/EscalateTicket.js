@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Select, Button, Input, message } from "antd";
 import axios from "axios";
 
 const { Option } = Select;
 
-const EscalateTicket = ({ handleEscalateCancel, ticketId, recordedBy, departments }) => {
-  const [selectedLevel, setSelectedLevel] = useState(null);
+const EscalateTicket = ({ handleEscalateCancel, ticketId, recordedBy, departments, fetchTickets }) => {
+  const [selectedLevel, setSelectedLevel] = useState(undefined);
   const [comments, setComments] = useState("");
-
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
@@ -39,6 +38,10 @@ const EscalateTicket = ({ handleEscalateCancel, ticketId, recordedBy, department
       console.log("Escalation successful:", response.data);
       message.success("Ticket escalated successfully!");
 
+      setSelectedLevel(undefined);
+      setComments("");
+
+      fetchTickets();
       handleEscalateCancel();
     } catch (error) {
       console.error("Error escalating ticket:", error);
@@ -63,7 +66,8 @@ const EscalateTicket = ({ handleEscalateCancel, ticketId, recordedBy, department
       </div>
       <div className="mt-8 text-start w-full my-2">Escalate To</div>
       <Select
-        defaultValue="Select department"
+        value={selectedLevel} // Use value prop to control the component
+        placeholder="Select department"
         style={{ width: "100%" }}
         className="h-12"
         onChange={(value) => setSelectedLevel(value)}

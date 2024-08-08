@@ -75,8 +75,6 @@ const AddTicket = ({
   const fetchTerritories = () => fetchData("/GetTerritories", setTerritories);
   const fetchTicketCategories = () =>
     fetchData("/GetTicketCategories", setTicketCategories);
-  // const fetchPriorities = () => fetchData('/GetPriorities', setPriorities);
-
   const fetchPriorities = async () => {
     setLoading(true);
     try {
@@ -123,6 +121,24 @@ const AddTicket = ({
     }
   };
 
+  const resetForm = () => {
+    setCurrentStep(0);
+    setCustomerReference("");
+    setCustomerDetails(null);
+    setCustomerName("");
+    setOperationalAreaId(null);
+    setBranchId(null);
+    setTerritoryId(null);
+    setCustomerType(null);
+    setTicketCategoryId(null);
+    setTicketSource(null);
+    setPriorityId(null);
+    setDescription("");
+    setPhoneNumber("");
+    setAddress("");
+    setComplaintSubject("");
+  };
+
   const handleSubmit = () => {
     if (
       !customerName ||
@@ -159,6 +175,7 @@ const AddTicket = ({
       .then((response) => {
         message.success("Data successfully saved");
         fetchTickets();
+        resetForm();
         handleCancel();
       })
       .catch((error) => {
@@ -320,12 +337,12 @@ const AddTicket = ({
               {currentStep < 1 ? (
                 <div className="flex justify-center w-full">
                   <Button
-                  type="primary"
-                  onClick={() => setCurrentStep(currentStep + 1)}
-                  className="px-8 py-4 font-semibold text-white rounded-3xl bg-slate-500 w-full max-md:px-5"
-                >
-                  Next
-                </Button>
+                    type="primary"
+                    onClick={() => setCurrentStep(currentStep + 1)}
+                    className="px-8 py-4 font-semibold text-white rounded-3xl bg-slate-500 w-full max-md:px-5"
+                  >
+                    Next
+                  </Button>
                 </div>
               ) : (
                 <Button
@@ -333,7 +350,7 @@ const AddTicket = ({
                   onClick={handleSubmit}
                   className="px-8 py-4 font-semibold text-white rounded-3xl bg-slate-500 max-md:px-5"
                 >
-                  Save Complainant
+                  Save Complaint
                 </Button>
               )}
             </div>
