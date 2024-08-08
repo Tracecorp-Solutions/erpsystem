@@ -9,6 +9,7 @@ const AssignSurveyor = ({
   handleApproveApplication,
   assignSurveyorAction,
   applicationId,
+  fetchApplicationById
 }) => {
   const [currentStep, setCurrentStep] = useState(0);
   const [formData, setFormData] = useState({
@@ -73,6 +74,7 @@ const AssignSurveyor = ({
   
         if (currentStep === steps.length - 1) {
           handleApproveApplication(formData);
+          fetchApplicationById();
           setAssignSurveyorAction(false);
         } else {
           nextStep();

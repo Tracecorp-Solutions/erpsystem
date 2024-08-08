@@ -7,11 +7,17 @@ import CrmDashboard from "../Dashboard/CrmDashboard";
 import Departments from "../Departments/Departments";
 import Escalation from "../Escalation/Escalation";
 import CrmReport from "../Reports/CrmReport";
+import TicketPage from "../Ticket/TicketPage";
+import ProritySetting from "../ProritySettings/ProrityLevel";
+import ProrityCriteria from "../ProritySettings/ProrityCriteria";
+import Ticket from "../Ticket/Ticket";
+import UpdateTicket from "../Ticket/UpdateTicket";
+import TicketSubcategory from "../Ticket/TicketSubcategory";
 
 const Crm = () => {
   const location = useLocation();
   const { state } = location;
-  const screen = state?.screen || "crm";
+  const screen = state?.screen || "crm-dashboard";
   const navigate = useNavigate();
   useEffect(() => {
     if (sessionStorage.getItem("userid") == null) {
@@ -30,11 +36,18 @@ const Crm = () => {
         <div className="w-full flex justify-center">
           <div className="main-content bg-stone-100 pb-6 rounded-t-3xl">
             <div className="content px-4 sm:px-6 lg:px-8 group-container">
-              {screen === "crm" && <CrmDashboard />}
+              
+              {screen === "crm-dashboard" && <CrmDashboard />}
               {screen === "departments" && <Departments />}
               {screen === "escalation" && <Escalation />}
               {screen === "crm-report" && <CrmReport />}
-        
+              {screen === "ticket" && <TicketPage />} 
+              {screen === "ticket-page" && <Ticket />} 
+              {screen === "priority-setting" && <ProritySetting />}
+              {screen === "priority-criteria" && <ProrityCriteria />}
+              {screen === "update-ticket" && <UpdateTicket />}
+              {screen === "ticket-subcategory" && <TicketSubcategory />}
+
             </div>
           </div>
         </div>

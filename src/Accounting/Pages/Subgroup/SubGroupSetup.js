@@ -20,6 +20,7 @@ const SubGroupSetup = () => {
   const [newAccount, setNewAccount] = useState({
     name: "",
     description: "",
+    subGroupCode:"",
     groupId: "",
   });
   const [selectedAccount, setSelectedAccount] = useState(null);
@@ -92,6 +93,7 @@ const SubGroupSetup = () => {
       setNewAccount({
         name: "",
         description: "",
+        subGroupCode:"",
         groupId: "",
       });
       setShowModal(false);
@@ -355,6 +357,32 @@ const SubGroupSetup = () => {
                 ))}
               </select>
             </div>
+            <div className="mb-4">
+              <label
+                htmlFor="name"
+                className="block mb-1"
+                style={{
+                  fontFamily: "outFit, Sans-serif",
+                  fontSize: "16px",
+                  fontWeight: "600",
+                }}
+              >
+                SubGroup code
+              </label>
+              <p>
+                Choose a unique name for your subgroup that reflects its purpose
+              </p>
+              <input
+                type="text"
+                id="subGroupCode"
+                name="subGroupCode"
+                value={newAccount.subGroupCode}
+                onChange={handleChange}
+                placeholder="Subgroup code"
+                className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                style={{ borderRadius: "12px", padding: "15px" }}
+              />
+            </div>
 
             <div className="mb-4">
               <label
@@ -434,6 +462,12 @@ const SubGroupSetup = () => {
                     scope="col"
                     className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                   >
+                    Code
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
                     DESCRIPTION
                   </th>
                   <th
@@ -465,6 +499,9 @@ const SubGroupSetup = () => {
                       />
                       <td className="px-3 py-4 whitespace-nowrap text-sm  text-gray-500">
                         {account.subGroupAccount.name}
+                      </td>
+                      <td className="px-3 py-4 whitespace-nowrap text-sm  text-gray-500">
+                        {account.subGroupAccount.subGroupCode}
                       </td>
                       <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">
                         {truncateText(account.subGroupAccount.description, 6)}

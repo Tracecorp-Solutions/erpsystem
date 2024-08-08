@@ -74,7 +74,7 @@ const SystemCard = ({ title, description, isActive, onClick }) => {
       <p className="mt-4 mb-8 text-neutral-400">{description}</p>
       <button
         className={`justify-center px-8 py-3 mt-auto text-base leading-6 text-white rounded-3xl ${
-          buttonClicked ? "bg-blue-400 text-white" : title === "Accounting System" || title === "Water Billing System" || title === "Customer Relationship System (CRM)" ? "bg-dark-blue text-white" : "bg-gray-200 text-white"
+          buttonClicked ? "bg-blue-400 text-white" : title === "Accounting System" || title === "Water Billing System" || title === "Customer Relationship System (CRM)" ? "bg-dark-blue text-white" : "bg-gray-400 text-white"
         } max-md:px-5 max-md:mb-10`}
         disabled={isActive || buttonClicked}
         aria-label={`${title} - ${isActive ? "Contact Us" : "Load System"}`}
@@ -103,7 +103,7 @@ const Landing = () => {
             TRACE ERP
           </h1>
         </section>
-        <section className="px-5 mt-8 w-full max-w-[1200px] max-md:max-w-full">
+        <section className="px-5 mt-8 w-full ">
           <div className="flex gap-5 max-md:flex-col max-md:gap-0">
             {systems.slice(0, 4).map((system, index) => (
               <div key={index} className="flex flex-col w-3/12 max-md:ml-0 max-md:w-full">
@@ -117,7 +117,7 @@ const Landing = () => {
             ))}
           </div>
         </section>
-        <section className="px-5 mt-6 w-full max-w-[1200px] max-md:max-w-full">
+        <section className="px-5 mt-6 w-full">
           <div className="flex gap-5 max-md:flex-col max-md:gap-0">
             {systems.slice(4).map((system, index) => (
               <div key={index} className="flex flex-col w-3/12 max-md:ml-0 max-md:w-full">

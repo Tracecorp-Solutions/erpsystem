@@ -1,15 +1,66 @@
-import * as React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function History() {
-    const navigate = useNavigate();
-    const handleNavigate = (screen) => {
-        navigate("/billingdashboard", { state: { screen } });
-      };
+  const navigate = useNavigate();
+  const [customerData, setCustomerData] = useState(null);
+  const [customerRef, setCustomerRef] = useState("");
+  const [name, setName] = useState("");
+  const [previousReadingDate, setPreviousReadingDate] = useState("");
+  const [streetAddress, setStreetAddress] = useState("");
+  const [meterReadingHistory, setMeterReadingHistory] = useState([]);
+
+  const handleNavigate = (screen) => {
+    navigate("/billingdashboard", { state: { screen } });
+  };
+
+  const handleValidateCustomer = async () => {
+    try {
+      // Fetch customer data using Axios
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}/GetMeterServicingByCustomerRef?customerRef=${customerRef}`
+      );
+      // Set customer data state
+      setCustomerData(response.data);
+
+      // Fetch fullname endpoint after customer validation using Axios
+      const nameResponse = await axios.get(
+        `${process.env.REACT_APP_API_URL}/ValidateCustomer/${customerRef}`
+      );
+      // Set fullname state
+      setName(nameResponse.data.name);
+
+      // Fetch previous reading date endpoint using Axios
+      const previousReadingDateResponse = await axios.get(
+        `${process.env.REACT_APP_API_URL}/ValidateCustomer/${customerRef}`
+      );
+      // Set previous reading date state
+      setPreviousReadingDate(previousReadingDateResponse.data.previousReadingDate);
+
+      // Fetch street address from GetApplications endpoint using Axios
+      const streetAddressResponse = await axios.get(
+        `${process.env.REACT_APP_API_URL}/GetApplications`
+      );
+     
+      setStreetAddress(streetAddressResponse.data[0].streetAddress);
+
+      const meterReadingResponse = await axios.get(
+        `${process.env.REACT_APP_API_URL}/GetMeterReadingByCustomerRef/${customerRef}`
+      );
+    
+      setMeterReadingHistory(meterReadingResponse.data);
+
+    } catch (error) {
+      console.error("Error validating customer:", error);
+      // Handle error 
+    }
+  };
+
   return (
     <div className="flex flex-col p-6 bg-white rounded-3xl max-md:px-5">
       <div className="flex gap-5 px-16 w-full text-base font-semibold leading-6 max-md:flex-wrap max-md:px-5 max-md:max-w-full">
-      <div
+        <div
           onClick={() => handleNavigate("servicing")}
           className="justify-center px-6 py-4 rounded-lg bg-stone-100 text-slate-500 max-md:px-5"
           role="button"
@@ -25,11 +76,12 @@ function History() {
             Meter Replacement
           </div>
         </div>
-        <div  onClick={() => handleNavigate("history")}
-            className="justify-center px-6 py-4 rounded-lg bg-stone-200 text-slate-500 max-md:px-5"
-            role="button">
+        <div
+          onClick={() => handleNavigate("history")}
+          className="justify-center px-6 py-4 rounded-lg bg-stone-200 text-slate-500 max-md:px-5"
+          role="button"
+        >
           Meter History
-    
         </div>
       </div>
       <div className="shrink-0 mt-4 h-px border border-solid bg-neutral-500 bg-opacity-10 border-neutral-500 border-opacity-10 max-md:max-w-full" />
@@ -37,179 +89,149 @@ function History() {
         Customer Reference
       </div>
       <div className="flex gap-2 justify-between py-1 pr-1 pl-4 mt-2 text-base leading-6 bg-white rounded-xl border border-solid border-neutral-500 border-opacity-30 max-md:flex-wrap max-md:max-w-full">
-        <div className="my-auto text-neutral-400">Enter Customer Ref</div>
-        <div className="justify-center px-8 py-3 font-semibold text-white rounded-lg bg-slate-500 max-md:px-5">
+        <input
+          type="text"
+          value={customerRef}
+          onChange={(e) => setCustomerRef(e.target.value)}
+          placeholder="Enter Customer Ref"
+          className="my-auto text-neutral-400 px-2 py-3"
+        />
+        <div
+          onClick={handleValidateCustomer}
+          className="justify-center px-8 py-3 font-semibold text-white rounded-lg bg-blue-600 cursor-pointer"
+        >
           Validate Customer
         </div>
       </div>
-      <div className="mt-8 text-2xl font-semibold leading-10 text-neutral-600 max-md:max-w-full">
-        Customer Information
-      </div>
-      <div className="mt-4 max-md:max-w-full">
-        <div className="flex gap-5 max-md:flex-col max-md:gap-0">
-          <div className="flex flex-col w-6/12 max-md:ml-0 max-md:w-full">
-            <div className="flex flex-col grow text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">
-              <div className="justify-center items-start py-4 pr-1 pl-4 bg-white border border-solid border-neutral-500 border-opacity-30 max-md:pr-5 max-md:max-w-full">
-                Customer Name
+      {customerData && (
+        <>
+          <div className="mt-8 text-2xl font-semibold leading-10 text-neutral-600 max-md:max-w-full">
+            Customer Information
+          </div>
+          <div className="mt-4 max-md:max-w-full">
+            <table className="w-full text-base font-semibold leading-6 text-neutral-600">
+              <tbody>
+                <tr className="bg-white border border-solid border-neutral-500 border-opacity-30">
+                  <td className="py-4 pr-1 pl-4 max-md:pr-5">Customer Name</td>
+                  <td className="py-4 pr-1 pl-4 whitespace-nowrap max-md:pr-5">
+                    {name}
+                  </td>
+                </tr>
+                <tr className="bg-white border border-solid border-neutral-500 border-opacity-30">
+                  <td className="py-4 pr-1 pl-4 max-md:pr-5">
+                    Customer Reference
+                  </td>
+                  <td className="py-4 pr-1 pl-4 whitespace-nowrap max-md:pr-5">
+                    {customerData.customerRef}
+                  </td>
+                </tr>
+                <tr className="bg-white border border-solid border-neutral-500 border-opacity-30">
+                  <td className="py-4 pr-1 pl-4 max-md:pr-5">
+                    Service Address
+                  </td>
+                  <td className="py-4 pr-1 pl-4 whitespace-nowrap max-md:pr-5">
+                    {streetAddress}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div className="mt-8 text-2xl font-semibold leading-10 text-neutral-600 max-md:max-w-full">
+            Meter Overview
+          </div>
+          <div className="mt-4 max-md:max-w-full">
+            <table className="w-full text-base font-semibold leading-6 text-neutral-600">
+              <tbody>
+                <tr className="bg-white border border-solid border-neutral-500 border-opacity-30">
+                  <td className="py-4 pr-1 pl-4 max-md:pr-5">Meter Number</td>
+                  <td className="py-4 pr-1 pl-4 whitespace-nowrap max-md:pr-5">
+                    {customerData.meterNo}
+                  </td>
+                </tr>
+                <tr className="bg-white border border-solid border-neutral-500 border-opacity-30">
+                  <td className="py-4 pr-1 pl-4 max-md:pr-5">
+                    Installation Date
+                  </td>
+                  <td className="py-4 pr-1 pl-4 max-md:pr-5">
+                    {customerData.dateOfInstallation}
+                  </td>
+                </tr>
+                <tr className="bg-white border border-solid border-neutral-500 border-opacity-30">
+                  <td className="py-4 pr-1 pl-4 max-md:pr-5">
+                    Current Reading
+                  </td>
+                  <td className="py-4 pr-1 pl-4 max-md:pr-5">
+                    {customerData.initialReading}
+                  </td>
+                </tr>
+                <tr className="bg-white border border-solid border-neutral-500 border-opacity-30">
+                  <td className="py-4 pr-1 pl-4 max-md:pr-5">
+                    Last Reading Date
+                  </td>
+                  <td className="py-4 pr-1 pl-4 max-md:pr-5">
+                    {previousReadingDate}
+                  </td>
+                </tr>
+                <tr className="bg-white border border-solid border-neutral-500 border-opacity-30">
+                  <td className="py-4 pr-1 pl-4 max-md:pr-5">Installed by</td>
+                  <td className="py-4 pr-1 pl-4 max-md:pr-5">
+                    {customerData.installedBy}
+                  </td>
+                </tr>
+              
+              </tbody>
+            </table>
+          </div>
+
+          <div className="mt-8 text-2xl font-semibold leading-10 text-neutral-600 max-md:max-w-full">
+            Meter Reading History
+          </div>
+          <div className="flex gap-0 mt-4 text-base leading-6 text-neutral-400 max-md:flex-wrap max-md:max-w-full">
+            <div className="flex flex-col flex-1 whitespace-nowrap">
+              <div className="justify-center items-start py-4 pr-1 pl-4 font-semibold bg-white border border-solid border-neutral-500 border-opacity-30 text-neutral-600 max-md:pr-5">
+                Date
               </div>
-              <div className="justify-center items-start py-4 pr-1 pl-4 bg-white border-r border-b border-l border-solid border-neutral-500 border-opacity-30 max-md:pr-5 max-md:max-w-full">
-                Customer Reference
-              </div>
-              <div className="justify-center items-start py-4 pr-1 pl-4 bg-white border-r border-b border-l border-solid border-neutral-500 border-opacity-30 max-md:pr-5 max-md:max-w-full">
-                Service Address
-              </div>
+              {meterReadingHistory.map((reading, index) => (
+                <div key={index} className="justify-center items-start py-4 pr-1 pl-4 bg-white border-r border-b border-l border-solid border-neutral-500 border-opacity-30 max-md:pr-5">
+                  {reading.readingDate}
+                </div>
+              ))}
             </div>
-          </div>
-          <div className="flex flex-col ml-5 w-6/12 max-md:ml-0 max-md:w-full">
-            <div className="flex flex-col grow text-base leading-6 text-neutral-400 max-md:max-w-full">
-              <div className="justify-center items-start py-4 pr-1 pl-4 bg-white border-t border-r border-b border-solid border-neutral-500 border-opacity-30 max-md:pr-5 max-md:max-w-full">
-                Juma John
+            <div className="flex flex-col flex-1">
+              <div className="justify-center items-start py-4 pr-1 pl-4 font-semibold bg-white border-t border-r border-b border-solid border-neutral-500 border-opacity-30 text-neutral-600 max-md:pr-5">
+                Previous Reading
               </div>
-              <div className="justify-center items-start py-4 pr-1 pl-4 whitespace-nowrap bg-white border-r border-b border-solid border-neutral-500 border-opacity-30 max-md:pr-5 max-md:max-w-full">
-                456789123
-              </div>
-              <div className="justify-center items-start py-4 pr-1 pl-4 bg-white border-r border-b border-solid border-neutral-500 border-opacity-30 max-md:pr-5 max-md:max-w-full">
-                45 Nile Avenue, Juba
-              </div>
+              {meterReadingHistory.map((reading, index) => (
+                <div key={index} className="justify-center items-start py-4 pr-1 pl-4 bg-white border-r border-b border-solid border-neutral-500 border-opacity-30 max-md:pr-5">
+                  {reading.previousReading}
+                </div>
+              ))}
             </div>
-          </div>
-        </div>
-      </div>
-      <div className="mt-8 text-2xl font-semibold leading-10 text-neutral-600 max-md:max-w-full">
-        Meter Overview
-      </div>
-      <div className="mt-4 max-md:max-w-full">
-        <div className="flex gap-5 max-md:flex-col max-md:gap-0">
-          <div className="flex flex-col w-6/12 max-md:ml-0 max-md:w-full">
-            <div className="flex flex-col grow text-base font-semibold leading-6 text-neutral-600 max-md:max-w-full">
-              <div className="justify-center items-start py-4 pr-1 pl-4 bg-white border border-solid border-neutral-500 border-opacity-30 max-md:pr-5 max-md:max-w-full">
-                Meter Number
+            <div className="flex flex-col flex-1">
+              <div className="justify-center items-start py-4 pr-1 pl-4 font-semibold bg-white border-t border-r border-b border-solid border-neutral-500 border-opacity-30 text-neutral-600 max-md:pr-5">
+                Current Reading
               </div>
-              <div className="justify-center items-start py-4 pr-1 pl-4 bg-white border-r border-b border-l border-solid border-neutral-500 border-opacity-30 max-md:pr-5 max-md:max-w-full">
-                Installation Date
-              </div>
-              <div className="justify-center items-start py-4 pr-1 pl-4 bg-white border-r border-b border-l border-solid border-neutral-500 border-opacity-30 max-md:pr-5 max-md:max-w-full">
-                Last Reading Date
-              </div>
-              <div className="justify-center items-start py-4 pr-1 pl-4 bg-white border-r border-b border-l border-solid border-neutral-500 border-opacity-30 max-md:pr-5 max-md:max-w-full">
-                Current Meter Reading
-              </div>
-              <div className="justify-center items-start py-4 pr-1 pl-4 bg-white border-r border-b border-l border-solid border-neutral-500 border-opacity-30 max-md:pr-5 max-md:max-w-full">
-                Average Monthly Consumption
-              </div>
+              {meterReadingHistory.map((reading, index) => (
+                <div key={index} className="justify-center items-start py-4 pr-1 pl-4 bg-white border-r border-b border-solid border-neutral-500 border-opacity-30 max-md:pr-5">
+                  {reading.reading}
+                </div>
+              ))}
             </div>
-          </div>
-          <div className="flex flex-col ml-5 w-6/12 max-md:ml-0 max-md:w-full">
-            <div className="flex flex-col grow text-base leading-6 text-neutral-400 max-md:max-w-full">
-              <div className="justify-center items-start py-4 pr-1 pl-4 whitespace-nowrap bg-white border-t border-r border-b border-solid border-neutral-500 border-opacity-30 max-md:pr-5 max-md:max-w-full">
-                12345
+            <div className="flex flex-col flex-1">
+              <div className="justify-center items-start py-4 pr-1 pl-4 font-semibold whitespace-nowrap bg-white border-t border-r border-b border-solid border-neutral-500 border-opacity-30 text-neutral-600 max-md:pr-5">
+                Consumption
               </div>
-              <div className="justify-center items-start py-4 pr-1 pl-4 bg-white border-r border-b border-solid border-neutral-500 border-opacity-30 max-md:pr-5 max-md:max-w-full">
-                January 1, 2022
-              </div>
-              <div className="justify-center items-start py-4 pr-1 pl-4 bg-white border-r border-b border-solid border-neutral-500 border-opacity-30 max-md:pr-5 max-md:max-w-full">
-                June 30, 2024
-              </div>
-              <div className="justify-center items-start py-4 pr-1 pl-4 bg-white border-r border-b border-solid border-neutral-500 border-opacity-30 max-md:pr-5 max-md:max-w-full">
-                1500 m³
-              </div>
-              <div className="justify-center items-start py-4 pr-1 pl-4 bg-white border-r border-b border-solid border-neutral-500 border-opacity-30 max-md:pr-5 max-md:max-w-full">
-                50 m³
-              </div>
+              {meterReadingHistory.map((reading, index) => (
+                <div key={index} className="justify-center items-start py-4 pr-1 pl-4 bg-white border-r border-b border-solid border-neutral-500 border-opacity-30 max-md:pr-5">
+                  {reading.consumption}ms
+                </div>
+              ))}
             </div>
+           
           </div>
-        </div>
-      </div>
-      <div className="mt-8 text-2xl font-semibold leading-10 text-neutral-600 max-md:max-w-full">
-        Meter Reading History
-      </div>
-      <div className="flex gap-0 mt-4 text-base leading-6 text-neutral-400 max-md:flex-wrap max-md:max-w-full">
-        <div className="flex flex-col flex-1 whitespace-nowrap">
-          <div className="justify-center items-start py-4 pr-1 pl-4 font-semibold bg-white border border-solid border-neutral-500 border-opacity-30 text-neutral-600 max-md:pr-5">
-            Date
-          </div>
-          <div className="justify-center items-start py-4 pr-1 pl-4 bg-white border-r border-b border-l border-solid border-neutral-500 border-opacity-30 max-md:pr-5">
-            06/30/2024
-          </div>
-          <div className="justify-center items-start py-4 pr-1 pl-4 bg-white border-r border-b border-l border-solid border-neutral-500 border-opacity-30 max-md:pr-5">
-            05/31/2024
-          </div>
-          <div className="justify-center items-start py-4 pr-1 pl-4 bg-white border-r border-b border-l border-solid border-neutral-500 border-opacity-30 max-md:pr-5">
-            04/30/2024
-          </div>
-          <div className="justify-center items-start py-4 pr-1 pl-4 bg-white border-r border-b border-l border-solid border-neutral-500 border-opacity-30 max-md:pr-5">
-            03/31/2024
-          </div>
-        </div>
-        <div className="flex flex-col flex-1">
-          <div className="justify-center items-start py-4 pr-1 pl-4 font-semibold bg-white border-t border-r border-b border-solid border-neutral-500 border-opacity-30 text-neutral-600 max-md:pr-5">
-            Previous Reading
-          </div>
-          <div className="justify-center items-start py-4 pr-1 pl-4 bg-white border-r border-b border-solid border-neutral-500 border-opacity-30 max-md:pr-5">
-            1450 m³
-          </div>
-          <div className="justify-center items-start py-4 pr-1 pl-4 bg-white border-r border-b border-solid border-neutral-500 border-opacity-30 max-md:pr-5">
-            1400 m³
-          </div>
-          <div className="justify-center items-start py-4 pr-1 pl-4 bg-white border-r border-b border-solid border-neutral-500 border-opacity-30 max-md:pr-5">
-            1350 m³
-          </div>
-          <div className="justify-center items-start py-4 pr-1 pl-4 bg-white border-r border-b border-solid border-neutral-500 border-opacity-30 max-md:pr-5">
-            1300 m³
-          </div>
-        </div>
-        <div className="flex flex-col flex-1">
-          <div className="justify-center items-start py-4 pr-1 pl-4 font-semibold bg-white border-t border-r border-b border-solid border-neutral-500 border-opacity-30 text-neutral-600 max-md:pr-5">
-            Current Reading
-          </div>
-          <div className="justify-center items-start py-4 pr-1 pl-4 bg-white border-r border-b border-solid border-neutral-500 border-opacity-30 max-md:pr-5">
-            1500 m³
-          </div>
-          <div className="justify-center items-start py-4 pr-1 pl-4 bg-white border-r border-b border-solid border-neutral-500 border-opacity-30 max-md:pr-5">
-            1450 m³
-          </div>
-          <div className="justify-center items-start py-4 pr-1 pl-4 bg-white border-r border-b border-solid border-neutral-500 border-opacity-30 max-md:pr-5">
-            1400 m³
-          </div>
-          <div className="justify-center items-start py-4 pr-1 pl-4 bg-white border-r border-b border-solid border-neutral-500 border-opacity-30 max-md:pr-5">
-            1350 m³
-          </div>
-        </div>
-        <div className="flex flex-col flex-1">
-          <div className="justify-center items-start py-4 pr-1 pl-4 font-semibold whitespace-nowrap bg-white border-t border-r border-b border-solid border-neutral-500 border-opacity-30 text-neutral-600 max-md:pr-5">
-            Consumption
-          </div>
-          <div className="justify-center items-start py-4 pr-1 pl-4 bg-white border-r border-b border-solid border-neutral-500 border-opacity-30 max-md:pr-5">
-            50 m³
-          </div>
-          <div className="justify-center items-start py-4 pr-1 pl-4 bg-white border-r border-b border-solid border-neutral-500 border-opacity-30 max-md:pr-5">
-            50 m³
-          </div>
-          <div className="justify-center items-start py-4 pr-1 pl-4 bg-white border-r border-b border-solid border-neutral-500 border-opacity-30 max-md:pr-5">
-            50 m³
-          </div>
-          <div className="justify-center items-start py-4 pr-1 pl-4 bg-white border-r border-b border-solid border-neutral-500 border-opacity-30 max-md:pr-5">
-            50 m³
-          </div>
-        </div>
-        <div className="flex flex-col flex-1">
-          <div className="justify-center items-start py-4 pr-1 pl-4 font-semibold whitespace-nowrap bg-white border-t border-r border-b border-solid border-neutral-500 border-opacity-30 text-neutral-600 max-md:pr-5">
-            Notes
-          </div>
-          <div className="justify-center items-start py-4 pr-1 pl-4 bg-white border-r border-b border-solid border-neutral-500 border-opacity-30 max-md:pr-5">
-            Actual Reading
-          </div>
-          <div className="justify-center items-start py-4 pr-1 pl-4 bg-white border-r border-b border-solid border-neutral-500 border-opacity-30 max-md:pr-5">
-            Actual Reading
-          </div>
-          <div className="justify-center items-start py-4 pr-1 pl-4 bg-white border-r border-b border-solid border-neutral-500 border-opacity-30 max-md:pr-5">
-            Estimated Reading
-          </div>
-          <div className="justify-center py-4 pr-1 pl-4 bg-white border-r border-b border-solid border-neutral-500 border-opacity-30 max-md:pr-5">
-            Customer Self-Reading
-          </div>
-        </div>
-      </div>
+        </>
+      )}
     </div>
   );
 }

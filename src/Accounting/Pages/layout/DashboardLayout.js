@@ -17,6 +17,7 @@ import BillsForm from "../Billing/BillsForm";
 import InvoiceForm from "../Invoices/InvoiceForm";
 import Report from "../Reports/Report";
 import { useNavigate } from "react-router-dom";
+import Ledger from "../Ledger/Ledger";
 
 const Dashboardlayout = () => {
   const location = useLocation();
@@ -51,7 +52,7 @@ const Dashboardlayout = () => {
               )}
               {screen === 'vendors' && <VendorSetup />}
               {screen === 'customer' && <Customer />}
-       
+              {screen === 'ledger' && <Ledger />}
               {screen === 'invoice' && <Invoice />}
               {screen === 'billing' && <Billing />}
               {screen === 'billsform' && <BillsForm />}

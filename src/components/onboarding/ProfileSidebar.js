@@ -1,61 +1,63 @@
-import { useState } from "react";
 import { CheckCircleOutlined } from '@ant-design/icons';
 
 const ProfileSidebar = ({ currentStep, maxSteps }) => {
+  // Steps labels
+  const stepLabels = [
+    "Personal Information",
+    "Company Information",
+    "Invite Users"
+  ];
 
-    return (
-        <>
-          <div className="">
-          {currentStep <= maxSteps && (
-            <nav
-              className="hidden md:flex justify-center"
-              aria-label="Progress"
-              style={{
-                position: "relative",
-                left: "1px",
-                background: "#fff",
-                height: "100vh",
-              }}
-            >
-              <ol
-                role="list"
-                className="space-y-6"
-                style={{
-                  marginTop: "20px",
-                  padding: "10px",
-                }}
-              >
-                {[1, 2, 3].map(stepNumber => (
-                  <li key={stepNumber}>
-                    <span className="flex items-start">
-                      <span className="relative flex h-5 w-5 flex-shrink-0 items-center justify-center">
-                        {currentStep >= stepNumber ? (
-                          <CheckCircleOutlined className="text-green-500" style={{
-                            fontSize: "30px",
-                          }} />
-                        ) : (
-                          <span
-                            className="h-full w-full bg-gray-300 rounded-full flex items-center justify-center"
-                            style={{ fontSize: "0.75rem", color: "#fff", padding: "15px" }}
-                          >
-                            {stepNumber}
-                          </span>
-                        )}
+  return (
+    <div className="flex justify-center">
+      {currentStep <= maxSteps && (
+        <nav
+          style={{
+            background: "#fff",
+            padding: "10px",
+            marginTop: "20px",
+            width: "100%",
+          }}
+        >
+          <ol
+            role="list"
+            className="flex items-center space-x-8"
+            style={{ justifyContent: "center" }}
+          >
+            {[1, 2, 3].map(stepNumber => (
+              <li key={stepNumber} className="flex items-center">
+                <span className="relative flex items-center">
+                  <span className="relative flex h-8 w-8 flex-shrink-0 items-center justify-center">
+                    {currentStep >= stepNumber ? (
+                      <CheckCircleOutlined
+                        className="text-green-500"
+                        style={{ fontSize: "30px" }}
+                      />
+                    ) : (
+                      <span
+                        className="h-full w-full bg-gray-300 rounded-full flex items-center justify-center"
+                        style={{ fontSize: "0.75rem", color: "#fff", padding: "15px" }}
+                      >
+                        {stepNumber}
                       </span>
-                      <span className="ml-3 text-sm font-medium text-gray-500">
-                        {stepNumber === 1 && "Personal Information"}
-                        {stepNumber === 2 && "Company Information"}
-                        {stepNumber === 3 && "Invite Users"}
-                      </span>
-                    </span>
-                  </li>
-                ))}
-              </ol>
-            </nav>
-          )}
-        </div>
-        </>
-    );
+                    )}
+                  </span>
+                  <span className="ml-3 text-sm font-medium text-gray-500">
+                    {stepLabels[stepNumber - 1]}
+                  </span>
+                </span>
+                {stepNumber < 3 && (
+                  <div
+                    className="h-0.5 w-8 bg-gray-300 mx-4"
+                  />
+                )}
+              </li>
+            ))}
+          </ol>
+        </nav>
+      )}
+    </div>
+  );
 }
 
 export default ProfileSidebar;

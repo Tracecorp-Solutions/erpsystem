@@ -6,6 +6,7 @@ const SubGroupForm = ({ onCancel }) => {
   const [newAccount, setNewAccount] = useState({
     name: "",
     groupId: "",
+    subGroupCode:"",
     description: "",
   });
   const [formErrors, setFormErrors] = useState({});
@@ -55,7 +56,7 @@ const SubGroupForm = ({ onCancel }) => {
           `${process.env.REACT_APP_API_URL}/CreateSubGroupAccount`,
           newAccount
         );
-        setNewAccount({ name: "", groupId: "", description: "" });
+        setNewAccount({ name: "", groupId: "", subGroupCode:"", description: "" });
         setLoading(false);
         setSuccessMessage("Sub-group created successfully!");
         setTimeout(() => {
@@ -169,6 +170,50 @@ const SubGroupForm = ({ onCancel }) => {
           </select>
           {formErrors.groupId && (
             <p className="mt-2 text-sm text-red-500">{formErrors.groupId}</p>
+          )}
+        </div>
+        <div className="mb-4">
+          <label
+            htmlFor="name"
+            className="block text-sm font-medium text-gray-700"
+            style={{
+                fontFamily: "outFit, Sans-serif",
+                color: "#505050",
+                fontSize: "16px"
+            }}
+          >
+          Subgroup Code
+         </label>
+         <p>Choose a unique code for your subgroup that reflects its purpose</p>
+          <input
+            type="text"
+            id="subGroupCode"
+            value={newAccount.subGroupCode}
+            placeholder="Subgroup code"
+            onChange={(e) =>
+              setNewAccount({ ...newAccount, subGroupCode: e.target.value })
+            }
+            className="
+            mt-1
+            p-4 block
+            w-full
+            sm:text-sm
+            rounded-md
+            text-input
+            focus:ring-indigo-500
+            focus:border-gray-400
+            focus-visible:border-indigo-500
+            "
+            style={{
+              border: "1px solid #7a7a7a",
+              borderRadius: "10px",
+              fontFamily: "outFit, Sans-serif",
+              color: "#505050",
+              fontSize: "16px"
+            }}
+          />
+          {formErrors.groupCode && (
+            <p className="mt-2 text-sm text-red-500">{formErrors.subGroupCode}</p>
           )}
         </div>
         <div className="mb-4">

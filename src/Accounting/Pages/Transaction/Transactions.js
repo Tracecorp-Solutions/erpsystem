@@ -628,6 +628,12 @@ const Transactions = () => {
                       scope="col"
                       className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                     >
+                      DATE
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    >
                       REF NUMBER
                     </th>
                     <th
@@ -640,19 +646,26 @@ const Transactions = () => {
                       scope="col"
                       className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                     >
-                      Behaviour
+                      ACCOUNT CODE
                     </th>
                     <th
                       scope="col"
                       className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                     >
-                      DATE
+                      Behaviour
                     </th>
+                    
                     <th
                       scope="col"
                       className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                     >
                       AMOUNT ($)
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    >
+                      NARRATION
                     </th>
                     <th
                       scope="col"
@@ -679,22 +692,28 @@ const Transactions = () => {
                           style={{ marginLeft: "10px", marginTop: "15px" }}
                         />
                         <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-800">
+                          {new Date(
+                            transaction.transactionDate
+                          ).toLocaleDateString("en-GB")}
+                        </td>
+                        <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-800">
                           {transaction.transactionReference}
                         </td>
 
                         <td className="px-3 py-4 whitespace-nowrap text-sm  text-gray-800">
                           {transaction.tranAccount}
                         </td>
+                        <td className="px-3 py-4 whitespace-nowrap text-sm  text-gray-800">
+                          {transaction.accountCode}
+                        </td>
                         <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-800">
                           {transaction.transactionType}
                         </td>
                         <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-800">
-                          {new Date(
-                            transaction.transactionDate
-                          ).toLocaleDateString("en-GB")}
+                          {transaction.amount}
                         </td>
                         <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-800">
-                          {transaction.amount}
+                          {transaction.narration}
                         </td>
                         <td>
                           <Dropdown

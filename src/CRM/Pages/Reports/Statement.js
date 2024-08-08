@@ -1,83 +1,32 @@
 import React, { useState, useEffect, useRef } from "react";
-import { DatePicker, Button } from "antd";
-import SearchAccount from "./SearchAccount";
+import { Button, Input, Select, Pagination } from "antd";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 import html2canvas from "html2canvas";
 
-
-const { RangePicker } = DatePicker;
-
-const formatDate = (date) => {
-  const year = date.getFullYear();
-  const month = (date.getMonth() + 1).toString().padStart(2, "0");
-  const day = date.getDate().toString().padStart(2, "0");
-  return `${year}-${month}-${day}`;
-};
+const { Option } = Select;
 
 const Statement = () => {
   const [statementEntries, setStatementEntries] = useState([]);
   const [filteredEntries, setFilteredEntries] = useState([]);
-  const [options, setOptions] = useState([]);
+  const [addressFilter, setAddressFilter] = useState("");
+  const [categoryFilter, setCategoryFilter] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(12);
   const tableRef = useRef(null);
 
   useEffect(() => {
-    fetchOptions();
+    fetchStatementEntries();
   }, []);
 
-  const handleExport = () => {
-    // Your export logic remains the same
-  };
-
-  const handleFilter = (accountId, startDate, endDate) => {
-    fetchStatementEntries(accountId, startDate, endDate);
-  };
-
-  const fetchStatementEntries = async (accountId, startDate, endDate) => {
-    startDate =
-      startDate instanceof Date
-        ? startDate
-        : new Date(startDate.$y, startDate.$M, startDate.$D);
-    endDate =
-      endDate instanceof Date
-        ? endDate
-        : new Date(endDate.$y, endDate.$M, endDate.$D);
-
-    if (!(startDate instanceof Date) || !(endDate instanceof Date)) {
-      console.error("Error: startDate and endDate must be valid Date objects.");
-      return;
-    }
-
-    if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
-      console.error("Error: startDate and endDate must be valid dates.");
-      return;
-    }
-
-    const formattedStartDate = formatDate(startDate);
-    const formattedEndDate = formatDate(endDate);
-
+  const fetchStatementEntries = async () => {
     try {
-      const response = await fetch(
-        `${process.env.REACT_APP_API_URL}/api/Report/AccountStatement?accountId=${accountId}&startDate=${formattedStartDate}&endDate=${formattedEndDate}`
-      );
+      const response = await fetch(`http://3.216.182.63:8095/TestApi/GetAllTickets`);
       const data = await response.json();
-      setStatementEntries(data.accountStatementEntries);
-      setFilteredEntries(data.accountStatementEntries);
+      setStatementEntries(data);
+      setFilteredEntries(data); // Initialize filtered entries with all entries
     } catch (error) {
       console.error("Error fetching data:", error);
-    }
-  };
-
-  const fetchOptions = async () => {
-    try {
-      const response = await fetch(
-        `${process.env.REACT_APP_API_URL}/GetAccounts`
-      );
-      const data = await response.json();
-      console.log("aaaacountntnntnntn", data);
-      setOptions(data);
-    } catch (error) {
-      console.error("Error fetching options:", error);
     }
   };
 
@@ -91,99 +40,107 @@ const Statement = () => {
       const imgHeight = (canvas.height * imgWidth) / canvas.width;
       pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
 
-      pdf.save("account_statement.pdf");
+      pdf.save("ticket_statement.pdf");
     });
+  };
+
+  const handleFilter = () => {
+    let filteredData = [...statementEntries];
+
+    if (addressFilter) {
+      filteredData = filteredData.filter(entry =>
+        entry.address.toLowerCase().includes(addressFilter.toLowerCase())
+      );
+    }
+
+    if (categoryFilter) {
+      filteredData = filteredData.filter(entry =>
+        entry.ticketCategoryId === parseInt(categoryFilter)
+      );
+    }
+
+    setFilteredEntries(filteredData);
+    setCurrentPage(1); // Reset to first page after filtering
+  };
+
+  const handleClearFilters = () => {
+    setAddressFilter("");
+    setCategoryFilter("");
+    setFilteredEntries(statementEntries);
+    setCurrentPage(1); // Reset to first page after clearing filters
+  };
+
+  // Calculate pagination values
+  const indexOfLastItem = currentPage * pageSize;
+  const indexOfFirstItem = indexOfLastItem - pageSize;
+  const currentItems = filteredEntries.slice(indexOfFirstItem, indexOfLastItem);
+
+  const handlePageChange = (page, pageSize) => {
+    setCurrentPage(page);
+  };
+
+  const onShowSizeChange = (current, size) => {
+    setPageSize(size);
+    setCurrentPage(1); // Reset to first page when changing page size
   };
 
   return (
     <div className="bg-white p-4 rounded-lg">
-      <SearchAccount
-        handleExport={handleExport}
-        handleFilter={handleFilter}
-        options={options}
-        filteredEntries={filteredEntries}
-        handleDownloadPDF={handleDownloadPDF}
-      />
-      <div className="overflow-x-auto">
-        <table className="w-full mt-3" ref={tableRef}>
+      <div className="flex justify-between items-center mb-4">
+        <div>
+          <Input
+            placeholder="Filter by Address"
+            value={addressFilter}
+            onChange={(e) => setAddressFilter(e.target.value)}
+            style={{ width: 200, marginRight: 10 }}
+          />
+          <Select
+            placeholder="Filter by Ticket Category"
+            style={{ width: 200 }}
+            allowClear
+            value={categoryFilter}
+            onChange={(value) => setCategoryFilter(value)}
+          >
+            {statementEntries.map(entry => (
+              <Option key={entry.ticketCategoryId} value={entry.ticketCategoryId}>
+                Category {entry.ticketCategoryId}
+              </Option>
+            ))}
+          </Select>
+        </div>
+        <div>
+          <Button type="primary" onClick={handleFilter} style={{ marginRight: 10 }}>
+            Apply Filters
+          </Button>
+          <Button onClick={handleClearFilters}>Clear Filters</Button>
+        </div>
+      </div>
+      <Button onClick={handleDownloadPDF}>Download PDF</Button>
+      <div className="overflow-x-auto mt-4" ref={tableRef}>
+        <table className="w-full mt-3">
           <thead>
             <tr>
-              <th className="px-6 py-3 text-gray-800 font-semibold">
-                Description
-              </th>
-              <th className="px-4 py-3 text-gray-800 font-semibold">Amount</th>
-              <th className="px-4 py-3 text-gray-800 font-semibold">
-                Running Balance
-              </th>
+              <th className="px-6 py-3 text-gray-800 font-semibold">Complaint Subject</th>
+              <th className="px-4 py-3 text-gray-800 font-semibold">Description</th>
+              <th className="px-4 py-3 text-gray-800 font-semibold">Customer Name</th>
+              <th className="px-4 py-3 text-gray-800 font-semibold">Address</th>
+              <th className="px-4 py-3 text-gray-800 font-semibold">Ticket Category</th>
             </tr>
           </thead>
           <tbody>
-            {filteredEntries.length > 0 ? (
-              filteredEntries.map((entry, index) => (
-                <React.Fragment key={index}>
-                  <tr>
-                    <th
-                      colSpan="3"
-                      className="px-4 py-2"
-                      style={{
-                        color: "#A1A1A1",
-                        fontWeight: "600",
-                        fontSize: "16px",
-                        fontFamily: "outFit, Sans-serif",
-                      }}
-                    >
-                      {entry.transactionDate}
-                    </th>
-                  </tr>
-                  {entry.transactionsFortheDay.map((transaction, idx) => (
-                    <tr
-                      key={`${index}-${idx}`}
-                      className={idx % 2 === 0 ? "bg-white-100" : ""}
-                    >
-                      <td
-                        className="px-6 py-4"
-                        style={{
-                          color: "#505050",
-                          fontWeight: "400",
-                          fontSize: "16px",
-                          fontFamily: "outFit, Sans-serif",
-                          width: "65%",
-                        }}
-                      >
-                        {transaction.description}
-                      </td>
-                      <td
-                        className="px-4 py-4"
-                        style={{
-                          color: "#F06C3E",
-                          fontWeight: "400",
-                          fontSize: "16px",
-                          fontFamily: "outFit, Sans-serif",
-                        }}
-                      >
-                        ${transaction.amount.toFixed(2)}
-                      </td>
-                      <td
-                        className="px-4 py-4"
-                        style={{
-                          color: "#505050",
-                          fontWeight: "400",
-                          fontSize: "16px",
-                          fontFamily: "outFit, Sans-serif",
-                        }}
-                      >
-                        {transaction.runningBalance}
-                      </td>
-                    </tr>
-                  ))}
-                </React.Fragment>
+            {currentItems.length > 0 ? (
+              currentItems.map((entry, index) => (
+                <tr key={index} className={index % 2 === 0 ? "bg-gray-100" : ""}>
+                  <td className="px-6 py-4">{entry.complaintSubject}</td>
+                  <td className="px-4 py-4">{entry.description}</td>
+                  <td className="px-4 py-4">{entry.customerName}</td>
+                  <td className="px-4 py-4">{entry.address}</td>
+                  <td className="px-4 py-4">{entry.ticketCategoryId}</td>
+                </tr>
               ))
             ) : (
               <tr>
-                <td
-                  colSpan="3"
-                  className="px-4 py-2 text-center text-gray-600 font-semibold"
-                >
+                <td colSpan="5" className="px-4 py-2 text-center text-gray-600 font-semibold">
                   No Filtered Data
                 </td>
               </tr>
@@ -191,6 +148,19 @@ const Statement = () => {
           </tbody>
         </table>
       </div>
+      
+      <Pagination
+        className="mt-4"
+        current={currentPage}
+        pageSize={pageSize}
+        total={filteredEntries.length}
+        onChange={handlePageChange}
+        showSizeChanger
+        onShowSizeChange={onShowSizeChange}
+        showTotal={(total, range) =>
+          `${range[0]}-${range[1]} of ${total} items`
+        }
+      />
     </div>
   );
 };

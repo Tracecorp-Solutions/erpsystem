@@ -21,6 +21,7 @@ const GroupAccountSetUp = () => {
   const [showForm, setShowForm] = useState(false);
   const [newAccount, setNewAccount] = useState({
     name: "",
+    groupCode: "",
     behaviour: "",
     description: "",
   });
@@ -132,6 +133,7 @@ const GroupAccountSetUp = () => {
           {
             name: newAccount.name,
             behaviour: newAccount.behaviour,
+            groupCode: newAccount.groupCode,
             description: newAccount.description,
           },
           {
@@ -142,7 +144,7 @@ const GroupAccountSetUp = () => {
         );
 
         setShowSuccess(true);
-        setNewAccount({ name: "", behaviour: "" });
+        setNewAccount({ name: "", groupCode: "", behaviour: "" });
         toggleModal();
         fetchGroupAccounts();
       } catch (error) {
@@ -174,6 +176,7 @@ const GroupAccountSetUp = () => {
         {
           id: editedAccount.id,
           name: editedAccount.name,
+          groupCode: editedAccount.groupCode,
           behaviour: editedAccount.behaviour,
           description: editedAccount.description,
         },
@@ -283,7 +286,12 @@ const GroupAccountSetUp = () => {
             </button>
           </div>
         </div>
-        <Modal visible={showModal} onCancel={toggleModal} footer={null} centered>
+        <Modal
+          visible={showModal}
+          onCancel={toggleModal}
+          footer={null}
+          centered
+        >
           <div className="flex items-center justify-center h-full">
             <div className="bg-white rounded-lg max-w-xl w-full">
               <div className="bg-white p-8 rounded-lg max-w-xl w-full">
@@ -332,6 +340,50 @@ const GroupAccountSetUp = () => {
                   {formErrors.name && (
                     <p className="mt-2 text-sm text-red-500">
                       {formErrors.name}
+                    </p>
+                  )}
+                </div>
+                <div className="mb-4">
+                  <label
+                    htmlFor="name"
+                    className="
+                block
+                text-sm
+                font-medium
+                text-gray-700
+                label-text
+                "
+                  >
+                    Group Code
+                  </label>
+                  <input
+                    type="text"
+                    name="groupCode"
+                    id="groupCode"
+                    value={newAccount.groupCode}
+                    onChange={(e) => {
+                      setNewAccount({
+                        ...newAccount,
+                        groupCode: e.target.value,
+                      });
+                      setFormError({ ...formErrors, groupCode: "" });
+                    }}
+                    className="
+                mt-1
+                p-4 block
+                w-full
+                sm:text-sm
+                rounded-md
+                text-input
+                focus:ring-indigo-500
+                focus:border-gray-400
+                focus-visible:border-indigo-500
+                "
+                    placeholder="Group Code"
+                  />
+                  {formErrors.c0de && (
+                    <p className="mt-2 text-sm text-red-500">
+                      {formErrors.groupCode}
                     </p>
                   )}
                 </div>
@@ -524,14 +576,15 @@ const GroupAccountSetUp = () => {
                             )}
                             style={{ margin: "15px", background: "#fff" }}
                           >
-                            <div className="p-4">
+                            <div className="p-4 ">
                               <div className="flex justify-between items-center mb-2">
                                 <h3
-                                  className="text-md font-semibold text-gray-700"
+                                  className="text-md font-semibold text-gray-700 gap-8"
                                   style={{ fontFamily: "outfit, sans-serif" }}
                                 >
-                                  {account.name}
+                                  {account.name}   {account.groupCode}
                                 </h3>
+
                                 {!showEditForm && (
                                   <Dropdown
                                     overlay={
@@ -586,6 +639,7 @@ const GroupAccountSetUp = () => {
                                 {account.description}
                               </p>
                             </div>
+
                             <div className="m-4 flex items-center justify-between">
                               <button
                                 onClick={() => handleSeeGroup(account)}

@@ -49,21 +49,24 @@ export default function AccountComponentSidebar({
               display: "flex",
               justifyContent: "start",
               color: "#505050",
+              marginRight:"6px",
               fontSize: "36px",
+              gap: "6px",
               fontFamily: "outFit, Sans-serif",
               fontWeight: "600",
             }}
           >
-            <h2>{selectedAccount.name}</h2>
+            <h2 className="mr-8">{selectedAccount.name}</h2>
+            <h2 className="mr-4">{selectedAccount.accountCode}</h2>
           </div>
           <div
             style={{
               display: "flex",
               justifyContent: "start",
               color: "#505050",
-              fontSize: "12px",
+              fontSize: "8px",
               fontFamily: "outFit, Sans-serif",
-              fontWeight: "500",
+              fontWeight: "420",
             }}
           >
             <h2>BALANCE</h2>

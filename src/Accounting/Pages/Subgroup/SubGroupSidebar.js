@@ -147,7 +147,7 @@ export default function SubComponentSidebar({
                   {currentItems.map((account) => (
                     <tr key={account.id}>
                       <td className="px-3 py-4 whitespace-nowrap text-sm  text-gray-500">
-                        {account.name}
+                        {account.name} {account.accountCode}
                       </td>
                       <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">
                         {new Date(
